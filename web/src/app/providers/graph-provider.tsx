@@ -25,6 +25,7 @@ import {
 } from "@prometheus-ags/entity-graph-react";
 
 import { PGLITE_SCHEMA_SQL } from "@/shared/sync/pglite-schema";
+import type { VerifiedSession } from "@/shared/model/session";
 import { useSession } from "./session-provider";
 
 type GraphStore = ReturnType<typeof createGraphStore>;
@@ -46,6 +47,40 @@ const LocalStoreContext = createContext<PGlite | null>(null);
 /** The local store, or null before it has opened. */
 export function useLocalStore(): PGlite | null {
   return useContext(LocalStoreContext);
+}
+
+/** Bumped when the local schema changes shape; old namespaces are then dead. */
+const REPLICA_GENERATION = 1;
+
+/**
+ * The persisted namespace for a session's graph.
+ *
+ * Previously `aso:${practiceId}` — practice alone. The runtime architecture
+ * (§7) forbids that outright: *"Do not key private storage only by practice
+ * ID."* Two clinicians in one practice on a shared workstation would share a
+ * namespace, and a scope or schema change would silently reuse stale private
+ * data.
+ *
+ * So the key carries identity as well as practice, plus the replica generation
+ * that invalidates the namespace when the local schema changes. `identityId` is
+ * the Kratos identity — the authority on *who* this is — and `principal`
+ * separates a user's namespace from an agent's, per ADR-002's rule that an
+ * agent acting for a clinician is a different principal.
+ *
+ * Authorization-scope revision is **not** yet a component: `VerifiedSession`
+ * carries `capabilities` but no revision counter to key on. Recorded in
+ * `docs/architecture/frf-shape-facade-integration.md` as an open item rather
+ * than approximated by hashing the capability list, which would churn the
+ * namespace on unrelated changes.
+ */
+export function graphStorageKey(session: VerifiedSession): string {
+  return [
+    "aso",
+    `g${REPLICA_GENERATION}`,
+    session.principal,
+    session.practiceId,
+    session.identityId,
+  ].join(":");
 }
 
 export interface GraphProviderProps {
@@ -79,7 +114,7 @@ export function GraphProvider({ children, fallback, onError }: GraphProviderProp
 
         const storage = await createPGlitePersistenceAdapter(pglite);
         const store = createGraphStore();
-        startLocalFirstGraph({ storage, store, key: `aso:${session.practiceId}` });
+        startLocalFirstGraph({ storage, store, key: graphStorageKey(session) });
 
         if (cancelled) {
           void pglite.close();
