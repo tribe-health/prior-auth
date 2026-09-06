@@ -1,0 +1,11 @@
+{
+  "stage": "plan",
+  "completedAt": "2026-09-05T13:18:20Z",
+  "outputs": [
+    "plan.md"
+  ],
+  "nextStage": "execute",
+  "summaryForNext": "8 changes emitted as native KBD structures in .kbd-orchestrator/changes/W1..W8 (openspec_available is false for this repo). Start with W1 — web/package.json still declares @prometheus-ags/prometheus-entity-management@^3.2.0, which is now a DEPRECATED alias; replace with @prometheus-ags/entity-graph-react@^4.0.0. Both assess BLOCKING gaps are closed: GAP-1 resolved to ElectricSQL 1.8.0 by operator decision (prometheus-entity-sync's JS SDKs are v0.1.0 with no build), GAP-2 resolved because the package is now published and registry-verified. GAP-8 resolved: hand-build auth flows on @ory/kratos-client-fetch@26.2.0 with existing shadcn primitives, NOT @ory/elements-react. FINDING: the ESM audit the child handoff requested is nearly a no-op — web/package.json already declares type:module, grep for require()/module.exports/__dirname over web/src and root configs returns zero, and there is no test script; W2 confirms rather than converts and should close honestly if it finds nothing. LARGEST OPEN RISK (W6): whether ElectricSQL shape authorization can express the per-record privacy class that build-order phase 1 requires, or whether that enforcement must live in the Axum layer — unverified at plan time. Also unverified: Kratos client flow coverage (W4), migration runner choice (W8), and whether the 61 shadcn primitives are token-driven (W5).",
+  "skipped": false,
+  "skipReason": null
+}

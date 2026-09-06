@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EMR connections · Settings · Advanced Spine &amp; Orthopedics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Mulish:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/aso.css">
+<script src="../assets/shell.js"></script>
+<script>ASO.primeTheme();</script>
+<style>
+  /* Screen-local: the add-connection catalogue and the identity
+     reconciliation panel. */
+  .cat {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(184px, 1fr));
+    gap: var(--sp-3);
+  }
+  .cat-item {
+    background: var(--s1);
+    border-radius: var(--r-lg);
+    padding: var(--sp-4);
+    text-align: left;
+    transition: background var(--dur-enter) var(--ease);
+  }
+  .cat-item:hover { background: var(--s2); }
+  .cat-item .ci-n { display: block; font-weight: 700; font-size: 0.88rem; margin-top: var(--sp-3); }
+  .cat-item .ci-p { display: block; font-family: var(--font-mono); font-size: 0.66rem; color: var(--fg-3); margin-top: 4px; }
+
+  .dupe {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 40px minmax(0, 1fr);
+    gap: var(--sp-3);
+    align-items: center;
+    background: var(--bg);
+    border-radius: var(--r);
+    padding: var(--sp-3) var(--sp-4);
+  }
+  .dupe-side .dp-n { font-weight: 600; font-size: 0.86rem; }
+  .dupe-side .dp-m { font-family: var(--font-mono); font-size: 0.72rem; color: var(--fg-3); margin-top: 3px; }
+  .dupe-link {
+    font-family: var(--font-mono); font-size: 0.66rem;
+    color: var(--gap); text-align: center;
+  }
+  @media (max-width: 720px) {
+    .dupe { grid-template-columns: minmax(0, 1fr); }
+    .dupe-link { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar" data-topbar></div>
+
+<div class="app app-nocontext">
+  <aside class="gnav" data-gnav></aside>
+
+  <main class="workbench workbench-wide" id="content">
+
+    <div data-whoami></div>
+
+    <section class="phead" data-od-id="settings-head">
+      <div>
+        <p class="eyebrow">Settings · Integrations</p>
+        <h1 class="display">Four systems.<br>One case list.</h1>
+        <p class="lead">
+          Surgeons operate where their patients are. Each site keeps its own chart, so this practice
+          reads from four systems and reconciles them into a single queue.
+        </p>
+      </div>
+      <div class="row">
+        <button class="btn btn-secondary" id="sync-btn">Sync all now</button>
+        <button class="btn btn-primary" data-disclose="add-conn"
+                data-label-open="Close" data-label-closed="Add connection">
+          <span data-disclose-label>Add connection</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Admin-only write access, stated rather than hidden. -->
+    <div id="read-only-note" hidden style="margin-bottom:var(--sp-5)">
+      <div class="denied">
+        <div class="lbl">Read-only for your role</div>
+        <p>
+          You can see which systems feed your cases and whether they are healthy — useful when a chart
+          looks stale. Adding, editing, or disconnecting an EMR is restricted to an administrator,
+          because a bad connection change silently stops cases from arriving.
+        </p>
+      </div>
+    </div>
+
+    <div class="set-grid">
+
+      <!-- ═══ settings nav ═══ -->
+      <nav class="set-nav" aria-label="Settings sections" data-od-id="settings-nav">
+        <a href="settings-integrations.html" aria-current="page">EMR connections</a>
+        <a href="settings-profile.html">Profile &amp; signature</a>
+        <a href="admin-console.html" data-admin-only hidden>Users &amp; roles</a>
+        <a href="admin-console.html" data-admin-only hidden>Audit log</a>
+      </nav>
+
+      <div class="stack" style="gap:var(--sp-6)">
+
+        <!-- ═══ add connection ═══ -->
+        <section data-od-id="add-connection">
+          <div class="acc" id="add-conn">
+            <div class="acc-in">
+              <div class="panel panel-raised" style="margin-bottom:var(--sp-5)">
+                <div class="panel-head">
+                  <div>
+                    <h2 class="h3">Connect a system</h2>
+                    <p class="body" style="font-size:.86rem;margin-top:6px">
+                      FHIR R4 is the preferred route. Where a vendor exposes no FHIR endpoint, the
+                      fallback is named honestly rather than hidden behind a logo.
+                    </p>
+                  </div>
+                </div>
+                <div class="cat">
+                  <button class="cat-item">
+                    <span class="conn-logo">aMD</span>
+                    <span class="ci-n">AdvancedMD</span>
+                    <span class="ci-p">FHIR R4 · SMART</span>
+                  </button>
+                  <button class="cat-item">
+                    <span class="conn-logo">EPC</span>
+                    <span class="ci-n">Epic</span>
+                    <span class="ci-p">FHIR R4 · SMART</span>
+                  </button>
+                  <button class="cat-item">
+                    <span class="conn-logo">CRN</span>
+                    <span class="ci-n">Oracle Health · Cerner</span>
+                    <span class="ci-p">FHIR R4 · SMART</span>
+                  </button>
+                  <button class="cat-item">
+                    <span class="conn-logo">ATH</span>
+                    <span class="ci-n">athenahealth</span>
+                    <span class="ci-p">FHIR R4 · US Core</span>
+                  </button>
+                  <button class="cat-item">
+                    <span class="conn-logo">ECW</span>
+                    <span class="ci-n">eClinicalWorks</span>
+                    <span class="ci-p">FHIR R4</span>
+                  </button>
+                  <button class="cat-item">
+                    <span class="conn-logo">NXG</span>
+                    <span class="ci-n">NextGen</span>
+                    <span class="ci-p">FHIR R4 · HL7 v2</span>
+                  </button>
+                  <button class="cat-item">
+                    <span class="conn-logo">FHR</span>
+                    <span class="ci-n">Generic FHIR R4</span>
+                    <span class="ci-p">Any US Core server</span>
+                  </button>
+                  <button class="cat-item">
+                    <span class="conn-logo">HL7</span>
+                    <span class="ci-n">HL7 v2 interface</span>
+                    <span class="ci-p">MLLP · legacy only</span>
+                  </button>
+                </div>
+                <div class="callout cool" style="margin-top:var(--sp-4)">
+                  <div class="lbl">What a connection actually needs</div>
+                  <p style="font-size:.84rem">
+                    Base URL, tenant or practice identifier, client credentials, and the scopes this
+                    app requests: <span class="cite">patient.read</span>
+                    <span class="cite">condition.read</span>
+                    <span class="cite">documentreference.read</span>
+                    <span class="cite">coverage.read</span>. This app never requests write scopes —
+                    it does not write to the chart, and asking for permission it does not need is how
+                    integrations get rejected by a security review.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══ live connections ═══ -->
+        <section data-od-id="connections">
+          <div class="panel-head">
+            <h2 class="h2">Connected systems</h2>
+            <div class="row" style="gap:8px">
+              <span class="chip chip-met">2 healthy</span>
+              <span class="chip chip-gap">1 attention</span>
+              <span class="chip chip-void">1 down</span>
+            </div>
+          </div>
+          <div id="conn-list"></div>
+        </section>
+
+        <!-- ═══ reconciliation · the consequence of multi-EMR ═══ -->
+        <section data-od-id="reconciliation">
+          <div class="panel-head">
+            <div>
+              <h2 class="h2">Patient identity reconciliation</h2>
+              <p class="body" style="font-size:.88rem;margin-top:8px">
+                The same person can exist in two systems under different record numbers. The app will
+                not merge them on a name-and-date-of-birth guess, and it will not show the case twice.
+              </p>
+            </div>
+            <span class="chip chip-gap">1 awaiting review</span>
+          </div>
+
+          <div class="callout">
+            <div class="lbl">Possible duplicate · 94% confidence</div>
+            <p style="margin-bottom:var(--sp-4)">
+              A patient in the Methodist Epic feed matches one already pulled from AdvancedMD. Same
+              name, same date of birth, same referring physician — but different record numbers, and
+              the two charts disagree on one imaging date.
+            </p>
+
+            <div class="dupe">
+              <div class="dupe-side">
+                <p class="dp-n">Kaminski, Renata</p>
+                <p class="dp-m">AdvancedMD · MRN 44-119-206</p>
+                <p class="dp-m">DOB 1974-03-11 · seen 2026-08-14</p>
+              </div>
+              <div class="dupe-link">same<br>person?</div>
+              <div class="dupe-side">
+                <p class="dp-n">Kaminski, Renata M.</p>
+                <p class="dp-m">Epic · MRN E-8830512</p>
+                <p class="dp-m">DOB 1974-03-11 · seen 2026-07-22</p>
+              </div>
+            </div>
+
+            <p style="margin-top:var(--sp-4);font-size:.85rem">
+              If these are one person, the Epic record adds the CT myelogram from the hospital visit —
+              which is the study the current pathway depends on. Merging is a clinical decision with a
+              real consequence, so a human confirms it.
+            </p>
+
+            <div class="row" style="gap:10px;margin-top:var(--sp-4)">
+              <button class="btn btn-secondary btn-sm" data-merge>Same patient · link records</button>
+              <button class="btn btn-quiet btn-sm" data-not-merge>Different people · keep separate</button>
+            </div>
+          </div>
+
+          <div class="callout void" style="margin-top:var(--sp-3)">
+            <div class="lbl">Why this is not automatic</div>
+            <p>
+              Name plus date of birth is not an identifier. Auto-merging two charts can attach one
+              patient's imaging to another patient's authorization — a error that would travel all
+              the way into a signed letter. The app surfaces the candidate and stops.
+            </p>
+          </div>
+        </section>
+
+        <!-- ═══ how cases arrive ═══ -->
+        <section data-od-id="ingest-rules">
+          <div class="panel-head">
+            <h2 class="h2">What gets pulled</h2>
+          </div>
+          <p class="body" style="font-size:.88rem;margin-bottom:var(--sp-4)">
+            A connection does not import an entire chart. It watches for surgical candidates and pulls
+            only what the authorization workflow needs.
+          </p>
+          <div class="tw">
+            <table class="ds">
+              <thead>
+                <tr><th>FHIR resource</th><th>Used for</th><th>Scope</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Patient</strong></td>
+                  <td>Identity, demographics, duplicate detection</td>
+                  <td class="m">patient.read</td>
+                </tr>
+                <tr>
+                  <td><strong>Coverage</strong></td>
+                  <td>Payer, plan, member ID — the input to policy retrieval</td>
+                  <td class="m">coverage.read</td>
+                </tr>
+                <tr>
+                  <td><strong>Condition</strong></td>
+                  <td>Diagnosis codes supporting the requested procedure</td>
+                  <td class="m">condition.read</td>
+                </tr>
+                <tr>
+                  <td><strong>DocumentReference</strong></td>
+                  <td>Clinic notes, imaging reports, PT records, operative plans</td>
+                  <td class="m">documentreference.read</td>
+                </tr>
+                <tr>
+                  <td><strong>ServiceRequest</strong></td>
+                  <td>The surgical order that opens a case</td>
+                  <td class="m">servicerequest.read</td>
+                </tr>
+                <tr>
+                  <td><strong>Observation</strong></td>
+                  <td>HbA1c, cotinine, BMI — the optimization criteria payers condition on</td>
+                  <td class="m">observation.read</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="meta" style="margin-top:12px">
+            No write scopes are requested. This app reads the chart and produces a letter; it does not
+            put anything back into the EMR.
+          </p>
+        </section>
+
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<div class="drawer-scrim" data-scrim></div>
+<aside class="drawer" data-drawer></aside>
+<nav class="tabbar" data-tabbar aria-label="Primary"></nav>
+
+<script>
+  ASO.shell({ section: 'settings', title: 'Settings', depth: 'nested' });
+  ASO.bindDisclosure();
+
+  (function () {
+    if (!ASO.currentRole()) return;
+
+    var isAdmin = ASO.can('configure');
+
+    /* Non-admins see the same truth, without the controls that change it. */
+    document.getElementById('read-only-note').hidden = isAdmin;
+    document.querySelectorAll('[data-admin-only]').forEach(function (el) {
+      el.hidden = !isAdmin;
+    });
+
+    function esc(s) {
+      return String(s).replace(/[&<>"]/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+      });
+    }
+
+    var STATUS = {
+      connected: { cls: 'chip-met',  label: 'Connected',      card: '' },
+      degraded:  { cls: 'chip-gap',  label: 'Needs attention', card: ' is-degraded' },
+      down:      { cls: 'chip-void', label: 'Not connected',   card: ' is-down' }
+    };
+
+    var CAP_LABEL = {
+      read:      'Chart read',
+      docs:      'Documents',
+      write:     'Write-back',
+      sched:     'Scheduling',
+      subscribe: 'Live updates'
+    };
+
+    function capRow(caps) {
+      return Object.keys(CAP_LABEL).map(function (k) {
+        var on = !!caps[k];
+        return '<span class="cap ' + (on ? 'on' : 'off') + '">' + CAP_LABEL[k] + '</span>';
+      }).join('');
+    }
+
+    function card(c) {
+      var st = STATUS[c.status] || STATUS.connected;
+      var actions = isAdmin
+        ? '<div class="row" style="gap:8px">' +
+            '<button class="btn btn-secondary btn-sm">Configure</button>' +
+            (c.status === 'connected'
+              ? '<button class="btn btn-quiet btn-sm">Sync now</button>'
+              : '<button class="btn btn-quiet btn-sm">Reconnect</button>') +
+          '</div>'
+        : '';
+
+      return '<div class="conn' + st.card + '">' +
+        '<div class="conn-head">' +
+          '<span class="conn-logo">' + esc(c.abbr) + '</span>' +
+          '<span>' +
+            '<span class="conn-name">' + esc(c.vendor) + '</span>' +
+            '<p class="conn-sub">' + esc(c.practice) + ' · ' + esc(c.role) + '</p>' +
+          '</span>' +
+          '<span class="chip ' + st.cls + '">' + st.label + '</span>' +
+        '</div>' +
+
+        '<div class="caps">' + capRow(c.caps) + '</div>' +
+
+        (c.note ? '<p class="body" style="font-size:.83rem;margin-top:var(--sp-3)">' + esc(c.note) + '</p>' : '') +
+
+        '<div class="conn-meta">' +
+          '<div class="conn-f"><p class="cf-k">Protocol</p><p class="cf-v">' + esc(c.protocol) + '</p></div>' +
+          '<div class="conn-f"><p class="cf-k">Authentication</p><p class="cf-v">' + esc(c.auth) + '</p></div>' +
+          '<div class="conn-f"><p class="cf-k">Last sync</p><p class="cf-v num">' + esc(c.lastSync) + '</p></div>' +
+          '<div class="conn-f"><p class="cf-k">Cadence</p><p class="cf-v">' + esc(c.cadence) + '</p></div>' +
+          '<div class="conn-f"><p class="cf-k">Open cases</p><p class="cf-v num">' + c.cases + '</p></div>' +
+        '</div>' +
+
+        (actions ? '<div style="margin-top:var(--sp-4)">' + actions + '</div>' : '') +
+      '</div>';
+    }
+
+    document.getElementById('conn-list').innerHTML =
+      ASO.connections().map(card).join('');
+
+    /* Sync is available to every role — reading status is not a
+       privileged act, and a coordinator chasing a stale chart needs it. */
+    var syncBtn = document.getElementById('sync-btn');
+    syncBtn.addEventListener('click', function () {
+      syncBtn.disabled = true;
+      syncBtn.textContent = 'Syncing…';
+      window.setTimeout(function () {
+        syncBtn.disabled = false;
+        syncBtn.textContent = 'Sync all now';
+      }, 1200);
+    });
+
+    /* Reconciliation is a clinical decision; record it either way. */
+    var merge = document.querySelector('[data-merge]');
+    var keep = document.querySelector('[data-not-merge]');
+    function resolve(msg, chipClass, chipText) {
+      var box = merge.closest('.callout');
+      box.querySelector('.lbl').textContent = chipText;
+      box.querySelector('.row').innerHTML =
+        '<span class="chip ' + chipClass + '">' + chipText + '</span>' +
+        '<span class="meta">Recorded ' + new Date().toISOString().slice(0, 10) +
+        ' · ' + (ASO.profile() ? ASO.profile().person : '') + '</span>';
+      var p = document.createElement('p');
+      p.className = 'body';
+      p.style.cssText = 'font-size:.85rem;margin-top:var(--sp-3)';
+      p.textContent = msg;
+      box.appendChild(p);
+      document.querySelector('[data-od-id="reconciliation"] .chip-gap').outerHTML =
+        '<span class="chip chip-met">Resolved</span>';
+    }
+    merge.addEventListener('click', function () {
+      resolve('Records linked. The Epic CT myelogram is now attached to case PA-2026-0431 and ' +
+              'appears on the evidence timeline with its source labelled.',
+              'chip-met', 'Linked as one patient');
+    });
+    keep.addEventListener('click', function () {
+      resolve('Kept separate. Both charts remain independent and neither case inherits the ' +
+              'other’s documents.',
+              'chip-plain', 'Kept as separate patients');
+    });
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "stage": "plan",
+  "completedAt": "2026-09-04T19:03:53Z",
+  "outputs": [
+    "plan.md"
+  ],
+  "nextStage": "execute",
+  "summaryForNext": "9 changes, OpenSpec structures emitted in the PEM repo (openspec/changes/C1..C9). Start with C1 (alias directory decision) — package-contract-validation.mjs:25 asserts repository.directory === publicPackage.directory, so the alias cannot share packages/entity-graph-react/; recommended shape B keeps source in place and gives the alias a new directory. BOTH assessment blockers resolved during planning by inspecting the v9 tarballs: GAP-C — release stays 3.3.0 because ColumnDef still exists in v9 (re-exported from @tanstack/table-core) and v9 ships a ./legacy entrypoint with v8-compatible row-model stubs; C2 freezes our own EntityColumnDef alias so this is enforced rather than assumed. GAP-D — CONFIRMED BREAK: ColumnMeta gains a TFeatures type parameter in v9, so the declare-module augmentation in columns.tsx:22-27 will not compile unchanged; C6 owns it. WARNINGS carried forward: (1) C7 must reproduce or refute the recorded Flutter 3.44.8 resolution failure before bumping — local toolchain is 3.48.0 beta and CANNOT verify the declared >=3.44.0 floor; if confirmed, raising the SDK floor is a breaking change for the Dart package and C9 must re-decide its version. (2) C9 must publish with pnpm publish, never npm publish — the 3.0.0 run leaked workspace: specifiers and made 10 of 12 packages uninstallable. (3) C4 carries an unresolved risk: PACKAGE_ENTRYPOINT_CONTRACT declares only the '.' entrypoint while the alias needs three; confirm the checker tolerates a superset before proceeding.",
+  "skipped": false,
+  "skipReason": null
+}

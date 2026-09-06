@@ -1,0 +1,11 @@
+{
+  "stage": "execute",
+  "completedAt": "2026-09-04T19:20:51Z",
+  "outputs": [
+    "execution.md"
+  ],
+  "nextStage": "reflect",
+  "summaryForNext": "Backend openspec; 9 changes emitted at PEM openspec/changes/C1..C9. C1 COMPLETE (decision: shape B — source keeps packages/entity-graph-react, alias gets new packages/prometheus-entity-management; verified 12 packages with exactly 1 directory/name mismatch and target dir free). C2 COMPLETE (EntityColumnDef alias; typecheck EXIT=0; build emits 3 entrypoints; alias present in dist/index.d.ts; guard proved to fail on a deliberate break). Next pending: C3-rename-entity-graph-react. FINDINGS: (1) the C2 surface was LARGER than assessed — 7 public column builders return ColumnDef, not just EntityTableProps.columns; all 7 switched. (2) 2 test files fail (schema-local-first, entity-explorer: unresolved import @prometheus-ags/entity-graph-core/devtools) — CONFIRMED PRE-EXISTING by stashing all C2 edits and re-running on clean d1588d8c with identical results; left unfixed as out of scope, flagged for reflection. (3) typed runtime still cannot register changes/tasks (stage plan was not found), so plan.md + handoffs are the authoritative record; waypoint not hand-edited.",
+  "skipped": false,
+  "skipReason": null
+}

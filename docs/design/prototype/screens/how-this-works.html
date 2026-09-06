@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How this works · Surgery Authorization Workbench · Advanced Spine &amp; Orthopedics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Mulish:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/aso.css">
+<script src="../assets/shell.js"></script>
+<script>ASO.primeTheme();</script>
+<style>
+  /* Screen-local only. The section, code, card, legend and evidence
+     vocabularies now live in aso.css — three documentation pages share
+     them, and a copy in each page is how two of them silently drift. */
+
+  /* The three evidence states, shown as the product shows them. */
+  .states { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: var(--sp-4); }
+  @media (max-width: 780px) { .states { grid-template-columns: minmax(0,1fr); } }
+
+  /* A quoted line from a real payer or professional body. */
+  .quote {
+    background: var(--s1); border-radius: var(--r-lg);
+    padding: var(--sp-5); margin-top: var(--sp-4);
+  }
+  .quote p {
+    font-family: var(--font-display); font-size: 1.12rem;
+    line-height: 1.5; color: var(--fg); font-style: italic;
+    max-width: 62ch;
+  }
+  .quote .q-src {
+    display: block; margin-top: var(--sp-3);
+    font-family: var(--font-mono); font-size: 0.68rem;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-3);
+  }
+
+  /* Workflow spine — the ten steps with the gate marked. */
+  .spine { display: grid; gap: 5px; }
+  .sp-r {
+    display: grid; grid-template-columns: 34px minmax(0,1fr) auto;
+    gap: var(--sp-3); align-items: baseline;
+    background: var(--s1); border-radius: var(--r);
+    padding: 9px var(--sp-4); font-size: 0.85rem;
+    text-decoration: none; color: var(--fg);
+    transition: background var(--dur-exit) var(--ease);
+  }
+  .sp-r:hover { background: var(--s2); }
+  .sp-r:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .sp-r .sp-i { font-family: var(--font-mono); font-size: 0.7rem; color: var(--fg-3); }
+  .sp-r .sp-t { font-weight: 600; }
+  .sp-r .sp-n { font-size: 0.79rem; color: var(--fg-2); }
+  .sp-r.is-gate { background: var(--warm-surface); }
+  .sp-r.is-gate:hover { background: var(--ember-tint); }
+  .sp-r.is-after .sp-i { color: var(--accent); }
+  @media (max-width: 700px) {
+    .sp-r { grid-template-columns: 34px minmax(0,1fr); }
+    .sp-r .sp-n { grid-column: 2; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar" data-topbar></div>
+
+<div class="app app-nocontext">
+  <aside class="gnav" data-gnav></aside>
+
+  <main class="workbench workbench-wide" id="content">
+
+    <div data-whoami></div>
+
+    <section class="phead" data-od-id="hiw-head">
+      <div>
+        <p class="eyebrow">About · How this works</p>
+        <h1 class="display">A letter is an argument.<br>This is where its evidence comes from.</h1>
+        <p class="lead">
+          A surgeon decides an operation is necessary. An insurer decides whether to pay for it.
+          Between those two decisions sits a document, and most of the work of prior
+          authorization is assembling the evidence that document stands on. This product is
+          about that assembly — and about never letting a claim into the letter that the
+          record cannot support.
+        </p>
+      </div>
+      <div class="row">
+        <button class="btn btn-secondary" onclick="window.print()">Print</button>
+      </div>
+    </section>
+
+    <nav class="toc" aria-label="On this page" style="margin-bottom:var(--sp-7)">
+      <a href="#problem">The problem</a>
+      <a href="#states">Three states, not two</a>
+      <a href="#gate">The gate</a>
+      <a href="#provenance">Where claims come from</a>
+      <a href="#derived">What actually gets approved</a>
+      <a href="#custody">Proving what was sent</a>
+      <a href="#assistants">What the AI does</a>
+      <a href="#roles">Who may do what</a>
+      <a href="#walk">Walk the product</a>
+    </nav>
+
+    <!-- ═══ the problem ═══ -->
+    <section class="sec" id="problem" data-od-id="hiw-problem">
+      <div class="sec-head"><span class="s-n">01 · The problem</span></div>
+      <p class="lede">
+        Prior authorization is not a form. It is an evidentiary proceeding conducted by fax,
+        in which a practice must prove that a proposed operation satisfies criteria the payer
+        wrote, using documents the payer has never seen, to a reviewer whose name it often does
+        not learn.
+      </p>
+
+      <div class="quote">
+        <p>
+          We don't actually know what piece of information the health insurer is looking for,
+          so we send a bunch of explanations.
+        </p>
+        <span class="q-src">American Medical Association · on why prior auth is a guessing game</span>
+      </div>
+
+      <p class="lede" style="margin-top:var(--sp-5)">
+        That sentence describes the whole failure mode. A practice that does not know the
+        target sends everything, which buries the two facts that mattered. A practice that
+        guesses wrong gets a denial that arrives weeks later, costs an appeal, and delays an
+        operation for a patient in pain.
+      </p>
+      <p class="lede">
+        <strong>The product's answer is not to write better letters faster.</strong> It is to
+        make the state of the evidence visible before anyone writes anything — what the policy
+        requires, what the chart actually says, and precisely where those two disagree.
+      </p>
+    </section>
+
+    <!-- ═══ three states ═══ -->
+    <section class="sec" id="states" data-od-id="hiw-states">
+      <div class="sec-head"><span class="s-n">02 · Three states, not two</span></div>
+      <p class="lede">
+        Most software models a requirement as met or unmet. That is one state too few, and the
+        missing one is where the work is.
+      </p>
+
+      <div class="states" style="margin-top:var(--sp-4)">
+        <div class="card">
+          <span class="c-k">State 01</span>
+          <span class="c-t">Met</span>
+          <span class="c-d">
+            A dated source document satisfies the criterion. Cite it and move on.
+          </span>
+        </div>
+        <div class="card is-warn">
+          <span class="c-k">State 02</span>
+          <span class="c-t">Not met — a gap</span>
+          <span class="c-d">
+            A document exists and it contradicts or falls short of the criterion. The chart
+            says no. This must be <strong>argued</strong>.
+          </span>
+        </div>
+        <div class="card is-type">
+          <span class="c-k">State 03</span>
+          <span class="c-t">Not documented — a void</span>
+          <span class="c-d">
+            Nothing in the record addresses the criterion at all. Nothing has been disproved.
+            This must be <strong>obtained</strong>.
+          </span>
+        </div>
+      </div>
+
+      <p class="lede" style="margin-top:var(--sp-5)">
+        <strong>A gap and a void call for opposite actions.</strong> A gap needs a surgeon to
+        explain why the contradiction does not defeat the request. A void needs a coordinator
+        to go get a lab result. Collapsing them into one "unmet" bucket sends the wrong person
+        to do the wrong job, which is how a case sits for three weeks waiting on a nicotine
+        test nobody ordered.
+      </p>
+      <p class="lede">
+        The distinction is not a label in the interface. It is a lookup table in the database
+        with a foreign key, so no code path can quietly conflate the two.
+      </p>
+    </section>
+
+    <!-- ═══ the gate ═══ -->
+    <section class="sec" id="gate" data-od-id="hiw-gate">
+      <div class="sec-head"><span class="s-n">03 · The gate</span></div>
+      <p class="lede">
+        The workflow is ten steps, and step six is different from the other nine. Steps 01–05
+        assemble and analyze. Steps 07–10 exist <em>only because a surgeon affirmed step 06</em>.
+      </p>
+
+      <div class="spine" style="margin-top:var(--sp-4)" id="spine"></div>
+
+      <p class="lede" style="margin-top:var(--sp-5)">
+        Four affirmations, each recorded with who and when: this is the controlling policy;
+        this is the section it must satisfy; this is the operation I intend to perform; the
+        described levels and extent match my operative plan.
+      </p>
+      <p class="lede">
+        <strong>The gate is enforced in the database, not in the interface.</strong> A trigger
+        refuses the affirmation unless the actor holds the clinical capability, and a second
+        trigger refuses to let a letter be signed for a case that has not been affirmed. A
+        future API route, a batch job, or somebody at a database prompt cannot route around it.
+      </p>
+
+      <div class="code" style="margin-top:var(--sp-4)" aria-label="Gate enforcement errors"><span class="k">ERROR</span>:  user a0000000-… may not affirm the surgeon gate;
+        affirm_gate is a clinical capability
+
+<span class="k">ERROR</span>:  case d0000000-… has not been affirmed at the surgeon gate;
+        a letter may not be signed</div>
+
+      <p class="lede" style="margin-top:var(--sp-5)">
+        The administrator is the point. Dana Whitfield can add an EMR connection, invite a
+        surgeon, and read the audit log — and cannot affirm a gate or sign a letter. That is
+        not an org-chart convenience. It is the safety boundary the whole role model exists
+        to draw.
+      </p>
+    </section>
+
+    <!-- ═══ provenance ═══ -->
+    <section class="sec" id="provenance" data-od-id="hiw-provenance">
+      <div class="sec-head"><span class="s-n">04 · Where claims come from</span></div>
+      <p class="lede">
+        Every sentence in a letter of medical necessity is a claim, and every claim traces to
+        exactly one source. There are three legitimate kinds, and the schema makes a claim
+        declare which one it is.
+      </p>
+
+      <div class="legend" style="margin-top:var(--sp-4);grid-template-columns:repeat(3,minmax(0,1fr))">
+        <div class="lg">
+          <span class="lg-k"><span class="gl gl-typed"></span>Source 01</span>
+          <span class="lg-n">A chart document</span>
+          <span class="lg-d">
+            An MRI report, a lab, a therapy note. Dated, hashed, and cited to the page.
+          </span>
+        </div>
+        <div class="lg is-gated">
+          <span class="lg-k"><span class="gl gl-gated"></span>Source 02</span>
+          <span class="lg-n">A surgeon annotation</span>
+          <span class="lg-d">
+            The treating physician's clinical judgment, in his own words, attributed to him
+            by name — never rendered as though a document said it.
+          </span>
+        </div>
+        <div class="lg">
+          <span class="lg-k"><span class="gl gl-plain"></span>Source 03</span>
+          <span class="lg-n">A payer criterion</span>
+          <span class="lg-d">
+            The rule itself, introduced the way its evidence grade permits.
+          </span>
+        </div>
+      </div>
+
+      <p class="lede" style="margin-top:var(--sp-5)">
+        <strong>The annotation is the interesting one.</strong> It is the single mechanism by
+        which a claim enters a letter without a chart document behind it — the surgeon saying
+        <em>a CT myelogram demonstrates nerve-root stenosis more accurately than MRI</em> when
+        no document in the chart says so. That is legitimate clinical argument, and it must be
+        possible. It must also never be disguised as a chart fact.
+      </p>
+
+      <div class="code" style="margin-top:var(--sp-4)" aria-label="Claim source constraint"><span class="c">-- Every claim resolves to exactly one source. The XOR is what stops</span>
+<span class="c">-- surgeon opinion from being rendered as though the chart said it.</span>
+<span class="k">CONSTRAINT</span> letter_claims_one_source <span class="k">CHECK</span> (
+  num_nonnulls(document_id, annotation_id, criterion_id) = <span class="s">1</span>)</div>
+
+      <p class="lede" style="margin-top:var(--sp-5)">
+        Recording a thought and arguing it are different acts, so they are different columns.
+        A surgeon may capture a point for the record, for a peer-to-peer call, or for a future
+        appeal without putting it in this letter.
+      </p>
+    </section>
+
+    <!-- ═══ derived criteria ═══ -->
+    <section class="sec" id="derived" data-od-id="hiw-derived">
+      <div class="sec-head">
+        <span class="s-n">05 · What actually gets approved</span>
+        <span style="font-size:.85rem;color:var(--fg-2)">The most valuable thing here, and the most dangerous.</span>
+      </div>
+      <p class="lede">
+        Payer criteria arrive two ways. Some are <strong>published</strong> — a policy document
+        with a number, a version, and a URL, hash-verified against what was retrieved. Others
+        are <strong>derived</strong>: a surgeon watches forty authorizations and works out what
+        actually gets approved, which the payer has never written down anywhere.
+      </p>
+      <p class="lede">
+        Derived criteria are how a practice stops guessing. Sharing them between surgeons is
+        the most valuable thing this product can do — and the reason provenance is treated as
+        load-bearing rather than descriptive.
+      </p>
+
+      <div class="pair" style="margin-top:var(--sp-4)">
+        <div class="card is-type">
+          <span class="c-k">Citable as policy</span>
+          <span class="c-t">Published · obtained on request</span>
+          <span class="c-d">
+            A document exists. The letter may state it as the payer's own requirement, because
+            it is.
+          </span>
+        </div>
+        <div class="card is-warn">
+          <span class="c-k">Never citable as policy</span>
+          <span class="c-t">Verbal · derived · peer-shared</span>
+          <span class="c-d">
+            The letter must introduce these as what they are — <em>in this practice's
+            experience</em>, <em>as reported by peer practices</em>. Attributing one as
+            published policy raises an error.
+          </span>
+        </div>
+      </div>
+
+      <p class="lede" style="margin-top:var(--sp-5)">
+        <strong>Derived knowledge decays, so the schema makes it decay.</strong> A peer-reviewed
+        study documents physicians gaming prior-auth protocols until payers notice and rescind
+        them — so a rule observed two years ago may be actively wrong today. Retrieval rank
+        blends similarity with evidence grade and an exponential recency decay. A fresh derived
+        criterion scores <span class="ic">0.64</span>; the same rule unconfirmed for two years
+        scores <span class="ic">0.0385</span>; current published policy scores
+        <span class="ic">1.0</span>. It cannot quietly outrank the written rule.
+      </p>
+
+      <p class="lede">
+        <strong>Sharing is aggregate-only, and the boundary is structural.</strong> Federal
+        antitrust guidance treats competitors sharing clinical information about the
+        <em>mode, quality, or efficiency of treatment</em> as low risk, and sharing fee or
+        reimbursement information as high risk. So the shared table has no money column, no fee
+        column, no allowed-amount column — and a database event trigger refuses any future
+        schema change that adds one. A price cannot be shared because there is nowhere to put
+        it.
+      </p>
+      <p class="lede">
+        It carries no case identifier, no date finer than a quarter, and no procedure code
+        finer than a family, with a floor of ten observations from at least two independent
+        practices before anything crosses a practice boundary.
+      </p>
+    </section>
+
+    <!-- ═══ custody ═══ -->
+    <section class="sec" id="custody" data-od-id="hiw-custody">
+      <div class="sec-head"><span class="s-n">06 · Proving what was sent</span></div>
+      <p class="lede">
+        The question after submission is not <em>did we send it</em> but <strong>can we prove
+        what the payer received</strong>. A denial that says "we never got the imaging" is
+        either true or false, and a practice should be able to say which.
+      </p>
+      <p class="lede">
+        Every attachment carries a page count and a content hash taken at the moment of
+        transmission. Acknowledgement is recorded per item, so a payer that confirms 38 of 42
+        pages leaves four disputed rows — and those four are the worklist. The custody chain
+        hashes each entry to the previous one, so a silent edit anywhere breaks verification
+        from that point forward.
+      </p>
+      <p class="lede">
+        The same principle governs the reviewer. A denial issued by an unnamed reviewer, or by
+        one whose specialty does not match the surgery, is a fact the practice should be able
+        to assert with evidence — so reviewer identity, specialty match, and disclosure status
+        are recorded fields rather than recollection.
+      </p>
+    </section>
+
+    <!-- ═══ AI ═══ -->
+    <section class="sec" id="assistants" data-od-id="hiw-assistants">
+      <div class="sec-head"><span class="s-n">07 · What the AI does — and does not</span></div>
+      <p class="lede">
+        There are AI assistants throughout this product. They read hundreds of chart pages and
+        find the sentence that bears on criterion 3.2. They draft. They surface what a payer
+        approved in comparable cases. They watch published policies and notice when one changes.
+      </p>
+      <p class="lede">
+        <strong>They do not decide anything clinical.</strong> That is not a policy written in
+        a prompt — a prompt is a request, not a constraint. It is enforced at two layers that
+        do not depend on the model behaving.
+      </p>
+
+      <div class="steps" style="margin-top:var(--sp-4)">
+        <div class="step-r">
+          <span class="st-n">01</span>
+          <span>
+            <span class="st-t">The agent is a different principal than the surgeon</span>
+            <span class="st-d">
+              An assistant acting for Dr. James is not Dr. James. In the authorization model
+              they are separate entity types, so a rule granting the surgeon the ability to
+              sign grants the assistant nothing. Authority must be re-granted explicitly, per
+              action, or it does not exist.
+            </span>
+          </span>
+        </div>
+        <div class="step-r">
+          <span class="st-n">02</span>
+          <span>
+            <span class="st-t">Irreversible acts require a named human release</span>
+            <span class="st-d">
+              Drafting is preparation. Affirming, signing, and submitting are decisions. The
+              agent prepares and flags; a named person releases.
+            </span>
+          </span>
+        </div>
+        <div class="step-r">
+          <span class="st-n">03</span>
+          <span>
+            <span class="st-t">Every retrieval into a draft is logged</span>
+            <span class="st-d">
+              A letter cannot be signed while a criterion that is not citable as policy sits
+              unresolved in its retrieval log. Each one must be attributed or explicitly
+              excluded by the surgeon first.
+            </span>
+          </span>
+        </div>
+        <div class="step-r">
+          <span class="st-n">04</span>
+          <span>
+            <span class="st-t">Generated interface elements carry no authority</span>
+            <span class="st-d">
+              When an assistant produces a form or an approval card, that surface is a
+              projection of what the runtime decided — it never executes a tool call or a
+              policy decision itself.
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <p class="lede" style="margin-top:var(--sp-5)">
+        <strong>Patient text is treated as radioactive.</strong> An embedding of clinical text
+        is not de-identified data — published research reconstructs source text from embedding
+        vectors, so an embedding of a chart note is itself protected health information. Each
+        embedding model records whether it is cleared for patient data, a model may only be
+        cleared if it runs locally or is covered by a business associate agreement, and the
+        database refuses to store a vector of patient text against an uncleared model.
+      </p>
+    </section>
+
+    <!-- ═══ roles ═══ -->
+    <section class="sec" id="roles" data-od-id="hiw-roles">
+      <div class="sec-head"><span class="s-n">08 · Who may do what</span></div>
+      <p class="lede">
+        Three roles, because two is too coarse. The split that matters is not seniority — it is
+        between configuring the system and making a medical decision.
+      </p>
+
+      <div class="tw" style="margin-top:var(--sp-4)">
+        <table class="ds">
+          <caption class="vh">Capabilities by role, showing that clinical authority is deliberately scarce</caption>
+          <thead>
+            <tr>
+              <th scope="col">Capability</th>
+              <th scope="col" style="text-align:center">Surgeon</th>
+              <th scope="col" style="text-align:center">Staff</th>
+              <th scope="col" style="text-align:center">Admin</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Configure the practice</td>
+              <td style="text-align:center">—</td><td style="text-align:center">—</td>
+              <td style="text-align:center"><strong>yes</strong></td></tr>
+            <tr><td>Affirm the surgeon gate</td>
+              <td style="text-align:center"><strong>yes</strong></td><td style="text-align:center">—</td>
+              <td style="text-align:center">—</td></tr>
+            <tr><td>Sign a letter</td>
+              <td style="text-align:center"><strong>yes</strong></td><td style="text-align:center">—</td>
+              <td style="text-align:center">—</td></tr>
+            <tr><td>Record a clinical annotation</td>
+              <td style="text-align:center"><strong>yes</strong></td><td style="text-align:center">—</td>
+              <td style="text-align:center">—</td></tr>
+            <tr><td>Submit to a payer</td>
+              <td style="text-align:center"><strong>yes</strong></td><td style="text-align:center"><strong>yes</strong></td>
+              <td style="text-align:center"><strong>yes</strong></td></tr>
+            <tr><td>Read the audit log</td>
+              <td style="text-align:center">—</td><td style="text-align:center">—</td>
+              <td style="text-align:center"><strong>yes</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="lede" style="margin-top:var(--sp-4)">
+        Access is not the variable — every role can open every screen, because a coordinator
+        who cannot see the gate cannot understand why a case is stalled. The variable is
+        capability, and the two clinical ones are scarce on purpose.
+      </p>
+    </section>
+
+    <!-- ═══ walk ═══ -->
+    <section class="sec" id="walk" data-od-id="hiw-walk">
+      <div class="sec-head"><span class="s-n">09 · Walk the product</span></div>
+      <p class="lede">
+        The prototype is fully clickable from any role. Sign in as a different person and the
+        same screens change what they let you do.
+      </p>
+      <div class="pair" style="margin-top:var(--sp-4)">
+        <a class="card" href="../index.html" style="text-decoration:none;display:block">
+          <span class="c-k">Start here</span>
+          <span class="c-t">Case dashboard</span>
+          <span class="c-d">The queue, with the gap and void counts that drive everything else.</span>
+        </a>
+        <a class="card" href="data-model.html" style="text-decoration:none;display:block">
+          <span class="c-k">Underneath</span>
+          <span class="c-t">Data model</span>
+          <span class="c-d">Sixty tables and the rules the database itself refuses to break.</span>
+        </a>
+        <a class="card" href="architecture.html" style="text-decoration:none;display:block">
+          <span class="c-k">The stack</span>
+          <span class="c-t">Technology</span>
+          <span class="c-d">The runtime this is built on, and what is shipped versus planned.</span>
+        </a>
+        <a class="card" href="build-playbook.html" style="text-decoration:none;display:block">
+          <span class="c-k">The method</span>
+          <span class="c-t">Build playbook</span>
+          <span class="c-d">How web, desktop, and mobile get built from one architecture.</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div class="tabbar" data-tabbar></div>
+
+<script>
+(function () {
+  ASO.shell({ step: null });
+
+  /* The spine is generated from the shell's own STEPS list rather than
+     pasted, so this page cannot describe a workflow the product no
+     longer has. */
+  var NOTES = {
+    dashboard: 'The queue, and what each case is waiting on',
+    intake:    'What the chart is missing',
+    evidence:  'Every document on a timeline, with contradictions marked',
+    policy:    'The controlling criteria, and which are met',
+    pathway:   'Three surgical theories, ranked by the evidence',
+    gate:      'Four affirmations only a surgeon can make',
+    letter:    'Drafted, QA-checked, signed',
+    packet:    'Assembled, hashed, page-counted',
+    receipt:   'What the payer acknowledged — and what it disputed',
+    p2p:       'The call, and who took it'
+  };
+
+  var host = document.getElementById('spine');
+  if (!host || !Array.isArray(ASO.STEPS)) return;
+
+  ASO.STEPS.forEach(function (s) {
+    var a = document.createElement('a');
+    a.className = 'sp-r' + (s.id === 'gate' ? ' is-gate' : (s.gated ? ' is-after' : ''));
+    a.href = s.href.indexOf('screens/') === 0 ? s.href.slice(8) : '../' + s.href;
+    a.innerHTML =
+      '<span class="sp-i">' + s.ix + '</span>' +
+      '<span class="sp-t">' + s.label + (s.id === 'gate' ? ' &mdash; the gate' : '') + '</span>' +
+      '<span class="sp-n">' + (NOTES[s.id] || '') + '</span>';
+    host.appendChild(a);
+  });
+})();
+</script>
+</body>
+</html>

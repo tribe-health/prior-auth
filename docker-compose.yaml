@@ -1,0 +1,193 @@
+# ═══════════════════════════════════════════════════════════════════════════
+# Prior Authorization Workbench — practice-boundary stack.
+#
+#   docker compose up -d
+#   docker compose down -v      # -v is required to re-run the schema bootstrap
+#
+# ── The rule this file exists to hold ──────────────────────────────────────
+#
+# PHI at rest stays inside the practice boundary and inside the United States
+# (Texas SB 1188, effective 2026-01-01). No service here moves it outside.
+# The only PHI egress in the product is to a BAA-covered inference endpoint
+# with zero data retention, gated by Cedar policy — and that service is not in
+# this file.
+#
+# ── One Postgres, several databases ────────────────────────────────────────
+#
+# flint-forge's postgres18 image is the single instance. It already starts with
+# `wal_level=logical` (images/postgres18/Dockerfile:155), which is what Electric
+# requires — that is why this image, not `postgres:16-alpine`.
+#
+# flint-gate's own compose uses postgres:16-alpine. It is a working example, not
+# a maintained pin; adapt it rather than copy it.
+#
+# Kratos owns and migrates its own schema in its own database. `aso.*` must
+# never FK into Kratos tables — `users.kratos_identity_id` is a soft reference
+# by design (docs/design/schema/schema.sql:230-257).
+# ═══════════════════════════════════════════════════════════════════════════
+
+name: aso-prior-auth
+
+services:
+  # ── Data plane ───────────────────────────────────────────────────────────
+  db:
+    build:
+      context: ${PROMETHEUS_ROOT:-/Users/gqadonis/Projects/prometheus}/flint-forge
+      dockerfile: images/postgres18/Dockerfile
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-flint}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-flint}
+      POSTGRES_DB: ${POSTGRES_DB:-flint}
+      # Kratos and flint-gate databases are created by
+      # docker/bootstrap/00-create-databases.sh — this image does not implement
+      # the POSTGRES_MULTIPLE_DATABASES convention.
+    volumes:
+      # Postgres 18 changed the volume convention: PGDATA is
+      # /var/lib/postgresql/18/docker and the image declares VOLUME
+      # /var/lib/postgresql. Mounting at .../data — the pg17-and-earlier path —
+      # makes the entrypoint see stray data in an "unused mount/volume" and
+      # refuse to start, in a restart loop. Observed 2026-09-05.
+      # See docker-library/postgres#1259.
+      - db_data:/var/lib/postgresql
+      # Bootstrap runs on FIRST START ONLY. Postgres skips this directory when
+      # the data volume already exists.
+      - ./docker/bootstrap:/docker-entrypoint-initdb.d:ro
+      - ./docs/design/schema:/schema:ro
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-flint} -d ${POSTGRES_DB:-flint}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+  # ── Read-path sync ───────────────────────────────────────────────────────
+  # Serves the BASE TABLES. Electric cannot serve a view — measured 2026-09-06:
+  #   GET /v1/shape?table=aso.sync_cases -> 400 "does not exist"
+  #   GET /v1/shape?table=aso.cases      -> 200                    [control]
+  # A view emits no WAL, so it can never join a publication; materialized views
+  # fail identically and Postgres refuses them outright. The sync_* views in
+  # docker/bootstrap/20-*.sql are SUPERSEDED as the sync path and remain only as
+  # documentation plus a PHI assertion over themselves.
+  #
+  # The tenant boundary is therefore the denormalized, trigger-forced
+  # practice_id column (docker/bootstrap/15-*.sql), and the PHI boundary is the
+  # per-shape `columns=` projection in web/src/shared/sync/electric-shapes.ts.
+  #
+  # WARNING: with ELECTRIC_INSECURE and port 3000 published, anything that can
+  # reach localhost:3000 can request a base-table shape with no projection and
+  # no where-clause. That is acceptable ONLY on a developer machine. A real
+  # deployment must not publish this port and must terminate authorization at
+  # the gateway.
+  electric:
+    image: electricsql/electric:1.8.0
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-flint}:${POSTGRES_PASSWORD:-flint}@db:5432/${POSTGRES_DB:-flint}
+      ELECTRIC_INSECURE: "true" # local only — the gateway terminates auth in a real deployment
+    ports:
+      - "${ELECTRIC_PORT:-3000}:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # ── Identity ─────────────────────────────────────────────────────────────
+  # v26.2.0, matching @ory/kratos-client-fetch@26.2.0 in the web app.
+  # flint-gate's reference compose pins v1.2 — roughly 25 majors stale.
+  kratos-migrate:
+    image: oryd/kratos:v26.2.0
+    command: migrate sql -e --yes
+    environment:
+      DSN: postgres://${POSTGRES_USER:-flint}:${POSTGRES_PASSWORD:-flint}@db:5432/kratos?sslmode=disable
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: on-failure
+
+  kratos:
+    image: oryd/kratos:v26.2.0
+    # Kratos REQUIRES a config file: `identity.schemas` and
+    # `selfservice.default_browser_return_url` have no environment-variable
+    # equivalent, and without them the container restart-loops on
+    # "validation failed". Observed 2026-09-05.
+    command: serve all --dev --watch-courier --config /etc/config/kratos/kratos.yml
+    volumes:
+      - ./docker/kratos:/etc/config/kratos:ro
+    environment:
+      DSN: postgres://${POSTGRES_USER:-flint}:${POSTGRES_PASSWORD:-flint}@db:5432/kratos?sslmode=disable
+      LOG_LEVEL: info
+      SERVE_PUBLIC_BASE_URL: http://localhost:${KRATOS_PUBLIC_PORT:-4433}/
+      SERVE_ADMIN_BASE_URL: http://kratos:4434/
+    ports:
+      - "${KRATOS_PUBLIC_PORT:-4433}:4433"
+      - "${KRATOS_ADMIN_PORT:-4434}:4434"
+    depends_on:
+      kratos-migrate:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+  # ── Gateway ──────────────────────────────────────────────────────────────
+  # Validates the Kratos session and enforces policy. ADR-002's first layer.
+  # A Kratos session maps to `User`, never `Agent` — an AI assistant acting for
+  # a surgeon is a different principal and holds no clinical capability.
+  flint-gate:
+    build:
+      context: ${PROMETHEUS_ROOT:-/Users/gqadonis/Projects/prometheus}/flint-gate
+    # flint-gate reads /app/config/config.yaml and exits if it is absent —
+    # environment variables alone are not enough. Observed 2026-09-06 as a
+    # restart loop: "reading config file /app/config/config.yaml: No such
+    # file or directory".
+    volumes:
+      - ./docker/flint-gate:/app/config:ro
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-flint}:${POSTGRES_PASSWORD:-flint}@db:5432/flintgate
+      FLINT_GATE_JWT_SECRET: ${FLINT_GATE_JWT_SECRET:-change-me-in-development-only}
+      RUST_LOG: ${RUST_LOG:-info,flint_gate=debug}
+    ports:
+      - "${GATE_PROXY_PORT:-4456}:4456"
+      # 4457 (admin) is intentionally NOT published. flint-gate refuses a
+      # non-loopback admin bind without admin_auth, so the admin API stays
+      # loopback-only inside the container; reach it with `docker compose exec`.
+    depends_on:
+      db:
+        condition: service_healthy
+      kratos:
+        condition: service_started
+    restart: unless-stopped
+
+  # ── Realtime substrate ───────────────────────────────────────────────────
+  # ── Realtime substrate — NOT STARTED BY DEFAULT ──────────────────────────
+  #
+  # `docker compose up` deliberately skips this. Start it explicitly with
+  # `docker compose --profile realtime up -d realtime-fabric` once its
+  # dependencies exist.
+  #
+  # WHY (measured 2026-09-06): the image BUILDS, then exits on
+  # "IGGY_CONNECTION_STRING must be set". Its docs/ENVIRONMENT.md marks 15
+  # settings required, and its own compose.yml brings four more services —
+  # iggy-server, keto, keto-migrate, surrealdb — plus a SECOND Postgres
+  # replication slot and publication (frf_slot / frf_pub) alongside Electric's.
+  #
+  # Nothing consumes it yet: grep of web/src, web/package.json and
+  # docs/architecture finds no reference to realtime-fabric, Iggy, LiveKit or
+  # Keto. It is named in one line of the phase plan's service list.
+  #
+  # Standing it up now would add four unused services and a second CDC
+  # consumer on the same database, for no caller. Left defined and profiled
+  # off so the intent survives and the default `up` stays green.
+  realtime-fabric:
+    profiles: ["realtime"]
+    build:
+      context: ${PROMETHEUS_ROOT:-/Users/gqadonis/Projects/prometheus}/flint-realtime-fabric
+    environment:
+      RUST_LOG: ${RUST_LOG:-info}
+    ports:
+      - "${FABRIC_PORT:-8080}:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  db_data:

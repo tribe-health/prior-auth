@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Receipt &amp; custody · Surgery Authorization Workbench · Advanced Spine &amp; Orthopedics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Mulish:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/aso.css">
+<script src="../assets/shell.js"></script>
+<script>ASO.primeTheme();</script>
+<style>
+  /* ═══ Screen-local: the document status grid. ═══ */
+  .cust {
+    background: var(--s1);
+    border-radius: var(--r-lg);
+    padding: var(--sp-4) var(--sp-5);
+  }
+  .cust + .cust { margin-top: var(--sp-2); }
+  .cust-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 116px 108px;
+    gap: var(--sp-3);
+    align-items: baseline;
+  }
+  .cust-head .c-n { font-weight: 700; font-size: 0.9rem; }
+  .cust-head .c-s { font-size: 0.81rem; color: var(--fg-2); margin-top: 3px; }
+  .cust .chain { margin-top: 10px; }
+  @media (max-width: 800px) {
+    .cust-head { grid-template-columns: minmax(0, 1fr); }
+  }
+
+  .crit {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 3px;
+  }
+  .crit-critical   { background: var(--gap-surface);  color: var(--gap); }
+  .crit-supporting { background: var(--cool-surface); color: var(--cool); }
+  .crit-background { background: var(--s3);           color: var(--fg-3); }
+
+  .notice {
+    background: var(--bg);
+    border-radius: var(--r);
+    padding: var(--sp-5);
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--fg-2);
+    max-width: 78ch;
+  }
+  .notice p { margin-bottom: 11px; }
+  .notice .n-sub { font-family: var(--font-mono); font-size: 0.78rem; color: var(--fg); }
+</style>
+</head>
+<body>
+
+<div class="topbar" data-topbar></div>
+
+<div class="app">
+  <aside class="gnav" data-gnav></aside>
+  <aside class="ctx" data-ctx></aside>
+
+  <main class="workbench workbench-wide" id="content">
+
+    <div data-whoami></div>
+
+    <section id="locked-view" hidden data-od-id="receipt-locked">
+      <div class="phead">
+        <div>
+          <p class="eyebrow">Step 09 · Receipt &amp; chain of custody</p>
+          <h1 class="display">Nothing transmitted yet.</h1>
+          <p class="lead">The custody chain begins at submission. Complete the gate and approve the letter first.</p>
+        </div>
+      </div>
+      <div style="background:var(--void-surface);border-radius:var(--r-lg);padding:var(--sp-7);text-align:center">
+        <h2 class="h2" style="margin-bottom:var(--sp-3)">Blocked upstream</h2>
+        <p class="body" style="margin:0 auto var(--sp-5);max-width:56ch;font-size:.92rem">
+          There is no manifest to track until a package exists.
+        </p>
+        <a class="btn btn-primary" href="surgeon-gate.html">Open surgeon gate</a>
+      </div>
+    </section>
+
+    <div id="receipt-view" hidden>
+
+      <section class="phead" data-od-id="receipt-head">
+        <div>
+          <p class="eyebrow">Step 09 · Receipt &amp; chain of custody</p>
+          <h1 class="display">We can prove what we sent.<br>We cannot prove they read it.</h1>
+          <p class="lead">
+            Transmission and receipt are different facts, and this screen never merges them.
+            Carrier silence is recorded as silence — not converted into confirmation.
+          </p>
+        </div>
+        <div class="row">
+          <a class="btn btn-secondary" href="peer-to-peer.html">Peer-to-peer preflight</a>
+          <button class="btn btn-primary">Send verification notice</button>
+        </div>
+      </section>
+
+      <!-- ═══ the distinction, stated first ═══ -->
+      <section style="margin-bottom:var(--sp-6)" data-od-id="receipt-principle">
+        <div class="g3">
+          <div class="callout" style="background:var(--ok-surface)">
+            <div class="lbl" style="color:var(--ok)">Confirmed received</div>
+            <p>The payer affirmatively acknowledged this item. The strongest state, and the only one that is an actual confirmation.</p>
+          </div>
+          <div class="callout void">
+            <div class="lbl">Transmission documented · carrier did not dispute</div>
+            <p>
+              We hold transmission evidence and the carrier did not identify the item as missing after
+              a verification request. <strong>This is not a legal confirmation of receipt</strong>, and
+              the interface will not label it as one.
+            </p>
+          </div>
+          <div class="callout">
+            <div class="lbl">Receipt disputed · item missing</div>
+            <p>The payer says the item is absent, incomplete, illegible, or unavailable to the reviewer. Generates an immediate resend task.</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="g-main">
+        <div class="stack" style="gap:var(--sp-5)">
+
+          <!-- ═══ document status grid ═══ -->
+          <section data-od-id="custody-grid">
+            <div class="panel-head">
+              <div>
+                <h2 class="h2">Document status</h2>
+                <p class="body" style="font-size:.88rem;margin-top:8px">
+                  Each document's full chain, from chart upload to confirmed reviewer availability.
+                  Criticality is assigned from the criteria the letter actually relies on.
+                </p>
+              </div>
+              <div class="row" style="gap:8px">
+                <span class="chip chip-met">7 confirmed</span>
+                <span class="chip chip-void">3 undisputed</span>
+                <span class="chip chip-gap">1 disputed</span>
+              </div>
+            </div>
+
+            <div class="cust">
+              <div class="cust-head">
+                <div>
+                  <span class="c-n">Letter of medical necessity · signed</span>
+                  <p class="c-s">Transmitted 2026-09-02 14:12 · Availity portal · ref AVY-88413-2</p>
+                </div>
+                <span class="crit crit-critical">Critical</span>
+                <span class="chip chip-met">Confirmed</span>
+              </div>
+              <div class="chain">
+                <span class="chain-stage done">Uploaded</span><span class="chain-sep">›</span>
+                <span class="chain-stage done">Validated</span><span class="chain-sep">›</span>
+                <span class="chain-stage done">Mapped</span><span class="chain-sep">›</span>
+                <span class="chain-stage done">Transmitted</span><span class="chain-sep">›</span>
+                <span class="chain-stage done">Evidence held</span><span class="chain-sep">›</span>
+                <span class="chain-stage done">Carrier confirmed</span><span class="chain-sep">›</span>
+                <span class="chain-stage done">Reviewer access</span>
+              </div>
+            </div>
+
+            <div class="cust">
+              <div class="cust-head">
+                <div>
+                  <span class="c-n">CT myelogram report</span>
+                  <p class="c-s">Transmitted 2026-09-02 14:12 · Availity portal · ref AVY-88413-2</p>
+                </div>
+                <span class="crit crit-critical">Critical</span>
+                <span class="chip chip-met">Confirmed</span>
+              </div>
+              <div class="chain">
+                <span class="chain-stage done">Uploaded</span><span class="chain-sep">›</span>
+                <span class="chain-stage done">Validated</span><span class="chain-sep">›</span>
+                <span class="chain-stage done">Mapped §4.1(b)</span><span class="chain-sep">›</span>
+                <span class="chain-stage done">Transmitted</span><span class="chain-sep">›</span>
+                <span class="chain-stage done">Evidence held</span><span class="chain-sep">›</span>
+                <span class="chain-stage done">Carrier confirmed</span><span class="chain-sep">›</span>
+                <span class="chain-stage done">Reviewer access</span>
+              </div>
+            </div>
+
+            <div class="cust">
+              <div class="cust-head">
+                <div>
+                  <span class="c-n">Physical therapy records · evaluation, ledger, discharge</span>
+                  <p class="c-s">Transmitted 2026-09-02 14:12 · Availity portal · ref AVY-88413-2</p>
+                </div>
+                <span class="crit crit-critical">Critical</span>
+                <span class="chip chip-gap">Disputed</span>
+              </div>
+              <div class="chain">
+                <span class="chain-stage done">Uploaded</span><span class="chain-sep">›</span>
+                <span class="chain-stage done">Validated</span><span class="chain-sep">›</span>
+                <span class="chain-stage done">Mapped §4.1(c)</span><span class="chain-sep">›</span>
+                <span class="chain-stage done">Transmitted</span><span class="chain-sep">›</span>
+                <span class="chain-stage done">Evidence held</span><span class="chain-sep">›</span>
+                <span class="chain-stage dispute">Reviewer says missing</span>
+              </div>
+              <div class="callout" style="margin-top:var(--sp-3);padding:var(--sp-3) var(--sp-4)">
+                <div class="lbl">Discrepancy captured 2026-09-05</div>
+                <p style="font-size:.83rem">
+                  The reviewing physician stated during the peer-to-peer that no physical therapy
+                  documentation was in the file. Our transmission record shows it in the same portal
+                  submission the carrier confirmed. Resent 2026-09-05 09:41.
+                </p>
+              </div>
+            </div>
+
+            <div class="cust">
+              <div class="cust-head">
+                <div>
+                  <span class="c-n">Flexion-extension radiograph report</span>
+                  <p class="c-s">Transmitted 2026-09-02 14:12 · Availity portal · ref AVY-88413-2</p>
+                </div>
+                <span class="crit crit-supporting">Supporting</span>
+                <span class="chip chip-void">Not disputed</span>
+              </div>
+              <div class="chain">
+                <span class="chain-stage done">Uploaded</span><span class="chain-sep">›</span>
+                <span class="chain-stage done">Validated</span><span class="chain-sep">›</span>
+                <span class="chain-stage done">Mapped §4.1(d)</span><span class="chain-sep">›</span>
+                <span class="chain-stage done">Transmitted</span><span class="chain-sep">›</span>
+                <span class="chain-stage done">Evidence held</span><span class="chain-sep">›</span>
+                <span class="chain-stage silent">Carrier silent</span><span class="chain-sep">›</span>
+                <span class="chain-stage silent">Reviewer access unknown</span>
+              </div>
+            </div>
+
+            <div class="cust">
+              <div class="cust-head">
+                <div>
+                  <span class="c-n">MRI lumbar spine report</span>
+                  <p class="c-s">Transmitted 2026-09-02 14:12 · Availity portal · ref AVY-88413-2</p>
+                </div>
+                <span class="crit crit-background">Background</span>
+                <span class="chip chip-met">Confirmed</span>
+              </div>
+              <div class="chain">
+                <span class="chain-stage done">Uploaded</span><span class="chain-sep">›</span>
+                <span class="chain-stage done">Validated</span><span class="chain-sep">›</span>
+                <span class="chain-stage done">Mapped §4.1(b)</span><span class="chain-sep">›</span>
+                <span class="chain-stage done">Transmitted</span><span class="chain-sep">›</span>
+                <span class="chain-stage done">Evidence held</span><span class="chain-sep">›</span>
+                <span class="chain-stage done">Carrier confirmed</span><span class="chain-sep">›</span>
+                <span class="chain-stage silent">Reviewer access unknown</span>
+              </div>
+            </div>
+
+            <div class="cust">
+              <div class="cust-head">
+                <div>
+                  <span class="c-n">MRI addendum · radiologist re-read</span>
+                  <p class="c-s">Never received from the imaging centre — not transmitted</p>
+                </div>
+                <span class="crit crit-supporting">Supporting</span>
+                <span class="chip chip-void">Not sent</span>
+              </div>
+              <div class="chain">
+                <span class="chain-stage silent">Not in chart</span><span class="chain-sep">›</span>
+                <span class="chain-stage">Validated</span><span class="chain-sep">›</span>
+                <span class="chain-stage">Mapped</span><span class="chain-sep">›</span>
+                <span class="chain-stage">Transmitted</span>
+              </div>
+              <p class="meta" style="margin-top:9px">
+                The letter makes no claim about this document's contents. It cannot be disputed as
+                missing from the packet because it was never represented as being in it.
+              </p>
+            </div>
+          </section>
+
+          <!-- ═══ verification notice ═══ -->
+          <section data-od-id="receipt-notice">
+            <div class="panel-head">
+              <div>
+                <h2 class="h2">Receipt-verification notice</h2>
+                <p class="body" style="font-size:.88rem;margin-top:8px">
+                  Sent after each material submission. It names the exact manifest rather than asking
+                  whether records arrived, so a later dispute has something specific to contradict.
+                </p>
+              </div>
+              <span class="chip chip-plain">Sent 2026-09-02</span>
+            </div>
+
+            <div class="panel">
+              <div class="notice">
+                <p class="n-sub">Subject: Confirmation of Records Submitted — Kaminski, Renata — PA-2026-0431</p>
+                <div class="doc-rule" style="background:var(--s3);height:1px;margin:14px 0"></div>
+                <p>
+                  On 2 September 2026, our office transmitted the records listed below in support of
+                  the above authorization request:
+                </p>
+                <p class="n-sub" style="color:var(--fg-2)">[ 11-item document manifest · attached ]</p>
+                <p>
+                  Please notify our office promptly if any listed item was not received, is incomplete
+                  or illegible, or is not available to the physician who will conduct the utilization
+                  review. If we receive no notice identifying a missing or unavailable item, our office
+                  will rely upon this transmission record in proceeding with the authorization and
+                  peer-review process.
+                </p>
+                <p>
+                  If a subsequent adverse determination or peer-review discussion asserts that a listed
+                  record was not available for review, we will compare that assertion with our
+                  transmission documentation and this notice. Material discrepancies in the handling or
+                  availability of submitted clinical information may be referred, when appropriate, to
+                  the governmental or regulatory entity having jurisdiction over the health plan or
+                  utilization-review process.
+                </p>
+                <p>Thank you,<br>Office of Kevin B. James, MD</p>
+              </div>
+            </div>
+
+            <div class="callout cool" style="margin-top:var(--sp-4)">
+              <div class="lbl">Why the wording is careful</div>
+              <p>
+                The notice states what our office will <em>rely on</em>, not what the carrier is deemed
+                to have received. Silence creates a contemporaneous record and an opportunity to
+                object — it does not create a legal presumption, and this office does not assert one.
+              </p>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- ═══ side ═══ -->
+        <aside class="stack" style="gap:var(--sp-4)" data-od-id="receipt-side">
+
+          <div class="callout">
+            <div class="lbl">One critical item disputed</div>
+            <p style="margin-bottom:10px">
+              Physical therapy records are policy-critical under §4.1(c) and the reviewer stated they
+              were not in the file. Transmission evidence contradicts that.
+            </p>
+            <a class="btn btn-secondary btn-sm" href="peer-to-peer.html">Open discrepancy record</a>
+          </div>
+
+          <div class="panel">
+            <p class="eyebrow" style="margin-bottom:var(--sp-3)">Payer communication profile</p>
+            <div class="tw">
+              <table class="ds" style="min-width:0">
+                <tbody>
+                  <tr><td>Submission channel</td><td class="m">Availity portal</td></tr>
+                  <tr><td>Appeal channel</td><td class="m">Separate · verified</td></tr>
+                  <tr><td>Verification route</td><td class="m">Portal message centre</td></tr>
+                  <tr><td>Last verified</td><td class="m">2026-08-29</td></tr>
+                  <tr><td>Regulator</td><td class="m">TDI · Texas</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="meta" style="margin-top:10px">
+              Channels are per-payer and per-purpose. The address that works for an appeal is not
+              necessarily the official medical-record submission route.
+            </p>
+          </div>
+
+          <div class="panel panel-raised">
+            <p class="eyebrow" style="margin-bottom:var(--sp-3)">Package readiness</p>
+            <div class="stack-sm">
+              <div class="row-between" style="gap:8px">
+                <span style="font-size:.84rem;color:var(--fg-2)">Critical items transmitted</span>
+                <span class="num" style="font-size:.84rem;color:var(--ok)">5 / 5</span>
+              </div>
+              <div class="row-between" style="gap:8px">
+                <span style="font-size:.84rem;color:var(--fg-2)">Transmission evidence stored</span>
+                <span class="num" style="font-size:.84rem;color:var(--ok)">11 / 11</span>
+              </div>
+              <div class="row-between" style="gap:8px">
+                <span style="font-size:.84rem;color:var(--fg-2)">Reviewer access unknown</span>
+                <span class="num" style="font-size:.84rem;color:var(--void)">2</span>
+              </div>
+            </div>
+            <p class="meta" style="margin-top:12px">
+              No package is marked ready until every critical item is selected and transmitted with
+              stored evidence.
+            </p>
+          </div>
+
+        </aside>
+      </div>
+
+    </div>
+
+  </main>
+</div>
+
+<div class="drawer-scrim" data-scrim></div>
+<aside class="drawer" data-drawer></aside>
+<nav class="tabbar" data-tabbar aria-label="Primary"></nav>
+
+<script>
+  ASO.shell({
+    step: 'receipt',
+    gatedScreen: true,
+    section: 'cases',
+    title: 'Receipt & custody',
+    depth: 'nested',
+    caseInfo: {
+      patient: 'Kaminski, Renata',
+      caseId: 'PA-2026-0431',
+      payer: 'BCBS TX · PPO',
+      source: 'AdvancedMD · Southlake',
+      deadline: '2026-09-11'
+    }
+  });
+  (function () {
+    var cleared = ASO.gateCleared();
+    document.getElementById('locked-view').hidden = cleared;
+    document.getElementById('receipt-view').hidden = !cleared;
+  })();
+</script>
+</body>
+</html>

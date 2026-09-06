@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{ dark: (localStorage.getItem('aso-theme')||'light')==='dark', toc:false }" :class="dark ? 'dark' : ''">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Document Title — Advanced Spine &amp; Orthopedics</title>
+<link rel="icon" href="aso-favicon.svg" type="image/svg+xml">
+<script>
+  (function(){ if((localStorage.getItem('aso-theme')||'light')==='dark'){ document.documentElement.classList.add('dark'); } })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Mulish:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+<style>
+/* ═══════════════════════════════════════════════════════════
+   ADVANCED SPINE & ORTHOPEDICS — DOCUMENT TEMPLATE v1.0
+   Flat 2.0 · zero border-* properties · surfaces by background only
+   Breakpoints: 860px (collapse TOC) · 540px (compress type/tables)
+   Replace content between <!-- CONTENT START --> and <!-- CONTENT END -->
+   ═══════════════════════════════════════════════════════════ */
+:root{
+  --ember:#DF7C35; --ember-deep:#A85417; --ember-tint:#FBEFE6;
+  --slate:#A7C5D6; --slate-tint:#EDF3F7; --navy:#1F4E79;
+  --graphite:#6E6F71; --ink:#231F20; --bone:#F1EFEC;
+
+  --bg:#FFFFFF; --s1:#F7F6F4; --s2:#F1EFEC; --s3:#E7E4E0; --s-zebra:#FAF9F7;
+  --fg:#231F20; --fg-2:#55565A; --fg-3:#6E6F71;
+  --accent:#A85417; --accent-vivid:#DF7C35; --cool:#1F4E79;
+  --cool-surface:#EDF3F7; --warm-surface:#FBEFE6;
+  --ok:#1E6F4E; --ok-surface:#E7F3EC;
+  --gap:#A85417; --gap-surface:#FBEFE6;
+  --void:#5B5F66; --void-surface:#EFEFF1;
+
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Mulish','Nunito Sans','Segoe UI',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  --r:5px; --measure:74ch;
+}
+html.dark{
+  --ember:#F0955A; --ember-deep:#F0955A; --ember-tint:#2E2119;
+  --slate:#8FB9D0; --slate-tint:#182430; --navy:#8FB9D0;
+  --graphite:#98A2AA; --ink:#EDF0F2; --bone:#1C2126;
+
+  --bg:#14181C; --s1:#1C2126; --s2:#252B31; --s3:#2E353C; --s-zebra:#191E23;
+  --fg:#EDF0F2; --fg-2:#B4BFC7; --fg-3:#93A0A9;
+  --accent:#F0955A; --accent-vivid:#F0955A; --cool:#8FB9D0;
+  --cool-surface:#182430; --warm-surface:#2E2119;
+  --ok:#6FD1A0; --ok-surface:#152620;
+  --gap:#F0955A; --gap-surface:#2E2119;
+  --void:#A9B3BB; --void-surface:#232830;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+.shell{display:grid;grid-template-columns:250px 1fr;max-width:1360px;margin:0 auto}
+
+/* ── SIDEBAR / TOC ─────────────────────────────────── */
+.side{background:var(--s1);padding:2.2rem 1.4rem;position:sticky;top:0;height:100vh;overflow-y:auto}
+.side-brand{display:flex;align-items:center;gap:.7rem;margin-bottom:1.6rem}
+.side-brand .ic{width:34px;height:34px;flex-shrink:0}
+.side-brand .ic svg{width:100%;height:100%;display:block}
+.side-mark{flex:1;min-width:0}
+.side-mark svg{width:100%;max-width:150px;height:auto;display:block}
+/* inline mark, for headers and letterhead blocks */
+.mark-inline{display:flex;align-items:center;gap:.65rem}
+.mark-inline svg{width:30px;height:30px;flex-shrink:0}
+.mark-inline .mi-t{font-size:.86rem;font-weight:700;color:var(--fg);line-height:1.3}
+.mark-inline .mi-s{font-family:var(--mono);font-size:.58rem;letter-spacing:.13em;text-transform:uppercase;color:var(--fg-3)}
+.side h4{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;color:var(--fg-3);text-transform:uppercase;margin:1.4rem 0 .5rem}
+.side a{display:block;color:var(--fg-2);text-decoration:none;font-size:.83rem;padding:.32rem .55rem;border-radius:3px}
+.side a:hover{background:var(--s2);color:var(--accent)}
+
+/* ── LAYOUT ────────────────────────────────────────── */
+main{padding:3rem 3.2rem 6rem;min-width:0}
+.topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap;margin-bottom:2.6rem}
+.ctrl{display:flex;gap:.5rem;flex-wrap:wrap}
+.toggle,.tocbtn{font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;background:var(--s2);color:var(--fg-2);padding:.55rem .9rem;border:none;border-radius:3px;cursor:pointer}
+.toggle:hover,.tocbtn:hover{background:var(--s3);color:var(--accent)}
+.tocbtn{display:none}
+
+/* ── TYPE ──────────────────────────────────────────── */
+.eyebrow{font-family:var(--mono);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--fg-3);margin-bottom:.7rem}
+h1{font-family:var(--serif);font-size:2.9rem;line-height:1.1;font-weight:600;letter-spacing:-.015em;margin-bottom:.7rem}
+h2{font-family:var(--serif);font-size:1.85rem;font-weight:600;margin:3.4rem 0 1rem;padding-top:1.6rem;background:linear-gradient(var(--s3),var(--s3)) top left / 60px 2px no-repeat}
+h3{font-size:1.05rem;font-weight:700;margin:2rem 0 .6rem}
+h4{font-size:.9rem;font-weight:700;margin:1.4rem 0 .4rem;color:var(--fg)}
+p{color:var(--fg-2);margin-bottom:1rem;max-width:var(--measure)}
+.lead{font-size:1.1rem;color:var(--fg-2);max-width:70ch}
+strong{color:var(--fg);font-weight:600}
+em{font-style:italic}
+a{color:var(--accent)}
+code{font-family:var(--mono);font-size:.82em;background:var(--s2);color:var(--accent);padding:.12em .4em;border-radius:3px}
+ul.doc,ol.doc{max-width:var(--measure);color:var(--fg-2);margin:0 0 1.1rem 0;list-style:none}
+ul.doc li,ol.doc li{padding-left:1.25rem;position:relative;margin-bottom:.45rem}
+ul.doc li::before{content:'—';position:absolute;left:0;color:var(--fg-3)}
+ol.doc{counter-reset:n}
+ol.doc li{counter-increment:n}
+ol.doc li::before{content:counter(n)'.';position:absolute;left:0;font-family:var(--mono);font-size:.8rem;color:var(--accent)}
+
+/* ── META STRIP ────────────────────────────────────── */
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.1rem;background:var(--s1);border-radius:var(--r);overflow:hidden;margin:1.6rem 0 2.4rem}
+.meta div{padding:.9rem 1.1rem;background:var(--s1)}
+.meta .k{font-family:var(--mono);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--fg-3);margin-bottom:.25rem}
+.meta .v{font-size:.86rem;color:var(--fg);font-weight:600}
+
+/* ── PANELS & CALLOUTS ─────────────────────────────── */
+.panel{background:var(--s1);border-radius:var(--r);padding:1.6rem 1.7rem;margin:1.4rem 0}
+.callout{border-radius:var(--r);padding:1.2rem 1.4rem;margin:1.4rem 0;background:var(--warm-surface)}
+.callout.cool{background:var(--cool-surface)}
+.callout .lbl{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:.45rem}
+.callout.cool .lbl{color:var(--cool)}
+.callout p{margin:0;color:var(--fg-2)}
+
+/* ── TABLES ────────────────────────────────────────── */
+.tw{overflow-x:auto;margin:1.3rem 0;border-radius:var(--r)}
+table{width:100%;border-collapse:collapse;font-size:.87rem;min-width:560px}
+thead th{background:var(--s3);text-align:left;padding:.72rem .9rem;font-family:var(--mono);font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;color:var(--fg-2);font-weight:500}
+tbody td{padding:.66rem .9rem;color:var(--fg-2);vertical-align:top}
+tbody tr:nth-child(odd){background:var(--s-zebra)}
+tbody tr:nth-child(even){background:var(--s1)}
+td.m{font-family:var(--mono);font-size:.78rem;color:var(--fg)}
+
+/* ── STATUS CHIPS (clinical semantics) ─────────────── */
+.chip{display:inline-block;font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;padding:.22em .6em;border-radius:3px}
+.chip-ok{background:var(--ok-surface);color:var(--ok)}
+.chip-gap{background:var(--gap-surface);color:var(--gap)}
+.chip-void{background:var(--void-surface);color:var(--void)}
+.cite{font-family:var(--mono);font-size:.74rem;color:var(--fg-3);background:var(--s2);padding:.2em .5em;border-radius:3px;display:inline-block}
+
+/* ── CARDS ─────────────────────────────────────────── */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:.9rem;margin:1.3rem 0}
+.card{background:var(--s1);border-radius:var(--r);padding:1.2rem 1.3rem}
+.card .ct{font-size:.95rem;font-weight:700;color:var(--fg);margin-bottom:.4rem}
+.card .cd{font-size:.83rem;color:var(--fg-2);line-height:1.55}
+
+/* ── BUTTONS ───────────────────────────────────────── */
+.btn{font-family:var(--sans);font-size:.85rem;font-weight:600;padding:.6rem 1.3rem;border:none;border-radius:3px;cursor:pointer}
+.btn-p{background:var(--accent-vivid);color:#fff}
+.btn-s{background:var(--s3);color:var(--fg)}
+
+footer{margin-top:4.5rem;padding-top:1.6rem;background:linear-gradient(var(--s3),var(--s3)) top left / 100% 1px no-repeat;font-family:var(--mono);font-size:.66rem;color:var(--fg-3);letter-spacing:.05em;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+
+/* ── RESPONSIVE ────────────────────────────────────── */
+@media (max-width:860px){
+  .shell{grid-template-columns:1fr}
+  .side{position:static;height:auto;display:none;padding:1.4rem}
+  .side.open{display:block}
+  .tocbtn{display:inline-block}
+  main{padding:1.8rem 1.4rem 4rem}
+  h1{font-size:2.1rem}
+}
+@media (max-width:540px){
+  body{font-size:15px}
+  h1{font-size:1.75rem} h2{font-size:1.4rem} .lead{font-size:1rem}
+  main{padding:1.4rem 1rem 3rem}
+  .panel,.callout,.card{padding:1.1rem 1rem}
+  thead th,tbody td{padding:.5rem .6rem;font-size:.8rem}
+}
+@media print{
+  .side,.ctrl{display:none}
+  .shell{grid-template-columns:1fr}
+  body{background:#fff;color:#231F20}
+  main{padding:0}
+}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+<!-- ══ SYMBOL LIBRARY · reference with <use href="#mk-adaptive"/> ══ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <g id="mk-adaptive"><g transform="rotate(-13 256 256) translate(0 18)">
+    <path d="M80 250C172 186 300 154 432 162C306 126 176 148 80 208C64 218 64 240 80 250Z" fill="var(--graphite)"/>
+    <path d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z" fill="var(--ember)"/>
+  </g></g>
+  <g id="mk-mono"><g transform="rotate(-13 256 256) translate(0 18)" fill="currentColor">
+    <path d="M80 250C172 186 300 154 432 162C306 126 176 148 80 208C64 218 64 240 80 250Z"/>
+    <path d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z"/>
+  </g></g>
+</defs></svg>
+
+<aside class="side" :class="toc && 'open'">
+  <div class="side-brand">
+  <div class="ic"><svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#mk-adaptive"/></svg></div>
+  <div class="side-mark">
+    <svg viewBox="0 0 430 128" xmlns="http://www.w3.org/2000/svg" aria-label="Advanced Spine and Orthopedics">
+      <text x="12" y="70" font-family="Mulish, sans-serif" font-size="58" font-weight="600" letter-spacing="2" textLength="404" lengthAdjust="spacing" fill="var(--graphite)">ADVANCED</text>
+      <path d="M10 74 C 76 34, 192 24, 288 36 C 348 44, 390 55, 420 65 C 388 51, 346 37, 286 29 C 190 17, 72 33, 10 66 Z" fill="var(--ember)"/>
+      <text x="14" y="112" font-family="Mulish, sans-serif" font-size="33" textLength="400" lengthAdjust="spacing" fill="var(--ink)">Spine &amp; Orthopedics</text>
+    </svg>
+  </div>
+  </div>
+  <!-- TOC START -->
+  <h4>Contents</h4>
+  <a href="#s1">Section One</a>
+  <a href="#s2">Section Two</a>
+  <a href="#s3">Component Reference</a>
+  <!-- TOC END -->
+</aside>
+
+<main>
+
+<div class="topbar">
+  <div>
+    <!-- CONTENT START -->
+    <div class="eyebrow">Document Type · Reference · 2026</div>
+    <h1>Document Title</h1>
+    <p class="lead">One-sentence statement of what this document establishes and who it is for.</p>
+  </div>
+  <div class="ctrl">
+    <button class="tocbtn" @click="toc = !toc">Contents</button>
+    <button class="toggle" @click="dark = !dark; localStorage.setItem('aso-theme', dark ? 'dark':'light')" x-text="dark ? 'Light' : 'Dark'">Dark</button>
+  </div>
+</div>
+
+<div class="meta">
+  <div><div class="k">Document ID</div><div class="v">ASO-DOC-001</div></div>
+  <div><div class="k">Status</div><div class="v">Draft</div></div>
+  <div><div class="k">Owner</div><div class="v">Kevin James, MD</div></div>
+  <div><div class="k">Revised</div><div class="v">2026-08-18</div></div>
+</div>
+
+<h2 id="s1">Section One</h2>
+<p>Body prose sits at a maximum 74-character measure. State the position first, then the mechanism, then what is at stake. Avoid preamble.</p>
+
+<div class="callout">
+  <div class="lbl">Attention</div>
+  <p>Warm callout. Reserved for something the reader must act on.</p>
+</div>
+
+<div class="callout cool">
+  <div class="lbl">Reference</div>
+  <p>Cool callout. Policy language, context, background — informs but does not demand.</p>
+</div>
+
+<h3>Subsection</h3>
+<ul class="doc">
+  <li>Unordered list item.</li>
+  <li>Second item.</li>
+</ul>
+
+<ol class="doc">
+  <li>Ordered step.</li>
+  <li>Second step.</li>
+</ol>
+
+<h2 id="s2">Section Two</h2>
+
+<div class="tw">
+<table>
+  <thead><tr><th>Criterion</th><th>Required</th><th>Documented</th><th>Status</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Supervised physical therapy</td><td class="m">12 weeks</td><td class="m">14 weeks</td><td><span class="chip chip-ok">Met</span></td><td class="m">PT-0219 p.2</td></tr>
+    <tr><td>Injection trial</td><td class="m">≥1 ESI</td><td class="m">0</td><td><span class="chip chip-gap">Not met</span></td><td class="m">—</td></tr>
+    <tr><td>Psychological clearance</td><td class="m">Required</td><td class="m">No record</td><td><span class="chip chip-void">Not documented</span></td><td class="m">—</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="cards">
+  <div class="card"><div class="ct">Card Title</div><div class="cd">Short supporting description, two lines at most.</div></div>
+  <div class="card"><div class="ct">Card Title</div><div class="cd">Short supporting description, two lines at most.</div></div>
+  <div class="card"><div class="ct">Card Title</div><div class="cd">Short supporting description, two lines at most.</div></div>
+</div>
+
+<h2 id="s3">Component Reference</h2>
+
+<h3>Cited assertion</h3>
+<p>Flexion-extension radiographs demonstrate 6mm of translation at L4–L5. <span class="cite">RAD-1180 · p.1 · 2026-01-08</span></p>
+
+<h3>Inline mark</h3>
+<p>For document headers, letterhead blocks, and anywhere the practice needs to be identified without the full lockup. Uses <code>&lt;use href="#mk-adaptive"/&gt;</code> from the symbol library at the top of the body.</p>
+<div class="panel">
+  <div class="mark-inline">
+    <svg viewBox="0 0 512 512"><use href="#mk-adaptive"/></svg>
+    <div>
+      <div class="mi-t">Advanced Spine &amp; Orthopedics</div>
+      <div class="mi-s">261 W Southlake Blvd · Southlake, TX 76092</div>
+    </div>
+  </div>
+</div>
+
+<h3>Panel</h3>
+<div class="panel">
+  <h3 style="margin-top:0">Panel heading</h3>
+  <p style="margin-bottom:0">A neutral container one surface step above the canvas. No border.</p>
+</div>
+
+<h3>Actions</h3>
+<p style="margin-bottom:.8rem"><button class="btn btn-p">Primary</button> <button class="btn btn-s">Secondary</button></p>
+
+<footer>
+  <span>Advanced Spine &amp; Orthopedics</span>
+  <span>ASO-DOC-001 · v1.0</span>
+</footer>
+<!-- CONTENT END -->
+
+</main>
+</div>
+</body>
+</html>

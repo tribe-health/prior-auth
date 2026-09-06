@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Profile &amp; signature · Settings · Advanced Spine &amp; Orthopedics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Mulish:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/aso.css">
+<script src="../assets/shell.js"></script>
+<script>ASO.primeTheme();</script>
+<style>
+  /* ═══ Screen-local styles.
+     Tokens come from aso.css; nothing here introduces a new palette
+     value or a border, per the brand guide's surface-ramp rule. ═══ */
+
+  /* ── identity: read-only is a state, not a disguise ──────────────
+     These four fields come from the practice directory and cannot be
+     edited here. Styling them like live inputs invites typing that
+     silently does nothing, so they read as inset plates instead. */
+  .ro-field {
+    background: var(--s2);
+    border-radius: var(--r);
+    padding: 9px 12px;
+    font-size: var(--fs-ui);
+    color: var(--fg);
+    min-height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-3);
+  }
+  .ro-field .ro-lock {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+    flex-shrink: 0;
+  }
+  .ro-field .ro-v { min-width: 0; overflow-wrap: anywhere; }
+
+  /* ── signature plate ─────────────────────────────────────────── */
+  .sig-store {
+    background: var(--s2);
+    border-radius: var(--r-lg);
+    padding: var(--sp-5);
+  }
+  .sig-plate {
+    background: var(--bg);
+    border-radius: var(--r);
+    padding: var(--sp-4) var(--sp-5);
+    margin-top: var(--sp-4);
+  }
+  .sig-mark {
+    font-family: var(--font-display);
+    font-size: 1.65rem; font-style: italic;
+    color: var(--ink); line-height: 1.2;
+  }
+  html.dark .sig-mark { color: var(--fg); }
+  .sig-rule { height: 1px; background: var(--s3); margin: 10px 0 8px; }
+  /* Was --fs-meta (0.78rem) at --fg-3, which fell under the 4.5:1 floor
+     for the credential lines. Bumped one step and to --fg-2. */
+  .sig-plate .sig-line {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    color: var(--fg-2);
+    line-height: 1.7;
+  }
+
+  /* ── notification preferences ────────────────────────────────── */
+  .prefs { display: grid; gap: var(--sp-3); }
+  .pref {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--sp-4);
+    align-items: center;
+    background: var(--s1);
+    border-radius: var(--r);
+    padding: var(--sp-3) var(--sp-4);
+    transition: background var(--dur-exit) var(--ease);
+  }
+  .pref:has(.switch:focus-visible) { background: var(--s2); }
+  .pref .pf-t { font-size: 0.88rem; font-weight: 600; }
+  .pref .pf-d { font-size: 0.82rem; color: var(--fg-2); margin-top: 3px; line-height: 1.5; max-width: 64ch; }
+
+  /* The switch is the only interactive control on this screen, so it
+     carries the whole accessibility burden:
+       · 44px hit area (WCAG 2.5.5 AAA; 2.5.8 AA floor is 24px)
+       · visible :focus-visible ring
+       · state carried by POSITION + a text label, never colour alone */
+  .switch {
+    /* 44px target achieved with padding; the visual track stays 40×23. */
+    width: 44px; height: 44px;
+    padding: 10px 2px;
+    background: none;
+    position: relative;
+    flex-shrink: 0;
+    border-radius: var(--r);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+  }
+  .switch .sw-track {
+    display: block;
+    width: 40px; height: 23px;
+    border-radius: 999px;
+    background: var(--s3);
+    position: relative;
+    transition: background var(--dur-exit) var(--ease);
+  }
+  .switch .sw-track::after {
+    content: '';
+    position: absolute; top: 3px; left: 3px;
+    width: 17px; height: 17px;
+    border-radius: 999px;
+    background: var(--bg);
+    transition: transform var(--dur-enter) var(--ease);
+  }
+  .switch[aria-checked='true'] .sw-track { background: var(--ember); }
+  .switch[aria-checked='true'] .sw-track::after { transform: translateX(17px); }
+  .switch:hover .sw-track { background: var(--void); }
+  .switch[aria-checked='true']:hover .sw-track { background: var(--ember-hover); }
+  .switch:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  /* Redundant text state — colour is reinforcement, not the signal. */
+  .pref-state {
+    display: flex; align-items: center; gap: var(--sp-3);
+  }
+  .pref-state .sw-label {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+    min-width: 24px;
+    text-align: right;
+  }
+  .switch[aria-checked='true'] ~ .sw-label { color: var(--accent); }
+
+  /* ── loading skeleton ────────────────────────────────────────────
+     The session resolves in script, so the identity block would flash
+     empty placeholders. Shimmer holds the layout instead. */
+  .sk {
+    background: linear-gradient(90deg, var(--s2) 25%, var(--s3) 50%, var(--s2) 75%);
+    background-size: 200% 100%;
+    border-radius: var(--r);
+    color: transparent !important;
+    animation: sk-pan 1.4s linear infinite;
+  }
+  @keyframes sk-pan { to { background-position: -200% 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    .sk { animation: none; background: var(--s2); }
+  }
+
+  @media (max-width: 560px) {
+    .pref { grid-template-columns: minmax(0, 1fr); gap: var(--sp-3); }
+    .pref-state { justify-content: flex-start; }
+    .pref-state .sw-label { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar" data-topbar></div>
+
+<div class="app app-nocontext">
+  <aside class="gnav" data-gnav></aside>
+
+  <main class="workbench workbench-wide" id="content">
+
+    <div data-whoami></div>
+
+    <section class="phead" data-od-id="profile-head">
+      <div>
+        <p class="eyebrow">Settings · Profile</p>
+        <h1 class="display" id="profile-title">Your account</h1>
+        <p class="lead" id="profile-lead">Identity, credentials, and what this account is permitted to do.</p>
+      </div>
+    </section>
+
+    <div class="set-grid">
+
+      <nav class="set-nav" aria-label="Settings sections" data-od-id="profile-nav">
+        <a href="settings-integrations.html">EMR connections</a>
+        <a href="settings-profile.html" aria-current="page">Profile &amp; signature</a>
+        <a href="admin-console.html" data-admin-only hidden>Users &amp; roles</a>
+        <a href="admin-console.html" data-admin-only hidden>Audit log</a>
+      </nav>
+
+      <div class="stack" style="gap:var(--sp-6)">
+
+        <!-- ═══ identity ═══ -->
+        <section data-od-id="profile-identity">
+          <div class="panel-head"><h2 class="h2">Identity</h2></div>
+          <div class="panel">
+            <dl class="g2" style="margin:0">
+              <div class="field">
+                <dt><label id="lbl-name">Name</label></dt>
+                <dd class="ro-field" style="margin:0" aria-labelledby="lbl-name">
+                  <span class="ro-v sk" id="p-name">Loading</span>
+                  <span class="ro-lock">Directory</span>
+                </dd>
+              </div>
+              <div class="field">
+                <dt><label id="lbl-email">Work email</label></dt>
+                <dd class="ro-field" style="margin:0" aria-labelledby="lbl-email">
+                  <span class="ro-v sk" id="p-email">Loading</span>
+                  <span class="ro-lock">Directory</span>
+                </dd>
+              </div>
+              <div class="field">
+                <dt><label id="lbl-role">Role</label></dt>
+                <dd class="ro-field" style="margin:0" aria-labelledby="lbl-role">
+                  <span class="ro-v sk" id="p-role">Loading</span>
+                  <span class="ro-lock">Directory</span>
+                </dd>
+              </div>
+              <div class="field">
+                <dt><label id="lbl-practice">Primary practice</label></dt>
+                <dd class="ro-field" style="margin:0" aria-labelledby="lbl-practice">
+                  <span class="ro-v">Advanced Spine &amp; Orthopedics · Southlake</span>
+                  <span class="ro-lock">Directory</span>
+                </dd>
+              </div>
+            </dl>
+            <p class="meta" style="margin-top:var(--sp-4)">
+              Name, email and role come from the practice directory. Changing a role is an
+              administrator action recorded in the audit log — it is not a personal setting.
+            </p>
+          </div>
+        </section>
+
+        <!-- ═══ permissions, made legible ═══ -->
+        <section data-od-id="profile-permissions">
+          <div class="panel-head"><h2 class="h2">What this account can do</h2></div>
+          <div class="tw">
+            <table class="ds">
+              <caption class="vh">Capabilities for this account, with permitted status</caption>
+              <thead><tr><th scope="col">Capability</th><th scope="col">Why it matters</th><th scope="col">Status</th></tr></thead>
+              <tbody id="perm-rows"></tbody>
+            </table>
+          </div>
+          <p class="meta" style="margin-top:12px" id="perm-summary"></p>
+        </section>
+
+        <!-- ═══ signature · surgeon only ═══ -->
+        <section id="sig-section" data-od-id="profile-signature">
+          <div class="panel-head">
+            <div>
+              <h2 class="h2">Electronic signature</h2>
+              <p class="body" style="font-size:.88rem;margin-top:8px">
+                Applied to a letter only after you have read and approved it. It is never attached to
+                a draft, and no other account can apply it on your behalf.
+              </p>
+            </div>
+            <span class="chip chip-met">On file</span>
+          </div>
+
+          <div class="sig-store">
+            <div class="sig-plate">
+              <div class="sig-mark sk" id="sig-name">Loading</div>
+              <div class="sig-rule" style="max-width:280px"></div>
+              <p class="sig-line" id="sig-full">&nbsp;</p>
+              <p class="sig-line">Advanced Spine &amp; Orthopedics · TX license [on file]</p>
+              <p class="sig-line">NPI [on file] · uploaded 2026-01-08</p>
+            </div>
+            <div class="row" style="gap:10px;margin-top:var(--sp-4)">
+              <button class="btn btn-secondary btn-sm" data-disclose="sig-replace"
+                      data-label-open="Cancel" data-label-closed="Replace signature">
+                <span data-disclose-label>Replace signature</span>
+              </button>
+              <button class="btn btn-quiet btn-sm" data-disclose="sig-history"
+                      data-label-open="Hide history" data-label-closed="View application history">
+                <span data-disclose-label>View application history</span>
+              </button>
+            </div>
+
+            <!-- Replace-signature flow. A destructive-ish action on a
+                 clinical credential, so it states the consequence and
+                 requires an explicit confirm rather than firing on click. -->
+            <div class="acc" id="sig-replace"><div class="acc-in">
+              <div class="callout" style="margin-top:var(--sp-4)">
+                <div class="lbl">Replacing a signature is audited</div>
+                <p style="margin-bottom:var(--sp-3)">
+                  The current signature stays in force on every letter already signed with it.
+                  A replacement applies only to letters signed from the moment you confirm, and
+                  both the old and new assets are retained for the audit record.
+                </p>
+                <div class="field" style="max-width:360px">
+                  <label for="sig-upload">New signature image</label>
+                  <input class="input" type="file" id="sig-upload" accept="image/png,image/svg+xml">
+                </div>
+                <div class="row" style="gap:10px;margin-top:var(--sp-4)">
+                  <button class="btn btn-secondary btn-sm" id="sig-confirm">Confirm replacement</button>
+                  <span class="meta" id="sig-confirm-note">PNG or SVG · transparent background</span>
+                </div>
+              </div>
+            </div></div>
+
+            <!-- Application history. Every use of the signature, which is
+                 what makes "audited" a checkable claim rather than a promise. -->
+            <div class="acc" id="sig-history"><div class="acc-in">
+              <div class="panel" style="margin-top:var(--sp-4)">
+                <p class="eyebrow" style="margin-bottom:var(--sp-3)">Signature applications · last 30 days</p>
+                <div class="tw">
+                  <table class="ds" style="min-width:0">
+                    <thead><tr><th>Applied</th><th>Case</th><th>Letter version</th></tr></thead>
+                    <tbody>
+                      <tr><td class="m">2026-09-03 16:22</td><td>PA-2026-0428 · Idris, H.</td><td class="m">v1 · §4.1</td></tr>
+                      <tr><td class="m">2026-08-29 11:04</td><td>PA-2026-0419 · Ruiz-Okonkwo, P.</td><td class="m">v1 · §3.2</td></tr>
+                      <tr><td class="m">2026-08-21 09:37</td><td>PA-2026-0402 · Vance, T.</td><td class="m">v2 · §4.1</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+                <p class="meta" style="margin-top:12px">
+                  Three applications. Each row links the case, the exact letter version signed, and
+                  the timestamp written to the audit log.
+                </p>
+              </div>
+            </div></div>
+          </div>
+
+          <div class="callout cool" style="margin-top:var(--sp-3)">
+            <div class="lbl">Where it is stored</div>
+            <p>
+              Encrypted at rest and released only to a signing action you initiate in an authenticated
+              session. Every application is written to the audit log with the case, the letter version,
+              and the timestamp.
+            </p>
+          </div>
+        </section>
+
+        <!-- ═══ signature · non-surgeon ═══ -->
+        <section id="sig-denied" hidden data-od-id="profile-signature-denied">
+          <div class="panel-head"><h2 class="h2">Electronic signature</h2></div>
+          <div class="denied">
+            <div class="lbl">Not applicable to this role</div>
+            <p>
+              Only a treating physician holds a signature in this system. A medical-necessity letter is
+              a clinical attestation, so it cannot be signed by a coordinator or an administrator —
+              including on a surgeon's instruction. If a letter needs to go out, it needs the surgeon.
+            </p>
+          </div>
+        </section>
+
+        <!-- ═══ notifications ═══ -->
+        <section data-od-id="profile-prefs">
+          <div class="panel-head"><h2 class="h2">Notifications</h2></div>
+          <div class="prefs">
+            <div class="pref">
+              <div>
+                <p class="pf-t" id="pref-gate-t">Case awaiting affirmation</p>
+                <p class="pf-d" id="pref-gate-d">A pathway is ranked and the chart is assembled, but the gate is unconfirmed.</p>
+              </div>
+              <div class="pref-state">
+                <button class="switch" role="switch" aria-checked="true" aria-label="Case awaiting affirmation">
+                  <span class="sw-track"></span>
+                </button>
+                <span class="sw-label">On</span>
+              </div>
+            </div>
+            <div class="pref">
+              <div>
+                <p class="pf-t">Statutory deadline within 48 hours</p>
+                <p class="pf-d">A determination clock is about to expire on a submitted case.</p>
+              </div>
+              <div class="pref-state">
+                <button class="switch" role="switch" aria-checked="true" aria-label="Deadline warning">
+                  <span class="sw-track"></span>
+                </button>
+                <span class="sw-label">On</span>
+              </div>
+            </div>
+            <div class="pref">
+              <div>
+                <p class="pf-t">EMR connection stopped pulling</p>
+                <p class="pf-d">A system went quiet — cases may be missing rather than absent.</p>
+              </div>
+              <div class="pref-state">
+                <button class="switch" role="switch" aria-checked="true" aria-label="Connection failure">
+                  <span class="sw-track"></span>
+                </button>
+                <span class="sw-label">On</span>
+              </div>
+            </div>
+            <div class="pref">
+              <div>
+                <p class="pf-t">Reviewer disputed a transmitted document</p>
+                <p class="pf-d">A payer says something is missing that our record shows we sent.</p>
+              </div>
+              <div class="pref-state">
+                <button class="switch" role="switch" aria-checked="true" aria-label="Receipt dispute">
+                  <span class="sw-track"></span>
+                </button>
+                <span class="sw-label">On</span>
+              </div>
+            </div>
+            <div class="pref">
+              <div>
+                <p class="pf-t">Weekly approval-rate summary</p>
+                <p class="pf-d">Determinations by payer and pathway. Digest, not per-event.</p>
+              </div>
+              <div class="pref-state">
+                <button class="switch" role="switch" aria-checked="false" aria-label="Weekly summary">
+                  <span class="sw-track"></span>
+                </button>
+                <span class="sw-label">Off</span>
+              </div>
+            </div>
+          </div>
+          <p class="meta" style="margin-top:var(--sp-3)">
+            Notifications never contain clinical detail. They name the case and the action needed.
+          </p>
+        </section>
+
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<div class="drawer-scrim" data-scrim></div>
+<aside class="drawer" data-drawer></aside>
+<nav class="tabbar" data-tabbar aria-label="Primary"></nav>
+
+<script>
+  ASO.shell({ section: 'settings', title: 'Profile', depth: 'nested' });
+
+  ASO.bindDisclosure();
+
+  (function () {
+    var p = ASO.profile();
+
+    /* No session — state it instead of rendering a page of em-dashes.
+       requireSession() normally adopts a persona, so this is a genuine
+       edge (storage blocked mid-session), not a routine path. */
+    if (!p) {
+      var main = document.getElementById('content');
+      var err = document.createElement('div');
+      err.className = 'denied';
+      err.style.marginBottom = 'var(--sp-5)';
+      err.innerHTML =
+        '<div class="lbl">No active session</div>' +
+        '<p>This account could not be resolved, so identity, permissions and ' +
+        'signature are all unavailable. Sign in again to continue.</p>' +
+        '<div class="row" style="margin-top:var(--sp-4)">' +
+        '<a class="btn btn-secondary btn-sm" href="login.html">Go to sign in</a></div>';
+      main.insertBefore(err, main.firstChild.nextSibling);
+      document.querySelectorAll('.sk').forEach(function (el) {
+        el.classList.remove('sk');
+        el.textContent = 'Unavailable';
+      });
+      return;
+    }
+
+    /* Fields resolved — drop the skeletons and write real values. The
+       identity fields are read-only plates, so this is textContent, not
+       .value; assigning .value to a <span> fails silently. */
+    function fill(id, text) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.classList.remove('sk');
+      el.textContent = text;
+    }
+
+    /* Signature block follows the session, not a hardcoded name. */
+    var sigName = document.getElementById('sig-name');
+    var sigFull = document.getElementById('sig-full');
+    if (sigName && sigFull) {
+      /* Display form drops the credential suffix: a signature reads
+         "Kevin James", the printed block reads "Kevin B. James, MD". */
+      sigName.classList.remove('sk');
+      sigName.textContent = p.person.replace(/,.*$/, '').replace(/\s+[A-Z]\.\s+/, ' ');
+      sigFull.textContent = p.person;
+    }
+
+    fill('p-name', p.person);
+    fill('p-email', p.email);
+    fill('p-role', p.label);
+    document.getElementById('profile-title').textContent = p.person;
+
+    document.querySelectorAll('[data-admin-only]').forEach(function (el) {
+      el.hidden = !ASO.can('configure');
+    });
+
+    /* The signature section is the clearest expression of the role
+       boundary, so it is shown as a stated limit rather than removed. */
+    var isSurgeon = ASO.can('sign');
+    document.getElementById('sig-section').hidden = !isSurgeon;
+    document.getElementById('sig-denied').hidden = isSurgeon;
+
+    var PERMS = [
+      ['Configure EMR connections', 'A wrong connection silently stops cases arriving.', 'configure'],
+      ['Affirm the surgeon gate', 'Selects the policy pathway a letter is built around.', 'affirmGate'],
+      ['Apply an electronic signature', 'Attests to medical necessity as the treating physician.', 'sign'],
+      ['Annotate clinical evidence', 'Adds surgeon opinion the chart does not contain.', 'annotate'],
+      ['Submit a packet to a payer', 'Transmits the record and starts the determination clock.', 'submit']
+    ];
+
+    document.getElementById('perm-rows').innerHTML = PERMS.map(function (row) {
+      var allowed = ASO.can(row[2]);
+      return '<tr>' +
+        '<td><strong>' + row[0] + '</strong></td>' +
+        '<td>' + row[1] + '</td>' +
+        '<td><span class="chip ' + (allowed ? 'chip-met' : 'chip-void') + '">' +
+          (allowed ? 'Permitted' : 'Not permitted') + '</span></td>' +
+      '</tr>';
+    }).join('');
+
+    /* This alert means different things per role: the surgeon is being
+       asked to decide; everyone else is being told they are blocked. */
+    var gt = document.getElementById('pref-gate-t');
+    var gd = document.getElementById('pref-gate-d');
+    if (gt && gd) {
+      if (ASO.can('affirmGate')) {
+        gt.textContent = 'Case awaiting my affirmation';
+        gd.textContent = 'A pathway is ranked and the chart is assembled, but the gate is unconfirmed.';
+      } else {
+        gt.textContent = 'Case blocked on a surgeon';
+        gd.textContent = 'You have prepared everything you can; the case now needs the surgeon to affirm.';
+      }
+    }
+
+    var allowedCount = PERMS.filter(function (r) { return ASO.can(r[2]); }).length;
+    var summary = document.getElementById('perm-summary');
+    if (summary) {
+      summary.textContent = allowedCount + ' of ' + PERMS.length +
+        ' capabilities permitted for this role. Clinical authority is assigned by an ' +
+        'administrator and recorded in the audit log.';
+    }
+
+    /* Replace-signature confirm. Requires a chosen file, then reports what
+       actually happened rather than silently closing. */
+    var confirmBtn = document.getElementById('sig-confirm');
+    if (confirmBtn) {
+      confirmBtn.addEventListener('click', function () {
+        var upload = document.getElementById('sig-upload');
+        var note = document.getElementById('sig-confirm-note');
+        if (!upload || !upload.files || !upload.files.length) {
+          note.textContent = 'Choose a PNG or SVG first.';
+          note.style.color = 'var(--gap)';
+          upload.focus();
+          return;
+        }
+        confirmBtn.disabled = true;
+        confirmBtn.textContent = 'Replaced';
+        note.textContent = 'Recorded ' + new Date().toISOString().slice(0, 10) +
+          ' · previous signature retained for audit';
+        note.style.color = 'var(--ok)';
+      });
+    }
+
+    /* Toggle flips aria-checked AND the adjacent text label, so the
+       state is never carried by colour alone. */
+    document.querySelectorAll('.switch').forEach(function (sw) {
+      sw.addEventListener('click', function () {
+        var on = sw.getAttribute('aria-checked') !== 'true';
+        sw.setAttribute('aria-checked', on ? 'true' : 'false');
+        var lbl = sw.parentElement && sw.parentElement.querySelector('.sw-label');
+        if (lbl) lbl.textContent = on ? 'On' : 'Off';
+      });
+    });
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Technology · Surgery Authorization Workbench · Advanced Spine &amp; Orthopedics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Mulish:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/aso.css">
+<script src="../assets/shell.js"></script>
+<script>ASO.primeTheme();</script>
+<style>
+  /* Screen-local only; shared doc vocabulary lives in aso.css. */
+
+  /* Component roster */
+  .comps { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: var(--sp-4); }
+  @media (max-width: 900px) { .comps { grid-template-columns: minmax(0,1fr); } }
+  .comp { background: var(--s1); border-radius: var(--r-lg); padding: var(--sp-5); }
+  .comp .cp-h {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: var(--sp-3); flex-wrap: wrap; margin-bottom: 7px;
+  }
+  .comp .cp-n { font-family: var(--font-mono); font-size: 0.95rem; font-weight: 500; }
+  .comp .cp-r {
+    font-family: var(--font-mono); font-size: 0.58rem;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3);
+  }
+  .comp .cp-d { font-size: 0.85rem; color: var(--fg-2); line-height: 1.6; }
+  .comp .cp-d + .cp-d { margin-top: var(--sp-3); }
+  .comp .cp-d strong { color: var(--fg); font-weight: 600; }
+
+  /* Fact rows inside a component card */
+  .facts { margin-top: var(--sp-4); display: flex; flex-direction: column; }
+  .fact {
+    display: grid; grid-template-columns: 82px minmax(0,1fr);
+    gap: var(--sp-3); padding: 6px 0; align-items: baseline;
+  }
+  .fact + .fact { background: linear-gradient(var(--s3), var(--s3)) top left / 100% 1px no-repeat; }
+  .fact .f-k {
+    font-family: var(--font-mono); font-size: 0.6rem;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-3);
+  }
+  .fact .f-v { font-size: 0.79rem; color: var(--fg-2); line-height: 1.5; }
+  .fact .f-v.is-yes { color: var(--ok); }
+  .fact .f-v.is-no  { color: var(--gap); }
+  @media (max-width: 560px) {
+    .fact { grid-template-columns: minmax(0,1fr); gap: 2px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar" data-topbar></div>
+
+<div class="app app-nocontext">
+  <aside class="gnav" data-gnav></aside>
+
+  <main class="workbench workbench-wide" id="content">
+
+    <div data-whoami></div>
+
+    <section class="phead" data-od-id="arch-head">
+      <div>
+        <p class="eyebrow">About · Technology</p>
+        <h1 class="display">Seven components.<br>Stated as they are, not as we'd like them.</h1>
+        <p class="lead">
+          This product runs on an open runtime stack built for governed AI agents. Below is
+          what each part does, what it actually ships today, and what it does not. Where a
+          capability is planned rather than built, this page says so — an architecture
+          document that presents a roadmap as shipped is worse than one that admits the
+          boundary.
+        </p>
+      </div>
+      <div class="row">
+        <button class="btn btn-secondary" onclick="window.print()">Print</button>
+      </div>
+    </section>
+
+    <nav class="toc" aria-label="On this page" style="margin-bottom:var(--sp-7)">
+      <a href="#shape">The shape</a>
+      <a href="#runtime">Agent runtime</a>
+      <a href="#data">Data &amp; API</a>
+      <a href="#identity">Identity &amp; authorization</a>
+      <a href="#entities">Entities &amp; state</a>
+      <a href="#realtime">Realtime</a>
+      <a href="#orchestration">Scheduled agents</a>
+      <a href="#skills">Skills</a>
+      <a href="#did">Decentralized identity</a>
+      <a href="#gaps">What we must build</a>
+    </nav>
+
+    <!-- ═══ shape ═══ -->
+    <section class="sec" id="shape" data-od-id="arch-shape">
+      <div class="sec-head"><span class="s-n">01 · The shape</span></div>
+      <p class="lede">
+        One database of record, one governed agent runtime, one realtime spine, and three
+        surfaces that share an architecture rather than a codebase. The layers below read from
+        the user inward.
+      </p>
+
+      <div class="stackd" style="margin-top:var(--sp-4)">
+        <div class="layer is-ours">
+          <span class="ly-n">Surfaces</span>
+          <span class="ly-d">
+            React 19 web · Tauri 2 desktop · Flutter mobile. Same design tokens, same entity
+            contracts, same event vocabulary — three implementations, one architecture.
+          </span>
+        </div>
+        <div class="layer">
+          <span class="ly-n">Entity layer</span>
+          <span class="ly-d">
+            Prometheus Entity Management — a normalized reactive entity graph with a local
+            store per tier, so the interface reads one canonical copy of every record.
+          </span>
+        </div>
+        <div class="layer">
+          <span class="ly-n">Gateway</span>
+          <span class="ly-d">
+            Flint Gate — auth proxy and policy boundary. Verifies the session, decides the
+            action, streams the run. Never an identity provider itself.
+          </span>
+        </div>
+        <div class="layer">
+          <span class="ly-n">Agent runtime</span>
+          <span class="ly-d">
+            Universal Agent Runtime — executes agents, routes models, governs every tool call,
+            and emits a normalized event stream.
+          </span>
+        </div>
+        <div class="layer">
+          <span class="ly-n">Realtime</span>
+          <span class="ly-d">
+            Flint Realtime Fabric — a durable event spine with per-event authorization, so a
+            determination arriving pushes to every open client instead of being polled for.
+          </span>
+        </div>
+        <div class="layer">
+          <span class="ly-n">Automation</span>
+          <span class="ly-d">
+            LibreFang — scheduled and durable agent work: watching payer policies, chasing
+            disputed items, resuming a case when a payer finally answers.
+          </span>
+        </div>
+        <div class="layer is-ours">
+          <span class="ly-n">Data plane</span>
+          <span class="ly-d">
+            PostgreSQL 18 with pgvector, fronted by Flint Forge. Sixty tables, and the clinical
+            safety rules enforced as triggers rather than conventions.
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ runtime ═══ -->
+    <section class="sec" id="runtime" data-od-id="arch-runtime">
+      <div class="sec-head"><span class="s-n">02 · Agent runtime</span></div>
+
+      <div class="comps">
+        <div class="comp">
+          <div class="cp-h"><span class="cp-n">universal-agent-runtime</span><span class="cp-r">v1.0.0 · Rust · MIT</span></div>
+          <p class="cp-d">
+            A single Rust process that executes agents, routes models, manages knowledge and
+            memory, governs tools, and streams structured events — behind one HTTP/SSE
+            boundary. The interface never talks to a model provider, a tool, or storage
+            directly; every capability crosses a policy-enforced boundary.
+          </p>
+          <p class="cp-d">
+            <strong>Agents are Markdown, compiled and signed.</strong> An agent is a document
+            with fifteen required sections — identity, capabilities, tools, knowledge, memory,
+            governance, budgets — compiled through eight stages into a signed descriptor.
+            <strong>Governance is enforced at compile time:</strong> the definition must embed
+            policy text, and compilation fails if any sensitive capability lacks explicit
+            coverage or explicit denial. A declared capability never implies permission.
+          </p>
+          <div class="facts">
+            <div class="fact"><span class="f-k">Model routing</span><span class="f-v">Capability filter, then provider health, then preference — a model in cooldown cannot win because policy picked it earlier</span></div>
+            <div class="fact"><span class="f-k">Certified</span><span class="f-v">OpenAI-compatible and Anthropic paths, plus local embeddings</span></div>
+            <div class="fact"><span class="f-k">Local lane</span><span class="f-v is-no">Embeddings only — local chat generation is not first-party</span></div>
+            <div class="fact"><span class="f-k">Egress lock</span><span class="f-v is-yes">A single driver constructor can refuse every non-loopback address and fail closed</span></div>
+            <div class="fact"><span class="f-k">Mobile</span><span class="f-v">Library embedding, not a sidecar — and it currently boots with an empty skill registry</span></div>
+          </div>
+        </div>
+
+        <div class="comp">
+          <div class="cp-h"><span class="cp-n">Generated interfaces</span><span class="cp-r">A2UI · certified catalog</span></div>
+          <p class="cp-d">
+            When an assistant needs to ask something — a clarifying question, an approval, a
+            structured form — it emits a typed projection rather than markup.
+            <strong>Unknown component types fail closed, and model-provided HTML and
+            JavaScript are never executed.</strong>
+          </p>
+          <p class="cp-d">
+            The rule that governs it is one sentence: <em>a projection describes what the
+            runtime decided; it does not grant authority.</em> Actions route back through the
+            runtime carrying run, event, and idempotency identifiers, so a duplicate submission
+            is absorbed rather than acted on twice.
+          </p>
+          <div class="facts">
+            <div class="fact"><span class="f-k">Catalog</span><span class="f-v">Nine certified protocol components plus seven entity extensions</span></div>
+            <div class="fact"><span class="f-k">Renderers</span><span class="f-v">React, Lit, and Svelte over one shared state model</span></div>
+            <div class="fact"><span class="f-k">Events</span><span class="f-v">Stable event IDs across retries; resume from the last committed ID</span></div>
+            <div class="fact"><span class="f-k">Rule</span><span class="f-v">Completion is never inferred from prose — only from an explicit terminal event</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ data ═══ -->
+    <section class="sec" id="data" data-od-id="arch-data">
+      <div class="sec-head"><span class="s-n">03 · Data and API</span></div>
+
+      <div class="comps">
+        <div class="comp">
+          <div class="cp-h"><span class="cp-n">flint-forge</span><span class="cp-r">v1.0.0 · Rust · PG 18</span></div>
+          <p class="cp-d">
+            Turns a PostgreSQL database into a self-describing API surface. It is three things
+            at once: a suite of in-database extensions, a gateway service, and a compiler.
+            <strong>The source of truth is the live database catalog</strong> — schema changes
+            fire event triggers that recompile the API in place, with no process restart.
+          </p>
+          <p class="cp-d">
+            One pattern here matters more than the rest for a clinical feed. Write-ahead
+            replication bypasses row-level security, so for every change event the gateway
+            <strong>re-queries the changed row as the subscriber</strong>, with full security
+            context, before delivering it. Streaming does not become a way around the
+            permissions the database enforces.
+          </p>
+          <div class="facts">
+            <div class="fact"><span class="f-k">Generates</span><span class="f-v">REST, GraphQL, and one typed agent tool per table</span></div>
+            <div class="fact"><span class="f-k">Vector</span><span class="f-v is-yes">pgvector with automatic HNSW indexes and hybrid keyword-plus-vector search</span></div>
+            <div class="fact"><span class="f-k">Policy</span><span class="f-v">Cedar policies stored in-database, fail-closed by construction</span></div>
+            <div class="fact"><span class="f-k">Tenancy</span><span class="f-v">Row-level security is the authoritative gate; forced, not merely enabled</span></div>
+          </div>
+        </div>
+
+        <div class="comp is-warn" style="background:var(--warm-surface)">
+          <div class="cp-h"><span class="cp-n">In-database embedding</span><span class="cp-r">Correction · read this</span></div>
+          <p class="cp-d">
+            The stack offers a SQL function that embeds text — <span class="ic">llm.embed()</span>
+            — and a declarative form that adds a vector column, builds the index, installs a
+            trigger, and backfills. It is genuinely useful, and it is the model our own
+            schema follows.
+          </p>
+          <p class="cp-d">
+            <strong>But it does not keep data inside the database.</strong> The extension is an
+            HTTP client: it builds a request and sends the text to the gateway, and onward to a
+            model provider. A summary of this architecture elsewhere describes retrieval as
+            running "beside the data — criteria never leave the box." For the published policy
+            corpus that is a fair description of intent. For patient text it is not what the
+            code does, and calling a SQL function does not change where the bytes go.
+          </p>
+          <p class="cp-d">
+            We state it plainly because it is the kind of assumption that produces a breach:
+            the call <em>looks</em> in-database.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ identity ═══ -->
+    <section class="sec" id="identity" data-od-id="arch-identity">
+      <div class="sec-head"><span class="s-n">04 · Identity and authorization</span></div>
+
+      <div class="comp">
+        <div class="cp-h"><span class="cp-n">flint-gate + Ory Kratos</span><span class="cp-r">Rust · OAuth 2.1 resource server</span></div>
+        <p class="cp-d">
+          An auth proxy purpose-built for streaming AI workloads. It verifies sessions, decides
+          actions against a policy engine, and streams the result without buffering. Its stated
+          posture is worth repeating: it <strong>federates any standards-capable identity
+          provider and never becomes one</strong>.
+        </p>
+
+        <p class="cp-d" style="margin-top:var(--sp-4)">
+          <strong>The mechanism that solves our hardest problem.</strong> An AI assistant must
+          be able to act for a surgeon without inheriting the surgeon's clinical authority.
+          Delegation produces a token carrying an actor claim, and that claim classifies the
+          caller as a <em>different entity type</em> — an agent, not a user.
+        </p>
+
+        <div class="code" style="margin-top:var(--sp-4)" aria-label="Delegated agent policy"><span class="c">-- Agent::"scribe" and User::"dr-james" are DIFFERENT PRINCIPALS,</span>
+<span class="c">-- even at an identical id. A rule granting the surgeon the ability</span>
+<span class="c">-- to sign grants the assistant nothing at all.</span>
+<span class="k">permit</span>(
+  principal == Agent::<span class="s">"prior-auth-scribe"</span>,
+  action    == Action::<span class="s">"call_tool"</span>,
+  resource  == Route::<span class="s">"draft_letter"</span>
+);</div>
+
+        <div class="facts">
+          <div class="fact"><span class="f-k">Scoping</span><span class="f-v">Delegation downscopes to a subset of the original scopes; escalation is rejected</span></div>
+          <div class="fact"><span class="f-k">Confused deputy</span><span class="f-v is-yes">The original token is never forwarded upstream</span></div>
+          <div class="fact"><span class="f-k">Spoofing</span><span class="f-v is-yes">Agent classification is stripped from inbound tokens — a federated provider cannot forge it</span></div>
+          <div class="fact"><span class="f-k">Chaining</span><span class="f-v">Multi-hop delegation is refused outright rather than silently ignored</span></div>
+          <div class="fact"><span class="f-k">Budgets</span><span class="f-v">Agent spend is separate from the human's, and fails closed when the budget service is unreachable</span></div>
+          <div class="fact"><span class="f-k">Audit</span><span class="f-v">Every authorization decision persists with its reason — including the denials</span></div>
+          <div class="fact"><span class="f-k">Approval</span><span class="f-v">A policy annotation marks an action as requiring human review before it runs</span></div>
+        </div>
+
+        <p class="cp-d" style="margin-top:var(--sp-4)">
+          Our database adds a third layer beneath this one. The gateway decides whether a caller
+          may invoke a tool; the database decides whether the resulting act is clinically
+          permitted. Neither substitutes for the other — and because a service role can bypass
+          row-level security, the trigger-enforced clinical rules are a genuine complement
+          rather than a duplicate.
+        </p>
+      </div>
+    </section>
+
+    <!-- ═══ entities ═══ -->
+    <section class="sec" id="entities" data-od-id="arch-entities">
+      <div class="sec-head"><span class="s-n">05 · Entities and client state</span></div>
+
+      <div class="comps">
+        <div class="comp">
+          <div class="cp-h"><span class="cp-n">prometheus-entity-management</span><span class="cp-r">v3.2 web · v3.1 Flutter</span></div>
+          <p class="cp-d">
+            A normalized reactive entity graph. Lists hold <strong>only ordered identifiers</strong>;
+            every view rejoins the same record at render time. One write updates the list row,
+            the detail panel, and the badge together, because they were never separate copies.
+          </p>
+          <p class="cp-d">
+            The layering argument is deliberate: a query cache models <em>requests</em> — is
+            this response stale? A local-first app models <em>data</em>, and the sync engine
+            already owns staleness. A cache on top re-answers that in the wrong layer with a
+            second source of truth that drifts. The project enforces this — an audit script
+            fails a build that reintroduces one.
+          </p>
+          <div class="facts">
+            <div class="fact"><span class="f-k">Web store</span><span class="f-v">PGlite — PostgreSQL compiled to WebAssembly, in the browser</span></div>
+            <div class="fact"><span class="f-k">Desktop</span><span class="f-v">The same engine natively, through typed commands</span></div>
+            <div class="fact"><span class="f-k">Mobile</span><span class="f-v">SQLite through a Rust bridge</span></div>
+            <div class="fact"><span class="f-k">Conflicts</span><span class="f-v">Last-write-wins by default, swappable to CRDT merge per entity type</span></div>
+            <div class="fact"><span class="f-k">Offline</span><span class="f-v">A durable queue with exponential backoff; exhausted actions are set aside rather than blocking the queue</span></div>
+          </div>
+        </div>
+
+        <div class="comp">
+          <div class="cp-h"><span class="cp-n">Typed payloads</span><span class="cp-r">Runtime schema registry</span></div>
+          <p class="cp-d">
+            The same metadata-driven pattern our database uses appears again in the client. A
+            schema can be registered per entity type <em>and per field</em>, so a request whose
+            payload varies by type resolves its shape at render time rather than needing a
+            separate component per variant.
+          </p>
+          <p class="cp-d">
+            <strong>An honest limit:</strong> the graph is untyped at runtime and the registry
+            is a lookup, not a validator. Nothing in it binds a record's type to its payload
+            schema. That enforcement is ours to write — which is exactly what the database
+            triggers do on the server side.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ realtime ═══ -->
+    <section class="sec" id="realtime" data-od-id="arch-realtime">
+      <div class="sec-head"><span class="s-n">06 · Realtime</span></div>
+
+      <div class="comp">
+        <div class="cp-h"><span class="cp-n">flint-realtime-fabric</span><span class="cp-r">Rust · 27 crates</span></div>
+        <p class="cp-d">
+          A durable event spine. A determination arriving from a payer pushes to every open
+          client — the scheduler sees it without polling, and the coordinator does not refresh
+          a queue to find out.
+        </p>
+        <p class="cp-d">
+          <strong>Subscriptions are permission-filtered twice.</strong> A channel gate checks
+          whether the subscriber may listen at all, and then <em>every individual event</em> is
+          re-checked against the subscriber's permissions before delivery, behind a hard tenant
+          equality guard. For patient data that is the right shape — but it is an authorization
+          round trip on the hot path, and at clinical volumes it needs caching we have not yet
+          measured.
+        </p>
+        <div class="facts">
+          <div class="fact"><span class="f-k">Delivery</span><span class="f-v">At-least-once with explicit acknowledgement and offset replay</span></div>
+          <div class="fact"><span class="f-k">Ordering</span><span class="f-v">Monotonic per channel; no cross-channel guarantee</span></div>
+          <div class="fact"><span class="f-k">Transports</span><span class="f-v">WebSocket and gRPC — no server-sent events, no MQTT</span></div>
+          <div class="fact"><span class="f-k">State sync</span><span class="f-v is-yes">CRDT operations with a logical clock, engine-agnostic on the wire</span></div>
+          <div class="fact"><span class="f-k">Change data</span><span class="f-v">Logical replication carries the previous row — a server-side diff channel</span></div>
+          <div class="fact"><span class="f-k">Video</span><span class="f-v is-no">The self-hosted media server is signaling only; hosted mode is the default and the honest choice</span></div>
+          <div class="fact"><span class="f-k">Telephony</span><span class="f-v is-no">No SMS or fax integration exists anywhere in this component</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ orchestration ═══ -->
+    <section class="sec" id="orchestration" data-od-id="arch-orchestration">
+      <div class="sec-head"><span class="s-n">07 · Scheduled and durable agent work</span></div>
+
+      <div class="comp">
+        <div class="cp-h"><span class="cp-n">librefang / bossfang</span><span class="cp-r">Rust · 31 crates · MIT</span></div>
+        <p class="cp-d">
+          An agent operating system: agents that run on a schedule, unprompted. This is where
+          the background work of prior authorization lives — checking whether a payer quietly
+          revised a policy, chasing a disputed attachment, waking a case when an answer finally
+          arrives.
+        </p>
+        <p class="cp-d">
+          <strong>Its durable workflow engine is the best fit in the whole stack for this
+          domain.</strong> Prior authorization is a long-running process punctuated by waits
+          on other people. A workflow can pause with a hashed resume token — the plaintext
+          returned once and never stored — and resume weeks later when the payer responds. That
+          is the shape of the actual problem.
+        </p>
+        <div class="facts">
+          <div class="fact"><span class="f-k">Scheduling</span><span class="f-v">Cron, interval, and one-shot, on a bounded-concurrency tick loop</span></div>
+          <div class="fact"><span class="f-k">Run record</span><span class="f-v is-yes">Durable, with full per-step history, pause reason, and resume state</span></div>
+          <div class="fact"><span class="f-k">Retry</span><span class="f-v">Per-step exponential backoff with jitter; fail, skip, or retry per step</span></div>
+          <div class="fact"><span class="f-k">Idempotency</span><span class="f-v">Keyed replay of a cached response — but currently on two endpoints only</span></div>
+          <div class="fact"><span class="f-k">Dead letter</span><span class="f-v is-no">No dedicated queue; a failed run persists with its error and stops</span></div>
+          <div class="fact"><span class="f-k">Channels</span><span class="f-v">Now out-of-process sidecars — email and webhooks exist; fax, SMS, and payer portals do not</span></div>
+        </div>
+
+        <p class="cp-d" style="margin-top:var(--sp-4)">
+          <strong>Policy change detection is a pattern here, not a feature.</strong> Nothing in
+          the component watches a URL for changes. But the pieces are deliberate: a scheduled
+          job can run a hardened script before the agent wakes, and if that script reports no
+          change the agent turn is skipped entirely — no model spend at all. Poll, hash, compare,
+          and wake only on a real difference. We write the comparison; the runtime provides the
+          discipline around it.
+        </p>
+      </div>
+    </section>
+
+    <!-- ═══ skills ═══ -->
+    <section class="sec" id="skills" data-od-id="arch-skills">
+      <div class="sec-head"><span class="s-n">08 · Skills</span></div>
+      <p class="lede">
+        A skill is a directory containing a Markdown document with structured frontmatter. The
+        runtime discovers them, matches them by trigger, and injects the body into the model's
+        context when one activates.
+      </p>
+      <p class="lede">
+        <strong>The dominant execution model is not execution.</strong> Of roughly three hundred
+        skills, the large majority are manifest-only — instructions a model reads, with nothing
+        to run. That is why the same skill set works unchanged on a phone: there is no binary to
+        port.
+      </p>
+      <p class="lede">
+        The control that matters here: <strong>a model cannot activate a skill by itself.</strong>
+        It may request activation through a specific tool that delegates the decision to the
+        trusted host, which checks the request against the run's policy before admitting it.
+      </p>
+    </section>
+
+    <!-- ═══ DID ═══ -->
+    <section class="sec" id="did" data-od-id="arch-did">
+      <div class="sec-head">
+        <span class="s-n">09 · Decentralized identity</span>
+        <span style="font-size:.85rem;color:var(--fg-2)">Where the roadmap and the code differ.</span>
+      </div>
+      <p class="lede">
+        The intent is that provider organizations exchange authorization evidence directly, each
+        node holding a cryptographic identity and presenting verifiable credentials that prove
+        it may act — rather than routing every exchange through a clearinghouse.
+      </p>
+      <p class="lede">
+        <strong>That is a direction, not a shipped capability, and the distinction is worth
+        being exact about.</strong> Here is what we found in the code.
+      </p>
+
+      <div class="vf" style="margin-top:var(--sp-4)">
+        <div class="vfr"><span class="v-n">Built</span><span>Agent-to-agent invocation with a federated registry and standards-based token auth</span><span class="v-o pass">shipped</span></div>
+        <div class="vfr"><span class="v-n">Built</span><span>Peer-to-peer transport crate with a key-derived node identifier</span><span class="v-o pass">shipped</span></div>
+        <div class="vfr"><span class="v-n">Built</span><span>Federation bridges to open social protocols</span><span class="v-o pass">shipped</span></div>
+        <div class="vfr"><span class="v-n">Roadmap</span><span>W3C verifiable credentials for owner-to-node delegation</span><span class="v-o planned">planned</span></div>
+        <div class="vfr"><span class="v-n">Roadmap</span><span>Peer discovery, peer transport selection, and routing that can choose a peer</span><span class="v-o planned">planned</span></div>
+        <div class="vfr"><span class="v-n">Absent</span><span>Cross-organization trust registry or partner-to-partner policy delegation</span><span class="v-o absent">unbuilt</span></div>
+      </div>
+
+      <p class="lede" style="margin-top:var(--sp-4)">
+        One clarification that prevents a common misreading. There <em>is</em> a decentralized
+        identifier scheme in this stack, and it signs WebAssembly build artifacts — it is code
+        signing, not identity credentials. Presenting it as verifiable-credential support would
+        be wrong.
+      </p>
+      <p class="lede">
+        The authorization model also has no organization concept today: four entity types, none
+        of them an organization. <strong>Provider-to-provider trust for authorization exchange
+        is entirely unbuilt, and designing it is our work.</strong>
+      </p>
+    </section>
+
+    <!-- ═══ gaps ═══ -->
+    <section class="sec" id="gaps" data-od-id="arch-gaps">
+      <div class="sec-head"><span class="s-n">10 · What we must build</span></div>
+      <p class="lede">
+        The runtime stack is general-purpose. Every healthcare-specific integration is ours to
+        write, and none of it exists in any component above.
+      </p>
+
+      <div class="legend" style="margin-top:var(--sp-4)">
+        <div class="lg is-gated">
+          <span class="lg-k">Absent</span>
+          <span class="lg-n">EDI transactions</span>
+          <span class="lg-d">The standard authorization request, response, and eligibility formats. Zero references anywhere in the stack.</span>
+        </div>
+        <div class="lg is-gated">
+          <span class="lg-k">Absent</span>
+          <span class="lg-n">FHIR</span>
+          <span class="lg-d">No clinical interoperability layer. Our EMR connections are a first-party build.</span>
+        </div>
+        <div class="lg is-gated">
+          <span class="lg-k">Absent</span>
+          <span class="lg-n">Fax and payer portals</span>
+          <span class="lg-d">Still the dominant submission channels in this domain, and both are greenfield.</span>
+        </div>
+        <div class="lg is-gated">
+          <span class="lg-k">Absent</span>
+          <span class="lg-n">Policy change detection</span>
+          <span class="lg-d">A pattern to compose, not a component to configure.</span>
+        </div>
+      </div>
+
+      <p class="lede" style="margin-top:var(--sp-5)">
+        Three risks we would rather name than discover later:
+      </p>
+      <div class="pair" style="margin-top:var(--sp-4)">
+        <div class="card is-warn">
+          <span class="c-k">Risk 01</span>
+          <span class="c-t">Mobile realtime is the weak leg</span>
+          <span class="c-d">
+            The entity layer's Flutter package is solid and published. The realtime component's
+            Dart bindings are a different story — the synchronous data surface works, and the
+            asynchronous transport is documented as not functional, pending an upstream fix.
+            Mobile live updates need a different path, and we would rather choose it than
+            assume it.
+          </span>
+        </div>
+        <div class="card is-warn">
+          <span class="c-k">Risk 02</span>
+          <span class="c-t">Two retrieval designs, not one</span>
+          <span class="c-d">
+            The client architecture fixes on-device embeddings at one dimension so vectors
+            survive syncing between a surgeon's devices. Our server corpus uses larger models
+            for published policy. These are two designs with two privacy reviews, and the
+            guidance is explicit that blurring them into one interface is the mistake.
+          </span>
+        </div>
+      </div>
+      <div class="card is-warn" style="margin-top:var(--sp-4)">
+        <span class="c-k">Risk 03</span>
+        <span class="c-t">Version and transport assumptions worth checking early</span>
+        <span class="c-d">
+          The change-data-capture component targets PostgreSQL 17 while our schema targets 18,
+          so replication compatibility needs verifying rather than assuming. Separately, the
+          peer-to-peer wire protocol is unencrypted by design — authenticated against tampering,
+          but not confidential — so it must never carry patient data without a tunnel beneath
+          it. Neither is a blocker. Both are the kind of detail that becomes one if nobody
+          writes it down.
+        </span>
+      </div>
+    </section>
+
+    <p class="meta" style="margin-top:var(--sp-7);color:var(--fg-3)">
+      Every claim on this page was read from source. Where a capability is marked planned or
+      unbuilt, that reflects the code as inspected — not a judgement about the roadmap.
+    </p>
+
+  </main>
+</div>
+
+<div class="tabbar" data-tabbar></div>
+
+<script>ASO.shell({ step: null });</script>
+</body>
+</html>

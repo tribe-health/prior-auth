@@ -1,0 +1,40 @@
+name: aso_mobile
+description: Prior Authorization Workbench — mobile surface.
+publish_to: none
+version: 0.1.0
+
+environment:
+  sdk: ">=3.12.0 <4.0.0"
+  flutter: ">=3.44.0"
+
+# Pinned exactly, not floored. The analyzer graph below is a coherent SET —
+# freezed, riverpod_generator, json_serializable and build_runner each cap the
+# analyzer differently, and you cannot satisfy all four at their latest. The
+# set moves together or not at all. See docs/architecture/dependency-pins.md.
+# Versions below were READ FROM pub.dev, not assumed. An earlier draft of this
+# file pinned riverpod_lint to the flutter_riverpod version — a number that has
+# never been published. `flutter pub get` caught it; a caret range would have
+# resolved to something arbitrary and hidden the mistake.
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_riverpod: 3.4.3
+  riverpod_annotation: 4.0.7
+  http: 1.6.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner: 2.16.1
+  riverpod_generator: 4.0.9
+  flutter_lints: 6.0.0
+  # custom_lint + riverpod_lint are DELIBERATELY OMITTED, not forgotten.
+  # riverpod_lint needs analyzer_plugin ^0.14 while custom_lint caps it at
+  # ^0.13, and riverpod_generator 4.0.9 needs riverpod_analyzer_utils 1.0.0-dev
+  # which custom_lint also refuses. You cannot satisfy all of them today.
+  # Codegen and the analyzer matter more than the extra lint rules, so the
+  # generator wins and the lints wait for the upstream graph to settle.
+  # Re-add both together once analyzer_plugin agrees; never one alone.
+
+flutter:
+  uses-material-design: true

@@ -1,0 +1,32 @@
+{
+  "schemaVersion": "5",
+  "generatedBy": "kbd-runtime",
+  "projectionContractVersion": 2,
+  "sourceRevision": 47,
+  "derivedRevision": 47,
+  "frontier": {
+    "e9a7936c-0a01-43d5-9004-b93a4e5fd031": 47
+  },
+  "conflictCount": 0,
+  "projectId": "0e0821e7-baa6-41b2-9b15-beaa40e0f40b",
+  "runId": "web-ui-architecture-20260904T190440Z",
+  "path": [
+    "web-ui-architecture"
+  ],
+  "phaseIds": [
+    "web-ui-architecture"
+  ],
+  "activePhaseId": "web-ui-architecture",
+  "phase": "web-ui-architecture",
+  "childPointer": null,
+  "change": null,
+  "currentTask": null,
+  "status": "ready",
+  "completionMetric": "implementation",
+  "implementationCompleted": 8,
+  "implementationTotal": 8,
+  "planRevision": 9,
+  "revision": 47,
+  "exactNextCommand": "EXECUTE IN CODEX (gpt-6-astra, reasoning effort high): docs/handoff/codex-runtime-architecture-execute.md. It creates the runtime-architecture phase, plans against runtime section 13 order and react-ui-component-architecture section 11 stages as ONE sequence, and starts at runtime order 1 then 2-4 (the read path). First exit criterion: a real clinical row in Postgres reaches a rendered screen through an authorized shape, practice-scoped, with PHI columns absent from the wire, demonstrated in a browser with the network payload shown.",
+  "updatedAt": "2026-09-06T11:20:50.409643Z"
+}

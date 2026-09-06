@@ -1,0 +1,1619 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{ dark: (localStorage.getItem('aso-theme')||'dark')==='dark', toc:false }" :class="dark ? 'dark' : ''">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prior Authorization Workbench — MVP Architecture, Functional Specification &amp; Implementation Plan</title>
+<link rel="icon" href="aso-favicon.svg" type="image/svg+xml">
+<script>
+  (function(){ if((localStorage.getItem('aso-theme')||'dark')==='dark'){ document.documentElement.classList.add('dark'); } })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Mulish:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+<style>
+:root{
+  --ember:#DF7C35; --ember-deep:#A85417; --ember-tint:#FBEFE6;
+  --slate:#A7C5D6; --slate-tint:#EDF3F7; --navy:#1F4E79;
+  --graphite:#6E6F71; --ink:#231F20; --bone:#F1EFEC;
+  --bg:#FFFFFF; --s1:#F7F6F4; --s2:#F1EFEC; --s3:#E7E4E0; --s-zebra:#FAF9F7;
+  --fg:#231F20; --fg-2:#55565A; --fg-3:#6E6F71;
+  --accent:#A85417; --accent-vivid:#DF7C35; --cool:#1F4E79;
+  --cool-surface:#EDF3F7; --warm-surface:#FBEFE6;
+  --ok:#1E6F4E; --ok-surface:#E7F3EC;
+  --gap:#A85417; --gap-surface:#FBEFE6;
+  --void:#5B5F66; --void-surface:#EFEFF1;
+  --code-bg:#F4F2EF;
+  --svg-face:#F7F6F4; --svg-face2:#EDEAE6; --svg-line:#B9B2AA;
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Mulish','Nunito Sans','Segoe UI',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  --r:5px; --measure:74ch;
+}
+html.dark{
+  --ember:#F0955A; --ember-deep:#F0955A; --ember-tint:#2E2119;
+  --slate:#8FB9D0; --slate-tint:#182430; --navy:#8FB9D0;
+  --graphite:#98A2AA; --ink:#EDF0F2; --bone:#1C2126;
+  --bg:#14181C; --s1:#1C2126; --s2:#252B31; --s3:#2E353C; --s-zebra:#191E23;
+  --fg:#EDF0F2; --fg-2:#B4BFC7; --fg-3:#93A0A9;
+  --accent:#F0955A; --accent-vivid:#F0955A; --cool:#8FB9D0;
+  --cool-surface:#182430; --warm-surface:#2E2119;
+  --ok:#6FD1A0; --ok-surface:#152620;
+  --gap:#F0955A; --gap-surface:#2E2119;
+  --void:#A9B3BB; --void-surface:#232830;
+  --code-bg:#1A2026;
+  --svg-face:#1C2126; --svg-face2:#252B31; --svg-line:#414B55;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+.shell{display:grid;grid-template-columns:272px 1fr;max-width:1480px;margin:0 auto}
+
+.side{background:var(--s1);padding:2.2rem 1.4rem;position:sticky;top:0;height:100vh;overflow-y:auto}
+.side-brand{display:flex;align-items:center;gap:.7rem;margin-bottom:1.6rem}
+.side-brand .ic{width:34px;height:34px;flex-shrink:0}
+.side-brand .ic svg{width:100%;height:100%;display:block}
+.side-mark{flex:1;min-width:0}
+.side-mark svg{width:100%;max-width:152px;height:auto;display:block}
+.side h4{font-family:var(--mono);font-size:.58rem;letter-spacing:.16em;color:var(--fg-3);text-transform:uppercase;margin:1.35rem 0 .45rem}
+.side a{display:block;color:var(--fg-2);text-decoration:none;font-size:.8rem;padding:.28rem .55rem;border-radius:3px;line-height:1.4}
+.side a:hover{background:var(--s2);color:var(--accent)}
+
+main{padding:3rem 3.2rem 6rem;min-width:0}
+.topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap;margin-bottom:2.4rem}
+.ctrl{display:flex;gap:.5rem;flex-wrap:wrap}
+.toggle,.tocbtn{font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;background:var(--s2);color:var(--fg-2);padding:.55rem .9rem;border:none;border-radius:3px;cursor:pointer}
+.toggle:hover,.tocbtn:hover{background:var(--s3);color:var(--accent)}
+.tocbtn{display:none}
+
+.eyebrow{font-family:var(--mono);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--fg-3);margin-bottom:.7rem}
+h1{font-family:var(--serif);font-size:2.85rem;line-height:1.08;font-weight:600;letter-spacing:-.015em;margin-bottom:.7rem}
+h2{font-family:var(--serif);font-size:1.8rem;font-weight:600;margin:3.6rem 0 1rem;padding-top:1.6rem;background:linear-gradient(var(--s3),var(--s3)) top left / 60px 2px no-repeat}
+h3{font-size:1.03rem;font-weight:700;margin:2rem 0 .55rem}
+h4{font-size:.9rem;font-weight:700;margin:1.4rem 0 .4rem}
+p{color:var(--fg-2);margin-bottom:1rem;max-width:var(--measure)}
+.lead{font-size:1.07rem;color:var(--fg-2);max-width:68ch}
+strong{color:var(--fg);font-weight:600}
+em{font-style:italic}
+code{font-family:var(--mono);font-size:.82em;background:var(--s2);color:var(--accent);padding:.12em .4em;border-radius:3px}
+ul.doc,ol.doc{max-width:var(--measure);color:var(--fg-2);margin:0 0 1.1rem 0;list-style:none}
+ul.doc li,ol.doc li{padding-left:1.3rem;position:relative;margin-bottom:.45rem}
+ul.doc li::before{content:'—';position:absolute;left:0;color:var(--fg-3)}
+ol.doc{counter-reset:n}
+ol.doc li{counter-increment:n}
+ol.doc li::before{content:counter(n)'.';position:absolute;left:0;font-family:var(--mono);font-size:.78rem;color:var(--accent)}
+
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:.1rem;background:var(--s1);border-radius:var(--r);overflow:hidden;margin:1.6rem 0 2.4rem}
+.meta div{padding:.9rem 1.1rem;background:var(--s1)}
+.meta .k{font-family:var(--mono);font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;color:var(--fg-3);margin-bottom:.25rem}
+.meta .v{font-size:.85rem;color:var(--fg);font-weight:600}
+
+.panel{background:var(--s1);border-radius:var(--r);padding:1.6rem 1.7rem;margin:1.4rem 0}
+.callout{border-radius:var(--r);padding:1.2rem 1.4rem;margin:1.4rem 0;background:var(--warm-surface)}
+.callout.cool{background:var(--cool-surface)}
+.callout .lbl{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:.45rem}
+.callout.cool .lbl{color:var(--cool)}
+.callout p{margin:0 0 .7rem;color:var(--fg-2)}
+.callout p:last-child{margin:0}
+
+pre{background:var(--code-bg);border-radius:var(--r);padding:1.1rem 1.25rem;overflow-x:auto;margin:1rem 0}
+pre code{background:none;padding:0;color:var(--fg-2);font-size:.75rem;line-height:1.8}
+.kw{color:var(--cool)} .st{color:var(--accent)} .cm{color:var(--fg-3);font-style:italic} .ty{color:var(--ok)}
+
+.tw{overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;margin:1.3rem 0;border-radius:var(--r)}
+table{width:100%;border-collapse:collapse;font-size:.84rem;min-width:620px}
+thead th{background:var(--s3);text-align:left;padding:.7rem .9rem;font-family:var(--mono);font-size:.6rem;letter-spacing:.13em;text-transform:uppercase;color:var(--fg-2);font-weight:500}
+tbody td{padding:.6rem .9rem;color:var(--fg-2);vertical-align:top}
+tbody tr:nth-child(odd){background:var(--s-zebra)}
+tbody tr:nth-child(even){background:var(--s1)}
+td.m{font-family:var(--mono);font-size:.74rem;color:var(--fg)}
+td.n{text-align:right;font-family:var(--mono);font-size:.76rem;color:var(--fg)}
+
+.chip{display:inline-block;font-family:var(--mono);font-size:.61rem;letter-spacing:.09em;text-transform:uppercase;padding:.2em .55em;border-radius:3px;white-space:nowrap}
+.ch-k{background:var(--void-surface);color:var(--void)}
+.ch-n{background:var(--cool-surface);color:var(--cool)}
+.ch-w{background:var(--ok-surface);color:var(--ok)}
+.ch-x{background:var(--gap-surface);color:var(--gap)}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:.9rem;margin:1.3rem 0}
+.card{background:var(--s1);border-radius:var(--r);padding:1.2rem 1.3rem}
+.card .ct{font-size:.94rem;font-weight:700;color:var(--fg);margin-bottom:.35rem}
+.card .cm2{font-family:var(--mono);font-size:.62rem;color:var(--accent);letter-spacing:.06em;margin-bottom:.5rem}
+.card .cd{font-size:.82rem;color:var(--fg-2);line-height:1.55}
+
+.figure{background:var(--s1);border-radius:var(--r);padding:1.5rem 1.2rem 1.1rem;margin:1.6rem 0;overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+.figure svg{width:100%;height:auto;min-width:640px;display:block}
+.figcap{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--fg-3);margin-top:1rem;text-align:center}
+
+footer{margin-top:4.5rem;padding-top:1.6rem;background:linear-gradient(var(--s3),var(--s3)) top left / 100% 1px no-repeat;font-family:var(--mono);font-size:.64rem;color:var(--fg-3);letter-spacing:.05em;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+
+@media (max-width:860px){
+  .shell{grid-template-columns:1fr}
+  .side{position:static;height:auto;display:none;padding:1.4rem}
+  .side.open{display:block}
+  .tocbtn{display:inline-block}
+  main{padding:1.8rem 1.4rem 4rem}
+  h1{font-size:2.05rem}
+  /* horizontal-scroll affordance — the hint stays put while the content moves */
+  .figure::before,.tw::before{
+    content:'\2194  swipe to explore';
+    display:block;position:sticky;left:0;
+    font-family:var(--mono);font-size:.57rem;letter-spacing:.15em;
+    text-transform:uppercase;color:var(--accent);
+    margin-bottom:.65rem;white-space:nowrap;
+  }
+  .tw::before{padding:.55rem .1rem 0}
+}
+@media (max-width:540px){
+  body{font-size:15px}
+  h1{font-size:1.72rem} h2{font-size:1.34rem} .lead{font-size:1rem}
+  main{padding:1.4rem 1rem 3rem}
+  .panel,.callout,.card,.figure{padding:1.1rem .9rem}
+  pre{padding:.9rem} pre code{font-size:.7rem}
+  thead th,tbody td{padding:.5rem .55rem;font-size:.77rem}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <g id="mk-adaptive"><g transform="rotate(-13 256 256) translate(0 18)">
+    <path d="M80 250C172 186 300 154 432 162C306 126 176 148 80 208C64 218 64 240 80 250Z" fill="var(--graphite)"/>
+    <path d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z" fill="var(--ember)"/>
+  </g></g>
+  <marker id="aE" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--ember)"/></marker>
+  <marker id="aC" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--cool)"/></marker>
+  <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--fg-3)"/></marker>
+  <marker id="aOK" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="var(--ok)"/></marker>
+</defs></svg>
+
+<div class="shell">
+
+<aside class="side" :class="toc && 'open'">
+  <div class="side-brand">
+  <div class="ic"><svg viewBox="0 0 512 512" aria-hidden="true"><use href="#mk-adaptive"/></svg></div>
+  <div class="side-mark">
+    <svg viewBox="0 0 430 128" aria-label="Advanced Spine and Orthopedics">
+      <text x="12" y="70" font-family="Mulish, sans-serif" font-size="58" font-weight="600" letter-spacing="2" textLength="404" lengthAdjust="spacing" fill="var(--graphite)">ADVANCED</text>
+      <path d="M10 74 C 76 34, 192 24, 288 36 C 348 44, 390 55, 420 65 C 388 51, 346 37, 286 29 C 190 17, 72 33, 10 66 Z" fill="var(--ember)"/>
+      <text x="14" y="112" font-family="Mulish, sans-serif" font-size="33" textLength="400" lengthAdjust="spacing" fill="var(--ink)">Spine &amp; Orthopedics</text>
+    </svg>
+  </div>
+  </div>
+  <h4>Frame</h4>
+  <a href="#summary">Executive summary</a>
+  <a href="#posture">Deployment posture change</a>
+  <h4>Architecture</h4>
+  <a href="#fabric">Fabric composition</a>
+  <a href="#clients">Client surfaces</a>
+  <a href="#integrations">Integrations</a>
+  <h4>Agents</h4>
+  <a href="#agents">Agent roster</a>
+  <a href="#decomp">Agent decomposition</a>
+  <h4>Workflow</h4>
+  <a href="#lifecycle">Case lifecycle</a>
+  <a href="#seq-submit">Submission &amp; RFI loop</a>
+  <a href="#seq-denial">Denial → P2P → IRO</a>
+  <a href="#channels">Channel fan-out</a>
+  <h4>People</h4>
+  <a href="#personas">Personas</a>
+  <a href="#stories">User stories</a>
+  <h4>Interface</h4>
+  <a href="#moodboard">UI/UX mood board</a>
+  <h4>Business case</h4>
+  <a href="#roi">ROI model</a>
+  <h4>Delivery</h4>
+  <a href="#phases">Phased plan</a>
+  <a href="#cadence">Release cadence</a>
+  <a href="#risks">Risks &amp; gaps</a>
+</aside>
+
+<main>
+
+<div class="topbar">
+  <div>
+    <div class="eyebrow">ASO-MVP-001 · Architecture · Functional Spec · Implementation Plan</div>
+    <h1>Prior Authorization<br>Workbench</h1>
+    <p class="lead">An agent-managed system for carrying a spine surgical case from clinical decision to authorized and schedulable — including the rejection loops that consume most of the effort.</p>
+  </div>
+  <div class="ctrl">
+    <button class="tocbtn" @click="toc = !toc">Contents</button>
+    <button class="toggle" @click="dark = !dark; localStorage.setItem('aso-theme', dark ? 'dark':'light')" x-text="dark ? 'Light' : 'Dark'">Light</button>
+  </div>
+</div>
+
+<div class="meta">
+  <div><div class="k">Document</div><div class="v">ASO-MVP-001</div></div>
+  <div><div class="k">Practice</div><div class="v">Advanced Spine &amp; Orthopedics</div></div>
+  <div><div class="k">EHR</div><div class="v">AdvancedMD</div></div>
+  <div><div class="k">Platform</div><div class="v">Prometheus Fabric</div></div>
+  <div><div class="k">Cadence</div><div class="v">4–6 week releases</div></div>
+  <div><div class="k">Status</div><div class="v">Plan of record, draft</div></div>
+</div>
+
+<!-- ═══════════ SUMMARY ═══════════ -->
+<h2 id="summary">Executive summary</h2>
+
+<p>Prior authorization for spine surgery is not one workflow. It is a routing problem wrapped around a documentation problem wrapped around an appeals problem, and the three fail in different ways.</p>
+
+<p><strong>The routing problem:</strong> the entity that decides is usually not the entity on the insurance card. Cigna spine goes to eviCore. Humana musculoskeletal goes to Cohere. Several Blues and Centene lines go to TurningPoint or Carelon. A submission sent to the payer instead of the delegated vendor does not get denied — it sits, and the statutory clock never starts.</p>
+
+<p><strong>The documentation problem:</strong> criteria converge on a small set of documentable facts — imaging graded moderate-or-worse correlating to exam, weeks of supervised conservative care with dates, instability measured in millimetres and degrees, functional scores, tobacco and psych gates — and diverge at exactly the points where a spine practice loses cases. Aetna will not authorize lumbar fusion for degenerative disc disease alone. Carelon wants three of seven provocative tests for sacroiliac fusion and 75% relief from two separate injections; Aetna wants three of five and 70%. Two-level cervical arthroplasty is covered only with a device FDA-approved for two levels.</p>
+
+<p><strong>The appeals problem:</strong> per the 2024 AMA survey, <strong>81.7% of appealed prior authorization denials are overturned in whole or in part.</strong> That number is the entire business case. It says most initial denials are not clinically robust, and that a practice which appeals systematically rather than selectively recovers most of what it loses — but only if the cost of appealing falls far enough to make appealing every eligible denial rational.</p>
+
+<div class="callout">
+  <div class="lbl">What this MVP is actually for</div>
+  <p>Not "AI writes letters." The letter is one artifact in a state machine that runs for weeks, crosses four or five channels, and loops. The system's job is to <strong>hold the case</strong> — know where it is, what it needs, who is holding it, what clock is running, and what the next action is — and to make each loop cheap enough that the practice always takes it.</p>
+</div>
+
+<h3>The five properties that define the build</h3>
+
+<ol class="doc">
+  <li><strong>Administering-entity resolution comes first.</strong> Everything downstream — criteria set, channel, peer-to-peer line, appeal path, timer set — keys off which vendor administers this benefit for this member, not which logo is on the card.</li>
+  <li><strong>Every generated assertion carries a source citation</strong> with document, page, and date. This is a False Claims Act control, not a UX flourish.</li>
+  <li><strong>A physician affirmation gate stands between drafting and transmission,</strong> and is enforced as a dependency in the plugin runtime rather than as a conditional in the render path.</li>
+  <li><strong>Channels are adapters behind one interface.</strong> Fax, portal, phone, EDI, and FHIR are interchangeable at the dispatch boundary, which is what lets the FHIR path land in 2027 without a rewrite.</li>
+  <li><strong>Every four to six weeks something ships that changes a working day.</strong> No release is infrastructure-only.</li>
+</ol>
+
+<!-- ═══════════ POSTURE ═══════════ -->
+<h2 id="posture">A deployment posture change, stated plainly</h2>
+
+<p>ASO-ARCH-001 specified a local-first Tauri desktop application: PHI on one machine, no hosted store, minimal Security Rule surface. That posture was correct for a single surgeon drafting letters.</p>
+
+<p><strong>It does not survive contact with this workflow.</strong> A prior authorization coordinator, a surgery scheduler, a biller, two surgeons, and a physician assistant all touch the same case. They need shared state, concurrent access, a work queue that means the same thing to everyone, and inbound fax that arrives somewhere other than one person's laptop. Local-first cannot deliver that.</p>
+
+<p>The MVP therefore deploys as a <strong>practice-boundary system</strong>: Fabric services running on a single-tenant node the practice controls — either an on-premise box in the Southlake office or a dedicated single-tenant cloud instance in a US region — with Tauri desktop, Flutter mobile, and React web clients connecting to it.</p>
+
+<div class="callout cool">
+  <div class="lbl">Why this still satisfies the constraints</div>
+  <p>PHI at rest stays inside the practice boundary and inside the United States, which is what Texas SB 1188 requires as of January 1 2026. The only PHI egress is to a BAA-covered inference endpoint with zero data retention, and that egress is gated by Cedar policy rather than configuration. The Security Rule surface is larger than the laptop version and has to be documented and risk-assessed properly — that is a real added cost and it should be priced into Phase 0 rather than discovered in Phase 3.</p>
+</div>
+
+<!-- ═══════════ FABRIC ═══════════ -->
+<h2 id="fabric">Fabric composition</h2>
+
+<p>Each Fabric component earns its place by carrying a named responsibility this workflow actually has. Nothing is included because it exists.</p>
+
+<div class="figure">
+<svg viewBox="0 0 1180 1000" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Prometheus Fabric composition for the Prior Authorization Workbench">
+
+  <text x="24" y="26" font-family="'JetBrains Mono',monospace" font-size="10.5" letter-spacing="3" fill="var(--fg-3)">FIGURE 01 · FABRIC COMPOSITION · PRACTICE BOUNDARY DEPLOYMENT</text>
+
+  <!-- ── CLIENT SURFACES ── -->
+  <text x="24" y="62" font-family="'JetBrains Mono',monospace" font-size="9.5" letter-spacing="2.4" fill="var(--fg-3)">01 · CLIENT SURFACES</text>
+  <rect x="24" y="72" width="270" height="86" rx="4" fill="var(--svg-face)"/>
+  <rect x="24" y="72" width="3" height="86" fill="var(--cool)"/>
+  <text x="44" y="98" font-family="Mulish,sans-serif" font-size="14" font-weight="700" fill="var(--fg)">Tauri 2 Desktop</text>
+  <text x="44" y="118" font-family="Mulish,sans-serif" font-size="11" fill="var(--fg-2)">React 19 · Zustand 5 · TanStack</text>
+  <text x="44" y="136" font-family="'JetBrains Mono',monospace" font-size="9" fill="var(--fg-3)">coordinator · scheduler · biller</text>
+  <text x="44" y="150" font-family="'JetBrains Mono',monospace" font-size="9" fill="var(--fg-3)">affirmation gate lives here</text>
+
+  <rect x="310" y="72" width="270" height="86" rx="4" fill="var(--svg-face)"/>
+  <rect x="310" y="72" width="3" height="86" fill="var(--cool)"/>
+  <text x="330" y="98" font-family="Mulish,sans-serif" font-size="14" font-weight="700" fill="var(--fg)">Flutter Mobile</text>
+  <text x="330" y="118" font-family="Mulish,sans-serif" font-size="11" fill="var(--fg-2)">Riverpod 3 · Rust FFI</text>
+  <text x="330" y="136" font-family="'JetBrains Mono',monospace" font-size="9" fill="var(--fg-3)">surgeon review · queue triage</text>
+  <text x="330" y="150" font-family="'JetBrains Mono',monospace" font-size="9" fill="var(--fg-3)">mandatory for regulated mobile</text>
+
+  <rect x="596" y="72" width="270" height="86" rx="4" fill="var(--svg-face)"/>
+  <rect x="596" y="72" width="3" height="86" fill="var(--cool)"/>
+  <text x="616" y="98" font-family="Mulish,sans-serif" font-size="14" font-weight="700" fill="var(--fg)">React 19 Web</text>
+  <text x="616" y="118" font-family="Mulish,sans-serif" font-size="11" fill="var(--fg-2)">Next.js 16 · TanStack Router</text>
+  <text x="616" y="136" font-family="'JetBrains Mono',monospace" font-size="9" fill="var(--fg-3)">admin console · gold-card</text>
+  <text x="616" y="150" font-family="'JetBrains Mono',monospace" font-size="9" fill="var(--fg-3)">dashboards · reporting</text>
+
+  <rect x="882" y="72" width="274" height="86" rx="4" fill="var(--svg-face2)"/>
+  <rect x="882" y="72" width="3" height="86" fill="var(--ember)"/>
+  <text x="902" y="98" font-family="Mulish,sans-serif" font-size="14" font-weight="700" fill="var(--fg)">Patient Channel</text>
+  <text x="902" y="118" font-family="Mulish,sans-serif" font-size="11" fill="var(--fg-2)">SMS via Telnyx · portal link</text>
+  <text x="902" y="136" font-family="'JetBrains Mono',monospace" font-size="9" fill="var(--fg-3)">action items only · no PHI</text>
+  <text x="902" y="150" font-family="'JetBrains Mono',monospace" font-size="9" fill="var(--fg-3)">detail in message body</text>
+
+  <!-- ── PROTOCOL ── -->
+  <text x="24" y="196" font-family="'JetBrains Mono',monospace" font-size="9.5" letter-spacing="2.4" fill="var(--fg-3)">02 · PRESENTATION PROTOCOL</text>
+  <rect x="24" y="206" width="1132" height="62" rx="4" fill="var(--svg-face)"/>
+  <rect x="24" y="206" width="3" height="62" fill="var(--cool)"/>
+  <text x="44" y="232" font-family="Mulish,sans-serif" font-size="14" font-weight="700" fill="var(--fg)">gen_ui_core — A2UI descriptors · AG-UI bidirectional channel</text>
+  <text x="44" y="254" font-family="'JetBrains Mono',monospace" font-size="9.5" fill="var(--fg-3)">one Rust implementation · plugins emit descriptors, never widgets · AFFIRM_CRITERIA travels as an AG-UI client event carrying matrix_hash</text>
+
+  <path d="M159 163 L159 200" stroke="var(--cool)" stroke-width="1.3" marker-end="url(#aC)"/>
+  <path d="M445 163 L445 200" stroke="var(--cool)" stroke-width="1.3" marker-end="url(#aC)"/>
+  <path d="M731 163 L731 200" stroke="var(--cool)" stroke-width="1.3" marker-end="url(#aC)"/>
+
+  <!-- ── GATE ── -->
+  <text x="24" y="304" font-family="'JetBrains Mono',monospace" font-size="9.5" letter-spacing="2.4" fill="var(--fg-3)">03 · IDENTITY &amp; AUTHORIZATION</text>
+  <rect x="24" y="314" width="1132" height="74" rx="4" fill="var(--warm-surface)"/>
+  <rect x="24" y="314" width="4" height="74" fill="var(--ember)"/>
+  <text x="46" y="340" font-family="Mulish,sans-serif" font-size="14" font-weight="700" fill="var(--accent)">Flint Gate — Cedar PDP/PEP</text>
+  <text x="46" y="360" font-family="Mulish,sans-serif" font-size="11" fill="var(--fg-2)">deny-is-final · PHI egress allow-list · policy may only tighten what a plugin requests</text>
+  <text x="46" y="378" font-family="'JetBrains Mono',monospace" font-size="9.5" fill="var(--fg-3)">authN: Ory Kratos (staff sessions, MFA) · authZ: Cedar · role scoping: coordinator / scheduler / biller / surgeon / admin</text>
+  <text x="1136" y="340" text-anchor="end" font-family="'JetBrains Mono',monospace" font-size="9" fill="var(--accent)">EVERY REQUEST</text>
+  <text x="1136" y="356" text-anchor="end" font-family="'JetBrains Mono',monospace" font-size="9" fill="var(--accent)">PASSES HERE</text>
+
+  <path d="M590 271 L590 308" stroke="var(--ember)" stroke-width="1.3" marker-end="url(#aE)"/>
+
+  <!-- ── UAR ── -->
+  <text x="24" y="424" font-family="'JetBrains Mono',monospace" font-size="9.5" letter-spacing="2.4" fill="var(--fg-3)">04 · AGENT PLANE</text>
+  <rect x="24" y="434" width="700" height="196" rx="4" fill="var(--svg-face)"/>
+  <rect x="24" y="434" width="3" height="196" fill="var(--ember)"/>
+  <text x="44" y="460" font-family="Mulish,sans-serif" font-size="15" font-weight="700" fill="var(--fg)">Universal Agent Runtime</text>
+  <text x="44" y="479" font-family="'JetBrains Mono',monospace" font-size="9" fill="var(--fg-3)">ractor actors · one fiber per plugin instance · PSP instruction plane · capability inversion at the Cargo graph</text>
+
+  <rect x="44" y="492" width="156" height="40" rx="3" fill="var(--svg-face2)"/>
+  <text x="56" y="510" font-family="Mulish,sans-serif" font-size="10.5" font-weight="700" fill="var(--fg)">Intake &amp; Resolve</text>
+  <text x="56" y="524" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--fg-3)">eligibility · UM entity</text>
+
+  <rect x="210" y="492" width="156" height="40" rx="3" fill="var(--svg-face2)"/>
+  <text x="222" y="510" font-family="Mulish,sans-serif" font-size="10.5" font-weight="700" fill="var(--fg)">Criteria &amp; Gaps</text>
+  <text x="222" y="524" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--fg-3)">matcher · gap analyst</text>
+
+  <rect x="376" y="492" width="156" height="40" rx="3" fill="var(--svg-face2)"/>
+  <text x="388" y="510" font-family="Mulish,sans-serif" font-size="10.5" font-weight="700" fill="var(--fg)">Compose</text>
+  <text x="388" y="524" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--fg-3)">assembler · LMN · appeal</text>
+
+  <rect x="542" y="492" width="162" height="40" rx="3" fill="var(--svg-face2)"/>
+  <text x="554" y="510" font-family="Mulish,sans-serif" font-size="10.5" font-weight="700" fill="var(--fg)">Adjudicate</text>
+  <text x="554" y="524" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--fg-3)">parser · classifier · P2P</text>
+
+  <rect x="44" y="542" width="156" height="40" rx="3" fill="var(--svg-face2)"/>
+  <text x="56" y="560" font-family="Mulish,sans-serif" font-size="10.5" font-weight="700" fill="var(--fg)">Sentinel</text>
+  <text x="56" y="574" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--fg-3)">SLA timers · expiry</text>
+
+  <rect x="210" y="542" width="156" height="40" rx="3" fill="var(--svg-face2)"/>
+  <text x="222" y="560" font-family="Mulish,sans-serif" font-size="10.5" font-weight="700" fill="var(--fg)">Gold Card</text>
+  <text x="222" y="574" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--fg-3)">rate accrual · defense</text>
+
+  <rect x="376" y="542" width="328" height="40" rx="3" fill="var(--gap-surface)"/>
+  <text x="388" y="560" font-family="Mulish,sans-serif" font-size="10.5" font-weight="700" fill="var(--gap)">Physician Affirmation Gate</text>
+  <text x="388" y="574" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--gap)">no transmission of a clinical assertion without it</text>
+
+  <text x="44" y="606" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="var(--fg-3)">Tier 1 native Rust plugins · Tier 2 WASM component plugins under knowme:plugin@1.0.0 for third-party criteria packs</text>
+  <text x="44" y="620" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="var(--fg-3)">agent backend: Rust + Axum 0.8 · one Tokio runtime · spawn_blocking for extraction and OCR</text>
+
+  <!-- ── BOSSFANG ── -->
+  <rect x="740" y="434" width="416" height="196" rx="4" fill="var(--svg-face)"/>
+  <rect x="740" y="434" width="3" height="196" fill="var(--ember)"/>
+  <text x="760" y="460" font-family="Mulish,sans-serif" font-size="15" font-weight="700" fill="var(--fg)">BossFang</text>
+  <text x="760" y="479" font-family="'JetBrains Mono',monospace" font-size="9" fill="var(--fg-3)">orchestration &amp; channel adapters · fork of librefang</text>
+
+  <rect x="760" y="492" width="184" height="34" rx="3" fill="var(--svg-face2)"/>
+  <text x="772" y="513" font-family="Mulish,sans-serif" font-size="10.5" fill="var(--fg-2)">Fax adapter (Telnyx)</text>
+  <rect x="954" y="492" width="184" height="34" rx="3" fill="var(--svg-face2)"/>
+  <text x="966" y="513" font-family="Mulish,sans-serif" font-size="10.5" fill="var(--fg-2)">Portal adapter</text>
+  <rect x="760" y="534" width="184" height="34" rx="3" fill="var(--svg-face2)"/>
+  <text x="772" y="555" font-family="Mulish,sans-serif" font-size="10.5" fill="var(--fg-2)">X12 278 / 275 / 277</text>
+  <rect x="954" y="534" width="184" height="34" rx="3" fill="var(--svg-face2)"/>
+  <text x="966" y="555" font-family="Mulish,sans-serif" font-size="10.5" fill="var(--fg-2)">FHIR PAS / CRD / DTR</text>
+  <rect x="760" y="576" width="378" height="34" rx="3" fill="var(--svg-face2)"/>
+  <text x="772" y="597" font-family="Mulish,sans-serif" font-size="10.5" fill="var(--fg-2)">Inbound normaliser — fax OCR, secure email, portal message, mail scan</text>
+
+  <path d="M728 532 L736 532" stroke="var(--ember)" stroke-width="1.3" marker-end="url(#aE)"/>
+  <path d="M736 552 L728 552" stroke="var(--ember)" stroke-width="1.3" marker-end="url(#aE)"/>
+
+  <path d="M590 391 L590 428" stroke="var(--ember)" stroke-width="1.3" marker-end="url(#aE)"/>
+
+  <!-- ── DATA / ENTITY / REALTIME ── -->
+  <text x="24" y="666" font-family="'JetBrains Mono',monospace" font-size="9.5" letter-spacing="2.4" fill="var(--fg-3)">05 · DATA, ENTITY &amp; REALTIME PLANE</text>
+
+  <rect x="24" y="676" width="366" height="128" rx="4" fill="var(--svg-face)"/>
+  <rect x="24" y="676" width="3" height="128" fill="var(--ok)"/>
+  <text x="44" y="702" font-family="Mulish,sans-serif" font-size="14" font-weight="700" fill="var(--fg)">Flint Forge</text>
+  <text x="44" y="720" font-family="'JetBrains Mono',monospace" font-size="9" fill="var(--fg-3)">flint_llm pgrx · Postgres · CloudNativePG</text>
+  <text x="44" y="742" font-family="Mulish,sans-serif" font-size="10.5" fill="var(--fg-2)">Payer criteria corpus, effective-dated</text>
+  <text x="44" y="760" font-family="Mulish,sans-serif" font-size="10.5" fill="var(--fg-2)">Case store · documents · extractions</text>
+  <text x="44" y="778" font-family="Mulish,sans-serif" font-size="10.5" fill="var(--fg-2)">Retrieval runs beside the data, not over</text>
+  <text x="44" y="794" font-family="Mulish,sans-serif" font-size="10.5" fill="var(--fg-2)">the wire — criteria never leave the box</text>
+
+  <rect x="406" y="676" width="366" height="128" rx="4" fill="var(--svg-face)"/>
+  <rect x="406" y="676" width="3" height="128" fill="var(--ok)"/>
+  <text x="426" y="702" font-family="Mulish,sans-serif" font-size="14" font-weight="700" fill="var(--fg)">Prometheus Entity Management</text>
+  <text x="426" y="720" font-family="'JetBrains Mono',monospace" font-size="9" fill="var(--fg-3)">did:prometheus: identity plane</text>
+  <text x="426" y="742" font-family="Mulish,sans-serif" font-size="10.5" fill="var(--fg-2)">Patient · Provider · Payer · UM Vendor</text>
+  <text x="426" y="760" font-family="Mulish,sans-serif" font-size="10.5" fill="var(--fg-2)">Plan · Case · Submission · Determination</text>
+  <text x="426" y="778" font-family="Mulish,sans-serif" font-size="10.5" fill="var(--fg-2)">Holds the delegation graph that answers</text>
+  <text x="426" y="794" font-family="Mulish,sans-serif" font-size="10.5" fill="var(--fg-2)">&quot;who actually decides this benefit?&quot;</text>
+
+  <rect x="788" y="676" width="368" height="128" rx="4" fill="var(--svg-face)"/>
+  <rect x="788" y="676" width="3" height="128" fill="var(--ok)"/>
+  <text x="808" y="702" font-family="Mulish,sans-serif" font-size="14" font-weight="700" fill="var(--fg)">Flint Realtime Fabric</text>
+  <text x="808" y="720" font-family="'JetBrains Mono',monospace" font-size="9" fill="var(--fg-3)">str0m WebRTC SFU · Telnyx SMS &amp; Fax</text>
+  <text x="808" y="742" font-family="Mulish,sans-serif" font-size="10.5" fill="var(--fg-2)">Live queue push to every client surface</text>
+  <text x="808" y="760" font-family="Mulish,sans-serif" font-size="10.5" fill="var(--fg-2)">Determination arrival → instant scheduler</text>
+  <text x="808" y="778" font-family="Mulish,sans-serif" font-size="10.5" fill="var(--fg-2)">notification, no polling in the UI</text>
+  <text x="808" y="794" font-family="Mulish,sans-serif" font-size="10.5" fill="var(--fg-2)">Patient SMS action items</text>
+
+  <path d="M380 633 L380 670" stroke="var(--ok)" stroke-width="1.3" marker-end="url(#aOK)"/>
+  <path d="M590 633 L590 670" stroke="var(--ok)" stroke-width="1.3" marker-end="url(#aOK)"/>
+  <path d="M948 633 L948 670" stroke="var(--ok)" stroke-width="1.3" marker-end="url(#aOK)"/>
+
+  <!-- ── LEDGER ── -->
+  <rect x="24" y="822" width="1132" height="52" rx="4" fill="var(--cool-surface)"/>
+  <rect x="24" y="822" width="4" height="52" fill="var(--cool)"/>
+  <text x="46" y="846" font-family="Mulish,sans-serif" font-size="13" font-weight="700" fill="var(--cool)">Evidence Receipt Ledger — append-only, outside the revertible boundary</text>
+  <text x="46" y="864" font-family="'JetBrains Mono',monospace" font-size="9" fill="var(--fg-3)">every assertion → document · page · date · signed receipt   ·   every channel event   ·   every Cedar decision, permit and deny alike</text>
+
+  <!-- ── BOUNDARY ── -->
+  <path d="M14 44 L14 890 L1166 890 L1166 44 Z" fill="none" stroke="var(--ember)" stroke-width="1.2" stroke-dasharray="6 5" opacity=".55"/>
+  <text x="1160" y="908" text-anchor="end" font-family="'JetBrains Mono',monospace" font-size="9" letter-spacing="1.6" fill="var(--accent)">PRACTICE BOUNDARY · PHI AT REST STAYS INSIDE · US REGION ONLY (SB 1188)</text>
+
+  <!-- ── EXTERNAL ── -->
+  <text x="24" y="944" font-family="'JetBrains Mono',monospace" font-size="9.5" letter-spacing="2.4" fill="var(--fg-3)">06 · OUTSIDE THE BOUNDARY</text>
+  <rect x="24" y="954" width="216" height="34" rx="3" fill="var(--svg-face2)"/>
+  <text x="36" y="975" font-family="Mulish,sans-serif" font-size="10" fill="var(--fg-2)">AdvancedMD FHIR R4</text>
+  <rect x="252" y="954" width="216" height="34" rx="3" fill="var(--svg-face2)"/>
+  <text x="264" y="975" font-family="Mulish,sans-serif" font-size="10" fill="var(--fg-2)">Payer &amp; UM vendor portals</text>
+  <rect x="480" y="954" width="216" height="34" rx="3" fill="var(--svg-face2)"/>
+  <text x="492" y="975" font-family="Mulish,sans-serif" font-size="10" fill="var(--fg-2)">Fax &amp; SMS (Telnyx, BAA)</text>
+  <rect x="708" y="954" width="216" height="34" rx="3" fill="var(--gap-surface)"/>
+  <text x="720" y="975" font-family="Mulish,sans-serif" font-size="10" fill="var(--gap)">BAA inference · ZDR only</text>
+  <rect x="936" y="954" width="220" height="34" rx="3" fill="var(--svg-face2)"/>
+  <text x="948" y="975" font-family="Mulish,sans-serif" font-size="10" fill="var(--fg-2)">TDI · IRO · clearinghouses</text>
+</svg>
+<div class="figcap">Figure 01 — Fabric composition. Every PHI egress crosses the boundary through Flint Gate.</div>
+</div>
+
+<h3>Component responsibilities</h3>
+
+<div class="tw">
+<table>
+  <thead><tr><th>Component</th><th>Responsibility in this system</th><th>Why not something else</th></tr></thead>
+  <tbody>
+    <tr><td class="m">Flint Forge</td><td>Payer criteria corpus with effective dating, case store, document store, extraction results. <code>flint_llm</code> runs retrieval and embedding inside Postgres.</td><td>Criteria retrieval beside the data means the corpus never crosses a wire to be searched. Policy text is not PHI, but the query that pairs it with a patient is.</td></tr>
+    <tr><td class="m">Prometheus Entity Management</td><td>The delegation graph. Resolves member + plan + procedure → administering UM entity, criteria set, channel, P2P line, appeal path, regulatory regime.</td><td>This is a graph problem with temporal validity, not a lookup table. Delegations change — BCBSM dropped TurningPoint for MA pain management in May 2025.</td></tr>
+    <tr><td class="m">Flint Gate</td><td>Cedar authorization on every request and every agent action. Ory Kratos handles staff authentication and MFA.</td><td>Cedar deny-is-final gives the PHI egress allow-list teeth. Kratos handles sessions; Cedar handles what a session may do.</td></tr>
+    <tr><td class="m">Universal Agent Runtime</td><td>Hosts every agent as a supervised fiber. Owns the lifecycle, the effect accumulator, the withdrawal guard, and the affirmation gate.</td><td>Agents that can be added, removed, and replaced without restarting the practice's workflow. Failed agent deactivates its dependents rather than the office.</td></tr>
+    <tr><td class="m">BossFang</td><td>Orchestration and channel adapters. Outbound dispatch and inbound normalisation across fax, portal, EDI, and FHIR.</td><td>The channel layer is where this system spends its operational life. It needs its own orchestration, retry, and dead-letter discipline.</td></tr>
+    <tr><td class="m">Flint Realtime Fabric</td><td>Live push of queue and determination state to all client surfaces. Telnyx for outbound fax and patient SMS.</td><td>A determination arriving at 4:40pm should reach the scheduler before they leave, not on the next poll. Telnyx carries both fax and SMS under one BAA.</td></tr>
+    <tr><td class="m">gen_ui_core</td><td>A2UI descriptors and the AG-UI bidirectional channel. One protocol implementation, three renderers.</td><td>Plugins emit descriptors, not widgets, so a new agent surface appears on desktop, mobile, and web without three implementations.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ═══════════ CLIENTS ═══════════ -->
+<h2 id="clients">Client surfaces and who uses them</h2>
+
+<div class="cards">
+  <div class="card">
+    <div class="ct">Tauri 2 Desktop</div>
+    <div class="cm2">React 19 · Zustand 5 · TanStack</div>
+    <div class="cd">The workhorse. Coordinator queue, criteria matrix, channel dispatch, denial workspace, appeal composer. <strong>The affirmation gate runs here and only here</strong> — signing key, chrome control, and physical context are all desktop facts.</div>
+  </div>
+  <div class="card">
+    <div class="ct">Flutter Mobile</div>
+    <div class="cm2">Riverpod 3 · Rust FFI</div>
+    <div class="cd">Surgeon review between cases. Queue triage, criteria matrix read, gap list, P2P briefing. Flutter is mandatory rather than preferred: TJ-ARCH-MOB-001 rules out WebView for regulated-industry mobile.</div>
+  </div>
+  <div class="card">
+    <div class="ct">React 19 Web</div>
+    <div class="cm2">Next.js 16 · TanStack Router</div>
+    <div class="cd">Administrator console. Gold-card accrual dashboards, denial and overturn analytics, turnaround compliance, AI-disclosure and audit reporting. No case-level clinical work.</div>
+  </div>
+  <div class="card">
+    <div class="ct">Patient SMS</div>
+    <div class="cm2">Telnyx · FRF</div>
+    <div class="cd">Action items only — psych evaluation scheduled, tobacco-cessation window open, records needed from an outside clinic. Never clinical detail in the message body; the portal carries the substance.</div>
+  </div>
+</div>
+
+<!-- ═══════════ INTEGRATIONS ═══════════ -->
+<h2 id="integrations">Expected integrations</h2>
+
+<div class="tw">
+<table>
+  <thead><tr><th>Integration</th><th>Direction</th><th>Mechanism</th><th>Phase</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr><td class="m">AdvancedMD FHIR R4</td><td>Read</td><td>SMART on FHIR 2.2, OAuth2 + PKCE</td><td class="m">R5</td><td>Free, public docs, read-only. No write-back. USCDI v3 / US Core 6.1.0.</td></tr>
+    <tr><td class="m">AdvancedMD Connect API</td><td>Read/Write</td><td>Proprietary REST, paid tier</td><td class="m">Later</td><td>Only if filing the finished LMN back into the chart is worth the licence.</td></tr>
+    <tr><td class="m">Availity Essentials</td><td>Both</td><td>Portal + API where available</td><td class="m">R3</td><td>BCBSTX and Aetna precert. Gold-card notices land in the Provider Correspondence Viewer.</td></tr>
+    <tr><td class="m">UHC Provider Portal</td><td>Both</td><td>Portal; 278 where supported</td><td class="m">R3</td><td>Returns a Decision ID. Status also visible via Availity.</td></tr>
+    <tr><td class="m">eviCore</td><td>Both</td><td>Portal + fax</td><td class="m">R3</td><td>Cigna spine, interventional pain, implants. Some Aetna plans.</td></tr>
+    <tr><td class="m">Carelon ProviderPortal</td><td>Both</td><td>Portal, 24/7 real-time status</td><td class="m">R4</td><td>Several BCBS and commercial lines.</td></tr>
+    <tr><td class="m">TurningPoint</td><td>Both</td><td>Portal + phone + fax</td><td class="m">R4</td><td>Same-specialty P2P. Post-procedural doc submission feeds claims.</td></tr>
+    <tr><td class="m">Cohere</td><td>Both</td><td>Portal</td><td class="m">R4</td><td>Humana MSK. Episode-of-care model; high auto-approval rate.</td></tr>
+    <tr><td class="m">Novitasphere</td><td>Both</td><td>Portal</td><td class="m">R6</td><td>Medicare FFS. Mostly retrospective; LCD L37848 governs lumbar fusion in Texas.</td></tr>
+    <tr><td class="m">Telnyx Fax</td><td>Both</td><td>Programmable Fax API</td><td class="m">R3</td><td><strong>BAA required.</strong> Inbound fax is the single highest-volume response channel.</td></tr>
+    <tr><td class="m">Telnyx SMS</td><td>Outbound</td><td>Messaging API</td><td class="m">R7</td><td>Same vendor, same BAA. Patient action items only.</td></tr>
+    <tr><td class="m">BAA inference</td><td>Outbound</td><td>Bedrock / Azure OpenAI / Anthropic API</td><td class="m">R2</td><td>Zero data retention configured. Provider set is a Cedar allow-list, not config.</td></tr>
+    <tr><td class="m">Ory Kratos</td><td>Internal</td><td>Self-hosted</td><td class="m">R0</td><td>Staff identity, MFA. Practice controls the directory.</td></tr>
+    <tr><td class="m">FHIR PAS / CRD / DTR</td><td>Both</td><td>Da Vinci IGs</td><td class="m">2027</td><td>Adapter built behind the same interface; activates as impacted payers publish endpoints.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout">
+  <div class="lbl">Two integration facts worth deciding early</div>
+  <p><strong>Telnyx must sign a BAA.</strong> Every inbound determination letter transits their fax infrastructure. If they will not sign, the fax channel needs a different vendor and that changes R3.</p>
+  <p><strong>Portal automation is a terms-of-service question, not a technical one.</strong> Scraping and RPA against payer portals commonly violates their terms. The design assumption is <em>portal-assist</em> — the system assembles the packet, pre-fills what it can, deep-links the coordinator into the right screen, and captures the reference number on return. Full portal automation only where a sanctioned API exists.</p>
+</div>
+
+<!-- ═══════════ AGENTS ═══════════ -->
+<h2 id="agents">Agent roster</h2>
+
+<p>Sixteen agents, each a UAR fiber with a declared coeffect specification and a provision. Each row states what it consumes, what it provides, whether it can act without a human, and what surface it emits.</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th>#</th><th>Agent</th><th>Consumes</th><th>Provides</th><th>Autonomy</th><th>A2UI surface</th></tr></thead>
+  <tbody>
+    <tr><td class="m">01</td><td><strong>Eligibility Agent</strong></td><td>Member ID, plan, DOS</td><td class="m">coverage.status</td><td><span class="chip ch-w">Autonomous</span></td><td>Coverage banner on case</td></tr>
+    <tr><td class="m">02</td><td><strong>UM Entity Resolver</strong></td><td>Plan, procedure, entity graph</td><td class="m">um.entity</td><td><span class="chip ch-w">Autonomous</span></td><td>Routing card — who decides</td></tr>
+    <tr><td class="m">03</td><td><strong>Regime Tagger</strong></td><td>Plan type, card markings</td><td class="m">regulatory.regime</td><td><span class="chip ch-w">Autonomous</span></td><td>TDI / ERISA / MA / WC badge</td></tr>
+    <tr><td class="m">04</td><td><strong>Criteria Matcher</strong></td><td>CPT, ICD-10, um.entity</td><td class="m">criteria.set</td><td><span class="chip ch-n">Review</span></td><td>Criteria panel</td></tr>
+    <tr><td class="m">05</td><td><strong>Chart Extractor</strong></td><td>Record bundle, imaging, notes</td><td class="m">extraction</td><td><span class="chip ch-n">Review</span></td><td>Extraction inspector</td></tr>
+    <tr><td class="m">06</td><td><strong>Gap Analyst</strong></td><td>criteria.set, extraction</td><td class="m">criteria.matrix</td><td><span class="chip ch-n">Review</span></td><td><code>CriteriaMatrixBlock</code></td></tr>
+    <tr><td class="m">07</td><td><strong>Remediation Planner</strong></td><td>criteria.matrix</td><td class="m">gap.worklist</td><td><span class="chip ch-n">Review</span></td><td><code>GapWorklistBlock</code></td></tr>
+    <tr><td class="m">08</td><td><strong>Document Assembler</strong></td><td>gap.worklist, case.store</td><td class="m">packet.draft</td><td><span class="chip ch-n">Review</span></td><td>Packet manifest</td></tr>
+    <tr><td class="m">09</td><td><strong>LMN Composer</strong></td><td>criteria.matrix, reasoning.library, inference</td><td class="m">document.draft</td><td><span class="chip ch-x">Gated</span></td><td>Draft with citation chips</td></tr>
+    <tr><td class="m">10</td><td><strong>Affirmation Gate</strong></td><td>criteria.matrix, rendered hash</td><td class="m">affirmation</td><td><span class="chip ch-x">Human only</span></td><td><code>AffirmationBlock</code> · privileged</td></tr>
+    <tr><td class="m">11</td><td><strong>Channel Dispatcher</strong></td><td>affirmation, packet, um.entity</td><td class="m">submission.record</td><td><span class="chip ch-n">Assist</span></td><td>Dispatch console</td></tr>
+    <tr><td class="m">12</td><td><strong>Response Parser</strong></td><td>Inbound fax/email/portal/EDI</td><td class="m">determination</td><td><span class="chip ch-n">Review</span></td><td>Inbox with confidence flag</td></tr>
+    <tr><td class="m">13</td><td><strong>Denial Classifier</strong></td><td>determination</td><td class="m">denial.classification</td><td><span class="chip ch-n">Review</span></td><td>Denial workspace</td></tr>
+    <tr><td class="m">14</td><td><strong>Appeal Composer</strong></td><td>denial, criteria.matrix, regime</td><td class="m">appeal.draft</td><td><span class="chip ch-x">Gated</span></td><td>Appeal draft with crosswalk</td></tr>
+    <tr><td class="m">15</td><td><strong>P2P Prep Agent</strong></td><td>denial, criteria crosswalk</td><td class="m">p2p.briefing</td><td><span class="chip ch-n">Review</span></td><td>One-screen briefing</td></tr>
+    <tr><td class="m">16</td><td><strong>SLA Sentinel</strong></td><td>Case events, regime</td><td class="m">timers</td><td><span class="chip ch-w">Autonomous</span></td><td>Countdown banners</td></tr>
+    <tr><td class="m">17</td><td><strong>Auth Lifecycle Monitor</strong></td><td>Approval, surgery date</td><td class="m">auth.validity</td><td><span class="chip ch-w">Autonomous</span></td><td>Expiry alerts on schedule board</td></tr>
+    <tr><td class="m">18</td><td><strong>Gold Card Tracker</strong></td><td>Determinations by physician × service × plan</td><td class="m">goldcard.status</td><td><span class="chip ch-w">Autonomous</span></td><td>Accrual dashboard</td></tr>
+    <tr><td class="m">19</td><td><strong>Patient Action Agent</strong></td><td>gap.worklist items assigned to patient</td><td class="m">patient.tasks</td><td><span class="chip ch-n">Assist</span></td><td>SMS + portal task list</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout cool">
+  <div class="lbl">Autonomy legend</div>
+  <p><strong>Autonomous</strong> — acts without a human; outputs are facts, not clinical assertions. <strong>Review</strong> — a human sees the output before it is used downstream, but no signature is required. <strong>Assist</strong> — the agent prepares, a human executes the irreversible step. <strong>Gated</strong> — output cannot leave the system without a physician affirmation. <strong>Human only</strong> — the agent renders the decision surface; the decision is not the agent's to make.</p>
+</div>
+
+<h3>Agent decomposition</h3>
+
+<div class="figure">
+<svg viewBox="0 0 1180 700" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Agent decomposition and coeffect dependency map">
+  <text x="24" y="26" font-family="'JetBrains Mono',monospace" font-size="10.5" letter-spacing="3" fill="var(--fg-3)">FIGURE 02 · AGENT DECOMPOSITION · COEFFECT DEPENDENCY ORDER</text>
+
+  <!-- lane labels -->
+  <text x="24" y="66" font-family="'JetBrains Mono',monospace" font-size="9" letter-spacing="2" fill="var(--fg-3)">RESOLVE</text>
+  <text x="264" y="66" font-family="'JetBrains Mono',monospace" font-size="9" letter-spacing="2" fill="var(--fg-3)">ASSESS</text>
+  <text x="504" y="66" font-family="'JetBrains Mono',monospace" font-size="9" letter-spacing="2" fill="var(--fg-3)">COMPOSE</text>
+  <text x="744" y="66" font-family="'JetBrains Mono',monospace" font-size="9" letter-spacing="2" fill="var(--fg-3)">TRANSMIT</text>
+  <text x="960" y="66" font-family="'JetBrains Mono',monospace" font-size="9" letter-spacing="2" fill="var(--fg-3)">ADJUDICATE</text>
+
+  <!-- resolve -->
+  <rect x="24" y="76" width="208" height="52" rx="4" fill="var(--svg-face)"/><rect x="24" y="76" width="3" height="52" fill="var(--ok)"/>
+  <text x="40" y="98" font-family="Mulish,sans-serif" font-size="11.5" font-weight="700" fill="var(--fg)">01 Eligibility</text>
+  <text x="40" y="116" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--fg-3)">→ coverage.status</text>
+
+  <rect x="24" y="140" width="208" height="52" rx="4" fill="var(--svg-face)"/><rect x="24" y="140" width="3" height="52" fill="var(--ok)"/>
+  <text x="40" y="162" font-family="Mulish,sans-serif" font-size="11.5" font-weight="700" fill="var(--fg)">02 UM Entity Resolver</text>
+  <text x="40" y="180" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--fg-3)">→ um.entity  · THE PIVOT</text>
+
+  <rect x="24" y="204" width="208" height="52" rx="4" fill="var(--svg-face)"/><rect x="24" y="204" width="3" height="52" fill="var(--ok)"/>
+  <text x="40" y="226" font-family="Mulish,sans-serif" font-size="11.5" font-weight="700" fill="var(--fg)">03 Regime Tagger</text>
+  <text x="40" y="244" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--fg-3)">→ regulatory.regime</text>
+
+  <!-- assess -->
+  <rect x="264" y="76" width="208" height="52" rx="4" fill="var(--svg-face)"/><rect x="264" y="76" width="3" height="52" fill="var(--cool)"/>
+  <text x="280" y="98" font-family="Mulish,sans-serif" font-size="11.5" font-weight="700" fill="var(--fg)">04 Criteria Matcher</text>
+  <text x="280" y="116" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--fg-3)">← um.entity → criteria.set</text>
+
+  <rect x="264" y="140" width="208" height="52" rx="4" fill="var(--svg-face)"/><rect x="264" y="140" width="3" height="52" fill="var(--cool)"/>
+  <text x="280" y="162" font-family="Mulish,sans-serif" font-size="11.5" font-weight="700" fill="var(--fg)">05 Chart Extractor</text>
+  <text x="280" y="180" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--fg-3)">→ extraction (cited)</text>
+
+  <rect x="264" y="204" width="208" height="52" rx="4" fill="var(--svg-face)"/><rect x="264" y="204" width="3" height="52" fill="var(--cool)"/>
+  <text x="280" y="226" font-family="Mulish,sans-serif" font-size="11.5" font-weight="700" fill="var(--fg)">06 Gap Analyst</text>
+  <text x="280" y="244" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--fg-3)">→ criteria.matrix</text>
+
+  <rect x="264" y="268" width="208" height="52" rx="4" fill="var(--svg-face)"/><rect x="264" y="268" width="3" height="52" fill="var(--cool)"/>
+  <text x="280" y="290" font-family="Mulish,sans-serif" font-size="11.5" font-weight="700" fill="var(--fg)">07 Remediation Planner</text>
+  <text x="280" y="308" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--fg-3)">→ gap.worklist</text>
+
+  <!-- compose -->
+  <rect x="504" y="76" width="208" height="52" rx="4" fill="var(--svg-face)"/><rect x="504" y="76" width="3" height="52" fill="var(--ember)"/>
+  <text x="520" y="98" font-family="Mulish,sans-serif" font-size="11.5" font-weight="700" fill="var(--fg)">08 Document Assembler</text>
+  <text x="520" y="116" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--fg-3)">→ packet.draft</text>
+
+  <rect x="504" y="140" width="208" height="52" rx="4" fill="var(--svg-face)"/><rect x="504" y="140" width="3" height="52" fill="var(--ember)"/>
+  <text x="520" y="162" font-family="Mulish,sans-serif" font-size="11.5" font-weight="700" fill="var(--fg)">09 LMN Composer</text>
+  <text x="520" y="180" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--fg-3)">→ document.draft (gated)</text>
+
+  <rect x="504" y="204" width="208" height="76" rx="4" fill="var(--gap-surface)"/><rect x="504" y="204" width="4" height="76" fill="var(--gap)"/>
+  <text x="522" y="228" font-family="Mulish,sans-serif" font-size="12" font-weight="700" fill="var(--gap)">10 Affirmation Gate</text>
+  <text x="522" y="248" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--gap)">→ affirmation</text>
+  <text x="522" y="264" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--gap)">matrix_hash bound</text>
+
+  <!-- transmit -->
+  <rect x="744" y="140" width="192" height="52" rx="4" fill="var(--svg-face)"/><rect x="744" y="140" width="3" height="52" fill="var(--ember)"/>
+  <text x="760" y="162" font-family="Mulish,sans-serif" font-size="11.5" font-weight="700" fill="var(--fg)">11 Dispatcher</text>
+  <text x="760" y="180" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--fg-3)">← affirmation → submission</text>
+
+  <rect x="744" y="204" width="192" height="52" rx="4" fill="var(--svg-face)"/><rect x="744" y="204" width="3" height="52" fill="var(--ember)"/>
+  <text x="760" y="226" font-family="Mulish,sans-serif" font-size="11.5" font-weight="700" fill="var(--fg)">12 Response Parser</text>
+  <text x="760" y="244" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--fg-3)">→ determination</text>
+
+  <!-- adjudicate -->
+  <rect x="960" y="140" width="196" height="52" rx="4" fill="var(--svg-face)"/><rect x="960" y="140" width="3" height="52" fill="var(--cool)"/>
+  <text x="976" y="162" font-family="Mulish,sans-serif" font-size="11.5" font-weight="700" fill="var(--fg)">13 Denial Classifier</text>
+  <text x="976" y="180" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--fg-3)">→ classification</text>
+
+  <rect x="960" y="204" width="196" height="52" rx="4" fill="var(--svg-face)"/><rect x="960" y="204" width="3" height="52" fill="var(--cool)"/>
+  <text x="976" y="226" font-family="Mulish,sans-serif" font-size="11.5" font-weight="700" fill="var(--fg)">15 P2P Prep</text>
+  <text x="976" y="244" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--fg-3)">→ p2p.briefing</text>
+
+  <rect x="960" y="268" width="196" height="52" rx="4" fill="var(--svg-face)"/><rect x="960" y="268" width="3" height="52" fill="var(--ember)"/>
+  <text x="976" y="290" font-family="Mulish,sans-serif" font-size="11.5" font-weight="700" fill="var(--fg)">14 Appeal Composer</text>
+  <text x="976" y="308" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--fg-3)">→ appeal.draft (gated)</text>
+
+  <!-- flows -->
+  <path d="M236 166 L258 166" stroke="var(--ok)" stroke-width="1.3" marker-end="url(#aOK)"/>
+  <path d="M236 166 L248 166 L248 102 L258 102" fill="none" stroke="var(--ok)" stroke-width="1.3" marker-end="url(#aOK)"/>
+  <path d="M368 132 L368 200" stroke="var(--cool)" stroke-width="1.3" marker-end="url(#aC)"/>
+  <path d="M368 196 L368 264" stroke="var(--cool)" stroke-width="1.3" marker-end="url(#aC)"/>
+  <path d="M476 294 L492 294 L492 168 L500 168" fill="none" stroke="var(--cool)" stroke-width="1.3" marker-end="url(#aC)"/>
+  <path d="M476 230 L484 230 L484 102 L500 102" fill="none" stroke="var(--cool)" stroke-width="1.3" marker-end="url(#aC)"/>
+  <path d="M608 196 L608 200" stroke="var(--ember)" stroke-width="1.3" marker-end="url(#aE)"/>
+  <path d="M608 132 L608 136" stroke="var(--ember)" stroke-width="1.3" marker-end="url(#aE)"/>
+  <path d="M716 242 L730 242 L730 166 L740 166" fill="none" stroke="var(--gap)" stroke-width="1.6" marker-end="url(#aE)"/>
+  <path d="M840 196 L840 200" stroke="var(--ember)" stroke-width="1.3" marker-end="url(#aE)"/>
+  <path d="M940 230 L950 230 L950 166 L956 166" fill="none" stroke="var(--cool)" stroke-width="1.3" marker-end="url(#aC)"/>
+  <path d="M1058 196 L1058 200" stroke="var(--cool)" stroke-width="1.3" marker-end="url(#aC)"/>
+  <path d="M1058 260 L1058 264" stroke="var(--cool)" stroke-width="1.3" marker-end="url(#aC)"/>
+  <!-- appeal loops back to gate -->
+  <path d="M1058 324 L1058 348 L608 348 L608 288" fill="none" stroke="var(--gap)" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#aE)"/>
+  <text x="800" y="342" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="var(--gap)">appeal re-enters the affirmation gate — every loop, no exceptions</text>
+
+  <!-- cross-cutting -->
+  <rect x="24" y="384" width="1132" height="46" rx="4" fill="var(--svg-face2)"/>
+  <text x="44" y="404" font-family="Mulish,sans-serif" font-size="12" font-weight="700" fill="var(--fg)">16 SLA Sentinel · 17 Auth Lifecycle Monitor · 18 Gold Card Tracker · 19 Patient Action Agent</text>
+  <text x="44" y="422" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="var(--fg-3)">cross-cutting — subscribe to case events across every stage, provide no input to the main chain, emit their own surfaces</text>
+
+  <!-- key -->
+  <rect x="24" y="452" width="1132" height="76" rx="4" fill="var(--cool-surface)"/>
+  <text x="44" y="474" font-family="'JetBrains Mono',monospace" font-size="9" letter-spacing="2" fill="var(--cool)">READING THE ORDER</text>
+  <text x="44" y="496" font-family="Mulish,sans-serif" font-size="11" fill="var(--fg-2)">Left-to-right is coeffect dependency, not schedule. An agent activates when its declared keys are provided and deactivates when they are withdrawn.</text>
+  <text x="44" y="516" font-family="Mulish,sans-serif" font-size="11" fill="var(--fg-2)">Nothing orchestrates this chain. Remove the Gap Analyst and the LMN Composer deactivates on its own, because criteria.matrix stops being provided.</text>
+
+  <!-- failure modes -->
+  <text x="24" y="566" font-family="'JetBrains Mono',monospace" font-size="9" letter-spacing="2" fill="var(--fg-3)">FAILURE PROPAGATION</text>
+  <rect x="24" y="576" width="366" height="86" rx="4" fill="var(--svg-face)"/>
+  <text x="44" y="598" font-family="Mulish,sans-serif" font-size="11.5" font-weight="700" fill="var(--fg)">Entity Resolver fails</text>
+  <text x="44" y="618" font-family="Mulish,sans-serif" font-size="10" fill="var(--fg-2)">Criteria Matcher never activates. No matrix,</text>
+  <text x="44" y="634" font-family="Mulish,sans-serif" font-size="10" fill="var(--fg-2)">no letter, no dispatch. The case parks visibly</text>
+  <text x="44" y="650" font-family="Mulish,sans-serif" font-size="10" fill="var(--fg-2)">rather than being sent to the wrong vendor.</text>
+
+  <rect x="406" y="576" width="366" height="86" rx="4" fill="var(--svg-face)"/>
+  <text x="426" y="598" font-family="Mulish,sans-serif" font-size="11.5" font-weight="700" fill="var(--fg)">Affirmation Gate absent</text>
+  <text x="426" y="618" font-family="Mulish,sans-serif" font-size="10" fill="var(--fg-2)">Dispatcher cannot activate. The system does</text>
+  <text x="426" y="634" font-family="Mulish,sans-serif" font-size="10" fill="var(--fg-2)">not fall back to sending unaffirmed letters —</text>
+  <text x="426" y="650" font-family="Mulish,sans-serif" font-size="10" fill="var(--fg-2)">it stops transmitting. Fail-closed by structure.</text>
+
+  <rect x="788" y="576" width="368" height="86" rx="4" fill="var(--svg-face)"/>
+  <text x="808" y="598" font-family="Mulish,sans-serif" font-size="11.5" font-weight="700" fill="var(--fg)">Response Parser low confidence</text>
+  <text x="808" y="618" font-family="Mulish,sans-serif" font-size="10" fill="var(--fg-2)">Determination is flagged for human read</text>
+  <text x="808" y="634" font-family="Mulish,sans-serif" font-size="10" fill="var(--fg-2)">rather than guessed. A misread denial reason</text>
+  <text x="808" y="650" font-family="Mulish,sans-serif" font-size="10" fill="var(--fg-2)">sends the case down the wrong remediation path.</text>
+</svg>
+<div class="figcap">Figure 02 — Agent decomposition. Left-to-right is dependency order, not a schedule.</div>
+</div>
+
+<!-- ═══════════ LIFECYCLE ═══════════ -->
+<h2 id="lifecycle">Case lifecycle</h2>
+
+<p>The state machine the whole system exists to run. Happy path across the top; everything below it is where the effort actually goes.</p>
+
+<div class="figure">
+<svg viewBox="0 0 1180 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Prior authorization case lifecycle state machine">
+  <text x="24" y="26" font-family="'JetBrains Mono',monospace" font-size="10.5" letter-spacing="3" fill="var(--fg-3)">FIGURE 03 · CASE LIFECYCLE · HAPPY PATH ABOVE, LOOPS BELOW</text>
+
+  <!-- happy path -->
+  <rect x="24" y="60" width="140" height="46" rx="4" fill="var(--svg-face)"/>
+  <text x="94" y="80" text-anchor="middle" font-family="Mulish,sans-serif" font-size="11" font-weight="700" fill="var(--fg)">Surgical</text>
+  <text x="94" y="95" text-anchor="middle" font-family="Mulish,sans-serif" font-size="11" font-weight="700" fill="var(--fg)">Decision</text>
+
+  <rect x="188" y="60" width="140" height="46" rx="4" fill="var(--svg-face)"/>
+  <text x="258" y="80" text-anchor="middle" font-family="Mulish,sans-serif" font-size="11" font-weight="700" fill="var(--fg)">Eligibility &amp;</text>
+  <text x="258" y="95" text-anchor="middle" font-family="Mulish,sans-serif" font-size="11" font-weight="700" fill="var(--fg)">Routing</text>
+
+  <rect x="352" y="60" width="140" height="46" rx="4" fill="var(--svg-face)"/>
+  <text x="422" y="80" text-anchor="middle" font-family="Mulish,sans-serif" font-size="11" font-weight="700" fill="var(--fg)">Criteria</text>
+  <text x="422" y="95" text-anchor="middle" font-family="Mulish,sans-serif" font-size="11" font-weight="700" fill="var(--fg)">Pre-check</text>
+
+  <rect x="516" y="60" width="140" height="46" rx="4" fill="var(--gap-surface)"/>
+  <text x="586" y="80" text-anchor="middle" font-family="Mulish,sans-serif" font-size="11" font-weight="700" fill="var(--gap)">Affirmation</text>
+  <text x="586" y="95" text-anchor="middle" font-family="Mulish,sans-serif" font-size="11" font-weight="700" fill="var(--gap)">Gate</text>
+
+  <rect x="680" y="60" width="140" height="46" rx="4" fill="var(--svg-face)"/>
+  <text x="750" y="80" text-anchor="middle" font-family="Mulish,sans-serif" font-size="11" font-weight="700" fill="var(--fg)">Submitted</text>
+  <text x="750" y="95" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--fg-3)">clock starts</text>
+
+  <rect x="844" y="60" width="140" height="46" rx="4" fill="var(--ok-surface)"/>
+  <text x="914" y="80" text-anchor="middle" font-family="Mulish,sans-serif" font-size="11" font-weight="700" fill="var(--ok)">Approved</text>
+  <text x="914" y="95" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--ok)">auth on file</text>
+
+  <rect x="1008" y="60" width="148" height="46" rx="4" fill="var(--ok-surface)"/>
+  <text x="1082" y="80" text-anchor="middle" font-family="Mulish,sans-serif" font-size="11" font-weight="700" fill="var(--ok)">Scheduled</text>
+  <text x="1082" y="95" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--ok)">case booked</text>
+
+  <path d="M166 83 L184 83" stroke="var(--fg-3)" stroke-width="1.3" marker-end="url(#aG)"/>
+  <path d="M330 83 L348 83" stroke="var(--fg-3)" stroke-width="1.3" marker-end="url(#aG)"/>
+  <path d="M494 83 L512 83" stroke="var(--fg-3)" stroke-width="1.3" marker-end="url(#aG)"/>
+  <path d="M658 83 L676 83" stroke="var(--gap)" stroke-width="1.6" marker-end="url(#aE)"/>
+  <path d="M822 83 L840 83" stroke="var(--ok)" stroke-width="1.3" marker-end="url(#aOK)"/>
+  <path d="M986 83 L1004 83" stroke="var(--ok)" stroke-width="1.3" marker-end="url(#aOK)"/>
+
+  <!-- gap remediation loop -->
+  <rect x="352" y="160" width="140" height="46" rx="4" fill="var(--svg-face)"/>
+  <text x="422" y="180" text-anchor="middle" font-family="Mulish,sans-serif" font-size="11" font-weight="700" fill="var(--fg)">Gap</text>
+  <text x="422" y="195" text-anchor="middle" font-family="Mulish,sans-serif" font-size="11" font-weight="700" fill="var(--fg)">Remediation</text>
+  <path d="M410 110 L410 156" stroke="var(--fg-3)" stroke-width="1.3" marker-end="url(#aG)"/>
+  <path d="M436 156 L436 110" stroke="var(--fg-3)" stroke-width="1.3" marker-end="url(#aG)"/>
+  <text x="500" y="188" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="var(--fg-3)">PT records · imaging · psych · tobacco window · outside records</text>
+
+  <!-- RFI loop -->
+  <rect x="680" y="160" width="140" height="46" rx="4" fill="var(--warm-surface)"/>
+  <text x="750" y="180" text-anchor="middle" font-family="Mulish,sans-serif" font-size="11" font-weight="700" fill="var(--accent)">RFI</text>
+  <text x="750" y="195" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--accent)">multi-round</text>
+  <path d="M738 110 L738 156" stroke="var(--accent)" stroke-width="1.3" marker-end="url(#aE)"/>
+  <path d="M764 156 L764 110" stroke="var(--accent)" stroke-width="1.3" marker-end="url(#aE)"/>
+
+  <!-- denial branch -->
+  <rect x="844" y="160" width="140" height="46" rx="4" fill="var(--gap-surface)"/>
+  <text x="914" y="180" text-anchor="middle" font-family="Mulish,sans-serif" font-size="11" font-weight="700" fill="var(--gap)">Denied</text>
+  <text x="914" y="195" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--gap)">classify</text>
+  <path d="M914 110 L914 156" stroke="var(--gap)" stroke-width="1.4" marker-end="url(#aE)"/>
+
+  <!-- classification split -->
+  <rect x="620" y="256" width="176" height="46" rx="4" fill="var(--svg-face)"/>
+  <text x="708" y="276" text-anchor="middle" font-family="Mulish,sans-serif" font-size="11" font-weight="700" fill="var(--fg)">Administrative</text>
+  <text x="708" y="291" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--fg-3)">correct &amp; resubmit</text>
+
+  <rect x="812" y="256" width="176" height="46" rx="4" fill="var(--svg-face)"/>
+  <text x="900" y="276" text-anchor="middle" font-family="Mulish,sans-serif" font-size="11" font-weight="700" fill="var(--fg)">Medical necessity</text>
+  <text x="900" y="291" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--fg-3)">P2P → appeal</text>
+
+  <rect x="1004" y="256" width="152" height="46" rx="4" fill="var(--svg-face)"/>
+  <text x="1080" y="276" text-anchor="middle" font-family="Mulish,sans-serif" font-size="11" font-weight="700" fill="var(--fg)">Experimental</text>
+  <text x="1080" y="291" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--fg-3)">straight to IRO</text>
+
+  <path d="M890 210 L760 210 L760 252" fill="none" stroke="var(--gap)" stroke-width="1.3" marker-end="url(#aE)"/>
+  <path d="M914 210 L914 252" stroke="var(--gap)" stroke-width="1.3" marker-end="url(#aE)"/>
+  <path d="M940 210 L1070 210 L1070 252" fill="none" stroke="var(--gap)" stroke-width="1.3" marker-end="url(#aE)"/>
+
+  <!-- resubmit loop back -->
+  <path d="M660 302 L600 302 L600 130 L586 130 L586 110" fill="none" stroke="var(--fg-3)" stroke-width="1.3" stroke-dasharray="5 4" marker-end="url(#aG)"/>
+  <text x="404" y="330" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="var(--fg-3)">administrative fixes re-enter at the affirmation gate</text>
+
+  <!-- P2P -->
+  <rect x="812" y="356" width="176" height="46" rx="4" fill="var(--svg-face)"/>
+  <text x="900" y="376" text-anchor="middle" font-family="Mulish,sans-serif" font-size="11" font-weight="700" fill="var(--fg)">Peer-to-Peer</text>
+  <text x="900" y="391" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--fg-3)">TX same-specialty required</text>
+  <path d="M900 306 L900 352" stroke="var(--gap)" stroke-width="1.3" marker-end="url(#aE)"/>
+
+  <rect x="812" y="426" width="176" height="46" rx="4" fill="var(--svg-face)"/>
+  <text x="900" y="446" text-anchor="middle" font-family="Mulish,sans-serif" font-size="11" font-weight="700" fill="var(--fg)">Internal Appeal</text>
+  <text x="900" y="461" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--fg-3)">30 cal days (TDI) · 180d ERISA</text>
+  <path d="M900 406 L900 422" stroke="var(--gap)" stroke-width="1.3" marker-end="url(#aE)"/>
+
+  <rect x="812" y="496" width="176" height="46" rx="4" fill="var(--svg-face)"/>
+  <text x="900" y="516" text-anchor="middle" font-family="Mulish,sans-serif" font-size="11" font-weight="700" fill="var(--fg)">External Review</text>
+  <text x="900" y="531" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--fg-3)">TX IRO · MA IRE · QIC</text>
+  <path d="M900 476 L900 492" stroke="var(--gap)" stroke-width="1.3" marker-end="url(#aE)"/>
+  <path d="M1070 306 L1070 519 L992 519" fill="none" stroke="var(--gap)" stroke-width="1.3" marker-end="url(#aE)"/>
+
+  <!-- overturn back to approved -->
+  <path d="M808 449 L640 449 L640 400 L1090 400 L1090 116" fill="none" stroke="var(--ok)" stroke-width="1.4" stroke-dasharray="5 4"/>
+  <path d="M1090 120 L1090 112" stroke="var(--ok)" stroke-width="1.4" marker-end="url(#aOK)"/>
+  <text x="646" y="393" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="var(--ok)">81.7% of appealed denials are overturned in whole or part (AMA 2024) — this is the return path the system is built to exploit</text>
+
+  <!-- post-approval -->
+  <rect x="24" y="426" width="176" height="46" rx="4" fill="var(--svg-face)"/>
+  <text x="112" y="446" text-anchor="middle" font-family="Mulish,sans-serif" font-size="11" font-weight="700" fill="var(--fg)">Auth Expiring</text>
+  <text x="112" y="461" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--fg-3)">re-auth trigger</text>
+
+  <rect x="216" y="426" width="176" height="46" rx="4" fill="var(--svg-face)"/>
+  <text x="304" y="446" text-anchor="middle" font-family="Mulish,sans-serif" font-size="11" font-weight="700" fill="var(--fg)">Intraop Change</text>
+  <text x="304" y="461" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--fg-3)">CPT drift → post-service auth</text>
+
+  <rect x="408" y="426" width="176" height="46" rx="4" fill="var(--svg-face)"/>
+  <text x="496" y="446" text-anchor="middle" font-family="Mulish,sans-serif" font-size="11" font-weight="700" fill="var(--fg)">Gold Card Earned</text>
+  <text x="496" y="461" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--fg-3)">exits the machine entirely</text>
+
+  <path d="M1076 110 L1076 496 L1000 496" fill="none" stroke="var(--fg-3)" stroke-width="1" stroke-dasharray="3 4" opacity="0"/>
+  <path d="M1082 110 L1082 140 L120 140 L120 422" fill="none" stroke="var(--fg-3)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#aG)"/>
+  <path d="M1082 140 L304 140 L304 422" fill="none" stroke="var(--fg-3)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#aG)"/>
+  <path d="M1082 140 L496 140 L496 422" fill="none" stroke="var(--ok)" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#aOK)"/>
+
+  <rect x="24" y="496" width="560" height="46" rx="4" fill="var(--cool-surface)"/>
+  <text x="44" y="518" font-family="Mulish,sans-serif" font-size="11" font-weight="700" fill="var(--cool)">The misrouted state is not drawn because it has no transitions.</text>
+  <text x="44" y="534" font-family="Mulish,sans-serif" font-size="10" fill="var(--fg-2)">A packet sent to the wrong entity does not get denied — it sits, and the clock never starts.</text>
+</svg>
+<div class="figcap">Figure 03 — Case lifecycle. Gap remediation, RFI, and appeal are all loops, not exits.</div>
+</div>
+
+<!-- ═══════════ SEQ SUBMIT ═══════════ -->
+<h2 id="seq-submit">Sequence — submission through the RFI loop</h2>
+
+<div class="figure">
+<svg viewBox="0 0 1180 700" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sequence diagram: submission through RFI loop to approval">
+  <text x="24" y="26" font-family="'JetBrains Mono',monospace" font-size="10.5" letter-spacing="3" fill="var(--fg-3)">FIGURE 04 · SEQUENCE · UC-01 SURGICAL DECISION TO APPROVAL, WITH ONE RFI ROUND</text>
+
+  <!-- lanes -->
+  <g font-family="Mulish,sans-serif" font-size="11" font-weight="700" fill="var(--fg)">
+    <rect x="24" y="52" width="150" height="34" rx="4" fill="var(--svg-face2)"/><text x="99" y="74" text-anchor="middle">Surgeon / PA</text>
+    <rect x="198" y="52" width="150" height="34" rx="4" fill="var(--svg-face2)"/><text x="273" y="74" text-anchor="middle">Coordinator</text>
+    <rect x="372" y="52" width="180" height="34" rx="4" fill="var(--warm-surface)"/><text x="462" y="74" text-anchor="middle" fill="var(--accent)">UAR Agents</text>
+    <rect x="576" y="52" width="150" height="34" rx="4" fill="var(--svg-face2)"/><text x="651" y="74" text-anchor="middle">BossFang</text>
+    <rect x="750" y="52" width="180" height="34" rx="4" fill="var(--svg-face2)"/><text x="840" y="74" text-anchor="middle">UM Vendor</text>
+    <rect x="954" y="52" width="202" height="34" rx="4" fill="var(--cool-surface)"/><text x="1055" y="74" text-anchor="middle" fill="var(--cool)">Ledger / Sentinel</text>
+  </g>
+
+  <g stroke="var(--svg-line)" stroke-width="1" stroke-dasharray="3 4" opacity=".7">
+    <line x1="99" y1="90" x2="99" y2="670"/><line x1="273" y1="90" x2="273" y2="670"/>
+    <line x1="462" y1="90" x2="462" y2="670"/><line x1="651" y1="90" x2="651" y2="670"/>
+    <line x1="840" y1="90" x2="840" y2="670"/><line x1="1055" y1="90" x2="1055" y2="670"/>
+  </g>
+
+  <g font-family="'JetBrains Mono',monospace" font-size="8.5" fill="var(--fg-2)">
+    <path d="M99 112 L456 112" stroke="var(--fg-3)" stroke-width="1.2" marker-end="url(#aG)"/>
+    <text x="110" y="106">surgical decision · CPT 22633 L4-L5 · ICD M43.16</text>
+
+    <path d="M462 140 L462 140" stroke="none"/>
+    <rect x="378" y="128" width="168" height="26" rx="3" fill="var(--svg-face)"/>
+    <text x="462" y="145" text-anchor="middle" fill="var(--fg)">01 eligibility · 02 UM resolve · 03 regime</text>
+
+    <path d="M456 178 L106 178" stroke="var(--ok)" stroke-width="1.2" marker-end="url(#aOK)"/>
+    <text x="120" y="172" fill="var(--ok)">routed: eviCore (Cigna spine) · TDI-regulated · not gold-carded</text>
+
+    <rect x="378" y="196" width="168" height="26" rx="3" fill="var(--svg-face)"/>
+    <text x="462" y="213" text-anchor="middle" fill="var(--fg)">04 criteria · 05 extract · 06 gaps</text>
+
+    <path d="M456 246 L280 246" stroke="var(--accent)" stroke-width="1.2" marker-end="url(#aE)"/>
+    <text x="292" y="240" fill="var(--accent)">matrix: 5 met · 1 gap (ESI trial undocumented)</text>
+
+    <path d="M273 274 L456 274" stroke="var(--fg-3)" stroke-width="1.2" marker-end="url(#aG)"/>
+    <text x="284" y="268">injection records retrieved from pain clinic, attached</text>
+
+    <rect x="378" y="292" width="168" height="26" rx="3" fill="var(--svg-face)"/>
+    <text x="462" y="309" text-anchor="middle" fill="var(--fg)">08 assemble · 09 compose LMN</text>
+
+    <path d="M456 342 L106 342" stroke="var(--gap)" stroke-width="1.6" marker-end="url(#aE)"/>
+    <text x="120" y="336" fill="var(--gap)">AFFIRMATION REQUIRED · matrix_hash sha256:9f2c…</text>
+
+    <path d="M99 372 L1049 372" stroke="var(--gap)" stroke-width="1.6" marker-end="url(#aE)"/>
+    <text x="110" y="366" fill="var(--gap)">AFFIRM_CRITERIA (AG-UI client event) · did:aso:p:kjames · attested_at</text>
+
+    <path d="M462 400 L645 400" stroke="var(--ember)" stroke-width="1.2" marker-end="url(#aE)"/>
+    <text x="474" y="394" fill="var(--accent)">11 dispatch</text>
+
+    <path d="M651 428 L834 428" stroke="var(--ember)" stroke-width="1.2" marker-end="url(#aE)"/>
+    <text x="662" y="422" fill="var(--accent)">eviCore portal submit + fax packet</text>
+
+    <path d="M840 456 L657 456" stroke="var(--cool)" stroke-width="1.2" marker-end="url(#aC)"/>
+    <text x="672" y="450" fill="var(--cool)">reference no. · clock starts</text>
+
+    <path d="M651 484 L1049 484" stroke="var(--cool)" stroke-width="1.2" marker-end="url(#aC)"/>
+    <text x="700" y="478" fill="var(--cool)">receipt written · SLA timer armed (72h expedited / 7d standard)</text>
+
+    <!-- RFI -->
+    <rect x="576" y="504" width="580" height="88" rx="4" fill="var(--warm-surface)" opacity=".55"/>
+    <text x="592" y="522" font-size="9" letter-spacing="2" fill="var(--accent)">RFI LOOP — REPEATS UNTIL RESOLVED</text>
+
+    <path d="M840 546 L657 546" stroke="var(--accent)" stroke-width="1.2" marker-end="url(#aE)"/>
+    <text x="672" y="540" fill="var(--accent)">fax: RFI — flexion/extension films requested</text>
+
+    <path d="M645 572 L468 572" stroke="var(--accent)" stroke-width="1.2" marker-end="url(#aE)"/>
+    <text x="480" y="566" fill="var(--accent)">12 parse → 07 re-plan → 08 re-assemble → re-affirm → 11 re-dispatch</text>
+
+    <path d="M840 622 L657 622" stroke="var(--ok)" stroke-width="1.4" marker-end="url(#aOK)"/>
+    <text x="672" y="616" fill="var(--ok)">APPROVED · auth no. · valid 90 days · CPT 22633 + 22632</text>
+
+    <path d="M645 650 L280 650" stroke="var(--ok)" stroke-width="1.4" marker-end="url(#aOK)"/>
+    <text x="292" y="644" fill="var(--ok)">FRF push → scheduler board updates live · 17 monitor arms expiry watch</text>
+  </g>
+</svg>
+<div class="figcap">Figure 04 — UC-01. Every re-submission re-enters the affirmation gate.</div>
+</div>
+
+<!-- ═══════════ SEQ DENIAL ═══════════ -->
+<h2 id="seq-denial">Sequence — denial through peer-to-peer, appeal, and external review</h2>
+
+<div class="figure">
+<svg viewBox="0 0 1180 700" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sequence diagram: denial through peer-to-peer, internal appeal and IRO">
+  <text x="24" y="26" font-family="'JetBrains Mono',monospace" font-size="10.5" letter-spacing="3" fill="var(--fg-3)">FIGURE 05 · SEQUENCE · UC-07 MEDICAL-NECESSITY DENIAL TO OVERTURN (TDI-REGULATED PLAN)</text>
+
+  <g font-family="Mulish,sans-serif" font-size="11" font-weight="700" fill="var(--fg)">
+    <rect x="24" y="52" width="150" height="34" rx="4" fill="var(--svg-face2)"/><text x="99" y="74" text-anchor="middle">Dr. James</text>
+    <rect x="198" y="52" width="150" height="34" rx="4" fill="var(--svg-face2)"/><text x="273" y="74" text-anchor="middle">Coordinator</text>
+    <rect x="372" y="52" width="180" height="34" rx="4" fill="var(--warm-surface)"/><text x="462" y="74" text-anchor="middle" fill="var(--accent)">UAR Agents</text>
+    <rect x="576" y="52" width="150" height="34" rx="4" fill="var(--svg-face2)"/><text x="651" y="74" text-anchor="middle">BossFang</text>
+    <rect x="750" y="52" width="180" height="34" rx="4" fill="var(--svg-face2)"/><text x="840" y="74" text-anchor="middle">UM Vendor</text>
+    <rect x="954" y="52" width="202" height="34" rx="4" fill="var(--cool-surface)"/><text x="1055" y="74" text-anchor="middle" fill="var(--cool)">TDI IRO</text>
+  </g>
+
+  <g stroke="var(--svg-line)" stroke-width="1" stroke-dasharray="3 4" opacity=".7">
+    <line x1="99" y1="90" x2="99" y2="670"/><line x1="273" y1="90" x2="273" y2="670"/>
+    <line x1="462" y1="90" x2="462" y2="670"/><line x1="651" y1="90" x2="651" y2="670"/>
+    <line x1="840" y1="90" x2="840" y2="670"/><line x1="1055" y1="90" x2="1055" y2="670"/>
+  </g>
+
+  <g font-family="'JetBrains Mono',monospace" font-size="8.5" fill="var(--fg-2)">
+    <path d="M840 112 L657 112" stroke="var(--gap)" stroke-width="1.4" marker-end="url(#aE)"/>
+    <text x="672" y="106" fill="var(--gap)">fax: ADVERSE DETERMINATION — &quot;instability not demonstrated&quot;</text>
+
+    <rect x="378" y="130" width="168" height="26" rx="3" fill="var(--svg-face)"/>
+    <text x="462" y="147" text-anchor="middle" fill="var(--fg)">12 parse · 13 classify</text>
+
+    <path d="M456 178 L280 178" stroke="var(--gap)" stroke-width="1.2" marker-end="url(#aE)"/>
+    <text x="292" y="172" fill="var(--gap)">class: MEDICAL NECESSITY · route P2P · appeal window armed</text>
+
+    <path d="M462 206 L462 206" stroke="none"/>
+    <rect x="378" y="196" width="168" height="26" rx="3" fill="var(--svg-face)"/>
+    <text x="462" y="213" text-anchor="middle" fill="var(--fg)">15 P2P prep — crosswalk built</text>
+
+    <path d="M456 250 L106 250" stroke="var(--accent)" stroke-width="1.2" marker-end="url(#aE)"/>
+    <text x="120" y="244" fill="var(--accent)">briefing: criterion ↔ chart evidence · flex/ext 6mm translation, RAD-1180 p.1</text>
+
+    <path d="M273 280 L834 280" stroke="var(--fg-3)" stroke-width="1.2" marker-end="url(#aG)"/>
+    <text x="300" y="274">P2P requested · TX same-specialty, Texas-licensed physician required (HB 3459)</text>
+
+    <path d="M99 308 L834 308" stroke="var(--fg-3)" stroke-width="1.2" marker-end="url(#aG)"/>
+    <text x="120" y="302">peer-to-peer call · outcome recorded to ledger</text>
+
+    <path d="M840 336 L657 336" stroke="var(--gap)" stroke-width="1.2" marker-end="url(#aE)"/>
+    <text x="672" y="330" fill="var(--gap)">upheld</text>
+
+    <!-- appeal -->
+    <rect x="198" y="356" width="958" height="152" rx="4" fill="var(--gap-surface)" opacity=".45"/>
+    <text x="214" y="374" font-size="9" letter-spacing="2" fill="var(--gap)">INTERNAL APPEAL — TX CH. 4201: ACK ≤5 WORKING DAYS, DECISION ≤30 CALENDAR DAYS</text>
+
+    <rect x="378" y="386" width="168" height="26" rx="3" fill="var(--svg-face)"/>
+    <text x="462" y="403" text-anchor="middle" fill="var(--fg)">14 appeal composer</text>
+
+    <path d="M456 434 L106 434" stroke="var(--gap)" stroke-width="1.6" marker-end="url(#aE)"/>
+    <text x="120" y="428" fill="var(--gap)">AFFIRMATION REQUIRED — appeal is a clinical assertion like any other</text>
+
+    <path d="M99 462 L645 462" stroke="var(--ember)" stroke-width="1.2" marker-end="url(#aE)"/>
+    <text x="130" y="456" fill="var(--accent)">affirmed → dispatch appeal packet</text>
+
+    <path d="M840 490 L657 490" stroke="var(--gap)" stroke-width="1.2" marker-end="url(#aE)"/>
+    <text x="672" y="484" fill="var(--gap)">appeal denied</text>
+
+    <!-- IRO -->
+    <path d="M273 528 L1049 528" stroke="var(--cool)" stroke-width="1.3" marker-end="url(#aC)"/>
+    <text x="300" y="522" fill="var(--cool)">IRO requested (Ch. 4202) · records due from UM agent within 3 business days</text>
+
+    <path d="M840 556 L1049 556" stroke="var(--fg-3)" stroke-width="1.2" marker-end="url(#aG)"/>
+    <text x="862" y="550">UM agent transmits its file</text>
+
+    <path d="M1049 590 L657 590" stroke="var(--ok)" stroke-width="1.6" marker-end="url(#aOK)"/>
+    <text x="700" y="584" fill="var(--ok)">IRO DETERMINATION: OVERTURNED · binding on the UM agent</text>
+
+    <path d="M645 622 L280 622" stroke="var(--ok)" stroke-width="1.4" marker-end="url(#aOK)"/>
+    <text x="300" y="616" fill="var(--ok)">auth issued · scheduler notified via FRF · 18 gold-card tracker records the reversal</text>
+
+    <rect x="24" y="642" width="1132" height="34" rx="4" fill="var(--cool-surface)"/>
+    <text x="44" y="663" font-family="Mulish,sans-serif" font-size="10.5" fill="var(--cool)">Note: an experimental/investigational determination (two-level arthroplasty, posterior SI fusion, interspinous spacer) skips P2P and internal appeal where the plan permits, and goes directly to IRO.</text>
+  </g>
+</svg>
+<div class="figcap">Figure 05 — UC-07. The IRO determination binds the utilization review agent.</div>
+</div>
+
+<!-- ═══════════ CHANNELS ═══════════ -->
+<h2 id="channels">Channel fan-out</h2>
+
+<div class="figure">
+<svg viewBox="0 0 1180 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Channel adapter fan-out">
+  <text x="24" y="26" font-family="'JetBrains Mono',monospace" font-size="10.5" letter-spacing="3" fill="var(--fg-3)">FIGURE 06 · CHANNEL FAN-OUT · ONE INTERFACE, SIX ADAPTERS, ONE INBOUND NORMALISER</text>
+
+  <rect x="24" y="56" width="230" height="70" rx="4" fill="var(--gap-surface)"/>
+  <rect x="24" y="56" width="4" height="70" fill="var(--gap)"/>
+  <text x="44" y="82" font-family="Mulish,sans-serif" font-size="13" font-weight="700" fill="var(--gap)">Affirmed Packet</text>
+  <text x="44" y="102" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="var(--gap)">document.draft + affirmation</text>
+  <text x="44" y="116" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="var(--gap)">matrix_hash bound</text>
+
+  <rect x="300" y="56" width="200" height="70" rx="4" fill="var(--svg-face)"/>
+  <rect x="300" y="56" width="3" height="70" fill="var(--ember)"/>
+  <text x="320" y="82" font-family="Mulish,sans-serif" font-size="13" font-weight="700" fill="var(--fg)">11 Dispatcher</text>
+  <text x="320" y="102" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="var(--fg-3)">selects adapter from</text>
+  <text x="320" y="116" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="var(--fg-3)">um.entity, not payer name</text>
+  <path d="M258 91 L296 91" stroke="var(--gap)" stroke-width="1.5" marker-end="url(#aE)"/>
+
+  <g font-family="Mulish,sans-serif" font-size="10.5" fill="var(--fg-2)">
+    <rect x="560" y="44" width="188" height="34" rx="3" fill="var(--svg-face)"/><text x="576" y="65">Fax (Telnyx)</text>
+    <rect x="560" y="86" width="188" height="34" rx="3" fill="var(--svg-face)"/><text x="576" y="107">Portal-assist</text>
+    <rect x="560" y="128" width="188" height="34" rx="3" fill="var(--svg-face)"/><text x="576" y="149">Phone / expedited</text>
+    <rect x="560" y="170" width="188" height="34" rx="3" fill="var(--svg-face)"/><text x="576" y="191">X12 278</text>
+    <rect x="560" y="212" width="188" height="34" rx="3" fill="var(--svg-face2)"/><text x="576" y="233">FHIR PAS (2027)</text>
+    <rect x="560" y="254" width="188" height="34" rx="3" fill="var(--svg-face)"/><text x="576" y="275">Mail (appeals)</text>
+  </g>
+  <g stroke="var(--ember)" stroke-width="1.2" fill="none">
+    <path d="M504 91 L536 91 L536 61 L556 61" marker-end="url(#aE)"/>
+    <path d="M504 91 L536 91 L536 103 L556 103" marker-end="url(#aE)"/>
+    <path d="M536 103 L536 145 L556 145" marker-end="url(#aE)"/>
+    <path d="M536 145 L536 187 L556 187" marker-end="url(#aE)"/>
+    <path d="M536 187 L536 229 L556 229" marker-end="url(#aE)" stroke-dasharray="4 4"/>
+    <path d="M536 229 L536 271 L556 271" marker-end="url(#aE)"/>
+  </g>
+
+  <g font-family="Mulish,sans-serif" font-size="10.5" fill="var(--fg-2)">
+    <rect x="800" y="44" width="180" height="34" rx="3" fill="var(--svg-face2)"/><text x="816" y="65">eviCore</text>
+    <rect x="800" y="86" width="180" height="34" rx="3" fill="var(--svg-face2)"/><text x="816" y="107">Carelon</text>
+    <rect x="800" y="128" width="180" height="34" rx="3" fill="var(--svg-face2)"/><text x="816" y="149">TurningPoint</text>
+    <rect x="800" y="170" width="180" height="34" rx="3" fill="var(--svg-face2)"/><text x="816" y="191">Cohere / Humana</text>
+    <rect x="800" y="212" width="180" height="34" rx="3" fill="var(--svg-face2)"/><text x="816" y="233">Availity (BCBSTX, Aetna)</text>
+    <rect x="800" y="254" width="180" height="34" rx="3" fill="var(--svg-face2)"/><text x="816" y="275">UHC · Novitas · TX DWC</text>
+  </g>
+  <g stroke="var(--svg-line)" stroke-width="1"><line x1="752" y1="166" x2="796" y2="166" stroke-dasharray="3 3"/></g>
+
+  <!-- inbound -->
+  <rect x="24" y="332" width="1132" height="80" rx="4" fill="var(--cool-surface)"/>
+  <rect x="24" y="332" width="4" height="80" fill="var(--cool)"/>
+  <text x="46" y="358" font-family="Mulish,sans-serif" font-size="13" font-weight="700" fill="var(--cool)">Inbound Normaliser — 12 Response Parser</text>
+  <text x="46" y="378" font-family="Mulish,sans-serif" font-size="10.5" fill="var(--fg-2)">Fax OCR · secure email · portal message scrape-on-view · X12 277/278 response · mail scan · phone note</text>
+  <text x="46" y="398" font-family="'JetBrains Mono',monospace" font-size="8.5" fill="var(--fg-3)">→ normalised determination { status, reason_codes[], reason_text, cited_criteria[], appeal_rights, deadline } · low confidence flags for human read, never guesses</text>
+  <path d="M890 292 L890 328" stroke="var(--cool)" stroke-width="1.3" marker-end="url(#aC)"/>
+
+  <rect x="24" y="428" width="554" height="72" rx="4" fill="var(--warm-surface)"/>
+  <text x="44" y="452" font-family="Mulish,sans-serif" font-size="11.5" font-weight="700" fill="var(--accent)">Why portal-assist, not portal automation</text>
+  <text x="44" y="472" font-family="Mulish,sans-serif" font-size="10" fill="var(--fg-2)">RPA against payer portals commonly breaches terms of service. The system</text>
+  <text x="44" y="488" font-family="Mulish,sans-serif" font-size="10" fill="var(--fg-2)">pre-fills, deep-links, and captures the reference on return. A human clicks submit.</text>
+
+  <rect x="602" y="428" width="554" height="72" rx="4" fill="var(--svg-face)"/>
+  <text x="622" y="452" font-family="Mulish,sans-serif" font-size="11.5" font-weight="700" fill="var(--fg)">Why fax is first, not last</text>
+  <text x="622" y="472" font-family="Mulish,sans-serif" font-size="10" fill="var(--fg-2)">Only 35% of medical prior authorizations run fully electronically on X12 278</text>
+  <text x="622" y="488" font-family="Mulish,sans-serif" font-size="10" fill="var(--fg-2)">(CAQH Index 2024; 40% in 2025). Inbound fax carries most determinations today.</text>
+</svg>
+<div class="figcap">Figure 06 — Channel fan-out. The FHIR path is built dormant and activates as payers publish endpoints.</div>
+</div>
+
+<!-- ═══════════ PERSONAS ═══════════ -->
+<h2 id="personas">Personas — the Southlake office</h2>
+
+<p>Seven people touch a case. The system is only useful if it changes each of their working days in a way they would notice.</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th>Persona</th><th>Role in the case</th><th>What they do today</th><th>What the MVP changes</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Dr. Kevin James, MD</strong><br><span class="chip ch-k">Surgeon / Owner</span></td>
+      <td>Makes the surgical decision. Affirms every letter. Takes every spine peer-to-peer.</td>
+      <td>Uploads records to a chat tool, re-explains his reasoning each time, reads back a draft. Takes P2P calls with the chart open in another window.</td>
+      <td>Reviews a criteria matrix with citations and affirms in seconds. P2P briefing is one screen mapping the vendor's own criteria to his chart.</td>
+    </tr>
+    <tr>
+      <td><strong>Dr. Aaron Eubanks, MD FAAOS</strong><br><span class="chip ch-k">Surgeon</span></td>
+      <td>Sports medicine and general orthopaedics — knee, shoulder, hip, fracture.</td>
+      <td>Same burden, different procedure set and different vendor mix.</td>
+      <td>Nothing in R0–R7. His procedure set arrives in R8 as a criteria pack, which is the test of whether the plugin model actually generalises.</td>
+    </tr>
+    <tr>
+      <td><strong>Nathan Mahanirananda, PA-C</strong><br><span class="chip ch-k">Physician Assistant</span></td>
+      <td>Clinic and surgical support. Owns most of the documentation that criteria hinge on.</td>
+      <td>Finds out a note was insufficient after a denial arrives, weeks later.</td>
+      <td>Sees the gap before submission, while the patient is still in front of him. Documentation feedback moves from weeks to same-visit.</td>
+    </tr>
+    <tr>
+      <td><strong>Prior Auth Coordinator</strong><br><span class="chip ch-k">Owns the queue</span></td>
+      <td>The centre of gravity. Assembles, submits, chases, logs, escalates.</td>
+      <td>Spreadsheet plus fax confirmations plus portal tabs plus IVR hold. Status lives in her head.</td>
+      <td>One queue ordered by deadline. Channel pre-selected. Status arrives instead of being fetched. The system knows what she knows.</td>
+    </tr>
+    <tr>
+      <td><strong>Surgery Scheduler</strong><br><span class="chip ch-k">Books the case</span></td>
+      <td>Coordinates surgeon, facility, implant rep, patient.</td>
+      <td>Asks the coordinator whether auth is in. Books optimistically and sometimes moves cases.</td>
+      <td>Auth state and validity window sit on the scheduling board. Cannot book past expiry. Determination arrives live rather than by walk-over.</td>
+    </tr>
+    <tr>
+      <td><strong>Biller</strong><br><span class="chip ch-k">Revenue</span></td>
+      <td>Files the claim against what was authorized.</td>
+      <td>Reconciles authorized CPTs against operative codes after the fact, discovers drift at denial.</td>
+      <td>Authorized codes attached to the case; alerted when intraoperative codes diverge from the authorization.</td>
+    </tr>
+    <tr>
+      <td><strong>Practice Administrator</strong><br><span class="chip ch-k">Runs the business</span></td>
+      <td>Staffing, payer relationships, compliance.</td>
+      <td>No visibility into denial rates by payer, no gold-card tracking, no turnaround compliance evidence.</td>
+      <td>Approval rate per physician per service per plan. Gold-card accrual. AI-disclosure and audit reporting for SB 1188 and TRAIGA.</td>
+    </tr>
+    <tr>
+      <td><strong>Patient</strong><br><span class="chip ch-k">Waiting</span></td>
+      <td>Sometimes holds the blocking item — a psych evaluation, a cessation window, outside records.</td>
+      <td>Calls the office to ask. Finds out about a blocking requirement late.</td>
+      <td>An SMS naming the one thing needed, and a portal task list. No clinical detail in the message.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ═══════════ STORIES ═══════════ -->
+<h2 id="stories">User stories</h2>
+
+<h3>Dr. Kevin James — surgeon</h3>
+<ul class="doc">
+  <li><strong>US-01</strong> As the surgeon, I want a criteria matrix showing met / not met / not documented with a source citation on every row, so that I can affirm in under a minute and defend it later.</li>
+  <li><strong>US-02</strong> As the surgeon, I want the letter drafted from arguments I authored once, so that I stop re-explaining my reasoning on every case.</li>
+  <li><strong>US-03</strong> As the surgeon, I want a peer-to-peer briefing that crosswalks the vendor's published criteria against my chart evidence, so that I walk into the call with their own standard in front of me.</li>
+  <li><strong>US-04</strong> As the surgeon, I want to be told when a case is medically supportable but administratively incomplete, so that I do not spend a P2P slot on a records problem.</li>
+  <li><strong>US-05</strong> As the surgeon, I want to review and affirm from my phone between cases, but I accept that signing happens at a desktop.</li>
+</ul>
+
+<h3>Nathan Mahanirananda — physician assistant</h3>
+<ul class="doc">
+  <li><strong>US-06</strong> As the PA, I want to see which criteria elements are missing for this specific payer while the patient is still in clinic, so that I document them now rather than chase them later.</li>
+  <li><strong>US-07</strong> As the PA, I want the system to tell me the exact threshold — twelve weeks, three of five provocative tests, seventy-five percent relief across two injections — rather than "insufficient conservative care."</li>
+</ul>
+
+<h3>Prior authorization coordinator</h3>
+<ul class="doc">
+  <li><strong>US-08</strong> As the coordinator, I want a single queue ordered by regulatory deadline and surgery date, so that I stop deciding what to work on from memory.</li>
+  <li><strong>US-09</strong> As the coordinator, I want the correct administering entity resolved for me, so that I stop sending eviCore packets to Cigna and losing two weeks.</li>
+  <li><strong>US-10</strong> As the coordinator, I want inbound faxes parsed and attached to the right case automatically, so that I stop being the routing layer.</li>
+  <li><strong>US-11</strong> As the coordinator, I want denial reasons classified as fix-and-resubmit versus appeal, so that I know within a minute whether this needs a surgeon.</li>
+  <li><strong>US-12</strong> As the coordinator, I want to be warned before a statutory clock runs out, not after.</li>
+  <li><strong>US-13</strong> As the coordinator, I want the appeal drafted with the criteria crosswalk already in it, so that appealing every eligible denial becomes affordable.</li>
+</ul>
+
+<h3>Surgery scheduler</h3>
+<ul class="doc">
+  <li><strong>US-14</strong> As the scheduler, I want authorization status and validity window visible on the board, so that I stop asking.</li>
+  <li><strong>US-15</strong> As the scheduler, I want to be blocked from booking a date beyond the authorization's expiry, with an override that records who overrode it.</li>
+  <li><strong>US-16</strong> As the scheduler, I want to know the moment an approval lands so I can fill a slot the same afternoon.</li>
+</ul>
+
+<h3>Biller and administrator</h3>
+<ul class="doc">
+  <li><strong>US-17</strong> As the biller, I want authorized CPTs and the authorization number attached to the case, and an alert when operative codes diverge.</li>
+  <li><strong>US-18</strong> As the administrator, I want approval rate by physician, service, and plan, so that I can pursue gold-card exemptions and contest rescissions with the underlying claim list.</li>
+  <li><strong>US-19</strong> As the administrator, I want denial and overturn rates by payer, so that I can hold a payer relationship conversation with evidence.</li>
+  <li><strong>US-20</strong> As the administrator, I want AI-use disclosures and onshore-storage attestations recorded, so that SB 1188 and TRAIGA compliance is evidenced rather than asserted.</li>
+</ul>
+
+<h3>Patient</h3>
+<ul class="doc">
+  <li><strong>US-21</strong> As the patient, I want to know the one thing I need to do next, without clinical detail arriving by text message.</li>
+  <li><strong>US-22</strong> As the patient, I want to know that my authorization is moving, so I stop calling the office to ask.</li>
+</ul>
+
+<!-- ═══════════ MOODBOARD ═══════════ -->
+<h2 id="moodboard">UI/UX mood board — agent surfaces</h2>
+
+<p>Six screens, each annotated with the agents behind it. Every surface below is an A2UI descriptor emitted by a plugin, rendered natively on whichever client the person happens to be using.</p>
+
+<style>
+.mb{background:var(--s1);border-radius:var(--r);padding:1.3rem;margin:1.4rem 0}
+.mb-hd{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap;margin-bottom:1rem}
+.mb-t{font-size:1rem;font-weight:700;color:var(--fg)}
+.mb-a{font-family:var(--mono);font-size:.62rem;letter-spacing:.09em;color:var(--accent)}
+.scr{background:var(--bg);border-radius:4px;padding:1.1rem 1.2rem;margin-bottom:.9rem}
+.scr-bar{display:flex;justify-content:space-between;align-items:center;gap:.8rem;flex-wrap:wrap;margin-bottom:.9rem}
+.scr-ttl{font-size:.9rem;font-weight:700;color:var(--fg)}
+.scr-meta{font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;color:var(--fg-3)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:.7rem;padding:.5rem .7rem;border-radius:3px;font-size:.79rem;flex-wrap:wrap}
+.row:nth-child(odd){background:var(--s-zebra)}
+.row:nth-child(even){background:var(--s2)}
+.row .lab{color:var(--fg-2);flex:1;min-width:150px}
+.row .sub{font-family:var(--mono);font-size:.65rem;color:var(--fg-3)}
+.gate{background:var(--ember-tint);border-radius:3px;padding:.85rem 1rem;margin-top:.85rem;display:flex;justify-content:space-between;align-items:center;gap:.8rem;flex-wrap:wrap}
+.gate .gt{font-size:.8rem;color:var(--fg-2)}
+.gate .gb{font-family:var(--sans);font-size:.75rem;font-weight:600;background:var(--accent-vivid);color:#fff;border:none;padding:.45rem .95rem;border-radius:3px;cursor:default}
+.tmr{display:inline-block;font-family:var(--mono);font-size:.62rem;padding:.2em .55em;border-radius:3px;background:var(--gap-surface);color:var(--gap)}
+.tmr.ok{background:var(--ok-surface);color:var(--ok)}
+.cite2{font-family:var(--mono);font-size:.62rem;color:var(--fg-3);background:var(--s2);padding:.15em .45em;border-radius:3px}
+.decomp{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:.6rem}
+.decomp div{background:var(--s2);border-radius:3px;padding:.6rem .75rem}
+.decomp .dn{font-family:var(--mono);font-size:.6rem;color:var(--accent);letter-spacing:.06em;margin-bottom:.2rem}
+.decomp .dd{font-size:.75rem;color:var(--fg-2);line-height:1.45}
+</style>
+
+<div class="mb">
+  <div class="mb-hd"><div class="mb-t">01 · Coordinator Queue</div><div class="mb-a">DESKTOP · PRIMARY SLOT</div></div>
+  <div class="scr">
+    <div class="scr-bar"><div class="scr-ttl">Prior Authorization Queue</div><div class="scr-meta">14 OPEN · 3 AT RISK · 1 BREACHED</div></div>
+    <div class="row"><span class="lab"><strong>Alvarez, M.</strong> · TLIF L4-L5 · 22633<br><span class="sub">eviCore (Cigna) · TDI · submitted 3d</span></span><span class="tmr">7d clock · 4d left</span></div>
+    <div class="row"><span class="lab"><strong>Boone, R.</strong> · ACDF C5-C6 · 22551<br><span class="sub">Carelon (BCBSTX) · TDI · RFI received</span></span><span class="tmr">RFI · action needed</span></div>
+    <div class="row"><span class="lab"><strong>Chen, D.</strong> · SI fusion · 27279<br><span class="sub">Aetna · ERISA · denied — experimental</span></span><span class="tmr">IRO window 11d</span></div>
+    <div class="row"><span class="lab"><strong>Draper, S.</strong> · Laminectomy · 63047<br><span class="sub">UHC MA · Novitas LCD · approved</span></span><span class="tmr ok">auth valid 84d</span></div>
+    <div class="row"><span class="lab"><strong>Ellis, T.</strong> · Kyphoplasty · 22513<br><span class="sub">Humana / Cohere · auto-approved 0 min</span></span><span class="tmr ok">ready to schedule</span></div>
+  </div>
+  <div class="decomp">
+    <div><div class="dn">02 UM ENTITY RESOLVER</div><div class="dd">Supplies the vendor line under each patient. This is why the queue is trustworthy.</div></div>
+    <div><div class="dn">03 REGIME TAGGER</div><div class="dd">TDI / ERISA / MA determines which clock and which appeal ladder applies.</div></div>
+    <div><div class="dn">16 SLA SENTINEL</div><div class="dd">Owns every countdown. Sorts the queue. Nothing else decides priority.</div></div>
+    <div><div class="dn">FRF PUSH</div><div class="dd">Rows change state live. The coordinator never refreshes.</div></div>
+  </div>
+</div>
+
+<div class="mb">
+  <div class="mb-hd"><div class="mb-t">02 · Criteria Matrix &amp; Affirmation Gate</div><div class="mb-a">DESKTOP ONLY · PRIVILEGED BLOCK</div></div>
+  <div class="scr">
+    <div class="scr-bar"><div class="scr-ttl">Alvarez, M. — TLIF L4-L5 · eviCore CMM</div><div class="scr-meta">CMM SPINE · V1.0.2025 · REV 2025-03-19</div></div>
+    <div class="row"><span class="lab">Supervised physical therapy — 6 weeks minimum</span><span><span class="chip ch-w">Met · 14 wk</span> <span class="cite2">PT-0219 p.2</span></span></div>
+    <div class="row"><span class="lab">MRI within 12 months, moderate+ stenosis at level</span><span><span class="chip ch-w">Met · 01/08</span> <span class="cite2">RAD-1180 p.1</span></span></div>
+    <div class="row"><span class="lab">Instability — ≥3 mm translation on flexion/extension</span><span><span class="chip ch-w">Met · 6 mm</span> <span class="cite2">RAD-1180 p.1</span></span></div>
+    <div class="row"><span class="lab">Epidural steroid injection trial</span><span><span class="chip ch-x">Not met · 0</span> <span class="cite2">—</span></span></div>
+    <div class="row"><span class="lab">Tobacco-free ≥6 weeks</span><span><span class="chip ch-k">Not documented</span> <span class="cite2">—</span></span></div>
+    <div class="row"><span class="lab">Oswestry Disability Index</span><span><span class="chip ch-w">Met · 48</span> <span class="cite2">ENC-0431 p.3</span></span></div>
+    <div class="gate">
+      <div class="gt"><strong>1 gap, 1 undocumented.</strong> Letter generation is blocked until affirmed or remediated.</div>
+      <span class="gb">Review &amp; Affirm</span>
+    </div>
+  </div>
+  <div class="decomp">
+    <div><div class="dn">04 CRITERIA MATCHER</div><div class="dd">Pulls the eviCore CMM set — not Cigna's, not a generic one.</div></div>
+    <div><div class="dn">06 GAP ANALYST</div><div class="dd">Produces the three-state classification. Not met and not documented never collapse.</div></div>
+    <div><div class="dn">10 AFFIRMATION GATE</div><div class="dd">Kernel-owned chrome. Binds matrix_hash to the signature.</div></div>
+    <div><div class="dn">LEDGER</div><div class="dd">The affirmation, the hash, and every citation are written before dispatch is possible.</div></div>
+  </div>
+</div>
+
+<div class="mb">
+  <div class="mb-hd"><div class="mb-t">03 · Denial Workspace</div><div class="mb-a">DESKTOP · SECONDARY SLOT</div></div>
+  <div class="scr">
+    <div class="scr-bar"><div class="scr-ttl">Boone, R. — Adverse Determination</div><div class="scr-meta">RECEIVED BY FAX 08:14 · PARSED · CONFIDENCE 0.94</div></div>
+    <div class="row"><span class="lab"><strong>Stated reason</strong> — "segmental instability not demonstrated on submitted imaging"</span><span><span class="chip ch-x">Medical necessity</span></span></div>
+    <div class="row"><span class="lab"><strong>Classification</strong> — requires physician; not resubmittable as-is</span><span><span class="chip ch-n">Route: P2P</span></span></div>
+    <div class="row"><span class="lab"><strong>Counter-evidence found</strong> — flexion/extension 6 mm translation L4-L5</span><span><span class="cite2">RAD-1180 p.1</span></span></div>
+    <div class="row"><span class="lab"><strong>Appeal window</strong> — Texas Ch. 4201, decision due within 30 calendar days of filing</span><span><span class="tmr">file within 28d</span></span></div>
+    <div class="row"><span class="lab"><strong>Peer-to-peer</strong> — Texas-licensed, same-or-similar specialty required (HB 3459)</span><span><span class="chip ch-n">Request P2P</span></span></div>
+  </div>
+  <div class="decomp">
+    <div><div class="dn">12 RESPONSE PARSER</div><div class="dd">Fax OCR to structured determination. Confidence below threshold routes to human read.</div></div>
+    <div><div class="dn">13 DENIAL CLASSIFIER</div><div class="dd">Administrative vs. medical necessity vs. experimental. Determines who is needed.</div></div>
+    <div><div class="dn">15 P2P PREP</div><div class="dd">Already found the counter-evidence before anyone opened the case.</div></div>
+    <div><div class="dn">16 SLA SENTINEL</div><div class="dd">Arms the appeal clock from the regime tag, not a hard-coded number.</div></div>
+  </div>
+</div>
+
+<div class="mb">
+  <div class="mb-hd"><div class="mb-t">04 · Peer-to-Peer Briefing</div><div class="mb-a">MOBILE + DESKTOP · SURGEON SURFACE</div></div>
+  <div class="scr">
+    <div class="scr-bar"><div class="scr-ttl">P2P — Boone, R. · Carelon reviewer</div><div class="scr-meta">SCHEDULED 14:30 · SAME-SPECIALTY VERIFIED</div></div>
+    <div class="row"><span class="lab"><strong>Their criterion</strong><br><span class="sub">Instability: ≥3 mm translation or &gt;11° angulation, flexion/extension</span></span><span class="chip ch-n">Their standard</span></div>
+    <div class="row"><span class="lab"><strong>Your evidence</strong><br><span class="sub">6 mm anterolisthesis C5-C6, dynamic films 03/14/2026</span></span><span class="cite2">RAD-1180 p.1</span></div>
+    <div class="row"><span class="lab"><strong>Their criterion</strong><br><span class="sub">Failed conservative management, ≥6 weeks, PT + one complementary strategy</span></span><span class="chip ch-n">Their standard</span></div>
+    <div class="row"><span class="lab"><strong>Your evidence</strong><br><span class="sub">14 weeks supervised PT, two ESI with non-durable relief</span></span><span class="cite2">PT-0219 p.2 · INJ-0044</span></div>
+    <div class="row"><span class="lab"><strong>Anticipated objection</strong> — imaging predates the last PT block by 5 weeks</span><span class="chip ch-x">Prepare for this</span></div>
+  </div>
+  <div class="decomp">
+    <div><div class="dn">15 P2P PREP AGENT</div><div class="dd">Builds the crosswalk. Their criterion on the left, chart evidence on the right, always paired.</div></div>
+    <div><div class="dn">04 CRITERIA MATCHER</div><div class="dd">Supplies the exact published language the reviewer is bound to.</div></div>
+    <div><div class="dn">05 CHART EXTRACTOR</div><div class="dd">Every evidence line traces to a document and page. Nothing is recalled from memory on a call.</div></div>
+  </div>
+</div>
+
+<div class="mb">
+  <div class="mb-hd"><div class="mb-t">05 · Channel Dispatch Console</div><div class="mb-a">DESKTOP · COORDINATOR</div></div>
+  <div class="scr">
+    <div class="scr-bar"><div class="scr-ttl">Dispatch — Alvarez, M.</div><div class="scr-meta">AFFIRMED 09:22 BY did:aso:p:kjames</div></div>
+    <div class="row"><span class="lab"><strong>Route</strong> — eviCore, spine surgery program (Cigna delegated)</span><span class="chip ch-w">Resolved</span></div>
+    <div class="row"><span class="lab"><strong>Primary channel</strong> — eviCore provider portal, pre-filled, deep-linked</span><span class="chip ch-n">Portal-assist</span></div>
+    <div class="row"><span class="lab"><strong>Parallel</strong> — fax packet via Telnyx, 14 pages, cover sheet generated</span><span class="chip ch-n">Queued</span></div>
+    <div class="row"><span class="lab"><strong>Packet</strong> — LMN, criteria matrix, MRI report, PT summary, injection records</span><span class="cite2">14 pp · manifest</span></div>
+    <div class="row"><span class="lab"><strong>Terms of service</strong> — portal automation not permitted; human submit required</span><span class="chip ch-x">You click submit</span></div>
+  </div>
+  <div class="decomp">
+    <div><div class="dn">11 DISPATCHER</div><div class="dd">Selects the adapter from um.entity. Never from the payer name on the card.</div></div>
+    <div><div class="dn">08 DOCUMENT ASSEMBLER</div><div class="dd">Builds the manifest. Every page traceable to a source.</div></div>
+    <div><div class="dn">BOSSFANG</div><div class="dd">Owns retry, dead-letter, and the reference number capture on return.</div></div>
+  </div>
+</div>
+
+<div class="mb">
+  <div class="mb-hd"><div class="mb-t">06 · Gold Card Accrual</div><div class="mb-a">WEB · ADMINISTRATOR</div></div>
+  <div class="scr">
+    <div class="scr-bar"><div class="scr-ttl">Exemption Tracking — Dr. K. James</div><div class="scr-meta">HB 3812 · 12-MONTH WINDOW · TDI PLANS ONLY</div></div>
+    <div class="row"><span class="lab"><strong>63047</strong> Laminectomy · BCBSTX · 22 requests, 21 approved</span><span><span class="chip ch-w">95.5% · exempt</span></span></div>
+    <div class="row"><span class="lab"><strong>22633</strong> TLIF · BCBSTX · 14 requests, 12 approved</span><span><span class="chip ch-n">85.7% · 2 short</span></span></div>
+    <div class="row"><span class="lab"><strong>22551</strong> ACDF · Aetna (TDI) · 9 requests, 9 approved</span><span><span class="chip ch-x">100% · under 5-req min</span></span></div>
+    <div class="row"><span class="lab"><strong>27279</strong> SI fusion · all plans · 6 requests, 1 approved</span><span><span class="chip ch-x">16.7% · no path</span></span></div>
+    <div class="row"><span class="lab"><strong>Excluded from tracking</strong> — ERISA self-funded, Medicare Advantage, Medicaid</span><span class="sub">~80% of Texans not covered by HB 3459</span></div>
+  </div>
+  <div class="decomp">
+    <div><div class="dn">18 GOLD CARD TRACKER</div><div class="dd">Rolling accrual per physician × service × plan. Knows the 5-request minimum.</div></div>
+    <div><div class="dn">03 REGIME TAGGER</div><div class="dd">Excludes non-TDI plans from the denominator. Getting this wrong invalidates the number.</div></div>
+    <div><div class="dn">LEDGER</div><div class="dd">Supplies the underlying claim list needed to contest a rescission.</div></div>
+  </div>
+</div>
+
+<div class="callout cool">
+  <div class="lbl">One interface convention across all six</div>
+  <p>A source citation chip sits adjacent to the claim it supports, never in a footnote block. An assertion rendered without one is a bug, not a styling choice — it means something reached the screen that cannot be traced, and that is the exact failure the False Claims Act exposure runs through.</p>
+</div>
+
+<!-- ═══════════ ROI ═══════════ -->
+<h2 id="roi">ROI model</h2>
+
+<div class="callout">
+  <div class="lbl">Read this before the numbers</div>
+  <p>Every baseline below is an <strong>assumption, not a measurement.</strong> The practice's actual volumes, denial rate, and coordinator time are unknown. Phase 0 exists to replace these figures with real ones, and if the measured baseline differs materially, the business case changes and should be re-run rather than defended.</p>
+</div>
+
+<h3>Assumed baseline — two surgeons, one PA, one coordinator</h3>
+
+<div class="tw">
+<table>
+  <thead><tr><th>Quantity</th><th>Assumed</th><th>Basis</th></tr></thead>
+  <tbody>
+    <tr><td>Surgical prior authorizations per month</td><td class="n">30</td><td>Spine + ortho case volume for two surgeons</td></tr>
+    <tr><td>Non-surgical PAs (imaging, injections, DME)</td><td class="n">120</td><td>Typical ratio in an MSK practice</td></tr>
+    <tr><td>Coordinator time per surgical PA, first pass</td><td class="n">90 min</td><td>Assembly, submission, logging, follow-up</td></tr>
+    <tr><td>Coordinator time per non-surgical PA</td><td class="n">15 min</td><td>Lower documentation burden</td></tr>
+    <tr><td>Initial denial rate, surgical</td><td class="n">20%</td><td>= 6 denials/month</td></tr>
+    <tr><td>Coordinator + surgeon time per denial worked</td><td class="n">4 hr</td><td>P2P prep, call, appeal drafting</td></tr>
+    <tr><td>Appeals actually filed today</td><td class="n">~50%</td><td>Selective, because each one is expensive</td></tr>
+    <tr><td>Overturn rate when appealed</td><td class="n">81.7%</td><td>AMA 2024 Prior Authorization Physician Survey</td></tr>
+    <tr><td>Mean days to authorization</td><td class="n">12</td><td>Including RFI rounds</td></tr>
+    <tr><td>Loaded coordinator cost</td><td class="n">$34/hr</td><td>Salary + burden, DFW market</td></tr>
+    <tr><td>Loaded surgeon opportunity cost</td><td class="n">$400/hr</td><td>Displaced clinical time, conservative</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>That baseline implies roughly <strong>75 coordinator hours per month</strong> on first-pass work, <strong>24 hours per month</strong> on denials, and <strong>3 to 5 surgeon hours per month</strong> on peer-to-peer calls and letter drafting — call it <strong>0.6 FTE of coordinator capacity and half a clinic day of surgeon time.</strong></p>
+
+<h3>Projected effect by release</h3>
+
+<div class="tw">
+<table>
+  <thead><tr><th>Release</th><th>Mechanism</th><th>Effect</th><th>Monthly value</th><th>Confidence</th></tr></thead>
+  <tbody>
+    <tr><td class="m">R1</td><td>Pre-submission gap detection on top CPTs</td><td>Administrative denials fall — fewer packets submitted incomplete</td><td class="n">$800–1,400</td><td><span class="chip ch-w">High</span></td></tr>
+    <tr><td class="m">R2</td><td>LMN composition from a reusable reasoning library</td><td>Surgeon drafting time falls ~80%; coordinator assembly ~40%</td><td class="n">$2,200–3,400</td><td><span class="chip ch-w">High</span></td></tr>
+    <tr><td class="m">R3</td><td>Channel dispatch + inbound fax parsing</td><td>Manual logging and status chasing largely eliminated</td><td class="n">$1,600–2,400</td><td><span class="chip ch-n">Medium</span></td></tr>
+    <tr><td class="m">R4</td><td>Denial classification, appeal composition, P2P prep</td><td>Appeal rate rises from ~50% to ~95%; at 81.7% overturn this is the revenue line</td><td class="n">$4,000–9,000</td><td><span class="chip ch-n">Medium</span></td></tr>
+    <tr><td class="m">R5</td><td>AdvancedMD FHIR ingestion</td><td>Manual export removed for chart-resident data (~40–60% of the packet)</td><td class="n">$900–1,500</td><td><span class="chip ch-n">Medium</span></td></tr>
+    <tr><td class="m">R6</td><td>SLA timers, auth expiry monitoring, gold-card accrual</td><td>Missed-deadline losses eliminated; exemptions pursued systematically</td><td class="n">$600–2,000</td><td><span class="chip ch-x">Low</span></td></tr>
+    <tr><td class="m">R7</td><td>Mobile review + patient action agent</td><td>Cycle-time reduction; blocking patient items surfaced earlier</td><td class="n">$400–900</td><td><span class="chip ch-x">Low</span></td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>The line that carries the case</h3>
+
+<p><strong>R4 is where the money is, and it is not a labour-savings argument.</strong> At 6 denials a month and an appeal rate near 50%, roughly three appealable denials per month are currently abandoned. At an 81.7% overturn rate, about 2.5 of those would have been won. If a spine case contributes conservatively $3,000–6,000 in professional collections, abandoning three appeals a month is a five-figure monthly loss — and the reason they are abandoned is that each one costs four hours.</p>
+
+<p>Drive that cost to forty minutes and appealing every eligible denial becomes the obvious choice rather than a judgment call. That is the whole mechanism.</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th>Measure</th><th>Baseline</th><th>Post-R4 target</th><th>How it is verified</th></tr></thead>
+  <tbody>
+    <tr><td>First-pass approval rate</td><td class="n">80%</td><td class="n">88–92%</td><td>Determinations by outcome, tracked from R0</td></tr>
+    <tr><td>Appeal rate on eligible denials</td><td class="n">~50%</td><td class="n">≥95%</td><td>Denials classified appealable vs. appeals filed</td></tr>
+    <tr><td>Mean days to authorization</td><td class="n">12</td><td class="n">7–9</td><td>Submission timestamp to determination timestamp</td></tr>
+    <tr><td>Coordinator hours per month on PA</td><td class="n">99</td><td class="n">45–60</td><td>Time study repeated from Phase 0</td></tr>
+    <tr><td>Surgeon hours per month on PA</td><td class="n">3–5</td><td class="n">1–1.5</td><td>Affirmation and P2P timestamps</td></tr>
+    <tr><td>Services gold-carded on TDI plans</td><td class="n">0</td><td class="n">2–4</td><td>Exemption notices in Availity correspondence</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout">
+  <div class="lbl">The honest ceiling</div>
+  <p>Gold-carding applies only to TDI-regulated fully-insured plans, which per the Texas Medical Association cover about 20% of Texans. Even a perfect exemption record leaves roughly four-fifths of the practice's prior authorization volume untouched. Gold-carding is a real prize; it is not the strategy.</p>
+</div>
+
+<!-- ═══════════ PHASES ═══════════ -->
+<h2 id="phases">Phased implementation plan</h2>
+
+<div class="figure">
+<svg viewBox="0 0 1180 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Release timeline across 46 weeks">
+  <text x="24" y="26" font-family="'JetBrains Mono',monospace" font-size="10.5" letter-spacing="3" fill="var(--fg-3)">FIGURE 07 · RELEASE TIMELINE · EIGHT RELEASES, 4–6 WEEKS EACH, EACH ONE USABLE</text>
+
+  <g font-family="'JetBrains Mono',monospace" font-size="8.5" fill="var(--fg-3)">
+    <text x="252" y="56">W4</text><text x="368" y="56">W10</text><text x="484" y="56">W16</text><text x="600" y="56">W22</text>
+    <text x="716" y="56">W28</text><text x="832" y="56">W34</text><text x="948" y="56">W40</text><text x="1064" y="56">W46</text>
+  </g>
+  <g stroke="var(--svg-line)" stroke-width="1" opacity=".4">
+    <line x1="252" y1="62" x2="252" y2="560"/><line x1="368" y1="62" x2="368" y2="560"/>
+    <line x1="484" y1="62" x2="484" y2="560"/><line x1="600" y1="62" x2="600" y2="560"/>
+    <line x1="716" y1="62" x2="716" y2="560"/><line x1="832" y1="62" x2="832" y2="560"/>
+    <line x1="948" y1="62" x2="948" y2="560"/><line x1="1064" y1="62" x2="1064" y2="560"/>
+  </g>
+
+  <g font-family="Mulish,sans-serif" font-size="10.5" fill="var(--fg-2)">
+    <rect x="24" y="72" width="228" height="46" rx="3" fill="var(--svg-face2)"/>
+    <text x="38" y="92" font-weight="700" fill="var(--fg)">R0 · Measure &amp; Shell</text>
+    <text x="38" y="109" font-size="9">baseline study · case ledger · Kratos · queue</text>
+
+    <rect x="252" y="130" width="116" height="46" rx="3" fill="var(--svg-face)"/>
+    <text x="266" y="150" font-weight="700" fill="var(--fg)">R1</text>
+    <text x="266" y="167" font-size="9">criteria + gaps</text>
+
+    <rect x="368" y="188" width="116" height="46" rx="3" fill="var(--gap-surface)"/>
+    <text x="382" y="208" font-weight="700" fill="var(--gap)">R2</text>
+    <text x="382" y="225" font-size="9" fill="var(--gap)">LMN + gate</text>
+
+    <rect x="484" y="246" width="116" height="46" rx="3" fill="var(--svg-face)"/>
+    <text x="498" y="266" font-weight="700" fill="var(--fg)">R3</text>
+    <text x="498" y="283" font-size="9">channels</text>
+
+    <rect x="600" y="304" width="116" height="46" rx="3" fill="var(--ok-surface)"/>
+    <text x="614" y="324" font-weight="700" fill="var(--ok)">R4</text>
+    <text x="614" y="341" font-size="9" fill="var(--ok)">denial + appeal</text>
+
+    <rect x="716" y="362" width="116" height="46" rx="3" fill="var(--svg-face)"/>
+    <text x="730" y="382" font-weight="700" fill="var(--fg)">R5</text>
+    <text x="730" y="399" font-size="9">FHIR ingest</text>
+
+    <rect x="832" y="420" width="116" height="46" rx="3" fill="var(--svg-face)"/>
+    <text x="846" y="440" font-weight="700" fill="var(--fg)">R6</text>
+    <text x="846" y="457" font-size="9">timers + gold card</text>
+
+    <rect x="948" y="478" width="116" height="46" rx="3" fill="var(--svg-face)"/>
+    <text x="962" y="498" font-weight="700" fill="var(--fg)">R7</text>
+    <text x="962" y="515" font-size="9">mobile + patient</text>
+
+    <rect x="1064" y="536" width="92" height="46" rx="3" fill="var(--svg-face2)"/>
+    <text x="1078" y="556" font-weight="700" fill="var(--fg)">R8</text>
+    <text x="1078" y="573" font-size="9">Tier 2 packs</text>
+  </g>
+
+  <!-- value markers -->
+  <g font-family="'JetBrains Mono',monospace" font-size="8" fill="var(--accent)">
+    <text x="266" y="184">first workflow change: gaps caught pre-submission</text>
+    <text x="382" y="242">kills the chat-tool loop — highest perceived value</text>
+    <text x="614" y="358" fill="var(--ok)">the revenue release — appeal every eligible denial</text>
+  </g>
+
+  <rect x="24" y="536" width="1020" height="46" rx="3" fill="var(--cool-surface)"/>
+  <text x="44" y="558" font-family="Mulish,sans-serif" font-size="11" font-weight="700" fill="var(--cool)">Every release ships plugins into the running shell. No release is infrastructure-only.</text>
+  <text x="44" y="574" font-family="Mulish,sans-serif" font-size="10" fill="var(--fg-2)">If a release cannot name the working day it changes, it is not a release — it is a milestone, and milestones do not go to the practice.</text>
+</svg>
+<div class="figcap">Figure 07 — Release timeline. R2 buys credibility; R4 buys the business case.</div>
+</div>
+
+<div class="tw">
+<table>
+  <thead><tr><th>Rel</th><th>Weeks</th><th>Ships</th><th>Agents</th><th>Who notices</th><th>Exit criterion</th></tr></thead>
+  <tbody>
+    <tr>
+      <td class="m">R0</td><td class="m">1–4</td>
+      <td>Application shell, Kratos auth, Cedar policy skeleton, case ledger, manual intake, coordinator queue. <strong>Baseline time study.</strong></td>
+      <td class="m">—</td>
+      <td>Coordinator — the spreadsheet is replaced by a shared queue</td>
+      <td>Twelve months of historical PA outcomes loaded; time study complete; the ROI table above is replaced with measured numbers</td>
+    </tr>
+    <tr>
+      <td class="m">R1</td><td class="m">5–10</td>
+      <td>Criteria corpus for top 3 CPTs × top 3 administering entities. Manual chart intake. Criteria matrix surface.</td>
+      <td class="m">02, 03, 04, 05, 06, 07</td>
+      <td>PA and coordinator — gaps visible before submission</td>
+      <td>Gap list produced for a real case in under two minutes; entity resolution correct on 20 consecutive cases</td>
+    </tr>
+    <tr>
+      <td class="m">R2</td><td class="m">11–16</td>
+      <td>Reasoning library authored by Dr. James. LMN composer. <strong>Affirmation gate.</strong> Citation chips. Evidence ledger live.</td>
+      <td class="m">08, 09, 10</td>
+      <td>Dr. James — the chat-tool loop ends</td>
+      <td>Removing the gate from configuration makes rendering impossible, proven by test. A non-gate plugin emitting an AffirmationBlock is denied and the denial is in the ledger.</td>
+    </tr>
+    <tr>
+      <td class="m">R3</td><td class="m">17–22</td>
+      <td>Telnyx fax in and out. Portal-assist for eviCore, Availity, UHC. Inbound parsing with confidence flags.</td>
+      <td class="m">11, 12</td>
+      <td>Coordinator — status arrives instead of being fetched</td>
+      <td>An inbound determination attaches to the correct case without human routing on 90% of faxes</td>
+    </tr>
+    <tr>
+      <td class="m">R4</td><td class="m">23–28</td>
+      <td>Denial classifier. Appeal composer with criteria crosswalk. P2P prep surface. Texas same-specialty check.</td>
+      <td class="m">13, 14, 15</td>
+      <td>Everyone — this is the release that pays for the project</td>
+      <td>Time to file an appeal drops below 45 minutes; appeal rate on eligible denials exceeds 90% for one full month</td>
+    </tr>
+    <tr>
+      <td class="m">R5</td><td class="m">29–34</td>
+      <td>AdvancedMD FHIR adapter behind the existing ingestion port. Manual adapter stays permanently.</td>
+      <td class="m">05 (extended)</td>
+      <td>Coordinator — chart-resident data stops being exported by hand</td>
+      <td>DocumentReference coverage measured; the 40%-vs-80% question from ARCH-001 answered with data</td>
+    </tr>
+    <tr>
+      <td class="m">R6</td><td class="m">35–40</td>
+      <td>SLA sentinel across all four regulatory regimes. Auth expiry monitoring on the scheduling board. Gold-card accrual.</td>
+      <td class="m">16, 17, 18</td>
+      <td>Scheduler and administrator</td>
+      <td>Zero missed statutory deadlines in a month; first gold-card exemption applied for with supporting data</td>
+    </tr>
+    <tr>
+      <td class="m">R7</td><td class="m">41–46</td>
+      <td>Flutter mobile — review and triage only, no affirmation. Patient action agent over Telnyx SMS.</td>
+      <td class="m">19</td>
+      <td>Dr. James and patients</td>
+      <td>Surgeon reviews a criteria matrix on mobile and queues an affirmation for desktop completion</td>
+    </tr>
+    <tr>
+      <td class="m">R8</td><td class="m">47+</td>
+      <td>Tier 2 WASM criteria packs. Dr. Eubanks' sports-medicine procedure set as the first externally-authored pack.</td>
+      <td class="m">—</td>
+      <td>Dr. Eubanks — and the plugin thesis is either proven or disproven</td>
+      <td>A criteria pack authored outside the core team runs sandboxed, with imports validated at registration</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Backend shape</h3>
+
+<pre><code><span class="cm">// Agent backend — Rust, Axum 0.8, one Tokio runtime</span>
+aso-shell/          <span class="cm">Tauri 2 host · React 19 renderer</span>
+aso-server/         <span class="cm">Axum 0.8 · AG-UI channel · REST for clients</span>
+  ├─ aso-ctx/       <span class="cm">Context handle, effect API — the only crate plugins depend on</span>
+  ├─ aso-keys/      <span class="cm">Coeffect key registry, versioned as a unit</span>
+  ├─ aso-runtime/   <span class="cm">Fiber machine, accumulator, withdrawal guard  ← plugins may NOT depend on this</span>
+  ├─ aso-policy/    <span class="cm">Cedar PDP, compiled in</span>
+  ├─ aso-ledger/    <span class="cm">Append-only receipts, outside the revertible boundary</span>
+  └─ aso-plugin-*/  <span class="cm">One crate per agent</span>
+gen_ui_core/        <span class="cm">A2UI + AG-UI pipeline, inference routing, shared by all clients</span>
+bossfang/           <span class="cm">Channel adapters, orchestration, retry, dead-letter</span>
+flint-forge/        <span class="cm">Postgres + flint_llm · criteria corpus · case store</span></code></pre>
+
+<!-- ═══════════ CADENCE ═══════════ -->
+<h2 id="cadence">Holding the four-to-six week cadence</h2>
+
+<p>The cadence is not a scheduling preference. It is the mechanism that keeps the project honest, because a release that must change a working day cannot hide behind infrastructure progress.</p>
+
+<ol class="doc">
+  <li><strong>Every release names the person whose day changes.</strong> If no persona can be named, the work is re-scoped before it is committed. This is why R0 ships a queue rather than only a data model.</li>
+  <li><strong>Plugins drop into a running shell.</strong> After R0 the shell is not rebuilt. Each release adds fibers that activate when their coeffects are provided, so a release is a deployment of plugins rather than a replacement of the application.</li>
+  <li><strong>Vertical slices, not layers.</strong> R1 covers three CPTs against three entities completely rather than all CPTs partially. Coverage widens by adding criteria packs, which is configuration and data, not code.</li>
+  <li><strong>The manual path is never removed.</strong> Every automated route has a human fallback that stays. This is what makes a mid-release rollback survivable and what handles the outside records that will never arrive through an API.</li>
+  <li><strong>Exit criteria are behavioural, not architectural.</strong> "Fiber lifecycle implemented" is not an exit criterion. "An inbound determination attaches to the right case without human routing on 90% of faxes" is.</li>
+  <li><strong>Measurement continues from R0 onward.</strong> The same instruments that establish the baseline stay on. A release that does not move a tracked metric gets examined rather than celebrated.</li>
+</ol>
+
+<div class="callout">
+  <div class="lbl">The release that will be tempting to skip</div>
+  <p>R0 produces no automation and will feel like overhead. It is the only release that makes every subsequent claim in this document checkable. Skip it and the ROI table stays a set of assumptions permanently, and there is no way to tell whether R4 worked.</p>
+</div>
+
+<!-- ═══════════ RISKS ═══════════ -->
+<h2 id="risks">Risks and open questions</h2>
+
+<div class="tw">
+<table>
+  <thead><tr><th>Risk</th><th>Impact</th><th>Response</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Telnyx will not sign a BAA</strong></td><td>Fax channel unbuildable as designed; R3 slips</td><td>Confirm before R0 closes. Fallback vendors exist but change the integration surface and the SMS story.</td></tr>
+    <tr><td><strong>Criteria drift</strong> — policies change quarterly</td><td>Silent degradation; the matrix becomes confidently wrong</td><td>Every criterion stored with policy number, effective date, and source URL. Effective-date change is a monitored event, not a background fact.</td></tr>
+    <tr><td><strong>Delegation changes</strong> — vendors are dropped and added</td><td>Misrouting, which does not fail loudly</td><td>Entity graph is data with temporal validity, never hard-coded. Resolution failure parks the case visibly.</td></tr>
+    <tr><td><strong>Portal terms of service</strong></td><td>Automation exposure; account suspension</td><td>Portal-assist only. Full automation exclusively where a sanctioned API exists.</td></tr>
+    <tr><td><strong>SB 1188 data residency</strong></td><td>Constrains where inference may run on Texas EHR data</td><td>US-region BAA endpoints only, enforced as Cedar allow-list. Confirm with counsel before R2 ships.</td></tr>
+    <tr><td><strong>Fax OCR quality</strong></td><td>Misparsed denial reason routes a case down the wrong remediation path</td><td>Confidence threshold routes to human read. The parser never guesses a reason code.</td></tr>
+    <tr><td><strong>Practice adoption</strong></td><td>The coordinator keeps her spreadsheet in parallel</td><td>R0 must be better than the spreadsheet on day one. If it is not, nothing after it matters.</td></tr>
+    <tr><td><strong>Over-engineering</strong></td><td>Plugin runtime cost not repaid by a single practice</td><td>Judged at R2. If the gate test cannot pass, the pipeline is the right build and the runtime should be abandoned.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Open questions to close before R0 exits</h3>
+
+<ol class="doc">
+  <li>Actual monthly PA volume, split surgical and non-surgical, per surgeon.</li>
+  <li>Measured first-pass approval rate and denial reason distribution over twelve months.</li>
+  <li>Measured coordinator hours on PA work.</li>
+  <li>Payer mix by percentage, and which plans are TDI-regulated versus ERISA self-funded.</li>
+  <li>Whether AdvancedMD's <code>DocumentReference</code> surfaces scanned outside records or only clinical notes.</li>
+  <li>Telnyx BAA availability.</li>
+  <li>Deployment target — on-premise appliance in Southlake, or single-tenant US cloud.</li>
+  <li>TRICARE and VA Community Care authorization mechanics, unresearched in this pass.</li>
+  <li>Verification of the reported Cigna CMM-211 revision effective 2026-08-04 against Cigna's official posting.</li>
+</ol>
+
+<div class="callout cool">
+  <div class="lbl">What would make this project the wrong one</div>
+  <p>If the measured first-pass approval rate is already above 90% and denials are rare, the appeal engine has little to recover and the whole case rests on labour savings — which a much simpler tool could deliver. If the coordinator is spending fifteen hours a month rather than ninety-nine, the same conclusion follows. R0 exists to find out, and the answer should be allowed to be no.</p>
+</div>
+
+<footer>
+  <span>Advanced Spine &amp; Orthopedics · Prior Authorization Workbench</span>
+  <span>ASO-MVP-001 · v0.1 · Draft · Extends ASO-ARCH-001 and ASO-ARCH-002</span>
+</footer>
+
+</main>
+</div>
+</body>
+</html>

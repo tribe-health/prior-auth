@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Build playbook · Surgery Authorization Workbench · Advanced Spine &amp; Orthopedics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Mulish:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/aso.css">
+<script src="../assets/shell.js"></script>
+<script>ASO.primeTheme();</script>
+<style>
+  /* Screen-local only; shared doc vocabulary lives in aso.css. */
+
+  /* Phase block */
+  .phase {
+    background: var(--s1); border-radius: var(--r-lg);
+    padding: var(--sp-5); margin-bottom: var(--sp-4);
+  }
+  .phase.is-hard { background: var(--warm-surface); }
+  .phase.is-gate { background: var(--ok-surface); }
+  .phase .ph-h {
+    display: flex; align-items: baseline; gap: var(--sp-3);
+    flex-wrap: wrap; margin-bottom: 8px;
+  }
+  .phase .ph-n {
+    font-family: var(--font-mono); font-size: 0.62rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-3);
+  }
+  .phase .ph-t { font-size: 1.02rem; font-weight: 700; }
+  .phase .ph-d { font-size: 0.85rem; color: var(--fg-2); line-height: 1.6; max-width: 76ch; }
+  .phase .ph-d strong { color: var(--fg); font-weight: 600; }
+
+  /* Skill chips inside a phase */
+  .skl { display: flex; flex-wrap: wrap; gap: 5px; margin-top: var(--sp-4); }
+  .skl span {
+    font-family: var(--font-mono); font-size: 0.66rem;
+    background: var(--s2); border-radius: var(--r);
+    padding: 5px 9px; color: var(--fg-2);
+  }
+  html.dark .phase.is-hard .skl span,
+  html.dark .phase.is-gate .skl span { background: var(--s1); }
+  .phase.is-hard .skl span, .phase.is-gate .skl span { background: var(--bg); }
+
+  /* Truth vocabulary */
+  .truth { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: var(--sp-3); }
+  @media (max-width: 860px) { .truth { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+  @media (max-width: 460px) { .truth { grid-template-columns: minmax(0,1fr); } }
+</style>
+</head>
+<body>
+
+<div class="topbar" data-topbar></div>
+
+<div class="app app-nocontext">
+  <aside class="gnav" data-gnav></aside>
+
+  <main class="workbench workbench-wide" id="content">
+
+    <div data-whoami></div>
+
+    <section class="phead" data-od-id="pb-head">
+      <div>
+        <p class="eyebrow">About · Build playbook</p>
+        <h1 class="display">One architecture.<br>Three surfaces. Nothing called done twice.</h1>
+        <p class="lead">
+          This product ships as web, desktop, and mobile. Not three products — one architecture
+          with three implementations, built under a set of enforcement contracts that decide
+          the order of work and what "finished" is allowed to mean.
+        </p>
+      </div>
+      <div class="row">
+        <button class="btn btn-secondary" onclick="window.print()">Print</button>
+      </div>
+    </section>
+
+    <nav class="toc" aria-label="On this page" style="margin-bottom:var(--sp-7)">
+      <a href="#loop">The control loop</a>
+      <a href="#classify">What kind of build</a>
+      <a href="#order">Order of work</a>
+      <a href="#surfaces">Three surfaces</a>
+      <a href="#inference">Where a turn runs</a>
+      <a href="#lanes">What syncs, what never does</a>
+      <a href="#done">What "done" means</a>
+      <a href="#honest">What this commits us to</a>
+    </nav>
+
+    <!-- ═══ loop ═══ -->
+    <section class="sec" id="loop" data-od-id="pb-loop">
+      <div class="sec-head"><span class="s-n">01 · The control loop</span></div>
+      <p class="lede">
+        The method is not "plan, then build." It is a loop with a named producer, an
+        <em>independent</em> critic, and a verification gate that a producer is not permitted
+        to pass on its own work.
+      </p>
+
+      <div class="code" style="margin-top:var(--sp-4)" aria-label="The control loop">learn  →  assess  →  research  →  decision-complete plan  →  bounded implementation
+       →  public-boundary verification  →  adversarial critic  →  retention  →  next</div>
+
+      <p class="lede" style="margin-top:var(--sp-5)">
+        Four rules govern it, and they are stated as prohibitions because that is how they get
+        broken:
+      </p>
+
+      <div class="steps" style="margin-top:var(--sp-4)">
+        <div class="step-r">
+          <span class="st-n">01</span>
+          <span>
+            <span class="st-t">Do not implement first</span>
+            <span class="st-d">
+              When requirements, domain knowledge, or architecture boundaries are incomplete,
+              the loop starts with learning and assessment. In this domain that is not
+              ceremony — the difference between a gap and a void is a domain fact that changes
+              the schema.
+            </span>
+          </span>
+        </div>
+        <div class="step-r">
+          <span class="st-n">02</span>
+          <span>
+            <span class="st-t">A producer cannot certify its own work</span>
+            <span class="st-d">
+              The critic is a different reviewer with fresh context. This page's own database
+              design was reviewed that way, and the review returned four critical findings that
+              changed the schema.
+            </span>
+          </span>
+        </div>
+        <div class="step-r">
+          <span class="st-n">03</span>
+          <span>
+            <span class="st-t">Authority is declared before implementation</span>
+            <span class="st-d">
+              What may be read, written locally, written externally, destroyed, published —
+              stated up front. Work stops at the boundary rather than expanding through it.
+            </span>
+          </span>
+        </div>
+        <div class="step-r">
+          <span class="st-n">04</span>
+          <span>
+            <span class="st-t">Requirements are never rewritten to fit a failing output</span>
+            <span class="st-d">
+              If the result does not meet the requirement, the result is wrong. This is the
+              rule that keeps a demo from quietly becoming the specification.
+            </span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ classify ═══ -->
+    <section class="sec" id="classify" data-od-id="pb-classify">
+      <div class="sec-head"><span class="s-n">02 · What kind of build this is</span></div>
+      <p class="lede">
+        The playbook classifies a product before planning it, because the classification
+        determines which contracts apply. This one is a composite of three.
+      </p>
+
+      <div class="legend" style="margin-top:var(--sp-4);grid-template-columns:repeat(3,minmax(0,1fr))">
+        <div class="lg is-typed">
+          <span class="lg-k">Scenario 01</span>
+          <span class="lg-n">Full hybrid</span>
+          <span class="lg-d">Web, desktop, and mobile from one architecture, with a shared core.</span>
+        </div>
+        <div class="lg is-typed">
+          <span class="lg-k">Scenario 02</span>
+          <span class="lg-n">Multi-tenant</span>
+          <span class="lg-d">Practices are tenants. Every data scope carries a tenant predicate bound to the verified session.</span>
+        </div>
+        <div class="lg is-gated">
+          <span class="lg-k">Scenario 03</span>
+          <span class="lg-n">Local inference</span>
+          <span class="lg-d">Because patient text should be able to stay on the device — which makes engine choice a privacy decision.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ order ═══ -->
+    <section class="sec" id="order" data-od-id="pb-order">
+      <div class="sec-head">
+        <span class="s-n">03 · Order of work</span>
+        <span style="font-size:.85rem;color:var(--fg-2)">Two of these phases are irreversible.</span>
+      </div>
+      <p class="lede">
+        The ordering is not a preference. Phases one and two are load-bearing for everything
+        downstream — retrofitting a privacy class or a session boundary means rewriting the
+        schema and the gateway. Everything from phase five onward is comparatively cheap to
+        redo.
+      </p>
+
+      <div style="margin-top:var(--sp-4)">
+        <div class="phase">
+          <div class="ph-h"><span class="ph-n">Phase 0</span><span class="ph-t">Control and process</span></div>
+          <p class="ph-d">
+            Classify the product, emit the reference manifest, declare authority, and name the
+            producer and the independent critic. Pin every dependency version in one file
+            before the first manifest is written — <strong>doing it later is a migration; doing
+            it now is free.</strong>
+          </p>
+          <div class="skl"><span>orchestrate-prometheus-application</span><span>dependency-pin-discipline</span><span>karpathy-progress-memory</span></div>
+        </div>
+
+        <div class="phase is-hard">
+          <div class="ph-h"><span class="ph-n">Phase 1 · irreversible</span><span class="ph-t">Data and privacy contracts</span></div>
+          <p class="ph-d">
+            <strong>Before the first table exists.</strong> Every datum gets a lane — server
+            authoritative, collaborative, or append-only history — and a privacy class. An
+            unknown class defaults to local, and local data is <em>structurally refused at the
+            sync boundary</em> rather than filtered out. In this product that decision governs
+            every chart document and every embedding derived from one.
+          </p>
+          <p class="ph-d" style="margin-top:var(--sp-3)">
+            De-identified development data is stood up here too, before anyone touches real
+            records — and on the principle that <strong>a replica is not anonymous merely
+            because names and email addresses were removed.</strong>
+          </p>
+          <div class="skl"><span>sync-doctrine</span><span>peer-profile-sync</span><span>anonymized-replica</span><span>domain-glossary-service</span></div>
+        </div>
+
+        <div class="phase is-hard">
+          <div class="ph-h"><span class="ph-n">Phase 2 · irreversible</span><span class="ph-t">Security and identity</span></div>
+          <p class="ph-d">
+            Before any agent or endpoint. The verified session, the governed tool sequence, and
+            the personas. Every tool call an assistant makes passes eight ordered steps —
+            resolve identity, validate against schema, <strong>classify effects independently
+            of what the tool claims about itself</strong>, evaluate policy, confirm when
+            required, execute with idempotency and cancellation, redact, and append an
+            immutable audit record.
+          </p>
+          <p class="ph-d" style="margin-top:var(--sp-3)">
+            The rule that matters most here: <strong>tool names and descriptions are untrusted
+            data.</strong> A tool that describes itself as safe is making a claim, not a
+            guarantee.
+          </p>
+          <div class="skl"><span>agent-runtime-security</span><span>axum-agent-gateway</span><span>persona-scoped-agent</span></div>
+        </div>
+
+        <div class="phase">
+          <div class="ph-h"><span class="ph-n">Phase 3</span><span class="ph-t">Runtime and protocol contracts</span></div>
+          <p class="ph-d">
+            Where a turn runs, what an event looks like, what a rendered block may contain, and
+            how retrieval works. Engine selection comes first because the cloud lane is a route
+            by which patient data leaves the device — that makes it a privacy decision before
+            it is a performance one.
+          </p>
+          <div class="skl"><span>local-inference-lanes</span><span>agui-event-contract</span><span>content-block-ui</span><span>a2ui-surface-contract</span><span>client-rag</span></div>
+        </div>
+
+        <div class="phase">
+          <div class="ph-h"><span class="ph-n">Phase 4</span><span class="ph-t">Client state</span></div>
+          <p class="ph-d">
+            The entity layer and the shell around it. Components import feature hooks — never
+            transports, never raw stores, never a network call. The local store is a projection
+            and an offline queue, <strong>never an authorization source.</strong>
+          </p>
+          <div class="skl"><span>pem-local-first</span><span>entity-graph-web-shell</span><span>mini-app-module</span></div>
+        </div>
+
+        <div class="phase">
+          <div class="ph-h"><span class="ph-n">Phase 5</span><span class="ph-t">Design system and surfaces</span></div>
+          <p class="ph-d">
+            One token file generates both the web theme and the mobile theme. This is generated
+            rather than kept in sync for a documented reason: when the two were hand-mirrored
+            they <em>had already drifted</em> — two different values for the same background
+            role, with nothing in the build to notice. <strong>Two palettes that agree on
+            intent and disagree on values are worse than one ugly palette</strong>, because
+            every screenshot comparison becomes unreliable.
+          </p>
+          <p class="ph-d" style="margin-top:var(--sp-3)">
+            Tokens are named for role, never colour — <span class="ic">accent</span> survives a
+            rebrand; a colour name becomes a lie the first time the brand changes.
+          </p>
+          <div class="skl"><span>hybrid-design-tokens</span><span>reference-ui-fidelity</span><span>mobile-navigation</span><span>a11y-gate</span><span>tauri-ui-review</span><span>flutter-golden-ui</span></div>
+        </div>
+
+        <div class="phase is-gate">
+          <div class="ph-h"><span class="ph-n">Phases 6–7 · gate</span><span class="ph-t">Deployment, verification, publication</span></div>
+          <p class="ph-d">
+            Deployment profiles are additive, and only the ones actually requested get built.
+            Then the verification gate — which is not the last phase so much as a gate every
+            phase passes through.
+          </p>
+          <div class="skl"><span>deploy-hybrid-agentic-stack</span><span>hybrid-runtime-verification</span><span>build-branded-docusaurus</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ surfaces ═══ -->
+    <section class="sec" id="surfaces" data-od-id="pb-surfaces">
+      <div class="sec-head"><span class="s-n">04 · Three surfaces, one architecture</span></div>
+      <p class="lede">
+        What is shared is the contract, not the code. Each surface owns its own presentation
+        idiom; they agree on the entity schema, the design tokens, and the event vocabulary.
+      </p>
+
+      <div class="stackd" style="margin-top:var(--sp-4)">
+        <div class="layer">
+          <span class="ly-n">Web · React 19</span>
+          <span class="ly-d">
+            Component → feature hook → entity layer → transport → local store, with PostgreSQL
+            compiled to WebAssembly running in the browser. The layering is lint-enforced, not
+            merely encouraged.
+          </span>
+        </div>
+        <div class="layer">
+          <span class="ly-n">Desktop · Tauri 2</span>
+          <span class="ly-d">
+            The same React bundle, the same engine natively through typed commands. The window
+            chrome is conditionally rendered — shipping the desktop title bar into a browser is
+            a crash, not a cosmetic slip.
+          </span>
+        </div>
+        <div class="layer">
+          <span class="ly-n">Mobile · Flutter</span>
+          <span class="ly-d">
+            Widget → provider → entity package → bridge → Rust store, over SQLite. A hand-written
+            parallel implementation of the same contract, verified against the same scenarios.
+          </span>
+        </div>
+        <div class="layer is-ours">
+          <span class="ly-n">Shared</span>
+          <span class="ly-d">
+            The entity schema and its intermediate representation, the design tokens, the block
+            contract, and the event envelope. Every generator consumes the same representation
+            so the targets cannot diverge.
+          </span>
+        </div>
+      </div>
+
+      <p class="lede" style="margin-top:var(--sp-5)">
+        Navigation is decided by window width, not by operating system. Top-level destinations
+        go in a bottom bar on every platform; a rail appears when the window is wide enough to
+        justify one. A platform check in navigation code is the bug the rule exists to prevent.
+      </p>
+    </section>
+
+    <!-- ═══ inference ═══ -->
+    <section class="sec" id="inference" data-od-id="pb-inference">
+      <div class="sec-head"><span class="s-n">05 · Where a turn runs</span></div>
+      <p class="lede">
+        <strong>The engine is a per-device choice. The lane is a per-turn choice.</strong> They
+        are different decisions, and neither is "mobile versus desktop." Every engine sits
+        behind one interface, so no surface code branches on which one is present.
+      </p>
+
+      <div class="tw" style="margin-top:var(--sp-4)">
+        <table class="ds">
+          <caption class="vh">Inference engine per device, and why each was chosen</caption>
+          <thead><tr><th scope="col">Surface</th><th scope="col">Engine</th><th scope="col">Why this one</th></tr></thead>
+          <tbody>
+            <tr><td>Desktop</td><td><span class="ic">llama-cpp</span></td><td>Pinned, checksummed weights. Zero-configuration default.</td></tr>
+            <tr><td>Android</td><td><span class="ic">LiteRT-LM</span></td><td>Runs everywhere on CPU — the correctness baseline.</td></tr>
+            <tr><td>iOS</td><td><span class="ic">MLX-Swift</span></td><td>Reaches the GPU without the alternative's build surface.</td></tr>
+            <tr><td>macOS</td><td><span class="ic">MLX-C</span></td><td>In-process, no separate language runtime.</td></tr>
+            <tr><td>Web</td><td><span class="ic">WebLLM</span></td><td>Browser GPU lane, no key required.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="lede" style="margin-top:var(--sp-4)">
+        Android is deliberately not the same engine as desktop, and the reason is instructive.
+        The desktop engine builds for Android, so it looks like the obvious single mobile
+        choice — but its GPU path proved <em>device-specific</em>: it works on the phone you
+        tested and fails on the next one. <strong>That is the worst possible failure shape for
+        a correctness baseline</strong>, so the universal CPU engine is the Android default.
+      </p>
+      <p class="lede">
+        Three lanes, and an unknown lane is rejected loudly rather than defaulted — because on
+        the cloud lane, defaulting means patient data leaving the device.
+      </p>
+
+      <div class="legend" style="margin-top:var(--sp-4);grid-template-columns:repeat(3,minmax(0,1fr))">
+        <div class="lg">
+          <span class="lg-k">Lane</span><span class="lg-n">cloud</span>
+          <span class="lg-d">A remote provider under the practice's own key. Never the zero-configuration default.</span>
+        </div>
+        <div class="lg is-append">
+          <span class="lg-k">Lane</span><span class="lg-n">local</span>
+          <span class="lg-d">On-device. The lane for anything touching patient text.</span>
+        </div>
+        <div class="lg is-typed">
+          <span class="lg-k">Lane</span><span class="lg-n">runtime</span>
+          <span class="lg-d">The governed agent runtime. On mobile it is embedded as a library, never a background service.</span>
+        </div>
+      </div>
+
+      <p class="lede" style="margin-top:var(--sp-5)">
+        Model files are revision-pinned and hash-verified before first load, small files
+        fetched first so a bad revision fails in seconds rather than after gigabytes, and
+        memory is checked <em>before</em> a load rather than around it — because on iOS an
+        over-budget model load does not raise an error. The operating system kills the process.
+      </p>
+    </section>
+
+    <!-- ═══ lanes ═══ -->
+    <section class="sec" id="lanes" data-od-id="pb-lanes">
+      <div class="sec-head"><span class="s-n">06 · What syncs, and what never does</span></div>
+      <p class="lede">
+        <strong>The device never mirrors the server database.</strong> Every record belongs to
+        exactly one lane and one privacy class, and getting the lane wrong is the root cause of
+        most synchronization defects.
+      </p>
+      <p class="lede">
+        For this product the consequential rule is a single sentence:
+        <strong>an embedding of local data is itself local.</strong> We reached the same
+        conclusion independently from published research on reconstructing text from embedding
+        vectors — which is a good sign that the rule is right, and the reason the database
+        refuses to store a vector of patient text against a model that is not cleared for it.
+      </p>
+      <p class="lede">
+        Offline writes go through one durable queue with explicit states, and an action that
+        exhausts its retries becomes visible to the user rather than disappearing.
+        <strong>A failure that no one sees is worse than one that fails loudly.</strong>
+      </p>
+    </section>
+
+    <!-- ═══ done ═══ -->
+    <section class="sec" id="done" data-od-id="pb-done">
+      <div class="sec-head"><span class="s-n">07 · What "done" is allowed to mean</span></div>
+      <p class="lede">
+        <strong>"Working" is a runtime claim, not a synonym for type-checking or passing unit
+        tests.</strong> Nothing is called working, complete, ready, or shipped until every gate
+        below passes on every surface being claimed.
+      </p>
+
+      <div class="vf" style="margin-top:var(--sp-4)">
+        <div class="vfr"><span class="v-n">01</span><span>Reproducible from a fresh clone — no leftover build output, downloaded model, or tool cache</span><span class="v-o pass">required</span></div>
+        <div class="vfr"><span class="v-n">02</span><span>Frozen dependency install and code generation both succeed</span><span class="v-o pass">required</span></div>
+        <div class="vfr"><span class="v-n">03</span><span>Formatter, type checker, architecture audit, and compiler all pass</span><span class="v-o pass">required</span></div>
+        <div class="vfr"><span class="v-n">04</span><span>A production build succeeds from tracked sources</span><span class="v-o pass">required</span></div>
+        <div class="vfr"><span class="v-n">05</span><span>The built artifact actually starts and reaches its documented ready state</span><span class="v-o pass">required</span></div>
+        <div class="vfr"><span class="v-n">06</span><span>Expected data directories exist and are readable after launch</span><span class="v-o pass">required</span></div>
+        <div class="vfr"><span class="v-n">07</span><span>One real user-visible workflow crosses the public boundary and returns a valid result</span><span class="v-o pass">required</span></div>
+        <div class="vfr"><span class="v-n">08</span><span>A physical device run, whenever a platform baseline or inference lane changed</span><span class="v-o pass">required</span></div>
+      </div>
+
+      <p class="lede" style="margin-top:var(--sp-5)">
+        <strong>A simulator is not a device for this purpose.</strong> The reason is specific:
+        the failures that matter here are invisible to a host check. An over-budget model load
+        on iOS produces no exception and no log — the process is simply killed. A mismatched
+        native library on Android surfaces only when the bridge is first touched. Native
+        bridges bind by symbol name, so a renamed class path compiles clean on both sides and
+        fails to resolve at runtime.
+      </p>
+
+      <p class="lede">
+        Results are recorded in four words, and only one of them means finished:
+      </p>
+
+      <div class="truth" style="margin-top:var(--sp-4)">
+        <div class="lg is-append">
+          <span class="lg-k">Result</span><span class="lg-n">Passed</span>
+          <span class="lg-d">The production artifact launched and the workflow completed.</span>
+        </div>
+        <div class="lg is-gated">
+          <span class="lg-k">Result</span><span class="lg-n">Build-only</span>
+          <span class="lg-d">It compiled but was never launched. <strong>Never call this working.</strong></span>
+        </div>
+        <div class="lg">
+          <span class="lg-k">Result</span><span class="lg-n">Blocked</span>
+          <span class="lg-d">An unavailable dependency or target prevented proof.</span>
+        </div>
+        <div class="lg is-gated">
+          <span class="lg-k">Result</span><span class="lg-n">Failed</span>
+          <span class="lg-d">It ran and produced incorrect behaviour.</span>
+        </div>
+      </div>
+
+      <p class="lede" style="margin-top:var(--sp-5)">
+        A device record names the device, the operating system version, and what was actually
+        observed. <em>"Tested on Android"</em> is not a record — it cannot be reproduced and it
+        cannot be falsified. And a newly generated project starts <strong>unverified on
+        purpose</strong>: that is not a gap to paper over, it is an accurate statement until
+        someone runs it on hardware.
+      </p>
+    </section>
+
+    <!-- ═══ honest ═══ -->
+    <section class="sec" id="honest" data-od-id="pb-honest">
+      <div class="sec-head"><span class="s-n">08 · What adopting this commits us to</span></div>
+      <p class="lede">
+        These contracts assume a specific project scaffold — a version manifest, an audit
+        script, a token generator, a platform-support record, and a particular core library
+        layout. They are <strong>enforcement contracts for an existing architecture, not a
+        greenfield generator.</strong>
+      </p>
+      <p class="lede">
+        Adopting them means adopting that scaffold, or reimplementing its file layout
+        deliberately. We would rather state that plainly than let a reader infer that the gates
+        come free.
+      </p>
+
+      <div class="pair" style="margin-top:var(--sp-4)">
+        <div class="card is-warn">
+          <span class="c-k">Tension 01</span>
+          <span class="c-t">A vault that is gone by design</span>
+          <span class="c-d">
+            The collaborative-document lane is explicit that if a user loses every paired
+            device, their vault is gone — no automatic cloud backup, by design. That is
+            excellent privacy engineering and it <strong>conflicts directly with medical-record
+            retention obligations</strong>. The resolution is that clinical records are not
+            vault data; only genuinely personal preferences are. Worth deciding once, in
+            writing, rather than per feature.
+          </span>
+        </div>
+        <div class="card is-warn">
+          <span class="c-k">Tension 02</span>
+          <span class="c-t">On-device retrieval versus a server corpus</span>
+          <span class="c-d">
+            The client contract fixes one embedding dimension so vectors survive syncing
+            between a surgeon's own devices. Our server-side corpus for published policy uses
+            larger models. The guidance is explicit that these are two designs with two privacy
+            reviews — so we treat them as two, rather than pretending one interface covers both.
+          </span>
+        </div>
+      </div>
+
+      <p class="lede" style="margin-top:var(--sp-5)">
+        One last rule, and it is the reason this page exists at all:
+        <strong>it is a blocking failure to implement only the easiest routes while presenting
+        the shell as the finished application.</strong> Navigation items may not lead to
+        placeholders. Every screen in the prototype you are reading is reachable, and every one
+        of them renders real content.
+      </p>
+    </section>
+
+    <p class="meta" style="margin-top:var(--sp-7);color:var(--fg-3)">
+      Related · <a href="how-this-works.html">How this works</a> ·
+      <a href="architecture.html">Technology</a> ·
+      <a href="data-model.html">Data model</a> ·
+      <a href="sitemap.html">Sitemap</a>
+    </p>
+
+  </main>
+</div>
+
+<div class="tabbar" data-tabbar></div>
+
+<script>ASO.shell({ step: null });</script>
+</body>
+</html>

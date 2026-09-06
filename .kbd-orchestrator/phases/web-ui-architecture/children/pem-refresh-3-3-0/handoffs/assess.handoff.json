@@ -1,0 +1,11 @@
+{
+  "stage": "assess",
+  "completedAt": "2026-09-04T18:56:50Z",
+  "outputs": [
+    "assessment.md"
+  ],
+  "nextStage": "analyze",
+  "summaryForNext": "Two BLOCKING gaps. GAP-C: ColumnDef<T> is public API via EntityTableProps (src/index.ts:392), so a react-table v9 type change breaks consumers — that conflicts with G2's 3.3.0 MINOR bump; plan must decide 3.3.0 vs 4.0.0 vs an insulating re-export before G3 starts. GAP-A: package-contract-validation.mjs:25 asserts repository.directory === publicPackage.directory, so the alias CANNOT share packages/entity-graph-react/ — it needs its own directory, and must carry all 3 entrypoints (., ./devtools, ./devtools/auto) against a PACKAGE_ENTRYPOINT_CONTRACT that declares only one. WARNINGS: (1) GAP-E — the Flutter pins encode an OBSERVED resolution failure stating the 3.4/4.0.6 Riverpod line cannot resolve on Flutter 3.44.8, which is exactly what G5 targets; local toolchain is 3.48.0 beta so this CANNOT be verified here. (2) GAP-B — workspace: protocol leak made 10 packages uninstallable in the 3.0.0 run; publish with pnpm publish, never npm publish. (3) The premise that prompted this phase is wrong: nothing is private, all 12 packages are published at 3.2.0; the real defects are one naming inconsistency plus two stale deps.",
+  "skipped": false,
+  "skipReason": null
+}

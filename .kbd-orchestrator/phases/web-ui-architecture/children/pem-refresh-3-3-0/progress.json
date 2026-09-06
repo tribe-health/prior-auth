@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "2",
+  "generatedBy": "kbd-runtime",
+  "projectionContractVersion": 2,
+  "sourceRevision": 43,
+  "derivedRevision": 43,
+  "frontier": {
+    "e9a7936c-0a01-43d5-9004-b93a4e5fd031": 43
+  },
+  "conflictCount": 0,
+  "phase": "pem-refresh-3-3-0",
+  "phaseId": "web-ui-architecture::pem-refresh-3-3-0",
+  "parentPhase": "web-ui-architecture",
+  "last_updated": "2026-09-06T11:04:42.705205Z",
+  "last_updated_by": "kbd-runtime",
+  "changes_total": 0,
+  "changes_completed": 0,
+  "implementation_total": 0,
+  "implementation_completed": 0,
+  "completion": {
+    "primaryCounter": "implementation",
+    "implementation": {
+      "completed": 0,
+      "total": 0,
+      "status": "PENDING"
+    },
+    "evidence": {
+      "status": "COMPLETE",
+      "summary": "Every change carries a result.md with observed command output. Six behavioural guards each sabotaged, observed failing, reverted. Live-stack evidence: 60 tables, 5/5 and 11/11 schema refusals, tenant isolation and PHI projection verified through Electric against real rows. NOT evidence of visual correctness — nothing has rendered in a browser.",
+      "blockers": []
+    },
+    "certification": {
+      "status": "COMPLETE",
+      "summary": "Both gates ran. artifact-refiner: 11/11 blocking constraints pass across web, Rust and Flutter surfaces; one warning finding (empty [pins] in versions.toml, operator-owned). Adversarial review by a fresh-context critic: 2 CRITICAL, 3 HIGH, 3 MEDIUM, 1 LOW. Six fixed here (misleading compose comment, gate read failing open, worklist hiding a gap behind a void, tautological stub, unreachable type variant, false verification claim in a test comment, double-negative copy). Three carried to runtime-architecture with stated reasons: the sync layer has no callers, GraphProvider conflates three states, and two tests mirror the implementation. Gates after: 57/57 tests, typecheck 0, lint clean, build green, audit PASS 6/6.",
+      "blockers": []
+    },
+    "publication": {
+      "status": "BLOCKED",
+      "summary": "The web READ PATH is disconnected: createEvidenceSyncAdapter has no callers and nothing writes rows into PGlite, so every case renders 'No evidence has been recorded' regardless of the truth. Not publishable. Wiring it is the first work item of runtime-architecture.",
+      "blockers": [
+        "Read path disconnected — sync adapter never constructed; PGlite never populated"
+      ]
+    }
+  },
+  "changes": [],
+  "children": {},
+  "migrationStatus": null
+}

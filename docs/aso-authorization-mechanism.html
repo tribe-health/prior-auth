@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{ dark: (localStorage.getItem('aso-kj')||'light')==='dark' }" :class="dark ? 'dark' : ''">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Authorization Mechanism — Requirements from Dr. Kevin James</title>
+<link rel="icon" href="aso-favicon.svg" type="image/svg+xml">
+<script>
+  (function(){ if((localStorage.getItem('aso-kj')||'light')==='dark'){ document.documentElement.classList.add('dark'); } })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Mulish:wght@300;400;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+<style>
+:root{
+  --ember:#DF7C35; --ember-deep:#A85417; --ember-tint:#FBEFE6;
+  --slate:#A7C5D6; --slate-tint:#EDF3F7; --navy:#1F4E79;
+  --graphite:#6E6F71; --ink:#231F20; --bone:#F1EFEC;
+  --bg:#FFFFFF; --s1:#F7F6F4; --s2:#F1EFEC; --s3:#E7E4E0; --s-zebra:#FAF9F7;
+  --fg:#231F20; --fg-2:#4A4B4F; --fg-3:#6E6F71;
+  --accent:#A85417; --accent-vivid:#DF7C35; --cool:#1F4E79;
+  --ok:#1E6F4E; --ok-surface:#E7F3EC;
+  --gap:#A85417; --gap-surface:#FBEFE6;
+  --void:#5B5F66; --void-surface:#EFEFF1;
+  --alert:#9B2C2C; --alert-surface:#FBEAEA;
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Mulish','Nunito Sans','Segoe UI',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  --r:6px;
+}
+html.dark{
+  --ember:#F0955A; --ember-deep:#F0955A; --ember-tint:#2E2119;
+  --slate:#8FB9D0; --slate-tint:#182430; --navy:#8FB9D0;
+  --graphite:#98A2AA; --ink:#EDF0F2; --bone:#1C2126;
+  --bg:#14181C; --s1:#1C2126; --s2:#252B31; --s3:#2E353C; --s-zebra:#191E23;
+  --fg:#EDF0F2; --fg-2:#C2CCD3; --fg-3:#93A0A9;
+  --accent:#F0955A; --accent-vivid:#F0955A; --cool:#8FB9D0;
+  --ok:#6FD1A0; --ok-surface:#152620;
+  --gap:#F0955A; --gap-surface:#2E2119;
+  --void:#A9B3BB; --void-surface:#232830;
+  --alert:#F2A0A0; --alert-surface:#2E1A1A;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:17px;line-height:1.68;-webkit-font-smoothing:antialiased}
+.wrap{max-width:880px;margin:0 auto;padding:3.5rem 2rem 6rem}
+
+.brandbar{display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap;margin-bottom:2.6rem}
+.bmark{display:flex;align-items:center;gap:.8rem}
+.bmark .ic{width:38px;height:38px;flex-shrink:0}
+.bmark .ic svg{width:100%;height:100%;display:block}
+.bmark .wm{width:180px}
+.bmark .wm svg{width:100%;height:auto;display:block}
+.toggle{font-family:var(--mono);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;background:var(--s2);color:var(--fg-2);padding:.55rem .9rem;border:none;border-radius:4px;cursor:pointer}
+.toggle:hover{background:var(--s3);color:var(--accent)}
+
+.eyebrow{font-family:var(--mono);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--fg-3);margin-bottom:.9rem}
+h1{font-family:var(--serif);font-size:2.7rem;line-height:1.1;font-weight:600;letter-spacing:-.015em;margin-bottom:1rem}
+h2{font-family:var(--serif);font-size:1.72rem;font-weight:600;margin:3.4rem 0 1rem;padding-top:1.7rem;background:linear-gradient(var(--s3),var(--s3)) top left / 64px 2px no-repeat}
+h3{font-size:1.08rem;font-weight:700;margin:2rem 0 .55rem}
+p{color:var(--fg-2);margin-bottom:1.1rem}
+.lead{font-size:1.14rem;color:var(--fg-2);line-height:1.62}
+strong{color:var(--fg);font-weight:700}
+em{font-style:italic}
+.big{font-size:1.24rem;line-height:1.5;color:var(--fg);font-weight:600;margin:1.5rem 0}
+
+ul.d,ol.d{color:var(--fg-2);margin:0 0 1.2rem 0;list-style:none}
+ul.d li,ol.d li{padding-left:1.5rem;position:relative;margin-bottom:.6rem}
+ul.d li::before{content:'—';position:absolute;left:0;color:var(--fg-3)}
+ol.d{counter-reset:n}
+ol.d li{counter-increment:n}
+ol.d li::before{content:counter(n)'.';position:absolute;left:0;font-family:var(--mono);font-size:.82rem;color:var(--accent)}
+
+.quote{background:var(--s1);border-radius:var(--r);padding:1.3rem 1.5rem;margin:1.5rem 0}
+.quote .qs{font-family:var(--mono);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--fg-3);margin-bottom:.6rem}
+.quote blockquote{font-family:var(--serif);font-size:1.08rem;line-height:1.55;color:var(--fg);font-style:italic;margin:0;padding-left:1rem;background:linear-gradient(var(--ember),var(--ember)) left top / 2px 100% no-repeat}
+
+.note{background:var(--ember-tint);border-radius:var(--r);padding:1.3rem 1.5rem;margin:1.6rem 0}
+.note.cool{background:var(--slate-tint)}
+.note.good{background:var(--ok-surface)}
+.note.alert{background:var(--alert-surface)}
+.note .lbl{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}
+.note.cool .lbl{color:var(--cool)}
+.note.good .lbl{color:var(--ok)}
+.note.alert .lbl{color:var(--alert)}
+.note p{margin:0 0 .75rem;color:var(--fg-2)}
+.note p:last-child{margin:0}
+
+.chain{margin:1.6rem 0}
+.link{background:var(--s1);border-radius:var(--r);padding:1rem 1.2rem;margin-bottom:.45rem;display:flex;gap:1rem;align-items:flex-start}
+.link .n{font-family:var(--mono);font-size:1.15rem;color:var(--accent-vivid);flex-shrink:0;width:26px;line-height:1.4}
+.link .t{font-size:.96rem;color:var(--fg-2);line-height:1.55}
+.link .t b{color:var(--fg)}
+.arrow{text-align:center;color:var(--fg-3);font-family:var(--mono);font-size:.9rem;margin:-.15rem 0 .3rem}
+
+.tw{overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;margin:1.5rem 0;border-radius:var(--r)}
+table{width:100%;border-collapse:collapse;font-size:.88rem;min-width:560px}
+thead th{background:var(--s3);text-align:left;padding:.7rem .9rem;font-family:var(--mono);font-size:.61rem;letter-spacing:.13em;text-transform:uppercase;color:var(--fg-2);font-weight:400}
+tbody td{padding:.66rem .9rem;color:var(--fg-2);vertical-align:top}
+tbody tr:nth-child(odd){background:var(--s-zebra)}
+tbody tr:nth-child(even){background:var(--s1)}
+td.m{font-family:var(--mono);font-size:.78rem;color:var(--fg)}
+
+.chip{display:inline-block;font-family:var(--mono);font-size:.62rem;letter-spacing:.09em;text-transform:uppercase;padding:.2em .55em;border-radius:3px;white-space:nowrap}
+.ch-ok{background:var(--ok-surface);color:var(--ok)}
+.ch-no{background:var(--gap-surface);color:var(--gap)}
+.ch-q{background:var(--void-surface);color:var(--void)}
+
+.ask{background:var(--s2);border-radius:var(--r);padding:1.6rem 1.8rem;margin:1.8rem 0}
+.ask h3{margin-top:0}
+
+footer{margin-top:4.5rem;padding-top:1.7rem;background:linear-gradient(var(--s3),var(--s3)) top left / 100% 1px no-repeat;font-family:var(--mono);font-size:.66rem;color:var(--fg-3);letter-spacing:.05em;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+
+@media (max-width:640px){
+  body{font-size:16px}
+  .wrap{padding:2rem 1.2rem 4rem}
+  h1{font-size:1.95rem} h2{font-size:1.42rem} .lead{font-size:1.05rem} .big{font-size:1.1rem}
+  .note,.ask,.quote{padding:1.1rem 1.1rem}
+  .link{padding:.9rem 1rem;gap:.75rem}
+  .bmark .wm{width:145px}
+  .tw::before{content:'\2194  swipe';display:block;position:sticky;left:0;font-family:var(--mono);font-size:.57rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <g id="mk"><g transform="rotate(-13 256 256) translate(0 18)">
+    <path d="M80 250C172 186 300 154 432 162C306 126 176 148 80 208C64 218 64 240 80 250Z" fill="var(--graphite)"/>
+    <path d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z" fill="var(--ember)"/>
+  </g></g>
+</defs></svg>
+
+<div class="brandbar">
+  <div class="bmark">
+    <div class="ic"><svg viewBox="0 0 512 512" aria-hidden="true"><use href="#mk"/></svg></div>
+    <div class="wm">
+      <svg viewBox="0 0 430 128" aria-label="Advanced Spine and Orthopedics">
+        <text x="12" y="70" font-family="Mulish, sans-serif" font-size="58" font-weight="600" letter-spacing="2" textLength="404" lengthAdjust="spacing" fill="var(--graphite)">ADVANCED</text>
+        <path d="M10 74 C 76 34, 192 24, 288 36 C 348 44, 390 55, 420 65 C 388 51, 346 37, 286 29 C 190 17, 72 33, 10 66 Z" fill="var(--ember)"/>
+        <text x="14" y="112" font-family="Mulish, sans-serif" font-size="33" textLength="400" lengthAdjust="spacing" fill="var(--ink)">Spine &amp; Orthopedics</text>
+      </svg>
+    </div>
+  </div>
+  <button class="toggle" @click="dark = !dark; localStorage.setItem('aso-kj', dark ? 'dark':'light')" x-text="dark ? 'Light' : 'Dark'">Dark</button>
+</div>
+
+<div class="eyebrow">Requirements from call · Dr. Kevin James · captured verbatim</div>
+<h1>The authorization<br>mechanism</h1>
+<p class="lead">Everything below comes from what you said on the call. This is the specification. One section flags a risk I have to raise before we build, and one section proposes a change to a tactic you described — both are marked.</p>
+
+<p style="font-size:.9rem;color:var(--fg-3)"><em>Note on the transcript: roughly a third of the recording is a second audio source bleeding in — a podcast on Bonhoeffer, Orwell, and Aztec philosophy. None of it is yours. It has been discarded.</em></p>
+
+<!-- ═══════ 1 ═══════ -->
+<h2>The strategic frame</h2>
+
+<div class="quote">
+  <div class="qs">You, on the call</div>
+  <blockquote>"They can't beat us at arbitration… I can't even go to arbitration if the case doesn't end up in the OR. It doesn't matter if I can beat them up on payment if I can't get the service provided."</blockquote>
+</div>
+
+<p>This is the most important thing you said and it reframes the entire project.</p>
+
+<p>You've solved the reimbursement side — federal IDR under the No Surprises Act, arbitration awards, tax ID strategy, out-of-network leverage with counsel. The insurers cannot win there. So they moved the fight upstream to the only place they still control: <strong>whether the case happens at all.</strong></p>
+
+<p class="big">Authorization denial isn't an administrative problem. It's their countermove to losing at arbitration. It's the last lever they have, and they know it.</p>
+
+<p>That changes what this system is. It isn't a documentation tool that saves staff hours. It's the instrument that decides whether the revenue you've already won the right to collect ever becomes collectable.</p>
+
+<!-- ═══════ 2 ═══════ -->
+<h2>The argument chain</h2>
+
+<p>This is the core of it — the thing that makes the product work and that no generic prior-auth vendor knows.</p>
+
+<div class="note">
+  <div class="lbl">The trap in the criteria</div>
+  <p>Lumbar fusion is not authorized for back pain. Back pain is why most patients need it. The MRI in a back-pain patient typically shows an annular tear and disc degeneration — neither of which authorizes anything.</p>
+  <p>They also require pre-existing instability on flexion-extension, 3–5 mm translation. As you put it: <strong>"Nobody has that. That's why they wrote the criteria that way."</strong></p>
+</div>
+
+<p>The route through is not to argue harder about back pain. It's to establish a different chain entirely:</p>
+
+<div class="chain">
+  <div class="link"><div class="n">1</div><div class="t"><b>MRI reports moderate or severe foraminal stenosis</b> at the operative level. Not mild. This single word governs everything downstream.</div></div>
+  <div class="arrow">↓</div>
+  <div class="link"><div class="n">2</div><div class="t"><b>Neurologic findings correlate to the exiting nerve root</b> at that specific foramen — motor weakness 4/5 in the muscle group that root supplies, plus dermatomal sensory change.</div></div>
+  <div class="arrow">↓</div>
+  <div class="link"><div class="n">3</div><div class="t"><b>Addressing foraminal stenosis requires wide decompression</b> — not central laminectomy, but laterally into the lateral recess and the foramen itself.</div></div>
+  <div class="arrow">↓</div>
+  <div class="link"><div class="n">4</div><div class="t"><b>That decompression resects greater than 50% of the facet joints bilaterally.</b></div></div>
+  <div class="arrow">↓</div>
+  <div class="link"><div class="n">5</div><div class="t"><b>Which produces iatrogenic instability</b> — and iatrogenic instability necessitating fusion is in the criteria for every carrier.</div></div>
+</div>
+
+<p>The instability requirement gets satisfied not by finding it on a flexion-extension film, but by demonstrating that the indicated decompression will create it. That's the mechanism, and it's the thing the system has to build every argument around.</p>
+
+<!-- ═══════ 3 ═══════ -->
+<h2>The documentation matrix, level by level</h2>
+
+<p>You gave the L5–S1 case precisely. The system needs this encoded for every level, so the note can be checked against it before it's signed.</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th>Level</th><th>Exiting root</th><th>Motor finding required</th><th>Sensory</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td class="m">L5–S1</td><td class="m">L5</td><td>Extensor hallucis longus, 4/5</td><td>L5 dermatome, decreased</td><td><span class="chip ch-ok">From you</span></td></tr>
+    <tr><td class="m">L4–L5</td><td class="m">L4</td><td>Tibialis anterior / quadriceps</td><td>L4 dermatome</td><td><span class="chip ch-q">Confirm</span></td></tr>
+    <tr><td class="m">L3–L4</td><td class="m">L3</td><td>Quadriceps, hip flexion</td><td>L3 dermatome</td><td><span class="chip ch-q">Confirm</span></td></tr>
+    <tr><td class="m">L5–S1 (traversing)</td><td class="m">S1</td><td>Gastrocnemius, plantar flexion</td><td>S1 dermatome</td><td><span class="chip ch-q">Confirm</span></td></tr>
+    <tr><td class="m">C5–C6</td><td class="m">C6</td><td>Wrist extension, biceps</td><td>C6 dermatome</td><td><span class="chip ch-q">Confirm</span></td></tr>
+    <tr><td class="m">C6–C7</td><td class="m">C7</td><td>Triceps, wrist flexion</td><td>C7 dermatome</td><td><span class="chip ch-q">Confirm</span></td></tr>
+  </tbody>
+</table>
+</div>
+
+<p><strong>The rows marked "confirm" are my extension of the pattern you described, not your words.</strong> I'm not going to encode clinical correlations you didn't state. Correct them tomorrow and they become the matrix.</p>
+
+<h3>What else has to be in the note</h3>
+<ul class="d">
+  <li>Physical therapy and non-operative care, documented with dates</li>
+  <li>Motor exam graded — specifically 4/5, at the correct muscle group</li>
+  <li>Dermatomal sensory change at the matching level</li>
+  <li>No smoking, no poorly controlled diabetes, no excluding comorbidity</li>
+  <li>Planned decompression described in terms that establish its extent</li>
+</ul>
+
+<div class="quote">
+  <div class="qs">The product requirement, in your words</div>
+  <blockquote>"The problem with the AI part of most EHR systems is they're not really set up well for this documentation. There's a lot of rigmarole I have to go through and make my notes perfect. With the matrix and the AI thing you're building — that's what I want to build. Just make sure the doctor's note is perfect."</blockquote>
+</div>
+
+<p><strong>This is a second product, and I hadn't scoped it.</strong> Checking the packet at submission is one job. Checking the note <em>before it's signed</em>, while the patient is still in clinic, is a different and arguably more valuable one. The gap gets closed at the point where closing it is free.</p>
+
+<!-- ═══════ 4 ═══════ -->
+<h2>The radiology chokepoint</h2>
+
+<div class="quote">
+  <div class="qs">You</div>
+  <blockquote>"Trying to set up meetings with radiologists so they quit putting the word 'mild' on the foraminal stenosis report."</blockquote>
+</div>
+
+<p>One adjective in a radiology report decides whether a case is authorizable. That is the single highest-leverage variable in the entire pipeline, and it's produced by someone who has no idea what they're deciding.</p>
+
+<h3>What the system does about it</h3>
+<ol class="d">
+  <li><strong>Flags it at intake.</strong> Imaging says "mild" at the operative level and the case needs "moderate" — that surfaces before submission, not after denial.</li>
+  <li><strong>Tracks it by radiologist and by facility.</strong> Over sixty cases you'll know exactly which readers systematically under-grade foraminal stenosis. That turns your radiologist conversations from an impression into a dataset.</li>
+  <li><strong>Routes the remediable ones.</strong> Where the images support a higher grade than the report states, the paths are a re-read request, a formal addendum, or an independent second read — each documented as a legitimate clinical disagreement about interpretation.</li>
+</ol>
+
+<div class="note cool">
+  <div class="lbl">The line to hold here</div>
+  <p>Asking a radiologist to change a grade because you need it for authorization is a different act from asking for a re-read because you believe the images show more than the report captured. The first is pressure on a colleague to alter a clinical finding. The second is ordinary medical practice.</p>
+  <p>The system should only ever generate the second — a re-read request stating what the surgeon observes on the images, with the question left open. That distinction protects you and it also produces a better document.</p>
+</div>
+
+<!-- ═══════ 5 ═══════ -->
+<h2>Payers, in your order</h2>
+
+<div class="tw">
+<table>
+  <thead><tr><th>Priority</th><th>Payer</th><th>Known tweak</th><th>Build</th></tr></thead>
+  <tbody>
+    <tr><td class="m">1</td><td><strong>Blue Cross Blue Shield of Texas</strong> — the majority of your demographic</td><td>To be pulled</td><td class="m">R1</td></tr>
+    <tr><td class="m">2</td><td><strong>UnitedHealthcare</strong></td><td>To be pulled</td><td class="m">R1</td></tr>
+    <tr><td class="m">3</td><td><strong>Aetna</strong></td><td>Explicitly excludes fusion for DDD alone</td><td class="m">R1</td></tr>
+    <tr><td class="m">4</td><td><strong>Cigna</strong> (via eviCore)</td><td><strong>Will not authorize more than one level</strong></td><td class="m">R2</td></tr>
+    <tr><td class="m">5</td><td><strong>Workers' comp</strong> — Sedgwick, Liberty Mutual</td><td>ODG criteria, adopted by Texas DWC</td><td class="m">R2</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Procedures to encode first</h3>
+<ul class="d">
+  <li>Lumbar 360 / anterior-posterior fusion</li>
+  <li>Lumbar fusion, single and multi-level</li>
+  <li>ACDF — anterior cervical discectomy and fusion</li>
+  <li>ODG criteria for lumbar fusion and ACDF (workers' comp)</li>
+</ul>
+
+<div class="note">
+  <div class="lbl">The constraint that changes sequencing</div>
+  <p>You said: <strong>"You only get so many appeals before they kick it back and say you can't make another request for six months."</strong></p>
+  <p>That makes appeals a finite resource, not an unlimited retry. It's the strongest possible argument for spending effort on getting the first submission right rather than optimizing the appeal — and it means the system has to track appeals remaining per case as a hard budget, visible before anyone files.</p>
+</div>
+
+<!-- ═══════ 6 ═══════ -->
+<h2>The reviewer — and a change I'd propose</h2>
+
+<div class="quote">
+  <div class="qs">You</div>
+  <blockquote>"The initial request goes to some internal medicine doctor who doesn't know what he's looking at… I want the name and medical license number of that guy, because I'm going to threaten him with a board complaint if he doesn't do what I ask."</blockquote>
+</div>
+
+<p>The instinct is right. The execution I'd change — and I think the version I'm proposing is materially stronger, not softer.</p>
+
+<h3>Why the personal threat is the weaker weapon</h3>
+<p>Threatening an individual physician with a board complaint to influence a clinical determination can be characterized as coercion of a medical decision-maker. You may never be challenged on it. But if you ever are — in an arbitration, in a deposition, in a payer's counter-complaint — that sentence does more damage to you than the denial did.</p>
+
+<h3>What I'd do instead, which gets the same result</h3>
+
+<p>Texas law already gives you the lever. Utilization review affecting Texas patients is regulated: the UR agent must be registered with TDI, and physicians conducting it are subject to Texas licensure and specialty-match requirements. Under HB 3459, a peer review preceding an adverse determination must be conducted by a <strong>Texas-licensed physician of the same or similar specialty.</strong></p>
+
+<p>So capture the reviewer's identity — but use it differently:</p>
+
+<ol class="d">
+  <li><strong>Record name, credentials, and specialty</strong> from every determination letter. This is information you are entitled to.</li>
+  <li><strong>Check it automatically</strong> against the Texas Medical Board licensure database and against the specialty requirement.</li>
+  <li><strong>Where it fails</strong> — an out-of-state reviewer, or an internist reviewing a spine fusion — that is a documented regulatory violation, and it goes to TDI as a compliance complaint about the utilization review agent, not as a threat to a person.</li>
+  <li><strong>Where it passes</strong>, you still have a record: which reviewers deny at what rate, and whether the same names recur across your denials.</li>
+</ol>
+
+<div class="note good">
+  <div class="lbl">Why this is the stronger position</div>
+  <p>A board complaint against an individual is a threat you have to be willing to carry out, and it reads as personal. A pattern of same-specialty violations documented across twenty cases is a regulatory filing against the <em>company</em> that they cannot dismiss, that puts their TDI registration in play, and that costs you nothing to accumulate because the system builds it automatically.</p>
+  <p>It also scales. One board complaint pressures one reviewer once. A compliance file pressures the vendor on every case you will ever send them.</p>
+</div>
+
+<h3>What goes in the first submission</h3>
+
+<p>You said the regulator should be named in the initial document. I pushed back on that previously; having heard the mechanism, I'd partly reverse. A <em>factual procedural notice</em> — not a threat — is appropriate and signals that the file will be handled properly:</p>
+
+<div class="quote">
+  <div class="qs">Proposed standing paragraph · TDI-regulated plans</div>
+  <blockquote style="font-family:var(--sans);font-style:normal;font-size:.95rem;background:linear-gradient(var(--cool),var(--cool)) left top / 2px 100% no-repeat">This request is submitted under a plan regulated by the Texas Department of Insurance. Any adverse determination is subject to the peer review requirements of the Texas Insurance Code, including review by a Texas-licensed physician of the same or similar specialty. Please include the reviewing physician's name, credentials, and specialty with any determination.</blockquote>
+</div>
+
+<p>That last sentence does the work. Asking for the reviewer's identity as a routine procedural matter is entirely proper, gets you the data without a confrontation, and tells them the file is being handled by someone who knows the rules.</p>
+
+<!-- ═══════ 7 ═══════ -->
+<h2>The risk I have to raise</h2>
+
+<div class="note alert">
+  <div class="lbl">Read this one carefully</div>
+  <p>You said: <em>"Most of these patients, I don't really even need to do the laminectomy, but I'm trying to fuse them, so I'm presenting to them that I'm going to do a laminectomy."</em></p>
+  <p>I think I know what you mean, and the charitable reading is almost certainly the correct one: the decompression is genuinely part of the operation you perform, and what you're saying is that decompression alone wouldn't be your chosen treatment — the fusion is the operation. A wide foraminal decompression really does destabilize, and that's a standard, defensible surgical argument.</p>
+  <p><strong>But that sentence, as spoken, describes representing a planned procedure to obtain authorization for a different one.</strong> In a deposition, an audit, or an OIG review, it reads as a false statement to a payer. And if a letter this system generates asserts a wide decompression that the operative report doesn't document, the mismatch is discoverable — payers audit for exactly that.</p>
+</div>
+
+<h3>Which is why I'm building one specific control</h3>
+
+<p>The system will <strong>reconcile every authorization request against the operative report</strong> and flag divergence — planned levels versus performed, planned decompression extent versus documented, authorized CPTs versus billed.</p>
+
+<p>Read one way that's a compliance burden. Read correctly, it's the thing that protects you: if the wide decompression is performed and the operative report documents it, the argument in the letter was true and you have contemporaneous proof. That reconciliation record is the single best defense you could have if anyone ever questions the pattern.</p>
+
+<p class="big">The system either protects you here or it convicts you. The difference is whether the letter describes what actually happens in the OR — and that's a design decision I need you to make with your eyes open, not one I'll make quietly.</p>
+
+<!-- ═══════ 8 ═══════ -->
+<h2>The business model — you found it</h2>
+
+<div class="quote">
+  <div class="qs">You</div>
+  <blockquote>"The CEO of Trophy Club already told me that's one service he wants to provide for our spine surgeons, to bring more spine surgeons to that hospital. If hospitals offer this authorization process, they're a magnet for people to bring spine cases — and that's the number one revenue driver for our hospital: spine and bariatrics."</blockquote>
+</div>
+
+<p>That's the buyer. Not you, and not patients.</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th>Model</th><th>Assessment</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Practice pays</strong></td><td>You're on a line of credit. Wrong buyer, wrong time.</td></tr>
+    <tr><td><strong>Patient pays</strong> (Sheer Health model)</td><td>Works for an independent third party. Carries self-referral and participating-provider problems the moment a referring surgeon has an interest.</td></tr>
+    <tr><td><strong>Hospital / ASC pays</strong></td><td><span class="chip ch-ok">This one</span> Spine is their top revenue line. Authorization support is a surgeon-recruitment differentiator. They have budget, they have a P&amp;L reason, and no compliance entanglement with you.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>A hospital paying for authorization infrastructure to attract spine surgeons is buying case volume in their highest-margin service line. That is a completely coherent purchase, and it means your colleagues get it without paying — which is exactly the distribution you described.</p>
+
+<div class="note cool">
+  <div class="lbl">Sequence this deliberately</div>
+  <p>Prove it on your own cases first. A hospital conversation goes very differently when it opens with <em>"here's what it did for sixty of my cases"</em> rather than a description. Trophy Club stays warm; it doesn't need to be closed in month one.</p>
+</div>
+
+<!-- ═══════ 9 ═══════ -->
+<h2>Captured for the reimbursement side</h2>
+
+<p>Not this build, but recorded so it isn't lost:</p>
+
+<ul class="d">
+  <li>Federal IDR under the No Surprises Act — arbitration awards currently high, expected to compress as payers start offering settlements the arbitrator finds reasonable</li>
+  <li>Counsel with IDR experience: <strong>Callagy</strong> (spelling to confirm) and <strong>Svetlana Minevich</strong> — you hold contracts with both</li>
+  <li>The NSA applies more to surgical assistant and anesthesia billing than to the primary surgeon — this is largely your PA's billing</li>
+  <li>The immediate goal there: eliminate the $100 checks for PA services after eight hours in the OR, and push reimbursement above the historical contracted rate</li>
+  <li>Tax ID strategy — MSO/aggregator groups (Privia and others interviewed) offer better contracts but demand an EHR change and carry stipulations</li>
+</ul>
+
+<!-- ═══════ 10 ═══════ -->
+<h2>What I need tomorrow</h2>
+
+<div class="ask">
+  <h3>The walkthrough you offered</h3>
+  <p style="margin-bottom:1rem">Anatomy, pathology, symptoms, how the surgery works, how authorization works. You're right that I'll build this better once I understand it properly.</p>
+  <p style="margin-bottom:.9rem">Specifically, I want to leave with:</p>
+  <ul class="d" style="margin-bottom:1rem">
+    <li>The level-by-level correlation table above, corrected in your hand</li>
+    <li>Two or three denial letters and what you did with each</li>
+    <li>One MRI report that said "mild" and cost you a case</li>
+    <li>One note you consider perfect, as the target the system writes toward</li>
+  </ul>
+  <p style="margin:0">That last one matters most. If I have a note you'd defend anywhere, the checker has something concrete to measure against instead of a criteria list.</p>
+</div>
+
+<footer>
+  <span>Advanced Spine &amp; Orthopedics</span>
+  <span>Requirements capture · from call · August 2026</span>
+</footer>
+
+</div>
+</body>
+</html>

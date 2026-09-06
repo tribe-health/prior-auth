@@ -1,0 +1,22 @@
+{
+  "allowedWritePaths": [
+    ".kbd-orchestrator/phases/web-ui-architecture/children/pem-refresh-3-3-0/**",
+    "/Users/gqadonis/Projects/prometheus/prometheus-entity-management/**"
+  ],
+  "deniedPaths": [
+    "web/**",
+    "mobile/**",
+    "crates/**",
+    "desktop/**",
+    "docs/**"
+  ],
+  "inheritsConstraints": true,
+  "externalRepository": {
+    "path": "/Users/gqadonis/Projects/prometheus/prometheus-entity-management",
+    "branch": "main",
+    "baselineCommit": "d1588d8c",
+    "reason": "This child fixes the upstream library, not the consuming application. All source edits land in the PEM repo; only KBD artifacts are written here.",
+    "publishTarget": "npm @prometheus-ags/* 3.3.0 + pub.dev entity_graph_flutter 3.3.0"
+  },
+  "__note": "deniedPaths block the prior-auth application surfaces on purpose. This child must not edit the consuming app — the parent phase (web-ui-architecture) owns those, and it is paused. Enforced advisorily by check-child-scope.sh."
+}

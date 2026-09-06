@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Surgeon gate · Surgery Authorization Workbench · Advanced Spine &amp; Orthopedics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Mulish:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/aso.css">
+<script src="../assets/shell.js"></script>
+<script>ASO.primeTheme();</script>
+<style>
+  /* ═══ Screen-local: the four confirmation blocks.
+     A native radio/checkbox is kept and styled rather than replaced, so
+     keyboard behaviour, screen-reader semantics and grouping stay intact. ═══ */
+  .gate-q {
+    background: var(--s1);
+    border-radius: var(--r-lg);
+    padding: var(--sp-5);
+  }
+  .gate-q.is-done { background: var(--ok-surface); }
+  .gate-q legend {
+    display: block;
+    width: 100%;
+    margin-bottom: var(--sp-4);
+  }
+  .gate-n {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+    margin-bottom: 7px;
+    display: block;
+  }
+  .gate-t { display: block; font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; line-height: 1.22; letter-spacing: -0.01em; }
+  .gate-d { display: block; font-size: 0.86rem; color: var(--fg-2); margin-top: 8px; max-width: 74ch; line-height: 1.55; }
+
+  .opt {
+    display: grid;
+    grid-template-columns: 20px minmax(0, 1fr);
+    gap: var(--sp-3);
+    padding: var(--sp-3) var(--sp-4);
+    background: var(--bg);
+    border-radius: var(--r);
+    cursor: pointer;
+    transition: background var(--dur-exit) var(--ease);
+    align-items: start;
+  }
+  .opt + .opt { margin-top: var(--sp-2); }
+  .opt:hover { background: var(--s2); }
+  .opt:has(input:checked) { background: var(--s3); }
+  .opt:has(input:disabled) { cursor: not-allowed; opacity: 0.55; }
+  .opt:has(input:disabled):hover { background: var(--bg); }
+  .opt input { width: 17px; height: 17px; margin-top: 2px; accent-color: var(--ember); cursor: inherit; }
+  .opt .o-t { display: block; font-size: 0.88rem; font-weight: 600; color: var(--fg); line-height: 1.4; }
+  .opt .o-d { display: block; font-size: 0.82rem; color: var(--fg-2); margin-top: 4px; line-height: 1.5; }
+  .opt .o-m { margin-top: 7px; display: flex; gap: 6px; flex-wrap: wrap; }
+
+  /* affirmation bar — sticks to the bottom because the surgeon scrolls */
+  .affirm {
+    position: sticky;
+    bottom: 0;
+    background: var(--s2);
+    border-radius: var(--r-lg);
+    padding: var(--sp-4) var(--sp-5);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: var(--sp-4);
+    align-items: center;
+    margin-top: var(--sp-5);
+  }
+  .affirm.is-ready { background: var(--ok-surface); }
+  .affirm .a-s { font-size: 0.86rem; color: var(--fg-2); line-height: 1.5; max-width: 68ch; }
+  .affirm .a-s b { color: var(--fg); }
+  @media (max-width: 720px) { .affirm { grid-template-columns: minmax(0, 1fr); position: static; } }
+
+  .tally { display: flex; gap: var(--sp-2); flex-wrap: wrap; margin-bottom: 8px; }
+</style>
+</head>
+<body>
+
+<div class="topbar" data-topbar></div>
+
+<div class="app">
+  <aside class="gnav" data-gnav></aside>
+  <aside class="ctx" data-ctx></aside>
+
+  <main class="workbench" id="content" style="max-width:1000px">
+
+    <div data-whoami></div>
+
+    <section class="phead" data-od-id="gate-head">
+      <div>
+        <p class="eyebrow">Step 06 · Surgeon decision gate</p>
+        <h1 class="display">Four confirmations.<br>Then, and only then, prose.</h1>
+        <p class="lead">
+          <span id="gate-lead">The system has assembled the chart and read the policy. It has not
+          chosen a theory. Everything below is a proposal awaiting a decision.</span>
+        </p>
+      </div>
+      <div class="row">
+        <a class="btn btn-secondary" href="pathway-comparison.html">Re-read pathways</a>
+      </div>
+    </section>
+
+    <!-- ═══ role boundary ═══
+         The gate is a clinical attestation. Staff and administrators can
+         read every input to it and prepare the case, but affirming is
+         restricted to the treating surgeon. -->
+    <div id="role-block" hidden style="margin-bottom:var(--sp-5)">
+      <div class="denied">
+        <div class="lbl">Affirmation is restricted to the surgeon</div>
+        <p style="margin-bottom:10px">
+          You can read the policy, the ranked pathways, and the evidence behind every element —
+          everything below is visible. What you cannot do is affirm it.
+        </p>
+        <p>
+          These four confirmations are a clinical attestation by the operating physician, not a
+          workflow step that unblocks a queue. Prepare the case, then hand it to Dr. James.
+        </p>
+        <div class="row" style="gap:10px;margin-top:var(--sp-4)">
+          <button class="btn btn-secondary btn-sm">Notify Dr. James · ready for review</button>
+        </div>
+      </div>
+    </div>
+
+    <form id="gate-form" class="stack" style="gap:var(--sp-4)" data-od-id="gate-form">
+
+      <!-- ═══ 01 · policy ═══ -->
+      <fieldset class="gate-q" data-gate="policy" data-od-id="gate-policy">
+        <legend>
+          <span class="gate-n">Confirmation 01 of 04 · controlling policy</span>
+          <span class="gate-t">Is this the document that governs this member's plan?</span>
+          <span class="gate-d">
+            Obtained from the payer's provider policy library on 2026-08-29. Plan is a fully insured
+            Texas PPO with no delegated utilization-management vendor.
+          </span>
+        </legend>
+
+        <label class="opt">
+          <input type="radio" name="policy" value="confirm">
+          <span>
+            <span class="o-t">BCBS Texas Medical Policy SURG-2026-014 rev. 4</span>
+            <span class="o-d">Lumbar Spinal Fusion and Decompression · effective 2026-07-01 · review due 2027-07-01</span>
+            <span class="o-m">
+              <span class="cite">POL-0431 · 28 pp.</span>
+              <span class="chip chip-met">Version-matched</span>
+              <span class="chip chip-met">CPT in scope</span>
+            </span>
+          </span>
+        </label>
+
+        <label class="opt">
+          <input type="radio" name="policy" value="other">
+          <span>
+            <span class="o-t">A different document governs — I will identify it</span>
+            <span class="o-d">Returns the case to the policy panel and blocks drafting until the correct criteria set is obtained and version-matched.</span>
+          </span>
+        </label>
+      </fieldset>
+
+      <!-- ═══ 02 · section ═══ -->
+      <fieldset class="gate-q" data-gate="section" data-od-id="gate-section">
+        <legend>
+          <span class="gate-n">Confirmation 02 of 04 · governing section</span>
+          <span class="gate-t">Which section of that policy governs this request?</span>
+          <span class="gate-d">
+            The section determines which elements must be satisfied — and which escape clauses exist.
+            §4.1 contains a non-progression clause for conservative care; §3.2 does not.
+          </span>
+        </legend>
+
+        <label class="opt">
+          <input type="radio" name="section" value="4.1">
+          <span>
+            <span class="o-t">§4.1 · Decompression with instrumented fusion — instability</span>
+            <span class="o-d">Five elements, lettered (a) through (e). Applies to a single-level instrumented posterior fusion, which is the planned operation.</span>
+            <span class="o-m"><span class="cite">POL-0431 · p.11–12</span><span class="chip chip-cool">System proposal</span></span>
+          </span>
+        </label>
+
+        <label class="opt">
+          <input type="radio" name="section" value="3.2">
+          <span>
+            <span class="o-t">§3.2 · Decompression without fusion</span>
+            <span class="o-d">Authorizes decompression only. Would not cover the instrumentation, and its conservative-care requirement has no non-progression clause.</span>
+            <span class="o-m"><span class="cite">POL-0431 · p.7</span><span class="chip chip-void">Plan mismatch</span></span>
+          </span>
+        </label>
+
+        <label class="opt">
+          <input type="radio" name="section" value="4.2" disabled>
+          <span>
+            <span class="o-t">§4.2 · Multi-level fusion and deformity</span>
+            <span class="o-d">Unavailable — requires two or more contiguous levels. This request is single-level.</span>
+            <span class="o-m"><span class="chip chip-plain">Out of scope</span></span>
+          </span>
+        </label>
+      </fieldset>
+
+      <!-- ═══ 03 · pathway ═══ -->
+      <fieldset class="gate-q" data-gate="pathway" data-od-id="gate-pathway">
+        <legend>
+          <span class="gate-n">Confirmation 03 of 04 · primary authorization pathway</span>
+          <span class="gate-t">Which theory should the letter be built around?</span>
+          <span class="gate-d">
+            The letter will be organized around this pathway's required elements. A second pathway may
+            be cited as corroboration, but the coverage argument will rest on this one.
+          </span>
+        </legend>
+
+        <label class="opt">
+          <input type="radio" name="pathway" value="facetectomy">
+          <span>
+            <span class="o-t">Iatrogenic instability from the planned facetectomy · §4.1(d) second clause</span>
+            <span class="o-d">The resection required for adequate decompression is itself the instability basis. Answers the therapy shortfall through the policy's own non-progression clause.</span>
+            <span class="o-m"><span class="chip chip-met">Strong fit · 5 of 5</span><span class="chip chip-cool">Ranked 01</span></span>
+          </span>
+        </label>
+
+        <label class="opt">
+          <input type="radio" name="pathway" value="translation">
+          <span>
+            <span class="o-t">Radiographic segmental instability · §4.1(d) first clause</span>
+            <span class="o-d">6 mm translation against a 4 mm threshold. Independent of the operative plan, but makes a disputable measurement load-bearing and leaves the MRI contradiction on the critical path.</span>
+            <span class="o-m"><span class="chip chip-gap">Possible with clarification</span><span class="chip chip-plain">Ranked 02</span></span>
+          </span>
+        </label>
+
+        <label class="opt">
+          <input type="radio" name="pathway" value="decompression" disabled>
+          <span>
+            <span class="o-t">Decompression alone · §3.2</span>
+            <span class="o-d">Unavailable — describes an operation that is not the prospective plan.</span>
+            <span class="o-m"><span class="chip chip-void">Blocked</span></span>
+          </span>
+        </label>
+
+        <div style="margin-top:var(--sp-4);padding-top:var(--sp-4);background:linear-gradient(var(--s3),var(--s3)) top left / 100% 1px no-repeat">
+          <p class="eyebrow" style="margin-bottom:var(--sp-3)">Supporting pathway · optional</p>
+          <label class="opt">
+            <input type="checkbox" name="support" value="translation">
+            <span>
+              <span class="o-t">Cite the 6 mm translation as corroboration</span>
+              <span class="o-d">Included as reinforcement of the same conclusion, not as an element the approval rests on. The QA pass will flag any paragraph that drifts into treating it as primary.</span>
+            </span>
+          </label>
+        </div>
+      </fieldset>
+
+      <!-- ═══ 04 · operative plan ═══ -->
+      <fieldset class="gate-q" data-gate="plan" data-od-id="gate-plan">
+        <legend>
+          <span class="gate-n">Confirmation 04 of 04 · prospective operative plan</span>
+          <span class="gate-t">Does the operation described by that pathway reflect what you intend to do?</span>
+          <span class="gate-d">
+            This is the assumption the selected pathway depends on. Confirming it does not bind you —
+            intraoperative judgment may change what is performed — but the letter must describe the
+            plan as it genuinely stands today.
+          </span>
+        </legend>
+
+        <label class="opt">
+          <input type="checkbox" name="plan" value="facetectomy">
+          <span>
+            <span class="o-t">Right L4–L5 decompression including resection of more than 50% of the facet joint</span>
+            <span class="o-d">This is the predicate for pathway 01. If you intend a facet-sparing foraminotomy, do not confirm it — the pathway collapses and the letter would misdescribe the operation.</span>
+            <span class="o-m"><span class="cite">CLIN-1142 · p.2</span></span>
+          </span>
+        </label>
+
+        <label class="opt">
+          <input type="checkbox" name="plan" value="fusion">
+          <span>
+            <span class="o-t">Posterior instrumented fusion at L4–L5 with an interbody device</span>
+            <span class="o-d">Single level. No pelvic fixation, which is why no bone-density assessment is being requested.</span>
+            <span class="o-m"><span class="cite">CLIN-1142 · p.2</span></span>
+          </span>
+        </label>
+
+        <div class="callout" style="margin-top:var(--sp-4)">
+          <div class="lbl">One live records gap under either fusion pathway</div>
+          <p>
+            §4.1(e) conditions interbody fusion on documented nicotine abstinence, and no cotinine
+            result is on file. The letter will not assert abstinence. You can proceed and have the
+            letter request criteria disclosure on that element, or hold for the lab draw.
+          </p>
+        </div>
+      </fieldset>
+
+      <!-- ═══ affirmation ═══ -->
+      <div class="affirm" id="affirm" data-od-id="gate-affirm">
+        <div>
+          <div class="tally" id="tally">
+            <span class="chip chip-void">Policy pending</span>
+            <span class="chip chip-void">Section pending</span>
+            <span class="chip chip-void">Pathway pending</span>
+            <span class="chip chip-void">Plan pending</span>
+          </div>
+          <p class="a-s" id="affirm-msg">
+            <b>Drafting is locked.</b> Four confirmations outstanding. Nothing is written until all
+            four are affirmed — the letter is generated whole from the confirmed model, not assembled
+            from fragments.
+          </p>
+        </div>
+        <button class="btn btn-primary" id="affirm-btn" type="button" disabled>Affirm and draft</button>
+      </div>
+
+    </form>
+
+    <!-- ═══ what happens next ═══ -->
+    <section style="margin-top:var(--sp-7)" data-od-id="gate-next">
+      <div class="g2">
+        <div class="callout cool">
+          <div class="lbl">Regulatory route · resolved before drafting</div>
+          <p style="margin-bottom:10px">
+            Fully insured Texas PPO. Medical-necessity appeal runs through the plan's internal process,
+            then to independent review under the Texas Department of Insurance IRO program. Regulatory
+            complaint jurisdiction is TDI, not DOL/EBSA.
+          </p>
+          <p>
+            The letter's accountability paragraph will be written to that jurisdiction specifically.
+            A self-funded plan under the same insurer's brand would route to DOL/EBSA instead.
+          </p>
+        </div>
+        <div class="callout void">
+          <div class="lbl">What affirming does not do</div>
+          <p style="margin-bottom:10px">
+            It does not append to an existing draft. On affirmation the letter is regenerated in full
+            from the confirmed evidence model — policy, section, pathway, operative plan and every
+            cited source — because addenda make a medical-necessity letter longer and less persuasive.
+          </p>
+          <p>
+            It also does not apply your signature. That happens once, after you have read the finished
+            letter, at step 07.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div class="drawer-scrim" data-scrim></div>
+<aside class="drawer" data-drawer></aside>
+<nav class="tabbar" data-tabbar aria-label="Primary"></nav>
+
+<script>
+  ASO.shell({
+    step: 'gate',
+    section: 'cases',
+    title: 'Surgeon gate',
+    depth: 'nested',
+    caseInfo: {
+      patient: 'Kaminski, Renata',
+      caseId: 'PA-2026-0431',
+      payer: 'BCBS TX · PPO',
+      source: 'AdvancedMD · Southlake',
+      deadline: '2026-09-11'
+    }
+  });
+
+  /* ── The gate, enforced.
+     Drafting unlocks only when all four confirmations resolve to a
+     coherent combination. A pathway that contradicts the confirmed
+     section, or an operative plan that contradicts the pathway, keeps
+     the gate closed and says why. */
+  (function () {
+    var form = document.getElementById('gate-form');
+
+    /* Role enforcement. A non-surgeon sees the full reasoning but cannot
+       commit it — the controls are disabled rather than hidden, so the
+       boundary is legible instead of mysterious. */
+    var mayAffirm = ASO.can('affirmGate');
+
+    /* The opening line addressed Dr. James by name regardless of who was
+       reading it. Speak to the actual reader. */
+    var lead = document.getElementById('gate-lead');
+    if (lead) {
+      lead.textContent = mayAffirm
+        ? 'Dr. James — the system has assembled the chart and read the policy. It has not chosen a theory. Everything below is a proposal awaiting your decision.'
+        : 'The system has assembled the chart and read the policy. The decision below belongs to the operating surgeon; you are reading it, not making it.';
+    }
+
+    document.getElementById('role-block').hidden = mayAffirm;
+    if (!mayAffirm) {
+      form.querySelectorAll('input').forEach(function (i) { i.disabled = true; });
+    }
+    var btn = document.getElementById('affirm-btn');
+    var msg = document.getElementById('affirm-msg');
+    var tally = document.getElementById('tally');
+    var bar = document.getElementById('affirm');
+
+    function chip(kind, label) {
+      return '<span class="chip chip-' + kind + '">' + label + '</span>';
+    }
+
+    function evaluate() {
+      var fd = new FormData(form);
+      var policy = fd.get('policy');
+      var section = fd.get('section');
+      var pathway = fd.get('pathway');
+      var plan = fd.getAll('plan');
+
+      var policyOk = policy === 'confirm';
+      var sectionOk = section === '4.1';
+      var pathwayOk = pathway === 'facetectomy' || pathway === 'translation';
+
+      /* Pathway 01 requires the facetectomy predicate; pathway 02 does not. */
+      var planNeeded = pathway === 'facetectomy' ? ['facetectomy', 'fusion'] : ['fusion'];
+      var planOk = pathway ? planNeeded.every(function (k) { return plan.indexOf(k) !== -1; }) : false;
+
+      /* Mark each answered block. */
+      form.querySelectorAll('[data-gate]').forEach(function (fs) {
+        var k = fs.getAttribute('data-gate');
+        var done = (k === 'policy' && policyOk) || (k === 'section' && sectionOk) ||
+                   (k === 'pathway' && pathwayOk) || (k === 'plan' && planOk);
+        fs.classList.toggle('is-done', done);
+      });
+
+      tally.innerHTML =
+        chip(policyOk ? 'met' : 'void', policyOk ? 'Policy confirmed' : 'Policy pending') +
+        chip(sectionOk ? 'met' : 'void', sectionOk ? 'Section §4.1' : 'Section pending') +
+        chip(pathwayOk ? 'met' : 'void', pathwayOk ? 'Pathway selected' : 'Pathway pending') +
+        chip(planOk ? 'met' : 'void', planOk ? 'Plan reconciled' : 'Plan pending');
+
+      var ready = policyOk && sectionOk && pathwayOk && planOk;
+      btn.disabled = !ready || !mayAffirm;
+      bar.classList.toggle('is-ready', ready);
+
+      /* Explain the specific blocker rather than reporting a count. */
+      if (!mayAffirm) {
+        msg.innerHTML = '<b>Visible, not affirmable.</b> Signed in as ' +
+          (ASO.profile() ? ASO.profile().label.toLowerCase() : 'a non-clinical role') +
+          '. Every input to this decision is readable here; the attestation itself belongs to the ' +
+          'operating surgeon.';
+      } else if (ready) {
+        msg.innerHTML = '<b>All four confirmed.</b> The letter will be generated whole from the ' +
+          'confirmed model, organized around ' +
+          (pathway === 'facetectomy' ? '§4.1(d) iatrogenic instability' : '§4.1(d) radiographic instability') +
+          ', with the nicotine element handled as a criteria-disclosure request rather than an assertion.';
+      } else if (policy === 'other') {
+        msg.innerHTML = '<b>Blocked at confirmation 01.</b> Identify the governing document on the ' +
+          'policy panel. Drafting against an unverified criteria set is what produces a denial on a ' +
+          'section nobody read.';
+      } else if (section === '3.2') {
+        msg.innerHTML = '<b>Blocked at confirmation 02.</b> §3.2 authorizes decompression without ' +
+          'fusion, which is not the planned operation. No pathway under that section can describe ' +
+          'this case accurately.';
+      } else if (pathway === 'facetectomy' && plan.indexOf('facetectomy') === -1 && plan.length > 0) {
+        msg.innerHTML = '<b>Blocked at confirmation 04.</b> Pathway 01 depends on resecting more than ' +
+          '50% of the facet joint. Confirm that plan, or select pathway 02, which does not require it.';
+      } else if (pathwayOk && !planOk) {
+        msg.innerHTML = '<b>Confirmation 04 outstanding.</b> Reconcile the prospective operative plan ' +
+          'with the selected pathway. The letter describes the plan as it stands today.';
+      } else {
+        msg.innerHTML = '<b>Drafting is locked.</b> Nothing is written until all four are affirmed — ' +
+          'the letter is generated whole from the confirmed model, not assembled from fragments.';
+      }
+    }
+
+    form.addEventListener('change', evaluate);
+
+    btn.addEventListener('click', function () {
+      var fd = new FormData(form);
+      ASO.writeState({
+        policyConfirmed: true,
+        sectionConfirmed: true,
+        pathway: fd.get('pathway'),
+        planConfirmed: true
+      });
+      btn.textContent = 'Generating…';
+      window.setTimeout(function () { window.location.href = 'letter-composer.html'; }, 320);
+    });
+
+    evaluate();
+  })();
+</script>
+</body>
+</html>

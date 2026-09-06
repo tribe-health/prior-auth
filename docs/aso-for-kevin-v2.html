@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{ dark: (localStorage.getItem('aso-kj')||'light')==='dark' }" :class="dark ? 'dark' : ''">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How This Would Actually Work — For Kevin · v2</title>
+<link rel="icon" href="aso-favicon.svg" type="image/svg+xml">
+<script>
+  (function(){ if((localStorage.getItem('aso-kj')||'light')==='dark'){ document.documentElement.classList.add('dark'); } })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Mulish:wght@300;400;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+<style>
+:root{
+  --ember:#DF7C35; --ember-deep:#A85417; --ember-tint:#FBEFE6;
+  --slate:#A7C5D6; --slate-tint:#EDF3F7; --navy:#1F4E79;
+  --graphite:#6E6F71; --ink:#231F20; --bone:#F1EFEC;
+  --bg:#FFFFFF; --s1:#F7F6F4; --s2:#F1EFEC; --s3:#E7E4E0; --s-zebra:#FAF9F7;
+  --fg:#231F20; --fg-2:#4A4B4F; --fg-3:#6E6F71;
+  --accent:#A85417; --accent-vivid:#DF7C35; --cool:#1F4E79;
+  --ok:#1E6F4E; --ok-surface:#E7F3EC;
+  --gap:#A85417; --gap-surface:#FBEFE6;
+  --void:#5B5F66; --void-surface:#EFEFF1;
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Mulish','Nunito Sans','Segoe UI',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  --r:6px;
+}
+html.dark{
+  --ember:#F0955A; --ember-deep:#F0955A; --ember-tint:#2E2119;
+  --slate:#8FB9D0; --slate-tint:#182430; --navy:#8FB9D0;
+  --graphite:#98A2AA; --ink:#EDF0F2; --bone:#1C2126;
+  --bg:#14181C; --s1:#1C2126; --s2:#252B31; --s3:#2E353C; --s-zebra:#191E23;
+  --fg:#EDF0F2; --fg-2:#C2CCD3; --fg-3:#93A0A9;
+  --accent:#F0955A; --accent-vivid:#F0955A; --cool:#8FB9D0;
+  --ok:#6FD1A0; --ok-surface:#152620;
+  --gap:#F0955A; --gap-surface:#2E2119;
+  --void:#A9B3BB; --void-surface:#232830;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased}
+.wrap{max-width:820px;margin:0 auto;padding:3.5rem 2rem 6rem}
+
+.brandbar{display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap;margin-bottom:3rem}
+.bmark{display:flex;align-items:center;gap:.8rem}
+.bmark .ic{width:40px;height:40px;flex-shrink:0}
+.bmark .ic svg{width:100%;height:100%;display:block}
+.bmark .wm{width:190px}
+.bmark .wm svg{width:100%;height:auto;display:block}
+.toggle{font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;background:var(--s2);color:var(--fg-2);padding:.55rem .9rem;border:none;border-radius:4px;cursor:pointer}
+.toggle:hover{background:var(--s3);color:var(--accent)}
+
+.eyebrow{font-family:var(--mono);font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--fg-3);margin-bottom:.9rem}
+h1{font-family:var(--serif);font-size:2.9rem;line-height:1.1;font-weight:600;letter-spacing:-.015em;margin-bottom:1rem}
+h2{font-family:var(--serif);font-size:1.85rem;font-weight:600;margin:3.6rem 0 1.1rem;padding-top:1.8rem;background:linear-gradient(var(--s3),var(--s3)) top left / 64px 2px no-repeat}
+h3{font-size:1.12rem;font-weight:700;margin:2.2rem 0 .6rem}
+p{color:var(--fg-2);margin-bottom:1.15rem}
+.lead{font-size:1.18rem;color:var(--fg-2);line-height:1.65}
+strong{color:var(--fg);font-weight:700}
+em{font-style:italic}
+.big{font-size:1.3rem;line-height:1.55;color:var(--fg);font-weight:600;margin:1.6rem 0}
+
+ul.d,ol.d{color:var(--fg-2);margin:0 0 1.3rem 0;list-style:none}
+ul.d li,ol.d li{padding-left:1.6rem;position:relative;margin-bottom:.7rem}
+ul.d li::before{content:'—';position:absolute;left:0;color:var(--fg-3)}
+ol.d{counter-reset:n}
+ol.d li{counter-increment:n}
+ol.d li::before{content:counter(n)'.';position:absolute;left:0;font-family:var(--mono);font-size:.85rem;color:var(--accent);font-weight:400}
+
+.steps{margin:2rem 0}
+.step{display:flex;gap:1.2rem;align-items:flex-start;background:var(--s1);border-radius:var(--r);padding:1.4rem 1.5rem;margin-bottom:.7rem}
+.step .num{font-family:var(--mono);font-size:1.5rem;color:var(--accent-vivid);line-height:1;flex-shrink:0;width:34px}
+.step .body h4{font-size:1.05rem;font-weight:700;color:var(--fg);margin-bottom:.35rem}
+.step .body p{margin:0;font-size:.97rem;line-height:1.6}
+.step .who{font-family:var(--mono);font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;color:var(--fg-3);margin-top:.5rem}
+
+.note{background:var(--ember-tint);border-radius:var(--r);padding:1.4rem 1.6rem;margin:1.8rem 0}
+.note.cool{background:var(--slate-tint)}
+.note.good{background:var(--ok-surface)}
+.note .lbl{font-family:var(--mono);font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:.55rem}
+.note.cool .lbl{color:var(--cool)}
+.note.good .lbl{color:var(--ok)}
+.note p{margin:0 0 .8rem;color:var(--fg-2)}
+.note p:last-child{margin:0}
+
+.doc{background:var(--s1);border-radius:var(--r);padding:2rem 2.2rem;margin:1.8rem 0}
+.doc .dh{font-family:var(--mono);font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;color:var(--fg-3);margin-bottom:1.3rem}
+.doc h5{font-family:var(--serif);font-size:1.3rem;font-weight:600;color:var(--fg);margin-bottom:.9rem}
+.doc p{font-size:.95rem;line-height:1.75;margin-bottom:.9rem}
+.doc .cite{font-family:var(--mono);font-size:.72rem;background:var(--s2);color:var(--fg-3);padding:.16em .5em;border-radius:3px;white-space:nowrap}
+.doc .rule{height:1px;background:var(--s3);margin:1.4rem 0}
+
+.tw{overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;margin:1.6rem 0;border-radius:var(--r)}
+table{width:100%;border-collapse:collapse;font-size:.92rem;min-width:520px}
+thead th{background:var(--s3);text-align:left;padding:.75rem 1rem;font-family:var(--mono);font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;color:var(--fg-2);font-weight:400}
+tbody td{padding:.75rem 1rem;color:var(--fg-2);vertical-align:top}
+tbody tr:nth-child(odd){background:var(--s-zebra)}
+tbody tr:nth-child(even){background:var(--s1)}
+td.n{text-align:right;font-family:var(--mono);font-size:.88rem;color:var(--fg)}
+
+.verdict{display:inline-block;font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;padding:.25em .6em;border-radius:3px;white-space:nowrap}
+.v-yes{background:var(--ok-surface);color:var(--ok)}
+.v-no{background:var(--gap-surface);color:var(--gap)}
+.v-maybe{background:var(--void-surface);color:var(--void)}
+
+.ask{background:var(--s2);border-radius:var(--r);padding:1.8rem 2rem;margin:2rem 0}
+.ask h3{margin-top:0}
+
+.corr{background:var(--slate-tint);border-radius:var(--r);padding:1.6rem 1.8rem;margin:1.8rem 0}
+.corr .lbl{font-family:var(--mono);font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;color:var(--cool);margin-bottom:.6rem}
+.corr blockquote{font-family:var(--serif);font-size:1.12rem;line-height:1.55;color:var(--fg);font-style:italic;margin:0 0 1rem;padding-left:1rem;background:linear-gradient(var(--cool),var(--cool)) left top / 2px 100% no-repeat}
+.corr p{margin:0 0 .8rem}
+.corr p:last-child{margin:0}
+
+footer{margin-top:5rem;padding-top:1.8rem;background:linear-gradient(var(--s3),var(--s3)) top left / 100% 1px no-repeat;font-family:var(--mono);font-size:.68rem;color:var(--fg-3);letter-spacing:.05em;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+
+@media (max-width:640px){
+  body{font-size:17px}
+  .wrap{padding:2rem 1.2rem 4rem}
+  h1{font-size:2rem} h2{font-size:1.5rem} .lead{font-size:1.08rem} .big{font-size:1.15rem}
+  .doc{padding:1.3rem 1.2rem}
+  .step{padding:1.1rem 1.1rem;gap:.9rem}
+  .note,.ask,.corr{padding:1.2rem 1.2rem}
+  .corr blockquote{font-size:1.02rem}
+  .bmark .wm{width:150px}
+  .tw::before{content:'\2194  swipe';display:block;position:sticky;left:0;font-family:var(--mono);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <g id="mk"><g transform="rotate(-13 256 256) translate(0 18)">
+    <path d="M80 250C172 186 300 154 432 162C306 126 176 148 80 208C64 218 64 240 80 250Z" fill="var(--graphite)"/>
+    <path d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z" fill="var(--ember)"/>
+  </g></g>
+</defs></svg>
+
+<div class="brandbar">
+  <div class="bmark">
+    <div class="ic"><svg viewBox="0 0 512 512" aria-hidden="true"><use href="#mk"/></svg></div>
+    <div class="wm">
+      <svg viewBox="0 0 430 128" aria-label="Advanced Spine and Orthopedics">
+        <text x="12" y="70" font-family="Mulish, sans-serif" font-size="58" font-weight="600" letter-spacing="2" textLength="404" lengthAdjust="spacing" fill="var(--graphite)">ADVANCED</text>
+        <path d="M10 74 C 76 34, 192 24, 288 36 C 348 44, 390 55, 420 65 C 388 51, 346 37, 286 29 C 190 17, 72 33, 10 66 Z" fill="var(--ember)"/>
+        <text x="14" y="112" font-family="Mulish, sans-serif" font-size="33" textLength="400" lengthAdjust="spacing" fill="var(--ink)">Spine &amp; Orthopedics</text>
+      </svg>
+    </div>
+  </div>
+  <button class="toggle" @click="dark = !dark; localStorage.setItem('aso-kj', dark ? 'dark':'light')" x-text="dark ? 'Light' : 'Dark'">Dark</button>
+</div>
+
+<div class="eyebrow">For Kevin · Version 2 · Revised after your last note</div>
+<h1>How this would<br>actually work</h1>
+<p class="lead">Three things you told me changed the plan. You were right about the overturn rate and I was wrong. The multiple-EHR situation makes the design simpler, not harder. And the financial pressure changes what we should build first — and who should pay for it.</p>
+
+<!-- ═══════════ 1 ═══════════ -->
+<h2>You're right about the 81%. I was leaning on it wrong.</h2>
+
+<div class="corr">
+  <div class="lbl">Your correction</div>
+  <blockquote>"With the 81% rate I would be curious what the overturn rate naturally is. I've heard that it's naturally about that anyway. And that's what I have seen. The insurance companies are only getting 20% of their denials to stick anyway. The benefit is in the cost savings for the physician office."</blockquote>
+  <p>That's correct and it's an important correction. The 81.7% figure is the overturn rate <em>among denials that get appealed</em>. If you already appeal essentially everything — and it sounds like you do — then better appeals don't win you materially more cases. You're already winning them.</p>
+  <p>I had built the business case on capturing appeals you weren't filing. If you're filing them, that case evaporates.</p>
+</div>
+
+<p>So the honest version is the one you gave me: <strong>the value is entirely in what it costs you to get there.</strong> You win these fights. You just can't afford to keep winning them the current way.</p>
+
+<p class="big">The insurer isn't trying to win the denial. They're trying to make the denial expensive enough that some fraction of doctors give up. You don't give up — you pay in unbillable hours instead. The software's job is to make the fight cheap, not to make it winnable.</p>
+
+<p>There is one place a gap might still exist, and it's worth checking rather than assuming either way: denials that never get appealed at all because they die in the shuffle — a fax that didn't get logged, a deadline that passed, a case where the patient moved on. Those aren't losses you'd remember, because you never fought them. When you send me the denial files I'll be able to see whether that number is zero or not.</p>
+
+<!-- ═══════════ 2 ═══════════ -->
+<h2>Where the money actually is, given your situation</h2>
+
+<p>You said the part that matters most: you've hit your line of credit, debt is accumulating, and you can't hire someone to absorb this. That reframes the whole thing. There are two ways this returns money, and only one of them is the obvious one.</p>
+
+<h3>The obvious one — hours you can't bill</h3>
+
+<div class="tw">
+<table>
+  <thead><tr><th>Where the time goes</th><th>Now</th><th>With the tool</th></tr></thead>
+  <tbody>
+    <tr><td>Assembling and writing the initial request</td><td class="n">60–90 min</td><td class="n">10–15 min</td></tr>
+    <tr><td>Your time drafting or dictating the letter</td><td class="n">20–30 min</td><td class="n">2 min</td></tr>
+    <tr><td>Chasing status, portals, hold time</td><td class="n">20–40 min</td><td class="n">near zero</td></tr>
+    <tr><td>Working a denial through to appeal</td><td class="n">3–4 hrs</td><td class="n">30–45 min</td></tr>
+    <tr><td>Prepping for a peer-to-peer</td><td class="n">30–45 min</td><td class="n">5 min</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>Whether that adds up to enough depends on your actual volume, which I don't have yet. But it's the boring half of the answer.</p>
+
+<h3>The one that matters more when you're on a line of credit</h3>
+
+<div class="note">
+  <div class="lbl">This is the argument I'd make to a banker</div>
+  <p>A case that takes twelve days to authorize instead of seven is a case whose entire professional fee sits five days further out. Multiply that across every case in your pipeline and you are <strong>financing the insurance company's review process with your line of credit.</strong></p>
+  <p>Compressing the authorization cycle doesn't just save hours. It pulls a chunk of revenue permanently forward — once, when the cycle shortens, and then it stays shortened. For a practice that's fine on paper but tight on cash, that one-time pull-forward is worth more than the hours.</p>
+  <p>A denial that adds thirty to forty-five days pushes a whole case past a month-end. Two or three of those in a quarter is the difference between drawing on the line and not.</p>
+</div>
+
+<p>I can put real numbers on this once I know your monthly surgical volume and roughly what a case collects. It's arithmetic, not a guess — but I need the inputs.</p>
+
+<!-- ═══════════ 3 ═══════════ -->
+<h2>The three-EHR problem solves the design</h2>
+
+<div class="corr">
+  <div class="lbl">What you told me</div>
+  <blockquote>"eClinicalWorks and Centricity belong to clinics owned by someone else where I am contracted to see patients. I have AdvancedMD but I'm likely going to sign a contract with an MSO. They usually want you to switch to their EHR."</blockquote>
+  <p>This kills the EHR integration plan, and that's genuinely good news.</p>
+</div>
+
+<p>I had been designing toward connecting to AdvancedMD directly. Given what you've just described, that would have been a mistake on three counts: two of the systems aren't yours to connect to, the third may be replaced within the year, and any integration work would have to be redone from scratch after the MSO switch.</p>
+
+<p><strong>Uploading isn't the shortcut version. It's the only design that survives your actual working life.</strong> You practise across systems you don't control and you're about to change the one you do. A tool that only works inside one EHR is a tool that works for you a few months a year.</p>
+
+<div class="note good">
+  <div class="lbl">What this buys</div>
+  <p>The tool works identically whether the records came from AdvancedMD, eClinicalWorks, Centricity, a fax from an outside pain clinic, or a PDF someone printed and scanned. It doesn't know and doesn't care.</p>
+  <p>It also means an MSO switching you to their EHR is a non-event. You keep working the same way the next morning.</p>
+</div>
+
+<!-- ═══════════ 4 ═══════════ -->
+<h2>Before you sign the MSO agreement</h2>
+
+<p>I'm not your lawyer and you should have one read this. But there are four specific things in MSO contracts that would directly affect what we're discussing, and they're easier to negotiate before signing than after.</p>
+
+<ol class="d">
+  <li><strong>Who owns the clinical data and can you export it?</strong> If the MSO's EHR holds your records and the contract restricts export, the upload workflow gets harder and leaving gets much harder.</li>
+  <li><strong>Does the MSO claim rights over ancillary revenue or services?</strong> Many MSO agreements sweep in any revenue-generating service associated with the practice. If you later want a patient-facing authorization service, that clause decides whether it's yours.</li>
+  <li><strong>Who controls prior authorization and revenue cycle?</strong> Some MSOs take this over entirely — which might solve your problem outright and make this whole project unnecessary. Ask them directly what their denial and appeal process is, who does it, and what their overturn rate is. If they're good at it, that's the cheapest possible answer.</li>
+  <li><strong>Non-compete and software restrictions.</strong> Whether you can use outside tools in their environment at all.</li>
+</ol>
+
+<div class="note">
+  <div class="lbl">The question worth asking them first</div>
+  <p>"What happens when one of my fusions gets denied? Who writes the appeal, who takes the peer-to-peer, and what percentage do you overturn?"</p>
+  <p>If the MSO has a real answer, take it and we don't build anything. If they hedge, you've learned that this stays your problem and you've learned it before signing rather than after.</p>
+</div>
+
+<!-- ═══════════ 5 ═══════════ -->
+<h2>Sheer Health, and "I need the patients to sign up"</h2>
+
+<p>Your patient paying just under $100 a month for a service that fights his denial for him is the most interesting fact in your message. It's proof that patients will pay for this — which is not obvious and is worth a lot.</p>
+
+<p>But there are two very different things you might mean by wanting patients to sign up, and they carry completely different risk.</p>
+
+<h3>Reading one — you refer patients to an existing service</h3>
+
+<div class="note good">
+  <div class="lbl">Low risk · testable this month · costs you nothing</div>
+  <p>You tell patients facing a denial that this service exists, they engage it directly, and they pay it. You have no financial relationship with it.</p>
+  <p>This offloads real work at zero cost to you, and you can start Monday. <strong>I'd test it on your next five denials before we build anything.</strong> If it works, some of your problem is already solved and the software gets smaller. If it doesn't, you'll know exactly where it falls short — which tells us what to build.</p>
+  <p>Keep it clean: mention it as one option among others, don't require it, don't take anything from them, and document that the patient chose it.</p>
+</div>
+
+<h3>Reading two — you build or own a service and charge your patients</h3>
+
+<div class="note">
+  <div class="lbl">This one has real problems and I'd want a healthcare attorney before a line of code</div>
+  <p><strong>You may already be contractually obligated to do this work.</strong> Participating-provider agreements generally make obtaining prior authorization part of the provider's responsibility. Charging a patient separately for something your payer contract already requires of you can breach that contract, and payers do enforce it.</p>
+  <p><strong>Steering your own patients to a service you profit from is a different legal question than referring them to an independent one.</strong> The moment you have a financial interest, self-referral and inducement rules come into view. Sheer Health works partly <em>because</em> it isn't the surgeon's company.</p>
+  <p><strong>And the incentive reads badly.</strong> A patient being told by their surgeon that a monthly fee to the surgeon's own service will help get their surgery approved is a sentence that could look coercive even when nothing improper is happening.</p>
+  <p>None of this makes it impossible. It makes it a business with a compliance structure, not a feature — and it's the wrong thing to attempt while cash is tight.</p>
+</div>
+
+<h3>What I'd actually do about Sheer Health</h3>
+
+<p>Refer patients to it now, watch closely, and treat it as market research you're being paid to conduct. What you learn — what patients will pay, what the service does well, where it leaves the practice still holding work — is exactly what you'd need to know before anyone built a competing one.</p>
+
+<!-- ═══════════ 6 ═══════════ -->
+<h2>What the tool does, in four steps</h2>
+
+<div class="steps">
+  <div class="step">
+    <div class="num">1</div>
+    <div class="body">
+      <h4>Staff drops the file in</h4>
+      <p>Office note, MRI report, PT records, injection records, outside records. One folder, one drag. Doesn't matter which EHR it came out of, or whether it came out of an EHR at all.</p>
+      <div class="who">Coordinator or PA · about 2 minutes</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="num">2</div>
+    <div class="body">
+      <h4>It pulls the right insurer's actual criteria</h4>
+      <p>The real published document for whoever is actually deciding — eviCore for Cigna spine, Carelon for many Blue Cross plans, Aetna's own bulletin for Aetna. These differ from each other in ways that decide cases.</p>
+      <div class="who">Automatic · seconds</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="num">3</div>
+    <div class="body">
+      <h4>It builds the matrix and writes the summary</h4>
+      <p>Every criterion marked met, not met, or not documented — with a page citation on every "met." Anything it can't find in the uploads, it doesn't claim.</p>
+      <div class="who">Automatic · under a minute</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="num">4</div>
+    <div class="body">
+      <h4>You check the table and sign</h4>
+      <p>Not the letter — the table. Six or eight rows. You're confirming it read your chart correctly, not editing prose.</p>
+      <div class="who">You · under a minute</div>
+    </div>
+  </div>
+</div>
+
+<div class="note">
+  <div class="lbl">The rule I'd hold you to</div>
+  <p>It will never state that something is in the chart when it isn't. No page citation means it marks that line <strong>"not documented"</strong> and tells your staff to go get it. A summary asserting twelve weeks of PT when the chart shows five is a false statement carrying your signature — that's the one failure that turns an administrative problem into a legal one.</p>
+</div>
+
+<!-- ═══════════ 7 ═══════════ -->
+<h2>What the summary looks like</h2>
+
+<div class="doc">
+  <div class="dh">Prior Authorization Summary · Alvarez, M. · CPT 22633 · L4–L5 TLIF</div>
+  <h5>Documentation Correspondence to eviCore CMM Spine Criteria</h5>
+  <p><strong>Neural compression, imaging-confirmed, correlating to exam.</strong> MRI lumbar spine dated 01/08/2026 demonstrates moderate-to-severe central canal stenosis at L4–L5 with bilateral foraminal narrowing, correlating with documented neurogenic claudication and L5 distribution paresthesias. <span class="cite">RAD-1180 p.1 · ENC-0431 p.2</span></p>
+  <p><strong>Segmental instability.</strong> Flexion-extension radiographs dated 03/14/2026 demonstrate 6 mm of anterolisthesis at L4–L5, exceeding the 3 mm threshold specified in the applicable criteria. <span class="cite">RAD-1180 p.1</span></p>
+  <p><strong>Failed conservative management.</strong> Fourteen weeks of supervised physical therapy 11/02/2025 through 02/08/2026 without durable improvement. Two lumbar epidural steroid injections, 12/03/2025 and 01/21/2026, with partial non-sustained relief. NSAID and muscle relaxant trials documented and exhausted. <span class="cite">PT-0219 p.2 · INJ-0044 p.1</span></p>
+  <p><strong>Functional impairment.</strong> Oswestry Disability Index 48, consistent with severe disability. <span class="cite">ENC-0431 p.3</span></p>
+  <p><strong>Tobacco status.</strong> Patient reports tobacco-free since 09/2025. Serum cotinine not yet obtained. <span class="cite">ENC-0431 p.1</span></p>
+  <div class="rule"></div>
+  <p style="color:var(--fg-3);font-size:.88rem;margin:0">Each assertion above is traceable to the identified source document and page.</p>
+</div>
+
+<p>It doesn't argue. It walks their own list and shows where each item lives in the file. The tobacco line is deliberately honest about the gap — a reviewer who catches one overstatement reads everything after it skeptically.</p>
+
+<!-- ═══════════ 8 ═══════════ -->
+<h2>The complaint language, briefly</h2>
+
+<p>Your instinct was right; I'd only change placement and tone.</p>
+
+<p><strong>Not in the first request.</strong> Nothing has gone wrong yet and the reviewer might approve. Opening adversarially costs something and gains nothing.</p>
+
+<p><strong>In the appeal, as a statement of process rather than a threat.</strong> A threat is a promise you might not keep. This isn't:</p>
+
+<div class="doc">
+  <div class="dh">Closing paragraph · appeal letter · TDI-regulated plans only</div>
+  <p style="margin:0">This appeal was filed on 08/18/2026. Under Texas Insurance Code Chapter 4201, a determination is due no later than thirty calendar days from receipt. Should this appeal be denied, the patient intends to request review by an Independent Review Organization under Chapter 4202, and the IRO's determination on medical necessity is binding on the utilization review agent.</p>
+</div>
+
+<div class="note">
+  <div class="lbl">The caveat that decides whether to use it</div>
+  <p>TDI's authority — appeal timelines, IRO rights, complaints, the gold-card law — reaches <strong>only fully insured HMO, PPO and EPO plans, roughly 20% of Texans.</strong> If the patient's employer self-insures, federal ERISA law governs and TDI has no jurisdiction.</p>
+  <p>Invoking TDI at a self-funded plan's reviewer is empty, and an experienced reviewer knows it on sight. You've just told them you don't know which rules apply to them, on exactly the case where you needed credibility.</p>
+  <p>The tool knows which kind of plan it is from the eligibility check and inserts the right language, the ERISA version, or none. That's the piece that's hard to get right by hand every time.</p>
+</div>
+
+<!-- ═══════════ 9 ═══════════ -->
+<h2>The money-back question, short version</h2>
+
+<p>I researched it. One finding is immediately useful and the rest is less than you'd hope.</p>
+
+<div class="note good">
+  <div class="lbl">Use this now, regardless of software</div>
+  <p>On a preauthorization denial, <strong>the carrier or its utilization review agent pays the Independent Review Organization fee</strong> — $650 for a physician review. Not the patient, not you. External review is free to escalate to.</p>
+</div>
+
+<p>A TDI complaint creates real pressure — an investigator is assigned, the insurer must respond and produce its documentation, and that scrutiny often prompts reconsideration. TDI can penalize and require corrective action. It <em>cannot</em> award your patient money or reverse a clinical judgment call on its own.</p>
+
+<p>For money actually spent — extra PT or injections done only to satisfy criteria, or a patient who self-paid to avoid waiting — Texas Insurance Code Chapters 541 and 542 allow a bad-faith action with actual damages, interest and attorney's fees. That's a lawsuit with its own economics, not a form. And it's largely unavailable on self-funded plans, where federal preemption limits the remedy to the benefit itself.</p>
+
+<p><strong>The leverage isn't recoupment. It's the record.</strong> Every overturn you can document is evidence the original denial was wrong. Accumulate them and you can pursue gold-card exemptions on services where you clear 90%, contest a rescission with the claim list in hand, and hold a payer conversation with a number instead of an impression.</p>
+
+<!-- ═══════════ 10 ═══════════ -->
+<h2>What we should actually build, given the money</h2>
+
+<p>I previously sketched a phased build running the better part of a year. Set that aside. It was written for a practice with capital to deploy, and that isn't your situation.</p>
+
+<h3>Who pays for this</h3>
+
+<div class="note cool">
+  <div class="lbl">Saying this plainly so we don't waste each other's time</div>
+  <p><strong>You shouldn't fund this.</strong> You're drawing on a line of credit. Adding a software project to that is the wrong move regardless of how good the project is.</p>
+  <p>The tool generalises well beyond your practice — the same thing works for any surgical specialty fighting the same payers. That makes it worth building on my side as a product, with your practice as the first real user. You'd be paying in access and honest feedback, which is worth more to me at this stage than a licence fee.</p>
+  <p>If it works and starts saving you real money, we can talk about what it's worth then. Not before.</p>
+</div>
+
+<h3>The sequence</h3>
+
+<div class="tw">
+<table>
+  <thead><tr><th></th><th>What happens</th><th>When</th><th>Costs you</th></tr></thead>
+  <tbody>
+    <tr>
+      <td class="n">0</td>
+      <td>Get onto a BAA-covered account. Refer your next five denials to Sheer Health. Have your coordinator log her hours for two weeks. Ask the MSO the denial question.</td>
+      <td>This month</td>
+      <td>An hour, total</td>
+    </tr>
+    <tr>
+      <td class="n">1</td>
+      <td>Upload → criteria matrix → summary document. Three procedures, three payers. Nothing else — no queue, no EHR, no automation.</td>
+      <td>6–8 weeks</td>
+      <td>Two sessions with me</td>
+    </tr>
+    <tr>
+      <td class="n">2</td>
+      <td>Appeal composer and peer-to-peer briefing, built from your real denials.</td>
+      <td>+4–6 weeks</td>
+      <td>Sending me the files</td>
+    </tr>
+    <tr>
+      <td class="n">3</td>
+      <td>Everything else — fax handling, queues, tracking — only if steps 1 and 2 have measurably saved you time.</td>
+      <td>Decided later</td>
+      <td>—</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>Step 0 is real work that helps you before any software exists. If step 1 doesn't visibly save your office time, we stop and I'll say so.</p>
+
+<!-- ═══════════ 11 ═══════════ -->
+<h2>What I need from you</h2>
+
+<div class="ask">
+  <h3>The denials, and four numbers</h3>
+  <p>Five to ten recent cases. For each: the denial letter, what you originally submitted, and what happened next. Include one you won and one you lost.</p>
+  <p style="margin-bottom:1.1rem">Then, rough figures — order of magnitude is fine:</p>
+  <ul class="d" style="margin-top:.9rem;margin-bottom:1.1rem">
+    <li>Surgical cases per month, and roughly what one collects professionally</li>
+    <li>Prior auths per month, surgical versus imaging and injections</li>
+    <li>Roughly what fraction get denied first time</li>
+    <li>Hours per week your coordinator spends on this</li>
+  </ul>
+  <p style="margin:0">With those four numbers I can tell you what compressing the authorization cycle is worth against your line of credit, in dollars, rather than describing it.</p>
+</div>
+
+<p>Then walk me through two or three of the denials the way you offered. Hearing you narrate what you actually did — which call, which portal, what you said on the peer-to-peer — will teach me more than any specification I can write.</p>
+
+<div class="note">
+  <div class="lbl">One thing this week regardless of everything above</div>
+  <p>If you're still uploading records to a consumer ChatGPT account, that's unauthorized disclosure of protected health information — the consumer tiers aren't covered by a business associate agreement. An API-backed account with a signed BAA takes a few business days and is the same plumbing this would use anyway.</p>
+  <p>Not a reason to panic. A reason to do it now rather than after something goes wrong.</p>
+</div>
+
+<footer>
+  <span>Advanced Spine &amp; Orthopedics</span>
+  <span>Prepared for Kevin · v2 · August 2026</span>
+</footer>
+
+</div>
+</body>
+</html>

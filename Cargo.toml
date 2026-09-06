@@ -1,0 +1,47 @@
+# ═══════════════════════════════════════════════════════════════════════════
+# Prior Authorization Workbench — Rust workspace
+#
+# Three crates, and the dependency direction between them is the architecture:
+#
+#   aso-host         typed application services + domain ports.
+#                    NO Tauri, NO Axum, NO Flutter dependency. This is the rule
+#                    that makes one core serve three surfaces — the moment the
+#                    core knows which shell it is inside, it stops being shared.
+#   aso-server-axum  reusable router, validation, SSE, readiness, metrics.
+#   aso-web-server   thin binary: config, assets, deployment adapters.
+#
+# Tauri consumes aso-host through commands; Flutter through FFI; web through
+# Axum. All three see the same AppServices.
+# ═══════════════════════════════════════════════════════════════════════════
+[workspace]
+resolver = "3"
+members = [
+  "crates/aso-host",
+  "crates/aso-server-axum",
+  "crates/aso-web-server",
+  "desktop/src-tauri",
+]
+
+[workspace.package]
+version    = "0.1.0"
+edition    = "2024"
+rust-version = "1.94"
+license    = "UNLICENSED"
+
+# Pinned exactly, not floored. A caret on a codegen or FFI graph is an
+# instruction to resolve to whatever published most recently — see
+# docs/architecture/dependency-pins.md for the rationale per pin.
+[workspace.dependencies]
+axum          = "0.8.8"
+tokio         = { version = "1.44.2", features = ["rt-multi-thread", "macros", "signal"] }
+tower         = "0.5.2"
+tower-http    = { version = "0.6.2", features = ["fs", "trace", "cors"] }
+serde         = { version = "1.0.219", features = ["derive"] }
+serde_json    = "1.0.140"
+uuid          = { version = "1.16.0", features = ["v4", "v7", "serde"] }
+thiserror     = "2.0.12"
+tracing       = "0.1.41"
+tracing-subscriber = { version = "0.3.19", features = ["env-filter"] }
+async-trait   = "0.1.88"
+chrono        = { version = "0.4.40", features = ["serde"] }
+sqlx          = { version = "0.8.3", features = ["runtime-tokio", "postgres", "uuid", "chrono", "json"] }

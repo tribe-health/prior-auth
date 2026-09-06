@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Intake checklist · Surgery Authorization Workbench · Advanced Spine &amp; Orthopedics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Mulish:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/aso.css">
+<script src="../assets/shell.js"></script>
+<script>ASO.primeTheme();</script>
+<style>
+  /* Screen-local: the document category rows. */
+  .cat {
+    background: var(--s1);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+  }
+  .cat-head {
+    display: grid;
+    grid-template-columns: 1fr 132px 108px 92px;
+    gap: var(--sp-4);
+    align-items: center;
+    padding: var(--sp-4) var(--sp-5);
+    width: 100%;
+    text-align: left;
+    transition: background var(--dur-exit) var(--ease);
+  }
+  .cat-head:hover { background: var(--s2); }
+  .cat-head .cat-t { display: block; font-weight: 700; font-size: 0.94rem; }
+  .cat-head .cat-w { display: block; font-size: 0.8rem; color: var(--fg-2); margin-top: 2px; max-width: 56ch; line-height: 1.45; }
+  .cat-head .cat-x {
+    font-family: var(--font-mono); font-size: 0.7rem; color: var(--fg-3);
+    justify-self: end; display: flex; align-items: center; gap: 6px;
+  }
+  @media (max-width: 900px) {
+    .cat-head { grid-template-columns: minmax(0, 1fr); gap: var(--sp-2); }
+    .cat-head .cat-x { justify-self: start; }
+  }
+
+  .cat-body { padding: 0 var(--sp-5) var(--sp-5); }
+  .doc-line {
+    display: grid;
+    grid-template-columns: 20px 1fr 128px 116px;
+    gap: var(--sp-3);
+    align-items: baseline;
+    padding: 9px 0;
+    font-size: 0.85rem;
+  }
+  .doc-line + .doc-line { background: linear-gradient(var(--s3), var(--s3)) top left / 100% 1px no-repeat; }
+  .doc-line .tick { font-family: var(--font-mono); font-size: 0.72rem; }
+  .doc-line .tick-ok { color: var(--ok); }
+  .doc-line .tick-gap { color: var(--gap); }
+  .doc-line .tick-void { color: var(--void); }
+  .doc-line .nm { color: var(--fg); }
+  .doc-line .sub { display: block; color: var(--fg-3); font-size: 0.78rem; margin-top: 2px; }
+  @media (max-width: 720px) { .doc-line { grid-template-columns: 20px minmax(0, 1fr); } }
+
+  .ask {
+    background: var(--warm-surface);
+    border-radius: var(--r);
+    padding: var(--sp-3) var(--sp-4);
+    margin-top: var(--sp-4);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--sp-4);
+    align-items: center;
+  }
+  .ask p { font-size: 0.84rem; color: var(--fg-2); max-width: 64ch; }
+  @media (max-width: 720px) { .ask { grid-template-columns: minmax(0, 1fr); } }
+
+  .drop {
+    background: var(--s2);
+    border-radius: var(--r-lg);
+    padding: var(--sp-6);
+    text-align: center;
+  }
+  .drop .dz {
+    background: var(--s1);
+    border-radius: var(--r);
+    padding: var(--sp-5);
+    outline: 2px dashed var(--s3);
+    outline-offset: -6px;
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar" data-topbar></div>
+
+<div class="app">
+  <aside class="gnav" data-gnav></aside>
+  <aside class="ctx" data-ctx></aside>
+
+  <main class="workbench workbench-wide" id="content">
+
+    <div data-whoami></div>
+
+    <section class="phead" data-od-id="intake-head">
+      <div>
+        <p class="eyebrow">Step 02 · Intake checklist</p>
+        <h1 class="display">Nine categories.<br>Six complete, two short, one empty.</h1>
+        <p class="lead">
+          Documents are requested by category, not by generic upload. The system names the
+          specific artefact it needs and why the policy needs it.
+        </p>
+      </div>
+      <div class="row">
+        <button class="btn btn-secondary">Request records</button>
+        <a class="btn btn-primary" href="evidence-timeline.html">Review extracted evidence</a>
+      </div>
+    </section>
+
+    <!-- ═══ completeness bar ═══ -->
+    <section style="margin-bottom:var(--sp-6)" data-od-id="intake-progress">
+      <div class="panel panel-raised">
+        <div class="row-between" style="margin-bottom:var(--sp-3)">
+          <span class="eyebrow">Package completeness · PA-2026-0431</span>
+          <span class="row" style="gap:10px">
+            <span class="chip chip-met">6 complete</span>
+            <span class="chip chip-gap">2 partial</span>
+            <span class="chip chip-void">1 absent</span>
+          </span>
+        </div>
+        <div class="meter" style="height:7px">
+          <span class="m-ok" style="width:67%"></span>
+          <span class="m-gap" style="width:22%"></span>
+          <span class="m-void" style="width:11%"></span>
+        </div>
+        <p class="meta" style="margin-top:10px">
+          Completeness is measured against the criteria actually cited by the confirmed policy —
+          not against a universal checklist.
+        </p>
+      </div>
+    </section>
+
+    <div class="g-main">
+      <div class="stack" style="gap:var(--sp-3)">
+
+        <h2 class="h2" style="margin-bottom:var(--sp-2)">Categories</h2>
+
+        <!-- ── 01 · insurance ── -->
+        <div class="cat" data-od-id="cat-insurance">
+          <button class="cat-head" data-disclose="d-ins" data-label-open="Hide" data-label-closed="Show">
+            <span>
+              <span class="cat-t">Insurance identity</span>
+              <span class="cat-w">Card front and back, benefit summary, and any evidence of self-funded status.</span>
+            </span>
+            <span class="chip chip-met">Complete</span>
+            <span class="meta">4 documents</span>
+            <span class="cat-x"><span data-disclose-label>Show</span> ↓</span>
+          </button>
+          <div class="acc" id="d-ins"><div class="acc-in"><div class="cat-body">
+            <div class="doc-line">
+              <span class="tick tick-ok">✓</span>
+              <span class="nm">Insurance card · front and back<span class="sub">Member ID, group number, and administering-entity logo captured</span></span>
+              <span class="meta">2026-08-28</span>
+              <span class="cite">DOC-0431-01 · p.1–2</span>
+            </div>
+            <div class="doc-line">
+              <span class="tick tick-ok">✓</span>
+              <span class="nm">Summary of benefits and coverage<span class="sub">Confirms fully insured PPO — establishes TDI jurisdiction</span></span>
+              <span class="meta">2026-01-01</span>
+              <span class="cite">DOC-0431-02 · p.4</span>
+            </div>
+            <div class="doc-line">
+              <span class="tick tick-ok">✓</span>
+              <span class="nm">Eligibility verification transcript<span class="sub">Active coverage through 2026-12-31</span></span>
+              <span class="meta">2026-08-28</span>
+              <span class="cite">DOC-0431-03 · p.1</span>
+            </div>
+          </div></div></div>
+        </div>
+
+        <!-- ── 02 · clinic notes ── -->
+        <div class="cat" data-od-id="cat-notes">
+          <button class="cat-head" data-disclose="d-notes" data-label-open="Hide" data-label-closed="Show">
+            <span>
+              <span class="cat-t">Surgeon clinic notes</span>
+              <span class="cat-w">Most recent note plus the note in which surgery was recommended, and prior notes showing symptom evolution.</span>
+            </span>
+            <span class="chip chip-met">Complete</span>
+            <span class="meta">5 documents</span>
+            <span class="cat-x"><span data-disclose-label>Show</span> ↓</span>
+          </button>
+          <div class="acc" id="d-notes"><div class="acc-in"><div class="cat-body">
+            <div class="doc-line">
+              <span class="tick tick-ok">✓</span>
+              <span class="nm">Surgical recommendation note · Dr. K. James<span class="sub">Names the planned levels, approach, and instrumentation</span></span>
+              <span class="meta">2026-08-14</span>
+              <span class="cite">CLIN-1142 · p.1–3</span>
+            </div>
+            <div class="doc-line">
+              <span class="tick tick-ok">✓</span>
+              <span class="nm">Follow-up note · N. Mahanirananda, PA-C<span class="sub">Motor exam, tension signs, and ambulation tolerance</span></span>
+              <span class="meta">2026-06-02</span>
+              <span class="cite">CLIN-1098 · p.1–2</span>
+            </div>
+            <div class="doc-line">
+              <span class="tick tick-ok">✓</span>
+              <span class="nm">Initial consultation · Dr. K. James<span class="sub">Establishes symptom onset at 14 months prior</span></span>
+              <span class="meta">2025-11-19</span>
+              <span class="cite">CLIN-0977 · p.1–4</span>
+            </div>
+          </div></div></div>
+        </div>
+
+        <!-- ── 03 · imaging ── -->
+        <div class="cat" data-od-id="cat-imaging">
+          <button class="cat-head" data-disclose="d-img" data-label-open="Hide" data-label-closed="Show">
+            <span>
+              <span class="cat-t">Diagnostic imaging &amp; reports</span>
+              <span class="cat-w">MRI, CT, myelogram, radiographs, flexion-extension views, EMG — including every addendum.</span>
+            </span>
+            <span class="chip chip-gap">Partial</span>
+            <span class="meta">6 of 7</span>
+            <span class="cat-x"><span data-disclose-label>Show</span> ↓</span>
+          </button>
+          <div class="acc open" id="d-img"><div class="acc-in"><div class="cat-body">
+            <div class="doc-line">
+              <span class="tick tick-ok">✓</span>
+              <span class="nm">MRI lumbar spine without contrast<span class="sub">Impression reads “no definite nerve root impingement” — contradicts the myelogram below</span></span>
+              <span class="meta">2026-01-08</span>
+              <span class="cite">RAD-1180 · p.1</span>
+            </div>
+            <div class="doc-line">
+              <span class="tick tick-ok">✓</span>
+              <span class="nm">CT myelogram lumbar<span class="sub">Severe right L4–L5 foraminal stenosis</span></span>
+              <span class="meta">2026-07-22</span>
+              <span class="cite">RAD-1341 · p.2</span>
+            </div>
+            <div class="doc-line">
+              <span class="tick tick-ok">✓</span>
+              <span class="nm">Flexion-extension radiographs<span class="sub">6 mm translation at L4–L5</span></span>
+              <span class="meta">2026-07-22</span>
+              <span class="cite">RAD-1342 · p.1</span>
+            </div>
+            <div class="doc-line">
+              <span class="tick tick-void">◇</span>
+              <span class="nm">MRI addendum · radiologist re-read<span class="sub">Referenced in the myelogram report but not present in the package</span></span>
+              <span class="meta">Referenced</span>
+              <span class="cite cite-void">Not received</span>
+            </div>
+            <div class="ask">
+              <p>
+                <strong>RAD-1341 cites an MRI addendum dated 2026-07-25.</strong> That addendum is the
+                document most likely to reconcile the MRI impression with the myelogram finding.
+                Request it from the imaging centre before the pathway is selected.
+              </p>
+              <button class="btn btn-secondary btn-sm">Request addendum</button>
+            </div>
+          </div></div></div>
+        </div>
+
+        <!-- ── 04 · conservative care ── -->
+        <div class="cat" data-od-id="cat-conservative">
+          <button class="cat-head" data-disclose="d-pt" data-label-open="Hide" data-label-closed="Show">
+            <span>
+              <span class="cat-t">Physical therapy &amp; conservative care</span>
+              <span class="cat-w">Evaluation, attendance, progress and discharge notes with dates and duration — not a statement that PT occurred.</span>
+            </span>
+            <span class="chip chip-gap">Partial</span>
+            <span class="meta">3 of 4</span>
+            <span class="cat-x"><span data-disclose-label>Show</span> ↓</span>
+          </button>
+          <div class="acc open" id="d-pt"><div class="acc-in"><div class="cat-body">
+            <div class="doc-line">
+              <span class="tick tick-ok">✓</span>
+              <span class="nm">PT initial evaluation<span class="sub">Baseline Oswestry 48%</span></span>
+              <span class="meta">2026-02-11</span>
+              <span class="cite">PT-0219 · p.1</span>
+            </div>
+            <div class="doc-line">
+              <span class="tick tick-ok">✓</span>
+              <span class="nm">PT attendance ledger · 9 sessions<span class="sub">Spans 2026-02-11 to 2026-03-18 — five weeks of supervised therapy</span></span>
+              <span class="meta">2026-03-18</span>
+              <span class="cite">PT-0219 · p.2</span>
+            </div>
+            <div class="doc-line">
+              <span class="tick tick-gap">△</span>
+              <span class="nm">PT discharge summary<span class="sub">Duration documented at 5 weeks; the confirmed policy section requires 6</span></span>
+              <span class="meta">2026-03-18</span>
+              <span class="cite">PT-0219 · p.3</span>
+            </div>
+            <div class="ask">
+              <p>
+                <strong>Five weeks documented against a six-week threshold.</strong> This is a shortfall
+                in the evidence, not a missing record — the letter may address it directly. If therapy
+                continued past discharge under a different provider, that ledger would close the gap.
+              </p>
+              <button class="btn btn-secondary btn-sm">Search other providers</button>
+            </div>
+          </div></div></div>
+        </div>
+
+        <!-- ── 05 · pain management ── -->
+        <div class="cat" data-od-id="cat-pain">
+          <button class="cat-head" data-disclose="d-pain" data-label-open="Hide" data-label-closed="Show">
+            <span>
+              <span class="cat-t">Pain management</span>
+              <span class="cat-w">Injections, blocks, ablations and medication trials with the response and the duration of benefit.</span>
+            </span>
+            <span class="chip chip-met">Complete</span>
+            <span class="meta">4 documents</span>
+            <span class="cat-x"><span data-disclose-label>Show</span> ↓</span>
+          </button>
+          <div class="acc" id="d-pain"><div class="acc-in"><div class="cat-body">
+            <div class="doc-line">
+              <span class="tick tick-ok">✓</span>
+              <span class="nm">Transforaminal epidural steroid injection · right L4–L5<span class="sub">70% relief for 11 days, then return to baseline</span></span>
+              <span class="meta">2026-04-09</span>
+              <span class="cite">PAIN-0884 · p.1</span>
+            </div>
+            <div class="doc-line">
+              <span class="tick tick-ok">✓</span>
+              <span class="nm">Repeat transforaminal injection · right L4–L5<span class="sub">50% relief for 6 days — non-durable</span></span>
+              <span class="meta">2026-05-21</span>
+              <span class="cite">PAIN-0912 · p.1</span>
+            </div>
+            <div class="doc-line">
+              <span class="tick tick-ok">✓</span>
+              <span class="nm">Medication trial record<span class="sub">NSAID and gabapentinoid trials exhausted prior to referral</span></span>
+              <span class="meta">2026-05-21</span>
+              <span class="cite">PAIN-0912 · p.2</span>
+            </div>
+          </div></div></div>
+        </div>
+
+        <!-- ── 06 · prior authorization history ── -->
+        <div class="cat" data-od-id="cat-history">
+          <button class="cat-head" data-disclose="d-hist" data-label-open="Hide" data-label-closed="Show">
+            <span>
+              <span class="cat-t">Prior authorization history</span>
+              <span class="cat-w">Prior requests, denial letters, peer-to-peer notes, appeal decisions, and any payer criteria already obtained.</span>
+            </span>
+            <span class="chip chip-met">Complete</span>
+            <span class="meta">2 documents</span>
+            <span class="cat-x"><span data-disclose-label>Show</span> ↓</span>
+          </button>
+          <div class="acc" id="d-hist"><div class="acc-in"><div class="cat-body">
+            <div class="doc-line">
+              <span class="tick tick-ok">✓</span>
+              <span class="nm">No prior authorization request on file for this procedure<span class="sub">Verified against the payer portal submission history</span></span>
+              <span class="meta">2026-08-28</span>
+              <span class="cite">DOC-0431-07 · p.1</span>
+            </div>
+            <div class="doc-line">
+              <span class="tick tick-ok">✓</span>
+              <span class="nm">Payer medical policy PDF · obtained from portal<span class="sub">SURG-2026-014 rev. 4 · effective 2026-07-01</span></span>
+              <span class="meta">2026-08-29</span>
+              <span class="cite">POL-0431 · 28 pp.</span>
+            </div>
+          </div></div></div>
+        </div>
+
+        <!-- ── 07 · preoperative optimization ── -->
+        <div class="cat" data-od-id="cat-optimization">
+          <button class="cat-head" data-disclose="d-opt" data-label-open="Hide" data-label-closed="Show">
+            <span>
+              <span class="cat-t">Preoperative optimization</span>
+              <span class="cat-w">Requested only because the confirmed policy conditions fusion approval on it: nicotine status, HbA1c, BMI, bone health.</span>
+            </span>
+            <span class="chip chip-void">Absent</span>
+            <span class="meta">0 of 3</span>
+            <span class="cat-x"><span data-disclose-label>Show</span> ↓</span>
+          </button>
+          <div class="acc open" id="d-opt"><div class="acc-in"><div class="cat-body">
+            <div class="doc-line">
+              <span class="tick tick-void">◇</span>
+              <span class="nm">Nicotine status · serum or urine cotinine<span class="sub">Policy §4.2(c) conditions instrumented fusion on documented abstinence</span></span>
+              <span class="meta">—</span>
+              <span class="cite cite-void">Not documented</span>
+            </div>
+            <div class="doc-line">
+              <span class="tick tick-void">◇</span>
+              <span class="nm">HbA1c within 90 days<span class="sub">Policy §4.2(c) threshold is below 8.0%</span></span>
+              <span class="meta">—</span>
+              <span class="cite cite-void">Not documented</span>
+            </div>
+            <div class="doc-line">
+              <span class="tick tick-void">◇</span>
+              <span class="nm">DEXA or bone-health assessment<span class="sub">Required where pelvic fixation is planned; not planned in this case</span></span>
+              <span class="meta">—</span>
+              <span class="cite cite-void">Not applicable</span>
+            </div>
+            <div class="ask">
+              <p>
+                <strong>Nothing here has been asserted anywhere.</strong> Two of these are genuine
+                records gaps and will block a fusion pathway; the third does not apply because pelvic
+                fixation is not part of the plan. None of the three will appear in a letter until a
+                source document exists.
+              </p>
+              <button class="btn btn-secondary btn-sm">Assign to Nathan, PA-C</button>
+            </div>
+          </div></div></div>
+        </div>
+
+        <!-- ── 08 · operative plan ── -->
+        <div class="cat" data-od-id="cat-plan">
+          <button class="cat-head" data-disclose="d-plan" data-label-open="Hide" data-label-closed="Show">
+            <span>
+              <span class="cat-t">Planned procedure detail</span>
+              <span class="cat-w">Levels, approach, decompression and facetectomy plan, instrumentation, interbody devices, pelvic fixation.</span>
+            </span>
+            <span class="chip chip-met">Complete</span>
+            <span class="meta">Surgeon-entered</span>
+            <span class="cat-x"><span data-disclose-label>Show</span> ↓</span>
+          </button>
+          <div class="acc" id="d-plan"><div class="acc-in"><div class="cat-body">
+            <div class="doc-line">
+              <span class="tick tick-ok">✓</span>
+              <span class="nm">Right L4–L5 decompression with unilateral facetectomy<span class="sub">Entered by Dr. James; the facetectomy is what makes the instability pathway coherent</span></span>
+              <span class="meta">2026-08-14</span>
+              <span class="cite">CLIN-1142 · p.2</span>
+            </div>
+            <div class="doc-line">
+              <span class="tick tick-ok">✓</span>
+              <span class="nm">Posterior instrumented fusion L4–L5 with interbody device<span class="sub">Single level · no pelvic fixation</span></span>
+              <span class="meta">2026-08-14</span>
+              <span class="cite">CLIN-1142 · p.2</span>
+            </div>
+          </div></div></div>
+        </div>
+
+        <!-- ── 09 · bracing ── -->
+        <div class="cat" data-od-id="cat-bracing">
+          <button class="cat-head" data-disclose="d-brace" data-label-open="Hide" data-label-closed="Show">
+            <span>
+              <span class="cat-t">Bracing &amp; immobilization</span>
+              <span class="cat-w">Requested only where the policy conditions approval on a documented trial. Not cited by the confirmed section.</span>
+            </span>
+            <span class="chip chip-plain">Not required</span>
+            <span class="meta">—</span>
+            <span class="cat-x"><span data-disclose-label>Show</span> ↓</span>
+          </button>
+          <div class="acc" id="d-brace"><div class="acc-in"><div class="cat-body">
+            <div class="doc-line">
+              <span class="tick tick-void">◇</span>
+              <span class="nm">Bracing trial record<span class="sub">SURG-2026-014 §4.1 does not condition approval on immobilization for this indication</span></span>
+              <span class="meta">—</span>
+              <span class="cite cite-void">Not requested</span>
+            </div>
+          </div></div></div>
+        </div>
+
+        <div class="drop" style="margin-top:var(--sp-4)" data-od-id="intake-drop">
+          <div class="dz">
+            <p class="h3" style="margin-bottom:6px">Add documents to a category</p>
+            <p class="body" style="margin:0 auto var(--sp-4);max-width:52ch;color:var(--fg-2);font-size:.86rem">
+              Uploads are classified on arrival and attached to the category they satisfy.
+              A document that satisfies nothing the policy asks for is held, not filed.
+            </p>
+            <button class="btn btn-secondary">Choose files</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ═══ side column ═══ -->
+      <aside class="stack" style="gap:var(--sp-4)" data-od-id="intake-side">
+
+        <div class="callout">
+          <div class="lbl">Two absences block the primary pathway</div>
+          <p>
+            Nicotine status and HbA1c are conditions of the fusion criterion in §4.2(c).
+            Until a source document exists, a fusion pathway cannot be ranked as strong —
+            and the letter will not claim optimization that no record supports.
+          </p>
+        </div>
+
+        <div class="panel">
+          <p class="eyebrow" style="margin-bottom:var(--sp-3)">Contradictions detected</p>
+          <div class="stack-sm">
+            <div>
+              <p style="font-size:.85rem;color:var(--fg);font-weight:600">MRI impression vs. CT myelogram</p>
+              <p style="font-size:.82rem;color:var(--fg-2);margin-top:3px">
+                “No definite nerve root impingement” against “severe right L4–L5 foraminal stenosis.”
+                A missing radiologist addendum may reconcile these.
+              </p>
+              <div class="row" style="gap:6px;margin-top:7px">
+                <span class="cite">RAD-1180 · p.1</span>
+                <span class="cite">RAD-1341 · p.2</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel panel-raised">
+          <p class="eyebrow" style="margin-bottom:var(--sp-3)">Who owns what</p>
+          <div class="tw">
+            <table class="ds" style="min-width:0">
+              <tbody>
+                <tr><td>MRI addendum</td><td class="m">Coordinator</td></tr>
+                <tr><td>Cotinine · HbA1c</td><td class="m">Nathan, PA-C</td></tr>
+                <tr><td>PT continuation</td><td class="m">Coordinator</td></tr>
+                <tr><td>Operative detail</td><td class="m">Dr. James</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="callout cool">
+          <div class="lbl">Why the list is short</div>
+          <p>
+            Nine categories appear here, not twenty. The checklist is generated from the criteria
+            the confirmed policy section actually cites, so staff are never asked for records
+            that cannot affect the determination.
+          </p>
+        </div>
+
+      </aside>
+    </div>
+
+  </main>
+</div>
+
+<div class="drawer-scrim" data-scrim></div>
+<aside class="drawer" data-drawer></aside>
+<nav class="tabbar" data-tabbar aria-label="Primary"></nav>
+
+<script>
+  ASO.shell({
+    step: 'intake',
+    section: 'cases',
+    title: 'Intake checklist',
+    depth: 'nested',
+    caseInfo: {
+      patient: 'Kaminski, Renata',
+      caseId: 'PA-2026-0431',
+      payer: 'BCBS TX · PPO',
+      source: 'AdvancedMD · Southlake',
+      deadline: '2026-09-11'
+    }
+  });
+  ASO.bindDisclosure();
+</script>
+</body>
+</html>

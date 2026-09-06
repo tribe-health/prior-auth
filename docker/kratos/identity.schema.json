@@ -1,0 +1,32 @@
+{
+  "$id": "https://advancedspine.example/schemas/clinician.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Clinician",
+  "type": "object",
+  "properties": {
+    "traits": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "title": "Work email",
+          "ory.sh/kratos": {
+            "credentials": { "password": { "identifier": true } },
+            "recovery": { "via": "email" },
+            "verification": { "via": "email" }
+          }
+        },
+        "name": {
+          "type": "object",
+          "properties": {
+            "first": { "type": "string", "title": "Given name" },
+            "last":  { "type": "string", "title": "Family name" }
+          }
+        }
+      },
+      "required": ["email"],
+      "additionalProperties": false
+    }
+  }
+}

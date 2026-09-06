@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 430 128" width="430" height="128" role="img" aria-label="Advanced Spine &amp; Orthopedics">
+  <title>Advanced Spine &amp; Orthopedics</title>
+
+  <!-- Wordmark: set in Mulish; substitute the practice's licensed face when the
+       original vector is recovered. Convert to outlines before production use. -->
+  <text x="12" y="70"
+        font-family="Mulish, 'Nunito Sans', 'Segoe UI', system-ui, sans-serif"
+        font-size="58" font-weight="600" letter-spacing="2"
+        textLength="404" lengthAdjust="spacing"
+        fill="#6E6F71">ADVANCED</text>
+
+  <!-- Spine sweep -->
+  <path d="M10 74 C 76 34, 192 24, 288 36 C 348 44, 390 55, 420 65
+           C 388 51, 346 37, 286 29 C 190 17, 72 33, 10 66 Z"
+        fill="#DF7C35"/>
+
+  <text x="14" y="112"
+        font-family="Mulish, 'Nunito Sans', 'Segoe UI', system-ui, sans-serif"
+        font-size="33" font-weight="400" letter-spacing="0.5"
+        textLength="400" lengthAdjust="spacing"
+        fill="#231F20">Spine &amp; Orthopedics</text>
+</svg>

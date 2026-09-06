@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{ dark: (localStorage.getItem('aso-kj')||'light')==='dark', raw:false }" :class="dark ? 'dark' : ''">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Annotated Transcript — Call with Dr. Kevin James</title>
+<link rel="icon" href="aso-favicon.svg" type="image/svg+xml">
+<script>
+  (function(){ if((localStorage.getItem('aso-kj')||'light')==='dark'){ document.documentElement.classList.add('dark'); } })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Mulish:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+<style>
+:root{
+  --ember:#DF7C35; --ember-deep:#A85417; --ember-tint:#FBEFE6;
+  --slate:#A7C5D6; --slate-tint:#EDF3F7; --navy:#1F4E79;
+  --graphite:#6E6F71; --ink:#231F20; --bone:#F1EFEC;
+  --bg:#FFFFFF; --s1:#F7F6F4; --s2:#F1EFEC; --s3:#E7E4E0; --s-zebra:#FAF9F7;
+  --fg:#231F20; --fg-2:#4A4B4F; --fg-3:#6E6F71;
+  --accent:#A85417; --accent-vivid:#DF7C35; --cool:#1F4E79;
+  --ok:#1E6F4E; --ok-surface:#E7F3EC;
+  --gap:#A85417; --gap-surface:#FBEFE6;
+  --void:#5B5F66; --void-surface:#EFEFF1;
+  --alert:#9B2C2C; --alert-surface:#FBEAEA;
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Mulish','Nunito Sans','Segoe UI',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  --r:6px;
+}
+html.dark{
+  --ember:#F0955A; --ember-deep:#F0955A; --ember-tint:#2E2119;
+  --slate:#8FB9D0; --slate-tint:#182430; --navy:#8FB9D0;
+  --graphite:#98A2AA; --ink:#EDF0F2; --bone:#1C2126;
+  --bg:#14181C; --s1:#1C2126; --s2:#252B31; --s3:#2E353C; --s-zebra:#191E23;
+  --fg:#EDF0F2; --fg-2:#C2CCD3; --fg-3:#93A0A9;
+  --accent:#F0955A; --accent-vivid:#F0955A; --cool:#8FB9D0;
+  --ok:#6FD1A0; --ok-surface:#152620;
+  --gap:#F0955A; --gap-surface:#2E2119;
+  --void:#A9B3BB; --void-surface:#232830;
+  --alert:#F2A0A0; --alert-surface:#2E1A1A;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:17px;line-height:1.66;-webkit-font-smoothing:antialiased}
+.wrap{max-width:880px;margin:0 auto;padding:3.5rem 2rem 6rem}
+
+.brandbar{display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap;margin-bottom:2.6rem}
+.bmark{display:flex;align-items:center;gap:.8rem}
+.bmark .ic{width:38px;height:38px;flex-shrink:0}
+.bmark .ic svg{width:100%;height:100%;display:block}
+.bmark .wm{width:180px}
+.bmark .wm svg{width:100%;height:auto;display:block}
+.toggle{font-family:var(--mono);font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;background:var(--s2);color:var(--fg-2);padding:.55rem .9rem;border:none;border-radius:4px;cursor:pointer}
+.toggle:hover{background:var(--s3);color:var(--accent)}
+
+.eyebrow{font-family:var(--mono);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--fg-3);margin-bottom:.9rem}
+h1{font-family:var(--serif);font-size:2.6rem;line-height:1.1;font-weight:600;letter-spacing:-.015em;margin-bottom:1rem}
+h2{font-family:var(--serif);font-size:1.62rem;font-weight:600;margin:3.2rem 0 1rem;padding-top:1.6rem;background:linear-gradient(var(--s3),var(--s3)) top left / 64px 2px no-repeat}
+h3{font-size:1.04rem;font-weight:700;margin:1.9rem 0 .5rem}
+p{color:var(--fg-2);margin-bottom:1.05rem}
+.lead{font-size:1.12rem;color:var(--fg-2);line-height:1.6}
+strong{color:var(--fg);font-weight:700}
+em{font-style:italic}
+
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.1rem;background:var(--s1);border-radius:var(--r);overflow:hidden;margin:1.5rem 0 2.4rem}
+.meta div{padding:.85rem 1.1rem;background:var(--s1)}
+.meta .k{font-family:var(--mono);font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;color:var(--fg-3);margin-bottom:.25rem}
+.meta .v{font-size:.85rem;color:var(--fg);font-weight:600}
+
+/* ── TRANSCRIPT ── */
+.sec{margin:2.6rem 0 1.2rem;display:flex;align-items:baseline;gap:.8rem;flex-wrap:wrap}
+.sec .sn{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;color:var(--accent);padding:.18em .5em;background:var(--ember-tint);border-radius:3px}
+.sec .st{font-family:var(--serif);font-size:1.32rem;font-weight:600;color:var(--fg)}
+
+.turn{margin:0 0 1.1rem;display:grid;grid-template-columns:96px 1fr;gap:1.1rem}
+.spk{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;padding-top:.28rem;text-align:right}
+.spk-kj{color:var(--accent)}
+.spk-tj{color:var(--cool)}
+.utt{color:var(--fg-2);line-height:1.72}
+.utt .ins{color:var(--fg-3)}
+.utt .kw{color:var(--fg);font-weight:600}
+
+.ann{grid-column:2;background:var(--s1);border-radius:var(--r);padding:.85rem 1.05rem;margin-top:.6rem}
+.ann .al{font-family:var(--mono);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--fg-3);margin-bottom:.3rem}
+.ann p{font-size:.87rem;line-height:1.55;margin:0 0 .5rem;color:var(--fg-2)}
+.ann p:last-child{margin:0}
+.ann.key{background:var(--ember-tint)}
+.ann.key .al{color:var(--accent)}
+.ann.risk{background:var(--alert-surface)}
+.ann.risk .al{color:var(--alert)}
+.ann.good{background:var(--ok-surface)}
+.ann.good .al{color:var(--ok)}
+.ann.ref{background:var(--slate-tint)}
+.ann.ref .al{color:var(--cool)}
+
+.note{background:var(--slate-tint);border-radius:var(--r);padding:1.3rem 1.5rem;margin:1.6rem 0}
+.note .lbl{font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--cool);margin-bottom:.5rem}
+.note p{margin:0 0 .75rem;color:var(--fg-2)}
+.note p:last-child{margin:0}
+.note.warm{background:var(--ember-tint)}
+.note.warm .lbl{color:var(--accent)}
+
+.tw{overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;margin:1.4rem 0;border-radius:var(--r)}
+table{width:100%;border-collapse:collapse;font-size:.86rem;min-width:540px}
+thead th{background:var(--s3);text-align:left;padding:.68rem .9rem;font-family:var(--mono);font-size:.6rem;letter-spacing:.13em;text-transform:uppercase;color:var(--fg-2);font-weight:400}
+tbody td{padding:.62rem .9rem;color:var(--fg-2);vertical-align:top}
+tbody tr:nth-child(odd){background:var(--s-zebra)}
+tbody tr:nth-child(even){background:var(--s1)}
+td.m{font-family:var(--mono);font-size:.77rem;color:var(--fg)}
+
+ul.d,ol.d{color:var(--fg-2);margin:0 0 1.1rem 0;list-style:none}
+ul.d li,ol.d li{padding-left:1.5rem;position:relative;margin-bottom:.55rem}
+ul.d li::before{content:'—';position:absolute;left:0;color:var(--fg-3)}
+ol.d{counter-reset:n}
+ol.d li{counter-increment:n}
+ol.d li::before{content:counter(n)'.';position:absolute;left:0;font-family:var(--mono);font-size:.8rem;color:var(--accent)}
+
+.chip{display:inline-block;font-family:var(--mono);font-size:.61rem;letter-spacing:.09em;text-transform:uppercase;padding:.2em .55em;border-radius:3px;white-space:nowrap}
+.ch-a{background:var(--gap-surface);color:var(--gap)}
+.ch-b{background:var(--ok-surface);color:var(--ok)}
+.ch-c{background:var(--void-surface);color:var(--void)}
+
+footer{margin-top:4.5rem;padding-top:1.7rem;background:linear-gradient(var(--s3),var(--s3)) top left / 100% 1px no-repeat;font-family:var(--mono);font-size:.66rem;color:var(--fg-3);letter-spacing:.05em;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+
+@media (max-width:640px){
+  body{font-size:16px}
+  .wrap{padding:2rem 1.1rem 4rem}
+  h1{font-size:1.9rem} h2{font-size:1.35rem} .lead{font-size:1.02rem}
+  .turn{grid-template-columns:1fr;gap:.3rem}
+  .spk{text-align:left;padding-top:0}
+  .ann{grid-column:1}
+  .note{padding:1.1rem 1.1rem}
+  .bmark .wm{width:145px}
+  .tw::before{content:'\2194  swipe';display:block;position:sticky;left:0;font-family:var(--mono);font-size:.57rem;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:.5rem}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <g id="mk"><g transform="rotate(-13 256 256) translate(0 18)">
+    <path d="M80 250C172 186 300 154 432 162C306 126 176 148 80 208C64 218 64 240 80 250Z" fill="var(--graphite)"/>
+    <path d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z" fill="var(--ember)"/>
+  </g></g>
+</defs></svg>
+
+<div class="brandbar">
+  <div class="bmark">
+    <div class="ic"><svg viewBox="0 0 512 512" aria-hidden="true"><use href="#mk"/></svg></div>
+    <div class="wm">
+      <svg viewBox="0 0 430 128" aria-label="Advanced Spine and Orthopedics">
+        <text x="12" y="70" font-family="Mulish, sans-serif" font-size="58" font-weight="600" letter-spacing="2" textLength="404" lengthAdjust="spacing" fill="var(--graphite)">ADVANCED</text>
+        <path d="M10 74 C 76 34, 192 24, 288 36 C 348 44, 390 55, 420 65 C 388 51, 346 37, 286 29 C 190 17, 72 33, 10 66 Z" fill="var(--ember)"/>
+        <text x="14" y="112" font-family="Mulish, sans-serif" font-size="33" textLength="400" lengthAdjust="spacing" fill="var(--ink)">Spine &amp; Orthopedics</text>
+      </svg>
+    </div>
+  </div>
+  <button class="toggle" @click="dark = !dark; localStorage.setItem('aso-kj', dark ? 'dark':'light')" x-text="dark ? 'Light' : 'Dark'">Dark</button>
+</div>
+
+<div class="eyebrow">Annotated Transcript · Working Record</div>
+<h1>Call with<br>Dr. Kevin James</h1>
+<p class="lead">Reconstructed, speaker-corrected, and annotated. This is the primary source for the authorization mechanism specification.</p>
+
+<div class="meta">
+  <div><div class="k">Participants</div><div class="v">Dr. Kevin James · Travis James</div></div>
+  <div><div class="k">Source</div><div class="v">Automated transcription</div></div>
+  <div><div class="k">Segments</div><div class="v">12 topical</div></div>
+  <div><div class="k">Status</div><div class="v">Reconstructed — see method</div></div>
+</div>
+
+<!-- ═══════ METHOD ═══════ -->
+<h2>Editorial method</h2>
+
+<p>The source file is machine-generated and required substantial reconstruction. Four things were done to it, and each is disclosed so the record can be checked against the original.</p>
+
+<h3>1. A second audio source was removed</h3>
+
+<p>Roughly a third of the source file is an unrelated audio stream that bled into the recording — a podcast or lecture on Dietrich Bonhoeffer's theory of stupidity, Nietzsche on truth, Harry Frankfurt on bullshit, George Orwell's <em>Politics and the English Language</em>, the Peter Principle, and Aztec decision circles. It is interleaved line-by-line with the call and carries the same speaker labels.</p>
+
+<p>None of it is Dr. James or Travis James. All of it has been removed. It is listed in Appendix C so nothing is silently discarded.</p>
+
+<h3>2. Speaker attribution was rebuilt</h3>
+
+<p>The diarizer assigned five speaker labels across what is a two-person call, and assigned the same label to both Dr. James and the podcast narrator. Attribution below is reconstructed from content, address terms, and conversational logic rather than taken from the source labels.</p>
+
+<div class="note">
+  <div class="lbl">Confidence</div>
+  <p><strong>High</strong> for all substantive passages — the clinical, payer, and business content is unmistakably Dr. James, and the operational responses are unmistakably Travis. <strong>Lower</strong> for three short interjections around the "who is the decision maker" exchange, where the source fragments badly. Those are marked in place.</p>
+</div>
+
+<h3>3. Speech was lightly repaired, never rewritten</h3>
+
+<p>Filler words, false starts, and stammers are removed. Words supplied by the editor to complete a sentence appear in <span class="ins">[square brackets]</span>. Mis-transcriptions are corrected with the original noted in Appendix B. <strong>No substantive language was altered, softened, or paraphrased.</strong></p>
+
+<h3>4. Verbatim language is preserved</h3>
+
+<div class="note warm">
+  <div class="lbl">Before circulating this</div>
+  <p>Segment 08 contains profanity and a characterization of a utilization review physician, recorded exactly as spoken. A transcript that sanitizes quotations is not a record. <strong>Produce a redacted version before this goes to a hospital, an MSO, or any external party.</strong></p>
+</div>
+
+<!-- ═══════ 01 ═══════ -->
+<div class="sec"><span class="sn">SEGMENT 01</span><span class="st">Reimbursement — the position already won</span></div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">…still taking these cases through arbitration, but that's really what it is. It becomes a legal dispute with a contracted amount that you get paid for. With the arbitration process, the awards are high, but it's not gonna last forever. So that's what I'm doing on that end. But as far as on the <span class="kw">auth</span> end, it doesn't matter. <span class="kw">I can't even go to arbitration if the case doesn't end up in the OR.</span></div>
+  <div class="ann key">
+    <div class="al">The thesis of the entire call</div>
+    <p>Everything that follows is downstream of this sentence. The reimbursement fight is won; the authorization fight determines whether the win is collectable.</p>
+  </div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">And I think that's really driving a lot of the tweaks now in approval — is <span class="kw">they can't beat us at arbitration, but they can flip on [authorization]</span>. There's very little they can do about it, but they're starting to figure it out, and that's the battle that we're in. What do we do about this arbitration? Well, they're gonna say, you're not gonna be up in [the OR] in the first place. And I think eventually what they'll do is they'll start offering us awards in the arbitration process that the arbitrator [finds reasonable] —</div>
+  <div class="ann key">
+    <div class="al">Strategic read</div>
+    <p>Dr. James is describing payer behaviour as an adaptive response, not as administrative friction. Authorization tightening is the countermove to losing at federal arbitration. This is the framing that should anchor any pitch to a hospital or a colleague.</p>
+  </div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">— and then that kills the big awards. I talked to an attorney yesterday, and that's what she said will probably happen. I'm hoping the arbitrator will look at it and say, wait a minute, that's still not a reasonable payment — and the doctor's problem in the first place is the contracted amount was not reasonable. And this really mainly applies to my PA and her billing, because the <span class="kw">No Surprises Act</span> is more about surgical assistants and anesthesia than it is about the primary provider.</div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">What I'm hoping they'll do is at least get rid of these <span class="kw">hundred dollar checks</span> that I'm getting for my PA service after eight hours in the OR. Get rid of that, and at least push reimbursement above the historical contracted amount. A reasonable amount.</div>
+  <div class="ann ref">
+    <div class="al">Concrete grievance</div>
+    <p>$100 for eight hours of physician assistant time in the operating room. Worth keeping — it is the single most legible example of the underlying problem for any non-clinical audience.</p>
+  </div>
+</div>
+
+<!-- ═══════ 02 ═══════ -->
+<div class="sec"><span class="sn">SEGMENT 02</span><span class="st">Contracting strategy and the tax ID problem</span></div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">And that's where I think the dust will settle. But at the end of the day, that still is a loss for the insurance company. So what they're doing is: flip to the first part, and just make sure that patients don't end up in the OR. [I'm fighting] them with arbitration. I'm fighting them with billing under a different tax ID for better contracts.</div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">The problem is, those entities that have better contracts — what they're doing is getting physicians in bulk, putting them under one tax ID, and going to the insurance companies to negotiate a better contract. But that puts me under one tax ID with a bunch of other physicians and a lot of stipulations attached. These companies — <span class="kw">Privia</span> and a few others I've interviewed — the problem is they want me to change [EHR].</div>
+  <div class="ann">
+    <div class="al">Corroborates the multi-EHR constraint</div>
+    <p>Independent confirmation of the MSO/EHR issue raised separately: better contracts are available, but they come bundled with a forced EHR migration. This is the strongest available argument for building EHR-agnostic from the start.</p>
+  </div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">[I've] recently been [focused] on the reimbursement end — either by seeking out a different tax ID with a better contract, or looking at going out of network, not having a contract, and getting an attorney to threaten them with a lawsuit to pay me appropriately. I'm working that. But you see, <span class="kw">it's all for naught if I've got 20 patients [waiting] and they can't get authorized.</span> So I've got the reimbursement part kind of worked out for now, but <span class="kw">they're beating us on authorization.</span></div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">And that's where I have to now shift focus in my free time away from the things I've set up on the reimbursement end, and shift it towards — now we've got to get people on the table. Otherwise it doesn't matter if I can beat them up on payment if I can't get the service provided.</div>
+</div>
+
+<!-- ═══════ 03 ═══════ -->
+<div class="sec"><span class="sn">SEGMENT 03</span><span class="st">The ask</span></div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">Getting these people on the table. <span class="kw">I know where the money is, and I can get it for you. You've got to help me get them on the table.</span> I've got so many colleagues [where] the interest is already set up the best it can be right now in terms of where the money's flowing towards. Right now we're just not getting them on the table. If you can get AI to get these people on the table, there's a whole pile of money sitting out there — through arbitration [with] insurance payers, where I can connect you, and then we get their reimbursement done.</div>
+  <div class="ann key">
+    <div class="al">The proposition, stated plainly</div>
+    <p>Dr. James is offering distribution and downstream monetisation in exchange for solving authorization. He is not asking for a tool; he is proposing a division of labour. Note this predates the hospital conversation in Segment 11 and is a separate channel.</p>
+  </div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">[Research] who's authorizing the surgery and the authorization process, and also the appeals, the denials — and what are <span class="kw">the entities that regulate the process that we can threaten them with?</span></div>
+  <div class="ann ref">
+    <div class="al">Research directive #1</div>
+    <p>First of several explicit research assignments. Answered in the requirements document: TDI for fully-insured plans, DOL/ERISA for self-funded, the Texas IRO process, and TMB jurisdiction over Texas-licensed reviewers.</p>
+  </div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-tj">Travis</div>
+  <div class="utt">Okay, so let me ask you this real quick about getting people on the table. Who is the decision maker for getting a person on the table?</div>
+  <div class="ann">
+    <div class="al">Attribution note</div>
+    <p>Source labels this and the two turns following inconsistently. Assigned by conversational logic — this reads as the interviewer's question. Confidence moderate.</p>
+  </div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">[The question is] how to make them authorize it.</div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-tj">Travis</div>
+  <div class="utt">Who do we have to get to?</div>
+</div>
+
+<!-- ═══════ 04 ═══════ -->
+<div class="sec"><span class="sn">SEGMENT 04</span><span class="st">Recording acknowledged</span></div>
+
+<div class="turn">
+  <div class="spk spk-tj">Travis</div>
+  <div class="utt">All right. Good. Okay, KJ. Everything we've said here is [being] recorded with my little AI system, and I'll be able to take this and do deep research. And I'll nail this.</div>
+  <div class="ann">
+    <div class="al">Consent, and a name</div>
+    <p>Recording is disclosed and acknowledged in the next turn — worth having on the record. "KJ" appears in the source as "Kasey"/"Casey"; read here as the initials, though this should be confirmed.</p>
+  </div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">Perfect. Deep research. Good. If you've got this AI app listening to me — if you happen to want to know more about the payment [side], have it look up the <span class="kw">No Surprises Act</span> and the <span class="kw">federal IDR process</span>, which is really the engine behind that. It comes from attorneys that have experience with it. <span class="kw">Callagy</span> is one — I'm using them — and then <span class="kw">Svetlana Minevich</span>, M-I-N-E-V-I-C-H. I've got contracts with each of those two companies. For federal arbitration.</div>
+  <div class="ann ref">
+    <div class="al">Named references</div>
+    <p>"Callagy" is transcribed as "Callaghi"; likely Callagy Law, a firm known for No Surprises Act IDR work — <strong>spelling unconfirmed</strong>. "Minevich" was spelled aloud by Dr. James and is therefore reliable. Both are existing contracted relationships on the reimbursement side, not the authorization side.</p>
+  </div>
+</div>
+
+<!-- ═══════ 05 ═══════ -->
+<div class="sec"><span class="sn">SEGMENT 05</span><span class="st">Research directive — payers and procedures</span></div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">And then they can tell you all about that process. But really, again, the focus is going to be on the front end — whether it's <span class="kw">eviCore</span> or some of these other companies that really do the utilization reviews: the utilization review process, the peer-to-peer conversations, the medical necessity letters, and the actual authorization criteria.</div>
+  <div class="ann">
+    <div class="al">Transcription correction</div>
+    <p>Source renders this as "Evercore" and, later, "ebacor." Both are <strong>eviCore</strong> — the Evernorth utilization management vendor that administers Cigna spine and interventional pain, and some Aetna lines.</p>
+  </div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">So look up the authorization criteria for <span class="kw">lumbar 360 fusion, anterior-posterior fusion, [and] anterior cervical discectomy and fusion</span>. If you just pull for <span class="kw">BUCA</span> — Blue Cross, United, Cigna, Aetna — pull their authorization criteria. Especially <span class="kw">Blue Cross Blue Shield Texas, [which] is the majority of our demographic.</span> And then second behind that's UnitedHealthcare, then Aetna, and Cigna.</div>
+  <div class="ann key">
+    <div class="al">Build order, straight from the source</div>
+    <p>This is the payer priority sequence for the criteria corpus. BCBSTX first — not alphabetically, not by national market share, but because it is the majority of this practice's demographic.</p>
+  </div>
+</div>
+
+<!-- ═══════ 06 ═══════ -->
+<div class="sec"><span class="sn">SEGMENT 06</span><span class="st">The authorization mechanism</span></div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">So if you pull the authorization criteria for those particular carriers, scrutinize [them]. For example, lumbar spinal fusion surgery — they only authorize it <span class="kw">not for back pain</span>. But that's the primary reason why people have fusion surgery: because they have back pain.</div>
+  <div class="ann key">
+    <div class="al">The trap</div>
+    <p>The criteria are written to exclude the presenting complaint. This is the structural problem the entire product exists to solve.</p>
+  </div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">But the MRI for people with back pain is usually just an annular tear, some disc degeneration, that kind of thing — they don't authorize fusion surgery for that. <span class="kw">What gets us spinal fusion surgery authorized is foraminal stenosis, which is graded as moderate or severe on the MRI report.</span></div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">Not mild. What's happening right now, and always has historically, is people need a spinal fusion surgery but the foraminal stenosis is graded as mild. Why foraminal stenosis and not central and lateral recess stenosis? Because to attack foraminal stenosis, you have to resect — usually it's <span class="kw">greater than 50% of the facet joints bilaterally.</span></div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">And that causes what's called <span class="kw">iatrogenic instability</span>. So I have to prove that I'm going to create iatrogenic instability from a laminectomy or decompression surgery to get my fusion surgery authorized.</div>
+  <div class="ann key">
+    <div class="al">The chain, complete</div>
+    <p>Moderate-or-severe foraminal stenosis → wide decompression into the foramen → &gt;50% bilateral facet resection → iatrogenic instability → fusion indicated. Every generated argument is built on this sequence.</p>
+  </div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">Most of these patients, I don't really even need to do the laminectomy, but I'm trying to fuse them, so I'm presenting to them that I'm going to do a laminectomy. The laminectomy then can't be just done centrally. I have to do it laterally — meaning not in the central part of the spinal canal, but on the lateral recess, and also into the foramen. So I need the MRI report to say moderate or severe foraminal stenosis. That justifies the wide decompression causing iatrogenic instability, and that's in the criteria for every insurance company. Of course, they're going to want you to have existing instability, like on flexion-extension X-rays — translation of motion more than 3 to 5 millimetres or something like that.</div>
+  <div class="ann risk">
+    <div class="al">Flagged for discussion — do not build past this without resolution</div>
+    <p>The first sentence, as spoken, describes representing a planned procedure in order to obtain authorization for a different one. The charitable and probably correct reading is that decompression is genuinely performed as part of the fusion and that decompression <em>alone</em> would not be the chosen treatment — a standard and defensible surgical position.</p>
+    <p>But as recorded, in a deposition or audit context, it reads as a misrepresentation to a payer. <strong>The control specified in response: reconcile every authorization request against the operative report and flag divergence.</strong> If the wide decompression is performed and documented, the argument was true and there is contemporaneous proof. If it is not, the letter said something the record contradicts.</p>
+  </div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt"><span class="kw">Nobody has that. That's why they wrote the criteria that way.</span> [We're] bypassing that in the game by saying: okay, there's no dynamic instability, but I'm going to create instability with my surgery, and that necessitates the fusion.</div>
+  <div class="ann key">
+    <div class="al">Why the mechanism exists</div>
+    <p>The pre-existing instability requirement is understood by Dr. James as deliberately unmeetable. The iatrogenic instability route is the answer to a criterion designed to have no answer.</p>
+  </div>
+</div>
+
+<!-- ═══════ 07 ═══════ -->
+<div class="sec"><span class="sn">SEGMENT 07</span><span class="st">The documentation matrix</span></div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt"><span class="kw">Cigna has an additional requirement of not wanting to do more than one level of a fusion. All of them have a different tweak.</span> That is the heart of the matter in writing the response: you've got to draw the matrix, like we talked about, between what the criteria specifically says for that particular insurance carrier, and what the MRI report shows and what the notes show.</div>
+  <div class="ann key">
+    <div class="al">"The matrix" — his term, adopted as the product's</div>
+    <p>Carrier criteria on one axis, chart evidence on the other. This is the coordinating idea of the whole system and it originated here, with him.</p>
+  </div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">In my notes, you've got to have — of course, PT has to be done, some non-operative care, you've got to document that. And then on physical exam, I have to have, on the motor exam for the neurological findings, <span class="kw">4 out of 5 strength in the specific muscle groups that are tied to the nerve root that's involved in that foraminal stenosis.</span> For example: L5-S1 — exiting nerve root is L5 — so I need the MRI report to say moderate foraminal stenosis at L5-S1. Then I have to have my doctor's note reflect that the L5 nerve root is adversely affected, which would be <span class="kw">extensor hallucis longus weakness, 4 out of 5 in strength, decreased sensation at L5 dermatome.</span> All that has to be in my notes.</div>
+  <div class="ann key">
+    <div class="al">The only fully specified level</div>
+    <p>L5-S1 is given completely: imaging finding, level, exiting root, motor test, grade, dermatome. Every other level in the matrix is currently extrapolated and must be confirmed by Dr. James before encoding.</p>
+  </div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">The problem with the AI part of most EHR systems is they're not really set up well for this documentation. There's a lot of rigmarole that I have to go through and make my notes perfect. But with the matrix and with the AI thing that you're building — <span class="kw">that's what I want to build: just make sure the doctor's note is perfect.</span></div>
+  <div class="ann good">
+    <div class="al">A second product, previously unscoped</div>
+    <p>Checking the packet at submission and checking the note before it is signed are different jobs. The second happens while the patient is still in clinic, which is when closing a gap is free. This should be treated as a first-class requirement, not an extension.</p>
+  </div>
+</div>
+
+<!-- ═══════ 08 ═══════ -->
+<div class="sec"><span class="sn">SEGMENT 08</span><span class="st">Radiology, and the reviewer</span></div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">Just make sure the radiology films reflect the foraminal stenosis adequately. [I'm] trying to set up meetings with radiologists <span class="kw">so they quit putting the word "mild" on the foraminal stenosis report.</span></div>
+  <div class="ann key">
+    <div class="al">Single highest-leverage variable in the pipeline</div>
+    <p>One adjective, written by someone with no knowledge of its consequence, determines authorization. System response: flag at intake, track by radiologist and facility, and route remediable cases to a re-read request framed as clinical disagreement about interpretation — never as a request to change a grade for authorization purposes.</p>
+  </div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">But that's really what we're doing. We're trying to check all the boxes, because <span class="kw">the initial request doesn't go to a spine surgeon who understands this language and this nomenclature.</span></div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">The initial request goes to some dumbass internal medicine doctor who doesn't know what the fuck he's looking at. And I got to get that guy to look at the boxes and let them know they are adequately checked. <span class="kw">I want the name and medical license number of that motherfucker who's looking at it, because I'm going to threaten him with a board complaint if he doesn't do what I ask him to do.</span></div>
+  <div class="ann risk">
+    <div class="al">Verbatim · tactic revised in the requirements document</div>
+    <p>Recorded as spoken. The underlying instinct is correct — reviewer identity is material and he is entitled to it. The execution was revised: capture name, credentials, and specialty from every determination, verify against Texas Medical Board licensure and the same-specialty requirement under HB 3459, and file failures as a <strong>regulatory compliance complaint against the utilization review agent</strong> rather than a personal threat against a physician.</p>
+    <p>Rationale: a threat to an individual can be characterised as coercion of a medical decision-maker and must be carried out to have force. A documented pattern of same-specialty violations across many cases puts the vendor's TDI registration in play, costs nothing to accumulate, and scales.</p>
+  </div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-tj">Travis</div>
+  <div class="utt">Right.</div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">That's another part of it. And that seems to work. When you collect the full name and medical license number of the first person who looks at it, now you've got something that you can threaten that person into submission.</div>
+  <div class="ann">
+    <div class="al">Worth testing</div>
+    <p>"That seems to work" is an empirical claim from experience. It should be measured rather than assumed — the system can track outcomes on cases where reviewer identity was requested versus not.</p>
+  </div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">Those are the type of things that we have to do. And we have to threaten the insurance company into submission by looking at <span class="kw">who regulates that particular insurance policy. Is it the Texas Department of Insurance? Is it another entity? Who regulates these utilization review companies?</span> Because that all needs to go in that first document — [so that] people at the utilization review company, or at the actual insurance company, look at it and say: we don't have anything we can do to fight this. We've got to approve this, otherwise there will be consequences. <span class="kw">That is the engine behind how this works.</span></div>
+  <div class="ann good">
+    <div class="al">Position partly reversed in response</div>
+    <p>Earlier advice was to keep regulatory language out of the initial submission. Having heard the mechanism, that was revised: a <em>factual procedural notice</em> in the first document — naming the regulatory regime and requesting the reviewing physician's name, credentials, and specialty — is proper, non-confrontational, and obtains the data he wants without a threat.</p>
+  </div>
+</div>
+
+<!-- ═══════ 09 ═══════ -->
+<div class="sec"><span class="sn">SEGMENT 09</span><span class="st">Workers' compensation and ODG</span></div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">Workers' compensation insurance companies like <span class="kw">Sedgwick, Liberty Mutual</span> — they go by the <span class="kw">ODG criteria</span>, which is the Official Disability Guidelines. Pull the ODG criteria for lumbar fusion and ACDF — anterior cervical discectomy and fusion — along with the BUCA plans. And that's going to be the bulk of my practice, and that's where we need to make sure that that matrix is set up.</div>
+  <div class="ann ref">
+    <div class="al">Research directive #2</div>
+    <p>ODG is adopted by the Texas Division of Workers' Compensation as the treatment guideline standard under 28 TAC §137.100. This is a distinct criteria corpus from the commercial payers and a distinct submission channel.</p>
+  </div>
+</div>
+
+<!-- ═══════ 10 ═══════ -->
+<div class="sec"><span class="sn">SEGMENT 10</span><span class="st">The appeal budget</span></div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">[The case is] perfect. The documentation is spotless. They're not smoking. They don't have poorly controlled diabetes. [There's no] medical thing that could exclude them from being authorized. The PT notes are there. There's just nothing for them to deny it by. Once you get that first denial, now you're appealing. <span class="kw">You only get so many appeals before they kick it back and say you can't make another request for six months.</span></div>
+  <div class="ann key">
+    <div class="al">Hard constraint on sequencing</div>
+    <p>Appeals are a finite resource, not unlimited retries. This is the strongest argument for investing in first-submission quality over appeal optimisation, and it requires the system to track appeals remaining per case as a visible budget before anyone files.</p>
+  </div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">That is the game. And you got that recorded.</div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-tj">Travis</div>
+  <div class="utt">Yep, I do.</div>
+</div>
+
+<!-- ═══════ 11 ═══════ -->
+<div class="sec"><span class="sn">SEGMENT 11</span><span class="st">Distribution and the buyer</span></div>
+
+<div class="turn">
+  <div class="spk spk-tj">Travis</div>
+  <div class="utt">All right, I'm down with that. I think what we have to do is just build it and then start seeing it work.</div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">Yes. Yes. <span class="kw">Once we demonstrate that it works, I have the connections to take it to my colleagues, and they won't have a choice but to say: yes, I've got to use that.</span></div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">It's got to come from other payment mechanisms. <span class="kw">I've got a hospital who's interested in it.</span> The CEO of Trophy Club — he's already told me that's one service he wants to provide for our spine surgeons, to bring more spine surgeons to that hospital.</div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt"><span class="kw">If hospitals offer this authorization process, they're a magnet for people to bring spine cases — and that's the number one revenue driver for our hospital: spine and bariatrics.</span></div>
+  <div class="ann good">
+    <div class="al">The business model, unprompted</div>
+    <p>Hospital-paid, as a surgeon recruitment instrument. This resolves the funding problem: the practice is capital-constrained and patient-paid carries self-referral and participating-provider complications. A hospital buying authorization infrastructure to attract spine volume in its highest-margin service line is a coherent purchase with no compliance entanglement with the referring surgeon.</p>
+  </div>
+</div>
+
+<!-- ═══════ 12 ═══════ -->
+<div class="sec"><span class="sn">SEGMENT 12</span><span class="st">Close and next meeting</span></div>
+
+<div class="turn">
+  <div class="spk spk-tj">Travis</div>
+  <div class="utt">Gotcha. Okay, so I got all that. My little ticker is running and I have it all. I've got another agent that's amazing at pulling it together, so I'm going to do that. I'll send you a link this afternoon to where I've done it — it'll be branded for you and all that, with what we just talked about. And then we can ideate from there. The cool thing about what I've built is you can run four or five different angles on this, have them running and re-researching at the same time. And then I have another agent that basically judges which one's best — which one's closest to money. Judge it based on anything you want.</div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">And I will take you through the biology, the anatomy of the spine, the pathology, the symptoms that people have, how the surgery works, and how the authorization works. I think the more you understand about that, the more it'll make sense with the process.</div>
+  <div class="ann good">
+    <div class="al">The most valuable commitment in the call</div>
+    <p>A domain walkthrough from the practitioner is worth more than any amount of published criteria research. Everything in the criteria corpus is public; the reasoning that connects imaging findings to surgical indication to authorization language is not.</p>
+  </div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-tj">Travis</div>
+  <div class="utt">All right. What time tomorrow do you think you'd be good for that?</div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">Apparently I'm free all day now, so whatever. Let's just meet — I'll get a workout in the morning, and then let's meet after that. So sometime around 9 o'clock.</div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-tj">Travis</div>
+  <div class="utt">Okay. Now, I have a thing at 10:00 tomorrow, so it would be 10:00 to 12:00. So I can leave from my 12:00 and come straight out there.</div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">The approval process is either through the insurance company directly, or they farm it out to a third party. Right? The authorization process — eviCore. I mean, I would get on ChatGPT today and find [it].</div>
+  <div class="ann">
+    <div class="al">Delegation, named again</div>
+    <p>Third mention of the delegated-vendor structure. Consistent with the architecture decision to resolve the administering entity before anything else — criteria, channel, peer-to-peer line, and appeal path all key off it.</p>
+  </div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-kj">Dr. James</div>
+  <div class="utt">Okay. Perfect. Well, we'll get together in the afternoon then.</div>
+</div>
+
+<div class="turn">
+  <div class="spk spk-tj">Travis</div>
+  <div class="utt">All right, man. Later.</div>
+</div>
+
+<!-- ═══════ APPENDICES ═══════ -->
+<h2>Appendix A · Glossary</h2>
+
+<div class="tw">
+<table>
+  <thead><tr><th>Term</th><th>Meaning in context</th></tr></thead>
+  <tbody>
+    <tr><td class="m">Foraminal stenosis</td><td>Narrowing of the opening where a nerve root exits the spine. Graded mild / moderate / severe by the radiologist. Moderate or severe is the threshold that makes fusion authorizable.</td></tr>
+    <tr><td class="m">Iatrogenic instability</td><td>Instability created by the surgery itself. Resecting more than half of both facet joints to reach the foramen destabilises the segment, which is what indicates fusion.</td></tr>
+    <tr><td class="m">Lateral recess</td><td>The region between the central canal and the foramen. Decompression must extend here and into the foramen — not stay central — to address foraminal stenosis.</td></tr>
+    <tr><td class="m">EHL</td><td>Extensor hallucis longus. Great-toe extensor, supplied by L5. Weakness here is the motor finding that correlates to L5 root involvement.</td></tr>
+    <tr><td class="m">4/5 strength</td><td>Movement against resistance but weaker than normal. The documented grade that establishes neurologic deficit without being complete paralysis.</td></tr>
+    <tr><td class="m">ACDF</td><td>Anterior cervical discectomy and fusion.</td></tr>
+    <tr><td class="m">Lumbar 360 fusion</td><td>Fusion achieved from both anterior and posterior approaches.</td></tr>
+    <tr><td class="m">BUCA</td><td>Industry shorthand: Blue Cross, UnitedHealthcare, Cigna, Aetna.</td></tr>
+    <tr><td class="m">eviCore</td><td>Evernorth utilization management vendor. Administers Cigna spine and interventional pain, and some Aetna lines.</td></tr>
+    <tr><td class="m">ODG</td><td>Official Disability Guidelines. Adopted by Texas DWC as the workers' compensation treatment standard.</td></tr>
+    <tr><td class="m">No Surprises Act</td><td>Federal law creating an independent dispute resolution process for out-of-network payment disputes.</td></tr>
+    <tr><td class="m">Federal IDR</td><td>Independent Dispute Resolution — the arbitration mechanism under the No Surprises Act.</td></tr>
+    <tr><td class="m">Peer-to-peer</td><td>Call between the treating surgeon and the payer's reviewing physician, usually preceding or following an adverse determination.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2>Appendix B · Corrections applied</h2>
+
+<div class="tw">
+<table>
+  <thead><tr><th>As transcribed</th><th>Corrected to</th><th>Confidence</th></tr></thead>
+  <tbody>
+    <tr><td class="m">"on the often end"</td><td class="m">on the auth end</td><td><span class="chip ch-b">High</span></td></tr>
+    <tr><td class="m">"Evercore" / "ebacor"</td><td class="m">eviCore</td><td><span class="chip ch-b">High</span></td></tr>
+    <tr><td class="m">"they brought the criteria that way"</td><td class="m">wrote the criteria that way</td><td><span class="chip ch-b">High</span></td></tr>
+    <tr><td class="m">"no surprise act"</td><td class="m">No Surprises Act</td><td><span class="chip ch-b">High</span></td></tr>
+    <tr><td class="m">"official or disability guidelines"</td><td class="m">Official Disability Guidelines</td><td><span class="chip ch-b">High</span></td></tr>
+    <tr><td class="m">"I'm working fat"</td><td class="m">I'm working that</td><td><span class="chip ch-b">High</span></td></tr>
+    <tr><td class="m">"fra on the foraminal"</td><td class="m">foraminal</td><td><span class="chip ch-b">High</span></td></tr>
+    <tr><td class="m">"Mindvich" (spelled M-I-N-E-V-I-C-H)</td><td class="m">Minevich</td><td><span class="chip ch-b">High</span> — spelled aloud</td></tr>
+    <tr><td class="m">"Callaghi"</td><td class="m">Callagy</td><td><span class="chip ch-a">Unconfirmed</span></td></tr>
+    <tr><td class="m">"Kasey" / "casey"</td><td class="m">KJ</td><td><span class="chip ch-c">Assumed initials</span></td></tr>
+    <tr><td class="m">"academic recording with my little AI system"</td><td class="m">[being] recorded with my little AI system</td><td><span class="chip ch-c">Reconstructed</span></td></tr>
+    <tr><td class="m">"I'll nail this, Beckerman"</td><td class="m">I'll nail this. <em>[trailing word unresolved]</em></td><td><span class="chip ch-a">Unclear</span></td></tr>
+    <tr><td class="m">"through arbitrary insurance payers"</td><td class="m">through arbitration [with] insurance payers</td><td><span class="chip ch-c">Reconstructed</span></td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2>Appendix C · Content removed</h2>
+
+<p>The following material appeared interleaved throughout the source file and belongs to an unrelated audio source. It is catalogued here so the removal is auditable, and so that anyone comparing this document to the raw transcript can account for every line.</p>
+
+<ul class="d">
+  <li>Dietrich Bonhoeffer's theory of stupidity — intelligence as critical thinking, conformity under power</li>
+  <li><em>How Democracies Die</em> — abuse of power and delegitimising opposition</li>
+  <li>Sebastian Purcell on Aztec philosophy — the decision circle, "the wise do not think for themselves"</li>
+  <li>Nietzsche, <em>Beyond Good and Evil</em> — truth as tool rather than value</li>
+  <li>Harry Frankfurt, <em>On Bullshit</em> (1986) — the liar versus the bullshitter</li>
+  <li>George Orwell, <em>Politics and the English Language</em> (1946) — euphemism and the flattening of thought</li>
+  <li>Lawrence Peter, the Peter Principle (1969)</li>
+  <li>UK parliamentary whip system as an example of enforced conformity</li>
+</ul>
+
+<h2>Appendix D · Action items</h2>
+
+<div class="tw">
+<table>
+  <thead><tr><th>Item</th><th>Owner</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Domain walkthrough — anatomy, pathology, surgery, authorization</td><td>KJ · TJ</td><td class="m">Seg 12</td></tr>
+    <tr><td>Confirm level-by-level nerve root correlation matrix</td><td>KJ</td><td class="m">Seg 07</td></tr>
+    <tr><td>Pull authorization criteria: BCBSTX, UHC, Aetna, Cigna</td><td>TJ</td><td class="m">Seg 05</td></tr>
+    <tr><td>Pull ODG criteria for lumbar fusion and ACDF</td><td>TJ</td><td class="m">Seg 09</td></tr>
+    <tr><td>Identify regulators for each plan type and for UR vendors</td><td>TJ</td><td class="m">Seg 03, 08</td></tr>
+    <tr><td>Confirm "Callagy" spelling and firm identity</td><td>TJ</td><td class="m">Seg 04</td></tr>
+    <tr><td>Resolve the laminectomy representation question before build</td><td>KJ · TJ</td><td class="m">Seg 06</td></tr>
+    <tr><td>Keep Trophy Club CEO warm; do not pitch before proof</td><td>KJ</td><td class="m">Seg 11</td></tr>
+    <tr><td>Produce redacted version of this transcript for external use</td><td>TJ</td><td class="m">Seg 08</td></tr>
+  </tbody>
+</table>
+</div>
+
+<footer>
+  <span>Advanced Spine &amp; Orthopedics</span>
+  <span>Annotated transcript · working record · not for external circulation</span>
+</footer>
+
+</div>
+</body>
+</html>

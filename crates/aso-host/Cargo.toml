@@ -1,0 +1,17 @@
+[package]
+name = "aso-host"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+# Host-neutral by construction. If a shell-specific crate ever appears in this
+# list, the shared core has stopped being shared — that is the failure this
+# boundary exists to make visible.
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true
+uuid.workspace = true
+thiserror.workspace = true
+async-trait.workspace = true
+chrono.workspace = true

@@ -1,0 +1,145 @@
+# ═══════════════════════════════════════════════════════════════════════════
+# THE design token source. Edit only this file.
+#
+#   bash scripts/gen-design-tokens.sh .
+#     ├── web/src/theme.css                    Tailwind 4 @theme + light override
+#     └── mobile/lib/core/theme/tokens.dart    Dart token class
+#
+# Both outputs carry a GENERATED … DO NOT EDIT banner. Never hand-edit one.
+#
+# Why generated rather than "kept in sync": two hand-mirrored theme files had
+# already drifted in a previous project — two different values for the same
+# background role, with nothing in the build to notice. Two palettes that agree
+# on intent and disagree on values are worse than one ugly palette, because
+# every screenshot comparison becomes unreliable.
+#
+# Naming is by ROLE, never by hue. `accent` survives a rebrand; `ember` becomes
+# a lie the first time the brand changes.
+#
+# Values measured from asodocs.com and carried unchanged from the approved
+# prototype in docs/design/prototype/assets/aso.css.
+# ═══════════════════════════════════════════════════════════════════════════
+
+[meta]
+name = "Advanced Spine & Orthopedics"
+slug = "aso"
+version = "1.0.0"
+source = "docs/design/prototype/assets/aso.css"
+
+# ── Color · light ─────────────────────────────────────────────────────────
+# Semantic roles only. The four-step surface ramp is load-bearing: this design
+# system is strict Flat 2.0, so adjacent regions are distinguished ONLY by
+# background value. There are no borders and no layout shadows to fall back on.
+[color.light]
+canvas       = "#FFFFFF"   # page background
+surface      = "#F7F6F4"   # ramp step 1 — panels
+raised       = "#F1EFEC"   # ramp step 2 — nested panels
+chrome       = "#E7E4E0"   # ramp step 3 — rules, wells, track fills
+zebra        = "#FAF9F7"   # alternating table rows
+
+text         = "#231F20"   # primary
+muted        = "#55565A"   # secondary
+subtle       = "#6E6F71"   # tertiary / metadata
+
+accent       = "#A85417"   # TEXT-SAFE accent — 5.45:1 on canvas
+accentVivid  = "#DF7C35"   # brand ember; fills and display headings only
+accentHover  = "#C4661F"   # filled-control hover
+accentTint   = "#FBEFE6"   # warm surface
+
+cool         = "#1F4E79"
+coolSurface  = "#EDF3F7"
+focus        = "#A85417"
+
+# Clinical status — the product's most important semantic. Three states, never
+# two: `void` is NOT a weak `gap`. A gap is a chart that says no; a void is a
+# chart that is silent. They call for opposite actions.
+statusMet         = "#1E6F4E"
+statusMetSurface  = "#E7F3EC"
+statusGap         = "#A85417"
+statusGapSurface  = "#FBEFE6"
+statusVoid        = "#5B5F66"
+statusVoidSurface = "#EFEFF1"
+
+destructive = "#A8331B"
+
+# ── Color · dark ──────────────────────────────────────────────────────────
+# Same token NAMES, different values, so no component ever branches on theme.
+[color.dark]
+canvas       = "#14181C"
+surface      = "#1C2126"
+raised       = "#252B31"
+chrome       = "#2E353C"
+zebra        = "#191E23"
+
+text         = "#EDF0F2"
+muted        = "#B4BFC7"
+subtle       = "#93A0A9"
+
+accent       = "#F0955A"
+accentVivid  = "#F0955A"
+accentHover  = "#F7AC7B"
+accentTint   = "#2E2119"
+
+cool         = "#8FB9D0"
+coolSurface  = "#182430"
+focus        = "#F0955A"
+
+statusMet         = "#6FD1A0"
+statusMetSurface  = "#152620"
+statusGap         = "#F0955A"
+statusGapSurface  = "#2E2119"
+statusVoid        = "#A9B3BB"
+statusVoidSurface = "#232830"
+
+destructive = "#E0705A"
+
+# ── Spacing · 4pt base ────────────────────────────────────────────────────
+[space]
+s1 = "4px"
+s2 = "8px"
+s3 = "12px"
+s4 = "16px"
+s5 = "24px"
+s6 = "32px"
+s7 = "48px"
+s8 = "72px"
+
+# ── Typography ────────────────────────────────────────────────────────────
+# Two families plus mono. Playfair is display-only — never body text.
+# Mono carries dates, codes, and citations so they align and read as data.
+[type]
+display = "'Playfair Display', Georgia, 'Times New Roman', serif"
+body    = "'Mulish', 'Nunito Sans', 'Segoe UI', system-ui, -apple-system, sans-serif"
+mono    = "'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace"
+
+sizeDisplay = "clamp(2.1rem, 3.4vw, 2.9rem)"
+sizeH2      = "clamp(1.5rem, 2.2vw, 1.85rem)"
+sizeH3      = "1.05rem"
+sizeBody    = "1rem"
+sizeUi      = "0.86rem"
+sizeMeta    = "0.78rem"
+sizeEyebrow = "0.62rem"
+
+# ── Radius and motion ─────────────────────────────────────────────────────
+# Asymmetric durations: enter ~200ms, exit ~140ms. Exit reads as decisive
+# because the user has already chosen to dismiss.
+[shape]
+radius   = "5px"
+radiusLg = "8px"
+
+[motion]
+ease      = "cubic-bezier(0.23, 1, 0.32, 1)"
+durEnter  = "200ms"
+durExit   = "140ms"
+
+# ── Layout ────────────────────────────────────────────────────────────────
+# Navigation breakpoint is 600px (Material 3 compact→medium), NOT Tailwind's
+# 640px default. Set --breakpoint-sm to match or the rail switches late.
+[layout]
+rail            = "232px"
+gutter          = "28px"
+breakpointSm    = "600px"
+navRail         = "64px"
+contextPanel    = "236px"
+topbar          = "56px"
+tabbar          = "64px"

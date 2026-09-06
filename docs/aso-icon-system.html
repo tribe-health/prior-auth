@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{ dark: (localStorage.getItem('aso-theme')||'light')==='dark' }" :class="dark ? 'dark' : ''">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Icon System — Advanced Spine &amp; Orthopedics</title>
+<script>
+  (function(){ if((localStorage.getItem('aso-theme')||'light')==='dark'){ document.documentElement.classList.add('dark'); } })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Mulish:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+<style>
+:root{
+  --ember:#DF7C35; --ember-deep:#A85417; --ember-tint:#FBEFE6;
+  --slate-tint:#EDF3F7; --navy:#1F4E79;
+  --graphite:#6E6F71; --ink:#231F20; --bone:#F1EFEC;
+  --bg:#FFFFFF; --s1:#F7F6F4; --s2:#F1EFEC; --s3:#E7E4E0; --s-zebra:#FAF9F7;
+  --fg:#231F20; --fg-2:#55565A; --fg-3:#6E6F71;
+  --accent:#A85417; --accent-vivid:#DF7C35; --cool:#1F4E79;
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Mulish','Nunito Sans',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  --r:5px;
+}
+html.dark{
+  --ember:#F0955A; --ember-deep:#F0955A; --ember-tint:#2E2119;
+  --slate-tint:#182430; --navy:#8FB9D0;
+  --graphite:#98A2AA; --ink:#EDF0F2; --bone:#1C2126;
+  --bg:#14181C; --s1:#1C2126; --s2:#252B31; --s3:#2E353C; --s-zebra:#191E23;
+  --fg:#EDF0F2; --fg-2:#B4BFC7; --fg-3:#93A0A9;
+  --accent:#F0955A; --accent-vivid:#F0955A; --cool:#8FB9D0;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1200px;margin:0 auto;padding:3rem 2.4rem 6rem}
+
+.head{display:flex;justify-content:space-between;align-items:flex-start;gap:1.4rem;flex-wrap:wrap;margin-bottom:2.6rem}
+.eyebrow{font-family:var(--mono);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--fg-3);margin-bottom:.7rem}
+h1{font-family:var(--serif);font-size:2.9rem;line-height:1.1;font-weight:600;letter-spacing:-.015em;margin-bottom:.7rem}
+h2{font-family:var(--serif);font-size:1.7rem;font-weight:600;margin:3.2rem 0 .9rem;padding-top:1.5rem;background:linear-gradient(var(--s3),var(--s3)) top left / 60px 2px no-repeat}
+h3{font-size:1rem;font-weight:700;margin:1.8rem 0 .5rem}
+p{color:var(--fg-2);margin-bottom:1rem;max-width:74ch}
+.lead{font-size:1.08rem;color:var(--fg-2);max-width:66ch}
+strong{color:var(--fg);font-weight:600}
+code{font-family:var(--mono);font-size:.82em;background:var(--s2);color:var(--accent);padding:.12em .4em;border-radius:3px}
+.toggle{font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;background:var(--s2);color:var(--fg-2);padding:.55rem .9rem;border:none;border-radius:3px;cursor:pointer}
+.toggle:hover{background:var(--s3);color:var(--accent)}
+
+.grid{display:grid;gap:1rem;margin:1.3rem 0}
+.g2{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.cell{background:var(--s1);border-radius:var(--r);padding:1.4rem;display:flex;flex-direction:column;gap:1rem;align-items:center;text-align:center}
+.cell .cap{font-family:var(--mono);font-size:.6rem;letter-spacing:.13em;text-transform:uppercase;color:var(--fg-3)}
+.cell .sub{font-size:.78rem;color:var(--fg-2);line-height:1.5;max-width:26ch}
+
+.tile{width:132px;height:132px;border-radius:29px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.tile svg{width:100%;height:100%;display:block}
+.t-bone{background:#F1EFEC}
+.t-ink{background:#14181C}
+.t-paper{background:#FFFFFF}
+.t-ember{background:#DF7C35}
+
+.sizes{display:flex;align-items:flex-end;gap:1.6rem;flex-wrap:wrap;background:var(--s1);border-radius:var(--r);padding:1.8rem;margin:1.2rem 0}
+.sizes figure{display:flex;flex-direction:column;align-items:center;gap:.6rem}
+.sizes .box{border-radius:4px;overflow:hidden;background:var(--s2);display:flex;align-items:center;justify-content:center}
+.sizes figcaption{font-family:var(--mono);font-size:.58rem;letter-spacing:.1em;color:var(--fg-3)}
+
+/* ── CONTEXT MOCKS ─────────────────────────── */
+.mock{background:var(--s1);border-radius:var(--r);padding:1.5rem;margin:1rem 0}
+.mock .mt{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-3);margin-bottom:1rem}
+
+.browser{background:#E7E4E0;border-radius:8px 8px 0 0;padding:.55rem .7rem;display:flex;gap:.5rem;align-items:center}
+html.dark .browser{background:#2E353C}
+.dots{display:flex;gap:.32rem}
+.dots i{width:9px;height:9px;border-radius:50%;display:block;background:#B9B4AE}
+html.dark .dots i{background:#4A535B}
+.tab{background:var(--bg);border-radius:6px 6px 0 0;padding:.42rem .8rem;display:flex;align-items:center;gap:.5rem;font-size:.76rem;color:var(--fg-2);max-width:230px}
+.tab svg{width:16px;height:16px;flex-shrink:0}
+.urlbar{flex:1;background:var(--bg);border-radius:12px;padding:.32rem .8rem;font-family:var(--mono);font-size:.66rem;color:var(--fg-3)}
+
+.homescreen{background:linear-gradient(160deg,#2C3A46,#151C24);border-radius:12px;padding:1.6rem 1.2rem;display:flex;gap:1.4rem;flex-wrap:wrap;justify-content:center}
+.app{display:flex;flex-direction:column;align-items:center;gap:.45rem;width:74px}
+.app .ic{width:60px;height:60px;border-radius:14px;overflow:hidden}
+.app .ic svg{width:100%;height:100%;display:block}
+.app .nm{font-size:.62rem;color:#DDE3E8;text-align:center;line-height:1.3}
+.ghost{background:rgba(255,255,255,.11)}
+
+.dock{background:rgba(120,132,145,.22);border-radius:16px;padding:.7rem .9rem;display:flex;gap:.8rem;align-items:flex-end;justify-content:center}
+.dock .di{width:54px;height:54px;border-radius:12px;overflow:hidden}
+.dock .di svg{width:100%;height:100%;display:block}
+
+.sidebarmock{background:var(--bg);border-radius:6px;padding:.9rem;display:flex;gap:.8rem;align-items:center}
+.sidebarmock svg{width:26px;height:26px}
+.sidebarmock .txt{font-size:.84rem;font-weight:700;color:var(--fg)}
+.sidebarmock .sm{font-family:var(--mono);font-size:.6rem;color:var(--fg-3);letter-spacing:.08em}
+
+/* ── CODE ──────────────────────────────────── */
+pre{background:var(--s2);border-radius:var(--r);padding:1.1rem 1.2rem;overflow-x:auto;margin:1rem 0}
+pre code{background:none;padding:0;color:var(--fg-2);font-size:.76rem;line-height:1.75}
+.k{color:var(--cool)} .s{color:var(--accent)} .c{color:var(--fg-3);font-style:italic}
+
+.tw{overflow-x:auto;margin:1.3rem 0;border-radius:var(--r)}
+table{width:100%;border-collapse:collapse;font-size:.86rem;min-width:560px}
+thead th{background:var(--s3);text-align:left;padding:.7rem .9rem;font-family:var(--mono);font-size:.62rem;letter-spacing:.13em;text-transform:uppercase;color:var(--fg-2);font-weight:500}
+tbody td{padding:.62rem .9rem;color:var(--fg-2);vertical-align:top}
+tbody tr:nth-child(odd){background:var(--s-zebra)}
+tbody tr:nth-child(even){background:var(--s1)}
+td.m{font-family:var(--mono);font-size:.76rem;color:var(--fg)}
+
+.callout{background:var(--ember-tint);border-radius:var(--r);padding:1.2rem 1.4rem;margin:1.4rem 0}
+.callout .lbl{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:.45rem}
+.callout p{margin:0}
+.callout.cool{background:var(--slate-tint)}
+.callout.cool .lbl{color:var(--cool)}
+
+footer{margin-top:4.5rem;padding-top:1.6rem;background:linear-gradient(var(--s3),var(--s3)) top left / 100% 1px no-repeat;font-family:var(--mono);font-size:.66rem;color:var(--fg-3);letter-spacing:.05em;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+
+@media (max-width:860px){
+  .wrap{padding:1.8rem 1.4rem 4rem}
+  h1{font-size:2.1rem}
+  .tile{width:110px;height:110px;border-radius:24px}
+}
+@media (max-width:540px){
+  body{font-size:15px}
+  h1{font-size:1.75rem} h2{font-size:1.35rem}
+  .wrap{padding:1.4rem 1rem 3rem}
+  .cell,.mock{padding:1.1rem}
+  thead th,tbody td{padding:.5rem .6rem;font-size:.8rem}
+  .sizes{gap:1rem;padding:1.2rem}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ══ SVG SYMBOL LIBRARY ══ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- adaptive: follows the page theme via CSS vars -->
+    <g id="m-adaptive">
+      <g transform="rotate(-13 256 256) translate(0 18)">
+        <path d="M80 250C172 186 300 154 432 162C306 126 176 148 80 208C64 218 64 240 80 250Z" fill="var(--graphite)"/>
+        <path d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z" fill="var(--ember)"/>
+      </g>
+    </g>
+    <!-- fixed light -->
+    <g id="m-light">
+      <g transform="rotate(-13 256 256) translate(0 18)">
+        <path d="M80 250C172 186 300 154 432 162C306 126 176 148 80 208C64 218 64 240 80 250Z" fill="#231F20"/>
+        <path d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z" fill="#DF7C35"/>
+      </g>
+    </g>
+    <!-- fixed dark -->
+    <g id="m-dark">
+      <g transform="rotate(-13 256 256) translate(0 18)">
+        <path d="M80 250C172 186 300 154 432 162C306 126 176 148 80 208C64 218 64 240 80 250Z" fill="#C7CDD2"/>
+        <path d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z" fill="#F0955A"/>
+      </g>
+    </g>
+    <!-- knockout on ember -->
+    <g id="m-knock">
+      <g transform="rotate(-13 256 256) translate(0 18)">
+        <path d="M80 250C172 186 300 154 432 162C306 126 176 148 80 208C64 218 64 240 80 250Z" fill="#FFFFFF" opacity=".62"/>
+        <path d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z" fill="#FFFFFF"/>
+      </g>
+    </g>
+    <!-- monochrome -->
+    <g id="m-mono">
+      <g transform="rotate(-13 256 256) translate(0 18)" fill="currentColor">
+        <path d="M80 250C172 186 300 154 432 162C306 126 176 148 80 208C64 218 64 240 80 250Z"/>
+        <path d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z"/>
+      </g>
+    </g>
+    <!-- maskable: 70% scale into the safe circle -->
+    <g id="m-mask">
+      <g transform="translate(256 256) scale(0.70) translate(-256 -256) rotate(-13 256 256) translate(0 18)">
+        <path d="M80 250C172 186 300 154 432 162C306 126 176 148 80 208C64 218 64 240 80 250Z" fill="#C7CDD2"/>
+        <path d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z" fill="#F0955A"/>
+      </g>
+    </g>
+  </defs>
+</svg>
+
+<div class="head">
+  <div>
+    <div class="eyebrow">Icon System · v1.0 · August 2026</div>
+    <h1>Two counter-sweeps</h1>
+    <p class="lead">One mark, six deliveries. The device is lifted directly from the wordmark: a warm sweep crossing a cool one. Doubled and opposed, it reads as a motion segment — the anatomy the practice actually treats — without becoming an illustration of one.</p>
+  </div>
+  <button class="toggle" @click="dark = !dark; localStorage.setItem('aso-theme', dark ? 'dark':'light')" x-text="dark ? 'Light' : 'Dark'">Dark</button>
+</div>
+
+<!-- ══ 01 PRIMARY ══ -->
+<h2>Primary containers</h2>
+<p>App stores and operating systems mask corners themselves. Ship a full-bleed square with no baked rounding and no transparency; the shapes below are previews of how each platform will render it.</p>
+
+<div class="grid g3">
+  <div class="cell">
+    <div class="tile t-ink"><svg viewBox="0 0 512 512"><use href="#m-dark"/></svg></div>
+    <div>
+      <div class="cap">Primary · dark ground</div>
+      <div class="sub">The default. Ink ground holds the ember at any size.</div>
+    </div>
+  </div>
+  <div class="cell">
+    <div class="tile t-bone"><svg viewBox="0 0 512 512"><use href="#m-light"/></svg></div>
+    <div>
+      <div class="cap">Alternate · bone ground</div>
+      <div class="sub">Light-theme docks, print, letterhead marks.</div>
+    </div>
+  </div>
+  <div class="cell">
+    <div class="tile t-ember"><svg viewBox="0 0 512 512"><use href="#m-knock"/></svg></div>
+    <div>
+      <div class="cap">Knockout · ember ground</div>
+      <div class="sub">Restricted. Notification badges and single-color stamps only.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 02 SCALE ══ -->
+<h2>Scale test</h2>
+<p>The gap between the two sweeps is what carries recognition at small sizes. It is also the first thing to close up — which is why the favicon variant is drawn at 116% rather than reusing the app icon.</p>
+
+<div class="sizes">
+  <figure><div class="box" style="width:16px;height:16px"><svg viewBox="0 0 512 512" style="width:16px;height:16px"><use href="#m-adaptive"/></svg></div><figcaption>16</figcaption></figure>
+  <figure><div class="box" style="width:24px;height:24px"><svg viewBox="0 0 512 512" style="width:24px;height:24px"><use href="#m-adaptive"/></svg></div><figcaption>24</figcaption></figure>
+  <figure><div class="box" style="width:32px;height:32px"><svg viewBox="0 0 512 512" style="width:32px;height:32px"><use href="#m-adaptive"/></svg></div><figcaption>32</figcaption></figure>
+  <figure><div class="box" style="width:48px;height:48px"><svg viewBox="0 0 512 512" style="width:48px;height:48px"><use href="#m-adaptive"/></svg></div><figcaption>48</figcaption></figure>
+  <figure><div class="box" style="width:64px;height:64px"><svg viewBox="0 0 512 512" style="width:64px;height:64px"><use href="#m-adaptive"/></svg></div><figcaption>64</figcaption></figure>
+  <figure><div class="box" style="width:96px;height:96px"><svg viewBox="0 0 512 512" style="width:96px;height:96px"><use href="#m-adaptive"/></svg></div><figcaption>96</figcaption></figure>
+  <figure><div class="box" style="width:128px;height:128px"><svg viewBox="0 0 512 512" style="width:128px;height:128px"><use href="#m-adaptive"/></svg></div><figcaption>128</figcaption></figure>
+</div>
+
+<!-- ══ 03 CONTEXT ══ -->
+<h2>In context</h2>
+
+<div class="mock">
+  <div class="mt">Browser tab &amp; address bar</div>
+  <div class="browser">
+    <div class="dots"><i></i><i></i><i></i></div>
+    <div class="tab">
+      <svg viewBox="0 0 512 512"><use href="#m-adaptive"/></svg>
+      <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Prior Auth Workbench</span>
+    </div>
+    <div class="urlbar">workbench.asodocs.com</div>
+  </div>
+</div>
+
+<div class="mock">
+  <div class="mt">Mobile home screen</div>
+  <div class="homescreen">
+    <div class="app">
+      <div class="ic"><svg viewBox="0 0 512 512" style="background:#14181C"><use href="#m-dark"/></svg></div>
+      <div class="nm">Workbench</div>
+    </div>
+    <div class="app"><div class="ic ghost"></div><div class="nm">&nbsp;</div></div>
+    <div class="app"><div class="ic ghost"></div><div class="nm">&nbsp;</div></div>
+    <div class="app"><div class="ic ghost"></div><div class="nm">&nbsp;</div></div>
+  </div>
+</div>
+
+<div class="mock">
+  <div class="mt">Desktop dock</div>
+  <div class="dock">
+    <div class="di ghost"></div>
+    <div class="di" style="background:#14181C"><svg viewBox="0 0 512 512"><use href="#m-dark"/></svg></div>
+    <div class="di ghost"></div>
+  </div>
+</div>
+
+<div class="mock">
+  <div class="mt">In-app header · monochrome</div>
+  <div class="sidebarmock">
+    <svg viewBox="0 0 512 512" style="color:var(--fg)"><use href="#m-mono"/></svg>
+    <div>
+      <div class="txt">Prior Authorization Workbench</div>
+      <div class="sm">ADVANCED SPINE &amp; ORTHOPEDICS</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 04 MASKABLE ══ -->
+<h2>Maskable &amp; safe area</h2>
+<p>Android adaptive icons crop to an arbitrary shape and may cut anything outside the centre 66% of the canvas. The maskable variant scales the mark to 70% so no part of either sweep can be clipped, whatever mask the launcher applies.</p>
+
+<div class="grid g3">
+  <div class="cell">
+    <div class="tile t-ink" style="border-radius:50%"><svg viewBox="0 0 512 512"><use href="#m-mask"/></svg></div>
+    <div class="cap">Circle mask</div>
+  </div>
+  <div class="cell">
+    <div class="tile t-ink" style="border-radius:14px"><svg viewBox="0 0 512 512"><use href="#m-mask"/></svg></div>
+    <div class="cap">Rounded square mask</div>
+  </div>
+  <div class="cell">
+    <div class="tile t-ink" style="border-radius:29px"><svg viewBox="0 0 512 512"><use href="#m-mask"/></svg></div>
+    <div class="cap">Squircle mask</div>
+  </div>
+</div>
+
+<!-- ══ 05 FILES ══ -->
+<h2>File map</h2>
+<div class="tw">
+<table>
+  <thead><tr><th>File</th><th>Ground</th><th>Use</th></tr></thead>
+  <tbody>
+    <tr><td class="m">aso-icon.svg</td><td>Transparent</td><td>Universal. Contains a <code>prefers-color-scheme</code> block and flips itself.</td></tr>
+    <tr><td class="m">aso-icon-dark.svg</td><td class="m">#14181C</td><td>Primary app icon. iOS, macOS, Windows, PWA.</td></tr>
+    <tr><td class="m">aso-icon-light.svg</td><td class="m">#F1EFEC</td><td>Light-theme alternate, print, document letterhead mark.</td></tr>
+    <tr><td class="m">aso-icon-mono.svg</td><td>Transparent</td><td>Inherits <code>currentColor</code>. Toolbars, in-app headers, stencils.</td></tr>
+    <tr><td class="m">aso-icon-maskable.svg</td><td class="m">#14181C</td><td>Android adaptive. 70% scale, safe-circle compliant.</td></tr>
+    <tr><td class="m">aso-favicon.svg</td><td>Transparent</td><td>116% scale for 16px legibility. Scheme-aware.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Raster derivatives to export</h3>
+<div class="tw">
+<table>
+  <thead><tr><th>Target</th><th>Sizes (px)</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>iOS app icon</td><td class="m">1024</td><td class="m">aso-icon-dark.svg</td></tr>
+    <tr><td>Android launcher</td><td class="m">432 (adaptive), 512</td><td class="m">aso-icon-maskable.svg</td></tr>
+    <tr><td>PWA manifest</td><td class="m">192, 512 (any + maskable)</td><td class="m">dark + maskable</td></tr>
+    <tr><td>macOS .icns</td><td class="m">16 – 1024</td><td class="m">aso-icon-dark.svg</td></tr>
+    <tr><td>Windows .ico</td><td class="m">16, 32, 48, 256</td><td class="m">aso-favicon.svg</td></tr>
+    <tr><td>Apple touch icon</td><td class="m">180</td><td class="m">aso-icon-dark.svg</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ══ 06 CODE ══ -->
+<h2>Implementation</h2>
+
+<h3>HTML head</h3>
+<pre><code><span class="c">&lt;!-- SVG first; browsers that support it skip the rest --&gt;</span>
+<span class="k">&lt;link</span> rel=<span class="s">"icon"</span> href=<span class="s">"/aso-favicon.svg"</span> type=<span class="s">"image/svg+xml"</span><span class="k">&gt;</span>
+<span class="k">&lt;link</span> rel=<span class="s">"icon"</span> href=<span class="s">"/favicon.ico"</span> sizes=<span class="s">"32x32"</span><span class="k">&gt;</span>
+<span class="k">&lt;link</span> rel=<span class="s">"apple-touch-icon"</span> href=<span class="s">"/apple-touch-icon.png"</span><span class="k">&gt;</span>
+<span class="k">&lt;link</span> rel=<span class="s">"manifest"</span> href=<span class="s">"/site.webmanifest"</span><span class="k">&gt;</span>
+<span class="k">&lt;meta</span> name=<span class="s">"theme-color"</span> media=<span class="s">"(prefers-color-scheme: light)"</span> content=<span class="s">"#F1EFEC"</span><span class="k">&gt;</span>
+<span class="k">&lt;meta</span> name=<span class="s">"theme-color"</span> media=<span class="s">"(prefers-color-scheme: dark)"</span> content=<span class="s">"#14181C"</span><span class="k">&gt;</span></code></pre>
+
+<h3>Web manifest</h3>
+<pre><code>{
+  <span class="s">"name"</span>: <span class="s">"Prior Authorization Workbench"</span>,
+  <span class="s">"short_name"</span>: <span class="s">"Workbench"</span>,
+  <span class="s">"background_color"</span>: <span class="s">"#14181C"</span>,
+  <span class="s">"theme_color"</span>: <span class="s">"#14181C"</span>,
+  <span class="s">"icons"</span>: [
+    { <span class="s">"src"</span>: <span class="s">"/icon-192.png"</span>, <span class="s">"sizes"</span>: <span class="s">"192x192"</span>, <span class="s">"type"</span>: <span class="s">"image/png"</span>, <span class="s">"purpose"</span>: <span class="s">"any"</span> },
+    { <span class="s">"src"</span>: <span class="s">"/icon-512.png"</span>, <span class="s">"sizes"</span>: <span class="s">"512x512"</span>, <span class="s">"type"</span>: <span class="s">"image/png"</span>, <span class="s">"purpose"</span>: <span class="s">"any"</span> },
+    { <span class="s">"src"</span>: <span class="s">"/icon-maskable-512.png"</span>, <span class="s">"sizes"</span>: <span class="s">"512x512"</span>, <span class="s">"type"</span>: <span class="s">"image/png"</span>, <span class="s">"purpose"</span>: <span class="s">"maskable"</span> }
+  ]
+}</code></pre>
+
+<h3>Tauri</h3>
+<pre><code><span class="c"># Generates every desktop + mobile size from one 1024px source</span>
+npm run tauri icon ./assets/aso-icon-dark.png</code></pre>
+
+<div class="callout cool">
+  <div class="lbl">Export note</div>
+  <p>Rasterize from <code>aso-icon-dark.svg</code> at 1024px, not from a smaller PNG. The sweeps have long shallow curves; upscaling a 512px raster produces visible stair-stepping along the tapers that is not obvious until it hits a Retina dock.</p>
+</div>
+
+<!-- ══ 07 RULES ══ -->
+<h2>Rules</h2>
+<div class="tw">
+<table>
+  <thead><tr><th>Do</th><th>Don't</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>Keep the ember sweep on the bottom. The order is fixed.</td>
+      <td>Flip, mirror, or rotate the mark beyond its built-in −13°.</td>
+    </tr>
+    <tr>
+      <td>Ship full-bleed squares and let the OS mask.</td>
+      <td>Bake rounded corners into the source SVG.</td>
+    </tr>
+    <tr>
+      <td>Use the maskable variant for anything Android.</td>
+      <td>Reuse the app icon as a favicon — it closes up at 16px.</td>
+    </tr>
+    <tr>
+      <td>Use <code>aso-icon-mono.svg</code> where a single color is required.</td>
+      <td>Recolor either sweep outside the token set.</td>
+    </tr>
+    <tr>
+      <td>Pair the icon with the full lockup on first-run and letterhead.</td>
+      <td>Use the icon as a replacement for the wordmark in documents.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="callout">
+  <div class="lbl">Open item</div>
+  <p>This mark is original work derived from the sweep in the practice's existing logo. Before it goes on an app store listing, have whoever holds the practice's trademark position confirm they are comfortable with a derived icon — and check that no orthopedic group in the DFW market is already using a similar double-arc device.</p>
+</div>
+
+<footer>
+  <span>Advanced Spine &amp; Orthopedics · Icon System v1.0</span>
+  <span>Derived from the wordmark sweep · Prepared for the Prior Authorization Workbench</span>
+</footer>
+
+</div>
+</body>
+</html>

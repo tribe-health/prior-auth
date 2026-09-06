@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Advanced Spine &amp; Orthopedics (dark)">
+  <title>Advanced Spine &amp; Orthopedics (dark)</title>
+  <rect width="512" height="512" fill="#14181C"/>
+  <g transform="rotate(-13 256 256) translate(0 18)">
+    <path d="M80 250C172 186 300 154 432 162C306 126 176 148 80 208C64 218 64 240 80 250Z" fill="#C7CDD2"/>
+    <path d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z" fill="#F0955A"/>
+  </g>
+</svg>

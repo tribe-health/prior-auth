@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Case dashboard · Surgery Authorization Workbench · Advanced Spine &amp; Orthopedics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Mulish:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/aso.css">
+<script src="assets/shell.js"></script>
+<script>ASO.primeTheme();</script>
+<style>
+  /* Screen-local: the dashboard's case cards and gate strip. */
+  .gate-strip {
+    background: var(--s2);
+    border-radius: var(--r-lg);
+    padding: var(--sp-4) var(--sp-5);
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) auto;
+    gap: var(--sp-4);
+    align-items: center;
+  }
+  .gate-cell { display: flex; flex-direction: column; gap: 5px; }
+  .gate-cell .gate-q { font-size: 0.8rem; color: var(--fg-2); line-height: 1.4; }
+  @media (max-width: 1080px) { .gate-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 640px) { .gate-strip { grid-template-columns: minmax(0, 1fr); } }
+
+  .case-card {
+    background: var(--s1);
+    border-radius: var(--r-lg);
+    padding: var(--sp-4) var(--sp-5);
+    display: grid;
+    grid-template-columns: 1fr 148px 132px 120px;
+    gap: var(--sp-4);
+    align-items: center;
+    transition: background var(--dur-enter) var(--ease);
+  }
+  .case-card:hover { background: var(--s2); }
+  .case-card.is-active { background: var(--s2); }
+  .case-card .who { font-weight: 700; font-size: 0.98rem; }
+  .case-card .proc { font-size: 0.82rem; color: var(--fg-2); margin-top: 2px; }
+  .case-card .clock { display: flex; flex-direction: column; gap: 3px; }
+  @media (max-width: 900px) {
+    .case-card { grid-template-columns: minmax(0, 1fr); gap: var(--sp-3); }
+  }
+
+  .kpi { background: var(--s1); border-radius: var(--r-lg); padding: var(--sp-4) var(--sp-5); }
+  .kpi .kpi-n {
+    font-family: var(--font-display);
+    font-size: 2.4rem; font-weight: 600; line-height: 1;
+    letter-spacing: -0.03em; color: var(--fg);
+  }
+  .kpi .kpi-l { font-size: 0.8rem; color: var(--fg-2); margin-top: 8px; max-width: 26ch; line-height: 1.45; }
+  .kpi .kpi-src { margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<div class="topbar" data-topbar></div>
+
+<div class="app app-nocontext">
+  <aside class="gnav" data-gnav></aside>
+
+  <main class="workbench workbench-wide" id="content">
+
+    <div data-whoami></div>
+
+    <!-- ═══ page head ═══ -->
+    <section class="phead" data-od-id="dashboard-head">
+      <div>
+        <p class="eyebrow" id="queue-eyebrow">Case dashboard</p>
+        <h1 class="display" id="queue-head">Six cases open.</h1>
+        <p class="lead">Pulled from four connected systems and ordered by regulatory deadline, then by surgery date — not by when the case arrived.</p>
+      </div>
+      <div class="row">
+        <a class="btn btn-secondary" href="screens/intake-checklist.html">Open intake checklist</a>
+        <button class="btn btn-secondary">New case</button>
+      </div>
+    </section>
+
+    <!-- ═══ the gate, stated up front ═══
+         This strip is the product's thesis: four questions must be
+         answered before prose exists. It appears first because a
+         coordinator's instinct is to start drafting. -->
+    <section style="margin-bottom:var(--sp-6)" data-od-id="gate-summary">
+      <div class="panel-head">
+        <div>
+          <p class="eyebrow">Drafting gate · Kaminski, R.</p>
+          <h2 class="h3" style="margin-top:6px">Four confirmations stand between this chart and a first draft.</h2>
+        </div>
+        <span class="chip chip-gap">Gate open · 2 of 4</span>
+      </div>
+      <div class="gate-strip">
+        <div class="gate-cell">
+          <span class="chip chip-met">Confirmed</span>
+          <span class="gate-q">Controlling payer policy identified and version-matched.</span>
+        </div>
+        <div class="gate-cell">
+          <span class="chip chip-met">Confirmed</span>
+          <span class="gate-q">Governing policy section located within that document.</span>
+        </div>
+        <div class="gate-cell">
+          <span class="chip chip-gap">Awaiting surgeon</span>
+          <span class="gate-q">Authorization pathway selected from the ranked candidates.</span>
+        </div>
+        <div class="gate-cell">
+          <span class="chip chip-gap">Awaiting surgeon</span>
+          <span class="gate-q">Prospective operative plan reconciled with that pathway.</span>
+        </div>
+        <a class="btn btn-primary" href="screens/pathway-comparison.html">Review pathways</a>
+      </div>
+      <p class="meta" style="margin-top:10px">Drafting is unavailable until all four are affirmed. This is a hard gate, not a warning.</p>
+    </section>
+
+    <div class="g-main">
+      <div class="stack" style="gap:var(--sp-6)">
+
+        <!-- ═══ queue ═══ -->
+        <section data-od-id="case-queue">
+          <div class="panel-head">
+            <h2 class="h2">Queue</h2>
+            <div class="row">
+              <span class="chip chip-plain">All payers</span>
+              <span class="chip chip-plain">Ordered by deadline</span>
+            </div>
+          </div>
+
+          <div class="stack" style="gap:var(--sp-2)">
+
+            <a class="case-card is-active" href="screens/pathway-comparison.html" data-od-id="case-kaminski">
+              <div>
+                <div class="row" style="gap:8px">
+                  <span class="who">Kaminski, Renata</span>
+                  <span class="chip chip-gap">Surgeon review</span>
+                </div>
+                <p class="proc">L4–L5 decompression with instrumented fusion · single level</p>
+                <p class="meta" style="margin-top:5px">via AdvancedMD</p>
+              </div>
+              <div class="clock">
+                <span class="eyebrow">Payer</span>
+                <span class="meta" style="color:var(--fg)">BCBS TX · PPO</span>
+              </div>
+              <div class="clock">
+                <span class="eyebrow">Decision due</span>
+                <span class="num" style="font-size:.82rem;color:var(--gap)">2026-09-11</span>
+              </div>
+              <div class="clock">
+                <span class="eyebrow">Criteria</span>
+                <div class="meter" title="6 met · 2 short of threshold · 1 undocumented" style="margin-top:4px">
+                  <span class="m-ok" style="width:67%"></span>
+                  <span class="m-gap" style="width:22%"></span>
+                  <span class="m-void" style="width:11%"></span>
+                </div>
+                <span class="meta">6 met · 2 gap · 1 void</span>
+              </div>
+            </a>
+
+            <a class="case-card" href="screens/policy-panel.html" data-od-id="case-oyelaran">
+              <div>
+                <div class="row" style="gap:8px">
+                  <span class="who">Oyelaran, Dele</span>
+                  <span class="chip chip-void">Criteria unverified</span>
+                </div>
+                <p class="proc">C5–C6 anterior cervical discectomy and fusion · 1 level</p>
+                <p class="meta" style="margin-top:5px">via Epic · Methodist</p>
+              </div>
+              <div class="clock">
+                <span class="eyebrow">Payer</span>
+                <span class="meta" style="color:var(--fg)">UHC · self-funded</span>
+              </div>
+              <div class="clock">
+                <span class="eyebrow">Decision due</span>
+                <span class="num" style="font-size:.82rem;color:var(--gap)">2026-09-14</span>
+              </div>
+              <div class="clock">
+                <span class="eyebrow">Criteria</span>
+                <div class="meter" title="Policy not yet confirmed" style="margin-top:4px">
+                  <span class="m-void" style="width:100%"></span>
+                </div>
+                <span class="meta">Policy not confirmed</span>
+              </div>
+            </a>
+
+            <a class="case-card" href="screens/intake-checklist.html" data-od-id="case-brennan">
+              <div>
+                <div class="row" style="gap:8px">
+                  <span class="who">Brennan, Marcus</span>
+                  <span class="chip chip-gap">Records incomplete</span>
+                </div>
+                <p class="proc">L5–S1 microdiscectomy · revision</p>
+                <p class="meta" style="margin-top:5px">via AdvancedMD</p>
+              </div>
+              <div class="clock">
+                <span class="eyebrow">Payer</span>
+                <span class="meta" style="color:var(--fg)">Aetna · HMO</span>
+              </div>
+              <div class="clock">
+                <span class="eyebrow">Decision due</span>
+                <span class="num" style="font-size:.82rem;color:var(--fg-2)">2026-09-19</span>
+              </div>
+              <div class="clock">
+                <span class="eyebrow">Criteria</span>
+                <div class="meter" title="4 met · 1 short of threshold · 3 undocumented" style="margin-top:4px">
+                  <span class="m-ok" style="width:50%"></span>
+                  <span class="m-gap" style="width:12%"></span>
+                  <span class="m-void" style="width:38%"></span>
+                </div>
+                <span class="meta">4 met · 1 gap · 3 void</span>
+              </div>
+            </a>
+
+            <a class="case-card" href="screens/letter-composer.html" data-od-id="case-idris">
+              <div>
+                <div class="row" style="gap:8px">
+                  <span class="who">Idris, Halima</span>
+                  <span class="chip chip-met">Letter approved</span>
+                </div>
+                <p class="proc">T10–L2 posterior instrumentation · deformity</p>
+                <p class="meta" style="margin-top:5px">via AdvancedMD</p>
+              </div>
+              <div class="clock">
+                <span class="eyebrow">Payer</span>
+                <span class="meta" style="color:var(--fg)">Cigna · via eviCore</span>
+              </div>
+              <div class="clock">
+                <span class="eyebrow">Submitted</span>
+                <span class="num" style="font-size:.82rem;color:var(--ok)">2026-09-01</span>
+              </div>
+              <div class="clock">
+                <span class="eyebrow">Criteria</span>
+                <div class="meter" title="All nine criteria met" style="margin-top:4px">
+                  <span class="m-ok" style="width:100%"></span>
+                </div>
+                <span class="meta">9 met · 0 gap · 0 void</span>
+              </div>
+            </a>
+
+            <a class="case-card" href="screens/peer-to-peer.html" data-od-id="case-vance">
+              <div>
+                <div class="row" style="gap:8px">
+                  <span class="who">Vance, Teodora</span>
+                  <span class="chip chip-cool">Denial · appeal eligible</span>
+                </div>
+                <p class="proc">L3–L4 lateral interbody fusion · single level</p>
+                <p class="meta" style="margin-top:5px">via athenahealth · Northpoint</p>
+              </div>
+              <div class="clock">
+                <span class="eyebrow">Payer</span>
+                <span class="meta" style="color:var(--fg)">BCBS TX · self-funded</span>
+              </div>
+              <div class="clock">
+                <span class="eyebrow">Appeal deadline</span>
+                <span class="num" style="font-size:.82rem;color:var(--gap)">2026-09-08</span>
+              </div>
+              <div class="clock">
+                <span class="eyebrow">Criteria</span>
+                <div class="meter" title="Denied on one criterion; evidence exists but was not submitted" style="margin-top:4px">
+                  <span class="m-ok" style="width:78%"></span>
+                  <span class="m-gap" style="width:22%"></span>
+                </div>
+                <span class="meta">Denied on 1 element</span>
+              </div>
+            </a>
+
+            <a class="case-card" href="screens/submission-packet.html" data-od-id="case-ruiz">
+              <div>
+                <div class="row" style="gap:8px">
+                  <span class="who">Ruiz-Okonkwo, Paloma</span>
+                  <span class="chip chip-met">Approved</span>
+                </div>
+                <p class="proc">L4–L5 laminectomy · decompression only</p>
+                <p class="meta" style="margin-top:5px">via Epic · Methodist</p>
+              </div>
+              <div class="clock">
+                <span class="eyebrow">Payer</span>
+                <span class="meta" style="color:var(--fg)">Humana · MA</span>
+              </div>
+              <div class="clock">
+                <span class="eyebrow">Auth valid to</span>
+                <span class="num" style="font-size:.82rem;color:var(--ok)">2026-12-04</span>
+              </div>
+              <div class="clock">
+                <span class="eyebrow">Criteria</span>
+                <div class="meter" title="All seven criteria met" style="margin-top:4px">
+                  <span class="m-ok" style="width:100%"></span>
+                </div>
+                <span class="meta">7 met · 0 gap · 0 void</span>
+              </div>
+            </a>
+
+          </div>
+        </section>
+
+        <!-- ═══ the semantic that matters ═══ -->
+        <section data-od-id="semantics">
+          <div class="panel-head">
+            <h2 class="h2">Gap, not met, not documented</h2>
+          </div>
+          <p class="body" style="margin-bottom:var(--sp-4)">
+            The queue distinguishes three states that most tools collapse into one. Conflating them is
+            how a letter ends up asserting something the chart does not support.
+          </p>
+          <div class="g3">
+            <div class="callout" style="background:var(--ok-surface)">
+              <div class="lbl" style="color:var(--ok)">Met</div>
+              <p>Criterion satisfied and traceable to a dated source document in the packet.</p>
+            </div>
+            <div class="callout">
+              <div class="lbl">Not met</div>
+              <p>Evidence exists and falls short of the policy threshold. This is a clinical fact and the letter may address it directly.</p>
+            </div>
+            <div class="callout void">
+              <div class="lbl">Not documented</div>
+              <p>No source found. Never rendered as “not met” and never asserted in a letter — it is a records gap, and it gets a task, not a sentence.</p>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- ═══ side column ═══ -->
+      <aside class="stack" style="gap:var(--sp-4)" data-od-id="dashboard-side">
+
+        <div class="kpi">
+          <div class="kpi-n num">2 of 6</div>
+          <p class="kpi-l">cases in this queue are blocked on a surgeon decision rather than on records.</p>
+          <p class="kpi-src meta">Counted from the six cases listed · demonstration data</p>
+        </div>
+
+        <div class="panel">
+          <p class="eyebrow" style="margin-bottom:var(--sp-3)">Next actions</p>
+          <div class="stack-sm">
+            <div class="row-between" style="gap:8px">
+              <span style="font-size:.84rem;color:var(--fg-2)">Kaminski · pathway selection</span>
+              <span class="chip chip-gap">Dr. James</span>
+            </div>
+            <div class="row-between" style="gap:8px">
+              <span style="font-size:.84rem;color:var(--fg-2)">Oyelaran · obtain plan criteria</span>
+              <span class="chip chip-void">Coordinator</span>
+            </div>
+            <div class="row-between" style="gap:8px">
+              <span style="font-size:.84rem;color:var(--fg-2)">Brennan · PT discharge summary</span>
+              <span class="chip chip-void">Nathan, PA-C</span>
+            </div>
+            <div class="row-between" style="gap:8px">
+              <span style="font-size:.84rem;color:var(--fg-2)">Vance · appeal draft</span>
+              <span class="chip chip-cool">Coordinator</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout cool">
+          <div class="lbl">Prospective, not retrospective</div>
+          <p>
+            Every letter describes the operative plan as it stands at authorization.
+            Intraoperative judgment may change what is performed, and the letter does
+            not bind the surgeon to the plan it describes.
+          </p>
+        </div>
+
+        <div class="panel panel-raised">
+          <p class="eyebrow" style="margin-bottom:var(--sp-3)">Jurisdiction resolved per case</p>
+          <div class="tw">
+            <table class="ds" style="min-width:0">
+              <tbody>
+                <tr><td>Kaminski</td><td class="m">TDI · state-regulated</td></tr>
+                <tr><td>Oyelaran</td><td class="m">DOL/EBSA · ERISA</td></tr>
+                <tr><td>Vance</td><td class="m">DOL/EBSA · ERISA</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="meta" style="margin-top:10px">Funding status is verified from plan documents, never inferred from the insurer's brand.</p>
+        </div>
+
+      </aside>
+    </div>
+
+  </main>
+</div>
+
+<div class="drawer-scrim" data-scrim></div>
+<aside class="drawer" data-drawer></aside>
+<nav class="tabbar" data-tabbar aria-label="Primary"></nav>
+
+<script>
+  ASO.shell({
+    section: 'cases',
+    title: 'Cases',
+    depth: 'root'
+  });
+
+  /* ── the queue, framed for whoever signed in ──────────────────────
+     The same six cases mean different things to different people. The
+     surgeon sees what is waiting on him; the coordinator sees what she
+     is blocked on; the administrator is not a clinical queue owner at
+     all and gets sent to the work that is actually theirs. */
+  (function () {
+    var p = ASO.profile();
+    if (!p) return;
+
+    var HEAD = {
+      surgeon: {
+        eyebrow: 'Your queue · Dr. James',
+        head: 'Six cases open.<br>Two are waiting on you.',
+        cta: 'Review pathways'
+      },
+      staff: {
+        eyebrow: 'Practice queue · coordinator view',
+        head: 'Six cases open.<br>Two are blocked on a surgeon.',
+        cta: 'Open intake checklist'
+      },
+      admin: {
+        eyebrow: 'Practice queue · read-only',
+        head: 'Six cases open<br>across four connected systems.',
+        cta: 'Manage connections'
+      }
+    };
+
+    var h = HEAD[p.role];
+    if (!h) return;
+    document.getElementById('queue-eyebrow').textContent = h.eyebrow;
+    document.getElementById('queue-head').innerHTML = h.head;
+
+    /* An administrator has no clinical standing in this queue — say so
+       rather than implying the cases are theirs to action. */
+    if (p.role === 'admin') {
+      var note = document.createElement('div');
+      note.className = 'denied';
+      note.style.marginBottom = 'var(--sp-5)';
+      note.innerHTML =
+        '<div class="lbl">Visible for support, not assigned to you</div>' +
+        '<p>You can open any case to help diagnose a stuck record or a bad ' +
+        'connection. Affirming pathways and signing letters belong to the ' +
+        'treating surgeon; preparing and submitting belongs to coordinators.</p>';
+      var head = document.querySelector('[data-od-id="dashboard-head"]');
+      head.parentNode.insertBefore(note, head.nextSibling);
+    }
+  })();
+</script>
+</body>
+</html>

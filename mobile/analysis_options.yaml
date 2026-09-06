@@ -1,0 +1,19 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  language:
+    strict-casts: true
+    strict-inference: true
+    strict-raw-types: true
+  errors:
+    # A missing switch arm on EvidenceState is the exact bug this project
+    # cannot afford — it would silently drop `void`.
+    non_exhaustive_switch_expression: error
+  exclude:
+    - build/**
+
+linter:
+  rules:
+    - always_declare_return_types
+    - prefer_const_constructors
+    - require_trailing_commas

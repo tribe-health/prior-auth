@@ -1,0 +1,11 @@
+{
+  "stage": "assess",
+  "completedAt": "2026-09-04T18:24:38Z",
+  "outputs": [
+    "assessment.md"
+  ],
+  "nextStage": "analyze",
+  "summaryForNext": "Two BLOCKING gaps for plan. GAP-1: phase now carries two sync engines (prometheus-entity-sync and ElectricSQL 1.8.0) and only one can own the privacy-class refusal boundary required by build-order phase 1 — must be decided before G4. GAP-2: G3 names @prometheus-ags/entity-graph-react, which is not published; the React binding installs as @prometheus-ags/prometheus-entity-management@3.2.0 (already a dependency) — G3 wording must be corrected or planning will produce a fabricated import. Kratos is v26.2.0 (flint-gate reference compose pins a stale v1.2); self-hosted client is @ory/kratos-client-fetch@26.2.0, NOT @ory/client-fetch (Ory Network). Identity boundary is already settled in schema.sql via kratos_identity_id. WARNING: @ory/elements-react depends on the Ory Network client — self-hosted fit unproven, spike required (GAP-8).",
+  "skipped": false,
+  "skipReason": null
+}

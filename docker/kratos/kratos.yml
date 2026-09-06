@@ -1,0 +1,58 @@
+# Minimum config that satisfies the v26.2.0 schema.
+#
+# Kratos requires `identity.schemas` and
+# `selfservice.default_browser_return_url`; neither can be supplied by the
+# environment variables W8 used, so the container restart-looped on
+# "validation failed". Observed 2026-09-05.
+#
+# NOTE: identity traits carry NO PHI. Kratos holds who a clinician IS, never
+# anything about a patient. `kratos_identity_id` is a SOFT reference from
+# `aso.*` — no foreign key crosses into Kratos tables.
+version: v26.2.0
+
+serve:
+  public:
+    base_url: http://localhost:4433/
+    cors:
+      enabled: true
+      allowed_origins:
+        - http://localhost:5173
+      allowed_methods: [GET, POST, PUT, PATCH, DELETE]
+      allowed_headers: [Authorization, Content-Type, Cookie]
+      allow_credentials: true
+  admin:
+    base_url: http://kratos:4434/
+
+identity:
+  default_schema_id: clinician
+  schemas:
+    - id: clinician
+      url: file:///etc/config/kratos/identity.schema.json
+
+selfservice:
+  default_browser_return_url: http://localhost:5173/
+  allowed_return_urls:
+    - http://localhost:5173/
+  methods:
+    password:
+      enabled: true
+  flows:
+    login:
+      ui_url: http://localhost:5173/login
+    settings:
+      ui_url: http://localhost:5173/settings/profile
+    error:
+      ui_url: http://localhost:5173/error
+
+secrets:
+  # DEVELOPMENT ONLY — these are literal, not interpolated: Kratos does not
+  # expand ${VAR} in its config file. A real deployment MUST override both via
+  # SECRETS_COOKIE / SECRETS_CIPHER environment variables, which take
+  # precedence over this file.
+  cookie:
+    - dev-insecure-cookie-secret-change-me
+  cipher:
+    - dev-insecure-cipher-secret-32chr
+
+log:
+  level: info

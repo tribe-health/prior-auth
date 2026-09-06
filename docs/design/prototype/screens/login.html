@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in · Surgery Authorization Workbench · Advanced Spine &amp; Orthopedics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Mulish:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/aso.css">
+<script src="../assets/shell.js"></script>
+<script>ASO.primeTheme();</script>
+<style>
+  /* Screen-local: the sign-in surface. */
+  .auth-mark { width: 40px; height: 40px; margin-bottom: var(--sp-5); }
+  .auth-quote {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    max-width: 22ch;
+  }
+  .auth-foot { font-family: var(--font-mono); font-size: 0.68rem; color: var(--fg-3); line-height: 1.7; }
+  .sso {
+    display: flex; align-items: center; justify-content: center; gap: 9px;
+    width: 100%;
+    min-height: 44px;
+    background: var(--s2);
+    border-radius: var(--r);
+    font-size: var(--fs-ui); font-weight: 600;
+    color: var(--fg);
+    transition: background var(--dur-exit) var(--ease);
+  }
+  .sso:hover { background: var(--s3); }
+  .sso svg { width: 17px; height: 17px; }
+  .divider {
+    display: flex; align-items: center; gap: var(--sp-3);
+    font-family: var(--font-mono); font-size: 0.64rem;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--fg-3);
+    margin: var(--sp-5) 0;
+  }
+  .divider::before, .divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--s3);
+  }
+</style>
+</head>
+<body>
+
+<div class="auth-frame">
+
+  <!-- ═══ brand side · hidden on mobile ═══ -->
+  <aside class="auth-side" data-od-id="auth-brand">
+    <div style="display:flex;flex-direction:column;min-height:0;flex:1">
+      <div class="auth-mark" id="auth-mark"></div>
+      <p class="eyebrow" style="margin-bottom:var(--sp-4)">Surgery Authorization Workbench</p>
+      <p class="auth-quote" style="font-size:1.35rem" id="preview-who">
+        Do the difficult reasoning before the prose is written.
+      </p>
+      <p class="body" style="font-size:.85rem;margin-top:var(--sp-3);max-width:46ch" id="preview-sub">
+        Choose a person on the right to see everything they can open.
+      </p>
+
+      <!-- Live preview of the selected persona's site map. -->
+      <div id="preview-map" style="margin-top:var(--sp-5);flex:1;min-height:0;overflow-y:auto"></div>
+    </div>
+    <div class="auth-foot">
+      Advanced Spine &amp; Orthopedics · Southlake, TX<br>
+      PHI is processed under a signed business associate agreement.<br>
+      Access is logged. Sessions expire after 30 minutes idle.
+    </div>
+  </aside>
+
+  <!-- ═══ form side ═══ -->
+  <main class="auth-main" id="content">
+    <div class="auth-card" data-od-id="auth-form">
+
+      <p class="eyebrow" style="margin-bottom:8px">Sign in</p>
+      <h1 class="h2" style="margin-bottom:var(--sp-5)">Advanced Spine<br>&amp; Orthopedics</h1>
+
+      <button class="sso" data-sso>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="10.5" width="16" height="10" rx="2"></rect>
+          <path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"></path>
+        </svg>
+        Continue with practice SSO
+      </button>
+      <p class="meta" style="margin-top:9px;text-align:center">
+        Microsoft Entra ID · enforced MFA
+      </p>
+
+      <div class="divider">or sign in directly</div>
+
+      <form id="login-form" class="stack" style="gap:var(--sp-4)">
+        <div class="field">
+          <label for="email">Work email</label>
+          <input class="input" type="email" id="email" name="email"
+                 autocomplete="username" placeholder="Optional in the prototype">
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input class="input" type="password" id="password" name="password"
+                 autocomplete="current-password" placeholder="Optional in the prototype">
+        </div>
+
+        <!-- Demo affordance. In production the role comes from the
+             directory, never from a control the user can set. -->
+        <fieldset style="margin-top:var(--sp-2)">
+          <legend class="eyebrow" style="margin-bottom:var(--sp-3)">
+            Prototype · sign in as
+          </legend>
+
+          <label class="role-opt">
+            <input type="radio" name="role" value="surgeon" checked>
+            <span>
+              <span class="ro-t">Kevin B. James, MD · Surgeon</span>
+              <span class="ro-d">Affirms the gate, annotates evidence, signs letters, takes peer-to-peer calls.</span>
+            </span>
+          </label>
+
+          <label class="role-opt">
+            <input type="radio" name="role" value="staff">
+            <span>
+              <span class="ro-t">Marisol Okonkwo · Staff</span>
+              <span class="ro-d">Prior-authorization coordinator. Prepares and submits everything; affirms nothing clinical.</span>
+            </span>
+          </label>
+
+          <label class="role-opt">
+            <input type="radio" name="role" value="admin">
+            <span>
+              <span class="ro-t">Dana Whitfield · Administrator</span>
+              <span class="ro-d">Practice configuration, EMR connections, users, audit. Cannot affirm a gate or sign a letter.</span>
+            </span>
+          </label>
+        </fieldset>
+
+        <button class="btn btn-primary" type="submit" style="justify-content:center;margin-top:var(--sp-2)">
+          Sign in
+        </button>
+      </form>
+
+      <div class="callout cool" style="margin-top:var(--sp-5)">
+        <div class="lbl">Why three roles, not two</div>
+        <p style="font-size:.83rem">
+          An administrator configures the system but must never be able to affirm a surgeon gate or
+          apply a physician's signature. Those are clinical acts. Separating “can configure” from
+          “can attest” is a safety boundary, not an org-chart detail.
+        </p>
+      </div>
+
+      <p class="meta" style="margin-top:var(--sp-4);text-align:center">
+        Prototype · no password needed. Pick a person above and press Sign in.
+      </p>
+
+    </div>
+  </main>
+</div>
+
+<script>
+  document.getElementById('auth-mark').innerHTML = ASO.MARK;
+
+  (function () {
+    var form = document.getElementById('login-form');
+
+    var emailField = document.getElementById('email');
+
+    function chosenRole() {
+      return (form.querySelector('input[name="role"]:checked') || {}).value || 'surgeon';
+    }
+
+    /* Keep the email box in step with the persona picker. Without this the
+       form shows one identity and signs you in as another. */
+    function reflectPersona() {
+      var r = ASO.ROLES[chosenRole()];
+      if (r && !emailField.dataset.touched) emailField.value = r.email;
+    }
+    emailField.addEventListener('input', function () { emailField.dataset.touched = '1'; });
+
+    /* ── live site-map preview ──────────────────────────────────────
+       The point of the picker is to answer "what does this person
+       see?". Showing the answer before you commit means you can browse
+       the whole product from any seat without guessing. */
+    function esc(t) {
+      return String(t).replace(/[&<>"]/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+      });
+    }
+
+    function renderPreview() {
+      var role = chosenRole();
+      var r = ASO.ROLES[role];
+      if (!r) return;
+
+      document.getElementById('preview-who').textContent =
+        'Everything ' + r.person.replace(/,.*$/, '') + ' can open.';
+
+      var n = 0;
+      ASO.siteMap().forEach(function (g) { n += g.screens.length; });
+      document.getElementById('preview-sub').textContent =
+        n + ' screens · ' + r.label.toLowerCase() +
+        '. Every page is reachable; the note says what changes for this role.';
+
+      var ix = 0;
+      document.getElementById('preview-map').innerHTML =
+        ASO.siteMap().map(function (g) {
+          return '<div class="smap-group">' +
+            '<p class="eyebrow">' + esc(g.group) + '</p>' +
+            g.screens.map(function (sc) {
+              ix += 1;
+              var href = sc.href.indexOf('screens/') === 0
+                ? sc.href.slice('screens/'.length)
+                : '../' + sc.href;
+              return '<a class="smap-item" href="' + href + '" data-preview-link="' + role + '">' +
+                '<span class="sm-ix">' + String(ix).padStart(2, '0') + '</span>' +
+                '<span><span class="sm-l">' + esc(sc.label) + '</span>' +
+                '<span class="sm-n">' + esc(sc.note[role] || '') + '</span></span>' +
+              '</a>';
+            }).join('') +
+          '</div>';
+        }).join('');
+    }
+
+    /* Clicking a preview link signs in as that persona first, so you
+       land on the page already in their session. */
+    document.getElementById('preview-map').addEventListener('click', function (ev) {
+      var a = ev.target.closest('[data-preview-link]');
+      if (!a) return;
+      ASO.signOut();
+      ASO.writeSession({
+        role: a.getAttribute('data-preview-link'),
+        signedInAt: new Date().toISOString(),
+        practice: 'Advanced Spine & Orthopedics · Southlake'
+      });
+      /* let the default navigation proceed */
+    });
+
+    form.addEventListener('change', function () {
+      reflectPersona();
+      renderPreview();
+    });
+    reflectPersona();
+    renderPreview();
+
+    function enter() {
+      var role = chosenRole();
+      /* Start this persona with a clean case, so nothing is inherited
+         from whoever was signed in before. */
+      ASO.signOut();
+      ASO.writeSession({
+        role: role,
+        signedInAt: new Date().toISOString(),
+        practice: 'Advanced Spine & Orthopedics · Southlake'
+      });
+      /* Land where the role actually works: an administrator's job starts
+         at configuration, not at a clinical case queue. */
+      window.location.href = role === 'admin' ? 'admin-console.html' : '../index.html';
+    }
+
+    form.addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      enter();
+    });
+
+    /* SSO takes the same demo path — the point of the button is to show
+       where federated identity belongs, not to simulate a handshake. */
+    document.querySelector('[data-sso]').addEventListener('click', function (ev) {
+      ev.preventDefault();
+      enter();
+    });
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+{
+  "name": "Prior Authorization Workbench",
+  "description": "A multi-surface prior authorization workbench for assembling clinical evidence and governed payer submissions.",
+  "activePhase": "web-ui-architecture",
+  "updatedAt": "2026-09-04T18:04:07Z",
+  "worktreeRoot": "${HOME}/.claude/worktrees",
+  "maxChildDepth": 4,
+  "ux_profile": "advanced",
+  "spec_paths": [
+    "docs/**/*.md",
+    "docs/design/prototype/**/*.html",
+    "docs/design/schema/*.sql"
+  ],
+  "openspec_available": false,
+  "constraint_file": ".kbd-orchestrator/constraints.md",
+  "build_health_command": "cargo build --workspace && pnpm --dir web build && flutter analyze mobile",
+  "test_command": "cargo test --workspace && flutter test mobile",
+  "lint_command": "bash scripts/audit.sh && cargo clippy --workspace --all-targets && pnpm --dir web lint && flutter analyze mobile",
+  "dev_command": "cargo run -p aso-web-server",
+  "preferred_planning_agent": "antigravity",
+  "preferred_execution_agents": [],
+  "model_policy": {
+    "registry": {
+      "small": {
+        "local": "Qwen3.5-9B-Q8_0",
+        "t4": "Qwen3.5-9B-Q8_0",
+        "l4": "Qwen3.5-9B-Q8_0"
+      },
+      "medium": {
+        "local": null,
+        "t4": "Qwen3.5-27B-Q4",
+        "l4": "Qwen3.5-35B-A3B-Q4"
+      },
+      "frontier": {
+        "local": "claude-sonnet-4-6",
+        "t4": "claude-sonnet-4-6",
+        "l4": "claude-sonnet-4-6"
+      }
+    },
+    "phases": {
+      "kbd-assess": "frontier",
+      "kbd-plan": "frontier",
+      "kbd-status": "small",
+      "kbd-reflect": "frontier",
+      "opsx-new": "small",
+      "opsx-apply-low": "small",
+      "opsx-apply-medium": "medium",
+      "opsx-apply-high": "frontier",
+      "opsx-verify": "medium",
+      "opsx-archive": "small",
+      "refiner-iterate": "small",
+      "refiner-evaluate": "medium",
+      "evolver-assess": "frontier",
+      "evolver-analyze": "frontier",
+      "evolver-plan": "frontier",
+      "evolver-execute-low": "small",
+      "evolver-execute-medium": "medium",
+      "evolver-execute-high": "frontier",
+      "evolver-reflect": "frontier",
+      "evolver-status": "small",
+      "creator-specify": "frontier",
+      "creator-plan": "frontier",
+      "creator-execute": "tiered",
+      "creator-reflect": "frontier",
+      "creator-persist": "small"
+    },
+    "active_environment": "local"
+  },
+  "agents_config": {
+    "antigravity": {
+      "entry": "SKILL.md slash commands",
+      "strengths": [
+        "multi-file features",
+        "browser verification",
+        "planning"
+      ]
+    },
+    "roo-code": {
+      "entry": "Roo Code mode in VSCode",
+      "strengths": [
+        "focused implementation",
+        "architect decisions"
+      ]
+    },
+    "cursor-agent": {
+      "entry": "Cursor Agent mode",
+      "strengths": [
+        "parallel subagent tasks",
+        "refactoring"
+      ]
+    },
+    "codex": {
+      "entry": "OpenAI Codex CLI / app",
+      "strengths": [
+        "parallel isolated tasks via git worktrees"
+      ]
+    },
+    "cline": {
+      "entry": "Cline VSCode extension",
+      "strengths": [
+        "terminal-first workflows",
+        "Plan/Act mode"
+      ]
+    },
+    "opencode": {
+      "entry": "OpenCode CLI",
+      "strengths": [
+        "quick targeted edits",
+        "file patches"
+      ]
+    }
+  },
+  "focus_project_path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth",
+  "workspace": {
+    "workspace_file": null,
+    "folders": [
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth",
+        "role": "focus",
+        "purpose": "Active project — all KBD operations target this directory",
+        "write_access": true
+      }
+    ]
+  }
+}

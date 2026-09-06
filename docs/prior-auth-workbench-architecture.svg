@@ -1,0 +1,252 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 1470" width="1160" height="1470" role="img" aria-label="Prior Authorization Workbench architecture on Prometheus Fabric">
+
+<defs>
+  <style>
+    .h1   { font-family:'Space Grotesk','Inter',system-ui,sans-serif; font-weight:700; }
+    .ui   { font-family:'Inter',system-ui,-apple-system,sans-serif; }
+    .mono { font-family:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace; }
+    .sec  { font-family:'JetBrains Mono',ui-monospace,monospace; font-size:10.5px; letter-spacing:.16em; fill:#8AA6BC; }
+    .ttl  { font-family:'Space Grotesk','Inter',system-ui,sans-serif; font-weight:700; font-size:15px; fill:#E9F0F6; }
+    .ttls { font-family:'Space Grotesk','Inter',system-ui,sans-serif; font-weight:700; font-size:13px; fill:#E9F0F6; }
+    .bd   { font-family:'Inter',system-ui,sans-serif; font-size:11.5px; fill:#AFC3D4; }
+    .bds  { font-family:'Inter',system-ui,sans-serif; font-size:10.5px; fill:#AFC3D4; }
+    .mt   { font-family:'JetBrains Mono',ui-monospace,monospace; font-size:9.5px; fill:#7E9AB0; letter-spacing:.03em; }
+    .emb  { fill:#FF7A4D; }
+    .cyn  { fill:#4FD6EA; }
+    .gld  { fill:#F5B44E; }
+  </style>
+
+  <marker id="aC" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#4FD6EA"/>
+  </marker>
+  <marker id="aE" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#FF7A4D"/>
+  </marker>
+  <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="#F5B44E"/>
+  </marker>
+</defs>
+
+<rect width="1160" height="1470" fill="#0B0F14"/>
+
+<!-- ══ TITLE ══ -->
+<text class="h1" x="40" y="52" font-size="27" fill="#E9F0F6">Prior Authorization Workbench</text>
+<text class="ui" x="40" y="76" font-size="13.5" fill="#AFC3D4">Letter of medical necessity generation for spine fusion — deployed on Prometheus Fabric</text>
+<rect x="40" y="90" width="86" height="3" fill="#FF6A3D"/>
+<text class="mt" x="1120" y="48" text-anchor="end">TRIBEHEALTH.AI</text>
+<text class="mt" x="1120" y="64" text-anchor="end">SINGLE-PRACTICE DEPLOYMENT</text>
+<text class="mt" x="1120" y="80" text-anchor="end">ARCHITECTURE v0.1</text>
+
+<!-- ══ 01 SOURCES ══ -->
+<text class="sec" x="40" y="140">01 · SOURCES</text>
+
+<rect x="40" y="155" width="250" height="132" rx="4" fill="#141C25"/>
+<rect x="40" y="155" width="3" height="132" fill="#4FD6EA"/>
+<text class="ttl" x="60" y="182">AdvancedMD</text>
+<text class="bds" x="60" y="204">Practice EHR · account holder</text>
+<text class="bds" x="60" y="221">FHIR R4, read-only (GET)</text>
+<text class="mt" x="60" y="245">SMART App Launch 2.2</text>
+<text class="mt" x="60" y="260">OAuth 2.0 + PKCE · loopback</text>
+<text class="mt" x="60" y="275">USCDI v3 · US Core 6.1.0 · free</text>
+
+<rect x="315" y="155" width="250" height="132" rx="4" fill="#141C25"/>
+<rect x="315" y="155" width="3" height="132" fill="#4FD6EA"/>
+<text class="ttl" x="335" y="182">Outside Records</text>
+<text class="bds" x="335" y="204">Scanned · faxed · mailed</text>
+<text class="bds" x="335" y="221">Watched folder intake</text>
+<text class="mt" x="335" y="245">PT notes with dates</text>
+<text class="mt" x="335" y="260">Injection + pain management</text>
+<text class="mt" x="335" y="275">Prior imaging read elsewhere</text>
+
+<rect x="590" y="155" width="250" height="132" rx="4" fill="#141C25"/>
+<rect x="590" y="155" width="3" height="132" fill="#4FD6EA"/>
+<text class="ttl" x="610" y="182">Payer Policy Corpus</text>
+<text class="bds" x="610" y="204">Effective-date versioned</text>
+<text class="bds" x="610" y="221">Change monitor on refresh</text>
+<text class="mt" x="610" y="245">Aetna · Cigna · BCBSTX · UHC</text>
+<text class="mt" x="610" y="260">eviCore · Carelon · TurningPoint</text>
+<text class="mt" x="610" y="275">Novitas LCD (TX MAC)</text>
+
+<!-- callout: outside records gap -->
+<rect x="880" y="155" width="240" height="132" rx="4" fill="#20161B"/>
+<rect x="880" y="155" width="3" height="132" fill="#FF6A3D"/>
+<text class="ttls" x="900" y="180" class="ttls">Open question</text>
+<text class="bds" x="900" y="202">Does DocumentReference</text>
+<text class="bds" x="900" y="218">surface scanned outside</text>
+<text class="bds" x="900" y="234">records, or only clinical</text>
+<text class="bds" x="900" y="250">notes?</text>
+<text class="mt" x="900" y="273" fill="#FF9E7A">Decides 40% vs 80% relief</text>
+
+<path d="M165 292 L165 330" stroke="#4FD6EA" stroke-width="1.4" marker-end="url(#aC)"/>
+<path d="M440 292 L440 330" stroke="#4FD6EA" stroke-width="1.4" marker-end="url(#aC)"/>
+<path d="M715 292 L715 330" stroke="#4FD6EA" stroke-width="1.4" marker-end="url(#aC)"/>
+
+<!-- ══ 02 INGESTION PORT ══ -->
+<rect x="40" y="335" width="800" height="112" rx="4" fill="#101922"/>
+<text class="sec" x="60" y="362">02 · INGESTION PORT</text>
+<text class="mt" x="820" y="362" text-anchor="end">one interface · two adapters · neither ever removed</text>
+<rect x="60" y="376" width="360" height="52" rx="3" fill="#1A2530"/>
+<text class="ttls" x="78" y="399">FHIR Adapter</text>
+<text class="mt" x="78" y="416">Patient · Condition · Procedure · Observation</text>
+<rect x="440" y="376" width="360" height="52" rx="3" fill="#1A2530"/>
+<text class="ttls" x="458" y="399">Manual Adapter</text>
+<text class="mt" x="458" y="416">PDF · CCDA · EHI export · permanent path</text>
+<text class="mono" x="820" y="416" text-anchor="end" font-size="10" fill="#4FD6EA">PatientRecordBundle</text>
+
+<path d="M440 452 L440 484" stroke="#4FD6EA" stroke-width="1.4" marker-end="url(#aC)"/>
+
+<!-- ══ 03 LOCAL RUNTIME ══ -->
+<rect x="40" y="490" width="800" height="545" rx="5" fill="#0E151D"/>
+<text class="sec" x="60" y="518">03 · LOCAL RUNTIME</text>
+<text class="mt" x="820" y="518" text-anchor="end">Tauri 2 · his machine · no hosted PHI store</text>
+
+<rect x="60" y="532" width="760" height="58" rx="3" fill="#20161B"/>
+<rect x="60" y="532" width="3" height="58" fill="#FF6A3D"/>
+<text class="ttls" x="80" y="556" fill="#FFA079">Flint Gate — Cedar PDP</text>
+<text class="mt" x="80" y="575" fill="#C9A695">deny-is-final · PHI egress allow-list · no credential overrides policy · thresholds may only tighten</text>
+
+<rect x="60" y="604" width="370" height="94" rx="3" fill="#141C25"/>
+<text class="ttls" x="80" y="628">UAR — embedded</text>
+<text class="bds" x="80" y="649">ractor actors · agent kernel</text>
+<text class="mt" x="80" y="669">capability inversion at the</text>
+<text class="mt" x="80" y="684">Cargo graph: kernels cannot write</text>
+
+<rect x="450" y="604" width="370" height="94" rx="3" fill="#141C25"/>
+<text class="ttls" x="470" y="628">SurrealDB — embedded</text>
+<text class="bds" x="470" y="649">case file · reasoning library · policy corpus</text>
+<text class="mt" x="470" y="669">his clinical arguments, authored once,</text>
+<text class="mt" x="470" y="684">refined by every edit he makes</text>
+
+<text class="sec" x="60" y="726">PROMETHEUS SKILL PACK — instruction plane</text>
+
+<rect x="60" y="738" width="182" height="64" rx="3" fill="#161F29"/>
+<text class="ttls" x="76" y="761" font-size="12">Extraction</text>
+<text class="mt" x="76" y="779">chart → fixed schema</text>
+<text class="mt" x="76" y="793">dates preserved verbatim</text>
+
+<rect x="252" y="738" width="182" height="64" rx="3" fill="#161F29"/>
+<text class="ttls" x="268" y="761" font-size="12">Criteria Map</text>
+<text class="mt" x="268" y="779">met / gap / undocumented</text>
+<text class="mt" x="268" y="793">per payer, per CPT</text>
+
+<rect x="444" y="738" width="182" height="64" rx="3" fill="#161F29"/>
+<text class="ttls" x="460" y="761" font-size="12">LMN Draft</text>
+<text class="mt" x="460" y="779">skeleton from library</text>
+<text class="mt" x="460" y="793">facts cited to source</text>
+
+<rect x="636" y="738" width="184" height="64" rx="3" fill="#161F29"/>
+<text class="ttls" x="652" y="761" font-size="12">Appeal + P2P</text>
+<text class="mt" x="652" y="779">denial workflow</text>
+<text class="mt" x="652" y="793">TX same-specialty reviewer</text>
+
+<rect x="60" y="816" width="760" height="56" rx="3" fill="#141C25"/>
+<text class="ttls" x="80" y="839">surreal-memory — hybrid BM25 + vector</text>
+<text class="mt" x="80" y="858">payer policy retrieval · prior case recall · rationale reuse across matching indications</text>
+
+<rect x="60" y="886" width="760" height="60" rx="3" fill="#141C25"/>
+<text class="ttls" x="80" y="909">liter-llm — model router</text>
+<text class="mt" x="80" y="928">provider set constrained by Cedar to BAA-covered endpoints only — not a config flag</text>
+
+<rect x="60" y="960" width="760" height="56" rx="3" fill="#151E19"/>
+<rect x="60" y="960" width="3" height="56" fill="#4FD6EA"/>
+<text class="ttls" x="80" y="983">Evidence Receipt Ledger</text>
+<text class="mt" x="80" y="1002">every assertion → document · page · date · signed execution receipt · nothing unsourced ships</text>
+
+<!-- ══ PHI BOUNDARY ══ -->
+<path d="M862 500 L862 1025" stroke="#FF6A3D" stroke-width="1.2" stroke-dasharray="5 5" opacity=".75"/>
+<text class="mt" x="856" y="770" text-anchor="middle" transform="rotate(-90 856 770)" fill="#FF9E7A">PHI BOUNDARY · CEDAR-CONTROLLED EGRESS</text>
+
+<!-- ══ INFERENCE PLANE ══ -->
+<text class="sec" x="880" y="518">04 · INFERENCE</text>
+
+<rect x="880" y="604" width="240" height="126" rx="4" fill="#141C25"/>
+<rect x="880" y="604" width="3" height="126" fill="#FF6A3D"/>
+<text class="ttls" x="900" y="628">BAA-Covered Remote</text>
+<text class="bds" x="900" y="650">Zero data retention</text>
+<text class="bds" x="900" y="667">Executed BAA required</text>
+<text class="mt" x="900" y="691">Azure OpenAI · Bedrock ·</text>
+<text class="mt" x="900" y="706">Anthropic API (ZDR)</text>
+<text class="mt" x="900" y="723" fill="#FF9E7A">consumer tiers: denied</text>
+
+<rect x="880" y="756" width="240" height="116" rx="4" fill="#141C25"/>
+<rect x="880" y="756" width="3" height="116" fill="#4FD6EA"/>
+<text class="ttls" x="900" y="780">candle-vllm — local</text>
+<text class="bds" x="900" y="802">On-device inference</text>
+<text class="bds" x="900" y="819">No egress at all</text>
+<text class="mt" x="900" y="843">TurboQuant KV compression</text>
+<text class="mt" x="900" y="858">fallback / offline path</text>
+
+<path d="M820 906 L845 906 L845 667 L874 667" fill="none" stroke="#FF7A4D" stroke-width="1.4" marker-end="url(#aE)"/>
+<path d="M820 916 L836 916 L836 814 L874 814" fill="none" stroke="#4FD6EA" stroke-width="1.4" marker-end="url(#aC)"/>
+
+<path d="M440 1040 L440 1076" stroke="#4FD6EA" stroke-width="1.4" marker-end="url(#aC)"/>
+
+<!-- ══ 05 HUMAN GATE ══ -->
+<rect x="40" y="1082" width="800" height="92" rx="5" fill="#241B10"/>
+<rect x="40" y="1082" width="4" height="92" fill="#F49E12"/>
+<text class="sec" x="64" y="1108" fill="#D8B478">05 · HARD GATE</text>
+<text class="h1" x="64" y="1136" font-size="17" fill="#F5C177">Physician Affirmation</text>
+<text class="bd" x="64" y="1157" fill="#D6BC95">Criteria matrix reviewed and affirmed — with source citations visible — before any letter is generated.</text>
+<text class="mt" x="820" y="1136" text-anchor="end" fill="#D8B478">Cedar: deny-is-final</text>
+<text class="mt" x="820" y="1152" text-anchor="end" fill="#D8B478">no bypass path exists</text>
+<text class="mt" x="820" y="1168" text-anchor="end" fill="#D8B478">enforced in policy, not UI</text>
+
+<path d="M440 1179 L440 1213" stroke="#F5B44E" stroke-width="1.4" marker-end="url(#aG)"/>
+
+<!-- ══ 06 OUTPUTS ══ -->
+<text class="sec" x="40" y="1240">06 · OUTPUTS</text>
+
+<rect x="40" y="1252" width="185" height="118" rx="4" fill="#141C25"/>
+<text class="ttls" x="58" y="1276" font-size="12.5">Letter of Medical</text>
+<text class="ttls" x="58" y="1292" font-size="12.5">Necessity</text>
+<text class="mt" x="58" y="1314">HTML → PDF (DocuMind)</text>
+<text class="mt" x="58" y="1330">payer-specific framing</text>
+<text class="mt" x="58" y="1352" fill="#FF9E7A">manual chart upload —</text>
+<text class="mt" x="58" y="1365" fill="#FF9E7A">FHIR has no write-back</text>
+
+<rect x="245" y="1252" width="185" height="118" rx="4" fill="#141C25"/>
+<text class="ttls" x="263" y="1276" font-size="12.5">Criteria Matrix</text>
+<text class="mt" x="263" y="1300">gap worklist, pre-submission</text>
+<text class="mt" x="263" y="1316">met / not met / undocumented</text>
+<text class="mt" x="263" y="1332">each row cites a page</text>
+<text class="mt" x="263" y="1355" fill="#7ED9E8">the actual time savings</text>
+
+<rect x="450" y="1252" width="185" height="118" rx="4" fill="#141C25"/>
+<text class="ttls" x="468" y="1276" font-size="12.5">P2P + Appeal Packet</text>
+<text class="mt" x="468" y="1300">peer-to-peer prep sheet</text>
+<text class="mt" x="468" y="1316">appeal letter with policy</text>
+<text class="mt" x="468" y="1332">citations</text>
+<text class="mt" x="468" y="1355">TX IRO pathway</text>
+
+<rect x="655" y="1252" width="185" height="118" rx="4" fill="#141C25"/>
+<text class="ttls" x="673" y="1276" font-size="12.5">Approval Analytics</text>
+<text class="mt" x="673" y="1300">rate by payer × CPT</text>
+<text class="mt" x="673" y="1316">days-to-decision</text>
+<text class="mt" x="673" y="1332">FHIR Bulk Data feed</text>
+<text class="mt" x="673" y="1355" fill="#F5B44E">gold card · HB 3459 / 3812</text>
+
+<!-- strategic note -->
+<rect x="880" y="1082" width="240" height="288" rx="4" fill="#101922"/>
+<text class="sec" x="900" y="1108">STRATEGIC TARGET</text>
+<text class="ui" x="900" y="1136" font-size="12.5" fill="#E9F0F6" font-weight="600">Exit the process entirely</text>
+<text class="bds" x="900" y="1160">Texas HB 3459, extended by</text>
+<text class="bds" x="900" y="1176">HB 3812 (2025) to a one-year</text>
+<text class="bds" x="900" y="1192">evaluation window, grants a</text>
+<text class="bds" x="900" y="1208">continuous preauthorization</text>
+<text class="bds" x="900" y="1224">exemption at a 90% approval</text>
+<text class="bds" x="900" y="1240">rate for a given service.</text>
+<text class="bds" x="900" y="1268">Applies to TDI-regulated</text>
+<text class="bds" x="900" y="1284">commercial HMO/PPO/EPO only</text>
+<text class="bds" x="900" y="1300">— roughly a fifth of Texans.</text>
+<text class="bds" x="900" y="1316">Not Medicaid. Not ERISA.</text>
+<text class="mt" x="900" y="1344" fill="#F5B44E">The tool raises first-pass rate.</text>
+<text class="mt" x="900" y="1359" fill="#F5B44E">The ledger proves it happened.</text>
+
+<!-- ══ FOOTER ══ -->
+<rect x="40" y="1402" width="1080" height="44" rx="4" fill="#101922"/>
+<text class="ttls" x="60" y="1421" font-size="12">Prometheus ID</text>
+<text class="mt" x="60" y="1437">did:prometheus: — actor identity bound to every receipt · claims never published to the DID document</text>
+<text class="mt" x="1100" y="1421" text-anchor="end">HIPAA · TX HB 300 · TRAIGA (HB 149) · SB 1188 disclosure</text>
+<text class="mt" x="1100" y="1437" text-anchor="end">CMS-0057-F Prior Auth API — payer-side, Jan 1 2027 · design target, not v1</text>
+
+</svg>

@@ -1,0 +1,6 @@
+allowBuilds:
+  '@tailwindcss/oxide': true
+  esbuild: true
+minimumReleaseAgeExclude:
+  - '@prometheus-ags/entity-graph-core@4.0.0'
+  - '@prometheus-ags/entity-graph-react@4.0.0'

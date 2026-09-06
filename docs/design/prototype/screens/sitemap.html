@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sitemap · Surgery Authorization Workbench · Advanced Spine &amp; Orthopedics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Mulish:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/aso.css">
+<script src="../assets/shell.js"></script>
+<script>ASO.primeTheme();</script>
+<style>
+  /* ═══ Screen-local: the map itself.
+     Three tiers, because the product has three: an entry gate, a
+     linear case pipeline, and a flat settings area. Drawing them the
+     same way would hide the one structural fact worth showing. ═══ */
+
+  /* Tier band */
+  .tier { margin-bottom: var(--sp-6); }
+  .tier-head {
+    display: flex; align-items: baseline; gap: var(--sp-3);
+    flex-wrap: wrap;
+    margin-bottom: var(--sp-4);
+  }
+  .tier-head .t-n {
+    font-family: var(--font-mono); font-size: 0.62rem;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--fg-3);
+  }
+  .tier-head .t-d { font-size: 0.85rem; color: var(--fg-2); max-width: 70ch; }
+
+  /* Node card */
+  .node {
+    background: var(--s1);
+    border-radius: var(--r-lg);
+    padding: var(--sp-4);
+    display: flex; flex-direction: column;
+    min-height: 100%;
+    transition: background var(--dur-enter) var(--ease);
+  }
+  .node:hover { background: var(--s2); }
+  .node .n-ix {
+    font-family: var(--font-mono); font-size: 0.62rem;
+    letter-spacing: 0.14em; color: var(--fg-3);
+    display: flex; justify-content: space-between; gap: 8px;
+    margin-bottom: 7px;
+  }
+  .node .n-l { font-weight: 700; font-size: 0.92rem; line-height: 1.3; }
+  .node .n-f {
+    font-family: var(--font-mono); font-size: 0.66rem;
+    color: var(--fg-3); margin-top: 4px; word-break: break-all;
+  }
+  .node .n-p { font-size: 0.82rem; color: var(--fg-2); margin-top: 9px; line-height: 1.5; }
+  .node .n-out { margin-top: auto; padding-top: var(--sp-3); }
+  .node .n-out .oh {
+    display: block;
+    font-family: var(--font-mono); font-size: 0.58rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--fg-3); margin-bottom: 5px;
+  }
+  .node .n-out > span { display: block; font-size: 0.78rem; color: var(--fg-2); line-height: 1.5; }
+  .node.is-entry { background: var(--cool-surface); }
+  .node.is-entry:hover { background: var(--slate-tint); }
+  .node.is-gate { background: var(--warm-surface); }
+
+  /* Pipeline: numbered flow with an arrow between steps */
+  .flow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-3); }
+  @media (max-width: 1080px) { .flow { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 680px)  { .flow { grid-template-columns: minmax(0, 1fr); } }
+
+  /* Role matrix */
+  .rx td.c { text-align: center; font-family: var(--font-mono); font-size: 0.72rem; }
+  .rx .yes { color: var(--ok); }
+  .rx .ro  { color: var(--fg-3); }
+  .rx .no  { color: var(--void); }
+</style>
+</head>
+<body>
+
+<div class="topbar" data-topbar></div>
+
+<div class="app app-nocontext">
+  <aside class="gnav" data-gnav></aside>
+
+  <main class="workbench workbench-wide" id="content">
+
+    <div data-whoami></div>
+
+    <section class="phead" data-od-id="sitemap-head">
+      <div>
+        <p class="eyebrow">Reference · Sitemap</p>
+        <h1 class="display">Nineteen screens.<br>One gate that matters.</h1>
+        <p class="lead">
+          The product is an entry point, a linear case pipeline, and a flat settings area.
+          Every screen is reachable by every role — what changes is what you can do once there.
+        </p>
+      </div>
+      <div class="row">
+        <button class="btn btn-secondary" onclick="window.print()">Print</button>
+      </div>
+    </section>
+
+    <!-- ═══ tier 1 · entry ═══ -->
+    <section class="tier" data-od-id="tier-entry">
+      <div class="tier-head">
+        <span class="t-n">Tier 1 · Entry</span>
+        <span class="t-d">
+          Chooses the persona. In production this is federated sign-in; in the prototype it is a
+          picker that also previews everything the selected person can open.
+        </span>
+      </div>
+      <div class="flow">
+        <a class="node is-entry" href="login.html">
+          <span class="n-ix"><span>Entry</span><span>ROOT</span></span>
+          <span class="n-l">Sign in</span>
+          <span class="n-f">screens/login.html</span>
+          <span class="n-p">
+            Persona picker with a live site-map preview. No password. Surgeon and staff land on the
+            case queue; an administrator lands on the admin console.
+          </span>
+          <span class="n-out">
+            <span class="oh">Leads to</span>
+            <span>Case dashboard · Admin console · any screen in the preview list</span>
+          </span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ═══ tier 2 · case pipeline ═══ -->
+    <section class="tier" data-od-id="tier-pipeline">
+      <div class="tier-head">
+        <span class="t-n">Tier 2 · Case pipeline</span>
+        <span class="t-d">
+          Ten steps in order. Steps 01–06 assemble and decide; <strong>step 06 is the gate</strong>;
+          steps 07–10 exist only because a surgeon affirmed it. The prototype lets you view 07–10
+          early, with a banner saying the gate has not been affirmed.
+        </span>
+      </div>
+
+      <div class="flow" id="pipeline"></div>
+    </section>
+
+    <!-- ═══ tier 3 · settings ═══ -->
+    <section class="tier" data-od-id="tier-settings">
+      <div class="tier-head">
+        <span class="t-n">Tier 3 · Settings &amp; administration</span>
+        <span class="t-d">
+          Flat, not sequential — reachable any time from the global rail. These screens configure
+          where cases come from and who may do what to them.
+        </span>
+      </div>
+      <div class="flow" id="settings"></div>
+    </section>
+
+    <!-- ═══ role access ═══ -->
+    <section data-od-id="sitemap-roles">
+      <div class="panel-head">
+        <div>
+          <h2 class="h2">Who can do what</h2>
+          <p class="body" style="font-size:.88rem;margin-top:8px">
+            Access is not the variable — every role opens every screen. The variable is capability,
+            and the two clinical ones are deliberately scarce.
+          </p>
+        </div>
+      </div>
+      <div class="tw">
+        <table class="ds rx">
+          <thead>
+            <tr>
+              <th>Capability</th>
+              <th style="text-align:center">Surgeon</th>
+              <th style="text-align:center">Staff</th>
+              <th style="text-align:center">Admin</th>
+              <th>Where it lives</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Open any screen</strong></td>
+              <td class="c yes">yes</td><td class="c yes">yes</td><td class="c yes">yes</td>
+              <td>All 19</td>
+            </tr>
+            <tr>
+              <td><strong>Affirm the surgeon gate</strong></td>
+              <td class="c yes">yes</td><td class="c no">no</td><td class="c no">no</td>
+              <td>06 Surgeon gate</td>
+            </tr>
+            <tr>
+              <td><strong>Apply an electronic signature</strong></td>
+              <td class="c yes">yes</td><td class="c no">no</td><td class="c no">no</td>
+              <td>07 Letter &amp; QA · Profile</td>
+            </tr>
+            <tr>
+              <td><strong>Annotate clinical evidence</strong></td>
+              <td class="c yes">yes</td><td class="c no">no</td><td class="c no">no</td>
+              <td>03 Evidence timeline</td>
+            </tr>
+            <tr>
+              <td><strong>Submit a packet to a payer</strong></td>
+              <td class="c yes">yes</td><td class="c yes">yes</td><td class="c yes">yes</td>
+              <td>08 Submission packet</td>
+            </tr>
+            <tr>
+              <td><strong>Configure EMR connections</strong></td>
+              <td class="c no">no</td><td class="c no">no</td><td class="c yes">yes</td>
+              <td>EMR connections</td>
+            </tr>
+            <tr>
+              <td><strong>Manage users &amp; roles</strong></td>
+              <td class="c no">no</td><td class="c no">no</td><td class="c yes">yes</td>
+              <td>Admin console</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="meta" style="margin-top:12px">
+        An administrator configures the system but cannot attest to medical necessity. That split is
+        a clinical-safety boundary, not an org-chart convenience.
+      </p>
+    </section>
+
+    <!-- ═══ flow notes ═══ -->
+    <section style="margin-top:var(--sp-6)" data-od-id="sitemap-notes">
+      <div class="g2">
+        <div class="callout">
+          <div class="lbl">The gate is the structure</div>
+          <p>
+            Steps 01–05 gather evidence and rank pathways but decide nothing. Step 06 is where the
+            surgeon confirms policy, section, pathway and operative plan. Steps 07–10 are downstream
+            consequences of that one decision — which is why the sitemap has a waist rather than a
+            flat list.
+          </p>
+        </div>
+        <div class="callout cool">
+          <div class="lbl">Two entries into the pipeline</div>
+          <p>
+            The dashboard links straight to whichever step a case is actually blocked on, so a
+            coordinator opening a records-incomplete case lands on the intake checklist while a case
+            awaiting a decision lands on pathway comparison. The pipeline is ordered, but you rarely
+            walk it from the top.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div class="drawer-scrim" data-scrim></div>
+<aside class="drawer" data-drawer></aside>
+<nav class="tabbar" data-tabbar aria-label="Primary"></nav>
+
+<script>
+  ASO.shell({ section: 'cases', title: 'Sitemap', depth: 'nested' });
+
+  (function () {
+    function esc(t) {
+      return String(t).replace(/[&<>"]/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+      });
+    }
+
+    /* The pipeline, with the real outbound links each screen carries.
+       Taken from the pages themselves, not from an idealised flow. */
+    var PIPELINE = [
+      { ix: '01', label: 'Case dashboard', file: 'index.html',
+        purpose: 'The queue, ordered by regulatory deadline. Every case shows which EMR it came from and how many criteria are met, short, or undocumented.',
+        out: 'Jumps to whichever step a case is blocked on' },
+      { ix: '02', label: 'Intake checklist', file: 'screens/intake-checklist.html',
+        purpose: 'Nine document categories, requested specifically rather than as a generic upload. Green / amber / red by category.',
+        out: 'Evidence timeline' },
+      { ix: '03', label: 'Evidence timeline', file: 'screens/evidence-timeline.html',
+        purpose: 'Every extracted fact with its source document and page. Contradictions surfaced; the surgeon can annotate in his own voice.',
+        out: 'Policy panel' },
+      { ix: '04', label: 'Policy panel', file: 'screens/policy-panel.html',
+        purpose: 'The controlling payer policy, version-matched. Includes the “criteria not verified” state where the case cannot advance.',
+        out: 'Pathway comparison' },
+      { ix: '05', label: 'Pathway comparison', file: 'screens/pathway-comparison.html',
+        purpose: 'Three candidate theories side by side, each with its criteria ledger, gaps, and the operative assumption it requires.',
+        out: 'Surgeon gate · back to Policy panel' },
+      { ix: '06', label: 'Surgeon gate', file: 'screens/surgeon-gate.html', gate: true,
+        purpose: 'Four confirmations — policy, section, pathway, operative plan. Only a surgeon can affirm. Nothing downstream exists until this is done.',
+        out: 'Letter & QA (on affirmation)' },
+      { ix: '07', label: 'Letter & QA', file: 'screens/letter-composer.html', gated: true,
+        purpose: 'One draft generated whole from the confirmed model, organised by the policy’s required elements. Fifteen automated checks.',
+        out: 'Submission packet · back to Surgeon gate' },
+      { ix: '08', label: 'Submission packet', file: 'screens/submission-packet.html', gated: true,
+        purpose: 'Attachment checklist derived from the criteria the letter actually cites, plus routing and the determination deadline.',
+        out: 'Receipt & custody · Peer-to-peer' },
+      { ix: '09', label: 'Receipt & custody', file: 'screens/receipt-verification.html', gated: true,
+        purpose: 'Chain of custody per document. Keeps transmission and receipt separate — carrier silence is never rendered as confirmation.',
+        out: 'Peer-to-peer' },
+      { ix: '10', label: 'Peer-to-peer', file: 'screens/peer-to-peer.html', gated: true,
+        purpose: 'Reviewer identity, recording consent, preflight, and a discrepancy record comparing reviewer claims against the transmission log.',
+        out: 'Receipt & custody' }
+    ];
+
+    var SETTINGS = [
+      { label: 'EMR connections', file: 'screens/settings-integrations.html',
+        purpose: 'Four connected systems with protocol, auth, sync cadence and capability matrix. Includes patient identity reconciliation across EMRs.',
+        out: 'Profile · Admin console' },
+      { label: 'Profile & signature', file: 'screens/settings-profile.html',
+        purpose: 'Identity from the directory, a plain-language permission table, and the stored electronic signature (surgeons only).',
+        out: 'EMR connections · Admin console' },
+      { label: 'Admin console', file: 'screens/admin-console.html',
+        purpose: 'Seven accounts with roles, case-source health, the audit log, and compliance posture.',
+        out: 'Settings screens · Case dashboard' },
+      { label: 'How this works', file: 'screens/how-this-works.html',
+        purpose: 'The theory the product rests on: three evidence states rather than two, the surgeon gate, where every claim in a letter comes from, and what the AI is and is not permitted to decide.',
+        out: 'Data model \u00b7 Technology \u00b7 Build playbook' },
+      { label: 'Technology', file: 'screens/architecture.html',
+        purpose: 'The seven runtime components, each stated as it actually ships \u2014 including the corrections where a summary and the code disagreed.',
+        out: 'How this works \u00b7 Build playbook' },
+      { label: 'Build playbook', file: 'screens/build-playbook.html',
+        purpose: 'How web, desktop and mobile get built from one architecture: the control loop, the irreversible phases, engine-per-device, and what \u201cdone\u201d is allowed to mean.',
+        out: 'Technology \u00b7 Data model' },
+      { label: 'Data model', file: 'screens/data-model.html',
+        purpose: 'The Postgres schema behind the product: Kratos-backed identity, the capability model, the typed-metadata pattern, and the four rules the database itself enforces.',
+        out: 'Admin console \u00b7 Sitemap' },
+      { label: 'Sitemap', file: 'screens/sitemap.html',
+        purpose: 'This page. A reference view of the whole product, printable for a walkthrough.',
+        out: 'Everything' }
+    ];
+
+    function href(file) {
+      return file.indexOf('screens/') === 0 ? file.slice('screens/'.length) : '../' + file;
+    }
+
+    function card(n, tagRight) {
+      var cls = 'node' + (n.gate ? ' is-gate' : '');
+      return '<a class="' + cls + '" href="' + href(n.file) + '">' +
+        '<span class="n-ix"><span>' + (n.ix || 'Settings') + '</span>' +
+          '<span>' + (tagRight || '') + '</span></span>' +
+        '<span class="n-l">' + esc(n.label) + '</span>' +
+        '<span class="n-f">' + esc(n.file) + '</span>' +
+        '<span class="n-p">' + esc(n.purpose) + '</span>' +
+        '<span class="n-out"><span class="oh">Leads to</span><span>' + esc(n.out) + '</span></span>' +
+      '</a>';
+    }
+
+    document.getElementById('pipeline').innerHTML = PIPELINE.map(function (n) {
+      var tag = n.gate ? 'GATE' : (n.gated ? 'POST-GATE' : '');
+      return card(n, tag);
+    }).join('');
+
+    document.getElementById('settings').innerHTML = SETTINGS.map(function (n) {
+      return card(n, '');
+    }).join('');
+  })();
+</script>
+</body>
+</html>

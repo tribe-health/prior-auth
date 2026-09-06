@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{ dark: (localStorage.getItem('aso-theme')||'light')==='dark', toc:false }" :class="dark ? 'dark' : ''">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Advanced Spine &amp; Orthopedics — Brand Guide</title>
+<link rel="icon" href="aso-favicon.svg" type="image/svg+xml">
+<script>
+  (function(){ if((localStorage.getItem('aso-theme')||'light')==='dark'){ document.documentElement.classList.add('dark'); } })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Mulish:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+<style>
+:root{
+  /* ── LIGHT · derived from asodocs.com ─────────────────── */
+  --ember:#DF7C35;          /* logo sweep — the single chromatic accent */
+  --ember-deep:#A85417;     /* text-safe accent, 5.45:1 on white        */
+  --ember-tint:#FBEFE6;
+  --slate:#A7C5D6;          /* announcement bar                        */
+  --slate-tint:#EDF3F7;
+  --navy:#1F4E79;           /* announcement link                       */
+  --graphite:#6E6F71;       /* ADVANCED wordmark                       */
+  --ink:#231F20;            /* Spine & Orthopedics                     */
+  --bone:#F1EFEC;           /* utility bar                             */
+
+  --bg:#FFFFFF;
+  --s1:#F7F6F4;
+  --s2:#F1EFEC;
+  --s3:#E7E4E0;
+  --s-zebra:#FAF9F7;
+  --fg:#231F20;
+  --fg-2:#55565A;
+  --fg-3:#6E6F71;
+  --accent:var(--ember-deep);
+  --accent-vivid:var(--ember);
+  --cool:var(--navy);
+  --cool-surface:var(--slate-tint);
+  --warm-surface:var(--ember-tint);
+
+  --ok:#1E6F4E; --ok-surface:#E7F3EC;
+  --gap:#A85417; --gap-surface:#FBEFE6;
+  --void:#5B5F66; --void-surface:#EFEFF1;
+
+  --serif:'Playfair Display', Georgia, 'Times New Roman', serif;
+  --sans:'Mulish','Nunito Sans','Segoe UI',system-ui,-apple-system,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace;
+  --r:5px;
+}
+html.dark{
+  --ember:#F0955A;
+  --ember-deep:#F0955A;
+  --ember-tint:#2E2119;
+  --slate:#8FB9D0;
+  --slate-tint:#182430;
+  --navy:#8FB9D0;
+  --graphite:#98A2AA;
+  --ink:#EDF0F2;
+  --bone:#1C2126;
+
+  --bg:#14181C;
+  --s1:#1C2126;
+  --s2:#252B31;
+  --s3:#2E353C;
+  --s-zebra:#191E23;
+  --fg:#EDF0F2;
+  --fg-2:#B4BFC7;
+  --fg-3:#93A0A9;
+  --accent:#F0955A;
+  --accent-vivid:#F0955A;
+  --cool:#8FB9D0;
+  --cool-surface:#182430;
+  --warm-surface:#2E2119;
+
+  --ok:#6FD1A0; --ok-surface:#152620;
+  --gap:#F0955A; --gap-surface:#2E2119;
+  --void:#A9B3BB; --void-surface:#232830;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:var(--bg); color:var(--fg);
+  font-family:var(--sans); font-size:16px; line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+.shell{display:grid;grid-template-columns:250px 1fr;max-width:1400px;margin:0 auto}
+
+/* ── SIDEBAR ─────────────────────────────────────────── */
+.side{background:var(--s1);padding:2.2rem 1.4rem;position:sticky;top:0;height:100vh;overflow-y:auto}
+.side-brand{display:flex;align-items:center;gap:.7rem;margin-bottom:1.6rem}
+.side-brand .ic{width:34px;height:34px;flex-shrink:0}
+.side-brand .ic svg{width:100%;height:100%;display:block}
+.side-mark{flex:1;min-width:0}
+.side-mark svg{width:100%;height:auto;max-width:150px;display:block}
+
+/* icon board */
+.icongrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.9rem;margin:1.3rem 0}
+.iconcell{background:var(--s1);border-radius:var(--r);padding:1.2rem;display:flex;flex-direction:column;align-items:center;gap:.9rem;text-align:center}
+.icontile{width:96px;height:96px;border-radius:21px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.icontile svg{width:100%;height:100%;display:block}
+.it-ink{background:#14181C} .it-bone{background:#F1EFEC} .it-ember{background:#DF7C35}
+.iconcell .cap{font-family:var(--mono);font-size:.58rem;letter-spacing:.13em;text-transform:uppercase;color:var(--fg-3)}
+.iconsizes{display:flex;align-items:flex-end;gap:1.5rem;flex-wrap:wrap;background:var(--s1);border-radius:var(--r);padding:1.6rem;margin:1.2rem 0}
+.iconsizes figure{display:flex;flex-direction:column;align-items:center;gap:.55rem}
+.iconsizes figcaption{font-family:var(--mono);font-size:.56rem;letter-spacing:.1em;color:var(--fg-3)}
+.side h4{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;color:var(--fg-3);margin:1.5rem 0 .55rem;text-transform:uppercase}
+.side a{display:block;color:var(--fg-2);text-decoration:none;font-size:.83rem;padding:.32rem .55rem;border-radius:3px}
+.side a:hover{background:var(--s2);color:var(--accent)}
+
+/* ── MAIN ────────────────────────────────────────────── */
+main{padding:3rem 3.2rem 6rem;min-width:0}
+.eyebrow{font-family:var(--mono);font-size:.62rem;letter-spacing:.2em;color:var(--fg-3);text-transform:uppercase;margin-bottom:.7rem}
+h1{font-family:var(--serif);font-size:2.9rem;line-height:1.1;font-weight:600;letter-spacing:-.015em;margin-bottom:.7rem}
+h2{font-family:var(--serif);font-size:1.85rem;font-weight:600;letter-spacing:-.01em;margin:3.4rem 0 1rem;padding-top:1.6rem;background:linear-gradient(var(--s3),var(--s3)) top left / 60px 2px no-repeat}
+h3{font-family:var(--sans);font-size:1.05rem;font-weight:700;margin:2rem 0 .6rem;letter-spacing:-.005em}
+p{color:var(--fg-2);margin-bottom:1rem;max-width:74ch}
+.lead{font-size:1.1rem;color:var(--fg-2);max-width:70ch}
+strong{color:var(--fg);font-weight:600}
+code{font-family:var(--mono);font-size:.82em;background:var(--s2);padding:.12em .4em;border-radius:3px;color:var(--accent)}
+
+.topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap;margin-bottom:2.4rem}
+.toggle{font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;background:var(--s2);color:var(--fg-2);padding:.55rem .9rem;border:none;border-radius:3px;cursor:pointer;text-transform:uppercase}
+.toggle:hover{background:var(--s3);color:var(--accent)}
+.tocbtn{display:none}
+
+/* ── PANELS ──────────────────────────────────────────── */
+.panel{background:var(--s1);border-radius:var(--r);padding:1.6rem 1.7rem;margin:1.4rem 0}
+.note{background:var(--warm-surface);border-radius:var(--r);padding:1.2rem 1.4rem;margin:1.4rem 0}
+.note .lbl{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;color:var(--accent);text-transform:uppercase;margin-bottom:.45rem}
+.note p{margin:0;color:var(--fg-2)}
+.cool{background:var(--cool-surface)}
+.cool .lbl{color:var(--cool)}
+
+/* ── LOGO BOARD ──────────────────────────────────────── */
+.logogrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;margin:1.4rem 0}
+.logocell{border-radius:var(--r);padding:2rem 1.4rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;min-height:170px}
+.logocell svg{width:100%;max-width:230px;height:auto}
+.lc-light{background:#FFFFFF}
+.lc-bone{background:#F1EFEC}
+.lc-dark{background:#231F20}
+.lc-slate{background:#A7C5D6}
+.logocell .cap{font-family:var(--mono);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase}
+.lc-light .cap,.lc-bone .cap,.lc-slate .cap{color:#6E6F71}
+.lc-dark .cap{color:#98A2AA}
+
+.clearspace{background:var(--s2);border-radius:var(--r);padding:2rem;margin:1.2rem 0;display:flex;justify-content:center}
+.clearspace .inner{background:var(--bg);padding:34px;border-radius:3px}
+.clearspace svg{width:280px;height:auto;display:block}
+
+/* ── SWATCHES ────────────────────────────────────────── */
+.swatches{display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));gap:.9rem;margin:1.3rem 0}
+.sw{border-radius:var(--r);overflow:hidden;background:var(--s1)}
+.sw .chip{height:82px}
+.sw .meta{padding:.75rem .85rem}
+.sw .nm{font-size:.86rem;font-weight:700;color:var(--fg)}
+.sw .hx{font-family:var(--mono);font-size:.7rem;color:var(--fg-3);margin-top:.15rem}
+.sw .use{font-size:.72rem;color:var(--fg-3);margin-top:.4rem;line-height:1.45}
+
+/* ── TYPE SPECIMENS ──────────────────────────────────── */
+.spec{background:var(--s1);border-radius:var(--r);padding:1.5rem 1.7rem;margin:1rem 0}
+.spec .tag{font-family:var(--mono);font-size:.6rem;letter-spacing:.14em;color:var(--fg-3);text-transform:uppercase;margin-bottom:.7rem}
+.sp-display{font-family:var(--serif);font-size:2.6rem;line-height:1.12;font-weight:600;color:var(--fg)}
+.sp-h{font-family:var(--serif);font-size:1.6rem;font-weight:600;color:var(--fg)}
+.sp-body{font-family:var(--sans);font-size:1rem;line-height:1.7;color:var(--fg-2);max-width:62ch}
+.sp-mono{font-family:var(--mono);font-size:.9rem;color:var(--fg-2)}
+
+/* ── TABLES ──────────────────────────────────────────── */
+.tw{overflow-x:auto;margin:1.3rem 0;border-radius:var(--r)}
+table{width:100%;border-collapse:collapse;font-size:.87rem;min-width:560px}
+thead th{background:var(--s3);text-align:left;padding:.72rem .9rem;font-family:var(--mono);font-size:.63rem;letter-spacing:.13em;text-transform:uppercase;color:var(--fg-2);font-weight:500}
+tbody td{padding:.66rem .9rem;color:var(--fg-2);vertical-align:top}
+tbody tr:nth-child(odd){background:var(--s-zebra)}
+tbody tr:nth-child(even){background:var(--s1)}
+td.m{font-family:var(--mono);font-size:.78rem;color:var(--fg)}
+
+/* ── COMPONENT PREVIEWS ──────────────────────────────── */
+.btnrow{display:flex;gap:.7rem;flex-wrap:wrap;margin:1rem 0}
+.btn{font-family:var(--sans);font-size:.85rem;font-weight:600;padding:.6rem 1.3rem;border:none;border-radius:3px;cursor:pointer}
+.btn-p{background:var(--ember);color:#fff}
+.btn-s{background:var(--s3);color:var(--fg)}
+.btn-g{background:transparent;color:var(--accent)}
+
+.states{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.8rem;margin:1.1rem 0}
+.state{border-radius:var(--r);padding:1rem 1.1rem}
+.state .s-lbl{font-family:var(--mono);font-size:.6rem;letter-spacing:.13em;text-transform:uppercase;margin-bottom:.35rem}
+.state .s-txt{font-size:.82rem;line-height:1.5}
+.st-ok{background:var(--ok-surface)} .st-ok .s-lbl{color:var(--ok)} .st-ok .s-txt{color:var(--fg-2)}
+.st-gap{background:var(--gap-surface)} .st-gap .s-lbl{color:var(--gap)} .st-gap .s-txt{color:var(--fg-2)}
+.st-void{background:var(--void-surface)} .st-void .s-lbl{color:var(--void)} .st-void .s-txt{color:var(--fg-2)}
+
+.cite{font-family:var(--mono);font-size:.74rem;color:var(--fg-3);background:var(--s2);padding:.22em .5em;border-radius:3px;display:inline-block}
+
+.dd{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.2rem 0}
+.dd > div{border-radius:var(--r);padding:1.2rem 1.3rem}
+.do{background:var(--ok-surface)}
+.dont{background:var(--gap-surface)}
+.dd h4{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:.6rem}
+.do h4{color:var(--ok)} .dont h4{color:var(--gap)}
+.dd ul{list-style:none;font-size:.84rem;color:var(--fg-2);line-height:1.6}
+.dd li{padding-left:1rem;position:relative;margin-bottom:.4rem}
+.dd li::before{content:'—';position:absolute;left:0;color:var(--fg-3)}
+
+footer{margin-top:4.5rem;padding-top:1.6rem;background:linear-gradient(var(--s3),var(--s3)) top left / 100% 1px no-repeat;font-family:var(--mono);font-size:.66rem;color:var(--fg-3);letter-spacing:.05em;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+
+/* ── RESPONSIVE ──────────────────────────────────────── */
+@media (max-width:860px){
+  .shell{grid-template-columns:1fr}
+  .side{position:static;height:auto;display:none;padding:1.4rem}
+  .side.open{display:block}
+  main{padding:1.8rem 1.4rem 4rem}
+  .tocbtn{display:inline-block;font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;background:var(--s2);color:var(--fg-2);padding:.55rem .9rem;border:none;border-radius:3px;cursor:pointer;text-transform:uppercase}
+  .dd{grid-template-columns:1fr}
+  h1{font-size:2.1rem}
+}
+@media (max-width:540px){
+  body{font-size:15px}
+  h1{font-size:1.75rem} h2{font-size:1.4rem} .sp-display{font-size:1.8rem}
+  main{padding:1.4rem 1rem 3rem}
+  .panel,.spec{padding:1.1rem 1rem}
+  thead th,tbody td{padding:.5rem .6rem;font-size:.8rem}
+}
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+<!-- ══ SYMBOL LIBRARY ══ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <g id="mk-adaptive"><g transform="rotate(-13 256 256) translate(0 18)">
+    <path d="M80 250C172 186 300 154 432 162C306 126 176 148 80 208C64 218 64 240 80 250Z" fill="var(--graphite)"/>
+    <path d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z" fill="var(--ember)"/>
+  </g></g>
+  <g id="mk-light"><g transform="rotate(-13 256 256) translate(0 18)">
+    <path d="M80 250C172 186 300 154 432 162C306 126 176 148 80 208C64 218 64 240 80 250Z" fill="#231F20"/>
+    <path d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z" fill="#DF7C35"/>
+  </g></g>
+  <g id="mk-dark"><g transform="rotate(-13 256 256) translate(0 18)">
+    <path d="M80 250C172 186 300 154 432 162C306 126 176 148 80 208C64 218 64 240 80 250Z" fill="#C7CDD2"/>
+    <path d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z" fill="#F0955A"/>
+  </g></g>
+  <g id="mk-knock"><g transform="rotate(-13 256 256) translate(0 18)">
+    <path d="M80 250C172 186 300 154 432 162C306 126 176 148 80 208C64 218 64 240 80 250Z" fill="#FFFFFF" opacity=".62"/>
+    <path d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z" fill="#FFFFFF"/>
+  </g></g>
+  <g id="mk-mono"><g transform="rotate(-13 256 256) translate(0 18)" fill="currentColor">
+    <path d="M80 250C172 186 300 154 432 162C306 126 176 148 80 208C64 218 64 240 80 250Z"/>
+    <path d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z"/>
+  </g></g>
+</defs></svg>
+
+<!-- ══ SIDEBAR ══ -->
+<aside class="side" :class="toc && 'open'">
+  <div class="side-brand">
+  <div class="ic"><svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#mk-adaptive"/></svg></div>
+  <div class="side-mark">
+    <svg viewBox="0 0 430 128" xmlns="http://www.w3.org/2000/svg" aria-label="Advanced Spine and Orthopedics">
+      <text x="12" y="70" font-family="Mulish, sans-serif" font-size="58" font-weight="600" letter-spacing="2" textLength="404" lengthAdjust="spacing" fill="var(--graphite)">ADVANCED</text>
+      <path d="M10 74 C 76 34, 192 24, 288 36 C 348 44, 390 55, 420 65 C 388 51, 346 37, 286 29 C 190 17, 72 33, 10 66 Z" fill="var(--ember)"/>
+      <text x="14" y="112" font-family="Mulish, sans-serif" font-size="33" font-weight="400" textLength="400" lengthAdjust="spacing" fill="var(--ink)">Spine &amp; Orthopedics</text>
+    </svg>
+  </div>
+  </div>
+  <h4>Foundation</h4>
+  <a href="#origin">Derivation &amp; provenance</a>
+  <a href="#voice">Voice</a>
+  <h4>Identity</h4>
+  <a href="#logo">Logo system</a>
+  <a href="#clearspace">Clear space &amp; scale</a>
+  <a href="#appmark">Application mark</a>
+  <a href="#lockups">Lockups</a>
+  <h4>Core</h4>
+  <a href="#color">Color</a>
+  <a href="#dark">Dark mode</a>
+  <a href="#type">Typography</a>
+  <a href="#surface">Surfaces</a>
+  <h4>Application</h4>
+  <a href="#components">Components</a>
+  <a href="#clinical">Clinical semantics</a>
+  <a href="#a11y">Accessibility</a>
+  <a href="#tokens">Token reference</a>
+  <a href="#rules">Do &amp; don't</a>
+</aside>
+
+<!-- ══ MAIN ══ -->
+<main>
+
+<div class="topbar">
+  <div>
+    <div class="eyebrow">Brand Guide · v1.0 · August 2026</div>
+    <h1>Advanced Spine<br>&amp; Orthopedics</h1>
+    <p class="lead">A visual system derived from asodocs.com, extended into the surfaces a clinical application requires.</p>
+  </div>
+  <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+    <button class="tocbtn" @click="toc = !toc">Contents</button>
+    <button class="toggle" @click="dark = !dark; localStorage.setItem('aso-theme', dark ? 'dark' : 'light')"
+            x-text="dark ? 'Light' : 'Dark'">Dark</button>
+  </div>
+</div>
+
+<!-- ── ORIGIN ── -->
+<h2 id="origin">Derivation &amp; provenance</h2>
+<p>Every value in this guide traces to an observable property of the existing practice website. Where a value was measured from a screenshot rather than read from source CSS, it is marked as such. Nothing here was invented for aesthetic reasons alone.</p>
+
+<div class="note">
+  <div class="lbl">Confidence</div>
+  <p><strong>Color: high.</strong> Sampled directly from the rendered site. <strong>Typography: inferred.</strong> The display serif and UI sans were identified visually, not read from the stylesheet. Before production, confirm the actual font stack in the site's CSS and substitute if it differs. <strong>Logo: reconstruction.</strong> The supplied SVG is a working vector rebuild. Request the original artwork from whoever produced the practice's branding and replace it — a rebuilt wordmark will not match at large sizes.</p>
+</div>
+
+<div class="tw">
+<table>
+  <thead><tr><th>Source element</th><th>Observed</th><th>Becomes</th></tr></thead>
+  <tbody>
+    <tr><td>Logo sweep</td><td class="m">#DF7C35</td><td>Ember — the single chromatic accent</td></tr>
+    <tr><td>"ADVANCED" wordmark</td><td class="m">#6E6F71</td><td>Graphite — secondary text</td></tr>
+    <tr><td>"Spine &amp; Orthopedics"</td><td class="m">#231F20</td><td>Ink — primary text</td></tr>
+    <tr><td>Announcement bar</td><td class="m">#A7C5D6</td><td>Slate — cool surface</td></tr>
+    <tr><td>Announcement link</td><td class="m">#1F4E79</td><td>Navy — cool text, links</td></tr>
+    <tr><td>Utility bar</td><td class="m">#F1EFEC</td><td>Bone — warm neutral surface</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="voice">Voice</h2>
+<p>The practice describes itself in plain, unhurried language: accurate diagnoses, personalized care, time spent with each patient. The system should sound the same — direct, specific, never promotional. In the application, this matters most in the language around evidence: state what the chart shows, name what is missing, and do not editorialize.</p>
+
+<h3>Register by surface</h3>
+<div class="tw">
+<table>
+  <thead><tr><th>Surface</th><th>Register</th><th>Example</th></tr></thead>
+  <tbody>
+    <tr><td>Criteria status</td><td>Declarative, no hedging</td><td>Supervised PT: 5 weeks documented. Policy requires 12.</td></tr>
+    <tr><td>Generated letter</td><td>Clinical, formal, cited</td><td>Flexion-extension radiographs dated 03/14/2026 demonstrate…</td></tr>
+    <tr><td>Interface labels</td><td>Short, concrete nouns</td><td>Gap worklist · Source citation · Affirm criteria</td></tr>
+    <tr><td>Warnings</td><td>Specific about consequence</td><td>This assertion has no source document. It will not be included.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ── LOGO ── -->
+<h2 id="logo">Logo system</h2>
+<p>The mark is a horizontal lockup: a gray wordmark, a warm sweep that crosses it, and a lighter descriptor line. The sweep is the only element that carries color, and it is the reason the palette has exactly one chromatic accent.</p>
+
+<div class="logogrid">
+  <div class="logocell lc-light">
+    <svg viewBox="0 0 430 128" xmlns="http://www.w3.org/2000/svg">
+      <text x="12" y="70" font-family="Mulish, sans-serif" font-size="58" font-weight="600" letter-spacing="2" textLength="404" lengthAdjust="spacing" fill="#6E6F71">ADVANCED</text>
+      <path d="M10 74 C 76 34, 192 24, 288 36 C 348 44, 390 55, 420 65 C 388 51, 346 37, 286 29 C 190 17, 72 33, 10 66 Z" fill="#DF7C35"/>
+      <text x="14" y="112" font-family="Mulish, sans-serif" font-size="33" textLength="400" lengthAdjust="spacing" fill="#231F20">Spine &amp; Orthopedics</text>
+    </svg>
+    <div class="cap">Primary · on white</div>
+  </div>
+
+  <div class="logocell lc-bone">
+    <svg viewBox="0 0 430 128" xmlns="http://www.w3.org/2000/svg">
+      <text x="12" y="70" font-family="Mulish, sans-serif" font-size="58" font-weight="600" letter-spacing="2" textLength="404" lengthAdjust="spacing" fill="#6E6F71">ADVANCED</text>
+      <path d="M10 74 C 76 34, 192 24, 288 36 C 348 44, 390 55, 420 65 C 388 51, 346 37, 286 29 C 190 17, 72 33, 10 66 Z" fill="#DF7C35"/>
+      <text x="14" y="112" font-family="Mulish, sans-serif" font-size="33" textLength="400" lengthAdjust="spacing" fill="#231F20">Spine &amp; Orthopedics</text>
+    </svg>
+    <div class="cap">Primary · on bone</div>
+  </div>
+
+  <div class="logocell lc-dark">
+    <svg viewBox="0 0 430 128" xmlns="http://www.w3.org/2000/svg">
+      <text x="12" y="70" font-family="Mulish, sans-serif" font-size="58" font-weight="600" letter-spacing="2" textLength="404" lengthAdjust="spacing" fill="#C3CACF">ADVANCED</text>
+      <path d="M10 74 C 76 34, 192 24, 288 36 C 348 44, 390 55, 420 65 C 388 51, 346 37, 286 29 C 190 17, 72 33, 10 66 Z" fill="#F0955A"/>
+      <text x="14" y="112" font-family="Mulish, sans-serif" font-size="33" textLength="400" lengthAdjust="spacing" fill="#EDF0F2">Spine &amp; Orthopedics</text>
+    </svg>
+    <div class="cap">Reverse · dark surface</div>
+  </div>
+
+  <div class="logocell lc-slate">
+    <svg viewBox="0 0 430 128" xmlns="http://www.w3.org/2000/svg">
+      <text x="12" y="70" font-family="Mulish, sans-serif" font-size="58" font-weight="600" letter-spacing="2" textLength="404" lengthAdjust="spacing" fill="#1F4E79">ADVANCED</text>
+      <path d="M10 74 C 76 34, 192 24, 288 36 C 348 44, 390 55, 420 65 C 388 51, 346 37, 286 29 C 190 17, 72 33, 10 66 Z" fill="#1F4E79"/>
+      <text x="14" y="112" font-family="Mulish, sans-serif" font-size="33" textLength="400" lengthAdjust="spacing" fill="#1F4E79">Spine &amp; Orthopedics</text>
+    </svg>
+    <div class="cap">Single-color · restricted use</div>
+  </div>
+</div>
+
+<h3 id="clearspace">Clear space &amp; minimum scale</h3>
+<p>Clear space equals the cap height of <strong>ADVANCED</strong> on all four sides. Nothing enters that field — no rules, no photography, no adjacent marks.</p>
+
+<div class="clearspace">
+  <div class="inner">
+    <svg viewBox="0 0 430 128" xmlns="http://www.w3.org/2000/svg">
+      <text x="12" y="70" font-family="Mulish, sans-serif" font-size="58" font-weight="600" letter-spacing="2" textLength="404" lengthAdjust="spacing" fill="var(--graphite)">ADVANCED</text>
+      <path d="M10 74 C 76 34, 192 24, 288 36 C 348 44, 390 55, 420 65 C 388 51, 346 37, 286 29 C 190 17, 72 33, 10 66 Z" fill="var(--ember)"/>
+      <text x="14" y="112" font-family="Mulish, sans-serif" font-size="33" textLength="400" lengthAdjust="spacing" fill="var(--ink)">Spine &amp; Orthopedics</text>
+    </svg>
+  </div>
+</div>
+
+<div class="tw">
+<table>
+  <thead><tr><th>Context</th><th>Minimum width</th><th>Note</th></tr></thead>
+  <tbody>
+    <tr><td>Screen — full lockup</td><td class="m">180 px</td><td>Below this the descriptor line stops being legible</td></tr>
+    <tr><td>Print — full lockup</td><td class="m">1.6 in</td><td>Letterhead, generated LMN header</td></tr>
+    <tr><td>Favicon / app icon</td><td class="m">—</td><td>Sweep only, no type</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ── APPLICATION MARK ── -->
+<h2 id="appmark">Application mark</h2>
+<p>The wordmark lockup cannot be an app icon — it is horizontal, type-dependent, and illegible below about 180px. The application mark solves that by taking the one distinctive form in the identity, the sweep, and doubling it in opposition.</p>
+
+<div class="panel">
+  <h3 style="margin-top:0">Construction</h3>
+  <p>Two counter-tapered sweeps on a 512 grid. The upper reads graphite and thins toward the right; the lower reads ember and thickens toward the right. The pair is rotated <code>−13°</code> and nudged 18 units down for optical centring. The silhouette suggests a spinal motion segment without illustrating one.</p>
+  <div class="tw">
+  <table>
+    <thead><tr><th>Property</th><th>Value</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>Grid</td><td class="m">512 × 512</td><td>Divides cleanly to 16, 32, 64, 128, 256</td></tr>
+      <tr><td>Rotation</td><td class="m">−13°</td><td>Breaks the horizontal-bars read; fills the square</td></tr>
+      <tr><td>Optical offset</td><td class="m">translate(0, 18)</td><td>Mark mass sits above true centre</td></tr>
+      <tr><td>Ember position</td><td class="m">Lower sweep</td><td>Fixed. The order is not interchangeable.</td></tr>
+      <tr><td>Maskable scale</td><td class="m">0.70</td><td>Keeps content inside the Android 66% safe circle</td></tr>
+      <tr><td>Favicon scale</td><td class="m">1.16</td><td>Preserves the inter-sweep gap at 16px</td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<div class="icongrid">
+  <div class="iconcell">
+    <div class="icontile it-ink"><svg viewBox="0 0 512 512"><use href="#mk-dark"/></svg></div>
+    <div class="cap">Primary · ink ground</div>
+  </div>
+  <div class="iconcell">
+    <div class="icontile it-bone"><svg viewBox="0 0 512 512"><use href="#mk-light"/></svg></div>
+    <div class="cap">Alternate · bone ground</div>
+  </div>
+  <div class="iconcell">
+    <div class="icontile it-ember"><svg viewBox="0 0 512 512"><use href="#mk-knock"/></svg></div>
+    <div class="cap">Knockout · restricted</div>
+  </div>
+  <div class="iconcell">
+    <div class="icontile" style="background:var(--s2);color:var(--fg)"><svg viewBox="0 0 512 512"><use href="#mk-mono"/></svg></div>
+    <div class="cap">Monochrome · currentColor</div>
+  </div>
+</div>
+
+<h3>Scale behaviour</h3>
+<p>Recognition is carried by the gap between the two sweeps, not by either sweep alone. That gap is the first thing to close under downscaling, which is why the favicon is drawn at 116% rather than reusing the app icon file.</p>
+
+<div class="iconsizes">
+  <figure><svg viewBox="0 0 512 512" style="width:16px;height:16px"><use href="#mk-adaptive"/></svg><figcaption>16</figcaption></figure>
+  <figure><svg viewBox="0 0 512 512" style="width:24px;height:24px"><use href="#mk-adaptive"/></svg><figcaption>24</figcaption></figure>
+  <figure><svg viewBox="0 0 512 512" style="width:32px;height:32px"><use href="#mk-adaptive"/></svg><figcaption>32</figcaption></figure>
+  <figure><svg viewBox="0 0 512 512" style="width:48px;height:48px"><use href="#mk-adaptive"/></svg><figcaption>48</figcaption></figure>
+  <figure><svg viewBox="0 0 512 512" style="width:72px;height:72px"><use href="#mk-adaptive"/></svg><figcaption>72</figcaption></figure>
+  <figure><svg viewBox="0 0 512 512" style="width:104px;height:104px"><use href="#mk-adaptive"/></svg><figcaption>104</figcaption></figure>
+</div>
+
+<div class="tw">
+<table>
+  <thead><tr><th>File</th><th>Ground</th><th>Use</th></tr></thead>
+  <tbody>
+    <tr><td class="m">aso-icon.svg</td><td>Transparent</td><td>Universal; carries its own <code>prefers-color-scheme</code> block</td></tr>
+    <tr><td class="m">aso-icon-dark.svg</td><td class="m">#14181C</td><td>Primary app icon — iOS, macOS, Windows, PWA</td></tr>
+    <tr><td class="m">aso-icon-light.svg</td><td class="m">#F1EFEC</td><td>Light-theme alternate, print, letterhead mark</td></tr>
+    <tr><td class="m">aso-icon-mono.svg</td><td>Transparent</td><td>Toolbars, in-app headers, stencils</td></tr>
+    <tr><td class="m">aso-icon-maskable.svg</td><td class="m">#14181C</td><td>Android adaptive, safe-circle compliant</td></tr>
+    <tr><td class="m">aso-favicon.svg</td><td>Transparent</td><td>16px-legible, scheme-aware</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="note">
+  <div class="lbl">Icon rules</div>
+  <p>Ship full-bleed squares with no baked corner radius and no transparency in the container variants — every platform masks the source itself. Never mirror or re-rotate the mark beyond its built-in −13°, never reorder the sweeps, and never substitute the icon for the wordmark inside a document.</p>
+</div>
+
+<h2 id="lockups">Lockups</h2>
+<p>Two approved arrangements. The horizontal lockup is the default for headers and letterhead; the mark stands alone only where the name appears adjacent in text.</p>
+
+<div class="logogrid">
+  <div class="logocell lc-light" style="align-items:flex-start">
+    <div style="display:flex;align-items:center;gap:.9rem;width:100%">
+      <svg viewBox="0 0 512 512" style="width:52px;height:52px;flex-shrink:0"><use href="#mk-light"/></svg>
+      <svg viewBox="0 0 430 128" style="flex:1;min-width:0;max-width:none">
+        <text x="12" y="70" font-family="Mulish, sans-serif" font-size="58" font-weight="600" letter-spacing="2" textLength="404" lengthAdjust="spacing" fill="#6E6F71">ADVANCED</text>
+        <path d="M10 74 C 76 34, 192 24, 288 36 C 348 44, 390 55, 420 65 C 388 51, 346 37, 286 29 C 190 17, 72 33, 10 66 Z" fill="#DF7C35"/>
+        <text x="14" y="112" font-family="Mulish, sans-serif" font-size="33" textLength="400" lengthAdjust="spacing" fill="#231F20">Spine &amp; Orthopedics</text>
+      </svg>
+    </div>
+    <div class="cap">Horizontal lockup · default</div>
+  </div>
+
+  <div class="logocell lc-dark">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:.8rem">
+      <svg viewBox="0 0 512 512" style="width:62px;height:62px"><use href="#mk-dark"/></svg>
+      <svg viewBox="0 0 430 128" style="width:190px">
+        <text x="12" y="70" font-family="Mulish, sans-serif" font-size="58" font-weight="600" letter-spacing="2" textLength="404" lengthAdjust="spacing" fill="#C3CACF">ADVANCED</text>
+        <path d="M10 74 C 76 34, 192 24, 288 36 C 348 44, 390 55, 420 65 C 388 51, 346 37, 286 29 C 190 17, 72 33, 10 66 Z" fill="#F0955A"/>
+        <text x="14" y="112" font-family="Mulish, sans-serif" font-size="33" textLength="400" lengthAdjust="spacing" fill="#EDF0F2">Spine &amp; Orthopedics</text>
+      </svg>
+    </div>
+    <div class="cap">Stacked lockup · splash, first run</div>
+  </div>
+</div>
+
+<div class="note cool">
+  <div class="lbl">Spacing</div>
+  <p>In the horizontal lockup, the space between mark and wordmark equals the mark's own optical width divided by three. The mark's height matches the cap height of <strong>ADVANCED</strong> plus the descriptor line — it never exceeds the type block.</p>
+</div>
+
+<!-- ── COLOR ── -->
+<h2 id="color">Color</h2>
+<p>One warm accent, one cool accent, a warm neutral ramp. The warmth comes from the mark; the coolness comes from the site's announcement bar and does the clinical work. Do not add a third chromatic family.</p>
+
+<div class="swatches">
+  <div class="sw"><div class="chip" style="background:#DF7C35"></div><div class="meta"><div class="nm">Ember</div><div class="hx">#DF7C35</div><div class="use">The mark, filled buttons, large headings. <strong>Never body text on white.</strong></div></div></div>
+  <div class="sw"><div class="chip" style="background:#A85417"></div><div class="meta"><div class="nm">Ember Deep</div><div class="hx">#A85417</div><div class="use">Text-safe accent. 5.45:1 on white. Links, inline emphasis.</div></div></div>
+  <div class="sw"><div class="chip" style="background:#1F4E79"></div><div class="meta"><div class="nm">Navy</div><div class="hx">#1F4E79</div><div class="use">Cool text, secondary links, data labels. 8.7:1 on white.</div></div></div>
+  <div class="sw"><div class="chip" style="background:#A7C5D6"></div><div class="meta"><div class="nm">Slate</div><div class="hx">#A7C5D6</div><div class="use">Cool surface. Navy text only — 4.7:1.</div></div></div>
+  <div class="sw"><div class="chip" style="background:#231F20"></div><div class="meta"><div class="nm">Ink</div><div class="hx">#231F20</div><div class="use">Primary text, reverse surfaces.</div></div></div>
+  <div class="sw"><div class="chip" style="background:#6E6F71"></div><div class="meta"><div class="nm">Graphite</div><div class="hx">#6E6F71</div><div class="use">Secondary text. 5.07:1 on white.</div></div></div>
+  <div class="sw"><div class="chip" style="background:#F1EFEC"></div><div class="meta"><div class="nm">Bone</div><div class="hx">#F1EFEC</div><div class="use">Warm surface. Panels, table rows, utility strips.</div></div></div>
+  <div class="sw"><div class="chip" style="background:#FFFFFF"></div><div class="meta"><div class="nm">Paper</div><div class="hx">#FFFFFF</div><div class="use">Base canvas. Generated documents.</div></div></div>
+</div>
+
+<div class="note">
+  <div class="lbl">The one rule that will be broken</div>
+  <p>Ember at <code>#DF7C35</code> measures <strong>3.08:1 on white</strong>. That passes for large text (24px+ or 19px bold) and fails everything else. The instinct will be to set body copy, small labels, and table headers in the brand orange because it looks like the brand. Use <code>#A85417</code> in those places instead — it reads as the same color family at small sizes and passes AA.</p>
+</div>
+
+<h2 id="dark">Dark mode</h2>
+<p>Dark mode is not an inversion. Ember is lifted to <code>#F0955A</code> because the original orange drops below 4.5:1 against a dark ground, and Navy is replaced entirely by lifted Slate because deep navy on near-black is unreadable. Never use a light-mode variable inside a dark surface.</p>
+
+<div class="swatches">
+  <div class="sw"><div class="chip" style="background:#14181C"></div><div class="meta"><div class="nm">Base</div><div class="hx">#14181C</div><div class="use">Canvas</div></div></div>
+  <div class="sw"><div class="chip" style="background:#1C2126"></div><div class="meta"><div class="nm">Surface 1</div><div class="hx">#1C2126</div><div class="use">Panels, sidebar</div></div></div>
+  <div class="sw"><div class="chip" style="background:#252B31"></div><div class="meta"><div class="nm">Surface 2</div><div class="hx">#252B31</div><div class="use">Raised, table head</div></div></div>
+  <div class="sw"><div class="chip" style="background:#F0955A"></div><div class="meta"><div class="nm">Ember Lift</div><div class="hx">#F0955A</div><div class="use">6.9:1 on Surface 1</div></div></div>
+  <div class="sw"><div class="chip" style="background:#8FB9D0"></div><div class="meta"><div class="nm">Slate Lift</div><div class="hx">#8FB9D0</div><div class="use">Replaces Navy entirely</div></div></div>
+  <div class="sw"><div class="chip" style="background:#EDF0F2"></div><div class="meta"><div class="nm">Text</div><div class="hx">#EDF0F2</div><div class="use">Primary on dark</div></div></div>
+</div>
+
+<!-- ── TYPE ── -->
+<h2 id="type">Typography</h2>
+<p>Three faces, three jobs. The serif is the practice's public voice and appears only at display sizes. The sans carries every functional surface. The mono is an addition — the website has no monospace face, but the application needs one for dates, codes, and citations, where digit alignment is not decorative.</p>
+
+<div class="spec">
+  <div class="tag">Display · Playfair Display · 500–700</div>
+  <div class="sp-display">High-Quality Spine and Orthopedic Treatments</div>
+</div>
+
+<div class="spec">
+  <div class="tag">UI &amp; Body · Mulish · 300–700</div>
+  <div class="sp-h" style="font-family:var(--sans);font-weight:700;font-size:1.15rem;margin-bottom:.5rem">Conservative care timeline</div>
+  <div class="sp-body">Supervised physical therapy documented across nine sessions between January and March. Two epidural steroid injections with partial, non-durable relief. NSAID and muscle relaxant trials exhausted prior to referral.</div>
+</div>
+
+<div class="spec">
+  <div class="tag">Data &amp; Citation · JetBrains Mono · 400–500</div>
+  <div class="sp-mono">CPT 22633 · ICD-10 M43.16 · DocumentReference/8817-c2 · p.4 · 2026-03-14</div>
+</div>
+
+<div class="tw">
+<table>
+  <thead><tr><th>Role</th><th>Face</th><th>Size / weight</th><th>Used for</th></tr></thead>
+  <tbody>
+    <tr><td>Display</td><td>Playfair Display</td><td class="m">2.4–3.2rem / 600</td><td>Document titles, letterhead, cover pages</td></tr>
+    <tr><td>Section</td><td>Playfair Display</td><td class="m">1.6–1.9rem / 600</td><td>H2 within documents</td></tr>
+    <tr><td>Subsection</td><td>Mulish</td><td class="m">1.05rem / 700</td><td>H3, panel titles</td></tr>
+    <tr><td>Body</td><td>Mulish</td><td class="m">1rem / 400, 1.65</td><td>All prose. Max 74ch measure.</td></tr>
+    <tr><td>UI label</td><td>Mulish</td><td class="m">.82rem / 600</td><td>Buttons, form labels, nav</td></tr>
+    <tr><td>Eyebrow</td><td>JetBrains Mono</td><td class="m">.62rem / 400, .18em</td><td>Section numbers, metadata strips</td></tr>
+    <tr><td>Data</td><td>JetBrains Mono</td><td class="m">.78rem / 400</td><td>Dates, codes, citations, receipt IDs</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="note cool">
+  <div class="lbl">Pairing rule</div>
+  <p>Playfair and Mulish never appear at the same size on the same surface. If a heading and its body text are within 4px of each other, drop the serif and set the heading in Mulish 700. The serif earns its place only through scale contrast.</p>
+</div>
+
+<!-- ── SURFACES ── -->
+<h2 id="surface">Surfaces</h2>
+<p>The system uses no borders. Depth is expressed entirely through background value — a four-step warm ramp in light mode, a four-step cool-neutral ramp in dark. Dividers, where genuinely needed, are 1–2px background bars, not <code>border</code> properties.</p>
+
+<div class="panel">
+  <h3 style="margin-top:0">Surface ramp</h3>
+  <p style="margin-bottom:1rem">Base → Surface 1 → Surface 2 → Surface 3. Never skip a step to create contrast; if a surface is not reading, the problem is spacing, not value.</p>
+  <div style="display:flex;gap:0;border-radius:var(--r);overflow:hidden">
+    <div style="flex:1;height:56px;background:var(--bg)"></div>
+    <div style="flex:1;height:56px;background:var(--s1)"></div>
+    <div style="flex:1;height:56px;background:var(--s2)"></div>
+    <div style="flex:1;height:56px;background:var(--s3)"></div>
+  </div>
+</div>
+
+<!-- ── COMPONENTS ── -->
+<h2 id="components">Components</h2>
+
+<h3>Buttons</h3>
+<div class="btnrow">
+  <button class="btn btn-p">Generate Letter</button>
+  <button class="btn btn-s">Review Sources</button>
+  <button class="btn btn-g">Cancel</button>
+</div>
+<p>Primary is Ember at full strength with white text — orange-on-white text is prohibited, but white-on-orange measures acceptably at button label weight. One primary action per view.</p>
+
+<h3>Tables</h3>
+<p>Zebra striping only. No rules, no cell borders. Header row sits one surface step above the body.</p>
+<div class="tw">
+<table>
+  <thead><tr><th>Criterion</th><th>Required</th><th>Documented</th><th>Source</th></tr></thead>
+  <tbody>
+    <tr><td>Supervised physical therapy</td><td class="m">12 weeks</td><td class="m">5 weeks</td><td class="m">PT-0219 p.2</td></tr>
+    <tr><td>Imaging correlation</td><td class="m">MRI within 12 mo</td><td class="m">2026-01-08</td><td class="m">RAD-1180 p.1</td></tr>
+    <tr><td>Psychological clearance</td><td class="m">Required</td><td class="m">Not present</td><td class="m">—</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Callouts</h3>
+<div class="note">
+  <div class="lbl">Warm — attention, gap, action required</div>
+  <p>Uses the Ember tint surface. Reserved for things the reader must act on.</p>
+</div>
+<div class="note cool">
+  <div class="lbl">Cool — context, reference, policy language</div>
+  <p>Uses the Slate tint surface. Reserved for information that explains but does not demand.</p>
+</div>
+
+<!-- ── CLINICAL ── -->
+<h2 id="clinical">Clinical semantics</h2>
+<p>The application has three states that must never be confused, and the palette assigns each an unambiguous surface. The distinction between <em>not met</em> and <em>not documented</em> is the single most important semantic in the product — one is a clinical fact, the other is a records gap, and conflating them is how a letter ends up asserting something the chart does not support.</p>
+
+<div class="states">
+  <div class="state st-ok">
+    <div class="s-lbl">Met</div>
+    <div class="s-txt">Criterion satisfied and traceable to a dated source document.</div>
+  </div>
+  <div class="state st-gap">
+    <div class="s-lbl">Not met</div>
+    <div class="s-txt">Evidence exists and falls short of the policy threshold. A clinical fact.</div>
+  </div>
+  <div class="state st-void">
+    <div class="s-lbl">Not documented</div>
+    <div class="s-txt">No source found. Never rendered as "not met" and never asserted in a letter.</div>
+  </div>
+</div>
+
+<h3>Citation styling</h3>
+<p>Every generated assertion carries a source chip. Chips are monospace, one surface step up, and always adjacent to the claim they support — never collected in a footnote block.</p>
+<p style="max-width:74ch">Flexion-extension radiographs demonstrate 6mm of translation at L4–L5. <span class="cite">RAD-1180 · p.1 · 2026-01-08</span></p>
+
+<div class="note">
+  <div class="lbl">Non-negotiable</div>
+  <p>An assertion without a citation chip is a rendering bug, not a styling choice. If the interface can display an uncited claim, the interface is wrong.</p>
+</div>
+
+<!-- ── A11Y ── -->
+<h2 id="a11y">Accessibility</h2>
+<p>Measured, not assumed. Every pairing below was computed against WCAG 2.1 relative luminance.</p>
+
+<div class="tw">
+<table>
+  <thead><tr><th>Foreground</th><th>Background</th><th>Ratio</th><th>Verdict</th></tr></thead>
+  <tbody>
+    <tr><td class="m">#231F20 Ink</td><td class="m">#FFFFFF</td><td class="m">15.9:1</td><td>AAA — all sizes</td></tr>
+    <tr><td class="m">#1F4E79 Navy</td><td class="m">#FFFFFF</td><td class="m">8.68:1</td><td>AAA — all sizes</td></tr>
+    <tr><td class="m">#A85417 Ember Deep</td><td class="m">#FFFFFF</td><td class="m">5.45:1</td><td>AA — all sizes</td></tr>
+    <tr><td class="m">#6E6F71 Graphite</td><td class="m">#FFFFFF</td><td class="m">5.07:1</td><td>AA — all sizes</td></tr>
+    <tr><td class="m">#1F4E79 Navy</td><td class="m">#A7C5D6 Slate</td><td class="m">4.73:1</td><td>AA — all sizes</td></tr>
+    <tr><td class="m">#DF7C35 Ember</td><td class="m">#FFFFFF</td><td class="m">3.08:1</td><td>Large text only — never body</td></tr>
+    <tr><td class="m">#F0955A Ember Lift</td><td class="m">#1C2126 Surface 1</td><td class="m">6.90:1</td><td>AA — all sizes</td></tr>
+    <tr><td class="m">#EDF0F2 Text</td><td class="m">#14181C Base</td><td class="m">14.6:1</td><td>AAA — all sizes</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="note">
+  <div class="lbl">Beyond contrast</div>
+  <p>Status is never conveyed by color alone. Every state chip carries a text label, because a red-green deficient reader, a grayscale print of a generated letter, and a screen reader all need the same information the color is carrying.</p>
+</div>
+
+<!-- ── TOKENS ── -->
+<h2 id="tokens">Token reference</h2>
+<div class="tw">
+<table>
+  <thead><tr><th>Token</th><th>Light</th><th>Dark</th><th>Role</th></tr></thead>
+  <tbody>
+    <tr><td class="m">--bg</td><td class="m">#FFFFFF</td><td class="m">#14181C</td><td>Canvas</td></tr>
+    <tr><td class="m">--s1</td><td class="m">#F7F6F4</td><td class="m">#1C2126</td><td>Panel</td></tr>
+    <tr><td class="m">--s2</td><td class="m">#F1EFEC</td><td class="m">#252B31</td><td>Raised</td></tr>
+    <tr><td class="m">--s3</td><td class="m">#E7E4E0</td><td class="m">#2E353C</td><td>Table head, dividers</td></tr>
+    <tr><td class="m">--fg</td><td class="m">#231F20</td><td class="m">#EDF0F2</td><td>Primary text</td></tr>
+    <tr><td class="m">--fg-2</td><td class="m">#55565A</td><td class="m">#B4BFC7</td><td>Body text</td></tr>
+    <tr><td class="m">--fg-3</td><td class="m">#6E6F71</td><td class="m">#93A0A9</td><td>Meta, eyebrow</td></tr>
+    <tr><td class="m">--accent</td><td class="m">#A85417</td><td class="m">#F0955A</td><td>Accent text, links</td></tr>
+    <tr><td class="m">--accent-vivid</td><td class="m">#DF7C35</td><td class="m">#F0955A</td><td>Mark, filled surfaces</td></tr>
+    <tr><td class="m">--cool</td><td class="m">#1F4E79</td><td class="m">#8FB9D0</td><td>Cool text</td></tr>
+    <tr><td class="m">--ok</td><td class="m">#1E6F4E</td><td class="m">#6FD1A0</td><td>Criterion met</td></tr>
+    <tr><td class="m">--gap</td><td class="m">#A85417</td><td class="m">#F0955A</td><td>Criterion not met</td></tr>
+    <tr><td class="m">--void</td><td class="m">#5B5F66</td><td class="m">#A9B3BB</td><td>Not documented</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ── RULES ── -->
+<h2 id="rules">Do &amp; don't</h2>
+<div class="dd">
+  <div class="do">
+    <h4>Do</h4>
+    <ul>
+      <li>Use one accent per view. The orange is a signal, not a texture.</li>
+      <li>Express hierarchy through background value and spacing.</li>
+      <li>Set dates, codes, and citations in mono for column alignment.</li>
+      <li>Pair every status color with a text label.</li>
+      <li>Reserve Playfair for display scale only.</li>
+      <li>Keep prose at or under a 74-character measure.</li>
+    </ul>
+  </div>
+  <div class="dont">
+    <h4>Don't</h4>
+    <ul>
+      <li>Set body copy or small labels in <code>#DF7C35</code> on white.</li>
+      <li>Add a <code>border</code> property anywhere in the system.</li>
+      <li>Use light-mode variables inside a dark surface.</li>
+      <li>Introduce a third chromatic family — green and red exist only as clinical status.</li>
+      <li>Recolor or redraw the sweep in the logo.</li>
+      <li>Bake corner radii into the icon source, or mirror the mark.</li>
+      <li>Reuse the app icon as a favicon — the gap closes at 16px.</li>
+      <li>Render "not met" and "not documented" in the same treatment.</li>
+    </ul>
+  </div>
+</div>
+
+<footer>
+  <span>Advanced Spine &amp; Orthopedics · Brand Guide v1.0</span>
+  <span>Derived from asodocs.com · Prepared for the Prior Authorization Workbench</span>
+</footer>
+
+</main>
+</div>
+</body>
+</html>

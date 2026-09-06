@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pathway comparison · Surgery Authorization Workbench · Advanced Spine &amp; Orthopedics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Mulish:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/aso.css">
+<script src="../assets/shell.js"></script>
+<script>ASO.primeTheme();</script>
+<style>
+  /* ═══ Screen-local: the pathway board.
+     This is the product's one decisive flourish — three candidate theories
+     side by side, each with its own criteria ledger. Strength is carried by
+     surface value and an explicit label, never by colour alone. ═══ */
+  .board { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-4); align-items: stretch; }
+  @media (max-width: 1180px) { .board { grid-template-columns: minmax(0, 1fr); } }
+
+  .pw {
+    background: var(--s1);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    transition: background var(--dur-enter) var(--ease);
+  }
+  .pw:hover { background: var(--s2); }
+  .pw.is-lead { background: var(--s2); }
+  .pw.is-lead:hover { background: var(--s3); }
+  .pw.is-poor { background: var(--void-surface); }
+
+  .pw-top { padding: var(--sp-4) var(--sp-5) var(--sp-3); }
+  .pw-rank {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+    margin-bottom: 8px;
+    display: flex; justify-content: space-between; gap: 8px;
+  }
+  .pw.is-lead .pw-rank { color: var(--accent); }
+  .pw-name {
+    font-family: var(--font-display);
+    font-size: 1.28rem;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 7px;
+  }
+  .pw-sec { font-family: var(--font-mono); font-size: 0.7rem; color: var(--fg-3); }
+  .pw-plain { font-size: 0.86rem; color: var(--fg-2); margin-top: 10px; line-height: 1.55; }
+
+  .pw-strength {
+    padding: var(--sp-3) var(--sp-5);
+    background: var(--bg);
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  }
+  .pw.is-poor .pw-strength { background: var(--s1); }
+
+  /* criteria ledger — one row per required element */
+  .ledger { padding: var(--sp-3) var(--sp-5) var(--sp-4); }
+  .el { padding: 9px 0; }
+  .el + .el { background: linear-gradient(var(--s3), var(--s3)) top left / 100% 1px no-repeat; }
+  .el-h { display: flex; align-items: baseline; justify-content: space-between; gap: 9px; }
+  .el-k { font-family: var(--font-mono); font-size: 0.66rem; color: var(--fg-3); flex-shrink: 0; }
+  .el-t { font-size: 0.82rem; color: var(--fg); font-weight: 600; flex: 1; line-height: 1.4; }
+  .el-w { font-size: 0.79rem; color: var(--fg-2); margin-top: 4px; line-height: 1.5; }
+  .el-e { font-size: 0.79rem; color: var(--fg-2); margin-top: 5px; line-height: 1.5; }
+  .el-e strong { color: var(--fg); font-weight: 600; }
+
+  .pw-assume {
+    padding: var(--sp-4) var(--sp-5);
+    background: var(--warm-surface);
+  }
+  .pw.is-poor .pw-assume { background: var(--void-surface); }
+  .pw-assume .lbl {
+    font-family: var(--font-mono);
+    font-size: var(--fs-eyebrow);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 5px;
+  }
+  .pw.is-poor .pw-assume .lbl { color: var(--void); }
+  .pw-assume p { font-size: 0.82rem; color: var(--fg-2); line-height: 1.55; }
+
+  .pw-why { padding: var(--sp-4) var(--sp-5); }
+  .pw-why .lbl {
+    font-family: var(--font-mono);
+    font-size: var(--fs-eyebrow);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+    margin-bottom: 5px;
+  }
+  .pw-why p { font-size: 0.82rem; color: var(--fg-2); line-height: 1.55; }
+
+  .pw-foot { margin-top: auto; padding: 0 var(--sp-5) var(--sp-5); }
+  .pw-foot .btn { width: 100%; justify-content: center; }
+</style>
+</head>
+<body>
+
+<div class="topbar" data-topbar></div>
+
+<div class="app">
+  <aside class="gnav" data-gnav></aside>
+  <aside class="ctx" data-ctx></aside>
+
+  <main class="workbench" id="content" style="max-width:1320px">
+
+    <div data-whoami></div>
+
+    <section class="phead" data-od-id="pathway-head">
+      <div>
+        <p class="eyebrow">Step 05 · Pathway comparison</p>
+        <h1 class="display">Three ways to read this chart.<br>Two of them will be denied.</h1>
+        <p class="lead">
+          The system proposes and ranks. It does not choose. Each pathway states what it requires the
+          operative plan to be, so the surgeon can see the commitment before the prose exists.
+        </p>
+      </div>
+      <div class="row">
+        <a class="btn btn-secondary" href="policy-panel.html">Back to policy</a>
+        <a class="btn btn-secondary" href="surgeon-gate.html">Take to surgeon gate</a>
+      </div>
+    </section>
+
+    <!-- ═══ framing ═══ -->
+    <section style="margin-bottom:var(--sp-5)" data-od-id="pathway-frame">
+      <div class="callout cool">
+        <div class="lbl">What the ranking optimizes for</div>
+        <p>
+          Approval likelihood given the documented findings and the surgeon's genuine prospective plan —
+          not the most complete description of the patient's disease. A pathway is only viable if the
+          chart already supports it and the planned operation actually matches it.
+        </p>
+      </div>
+    </section>
+
+    <!-- ═══ the board ═══ -->
+    <section data-od-id="pathway-board">
+      <div class="board">
+
+        <!-- ── Pathway A · lead ── -->
+        <article class="pw is-lead" data-od-id="pathway-facetectomy">
+          <div class="pw-top">
+            <div class="pw-rank"><span>Ranked 01</span><span>Recommended</span></div>
+            <h2 class="pw-name">Iatrogenic instability from planned facetectomy</h2>
+            <p class="pw-sec">SURG-2026-014 rev. 4 · §4.1(d), second clause · p.11–12</p>
+            <p class="pw-plain">
+              The decompression required to relieve the foraminal stenosis necessitates resecting more
+              than half of the right L4–L5 facet. The policy treats that resection as itself
+              establishing the instability that justifies fusion — no radiographic threshold needed.
+            </p>
+          </div>
+
+          <div class="pw-strength">
+            <span class="chip chip-met">Strong fit</span>
+            <span class="meta">5 of 5 elements supported</span>
+          </div>
+
+          <div class="ledger">
+            <div class="el">
+              <div class="el-h"><span class="el-k">a</span><span class="el-t">Radicular pain ≥ 6 months, unresponsive to conservative management</span><span class="chip chip-met">Met</span></div>
+              <p class="el-e"><strong>14 months</strong> of right L4 radicular pain; two injections with non-durable benefit; medication trials exhausted. <span class="cite">CLIN-0977 p.2</span> <span class="cite">PAIN-0912 p.1</span></p>
+            </div>
+            <div class="el">
+              <div class="el-h"><span class="el-k">b</span><span class="el-t">Imaging nerve root compression at the operative level, corroborated by exam</span><span class="chip chip-met">Met</span></div>
+              <p class="el-e">Severe right L4–L5 foraminal stenosis with root deformation; right patellar reflex 1+ and positive femoral stretch referable to L4. <span class="cite">RAD-1341 p.2</span> <span class="cite">CLIN-0977 p.3</span></p>
+            </div>
+            <div class="el">
+              <div class="el-h"><span class="el-k">c</span><span class="el-t">Six weeks supervised therapy, <em>or</em> discontinued for non-progression</span><span class="chip chip-met">Met</span></div>
+              <p class="el-w">The second clause is satisfied without reaching the duration threshold.</p>
+              <p class="el-e">Discharged at five weeks <strong>for non-progression</strong>, Oswestry 48% → 44%. The discharge reason is what satisfies this element. <span class="cite">PT-0219 p.3</span></p>
+            </div>
+            <div class="el">
+              <div class="el-h"><span class="el-k">d</span><span class="el-t">Instability, <em>or</em> planned resection of &gt; 50% of a facet joint</span><span class="chip chip-met">Met</span></div>
+              <p class="el-e">Planned unilateral right L4–L5 facetectomy, surgeon-documented as required for adequate foraminal decompression. <span class="cite">CLIN-1142 p.2</span></p>
+            </div>
+            <div class="el">
+              <div class="el-h"><span class="el-k">e</span><span class="el-t">Nicotine abstinence where interbody fusion is planned</span><span class="chip chip-gap">Records gap</span></div>
+              <p class="el-e">No cotinine result on file. Interbody device <em>is</em> planned, so this element is live. <span class="cite cite-void">Not documented</span></p>
+            </div>
+          </div>
+
+          <div class="pw-assume">
+            <div class="lbl">Operative assumption this pathway requires</div>
+            <p>
+              That the facetectomy is genuinely planned and genuinely exceeds 50% of the joint.
+              If the surgeon intends a facet-sparing foraminotomy, this pathway collapses and
+              must not be selected.
+            </p>
+          </div>
+
+          <div class="pw-why">
+            <div class="lbl">Why this over the alternatives</div>
+            <p>
+              It routes around the two weakest facts in the chart. The therapy shortfall is answered by
+              the policy's own non-progression clause rather than argued, and the 6 mm translation —
+              which a reviewer could dispute on measurement technique — becomes corroboration instead
+              of the load-bearing element.
+            </p>
+          </div>
+
+          <div class="pw-foot">
+            <a class="btn btn-primary" href="surgeon-gate.html">Select at surgeon gate</a>
+          </div>
+        </article>
+
+        <!-- ── Pathway B ── -->
+        <article class="pw" data-od-id="pathway-translation">
+          <div class="pw-top">
+            <div class="pw-rank"><span>Ranked 02</span><span>Viable</span></div>
+            <h2 class="pw-name">Radiographic segmental instability</h2>
+            <p class="pw-sec">SURG-2026-014 rev. 4 · §4.1(d), first clause · p.11–12</p>
+            <p class="pw-plain">
+              The flexion-extension films show 6 mm of translation at L4–L5 against a 4 mm threshold.
+              This is the more conventional reading and does not depend on the operative plan.
+            </p>
+          </div>
+
+          <div class="pw-strength">
+            <span class="chip chip-gap">Possible with clarification</span>
+            <span class="meta">4 supported · 1 disputable</span>
+          </div>
+
+          <div class="ledger">
+            <div class="el">
+              <div class="el-h"><span class="el-k">a</span><span class="el-t">Radicular pain ≥ 6 months, unresponsive to conservative management</span><span class="chip chip-met">Met</span></div>
+              <p class="el-e">Identical evidence to pathway 01. <span class="cite">CLIN-0977 p.2</span></p>
+            </div>
+            <div class="el">
+              <div class="el-h"><span class="el-k">b</span><span class="el-t">Imaging nerve root compression at the operative level</span><span class="chip chip-gap">Contested source</span></div>
+              <p class="el-e">
+                The myelogram supports it; the MRI impression reads “no definite nerve root impingement.”
+                A reviewer working from the MRI alone sees a negative study.
+                <span class="cite">RAD-1341 p.2</span> <span class="cite">RAD-1180 p.1</span>
+              </p>
+            </div>
+            <div class="el">
+              <div class="el-h"><span class="el-k">c</span><span class="el-t">Six weeks supervised therapy, <em>or</em> discontinued for non-progression</span><span class="chip chip-met">Met</span></div>
+              <p class="el-e">Same non-progression discharge. <span class="cite">PT-0219 p.3</span></p>
+            </div>
+            <div class="el">
+              <div class="el-h"><span class="el-k">d</span><span class="el-t">≥ 4 mm translation or ≥ 10° angular motion on flexion-extension</span><span class="chip chip-met">Met</span></div>
+              <p class="el-w">Measurement technique is not specified by the policy, which is the exposure.</p>
+              <p class="el-e"><strong>6 mm</strong> anterior translation of L4 on L5, measured on the posterior vertebral body line. <span class="cite">RAD-1342 p.1</span></p>
+            </div>
+            <div class="el">
+              <div class="el-h"><span class="el-k">e</span><span class="el-t">Nicotine abstinence where interbody fusion is planned</span><span class="chip chip-gap">Records gap</span></div>
+              <p class="el-e">Same gap as pathway 01. <span class="cite cite-void">Not documented</span></p>
+            </div>
+          </div>
+
+          <div class="pw-assume">
+            <div class="lbl">Operative assumption this pathway requires</div>
+            <p>
+              None beyond fusion at L4–L5. This pathway is indifferent to the facetectomy, which is
+              its practical advantage if the surgeon is not certain about the extent of resection.
+            </p>
+          </div>
+
+          <div class="pw-why">
+            <div class="lbl">Why it ranks second</div>
+            <p>
+              It makes the single most disputable measurement in the chart load-bearing, and it leaves the
+              MRI contradiction sitting on the critical path. Reasonable as a supporting pathway; risky
+              as the primary one.
+            </p>
+          </div>
+
+          <div class="pw-foot">
+            <a class="btn btn-secondary" href="surgeon-gate.html">Consider as supporting</a>
+          </div>
+        </article>
+
+        <!-- ── Pathway C · poor fit ── -->
+        <article class="pw is-poor" data-od-id="pathway-decompression">
+          <div class="pw-top">
+            <div class="pw-rank"><span>Ranked 03</span><span>Not recommended</span></div>
+            <h2 class="pw-name">Decompression alone, without fusion</h2>
+            <p class="pw-sec">SURG-2026-014 rev. 4 · §3.2 · p.7</p>
+            <p class="pw-plain">
+              The easiest section to satisfy — and it authorizes an operation the surgeon is not
+              planning to perform.
+            </p>
+          </div>
+
+          <div class="pw-strength">
+            <span class="chip chip-void">Poor fit</span>
+            <span class="meta">Mismatched to the plan</span>
+          </div>
+
+          <div class="ledger">
+            <div class="el">
+              <div class="el-h"><span class="el-k">1</span><span class="el-t">Radiculopathy or claudication corroborated by advanced imaging</span><span class="chip chip-met">Met</span></div>
+              <p class="el-e">Supported by the myelogram and examination. <span class="cite">RAD-1341 p.2</span></p>
+            </div>
+            <div class="el">
+              <div class="el-h"><span class="el-k">2</span><span class="el-t">Six weeks supervised conservative therapy completed or contraindicated</span><span class="chip chip-gap">Below threshold</span></div>
+              <p class="el-w">§3.2 has <em>no</em> non-progression clause — the escape used by pathways 01 and 02 does not exist here.</p>
+              <p class="el-e"><strong>5 weeks documented against 6 required.</strong> <span class="cite">PT-0219 p.2</span></p>
+            </div>
+            <div class="el">
+              <div class="el-h"><span class="el-k">—</span><span class="el-t">Authorizes decompression only; no fusion or instrumentation</span><span class="chip chip-void">Plan mismatch</span></div>
+              <p class="el-e">
+                An approval under §3.2 would not cover the instrumented fusion, and performing it anyway
+                creates an unauthorized-services problem at billing.
+              </p>
+            </div>
+          </div>
+
+          <div class="pw-assume">
+            <div class="lbl">Operative assumption this pathway requires</div>
+            <p>
+              That the surgeon will perform decompression <em>without</em> fusion. That is not the
+              prospective plan, so selecting this pathway would misdescribe the operation.
+            </p>
+          </div>
+
+          <div class="pw-why">
+            <div class="lbl">Recorded, not hidden</div>
+            <p>
+              It appears here because a coordinator under deadline pressure will find §3.2 and notice it
+              is easier to satisfy. Naming why it fails is more useful than omitting it.
+            </p>
+          </div>
+
+          <div class="pw-foot">
+            <button class="btn btn-secondary" disabled>Blocked · plan mismatch</button>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ═══ cross-pathway analysis ═══ -->
+    <section style="margin-top:var(--sp-7)" data-od-id="pathway-analysis">
+      <div class="g-main">
+        <div class="stack" style="gap:var(--sp-5)">
+          <div>
+            <div class="panel-head">
+              <h2 class="h2">Element coverage across pathways</h2>
+              <span class="chip chip-plain">Same chart, three readings</span>
+            </div>
+            <div class="tw">
+              <table class="ds">
+                <thead>
+                  <tr>
+                    <th>Required element</th>
+                    <th>01 · Facetectomy</th>
+                    <th>02 · Translation</th>
+                    <th>03 · Decompression</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Duration and failed conservative care</strong></td>
+                    <td><span class="chip chip-met">Met</span></td>
+                    <td><span class="chip chip-met">Met</span></td>
+                    <td><span class="chip chip-met">Met</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Imaging correlation at the operative level</strong></td>
+                    <td><span class="chip chip-met">Met</span></td>
+                    <td><span class="chip chip-gap">Contested</span></td>
+                    <td><span class="chip chip-met">Met</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Supervised therapy threshold</strong></td>
+                    <td><span class="chip chip-met">Met via clause</span></td>
+                    <td><span class="chip chip-met">Met via clause</span></td>
+                    <td><span class="chip chip-gap">5 of 6 weeks</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Instability basis</strong></td>
+                    <td><span class="chip chip-met">Planned resection</span></td>
+                    <td><span class="chip chip-met">6 mm</span></td>
+                    <td><span class="chip chip-plain">Not required</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Nicotine status</strong></td>
+                    <td><span class="chip chip-gap">Gap</span></td>
+                    <td><span class="chip chip-gap">Gap</span></td>
+                    <td><span class="chip chip-plain">Not required</span></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Matches the prospective operative plan</strong></td>
+                    <td><span class="chip chip-met">Yes</span></td>
+                    <td><span class="chip chip-met">Yes</span></td>
+                    <td><span class="chip chip-void">No</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="callout">
+            <div class="lbl">One gap is common to both viable pathways</div>
+            <p>
+              Nicotine status blocks §4.1(e) under either fusion theory. A cotinine result is worth more
+              to this case than any argument the letter could make — it is one lab draw, and it is
+              assigned to Nathan, PA-C.
+            </p>
+          </div>
+        </div>
+
+        <aside class="stack" style="gap:var(--sp-4)">
+          <div class="panel panel-raised">
+            <p class="eyebrow" style="margin-bottom:var(--sp-3)">Recommended combination</p>
+            <div class="stack-sm">
+              <div>
+                <p style="font-size:.85rem;font-weight:700;color:var(--fg)">Primary · Pathway 01</p>
+                <p style="font-size:.82rem;color:var(--fg-2);margin-top:3px">Iatrogenic instability from the planned facetectomy.</p>
+              </div>
+              <div style="margin-top:6px">
+                <p style="font-size:.85rem;font-weight:700;color:var(--fg)">Supporting · Pathway 02</p>
+                <p style="font-size:.82rem;color:var(--fg-2);margin-top:3px">
+                  The 6 mm translation cited as corroboration of the same conclusion — not as the
+                  element the approval rests on.
+                </p>
+              </div>
+            </div>
+            <p class="meta" style="margin-top:12px">
+              A supporting pathway strengthens the letter only while the primary theory stays intact.
+              The drafting engine will not let the prose drift between the two.
+            </p>
+          </div>
+
+          <div class="callout void">
+            <div class="lbl">What is not on this board</div>
+            <p>
+              No central stenosis pathway, no motor-deficit pathway, no multi-level deformity pathway.
+              Each would require a predicate this chart does not contain, and the system will not
+              create one to open a route.
+            </p>
+          </div>
+
+          <div class="panel">
+            <p class="eyebrow" style="margin-bottom:var(--sp-3)">Before the gate opens</p>
+            <div class="stack-sm">
+              <div class="row" style="gap:8px">
+                <span class="chip chip-met">Done</span>
+                <span style="font-size:.83rem;color:var(--fg-2)">Policy confirmed and version-matched</span>
+              </div>
+              <div class="row" style="gap:8px">
+                <span class="chip chip-met">Done</span>
+                <span style="font-size:.83rem;color:var(--fg-2)">Evidence mapped to every candidate</span>
+              </div>
+              <div class="row" style="gap:8px">
+                <span class="chip chip-gap">Next</span>
+                <span style="font-size:.83rem;color:var(--fg-2)">Surgeon selects pathway and confirms the plan</span>
+              </div>
+            </div>
+            <a class="btn btn-secondary btn-sm" href="surgeon-gate.html" style="width:100%;justify-content:center;margin-top:var(--sp-4)">Open surgeon gate</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div class="drawer-scrim" data-scrim></div>
+<aside class="drawer" data-drawer></aside>
+<nav class="tabbar" data-tabbar aria-label="Primary"></nav>
+
+<script>
+  ASO.shell({
+    step: 'pathway',
+    section: 'cases',
+    title: 'Pathway comparison',
+    depth: 'nested',
+    caseInfo: {
+      patient: 'Kaminski, Renata',
+      caseId: 'PA-2026-0431',
+      payer: 'BCBS TX · PPO',
+      source: 'AdvancedMD · Southlake',
+      deadline: '2026-09-11'
+    }
+  });
+</script>
+</body>
+</html>

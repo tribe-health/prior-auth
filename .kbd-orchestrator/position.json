@@ -1,0 +1,125 @@
+{
+  "schemaVersion": "1",
+  "generatedBy": "kbd-runtime",
+  "projectionContractVersion": 2,
+  "sourceRevision": 47,
+  "derivedRevision": 47,
+  "frontier": {
+    "e9a7936c-0a01-43d5-9004-b93a4e5fd031": 47
+  },
+  "conflictCount": 0,
+  "updatedAt": "2026-09-06T11:20:50.409643Z",
+  "cursor": [
+    "web-ui-architecture",
+    "reflect"
+  ],
+  "root": {
+    "type": "phase",
+    "id": "0e0821e7-baa6-41b2-9b15-beaa40e0f40b",
+    "status": "ready",
+    "progress": {
+      "done": 8,
+      "total": 8
+    },
+    "children": [
+      {
+        "type": "phase",
+        "id": "web-ui-architecture",
+        "canonicalId": "web-ui-architecture",
+        "status": "PENDING",
+        "progress": {
+          "done": 8,
+          "total": 8
+        },
+        "children": [
+          {
+            "type": "phase",
+            "id": "pem-refresh-3-3-0",
+            "canonicalId": "web-ui-architecture::pem-refresh-3-3-0",
+            "status": "COMPLETE",
+            "progress": {
+              "done": 0,
+              "total": 0
+            },
+            "children": [],
+            "annotations": []
+          },
+          {
+            "type": "change",
+            "id": "W1-adopt-entity-graph-react",
+            "status": "COMPLETE",
+            "progress": {
+              "done": 0,
+              "total": 0
+            }
+          },
+          {
+            "type": "change",
+            "id": "W2-esm-conformance",
+            "status": "COMPLETE",
+            "progress": {
+              "done": 0,
+              "total": 0
+            }
+          },
+          {
+            "type": "change",
+            "id": "W3-architecture-decisions",
+            "status": "COMPLETE",
+            "progress": {
+              "done": 0,
+              "total": 0
+            }
+          },
+          {
+            "type": "change",
+            "id": "W4-app-shell",
+            "status": "COMPLETE",
+            "progress": {
+              "done": 0,
+              "total": 0
+            }
+          },
+          {
+            "type": "change",
+            "id": "W5-component-library",
+            "status": "COMPLETE",
+            "progress": {
+              "done": 0,
+              "total": 0
+            }
+          },
+          {
+            "type": "change",
+            "id": "W6-entity-graph-sync",
+            "status": "COMPLETE",
+            "progress": {
+              "done": 0,
+              "total": 0
+            }
+          },
+          {
+            "type": "change",
+            "id": "W7-evidence-timeline-slice",
+            "status": "COMPLETE",
+            "progress": {
+              "done": 0,
+              "total": 0
+            }
+          },
+          {
+            "type": "change",
+            "id": "W8-docker-compose",
+            "status": "COMPLETE",
+            "progress": {
+              "done": 0,
+              "total": 0
+            }
+          }
+        ],
+        "annotations": []
+      }
+    ],
+    "annotations": []
+  }
+}

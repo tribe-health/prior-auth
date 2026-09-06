@@ -1,0 +1,21 @@
+# Build output
+/target/
+node_modules/
+*.tsbuildinfo
+/web/dist/
+/web/node_modules/
+/mobile/build/
+/mobile/.dart_tool/
+/desktop/src-tauri/target/
+
+# macOS
+.DS_Store
+
+# Local env
+.env
+.env.local
+
+# prometheus-context-bootstrap
+.prometheus/.writer.lock
+.prometheus/.review-pending
+.claude/settings.json.bak.*

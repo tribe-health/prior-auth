@@ -1,0 +1,9 @@
+{
+  "folders": [
+    { "name": "prior-auth", "path": "." },
+    { "name": "flint-forge", "path": "../../../prometheus/flint-forge" },
+    { "name": "flint-gate", "path": "../../../prometheus/flint-gate" },
+    { "name": "flint-realtime-fabric", "path": "../../../prometheus/flint-realtime-fabric" },
+    { "name": "prometheus-entity-management", "path": "../../../prometheus/prometheus-entity-management" }
+  ]
+}

@@ -1,0 +1,817 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Evidence timeline · Surgery Authorization Workbench · Advanced Spine &amp; Orthopedics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Mulish:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/aso.css">
+<script src="../assets/shell.js"></script>
+<script>ASO.primeTheme();</script>
+<style>
+  /* ── Screen-local: the chronological spine.
+     A single vertical value-bar carries the year; each event sits on a
+     lane so imaging, therapy and injections are separable at a glance. */
+  .tl { display: grid; grid-template-columns: 92px 12px minmax(0, 1fr); gap: 0; }
+  .tl-track { position: relative; }
+  .tl-track::before {
+    content: '';
+    position: absolute; left: 5px; top: 0; bottom: 0;
+    width: 2px; background: var(--s3);
+  }
+  .tl-ev {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: 1 / -1;
+    align-items: start;
+    padding-bottom: var(--sp-5);
+  }
+  .tl-date {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--fg-3);
+    text-align: right;
+    padding-right: var(--sp-4);
+    padding-top: 2px;
+    white-space: nowrap;
+  }
+  .tl-node { position: relative; padding-top: 6px; }
+  .tl-node span {
+    display: block;
+    width: 12px; height: 12px;
+    border-radius: 999px;
+    background: var(--fg-3);
+    outline: 3px solid var(--bg);
+  }
+  .tl-node.n-img   span { background: var(--cool); }
+  .tl-node.n-care  span { background: var(--ok); }
+  .tl-node.n-clin  span { background: var(--fg-3); }
+  .tl-node.n-gap   span { background: var(--gap); border-radius: 2px; }
+  .tl-node.n-void  span { background: var(--void); border-radius: 2px; transform: rotate(45deg); }
+
+  .tl-card {
+    background: var(--s1);
+    border-radius: var(--r-lg);
+    padding: var(--sp-4) var(--sp-5);
+    margin-left: var(--sp-4);
+  }
+  .tl-card.is-void { background: var(--void-surface); }
+  .tl-card.is-conflict { background: var(--warm-surface); }
+  .tl-card .t { font-weight: 700; font-size: 0.92rem; }
+  .tl-card .lane { margin-left: auto; }
+  .tl-card p { font-size: 0.85rem; color: var(--fg-2); margin-top: 6px; max-width: 70ch; }
+  .tl-card .quotebox {
+    background: var(--bg);
+    border-radius: var(--r);
+    padding: 10px 13px;
+    margin-top: 10px;
+    font-size: 0.84rem;
+    color: var(--fg-2);
+    line-height: 1.6;
+  }
+  .tl-card .quotebox em { color: var(--fg); font-style: normal; font-weight: 600; }
+
+  @media (max-width: 720px) {
+    .tl { grid-template-columns: 12px minmax(0, 1fr); }
+    .tl-date { grid-column: 1 / -1; text-align: left; padding: 0 0 6px 26px; }
+    .tl-card { margin-left: var(--sp-3); }
+  }
+
+  .legend { display: flex; gap: var(--sp-4); flex-wrap: wrap; }
+  .legend span { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-mono); font-size: 0.68rem; color: var(--fg-3); }
+  .legend i { width: 9px; height: 9px; border-radius: 999px; display: block; }
+</style>
+</head>
+<body>
+
+<div class="topbar" data-topbar></div>
+
+<div class="app">
+  <aside class="gnav" data-gnav></aside>
+  <aside class="ctx" data-ctx></aside>
+
+  <main class="workbench workbench-wide" id="content">
+
+    <div data-whoami></div>
+
+    <section class="phead" data-od-id="timeline-head">
+      <div>
+        <p class="eyebrow">Step 03 · Evidence timeline</p>
+        <h1 class="display">Fourteen months, one contradiction,<br>two undocumented claims.</h1>
+        <p class="lead">
+          Every fact carries the document and page it came from. Nothing on this timeline was
+          inferred, summarized from another summary, or supplied by the system.
+        </p>
+      </div>
+      <div class="row">
+        <button class="btn btn-secondary">Export case model</button>
+        <a class="btn btn-primary" href="policy-panel.html">Confirm payer policy</a>
+      </div>
+    </section>
+
+    <!-- ═══ extraction summary ═══ -->
+    <section style="margin-bottom:var(--sp-6)" data-od-id="extraction-summary">
+      <div class="g4">
+        <button class="tile" disabled aria-label="47 facts extracted, all source-linked">
+          <span class="eyebrow">Facts extracted</span>
+          <span class="t-n num" style="color:var(--fg)">47</span>
+          <span class="meta" style="display:block;margin-top:2px">all source-linked</span>
+        </button>
+
+        <a class="tile tile-link" href="#contradiction" data-jump="contradiction">
+          <span class="eyebrow">Contradictions</span>
+          <span class="t-n num" style="color:var(--gap)">1</span>
+          <span class="meta" style="display:block;margin-top:2px">imaging interpretation</span>
+          <span class="t-go">Go to MRI vs. myelogram</span>
+        </a>
+
+        <a class="tile tile-link" href="#undocumented" data-jump="undocumented">
+          <span class="eyebrow">Undocumented</span>
+          <span class="t-n num" style="color:var(--void)">2</span>
+          <span class="meta" style="display:block;margin-top:2px">optimization records</span>
+          <span class="t-go">Go to cotinine &amp; HbA1c</span>
+        </a>
+
+        <a class="tile tile-link" href="#annotations" data-jump="annotations">
+          <span class="eyebrow">Your annotations</span>
+          <span class="t-n num" id="ann-count" style="color:var(--cool)">0</span>
+          <span class="meta" style="display:block;margin-top:2px">surgeon clinical points</span>
+          <span class="t-go">Go to annotations</span>
+        </a>
+      </div>
+      <p class="meta" style="margin-top:10px">
+        Each count is a link into the evidence it describes. “Uncited assertions” was replaced by an
+        annotation count — zero uncited claims is enforced by the drafting engine, not reported here.
+      </p>
+    </section>
+
+    <div class="g-main">
+      <div class="stack" style="gap:var(--sp-6)">
+
+        <!-- ═══ contradiction, surfaced before the timeline ═══ -->
+        <section id="contradiction" data-od-id="contradiction">
+          <div class="callout">
+            <div class="lbl">Contradiction · must be addressed in the letter, not discovered by the reviewer</div>
+            <p style="margin-bottom:var(--sp-3)">
+              The MRI impression and the CT myelogram describe the same anatomy differently.
+              A reviewer who reads the MRI first will see a negative study.
+            </p>
+            <div class="g2">
+              <div style="background:var(--bg);border-radius:var(--r);padding:12px 14px">
+                <p class="meta" style="margin-bottom:5px">MRI lumbar · 2026-01-08</p>
+                <p style="font-size:.85rem;color:var(--fg-2)">“No definite nerve root impingement at any lumbar level.”</p>
+                <span class="cite" style="margin-top:8px">RAD-1180 · p.1</span>
+              </div>
+              <div style="background:var(--bg);border-radius:var(--r);padding:12px 14px">
+                <p class="meta" style="margin-bottom:5px">CT myelogram · 2026-07-22</p>
+                <p style="font-size:.85rem;color:var(--fg-2)">“Severe right L4–L5 foraminal stenosis with nerve root deformation.”</p>
+                <span class="cite" style="margin-top:8px">RAD-1341 · p.2</span>
+              </div>
+            </div>
+            <p style="margin-top:var(--sp-3)">
+              The six-month interval and the modality difference both explain the divergence.
+              The letter should state that reconciliation explicitly rather than cite only the
+              favourable study.
+            </p>
+          </div>
+
+          <!-- ═══ annotation composer ═══
+               The surgeon's clinical knowledge is evidence the chart does
+               not contain. This is the one place it can enter the case —
+               and it enters attributed, never disguised as a citation. -->
+          <div class="compose" data-annotate="mri-contradiction" data-od-id="annotate-mri">
+            <div class="row-between" style="margin-bottom:var(--sp-2)">
+              <p class="eyebrow" style="color:var(--cool)">Tell the AI what you know</p>
+              <span class="chip chip-cool">Surgeon annotation</span>
+            </div>
+            <p class="compose-q">
+              The chart cannot say why the myelogram should outweigh the MRI — that is your clinical
+              judgment, not a finding in either report. State it here and decide whether it goes in
+              the letter.
+            </p>
+
+            <div class="field">
+              <label for="ann-mri-text">Your clinical point</label>
+              <textarea class="textarea" id="ann-mri-text"
+                placeholder="e.g. CT myelography is more accurate than MRI for demonstrating foraminal nerve root compression, particularly where central canal dimensions are preserved."></textarea>
+            </div>
+
+            <div class="proposed" id="ann-mri-proposed" hidden>
+              <p class="p-lbl">How this would read in the letter</p>
+              <p id="ann-mri-preview"></p>
+              <p class="meta" style="margin-top:9px">
+                Carried as your stated clinical opinion and attributed to you by name — not presented
+                as a statement from RAD-1180 or RAD-1341.
+              </p>
+            </div>
+
+            <div class="compose-opts">
+              <label class="compose-opt">
+                <input type="radio" name="ann-mri-use" value="letter">
+                <span>
+                  <span class="c-t">Make this point in the letter</span>
+                  <span class="c-d">Enters the §4.1(b) paragraph as your attributed clinical opinion, alongside the interval and modality reasoning already there.</span>
+                </span>
+              </label>
+              <label class="compose-opt">
+                <input type="radio" name="ann-mri-use" value="record">
+                <span>
+                  <span class="c-t">Record it, but keep it out of this letter</span>
+                  <span class="c-d">Held for the peer-to-peer briefing and any appeal. Recording a point and arguing it now are different decisions.</span>
+                </span>
+              </label>
+            </div>
+
+            <div class="row" style="margin-top:var(--sp-4);gap:10px">
+              <button class="btn btn-secondary btn-sm" data-ann-save>Save annotation</button>
+              <button class="btn btn-quiet btn-sm" data-ann-example>Use the example wording</button>
+            </div>
+          </div>
+
+          <div id="ann-mri-list" class="stack-sm" style="margin-top:var(--sp-3)"></div>
+        </section>
+
+        <!-- ═══ the timeline ═══ -->
+        <section data-od-id="timeline">
+          <div class="panel-head">
+            <h2 class="h2">Chronology</h2>
+            <div class="legend">
+              <span><i style="background:var(--fg-3)"></i>Clinical</span>
+              <span><i style="background:var(--cool)"></i>Imaging</span>
+              <span><i style="background:var(--ok)"></i>Conservative care</span>
+              <span><i style="background:var(--gap);border-radius:2px"></i>Below threshold</span>
+              <span><i style="background:var(--void);border-radius:2px;transform:rotate(45deg)"></i>Not documented</span>
+            </div>
+          </div>
+
+          <div class="tl">
+
+            <div class="tl-ev">
+              <span class="tl-date">2025-06<br>approx.</span>
+              <span class="tl-node n-clin"><span></span></span>
+              <div class="tl-card">
+                <div class="row" style="gap:8px">
+                  <span class="t">Symptom onset</span>
+                  <span class="lane chip chip-plain">Patient-reported</span>
+                </div>
+                <p>
+                  Right buttock and lateral thigh pain with standing intolerance. Onset dated by patient
+                  recall in the initial consultation — 14 months before the surgical recommendation.
+                </p>
+                <div class="row" style="gap:6px;margin-top:9px">
+                  <span class="cite">CLIN-0977 · p.1 · 2025-11-19</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="tl-ev">
+              <span class="tl-date">2025-11-19</span>
+              <span class="tl-node n-clin"><span></span></span>
+              <div class="tl-card">
+                <div class="row" style="gap:8px">
+                  <span class="t">Initial consultation · Dr. K. James</span>
+                  <span class="lane chip chip-met">Source-linked</span>
+                </div>
+                <p>
+                  Right L4 dermatomal pain, standing tolerance under ten minutes, walking tolerance two
+                  blocks. Strength 5/5 throughout. Right patellar reflex 1+ versus 2+ left.
+                </p>
+                <div class="quotebox">
+                  “Seated straight-leg raise negative bilaterally. <em>Right femoral stretch reproduces
+                  anterior thigh pain.</em> Gait antalgic on the right without foot drop.”
+                </div>
+                <div class="row" style="gap:6px;margin-top:9px">
+                  <span class="cite">CLIN-0977 · p.2</span>
+                  <span class="cite">CLIN-0977 · p.3</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="tl-ev">
+              <span class="tl-date">2026-01-08</span>
+              <span class="tl-node n-img"><span></span></span>
+              <div class="tl-card is-conflict">
+                <div class="row" style="gap:8px">
+                  <span class="t">MRI lumbar spine, without contrast</span>
+                  <span class="lane chip chip-gap">Conflicts with RAD-1341</span>
+                </div>
+                <p>
+                  Reports L4–L5 disc height loss and facet hypertrophy. The impression states no definite
+                  nerve root impingement — the sentence a reviewer will quote back if the letter ignores it.
+                </p>
+                <div class="row" style="gap:6px;margin-top:9px">
+                  <span class="cite">RAD-1180 · p.1</span>
+                  <span class="cite cite-void">Addendum 2026-07-25 · not received</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="tl-ev">
+              <span class="tl-date">2026-02-11<br>→ 03-18</span>
+              <span class="tl-node n-gap"><span></span></span>
+              <div class="tl-card">
+                <div class="row" style="gap:8px">
+                  <span class="t">Supervised physical therapy · 9 sessions</span>
+                  <span class="lane chip chip-gap">5 weeks vs. 6 required</span>
+                </div>
+                <p>
+                  Baseline Oswestry 48%, discharge 44%. Discharged for non-progression rather than for
+                  completion. Duration is five weeks against a six-week policy threshold — a documented
+                  shortfall, not a missing record.
+                </p>
+                <div class="row" style="gap:6px;margin-top:9px">
+                  <span class="cite">PT-0219 · p.1</span>
+                  <span class="cite">PT-0219 · p.2</span>
+                  <span class="cite">PT-0219 · p.3</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="tl-ev">
+              <span class="tl-date">2026-04-09</span>
+              <span class="tl-node n-care"><span></span></span>
+              <div class="tl-card">
+                <div class="row" style="gap:8px">
+                  <span class="t">Transforaminal epidural steroid injection · right L4–L5</span>
+                  <span class="lane chip chip-met">Source-linked</span>
+                </div>
+                <p>
+                  70% relief sustained eleven days, then return to baseline. The diagnostic value is as
+                  significant as the therapeutic result — the response localizes the symptomatic level.
+                </p>
+                <div class="row" style="gap:6px;margin-top:9px">
+                  <span class="cite">PAIN-0884 · p.1</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="tl-ev">
+              <span class="tl-date">2026-05-21</span>
+              <span class="tl-node n-care"><span></span></span>
+              <div class="tl-card">
+                <div class="row" style="gap:8px">
+                  <span class="t">Repeat injection and medication trial closure</span>
+                  <span class="lane chip chip-met">Source-linked</span>
+                </div>
+                <p>
+                  50% relief for six days. NSAID and gabapentinoid trials recorded as exhausted.
+                  Two injections with non-durable benefit satisfies the policy's injection element.
+                </p>
+                <div class="row" style="gap:6px;margin-top:9px">
+                  <span class="cite">PAIN-0912 · p.1</span>
+                  <span class="cite">PAIN-0912 · p.2</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="tl-ev">
+              <span class="tl-date">2026-07-22</span>
+              <span class="tl-node n-img"><span></span></span>
+              <div class="tl-card">
+                <div class="row" style="gap:8px">
+                  <span class="t">CT myelogram and flexion-extension radiographs</span>
+                  <span class="lane chip chip-met">Source-linked</span>
+                </div>
+                <p>
+                  Severe right L4–L5 foraminal stenosis with nerve root deformation. Flexion-extension
+                  views demonstrate 6 mm of translation at the same level.
+                </p>
+                <div class="quotebox">
+                  “<em>6 mm anterior translation of L4 on L5</em> between flexion and extension,
+                  measured on the posterior vertebral body line.”
+                </div>
+                <div class="row" style="gap:6px;margin-top:9px">
+                  <span class="cite">RAD-1341 · p.2</span>
+                  <span class="cite">RAD-1342 · p.1</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="tl-ev">
+              <span class="tl-date">2026-08-14</span>
+              <span class="tl-node n-clin"><span></span></span>
+              <div class="tl-card">
+                <div class="row" style="gap:8px">
+                  <span class="t">Surgical recommendation · Dr. K. James</span>
+                  <span class="lane chip chip-met">Source-linked</span>
+                </div>
+                <p>
+                  Right L4–L5 decompression with unilateral facetectomy, followed by posterior
+                  instrumented fusion with an interbody device. Single level. No pelvic fixation.
+                </p>
+                <div class="quotebox">
+                  “Decompression adequate to relieve the foraminal stenosis <em>requires resection of the
+                  right L4–L5 facet</em>, which in the setting of the documented translation will not be
+                  stable without instrumentation.”
+                </div>
+                <div class="row" style="gap:6px;margin-top:9px">
+                  <span class="cite">CLIN-1142 · p.2</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="tl-ev" id="undocumented">
+              <span class="tl-date">Undated</span>
+              <span class="tl-node n-void"><span></span></span>
+              <div class="tl-card is-void">
+                <div class="row" style="gap:8px">
+                  <span class="t">Nicotine status and HbA1c</span>
+                  <span class="lane chip chip-void">Not documented</span>
+                </div>
+                <p>
+                  Both are conditions of the fusion criterion in §4.2(c). No source document exists for
+                  either. They appear on this timeline so that their absence is visible — they will not
+                  appear in a letter, and they are not recorded as “not met.”
+                </p>
+                <div class="row" style="gap:6px;margin-top:9px">
+                  <span class="cite cite-void">No source</span>
+                  <span class="chip chip-void">Assigned · Nathan, PA-C</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ═══ structured case model ═══ -->
+        <!-- ═══ annotations roll-up ═══
+             Every surgeon point in one place, with its include/hold
+             decision visible and reversible. -->
+        <section id="annotations" data-od-id="annotations">
+          <div class="panel-head">
+            <div>
+              <h2 class="h2">Your clinical annotations</h2>
+              <p class="body" style="font-size:.88rem;margin-top:8px">
+                Points you have told the AI that no chart document contains. Each one is attributed
+                to you in anything it appears in, and each carries its own decision about whether it
+                is argued in this letter.
+              </p>
+            </div>
+            <span class="chip chip-cool" id="ann-roll-count">0 recorded</span>
+          </div>
+
+          <div id="ann-roll" class="stack-sm"></div>
+
+          <div class="callout cool" id="ann-empty" style="margin-top:var(--sp-3)">
+            <div class="lbl">Nothing recorded yet</div>
+            <p>
+              Annotations are added from the evidence they concern — open a contradiction or a gap
+              above and use “Tell the AI what you know.” They are the only route by which a claim
+              enters the letter without a source document behind it, which is why they stay visible
+              and separately labelled rather than blending into the chart record.
+            </p>
+          </div>
+
+          <div class="compose" data-annotate="pt-duration" data-od-id="annotate-pt" style="margin-top:var(--sp-4)">
+            <div class="row-between" style="margin-bottom:var(--sp-2)">
+              <p class="eyebrow" style="color:var(--cool)">Add a point about another element</p>
+              <select class="input" id="ann-target" style="max-width:270px">
+                <option value="pt-duration">Supervised therapy duration</option>
+                <option value="nicotine">Nicotine status</option>
+                <option value="hba1c">HbA1c</option>
+                <option value="translation">Segmental translation measurement</option>
+                <option value="facetectomy">Planned facetectomy extent</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="ann-gen-text">Your clinical point</label>
+              <textarea class="textarea" id="ann-gen-text"
+                placeholder="State the clinical reasoning the chart does not carry."></textarea>
+            </div>
+            <div class="compose-opts">
+              <label class="compose-opt">
+                <input type="radio" name="ann-gen-use" value="letter">
+                <span>
+                  <span class="c-t">Make this point in the letter</span>
+                  <span class="c-d">Enters the paragraph for that element as your attributed opinion.</span>
+                </span>
+              </label>
+              <label class="compose-opt">
+                <input type="radio" name="ann-gen-use" value="record">
+                <span>
+                  <span class="c-t">Record it, but keep it out of this letter</span>
+                  <span class="c-d">Held for peer-to-peer and appeal.</span>
+                </span>
+              </label>
+            </div>
+            <div class="row" style="margin-top:var(--sp-4)">
+              <button class="btn btn-secondary btn-sm" data-ann-save-gen>Save annotation</button>
+            </div>
+          </div>
+
+          <div class="callout void" style="margin-top:var(--sp-4)">
+            <div class="lbl">What an annotation cannot do</div>
+            <p>
+              It cannot supply a missing record. A cotinine result is a lab draw, and no clinical
+              argument substitutes for it — an annotation about smoking history will be carried as
+              your statement, and §4.1(e) will still read as a documentation gap until the lab
+              returns.
+            </p>
+          </div>
+        </section>
+
+        <section data-od-id="case-model">
+          <div class="panel-head">
+            <h2 class="h2">Structured case model</h2>
+            <span class="chip chip-plain">Feeds the pathway engine</span>
+          </div>
+          <div class="tw">
+            <table class="ds">
+              <thead>
+                <tr><th>Domain</th><th>Extracted value</th><th>Source</th><th>State</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Radicular pain</strong></td>
+                  <td>Right L4 distribution, 14 months, standing tolerance &lt;10 min</td>
+                  <td class="m">CLIN-0977 p.2</td>
+                  <td><span class="chip chip-met">Met</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Neurologic examination</strong></td>
+                  <td>Strength 5/5; right patellar reflex 1+; positive femoral stretch</td>
+                  <td class="m">CLIN-0977 p.3</td>
+                  <td><span class="chip chip-met">Met</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Foraminal stenosis · L4–L5</strong></td>
+                  <td>Severe, right, with nerve root deformation</td>
+                  <td class="m">RAD-1341 p.2</td>
+                  <td><span class="chip chip-met">Met</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Segmental translation · L4–L5</strong></td>
+                  <td>6 mm on flexion-extension</td>
+                  <td class="m">RAD-1342 p.1</td>
+                  <td><span class="chip chip-met">Met</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Injection response</strong></td>
+                  <td>Two transforaminal injections; 70% / 11 d then 50% / 6 d</td>
+                  <td class="m">PAIN-0884, PAIN-0912</td>
+                  <td><span class="chip chip-met">Met</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Supervised therapy duration</strong></td>
+                  <td>5 weeks, 9 sessions, discharged for non-progression</td>
+                  <td class="m">PT-0219 p.2–3</td>
+                  <td><span class="chip chip-gap">Below threshold</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Central canal stenosis</strong></td>
+                  <td>Not described at any level on either study</td>
+                  <td class="m">RAD-1180, RAD-1341</td>
+                  <td><span class="chip chip-plain">Absent finding</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Nicotine status</strong></td>
+                  <td>—</td>
+                  <td class="m">—</td>
+                  <td><span class="chip chip-void">Not documented</span></td>
+                </tr>
+                <tr>
+                  <td><strong>HbA1c</strong></td>
+                  <td>—</td>
+                  <td class="m">—</td>
+                  <td><span class="chip chip-void">Not documented</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="meta" style="margin-top:12px">
+            “Absent finding” means the record affirmatively does not describe it. That is different from
+            “not documented,” where no record was searched or received.
+          </p>
+        </section>
+
+      </div>
+
+      <!-- ═══ side column ═══ -->
+      <aside class="stack" style="gap:var(--sp-4)" data-od-id="timeline-side">
+
+        <div class="callout void">
+          <div class="lbl">No invented predicates</div>
+          <p>
+            Central canal stenosis, motor deficit, prior fusion, and planned pelvic fixation are all
+            absent from this chart. None will be created to make a pathway fit, because a criterion
+            satisfied by a fact the reviewer cannot find is a denial with extra steps.
+          </p>
+        </div>
+
+        <div class="panel">
+          <p class="eyebrow" style="margin-bottom:var(--sp-3)">Provenance discipline</p>
+          <div class="stack-sm">
+            <div class="row-between" style="gap:8px">
+              <span style="font-size:.84rem;color:var(--fg-2)">Facts with a document and page</span>
+              <span class="num" style="font-size:.84rem;color:var(--ok)">47 / 47</span>
+            </div>
+            <div class="row-between" style="gap:8px">
+              <span style="font-size:.84rem;color:var(--fg-2)">Facts from surgeon confirmation</span>
+              <span class="num" style="font-size:.84rem;color:var(--fg)">6</span>
+            </div>
+            <div class="row-between" style="gap:8px">
+              <span style="font-size:.84rem;color:var(--fg-2)">Facts the system supplied</span>
+              <span class="num" style="font-size:.84rem;color:var(--ok)">0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout cool">
+          <div class="lbl">What the timeline is for</div>
+          <p>
+            It is not a chart summary for reading. It exists so that the pathway screen can show which
+            candidate theories the documented findings actually support — and so a gap has a date
+            attached when someone has to go get it.
+          </p>
+        </div>
+
+      </aside>
+    </div>
+
+  </main>
+</div>
+
+<div class="drawer-scrim" data-scrim></div>
+<aside class="drawer" data-drawer></aside>
+<nav class="tabbar" data-tabbar aria-label="Primary"></nav>
+
+<script>
+  ASO.shell({
+    step: 'evidence',
+    section: 'cases',
+    title: 'Evidence timeline',
+    depth: 'nested',
+    caseInfo: {
+      patient: 'Kaminski, Renata',
+      caseId: 'PA-2026-0431',
+      payer: 'BCBS TX · PPO',
+      source: 'AdvancedMD · Southlake',
+      deadline: '2026-09-11'
+    }
+  });
+
+  /* ═══ drill-down + annotations ═══════════════════════════════════ */
+  (function () {
+    var EXAMPLE = 'CT myelography is more accurate than MRI for demonstrating foraminal nerve ' +
+      'root compression, particularly where central canal dimensions are preserved. The myelogram ' +
+      'was obtained specifically because the clinical picture was not consistent with the MRI ' +
+      'impression.';
+
+    /* ── drill-down.
+       scrollTo, never scrollIntoView — the latter breaks the preview
+       iframe. The landing target gets a brief highlight so the eye
+       finds it without the page staying permanently marked. */
+    function jumpTo(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      var y = el.getBoundingClientRect().top + window.pageYOffset - 24;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+      el.classList.remove('landed');
+      void el.offsetWidth;
+      el.classList.add('landed');
+      var focusable = el.querySelector('textarea, button, a, [tabindex]');
+      if (focusable) window.setTimeout(function () { focusable.focus({ preventScroll: true }); }, 380);
+    }
+
+    document.querySelectorAll('[data-jump]').forEach(function (a) {
+      a.addEventListener('click', function (ev) {
+        ev.preventDefault();
+        jumpTo(a.getAttribute('data-jump'));
+      });
+    });
+
+    /* ── annotation rendering.
+       An annotation always renders with its attribution and its
+       include/hold state. There is no compact form that drops either. */
+    function esc(s) {
+      return String(s).replace(/[&<>"]/g, function (c) {
+        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+      });
+    }
+
+    function annCard(a) {
+      var target = ASO.ANNOTATION_TARGETS[a.target] || a.target;
+      return '<div class="ann">' +
+        '<div class="ann-head">' +
+          '<span class="ann-who">Dr. K. James · clinical opinion</span>' +
+          '<span class="chip ' + (a.include ? 'chip-cool' : 'chip-plain') + '">' +
+            (a.include ? 'In the letter' : 'Held · not in letter') +
+          '</span>' +
+        '</div>' +
+        '<p class="ann-body">' + esc(a.text) + '</p>' +
+        '<div class="ann-foot">' +
+          '<span class="meta">' + esc(target) + ' · recorded ' + esc(a.created || '') + '</span>' +
+          '<button class="btn btn-quiet btn-sm" data-ann-toggle="' + a.id + '">' +
+            (a.include ? 'Remove from letter' : 'Add to letter') +
+          '</button>' +
+          '<button class="btn btn-quiet btn-sm" data-ann-del="' + a.id + '">Delete</button>' +
+        '</div>' +
+      '</div>';
+    }
+
+    function paint() {
+      var all = ASO.readAnnotations();
+      var included = all.filter(function (a) { return a.include; });
+
+      document.getElementById('ann-count').textContent = String(all.length);
+      document.getElementById('ann-roll-count').textContent =
+        all.length + ' recorded · ' + included.length + ' in letter';
+
+      var mri = ASO.annotationsFor('mri-contradiction');
+      document.getElementById('ann-mri-list').innerHTML = mri.map(annCard).join('');
+
+      var roll = document.getElementById('ann-roll');
+      roll.innerHTML = all.map(annCard).join('');
+      document.getElementById('ann-empty').hidden = all.length > 0;
+
+      roll.querySelectorAll('[data-ann-toggle]').forEach(bindToggle);
+      roll.querySelectorAll('[data-ann-del]').forEach(bindDelete);
+      document.getElementById('ann-mri-list').querySelectorAll('[data-ann-toggle]').forEach(bindToggle);
+      document.getElementById('ann-mri-list').querySelectorAll('[data-ann-del]').forEach(bindDelete);
+    }
+
+    function bindToggle(btn) {
+      btn.addEventListener('click', function () {
+        var id = btn.getAttribute('data-ann-toggle');
+        var a = ASO.readAnnotations().filter(function (x) { return x.id === id; })[0];
+        if (!a) return;
+        ASO.saveAnnotation({ id: id, include: !a.include });
+        paint();
+      });
+    }
+    function bindDelete(btn) {
+      btn.addEventListener('click', function () {
+        ASO.deleteAnnotation(btn.getAttribute('data-ann-del'));
+        paint();
+      });
+    }
+
+    /* ── live preview of the letter wording.
+       Showing the surgeon the attributed sentence BEFORE he commits is
+       what keeps "make this point" from feeling like a black box. */
+    var mriText = document.getElementById('ann-mri-text');
+    var proposed = document.getElementById('ann-mri-proposed');
+    var preview = document.getElementById('ann-mri-preview');
+
+    /* Same clause-join rule the letter uses — an acronym must survive.
+       If these two ever diverge, the preview stops being a preview. */
+    function joinClause(t) {
+      t = t.trim();
+      var raw = t.split(/\s/)[0];
+      var word = raw.replace(/[^A-Za-z]/g, '');
+      /* Leave acronyms (CT, MRI, HbA1c) and abbreviated titles ("Dr.")
+         alone; only downcase a plain capitalized word. */
+      var abbrev = /\.$/.test(raw);
+      var ordinary = /^[A-Z][a-z]+$/.test(word) && !abbrev;
+      return ordinary ? t.charAt(0).toLowerCase() + t.slice(1) : t;
+    }
+
+    function renderPreview() {
+      var t = mriText.value.trim();
+      if (!t) { proposed.hidden = true; return; }
+      proposed.hidden = false;
+      preview.innerHTML = 'In Dr. James’s clinical assessment, ' + esc(joinClause(t)) +
+        ' <span class="attrib">Treating surgeon · clinical opinion</span>';
+    }
+    mriText.addEventListener('input', renderPreview);
+
+    document.querySelector('[data-ann-example]').addEventListener('click', function () {
+      mriText.value = EXAMPLE;
+      renderPreview();
+      mriText.focus();
+    });
+
+    document.querySelector('[data-ann-save]').addEventListener('click', function () {
+      var t = mriText.value.trim();
+      var use = document.querySelector('input[name="ann-mri-use"]:checked');
+      if (!t) { mriText.focus(); return; }
+      if (!use) return;
+      ASO.saveAnnotation({ target: 'mri-contradiction', text: t, include: use.value === 'letter' });
+      mriText.value = '';
+      proposed.hidden = true;
+      use.checked = false;
+      paint();
+    });
+
+    document.querySelector('[data-ann-save-gen]').addEventListener('click', function () {
+      var el = document.getElementById('ann-gen-text');
+      var t = el.value.trim();
+      var use = document.querySelector('input[name="ann-gen-use"]:checked');
+      if (!t || !use) { el.focus(); return; }
+      ASO.saveAnnotation({
+        target: document.getElementById('ann-target').value,
+        text: t,
+        include: use.value === 'letter'
+      });
+      el.value = '';
+      use.checked = false;
+      paint();
+    });
+
+    paint();
+  })();
+</script>
+</body>
+</html>

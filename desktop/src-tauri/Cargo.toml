@@ -1,0 +1,24 @@
+[package]
+name = "aso-desktop"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[lib]
+name = "aso_desktop_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[dependencies]
+aso-host = { path = "../../crates/aso-host" }
+serde.workspace = true
+serde_json.workspace = true
+uuid.workspace = true
+tokio.workspace = true
+async-trait.workspace = true
+chrono.workspace = true
+
+# Tauri itself is added when the shell is scaffolded (`pnpm tauri init`).
+# Left out here so a clean checkout compiles the shared core without pulling
+# the full desktop toolchain — the commands below are pure functions over
+# AppServices and are unit-testable with no window.

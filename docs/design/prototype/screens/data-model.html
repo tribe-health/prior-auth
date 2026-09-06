@@ -1,0 +1,914 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data model · Surgery Authorization Workbench · Advanced Spine &amp; Orthopedics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Mulish:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/aso.css">
+<script src="../assets/shell.js"></script>
+<script>ASO.primeTheme();</script>
+<style>
+  /* ═══ Screen-local: a reference document, not a product screen.
+     The one flourish is provenance colour — every table is tinted by
+     which governance class it belongs to, so the safety architecture
+     is legible in the diagram and not only in the prose. All colour is
+     paired with a shape or a label, so it survives greyscale. ═══ */
+
+
+
+  /* ── map of the schema ──────────────────────────────────────────── */
+  .map { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: var(--sp-3); }
+  @media (max-width: 1080px) { .map { grid-template-columns: repeat(3, minmax(0,1fr)); } }
+  @media (max-width: 820px)  { .map { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+  @media (max-width: 520px)  { .map { grid-template-columns: minmax(0,1fr); } }
+
+  .grp {
+    background: var(--s1); border-radius: var(--r-lg);
+    padding: var(--sp-4); display: flex; flex-direction: column;
+  }
+  .grp .g-h {
+    font-family: var(--font-mono); font-size: 0.6rem;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--fg-3); margin-bottom: var(--sp-3);
+    display: flex; justify-content: space-between; gap: 8px;
+  }
+  .grp .g-t { display: flex; flex-direction: column; gap: 5px; }
+  .tb {
+    display: flex; align-items: center; gap: 7px;
+    font-family: var(--font-mono); font-size: 0.74rem;
+    background: var(--s2); border-radius: var(--r);
+    padding: 6px 9px; color: var(--fg);
+  }
+  .tb.t-typed  { background: var(--cool-surface); }
+  .tb.t-gated  { background: var(--warm-surface); }
+  .tb.t-append { background: var(--ok-surface); }
+  .tb .tb-n { min-width: 0; overflow-wrap: anywhere; }
+
+
+  /* Column list inside a card */
+  .cols { margin-top: var(--sp-4); display: flex; flex-direction: column; gap: 0; }
+  .col {
+    display: grid; grid-template-columns: minmax(0,1.1fr) minmax(0,1fr);
+    gap: var(--sp-3); padding: 7px 0; align-items: baseline;
+  }
+  .col + .col { background: linear-gradient(var(--s3), var(--s3)) top left / 100% 1px no-repeat; }
+  .col .cn { font-family: var(--font-mono); font-size: 0.76rem; overflow-wrap: anywhere; }
+  .col .ct { font-size: 0.76rem; color: var(--fg-2); line-height: 1.5; }
+  .col .cn .req { color: var(--accent); }
+  @media (max-width: 560px) {
+    .col { grid-template-columns: minmax(0,1fr); gap: 2px; }
+  }
+
+
+  /* ── decision table ─────────────────────────────────────────────── */
+  .why td:first-child { font-weight: 600; }
+  .why .yes { color: var(--ok); font-family: var(--font-mono); font-size: 0.74rem; }
+  .why .no  { color: var(--void); font-family: var(--font-mono); font-size: 0.74rem; }
+
+
+</style>
+</head>
+<body>
+
+<div class="topbar" data-topbar></div>
+
+<div class="app app-nocontext">
+  <aside class="gnav" data-gnav></aside>
+
+  <main class="workbench workbench-wide" id="content">
+
+    <div data-whoami></div>
+
+    <section class="phead" data-od-id="dm-head">
+      <div>
+        <p class="eyebrow">Reference · Data model</p>
+        <h1 class="display">Sixty tables.<br>Provenance the database refuses to launder.</h1>
+        <p class="lead">
+          PostgreSQL 18 with pgvector 0.8.6 and Ory Kratos as the identity provider. Kratos owns
+          credentials and sessions; this schema owns authority — who may affirm a medical
+          decision, where every sentence of a letter came from, and which of two very
+          different kinds of payer criteria a claim is allowed to rest on.
+        </p>
+      </div>
+      <div class="row">
+        <button class="btn btn-secondary" onclick="window.print()">Print</button>
+      </div>
+    </section>
+
+    <nav class="toc" aria-label="On this page" style="margin-bottom:var(--sp-7)">
+      <a href="#governance">Governance classes</a>
+      <a href="#map">Schema map</a>
+      <a href="#identity">Kratos &amp; identity</a>
+      <a href="#typed">The typed pattern</a>
+      <a href="#gate">The surgeon gate</a>
+      <a href="#provenance">Claim provenance</a>
+      <a href="#custody">Custody &amp; audit</a>
+      <a href="#tenancy">Tenancy &amp; RLS</a>
+      <a href="#criteria">Criteria provenance</a>
+      <a href="#retrieval">Retrieval &amp; embeddings</a>
+      <a href="#adversarial">Adversarial review</a>
+      <a href="#verification">Verification</a>
+      <a href="#limits">Known limits</a>
+    </nav>
+
+    <!-- ═══ governance classes ═══ -->
+    <section class="sec" id="governance" data-od-id="dm-governance">
+      <div class="sec-head">
+        <span class="s-n">01 · Governance classes</span>
+      </div>
+      <p class="lede">
+        Not every table carries the same obligation. Four classes run through the schema, and the
+        colour in every diagram below refers to them. A table's class is the fastest answer to
+        "what happens if this row is wrong."
+      </p>
+
+      <div class="legend" style="margin-top:var(--sp-4)">
+        <div class="lg is-typed">
+          <span class="lg-k"><span class="gl gl-typed"></span>Typed</span>
+          <span class="lg-n">Metadata-driven</span>
+          <span class="lg-d">
+            A <span class="ic">*_types</span> parent holds a JSON Schema; the child's
+            <span class="ic">data</span> column is validated against it on write. Nine pairs.
+          </span>
+        </div>
+        <div class="lg is-gated">
+          <span class="lg-k"><span class="gl gl-gated"></span>Gated</span>
+          <span class="lg-n">Capability-enforced</span>
+          <span class="lg-d">
+            A trigger refuses the write unless the actor holds the clinical capability. An
+            administrator is refused here however much system access they hold.
+          </span>
+        </div>
+        <div class="lg is-append">
+          <span class="lg-k"><span class="gl gl-append"></span>Append-only</span>
+          <span class="lg-n">Immutable record</span>
+          <span class="lg-d">
+            <span class="ic">UPDATE</span> and <span class="ic">DELETE</span> raise. What was
+            recorded stays recorded, including the denials.
+          </span>
+        </div>
+        <div class="lg">
+          <span class="lg-k"><span class="gl gl-plain"></span>Relational</span>
+          <span class="lg-n">Ordinary columns</span>
+          <span class="lg-d">
+            One fixed shape, so constraints live in the column definitions where the database
+            can enforce them rather than inside a JSON blob.
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ map ═══ -->
+    <section class="sec" id="map" data-od-id="dm-map">
+      <div class="sec-head">
+        <span class="s-n">02 · Schema map</span>
+        <span style="font-size:.85rem;color:var(--fg-2)">
+          Every table in <span class="ic">schema.sql</span>, grouped by the workflow stage it serves.
+        </span>
+      </div>
+      <div class="map" id="schema-map"></div>
+    </section>
+
+    <!-- ═══ identity ═══ -->
+    <section class="sec" id="identity" data-od-id="dm-identity">
+      <div class="sec-head"><span class="s-n">03 · Kratos and identity</span></div>
+      <p class="lede">
+        <strong>Kratos owns authentication; this database owns authorization.</strong>
+        The join is a single column — <span class="ic">users.kratos_identity_id</span>, unique and
+        immutable. One Kratos identity is exactly one application user, forever. Everything Kratos
+        has no opinion on lives here: which practice the person belongs to, what they may do, and
+        whether they hold the credentials to affirm a medical decision.
+      </p>
+      <p class="lede">
+        Email is mirrored onto <span class="ic">users</span> for display, search and letterhead.
+        Kratos remains the authority on the verified address, so a mirrored copy that drifts is a
+        display bug — never an authentication one.
+      </p>
+
+      <div class="code" style="margin-top:var(--sp-4)" aria-label="users table definition"><span class="c">-- The join to Ory. UNIQUE and never reassigned.</span>
+<span class="k">CREATE TABLE</span> users (
+  id                  <span class="k">uuid</span> <span class="k">PRIMARY KEY</span> <span class="k">DEFAULT</span> gen_random_uuid(),
+  kratos_identity_id  <span class="k">uuid</span> <span class="k">NOT NULL</span> <span class="k">UNIQUE</span>,
+  practice_id         <span class="k">uuid</span> <span class="k">NOT NULL</span> <span class="k">REFERENCES</span> practices(id),
+  email               <span class="k">citext</span> <span class="k">NOT NULL</span>,   <span class="c">-- mirrored for display only</span>
+  full_name           <span class="k">text</span> <span class="k">NOT NULL</span>,
+  npi                 <span class="k">text</span>,             <span class="c">-- clinicians only</span>
+  status              <span class="k">text</span> <span class="k">NOT NULL</span> <span class="k">DEFAULT</span> <span class="s">'active'</span>
+);</div>
+
+      <p class="lede" style="margin-top:var(--sp-5)">
+        Authority resolves through capabilities, not role names. Application code asks
+        <span class="ic">user_capabilities</span> whether the actor holds
+        <span class="ic">affirm_gate</span>; it never asks whether they are "a surgeon". Adding a
+        fourth role therefore requires no call-site change.
+      </p>
+
+      <div class="tw" style="margin-top:var(--sp-4)">
+        <table class="ds why">
+          <caption class="vh">Capabilities by role, showing that clinical authority is scarce</caption>
+          <thead>
+            <tr>
+              <th scope="col">Capability</th>
+              <th scope="col" style="text-align:center">Surgeon</th>
+              <th scope="col" style="text-align:center">Staff</th>
+              <th scope="col" style="text-align:center">Admin</th>
+              <th scope="col">Clinical</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>configure</td>
+              <td style="text-align:center" class="no">—</td>
+              <td style="text-align:center" class="no">—</td>
+              <td style="text-align:center" class="yes">yes</td>
+              <td class="no">no</td></tr>
+            <tr><td>affirm_gate</td>
+              <td style="text-align:center" class="yes">yes</td>
+              <td style="text-align:center" class="no">—</td>
+              <td style="text-align:center" class="no">—</td>
+              <td class="yes">yes</td></tr>
+            <tr><td>sign_letter</td>
+              <td style="text-align:center" class="yes">yes</td>
+              <td style="text-align:center" class="no">—</td>
+              <td style="text-align:center" class="no">—</td>
+              <td class="yes">yes</td></tr>
+            <tr><td>annotate</td>
+              <td style="text-align:center" class="yes">yes</td>
+              <td style="text-align:center" class="no">—</td>
+              <td style="text-align:center" class="no">—</td>
+              <td class="yes">yes</td></tr>
+            <tr><td>submit</td>
+              <td style="text-align:center" class="yes">yes</td>
+              <td style="text-align:center" class="yes">yes</td>
+              <td style="text-align:center" class="yes">yes</td>
+              <td class="no">no</td></tr>
+            <tr><td>view_audit</td>
+              <td style="text-align:center" class="no">—</td>
+              <td style="text-align:center" class="no">—</td>
+              <td style="text-align:center" class="yes">yes</td>
+              <td class="no">no</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="lede" style="margin-top:var(--sp-4)">
+        The administrator row is the point. Dana Whitfield can add an EMR connection, invite a
+        surgeon and read the audit log, and cannot affirm a gate or sign a letter. That is not an
+        org-chart convenience; it is the safety boundary the whole role model exists to draw.
+      </p>
+    </section>
+
+    <!-- ═══ typed pattern ═══ -->
+    <section class="sec" id="typed" data-od-id="dm-typed">
+      <div class="sec-head"><span class="s-n">04 · The typed pattern</span></div>
+      <p class="lede">
+        Nine <span class="ic">*_types</span> / <span class="ic">things</span> pairs. The pattern is
+        applied where instances genuinely differ in shape and withheld where they do not — an
+        MRI report, an HbA1c result and a supervised-therapy note share a lifecycle and share
+        almost no fields, which is exactly the case the pattern exists for.
+      </p>
+
+      <div class="pair" style="margin-top:var(--sp-4)">
+        <div class="card is-type">
+          <span class="c-k">Parent · type registry</span>
+          <span class="c-t">document_types</span>
+          <span class="c-d">
+            Configuration data. New document types are added by an administrator without a
+            migration; the JSON Schema they supply becomes the write-time contract.
+          </span>
+          <div class="cols">
+            <div class="col"><span class="cn">id</span><span class="ct">uuid, primary key</span></div>
+            <div class="col"><span class="cn">name <span class="req">*</span></span><span class="ct">text, unique</span></div>
+            <div class="col"><span class="cn">description</span><span class="ct">text, optional</span></div>
+            <div class="col"><span class="cn">key <span class="req">*</span></span><span class="ct">text, unique · kebab-cased from name</span></div>
+            <div class="col"><span class="cn">schema</span><span class="ct">jsonb · JSON Schema for the child payload</span></div>
+            <div class="col"><span class="cn">created_at <span class="req">*</span></span><span class="ct">timestamptz, default now()</span></div>
+            <div class="col"><span class="cn">updated_at</span><span class="ct">timestamptz · set by trigger</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <span class="c-k">Child · instances</span>
+          <span class="c-t">documents</span>
+          <span class="c-d">
+            The shared columns are the ones every document type has regardless of payload: a
+            clinical date, an author, a source system and a content hash.
+          </span>
+          <div class="cols">
+            <div class="col"><span class="cn">id</span><span class="ct">uuid, primary key</span></div>
+            <div class="col"><span class="cn">document_type_id <span class="req">*</span></span><span class="ct">uuid → document_types.id</span></div>
+            <div class="col"><span class="cn">name <span class="req">*</span></span><span class="ct">text</span></div>
+            <div class="col"><span class="cn">data</span><span class="ct">jsonb · conforms to the type's schema</span></div>
+            <div class="col"><span class="cn">effective_date <span class="req">*</span></span><span class="ct">date · the clinical date, not retrieval</span></div>
+            <div class="col"><span class="cn">content_sha256</span><span class="ct">bytea · basis of custody proof</span></div>
+            <div class="col"><span class="cn">created_at <span class="req">*</span></span><span class="ct">timestamptz, default now()</span></div>
+            <div class="col"><span class="cn">updated_at</span><span class="ct">timestamptz · set by trigger</span></div>
+          </div>
+        </div>
+      </div>
+
+      <p class="lede" style="margin-top:var(--sp-5)">
+        <strong>The key is derived, not typed by hand.</strong> A trigger kebab-cases
+        <span class="ic">name</span> when <span class="ic">key</span> is not supplied, so
+        <span class="ic">CT Myelogram Report</span> becomes
+        <span class="ic">ct-myelogram-report</span>. Application code switches on the key and never
+        on the display name, so renaming a type for the interface cannot break the code that
+        depends on it.
+      </p>
+
+      <p class="lede">
+        <strong>Validation is a trigger, not a CHECK constraint.</strong> This is forced by
+        Postgres: a <span class="ic">CHECK</span> must be immutable and row-local, and resolving
+        the type's schema means reading another table. Attempting it fails with
+        <span class="ic">cannot use subquery in check constraint</span>. A
+        <span class="ic">BEFORE INSERT OR UPDATE</span> trigger is the sanctioned mechanism, and it
+        can name the offending type in the error, which a constraint violation cannot.
+      </p>
+
+      <div class="code" style="margin-top:var(--sp-4)" aria-label="Validation trigger and its error"><span class="c">-- One generic function serves every typed table.</span>
+<span class="k">CREATE TRIGGER</span> documents_validate_data <span class="k">BEFORE INSERT OR UPDATE</span> <span class="k">ON</span> documents
+  <span class="k">FOR EACH ROW EXECUTE FUNCTION</span> validate_typed_payload(<span class="s">'document_types'</span>, <span class="s">'document_type_id'</span>);
+
+<span class="c">-- Writing a lab result without its required fields:</span>
+<span class="k">ERROR</span>:  data does not conform to the JSON Schema
+        for document_types type <span class="s">"Laboratory Result"</span></div>
+
+      <p class="lede" style="margin-top:var(--sp-5)">
+        Where the pattern is deliberately <em>not</em> used: <span class="ic">cases</span>,
+        <span class="ic">letters</span>, <span class="ic">receipts</span> and
+        <span class="ic">users</span> have one fixed shape each. Burying a
+        <span class="ic">NOT NULL</span> business rule inside JSONB would trade a constraint the
+        database enforces for one nobody does.
+      </p>
+    </section>
+
+    <!-- ═══ gate ═══ -->
+    <section class="sec" id="gate" data-od-id="dm-gate">
+      <div class="sec-head"><span class="s-n">05 · The surgeon gate</span></div>
+      <p class="lede">
+        The product's central claim is that the gate is a hard gate enforced in code, not advice.
+        The schema honours that literally: <strong>the rule lives in the database</strong>, so a
+        future API route, a batch job, or somebody at a <span class="ic">psql</span> prompt cannot
+        route around it.
+      </p>
+      <p class="lede">
+        Four affirmations, each recorded individually with who and when.
+        <span class="ic">cases.gate_affirmed_at</span> is derived by trigger from those four rows —
+        it is never written directly, so the denormalized flag cannot disagree with the
+        affirmations behind it. Withdraw one affirmation and the gate clears on the same
+        statement.
+      </p>
+
+      <div class="code" style="margin-top:var(--sp-4)" aria-label="Gate enforcement"><span class="c">-- Only a holder of the clinical affirm_gate capability may affirm.</span>
+<span class="k">CREATE TRIGGER</span> gate_affirmations_authority <span class="k">BEFORE INSERT OR UPDATE</span>
+  <span class="k">ON</span> gate_affirmations <span class="k">FOR EACH ROW</span>
+  <span class="k">EXECUTE FUNCTION</span> enforce_gate_authority();
+
+<span class="c">-- The administrator, attempting it:</span>
+<span class="k">ERROR</span>:  user a0000000-…-0002 may not affirm the surgeon gate;
+        affirm_gate is a clinical capability
+
+<span class="c">-- And downstream, a letter signed before the gate:</span>
+<span class="k">ERROR</span>:  case d0000000-…-0002 has not been affirmed at the
+        surgeon gate; a letter may not be signed</div>
+
+      <p class="lede" style="margin-top:var(--sp-5)">
+        <span class="ic">affirmed_by</span> is <span class="ic">NOT NULL</span> and
+        <span class="ic">ON DELETE RESTRICT</span> rather than
+        <span class="ic">SET NULL</span>. Deleting a user must not be able to quietly turn an
+        affirmation into an anonymous one: an affirmation without an affirmer is not a weaker
+        record, it is a false one.
+      </p>
+    </section>
+
+    <!-- ═══ provenance ═══ -->
+    <section class="sec" id="provenance" data-od-id="dm-provenance">
+      <div class="sec-head"><span class="s-n">06 · Claim provenance</span></div>
+      <p class="lede">
+        A surgeon annotation is the one mechanism by which a claim enters a letter without a chart
+        document behind it. That makes provenance load-bearing rather than cosmetic, and it is why
+        <span class="ic">annotations</span> is a separate table from
+        <span class="ic">case_evidence</span> instead of a flag on it.
+      </p>
+
+      <div class="code" style="margin-top:var(--sp-4)" aria-label="Letter claim provenance constraint"><span class="c">-- Every claim traces to exactly one source. The XOR is what stops</span>
+<span class="c">-- surgeon opinion from being rendered as though a chart said it.</span>
+<span class="k">CREATE TABLE</span> letter_claims (
+  claim_text     <span class="k">text</span> <span class="k">NOT NULL</span>,
+  document_id    <span class="k">uuid</span> <span class="k">REFERENCES</span> documents(id) <span class="k">ON DELETE RESTRICT</span>,
+  annotation_id  <span class="k">uuid</span> <span class="k">REFERENCES</span> annotations(id) <span class="k">ON DELETE RESTRICT</span>,
+  <span class="k">CONSTRAINT</span> letter_claims_one_source <span class="k">CHECK</span> (
+    num_nonnulls(document_id, annotation_id) = <span class="s">1</span>)
+);</div>
+
+      <p class="lede" style="margin-top:var(--sp-5)">
+        <strong><span class="ic">is_included</span> is separate from existence.</strong> A surgeon
+        may record a point for the record, for a peer-to-peer, or for a future appeal without
+        arguing it in this letter. Recording a thought and arguing it are different acts, and the
+        schema does not conflate them.
+      </p>
+      <p class="lede">
+        Evidence carries three states, never two. <span class="ic">met</span>,
+        <span class="ic">gap</span> and <span class="ic">void</span> are a lookup table rather than
+        a boolean because "not documented" is not a weak "not met" — one is a chart that says no,
+        the other is a chart that is silent, and they call for opposite actions: argue, or go
+        obtain.
+      </p>
+
+      <div class="legend" style="margin-top:var(--sp-4);grid-template-columns:repeat(3,minmax(0,1fr))">
+        <div class="lg">
+          <span class="lg-k">met</span>
+          <span class="lg-n">Met</span>
+          <span class="lg-d">A dated source document satisfies the criterion.</span>
+        </div>
+        <div class="lg is-gated">
+          <span class="lg-k">gap</span>
+          <span class="lg-n">Not met</span>
+          <span class="lg-d">A document exists and it contradicts or falls short. Argue it.</span>
+        </div>
+        <div class="lg">
+          <span class="lg-k">void</span>
+          <span class="lg-n">Not documented</span>
+          <span class="lg-d">Nothing addresses it at all. Nothing has been disproved; obtain it.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ custody ═══ -->
+    <section class="sec" id="custody" data-od-id="dm-custody">
+      <div class="sec-head"><span class="s-n">07 · Custody and audit</span></div>
+      <p class="lede">
+        From the submission-and-receipt addendum: the question is not "did we send it" but
+        <strong>"can we prove what the payer received"</strong>. Every attachment carries a page
+        count and a hash taken at the moment of transmission, and
+        <span class="ic">receipt_items</span> records acknowledgement per item — so a payer that
+        acknowledges 38 of 42 pages leaves four disputed rows, and those four are the worklist.
+      </p>
+      <p class="lede">
+        <span class="ic">custody_events</span> chains each row's hash to the previous one, so a
+        silent edit anywhere breaks verification from that point forward. Both it and
+        <span class="ic">audit_events</span> refuse <span class="ic">UPDATE</span> and
+        <span class="ic">DELETE</span> outright.
+      </p>
+      <p class="lede">
+        The audit log stores <span class="ic">actor_label</span> and
+        <span class="ic">actor_role</span> as text captured at the time of the act. This is
+        deliberate denormalization: an entry that renders as "Staff did X" because the person was
+        demoted a year later is a false record of what happened.
+      </p>
+
+      <div class="code" style="margin-top:var(--sp-4)" aria-label="Append-only enforcement"><span class="k">ERROR</span>:  audit_events is append-only; UPDATE is not permitted</div>
+
+      <p class="lede" style="margin-top:var(--sp-5)">
+        Denials are recorded, not only successes. <span class="ic">audit_events.outcome</span>
+        carries <span class="ic">denied</span>, and a partial index keeps that slice cheap to
+        query — "who tried to sign something they could not" is a question the practice should be
+        able to answer.
+      </p>
+    </section>
+
+    <!-- ═══ tenancy ═══ -->
+    <section class="sec" id="tenancy" data-od-id="dm-tenancy">
+      <div class="sec-head"><span class="s-n">08 · Tenancy, multi-EMR and RLS</span></div>
+      <p class="lede">
+        A surgeon operates at more than one site, so one human patient legitimately exists in
+        several EMRs under different MRNs. <span class="ic">patient_identities</span> models that
+        duplication explicitly with a <span class="ic">match_status</span> the product surfaces,
+        rather than silently merging records — a wrong automatic merge is a patient-safety event,
+        not a data-quality nuisance.
+      </p>
+      <p class="lede">
+        EMR connection parameters are typed for the same reason documents are. A FHIR
+        backend-services connection needs an issuer, a JWKS URL and a scope list; an HL7 v2 MLLP
+        link needs a host, a port and a client certificate. Forcing both into one column set
+        produces a table where two-thirds of the columns are NULL on every row and no
+        <span class="ic">NOT NULL</span> means anything.
+      </p>
+      <p class="lede">
+        Secrets never enter this database. <span class="ic">emr_connection_secrets</span> holds a
+        reference such as <span class="ic">vault://…</span> plus an expiry, which is what the
+        interface needs to warn before a token lapses.
+      </p>
+      <p class="lede">
+        Tenancy is enforced by Postgres, not only by the application. The API sets the caller's
+        Kratos identity as a session variable on connection checkout, and row-level security
+        policies read it.
+      </p>
+
+      <div class="code" style="margin-top:var(--sp-4)" aria-label="Row level security"><span class="c">-- Set by the API on checkout, per request.</span>
+<span class="k">SET LOCAL</span> aso.kratos_identity_id = <span class="s">'…'</span>;
+
+<span class="k">CREATE POLICY</span> cases_tenant <span class="k">ON</span> cases
+  <span class="k">USING</span> (practice_id <span class="k">IN</span> (<span class="k">SELECT</span> current_app_practice_ids()));</div>
+    </section>
+
+    <!-- ═══ criteria provenance ═══ -->
+    <section class="sec" id="criteria" data-od-id="dm-criteria">
+      <div class="sec-head"><span class="s-n">09 · Criteria provenance</span></div>
+      <p class="lede">
+        Payer criteria arrive two ways, and they are not the same kind of thing.
+        Some are <strong>published</strong> — a policy document with a number, a version and a
+        URL, hash-verified against what was retrieved. Others are <strong>derived</strong>: a
+        surgeon watches forty authorisations and works out what actually gets approved, which
+        the payer has never written down anywhere.
+      </p>
+      <p class="lede">
+        The AMA puts the problem plainly — prior authorisation is <em>"a guessing game. We
+        don't actually know what piece of information the health insurer is looking for."</em>
+        Derived criteria are how a practice stops guessing, and sharing them between surgeons
+        is the most valuable thing this product can do. It is also the most dangerous, which is
+        why the schema treats provenance as load-bearing rather than descriptive.
+      </p>
+
+      <p class="lede">
+        <strong>The original schema could not record a derived criterion at all.</strong>
+        <span class="ic">policy_criteria</span> hung off a <span class="ic">policies</span> row
+        that required a policy number, a version and a source URL. A derived rule has none of
+        those, so recording one meant inventing a fake policy — laundering a surgeon's
+        observation into something indistinguishable from published payer language. That is the
+        same failure the annotation table exists to prevent, reappearing one table over.
+      </p>
+
+      <div class="tw" style="margin-top:var(--sp-4)">
+        <table class="ds why">
+          <caption class="vh">The evidence ladder, with what each grade must carry and how it may be used</caption>
+          <thead>
+            <tr>
+              <th scope="col">Grade</th>
+              <th scope="col">Must carry</th>
+              <th scope="col" style="text-align:center">Citable as policy</th>
+              <th scope="col" style="text-align:center">Half-life</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>published</td><td>policy_id + section + hash</td>
+              <td style="text-align:center" class="yes">yes</td><td style="text-align:center" class="no">—</td></tr>
+            <tr><td>obtained_by_request</td><td>document_id + received_at</td>
+              <td style="text-align:center" class="yes">yes</td><td style="text-align:center" class="no">—</td></tr>
+            <tr><td>payer_verbal</td><td>recorded_by + recorded_at + call reference</td>
+              <td style="text-align:center" class="no">no</td><td style="text-align:center">365d</td></tr>
+            <tr><td>derived_observed</td><td>practice_id + observation counts</td>
+              <td style="text-align:center" class="no">no</td><td style="text-align:center">180d</td></tr>
+            <tr><td>peer_shared</td><td>source practice + the grade it had at home</td>
+              <td style="text-align:center" class="no">no</td><td style="text-align:center">180d</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="lede" style="margin-top:var(--sp-4)">
+        Every one of those requirements is a <span class="ic">CHECK</span>, not a convention.
+        A <span class="ic">payer_verbal</span> criterion with no named recorder and no call
+        reference is rumour, and rumour must not outrank an observation backed by data — so
+        the database refuses to store it.
+      </p>
+
+      <div class="code" style="margin-top:var(--sp-4)" aria-label="Provenance constraints"><span class="c">-- A derived rule is never document-backed. If it were, it would be published.</span>
+<span class="c">-- This single constraint closes the laundering path.</span>
+<span class="k">CONSTRAINT</span> criteria_derived_has_no_policy <span class="k">CHECK</span> (
+  evidence_grade <span class="k">NOT IN</span> (<span class="s">'derived_observed'</span>,<span class="s">'peer_shared'</span>)
+  <span class="k">OR</span> (policy_id <span class="k">IS NULL</span> <span class="k">AND</span> document_id <span class="k">IS NULL</span>))
+
+<span class="c">-- Travelling between practices never upgrades a rumour into a fact.</span>
+<span class="k">CONSTRAINT</span> criteria_peer_no_promotion <span class="k">CHECK</span> (
+  origin_grade <span class="k">IS NULL</span> <span class="k">OR</span> evidence_grade = <span class="s">'peer_shared'</span>)</div>
+
+      <p class="lede" style="margin-top:var(--sp-5)">
+        <strong>Derived knowledge decays, so the schema makes it decay.</strong> A peer-reviewed
+        study documents physicians gaming prior-auth protocols until payers notice and rescind
+        them — meaning a rule observed two years ago may be actively wrong today. Retrieval rank
+        blends similarity with grade and an exponential recency decay: a fresh derived criterion
+        scores <span class="ic">0.64</span>, the same criterion unconfirmed for two years scores
+        <span class="ic">0.0385</span>, and current published policy scores
+        <span class="ic">1.0</span>. It cannot quietly outrank the written rule.
+      </p>
+      <p class="lede">
+        PostgreSQL 18's <span class="ic">WITHOUT OVERLAPS</span> exclusion constraint also fixes
+        a latent bug: nothing previously stopped two versions of one rule being in force on the
+        same date, which made "what governed on the date of service" ambiguous.
+      </p>
+
+      <p class="lede" style="margin-top:var(--sp-5)">
+        <strong>Sharing is aggregate-only, and the antitrust block is structural.</strong>
+        DOJ/FTC health care policy statements treat competitors sharing clinical information
+        about the "mode, quality, or efficiency of treatment" as low risk, and sharing fee or
+        reimbursement information as high risk. So the shared table has no money column, no fee
+        column, no allowed-amount column — and an event trigger refuses any future
+        <span class="ic">ALTER TABLE</span> that adds one. A price cannot be shared because
+        there is nowhere to put it.
+      </p>
+      <p class="lede">
+        It also carries no case foreign key, no MRN, no date finer than a quarter and no
+        procedure code finer than a family, with a minimum cell size of ten observations from at
+        least two independent practices. Counts are recomputed from observations rather than
+        typed in, one case counts once, and a Wilson lower bound is stored beside the raw
+        numbers so <span class="ic">n=3</span> never presents the way <span class="ic">n=300</span>
+        does.
+      </p>
+    </section>
+
+    <!-- ═══ retrieval ═══ -->
+    <section class="sec" id="retrieval" data-od-id="dm-retrieval">
+      <div class="sec-head"><span class="s-n">10 · Retrieval and embeddings</span></div>
+      <p class="lede">
+        Seven corpora, each answering a question somebody actually asks mid-case: what the payer
+        requires, what actually gets approved, where in three hundred chart pages the evidence
+        for criterion 3.2 sits, how this surgeon argued the point last time, what wording was
+        approved before, why this payer denies, and which society guideline supports the appeal.
+      </p>
+
+      <p class="lede">
+        <strong>Several embedding models must coexist, so the model partitions the search
+        space.</strong> A vector column's dimension is fixed at <span class="ic">CREATE
+        TABLE</span> and cannot be altered in place, and cosine distance between vectors from
+        two different models is a number with no meaning. Storage is split by dimension class
+        because pgvector indexes <span class="ic">vector</span> only to 2000 dimensions and
+        <span class="ic">halfvec</span> to 4000 — text-embedding-3-large is 3072 and cannot live
+        in an indexed <span class="ic">vector</span> column at all. One shared column would
+        either cap the product at 1536 dimensions forever or silently lose the index, which
+        still returns correct answers and so is not noticed until production is slow.
+      </p>
+
+      <p class="lede">
+        <strong>An embedding of clinical text is PHI.</strong> Text can be reconstructed from an
+        embedding by inversion attack, so embeddings fail both Safe Harbor and Expert
+        Determination — they are not de-identified by virtue of being numbers. Each model
+        therefore records whether it is cleared for PHI, a model may only be cleared if it is
+        local or covered by a BAA, and a trigger refuses to store a vector of patient text
+        against an uncleared model. A chunk in a PHI corpus must name its practice, or
+        row-level security would have nothing to filter on.
+      </p>
+
+      <div class="code" style="margin-top:var(--sp-4)" aria-label="PHI enforcement on embeddings"><span class="k">ERROR</span>:  model <span class="s">"OpenAI text-embedding-3-small"</span> is not cleared for PHI;
+        an embedding of clinical text is PHI and is recoverable by inversion
+
+<span class="k">ERROR</span>:  corpus document contains PHI; a chunk without a practice_id
+        would be visible to every tenant</div>
+
+      <p class="lede" style="margin-top:var(--sp-5)">
+        Retrieval is hybrid. Dense vectors miss exact tokens that decide cases —
+        <span class="ic">L4-L5</span>, a CPT code, <span class="ic">HbA1c</span> are either
+        present or not, and cosine similarity is indifferent to that — so keyword search runs
+        beside the vectors and the two rankings fuse by reciprocal rank.
+      </p>
+
+      <p class="lede">
+        <strong>The letter boundary is enforced, not hoped for.</strong> A rule about what a
+        model should write is not a rule. Every retrieval into a generation context is logged;
+        <span class="ic">letter_claims</span> gained a criterion source, so a criterion-backed
+        claim finally has a legal slot instead of having to masquerade as a document; and a
+        letter cannot be signed while a non-citable criterion sits unresolved in its retrieval
+        log. Attributing a derived criterion as published policy raises.
+      </p>
+      <div class="code" style="margin-top:var(--sp-4)" aria-label="Letter attribution enforcement"><span class="k">ERROR</span>:  criterion f0000000-… is graded <span class="s">"derived_observed"</span> and may not be
+        presented to a payer as published policy
+
+<span class="k">ERROR</span>:  1 unattributed non-policy criteria were retrieved into this letter;
+        attribute or exclude each before signing</div>
+    </section>
+
+    <!-- ═══ adversarial review ═══ -->
+    <section class="sec" id="adversarial" data-od-id="dm-adversarial">
+      <div class="sec-head">
+        <span class="s-n">11 · Adversarial review</span>
+        <span style="font-size:.85rem;color:var(--fg-2)">
+          Judged by a different model than the one that wrote the schema.
+        </span>
+      </div>
+      <p class="lede">
+        This design was reviewed before it was written, by <span class="ic">k3</span> — a
+        different model from the one that produced it, given only the design and no
+        conversation history. It returned <strong>BLOCK</strong> at confidence 82, with four
+        critical findings. Every one was a real hole, and each is now closed by a constraint
+        rather than by a paragraph.
+      </p>
+
+      <div class="vf" style="margin-top:var(--sp-4)">
+        <div class="vfr"><span class="v-n">K3-1</span><span>"The antitrust block is not structural — a regex over free text is trivially evaded"</span><span class="v-o pass">closed</span></div>
+        <div class="vfr"><span class="v-n">K3-2</span><span>"Cross-tenant observation linkage leaks PHI and defeats the existing RLS"</span><span class="v-o pass">closed</span></div>
+        <div class="vfr"><span class="v-n">K3-3</span><span>"Nothing binds generated letter text to the criteria that informed it"</span><span class="v-o pass">closed</span></div>
+        <div class="vfr"><span class="v-n">K3-4</span><span>"Decoupling from policies strips effective dating; a stale rule ranks equal to current policy"</span><span class="v-o pass">closed</span></div>
+        <div class="vfr"><span class="v-n">K3-5</span><span>"Observation counts are gameable and unverifiable"</span><span class="v-o pass">closed</span></div>
+        <div class="vfr"><span class="v-n">K3-6</span><span>"Criterion text stays mutable, so observations silently endorse edited text"</span><span class="v-o pass">closed</span></div>
+        <div class="vfr"><span class="v-n">K3-7</span><span>"The ladder conflates provenance with reliability; payer_verbal is unverifiable hearsay"</span><span class="v-o pass">closed</span></div>
+      </div>
+
+      <p class="lede" style="margin-top:var(--sp-4)">
+        The review's eighth item claimed the existing signing triggers would break when
+        <span class="ic">policy_id</span> became nullable. That part was wrong — no trigger
+        validated criteria against policies. But checking it surfaced something worse:
+        <span class="ic">letter_claims_one_source</span> was a strict two-way choice between a
+        document and an annotation, so a criterion-sourced claim had <em>no legal slot at
+        all</em> and could only enter a letter disguised as one of the other two. The laundering
+        path was already in the code.
+      </p>
+    </section>
+
+    <!-- ═══ verification ═══ -->
+    <section class="sec" id="verification" data-od-id="dm-verification">
+      <div class="sec-head">
+        <span class="s-n">12 · Verification</span>
+        <span style="font-size:.85rem;color:var(--fg-2)">
+          Executed against PostgreSQL 18.6 + pgvector 0.8.6, not reviewed by eye.
+        </span>
+      </div>
+      <p class="lede">
+        <span class="ic">schema.sql</span> and <span class="ic">schema-ai.sql</span> apply cleanly
+        and produce 60 tables, 5 views, 74 triggers, one event trigger, 134 foreign keys and
+        170 indexes, three of them HNSW vector indexes. The checks below matter more than the counts:
+        they test that the safety rules actually <em>refuse</em> the wrong actor. They live in
+        <span class="ic">schema-checks.sql</span> and run inside a transaction that is rolled
+        back.
+      </p>
+
+      <div class="vf" style="margin-top:var(--sp-4)">
+        <div class="vfr"><span class="v-n">T1</span><span>Administrator attempts to affirm the gate</span><span class="v-o pass">refused</span></div>
+        <div class="vfr"><span class="v-n">T2</span><span>Surgeon affirms all four — gate flag set by trigger</span><span class="v-o pass">true</span></div>
+        <div class="vfr"><span class="v-n">T3</span><span>One affirmation withdrawn — gate clears</span><span class="v-o pass">true</span></div>
+        <div class="vfr"><span class="v-n">T4</span><span>Administrator attempts a clinical annotation</span><span class="v-o pass">refused</span></div>
+        <div class="vfr"><span class="v-n">T5</span><span>Lab payload missing schema-required fields</span><span class="v-o pass">refused</span></div>
+        <div class="vfr"><span class="v-n">T6</span><span>Conforming lab payload accepted</span><span class="v-o pass">written</span></div>
+        <div class="vfr"><span class="v-n">T7</span><span><span class="ic">UPDATE</span> against the audit log</span><span class="v-o pass">refused</span></div>
+        <div class="vfr"><span class="v-n">T8</span><span>Kebab key derived from a type name</span><span class="v-o pass">derived</span></div>
+        <div class="vfr"><span class="v-n">T9</span><span>Letter signed before the gate was affirmed</span><span class="v-o pass">refused</span></div>
+      </div>
+
+      <p class="lede" style="margin-top:var(--sp-4)">
+        The first draft of this schema did not apply. It expressed payload validation as a
+        <span class="ic">CHECK</span> constraint containing a subquery, which Postgres rejects
+        outright, and a missing <span class="ic">updated_at</span> trigger on
+        <span class="ic">credentials</span> surfaced in the same pass. Both are fixed above.
+      </p>
+    </section>
+
+    <!-- ═══ limits ═══ -->
+    <section class="sec" id="limits" data-od-id="dm-limits">
+      <div class="sec-head"><span class="s-n">13 · Known limits</span></div>
+      <p class="lede">
+        Three things a reviewer should know before this goes near production data.
+      </p>
+
+      <div class="pair" style="margin-top:var(--sp-4)">
+        <div class="card">
+          <span class="c-k">Limit 01</span>
+          <span class="c-t">Free-text fee screening is a tripwire, not a barrier</span>
+          <span class="c-d">
+            The structural antitrust block is real — the shared corpus has no column for a
+            price. But a dollar figure typed into a criterion's free text is a different
+            problem. A trigger flags obvious currency patterns and blocks a flagged criterion
+            from ever reaching the shared corpus, and it is honest about what it misses:
+            <span class="ic">1.8x Medicare</span>, <span class="ic">six thousand</span> and
+            <span class="ic">RVU-weighted</span> all pass. Treating that screen as a guarantee
+            would be worse than not having it. Human review before sharing remains required.
+            <br><br>
+            Separately, JSON Schema validation stays partial —
+            <span class="ic">jsonschema_basic_check</span> enforces type and required
+            properties, not the full specification. Production should install
+            <span class="ic">pg_jsonschema</span>; the trigger wiring does not change.
+          </span>
+        </div>
+        <div class="card">
+          <span class="c-k">Limit 02</span>
+          <span class="c-t">No PHI encryption at rest</span>
+          <span class="c-d">
+            This schema assumes volume or tablespace encryption beneath it. Column-level
+            encryption for identifiers, and the key-management decision behind it, is a separate
+            piece of work that should not be inferred from this file.
+          </span>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:var(--sp-4)">
+        <span class="c-k">Limit 03</span>
+        <span class="c-t">Seed data is structural, not clinical</span>
+        <span class="c-d">
+          The document types, pathway types, QA checks and roles seeded in
+          <span class="ic">schema.sql</span> encode the workflow the prototype demonstrates. The
+          JSON Schemas attached to them are plausible and internally consistent, but they have not
+          been reviewed against a specific payer's published medical policy. Treat them as the
+          shape of the answer, not the answer.
+        </span>
+      </div>
+    </section>
+
+    <p class="meta" style="margin-top:var(--sp-7);color:var(--fg-3)">
+      Related · <a href="how-this-works.html">How this works</a> ·
+      <a href="architecture.html">Technology</a> ·
+      <a href="build-playbook.html">Build playbook</a><br><br>
+      Files · <span class="ic">schema.sql</span> · <span class="ic">schema-ai.sql</span> ·
+      <span class="ic">schema-checks.sql</span> · <span class="ic">schema-ai-checks.sql</span> ·
+      PostgreSQL 18 · pgvector 0.8.6 · Ory Kratos
+    </p>
+
+  </main>
+</div>
+
+<div class="tabbar" data-tabbar></div>
+
+<script>
+(function () {
+  ASO.shell({ step: null });
+
+  /* The schema map is generated from a single declaration rather than
+     pasted markup, so a table cannot appear in the diagram with the
+     wrong governance class after an edit. */
+  var GROUPS = [
+    { g: 'Tenancy', t: [
+      ['practices','plain'], ['facility_types','typed'], ['facilities','typed'] ] },
+    { g: 'Identity · Kratos', t: [
+      ['users','plain'], ['roles','plain'], ['capabilities','plain'],
+      ['role_capabilities','plain'], ['user_roles','plain'],
+      ['credential_types','typed'], ['credentials','typed'], ['signatures','plain'] ] },
+    { g: 'EMR integration', t: [
+      ['emr_connection_types','typed'], ['emr_connections','typed'],
+      ['emr_connection_secrets','plain'] ] },
+    { g: 'Patients', t: [
+      ['patients','plain'], ['patient_identities','plain'] ] },
+    { g: 'Payers & policy', t: [
+      ['payers','plain'], ['policy_types','typed'], ['policies','typed'],
+      ['policy_criteria','plain'] ] },
+    { g: 'Criteria provenance', t: [
+      ['evidence_grades','plain'], ['criteria','gated'],
+      ['criterion_observations','plain'], ['shared_criterion_summaries','gated'] ] },
+    { g: 'AI retrieval', t: [
+      ['embedding_models','plain'], ['corpora','plain'], ['chunks','gated'],
+      ['chunk_vectors_2000','gated'], ['chunk_vectors_1024','gated'],
+      ['chunk_vectors_half','gated'], ['retrieval_log','plain'] ] },
+    { g: 'Cases', t: [
+      ['cases','plain'], ['case_statuses','plain'],
+      ['case_diagnosis_codes','plain'] ] },
+    { g: 'Documents', t: [
+      ['document_types','typed'], ['documents','typed'] ] },
+    { g: 'Evidence', t: [
+      ['evidence_states','plain'], ['case_evidence','plain'],
+      ['evidence_citations','plain'] ] },
+    { g: 'Annotations', t: [
+      ['annotation_types','typed'], ['annotations','gated-typed'] ] },
+    { g: 'Pathways', t: [
+      ['pathway_types','typed'], ['case_pathways','typed'],
+      ['case_procedure_codes','plain'] ] },
+    { g: 'Surgeon gate', t: [
+      ['gate_affirmation_kinds','plain'], ['gate_affirmations','gated'] ] },
+    { g: 'Letters & QA', t: [
+      ['letters','gated'], ['letter_claims','gated'],
+      ['qa_check_types','typed'], ['letter_qa_results','typed'] ] },
+    { g: 'Submission', t: [
+      ['submission_channel_types','typed'], ['submissions','typed'],
+      ['submission_attachments','plain'] ] },
+    { g: 'Receipt & custody', t: [
+      ['receipts','plain'], ['receipt_items','plain'], ['custody_events','append'] ] },
+    { g: 'Peer review', t: [
+      ['reviewers','plain'], ['peer_reviews','plain'], ['determinations','plain'] ] },
+    { g: 'Audit', t: [
+      ['audit_events','append'] ] }
+  ];
+
+  var CLS = { typed: 't-typed', gated: 't-gated', 'gated-typed': 't-gated',
+             append: 't-append', plain: '' };
+  var GLY = { typed: 'gl-typed', gated: 'gl-gated', 'gated-typed': 'gl-gated',
+             append: 'gl-append', plain: 'gl-plain' };
+  var WORD = { typed: 'typed', gated: 'capability-gated',
+              'gated-typed': 'capability-gated and typed',
+              append: 'append-only', plain: 'relational' };
+
+  var host = document.getElementById('schema-map');
+  if (!host) return;
+
+  var total = 0;
+  GROUPS.forEach(function (grp) {
+    var el = document.createElement('div');
+    el.className = 'grp';
+
+    var h = document.createElement('span');
+    h.className = 'g-h';
+    h.innerHTML = '<span>' + grp.g + '</span><span>' + grp.t.length + '</span>';
+    el.appendChild(h);
+
+    var list = document.createElement('div');
+    list.className = 'g-t';
+    grp.t.forEach(function (pair) {
+      total++;
+      var row = document.createElement('span');
+      row.className = 'tb ' + CLS[pair[1]];
+      row.innerHTML =
+        '<span class="gl ' + GLY[pair[1]] + '"></span>' +
+        '<span class="tb-n">' + pair[0] + '</span>';
+      /* Colour alone never carries the class — the title and the shape
+         both restate it for anyone who cannot see the tint. */
+      row.setAttribute('title', pair[0] + ' · ' + WORD[pair[1]]);
+      list.appendChild(row);
+    });
+    el.appendChild(list);
+    host.appendChild(el);
+  });
+
+  /* If this count ever disagrees with the live database, the map is stale. */
+  var head = document.querySelector('#map .sec-head span:last-child');
+  if (head && total !== 60) {
+    head.textContent = 'Map lists ' + total + ' tables; the schema defines 60. The map is stale.';
+    head.style.color = 'var(--gap)';
+  }
+})();
+</script>
+</body>
+</html>
