@@ -26,6 +26,7 @@ import {
 
 import { PGLITE_SCHEMA_SQL } from "@/shared/sync/pglite-schema";
 import type { VerifiedSession } from "@/shared/model/session";
+import { GraphSessionManager } from "@/shared/sync/graph-session-manager";
 import { useSession } from "./session-provider";
 
 type GraphStore = ReturnType<typeof createGraphStore>;
@@ -83,6 +84,39 @@ export function graphStorageKey(session: VerifiedSession): string {
   ].join(":");
 }
 
+/**
+ * The one manager for this app.
+ *
+ * Module-level because the ownership guarantee is process-wide: two managers
+ * would each believe they held the only runtime, which is the problem this
+ * solves. Its factory is what actually opens PGlite and starts the graph.
+ */
+const sessionManager = new GraphSessionManager({
+  async open(key: string) {
+    // In-memory for now. A persisted store (idb://) survives reloads and is the
+    // point of local-first — but it also means PHI at rest in the browser,
+    // which is a decision this phase has not taken. Deliberately ephemeral.
+    const pglite = new PGlite();
+    await pglite.exec(PGLITE_SCHEMA_SQL);
+
+    const storage = await createPGlitePersistenceAdapter(pglite);
+    const store = createGraphStore();
+    const runtime = startLocalFirstGraph({ storage, store, key });
+
+    return {
+      pglite,
+      store,
+      // Drain the graph's in-flight persistence BEFORE closing the database
+      // underneath it. Closing first would fail those writes rather than
+      // letting them settle.
+      async dispose() {
+        await runtime.dispose();
+        await pglite.close();
+      },
+    };
+  },
+});
+
 export interface GraphProviderProps {
   children: ReactNode;
   /** Rendered while the local store is opening. */
@@ -100,27 +134,12 @@ export function GraphProvider({ children, fallback, onError }: GraphProviderProp
     if (!session) return;
 
     let cancelled = false;
-    let opened: PGlite | null = null;
 
     void (async () => {
       try {
-        // In-memory for now. A persisted store (idb://) survives reloads and
-        // is the point of local-first — but it also means PHI at rest in the
-        // browser, which is a decision this phase has not taken. Deliberately
-        // ephemeral until it is.
-        const pglite = new PGlite();
-        opened = pglite;
-        await pglite.exec(PGLITE_SCHEMA_SQL);
-
-        const storage = await createPGlitePersistenceAdapter(pglite);
-        const store = createGraphStore();
-        startLocalFirstGraph({ storage, store, key: graphStorageKey(session) });
-
-        if (cancelled) {
-          void pglite.close();
-          return;
-        }
-        setRuntime({ store, pglite });
+        const opened = await sessionManager.open(graphStorageKey(session));
+        if (cancelled) return;
+        setRuntime({ store: opened.store as GraphStore, pglite: opened.pglite });
       } catch (cause) {
         if (!cancelled) {
           setError(cause instanceof Error ? cause : new Error(String(cause)));
@@ -128,9 +147,14 @@ export function GraphProvider({ children, fallback, onError }: GraphProviderProp
       }
     })();
 
+    // A React cleanup is synchronous and cannot await the drain, so it only
+    // *starts* the close. The manager retains that promise and the next open()
+    // waits on it — which is what stops a disposed session's write from landing
+    // in its successor, and what makes StrictMode's mount/unmount/mount yield
+    // one runtime rather than two.
     return () => {
       cancelled = true;
-      void opened?.close();
+      void sessionManager.close();
     };
   }, [session]);
 
