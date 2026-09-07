@@ -8,8 +8,8 @@
 import { useShallow } from 'zustand/react/shallow';
 
 import { EvidenceCountsSummary, EvidenceStateChip } from '../../../shared/ui';
-import type { EvidenceCounts, EvidenceState } from '../../../shared/model/evidence-state';
-import { EVIDENCE_STATES, evidenceLabel } from '../../../shared/model/evidence-state';
+import type { EvidenceCounts, EvidenceState, EvidenceTally } from '../../../shared/model/evidence-state';
+import { EVIDENCE_STATES, evidenceLabel, loadedTally, pendingTally } from '../../../shared/model/evidence-state';
 import { useInteractionStore } from '../../../shared/store/interaction-store';
 import { useEvidenceTimeline } from '../hooks/use-evidence-timeline';
 import type { TimelineEntry } from '../model/timeline-entry';
@@ -109,6 +109,12 @@ export function filterEntries(
  *
  * Seeded at zero for all three so a state with no entries reports `0` rather
  * than being absent — the distinction `EvidenceCountsSummary` exists to keep.
+ *
+ * **Only call this with entries you have.** All-zero counts from this function
+ * mean "loaded, and nothing matched"; they are indistinguishable from a case
+ * still hydrating, which is why an unloaded caller must use `pendingTally()`
+ * rather than passing an empty array here. `tallyStates` makes that choice
+ * explicit and is the safer entry point.
  */
 export function countStates(entries: readonly TimelineEntry[]): EvidenceCounts {
   const counts: EvidenceCounts = { met: 0, gap: 0, void: 0 };
@@ -116,6 +122,18 @@ export function countStates(entries: readonly TimelineEntry[]): EvidenceCounts {
     counts[entry.state] += 1;
   }
   return counts;
+}
+
+/**
+ * Tally, carrying whether the entries are known at all.
+ *
+ * `entries` is `null` while the case's evidence is still arriving. Returning a
+ * tally rather than counts forces every downstream reader to distinguish "no
+ * outstanding evidence" from "no evidence yet" — the distinction that let a
+ * mid-hydration case report "Ready to draft".
+ */
+export function tallyStates(entries: readonly TimelineEntry[] | null): EvidenceTally {
+  return entries === null ? pendingTally() : loadedTally(countStates(entries));
 }
 
 function StateFilter({

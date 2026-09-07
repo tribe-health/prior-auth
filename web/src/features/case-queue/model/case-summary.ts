@@ -1,4 +1,4 @@
-import type { EvidenceCounts } from '../../../shared/model/evidence-state';
+import type { EvidenceCounts, EvidenceTally } from '../../../shared/model/evidence-state';
 
 export interface CaseSummary {
   id: string;
@@ -11,8 +11,28 @@ export interface CaseSummary {
   evidence: EvidenceCounts;
 }
 
+/**
+ * What the case is waiting on, when its evidence is known.
+ *
+ * Takes an {@link EvidenceTally} rather than a `CaseSummary` so an unloaded case
+ * cannot reach the sentence-building path at all. Before this, all-zero counts
+ * fell through every `> 0` check and returned **"Ready to draft"** — so a case
+ * still hydrating told a coordinator it was ready to send. The counts were
+ * honest; nothing distinguished "nothing outstanding" from "nothing known yet".
+ */
+export function blockedOnTally(tally: EvidenceTally, gateAffirmed: boolean): string | null {
+  // Not a sentence. A caller that renders this must show a loading treatment,
+  // and returning null rather than a placeholder string means it cannot
+  // accidentally print one.
+  if (!tally.loaded) return null;
+  return describeOutstanding(tally.counts, gateAffirmed);
+}
+
 /** What the case is waiting on, in the words a coordinator would use.
- *  Derived rather than stored so it cannot drift from the counts it describes. */
+ *  Derived rather than stored so it cannot drift from the counts it describes.
+ *
+ *  Retained for callers holding a fully-loaded summary. Prefer
+ *  {@link blockedOnTally} where the load state is in question. */
 export function blockedOn(c: CaseSummary): string {
   // BOTH outstanding states are reported, never just the first.
   //
@@ -26,16 +46,21 @@ export function blockedOn(c: CaseSummary): string {
   // The two states route work to DIFFERENT people — a void is obtained by a
   // coordinator, a gap is argued by a surgeon — so a worklist that names only
   // one of them dispatches half the work.
+  return describeOutstanding(c.evidence, c.gateAffirmed);
+}
+
+/** The sentence itself, given counts that are known to have arrived. */
+function describeOutstanding(evidence: EvidenceCounts, gateAffirmed: boolean): string {
   const outstanding: string[] = [];
 
-  if (c.evidence.void > 0) {
-    outstanding.push(`${c.evidence.void} document${c.evidence.void > 1 ? 's' : ''} to obtain`);
+  if (evidence.void > 0) {
+    outstanding.push(`${evidence.void} document${evidence.void > 1 ? 's' : ''} to obtain`);
   }
-  if (c.evidence.gap > 0) {
-    outstanding.push(`${c.evidence.gap} contradiction${c.evidence.gap > 1 ? 's' : ''} to argue`);
+  if (evidence.gap > 0) {
+    outstanding.push(`${evidence.gap} contradiction${evidence.gap > 1 ? 's' : ''} to argue`);
   }
   if (outstanding.length > 0) return outstanding.join(' · ');
 
-  if (!c.gateAffirmed) return 'A surgeon affirmation';
+  if (!gateAffirmed) return 'A surgeon affirmation';
   return 'Ready to draft';
 }
