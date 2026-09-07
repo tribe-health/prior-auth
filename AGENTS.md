@@ -442,3 +442,67 @@ Model `gpt-6-astra` on the Responses API; tool calling requires Responses.
 Reasoning effort `low` through `max` — `none` is unsupported. `temperature`,
 `top_p` and `top_logprobs` are not accepted. Set reasoning effort through the
 API, not by asking the model in prose to think harder.
+
+---
+
+## Testing Policy — Local Integration Only (NON-NEGOTIABLE)
+
+**CI/CD is never used to run tests. Ever.** Not to verify a change, not to prove
+a gate, not "just this once" for a hard-to-reproduce case.
+
+**All testing is local full-integration testing.** Stand the stack up locally
+and run against it.
+
+### Forbidden
+
+- Dispatching a workflow to test something (`gh workflow run …`, pushing to
+  trigger CI, re-running a job to observe behaviour).
+- Treating a CI result as evidence that a gate may flip or a change is verified.
+- Authoring a task, plan or acceptance criterion whose only completion path is a
+  CI run. Such a task is **unsatisfiable** and must be rewritten around a local
+  integration run.
+
+### Permitted
+
+- CI for build, lint, typecheck, formatting and packaging.
+- Local `vitest` / `cargo test` and full local integration runs.
+
+### Consequence for planning
+
+When a change's verification step is "run the workflow and read the result",
+stop and rewrite it before implementing. A phase in the sibling
+`flint-realtime-fabric` repo carried such a change (`p36-c002`) to completion of
+every task except the two that needed CI, and could never close it. Catching
+this at plan time is cheaper than discovering it at the gate.
+
+---
+
+## Testing Policy — Local Integration Only (NON-NEGOTIABLE)
+
+**CI/CD is never used to run tests. Ever.** Not to verify a change, not to prove
+a gate, not "just this once" for a hard-to-reproduce case.
+
+**All testing is local full-integration testing.** Stand the stack up locally
+and run against it.
+
+### Forbidden
+
+- Dispatching a workflow to test something (`gh workflow run …`, pushing to
+  trigger CI, re-running a job to observe behaviour).
+- Treating a CI result as evidence that a gate may flip or a change is verified.
+- Authoring a task, plan or acceptance criterion whose only completion path is a
+  CI run. Such a task is **unsatisfiable** and must be rewritten around a local
+  integration run.
+
+### Permitted
+
+- CI for build, lint, typecheck, formatting and packaging.
+- Local `vitest` / `cargo test` and full local integration runs.
+
+### Consequence for planning
+
+When a change's verification step is "run the workflow and read the result",
+stop and rewrite it before implementing. A phase in the sibling
+`flint-realtime-fabric` repo carried such a change (`p36-c002`) to completion of
+every task except the two that needed CI, and could never close it. Catching
+this at plan time is cheaper than discovering it at the gate.
