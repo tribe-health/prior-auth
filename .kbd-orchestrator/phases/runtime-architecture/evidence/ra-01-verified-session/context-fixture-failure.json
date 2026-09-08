@@ -1,0 +1,78 @@
+{
+  "result": "Failed",
+  "verification_tier": 1,
+  "observed_at": "2026-09-06T16:24:44.551123+00:00",
+  "scope": "Task 1.3: real PostgreSQL transaction lifecycle and mounted session authority refusals",
+  "commands": [
+    "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-session-context.py",
+    "docker compose exec -T db psql -U <configured admin> -X -A -t -q -v ON_ERROR_STOP=1 -d <disposable database> (SQL on stdin)",
+    "cargo run -p aso-web-server (configuration and disposable password supplied through environment)",
+    "cargo test -p aso-web-server session_transaction_context_lifecycle -- --ignored --nocapture"
+  ],
+  "checks": {
+    "synthetic_native_and_browser_flows": {
+      "result": "Passed",
+      "identity_equal": true,
+      "distinct_sessions": true
+    },
+    "disposable_login_is_nonowner_nonbypass_reader_member": {
+      "result": "Passed",
+      "psql_output": "t"
+    }
+  },
+  "app_response_count": 0,
+  "no_store_response_count": 0,
+  "cleanup": {
+    "synthetic_identity_deleted": true,
+    "native_session_revoked": true,
+    "browser_session_revoked": true,
+    "disposable_database_deleted": true,
+    "disposable_login_deleted": true,
+    "probe_created_reader_deleted": true
+  },
+  "unverified": [
+    "Gate routing, two-identity assembled pool campaign and physical native UI remain later tasks.",
+    "Cancellation is proved on the production transaction owner with an active PostgreSQL query; HTTP disconnect propagation is not claimed."
+  ],
+  "attempt_history": [
+    {
+      "observed_at": "2026-09-06T16:24:09.478121+00:00",
+      "result": "Failed",
+      "failure": {
+        "stage": "real_transaction_lifecycle",
+        "type": "AssertionError"
+      },
+      "app_exit_code": null,
+      "cleanup": {
+        "synthetic_identity_deleted": true,
+        "native_session_revoked": true,
+        "browser_session_revoked": true,
+        "disposable_database_deleted": true,
+        "disposable_login_deleted": true,
+        "probe_created_reader_deleted": true
+      },
+      "diagnosis": "See recorded failure stage."
+    }
+  ],
+  "kratos_version": "v26.2.0",
+  "postgres_published_port": 55432,
+  "transaction_test": {
+    "exit": 101,
+    "output": [
+      "context check passed: explicit_commit",
+      "context check passed: mounted_repository_success",
+      "context check passed: mounted_repository_denial",
+      "context check passed: sql_error_drop_rollback",
+      "context check passed: explicit_rollback",
+      "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 3 filtered out; finished in 5.17s"
+    ],
+    "diagnostic": "\nrunning 1 test\ncontext check passed: explicit_commit\ncontext check passed: mounted_repository_success\ncontext check passed: mounted_repository_denial\ncontext check passed: sql_error_drop_rollback\ncontext check passed: explicit_rollback\ntest adapters::session::transaction_tests::session_transaction_context_lifecycle ... FAILED\n\nfailures:\n\nfailures:\n    adapters::session::transaction_tests::session_transaction_context_lifecycle\n\ntest result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 3 filtered out; finished in 5.17s\n\n    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.63s\n     Running unittests src/main.rs (/Users/gqadonis/.cargo/build-cache/02/70d32e977a4fbf/debug/deps/aso_web_server-b67069ade2a5d53e)\n\nthread 'adapters::session::transaction_tests::session_transaction_context_lifecycle' (89628261) panicked at crates/aso-web-server/src/adapters/session/transaction_tests.rs:19:5:\nassertion `left == right` failed: connection context leaked after in_flight_cancellation_drop_rollback\n  left: (44534, true, \"\", \"\\\"$user\\\", public\", \"0\", \"off\", \"read committed\")\n right: (44524, true, \"\", \"\\\"$user\\\", public\", \"0\", \"off\", \"read committed\")\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\nerror: test failed, to rerun pass `-p aso-web-server --bin aso-web-server`\n"
+  },
+  "failure": {
+    "stage": "real_transaction_lifecycle",
+    "type": "AssertionError"
+  },
+  "check_count": 2,
+  "completed_at": "2026-09-06T16:24:56.514420+00:00",
+  "diagnosis": "Test required same backend PID after cancellation; SQLx 0.8.3 discards connection on release ping error. Both contexts were clean; test now verifies same-PID cleanup for normal exits, and cleanup plus old backend removal if cancellation replaces it."
+}

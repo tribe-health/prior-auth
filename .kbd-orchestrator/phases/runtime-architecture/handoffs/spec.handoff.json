@@ -1,0 +1,9 @@
+{
+  "stage": "spec",
+  "completedAt": "2026-09-06T11:51:20Z",
+  "outputs": [],
+  "nextStage": "plan",
+  "summaryForNext": "skipped: Use the phase goals and accepted runtime/UI contracts as the existing specification; the next plan must produce bounded implementation criteria without claiming delivery.",
+  "skipped": true,
+  "skipReason": "Use the phase goals and accepted runtime/UI contracts as the existing specification; the next plan must produce bounded implementation criteria without claiming delivery."
+}

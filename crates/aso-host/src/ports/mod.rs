@@ -9,6 +9,31 @@ use async_trait::async_trait;
 
 #[async_trait]
 pub trait CaseRepository: Send + Sync {
+    /// Legacy adapters cannot silently accept authenticated durable commands.
+    async fn execute_gate_command(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: &crate::affirmation::GateCommand,
+    ) -> Result<crate::affirmation::GateCommandResult, crate::affirmation::GateError> {
+        Err(crate::affirmation::GateError::Unavailable)
+    }
+
+    async fn read_verified_gate(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+    ) -> Result<crate::affirmation::GateSnapshot, crate::affirmation::GateError> {
+        Err(crate::affirmation::GateError::Unavailable)
+    }
+
+    async fn lookup_gate_command(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+    ) -> Result<Option<crate::affirmation::GateCommandResult>, crate::affirmation::GateError> {
+        Err(crate::affirmation::GateError::Unavailable)
+    }
+
     async fn gate_state(&self, case_id: CaseId) -> Result<GateState, DomainError>;
 
     async fn record_affirmation(
@@ -22,6 +47,38 @@ pub trait CaseRepository: Send + Sync {
 
 #[async_trait]
 pub trait EvidenceRepository: Send + Sync {
+    async fn read_reassessment_target(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+        _: uuid::Uuid,
+    ) -> Result<
+        crate::reassessment::EvidenceReassessmentTarget,
+        crate::reassessment::ReassessmentError,
+    > {
+        Err(crate::reassessment::ReassessmentError::Unavailable)
+    }
+
+    async fn execute_reassessment(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: &crate::reassessment::ReassessEvidenceCommand,
+    ) -> Result<crate::reassessment::ReassessEvidenceResult, crate::reassessment::ReassessmentError>
+    {
+        Err(crate::reassessment::ReassessmentError::Unavailable)
+    }
+
+    async fn lookup_reassessment_command(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+    ) -> Result<
+        Option<crate::reassessment::ReassessEvidenceResult>,
+        crate::reassessment::ReassessmentError,
+    > {
+        Err(crate::reassessment::ReassessmentError::Unavailable)
+    }
+
     /// Counts by state, which is what the dashboard tiles read. Returned as a
     /// triple rather than a map so a caller cannot forget that `Void` exists.
     async fn counts(&self, case_id: CaseId) -> Result<EvidenceCounts, DomainError>;
@@ -55,6 +112,32 @@ pub struct Criterion {
 
 #[async_trait]
 pub trait LetterRepository: Send + Sync {
+    /// Legacy adapters refuse verified signing until they implement the
+    /// authoritative clinical transaction.
+    async fn read_signing_target(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: LetterId,
+    ) -> Result<crate::signing::SigningTarget, crate::signing::SigningError> {
+        Err(crate::signing::SigningError::Unavailable)
+    }
+
+    async fn execute_sign_letter(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: &crate::signing::SignLetterCommand,
+    ) -> Result<crate::signing::SignLetterResult, crate::signing::SigningError> {
+        Err(crate::signing::SigningError::Unavailable)
+    }
+
+    async fn lookup_sign_letter_command(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+    ) -> Result<Option<crate::signing::SignLetterResult>, crate::signing::SigningError> {
+        Err(crate::signing::SigningError::Unavailable)
+    }
+
     async fn get(&self, id: LetterId) -> Result<Letter, DomainError>;
 
     /// Retrieved criteria that are not citable as policy and have neither been
@@ -80,6 +163,32 @@ pub trait LetterRepository: Send + Sync {
 /// capability set — it does not inherit the surgeon's clinical authority.
 #[async_trait]
 pub trait AuthorityPort: Send + Sync {
+    /// The existing actor-only scaffold grants no verified clinical authority.
+    async fn may_affirm_gate(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+    ) -> Result<bool, crate::affirmation::GateError> {
+        Ok(false)
+    }
+
+    async fn may_sign_letter(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: LetterId,
+    ) -> Result<bool, crate::signing::SigningError> {
+        Ok(false)
+    }
+
+    async fn may_reassess_evidence(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+        _: uuid::Uuid,
+    ) -> Result<bool, crate::reassessment::ReassessmentError> {
+        Ok(false)
+    }
+
     async fn holds(&self, actor: ActorId, capability: Capability) -> Result<bool, DomainError>;
 }
 

@@ -1,0 +1,126 @@
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.10s
+    Checking aso-server-axum v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-server-axum)
+warning: the `Err`-variant returned from this function is very large
+  --> crates/aso-server-axum/src/routes/evidence.rs:92:6
+   |
+92 | ) -> Result<Json<ReassessEvidenceResult>, Response> {
+   |      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the `Err`-variant is at least 128 bytes
+   |
+   = help: try reducing the size of `axum::http::Response<axum::body::Body>`, for example by boxing large elements or replacing it with `Box<axum::http::Response<axum::body::Body>>`
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#result_large_err
+   = note: `#[warn(clippy::result_large_err)]` on by default
+
+warning: the `Err`-variant returned from this function is very large
+   --> crates/aso-server-axum/src/routes/evidence.rs:119:6
+    |
+119 | ) -> Result<Json<ReassessEvidenceResult>, Response> {
+    |      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the `Err`-variant is at least 128 bytes
+    |
+    = help: try reducing the size of `axum::http::Response<axum::body::Body>`, for example by boxing large elements or replacing it with `Box<axum::http::Response<axum::body::Body>>`
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#result_large_err
+
+warning: the `Err`-variant returned from this function is very large
+   --> crates/aso-server-axum/src/routes/gate.rs:117:6
+    |
+117 | ) -> Result<Json<GateSnapshot>, Response> {
+    |      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the `Err`-variant is at least 128 bytes
+    |
+    = help: try reducing the size of `axum::http::Response<axum::body::Body>`, for example by boxing large elements or replacing it with `Box<axum::http::Response<axum::body::Body>>`
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#result_large_err
+
+warning: the `Err`-variant returned from this function is very large
+   --> crates/aso-server-axum/src/routes/gate.rs:137:6
+    |
+137 | ) -> Result<Json<GateCommandResult>, Response> {
+    |      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the `Err`-variant is at least 128 bytes
+    |
+    = help: try reducing the size of `axum::http::Response<axum::body::Body>`, for example by boxing large elements or replacing it with `Box<axum::http::Response<axum::body::Body>>`
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#result_large_err
+
+warning: the `Err`-variant returned from this function is very large
+   --> crates/aso-server-axum/src/routes/gate.rs:163:6
+    |
+163 | ) -> Result<Json<GateCommandResult>, Response> {
+    |      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the `Err`-variant is at least 128 bytes
+    |
+    = help: try reducing the size of `axum::http::Response<axum::body::Body>`, for example by boxing large elements or replacing it with `Box<axum::http::Response<axum::body::Body>>`
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#result_large_err
+
+warning: the `Err`-variant returned from this function is very large
+   --> crates/aso-server-axum/src/routes/gate.rs:172:6
+    |
+172 | ) -> Result<Json<GateCommandResult>, Response> {
+    |      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the `Err`-variant is at least 128 bytes
+    |
+    = help: try reducing the size of `axum::http::Response<axum::body::Body>`, for example by boxing large elements or replacing it with `Box<axum::http::Response<axum::body::Body>>`
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#result_large_err
+
+warning: the `Err`-variant returned from this function is very large
+   --> crates/aso-server-axum/src/routes/gate.rs:180:6
+    |
+180 | ) -> Result<Json<GateCommandResult>, Response> {
+    |      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the `Err`-variant is at least 128 bytes
+    |
+    = help: try reducing the size of `axum::http::Response<axum::body::Body>`, for example by boxing large elements or replacing it with `Box<axum::http::Response<axum::body::Body>>`
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#result_large_err
+
+warning: the `Err`-variant returned from this function is very large
+   --> crates/aso-server-axum/src/routes/gate.rs:213:6
+    |
+213 | ) -> Result<StatusCode, Response> {
+    |      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the `Err`-variant is at least 128 bytes
+    |
+    = help: try reducing the size of `axum::http::Response<axum::body::Body>`, for example by boxing large elements or replacing it with `Box<axum::http::Response<axum::body::Body>>`
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#result_large_err
+
+warning: the `Err`-variant returned from this function is very large
+  --> crates/aso-server-axum/src/routes/letters.rs:93:6
+   |
+93 | ) -> Result<Json<SignLetterResult>, Response> {
+   |      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the `Err`-variant is at least 128 bytes
+   |
+   = help: try reducing the size of `axum::http::Response<axum::body::Body>`, for example by boxing large elements or replacing it with `Box<axum::http::Response<axum::body::Body>>`
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#result_large_err
+
+warning: the `Err`-variant returned from this function is very large
+   --> crates/aso-server-axum/src/routes/letters.rs:126:6
+    |
+126 | ) -> Result<Json<SignLetterResult>, Response> {
+    |      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the `Err`-variant is at least 128 bytes
+    |
+    = help: try reducing the size of `axum::http::Response<axum::body::Body>`, for example by boxing large elements or replacing it with `Box<axum::http::Response<axum::body::Body>>`
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#result_large_err
+
+warning: this `MutexGuard` is held across an await point
+   --> crates/aso-server-axum/src/routes/letters/tests.rs:279:9
+    |
+279 |     let commands = fixture.signing.commands.lock().unwrap();
+    |         ^^^^^^^^
+    |
+    = help: consider using an async-aware `Mutex` type or ensuring the `MutexGuard` is dropped before calling `await`
+note: these are all the await points this lock is held through
+   --> crates/aso-server-axum/src/routes/letters/tests.rs:294:49
+    |
+294 |     let response = fixture.request(&uri, stale).await;
+    |                                                 ^^^^^
+295 |     assert_eq!(response.status(), StatusCode::CONFLICT);
+296 |     assert_eq!(error_code(response).await, "revision_conflict");
+    |                                     ^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#await_holding_lock
+    = note: `#[warn(clippy::await_holding_lock)]` on by default
+
+warning: `aso-server-axum` (lib test) generated 11 warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.60s
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.17s
+     Running unittests src/lib.rs (/Users/gqadonis/.cargo/build-cache/02/70d32e977a4fbf/debug/deps/aso_server_axum-f8afc4fcd3fc590a)
+
+running 6 tests
+test session::tests::an_agent_may_not_attempt_a_clinical_act ... ok
+test session::tests::ambiguous_or_blank_credentials_are_rejected_before_resolution ... ok
+test session::tests::mounted_registry_derives_two_practice_grants ... ok
+test session::tests::mounted_registry_rejects_client_projection_controls ... ok
+test session::tests::mounted_current_session_refuses_expired_or_nonhuman_port_results ... ok
+test session::tests::mounted_registry_refuses_failed_or_expired_membership_resolution ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 22 filtered out; finished in 0.00s
+

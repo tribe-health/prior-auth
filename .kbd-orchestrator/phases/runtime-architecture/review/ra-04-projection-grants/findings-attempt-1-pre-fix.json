@@ -1,0 +1,73 @@
+{
+  "mode": "diff",
+  "verdict": "PASS",
+  "judge_model": "k3",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "WARNING",
+      "file": "crates/aso-server-axum/src/session.rs",
+      "line": 168,
+      "claim": "The replica_grant handler issues a ReplicaGrant without verifying the resolved session's principal is a human, unlike clinical_context which explicitly rejects non-User principals.",
+      "evidence": "clinical_context() contains `if session.principal != Principal::User { return Err(ClinicalContextError::NonHuman); }`, but replica_grant() only guards on `summary.expires_at > state.services.clock.now()` and then returns `Json(ReplicaGrant::for_session(&summary))`. The principal refusal exists only inside the SessionService implementation of SessionPort (crates/aso-host/src/session.rs), so any alternate/future SessionPort wiring that returns an Agent or Service summary produces a full five-projection grant. The axum tests inject GrantSessions/FixedGrantSessions directly, demonstrating the handler itself performs no principal check.",
+      "suggested_fix": "Add `if summary.principal != Principal::User { return session_error(SessionError::PracticeDenied) }` (or a dedicated error) in replica_grant before constructing the grant, mirroring clinical_context."
+    },
+    {
+      "severity": "WARNING",
+      "file": "crates/aso-server-axum/src/lib.rs",
+      "line": 34,
+      "claim": "The diff removes the entire cases router (`routes::cases::router()`) while the accompanying documentation only justifies unmounting the single legacy actor-less evidence-count route, leaving any other case endpoints the router served unmounted with no stated replacement.",
+      "evidence": "Hunk in crates/aso-server-axum/src/lib.rs: `-        .merge(routes::cases::router())` replaced by session and evidence routers. docs/architecture/application-runtime-architecture.md says only \"The legacy actor-less evidence-count route is unmounted until it is converted to fresh verified context\" \u2014 it does not state that all other case routes (e.g., case read/list used by the web pipeline in web/src/app/shell/app-shell.tsx) were removed or where they moved. Nothing in the packet shows a replacement HTTP or projection path for those endpoints.",
+      "suggested_fix": "Either confirm in the change evidence that routes::cases contained only legacy routes superseded by gate/evidence/projection paths, or restore the still-needed case endpoints under verified-context handlers."
+    },
+    {
+      "severity": "WARNING",
+      "file": "crates/frf-identity-ory/src/verifier.rs",
+      "line": 74,
+      "claim": "The only FRF verifier hardcodes RS256 while the Gate deployment config mints HS256, so the Gate\u2192FRF replica token path cannot interoperate as configured, and the packet's end-to-end evidence verifies the minted HS256 token with a Python hmac check instead of the actual FRF verifier.",
+      "evidence": "crates/frf-identity-ory/src/verifier.rs: `Validation::new(Algorithm::RS256)`. docker/flint-gate/config.yaml: `jwt: signing_algorithm: \"HS256\"`. scripts/test-replica-grant.py verifies the token locally (`hmac.new(SECRET.encode(), signed, hashlib.sha256)`) and never presents it to OryIdentityVerifier. Acceptance criterion 1.3 requires \"expiry and issuer/audience validation across Gate and FRF\" and 2.2 requires wrong issuer/audience rejected; no evidence in the packet runs a Gate-minted token through the real FRF verification path.",
+      "suggested_fix": "Configure an asymmetric signing key for the replica minter (or make the verifier algorithm part of validated config) and add a fixture that passes an actual Gate-minted token through OryIdentityVerifier with the deployed issuer/audience."
+    },
+    {
+      "severity": "WARNING",
+      "file": "crates/frf-identity-ory/src/verifier.rs",
+      "line": 78,
+      "claim": "Issuer validation is conditional on optional config (`if let Some(issuer) = &self.issuer`), so a deployment that omits the issuer accepts any `iss` from a key-resolvable IdP, contrary to criterion 1.3/2.2's blanket claim that a wrong issuer is rejected.",
+      "evidence": "verifier.rs: `validation.set_audience(&[&self.audience]);` is unconditional, but `if let Some(issuer) = &self.issuer { ... }` gates the issuer check. Nothing in the packet shows the issuer being required at construction. Acceptance criterion 1.3: \"expiry and issuer/audience validation across Gate and FRF\"; 2.2: \"wrong issuer/audience/scope/revision is rejected.\"",
+      "suggested_fix": "Make the expected issuer a required field of OryIdentityVerifier (fail construction without it) so `iss` is always validated."
+    },
+    {
+      "severity": "WARNING",
+      "file": "crates/frf-gateway/tests/shape_projection_grant.rs",
+      "claim": "Acceptance criterion 2.4 is marked complete, but its evidence is a stub facade echoing a canned JSON body containing `gate_affirmed_at: null` \u2014 no gate affirmation is removed in another session and nothing propagates through an authorized stream.",
+      "evidence": "Criterion 2.4: \"when A committed gate affirmation is removed in another session, then The projected cases.gate_affirmed_at clears through the authorized stream.\" The test `authorized_shape_route_preserves_a_cleared_gate_summary` constructs `CountingFacade` whose `fetch` returns a fixed `body` and asserts the route echoes it; CountingAuthz always returns true. The completion evidence itself concedes \"the live Gate-to-FRF-to-Electric exchange and deployment topology belong to RA05,\" which contradicts checking 2.4 as satisfied.",
+      "suggested_fix": "Reopen criterion 2.4 (mark it partially satisfied) until a fixture removes a committed affirmation in one session and observes the cleared field arrive through the real replica stream, or scope the criterion explicitly to the route-level pass-through that was actually proved."
+    },
+    {
+      "severity": "WARNING",
+      "file": "docker/flint-gate/config.yaml",
+      "line": 304,
+      "claim": "The deployment config mounts eight clinical routes on the `aso_clinical_authorize` hook and the new replica-grant minter reuses that module's `credential_headers`/`callback_url`, but the hook module's source is not in the packet, so the fail-closed behavior of the clinical boundary and the replica credential forwarding cannot be verified.",
+      "evidence": "config.yaml adds `type: aso_clinical_authorize` hooks for gate/sign/reassess routes with the comment \"Requires the Gate build containing the aso_clinical_authorize hook.\" crates/flint-gate-core/src/middleware/mod.rs adds `mod aso_clinical_authorize;`, and aso_replica_grant.rs calls `super::aso_clinical_authorize::credential_headers(original_headers)?` and `super::aso_clinical_authorize::callback_url(&config.url)?` \u2014 yet supplemental_diffs includes only aso_replica_grant.rs, not aso_clinical_authorize.rs. Whether it enforces single-credential extraction, scheme/host pinning of the callback URL, and fail-closed mapping is unreviewable.",
+      "suggested_fix": "Include crates/flint-gate-core/src/middleware/aso_clinical_authorize.rs in the review packet (or its prior-waypoint review artifact) so the credential-forwarding and URL-validation helpers the replica path depends on are covered."
+    },
+    {
+      "severity": "SUGGESTION",
+      "file": "crates/aso-server-axum/src/session.rs",
+      "line": 99,
+      "claim": "The duplicate `ory_kratos_session` cookie detection is bypassable with whitespace before the `=` (e.g., `ory_kratos_session =a`), because only the whole pair is trimmed before `split_once('=')`, leaving a trailing space in the key.",
+      "evidence": "credential(): `pair.trim().split_once('=').is_some_and(|(key, _)| key == \"ory_kratos_session\")` \u2014 for the pair ` ory_kratos_session =a`, trim yields `ory_kratos_session =a` and the key is `ory_kratos_session ` (trailing space), which fails the equality check, so a header containing `ory_kratos_session=a; ory_kratos_session =b` passes the duplicate rejection the comment says is required.",
+      "suggested_fix": "Trim the key before comparing: `pair.split_once('=').is_some_and(|(key, _)| key.trim() == \"ory_kratos_session\")`."
+    },
+    {
+      "severity": "SUGGESTION",
+      "file": "crates/flint-gate-core/src/middleware/pipeline.rs",
+      "line": 335,
+      "claim": "The mutually-exclusive configuration of `aso_replica_grant` and `mint_jwt` on one route is detected per-request at runtime (returning 503) instead of at config load/startup.",
+      "evidence": "pipeline.rs: `if let Some(replica_cfg) = &config.aso_replica_grant { if config.mint_jwt.is_some() { return Err(StatusCode::SERVICE_UNAVAILABLE); } ... }`. A misconfigured route starts cleanly and only fails when first exercised; with hot-reload this also means a bad route can be live-rejected only at request time.",
+      "suggested_fix": "Validate the `aso_replica_grant` + `mint_jwt` conflict in config validation (alongside the other route linting in config/types.rs) so startup or hot-reload refuses the route."
+    }
+  ]
+}

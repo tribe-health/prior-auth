@@ -1,0 +1,12 @@
+{
+  "stage": "plan",
+  "completedAt": "2026-09-06T13:58:16Z",
+  "outputs": [
+    "plan.md",
+    "review/plan/review.md"
+  ],
+  "nextStage": "execute",
+  "summaryForNext": "24 ordered OpenSpec changes; start ra-01-verified-session, establish verified authority before authorized sync, then scoped PEM, browser delivery, native parity and updates. Review warnings are disposed in review/plan/review.md: root OpenSpec satisfies the existing OR condition, ra-10 gates ra-14 rather than conformance, practice-derivation tests cover actual trigger tables, and Flutter joins phase T2; critic fixes cover SQLite projection, sync splitting, gate summary and synthetic durable fixtures. Keep G-PIN and other explicit decision gates, all implementation pending, and prior publication blocked; candidate tests do not certify installed PEM 4.0.0.",
+  "skipped": false,
+  "skipReason": null
+}

@@ -1,0 +1,43 @@
+{
+  "mode": "artifact",
+  "verdict": "PASS",
+  "judge_model": "k3",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "WARNING",
+      "file": "plan.md",
+      "claim": "The plan selects root OpenSpec spec-driven change management, contradicting the constraints' project note that KBD uses built-in change management until actual specs exist.",
+      "evidence": "Plan header: \"OpenSpec available: YES \u2014 root openspec/config.yaml selects spec-driven\" and \"Use root OpenSpec spec-driven changes, with KBD as canonical ordering/status.\" Constraints project note: \"web/openspec/config.yaml is nested below the focus root and has no specs, so KBD uses its built-in change management until a root OpenSpec project or actual specs are added.\" The plan itself admits \"the root OpenSpec directory exists even though its specs are empty\" and \"the root spec store is empty,\" so by the constraints' own criterion (\"actual specs are added\") the spec-driven switch is not yet authorized; the plan resolves the ambiguity in its favor without flagging it as a decision.",
+      "suggested_fix": "Either record an explicit operator decision that root openspec/config.yaml constitutes 'a root OpenSpec project' (overriding the stale constraint note), or plan change artifacts under KBD built-in change management until the first spec is accepted."
+    },
+    {
+      "severity": "WARNING",
+      "file": "plan.md",
+      "claim": "ra-11a depends on ra-10, placing an explicitly independent invariant (query-cache removal) on the critical path of the entire first-delivery chain.",
+      "evidence": "ra-10 declares \"Depends on: NONE\" and \"Scope / runtime order: independent invariant,\" yet ra-11a lists \"Depends on: ra-09-pem-delivery-gate, ra-10-remove-transitive-query-cache\" and the round table states round 10 \"Requires adopted PEM and ra-10.\" ra-10's own bounded task 1 says \"stop this change for replanning if an active bridge consumer is found\" \u2014 if that happens, ra-11a, ra-11b, ra-11c, ra-12, ra-13 and the ra-14 first-row milestone all block on an orthogonal dependency-cleanup replan that has no technical bearing on sync conformance.",
+      "suggested_fix": "Remove the ra-11a\u2192ra-10 dependency (the conformance harness runs in an isolated checkout where SWR presence in the web lockfile is irrelevant) and instead gate ra-10 on ra-14/ra-22 (browser delivery / certification), where the no-query-cache invariant is actually enforced."
+    },
+    {
+      "severity": "WARNING",
+      "file": "plan.md",
+      "claim": "The goals' requirement for trigger-forced practice_id on base tables has no corresponding acceptance criterion in any change.",
+      "evidence": "Goals: \"Use trigger-forced practice_id on base tables and server-authorized column projections.\" The plan covers server-authorized column projections (ra-04) and the cases.gate_affirmed_at trigger (ra-02: \"Maintain the existing trigger-derived cases.gate_affirmed_at\"), but no change's acceptance criteria verify that practice_id on the five base tables is trigger-forced and cannot be caller-set \u2014 ra-02's \"direct-column write refusal\" applies only to gate_affirmed_at, and ra-01/ra-02 use transaction-local identity context without proving the practice_id trigger survives the new repository transactions.",
+      "suggested_fix": "Add to ra-02 (or ra-04) an acceptance criterion that a direct caller-supplied practice_id write on each of the five base tables is refused/overridden by the trigger under the non-bypass role, on both fresh and upgraded databases."
+    },
+    {
+      "severity": "SUGGESTION",
+      "file": "plan.md",
+      "claim": "Typo in ra-11c acceptance criterion 1 corrupts the technical term.",
+      "evidence": "\"sQL rows/checkpoints and graph entities/lists agree before readiness\" \u2014 lowercase 'sQL' in a normative acceptance sentence that downstream executors will quote.",
+      "suggested_fix": "Correct to \"SQL rows/checkpoints\"."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "gate_command": "bash /Users/gqadonis/.codex/skills/adversarial-review/scripts/check-findings-sycophancy.sh --findings .kbd-orchestrator/phases/runtime-architecture/review/ra-01-verified-session/findings.json --counter-key adv-review-ra01-completion",
+  "gate_exit": 0,
+  "gate_output": "[adv-gate] PASS (score=0.0, strictness=strict)",
+  "direct_mcp_confirmation": {
+    "audit_trail": {
+      "agent_did": null,
+      "executed_at": "2026-09-06T20:31:59.636412Z",
+      "hook_log": [],
+      "passes": 0,
+      "skill_id": "sycophancy.correction",
+      "strictness": "strict",
+      "version": "1.0.0"
+    },
+    "classifications": [],
+    "correction_mandatory": false,
+    "delta_summary": "No changes needed: score below clean threshold and no sycophancy patterns were detected.",
+    "sycophancy_score": 0
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "stages": [
+    "Read the artifact-refiner contract, canonical schemas, RA-02 evidence and implementation sources.",
+    "Define applicable constraints for durability, three independent authority layers, idempotency, derived summaries and caller truthfulness.",
+    "Validate current hashes, recorded T1 receipts, caller anchors, bundle schemas and explicit delivery limits.",
+    "Persist the report, checklist, decisions, refinement state and actual validator output."
+  ],
+  "tool": "local python3 through the trusted host; jsonschema is already installed",
+  "state_updates": [
+    "constraints.json",
+    "artifact_manifest.json",
+    "refinement_log.md",
+    "decisions.md",
+    ".refiner/",
+    "dist/",
+    "validate.py"
+  ],
+  "template": "Scoped Markdown evidence report with JSON checklist; no visual artifact requested."
+}

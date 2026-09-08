@@ -1,0 +1,51 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.6-sol",
+  "isolation_mode": "harness-native",
+  "producer_model": "gpt-6-astra",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "migrations/server/2026090600_local_publication_boundary.sql",
+      "line": 101,
+      "claim": "Concurrent publication DDL and a protected ledger schema move can both pass the publication guard and commit an exposed local command ledger.",
+      "evidence": "The guard runs only at ddl_command_end and uses ordinary catalog EXISTS checks at lines 76-94, with no lock shared by ALTER TABLE and CREATE/ALTER PUBLICATION. If one transaction moves a registered ledger into schema X while another creates a schema publication for X, each check can miss the other transaction's uncommitted catalog change; after both commit, the registered ledger is published. The recorded schema-move negative control is sequential and does not exercise this write-skew race.",
+      "suggested_fix": "Install a ddl_command_start event trigger that acquires one transaction-scoped advisory lock for protected table and publication DDL, retain the end-of-command validation, and add a two-session test that forces the schema-move/publication interleaving."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "migrations/server/2026090605_clinical_revision_guards.sql",
+      "line": 78,
+      "claim": "QA truncation is not serialized with letter approval, so an approval can commit with the QA rows on which it was based already removed.",
+      "evidence": "The approval trigger locks letter claims and cited documents at lines 78-95 but never reads or locks aso.letter_qa_results. The BEFORE TRUNCATE trigger in migration 2026090606 only checks statuses visible to its transaction. While an approval update is uncommitted, a concurrent TRUNCATE sees the old draft status, passes, removes the QA rows, and commits; the approval then stamps NEW.approved_qa_revision at line 97 and commits. This contradicts the refiner's claim that approval is serialized with QA mutations and leaves an approved clinical record without its QA evidence.",
+      "suggested_fix": "Make approval acquire a relation lock on letter_qa_results and revalidate complete QA inside the approval transaction, coordinate TRUNCATE through the same locking protocol, and add a two-transaction integration test proving that one operation waits and the invalid outcome is refused."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "web/src/features/evidence-timeline/api/timeline-api.ts",
+      "line": 126,
+      "claim": "Evidence reassessment and command lookup omit the selected practice, so the client cannot execute or reconcile commands for an authorized non-default practice.",
+      "evidence": "Both URLs at lines 126 and 132-133 omit practiceId, and useEvidenceTimeline accepts only caseId. The HTTP handlers explicitly consume EvidenceQuery.practice_id before resolving clinical context, while the Gate client carries practiceId on every corresponding operation. The React architecture source at line 240 requires command state to be keyed by case/practice scope generation.",
+      "suggested_fix": "Accept practiceId in useEvidenceTimeline and timelineApi, append it to reassessment and lookup requests, include it in the hook scope identity, and add tests for a secondary practice and an A-to-B practice switch."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "web/src/features/evidence-timeline/hooks/use-evidence-timeline.ts",
+      "line": 63,
+      "claim": "Navigation discards an unresolved clinical command and permits a new command when the original outcome may already have committed.",
+      "evidence": "A case change unconditionally sets pendingCommand.current to null at line 63; useSurgeonGate does the same on case or practice change at line 72. If a request commits and its response is lost after navigation, the late catch cannot retain the command ID because the ref no longer matches, returning to the original scope has no correlation to reconcile, and the guard permits another mutation. This violates the architecture contract at source line 240 that an unresolved command continues to own its scope slot until definitive success, refusal, or lookup.",
+      "suggested_fix": "Store pending commands in a runtime-scoped registry keyed by identity, practice, and case generation; hide another scope's feedback without deleting its correlation, and remove only the matching entry after a definitive result or successful lookup. Add navigate-away-and-back lost-response tests for both hooks."
+    },
+    {
+      "severity": "WARNING",
+      "file": "crates/aso-server-axum/src/routes/gate.rs",
+      "line": 264,
+      "claim": "Gate policy converts signing and reassessment backend failures into authorization denials.",
+      "evidence": "The Letter and Evidence branches map every read_signing_target or read_reassessment_target error to GateError::Denied at lines 264 and 277. Those service APIs can return Unavailable and NativeAuthenticationUnavailable, which the route's gate_error mapper otherwise represents as 503; the Gate case branch correctly preserves its typed error. A database outage therefore appears as a 403 clinical denial and is silently misclassified.",
+      "suggested_fix": "Map typed target-read errors explicitly: preserve unavailable errors as 503 and convert only the resource-hiding denial/not-found cases to the intended policy denial. Add policy tests for letter and evidence target outages."
+    }
+  ],
+  "checked_classes": []
+}

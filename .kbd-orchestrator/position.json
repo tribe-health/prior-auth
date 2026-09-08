@@ -2,26 +2,254 @@
   "schemaVersion": "1",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 47,
-  "derivedRevision": 47,
+  "sourceRevision": 304,
+  "derivedRevision": 304,
   "frontier": {
-    "e9a7936c-0a01-43d5-9004-b93a4e5fd031": 47
+    "e9a7936c-0a01-43d5-9004-b93a4e5fd031": 304
   },
   "conflictCount": 0,
-  "updatedAt": "2026-09-06T11:20:50.409643Z",
+  "updatedAt": "2026-09-08T15:33:46.673347Z",
   "cursor": [
-    "web-ui-architecture",
-    "reflect"
+    "runtime-architecture"
   ],
   "root": {
     "type": "phase",
     "id": "0e0821e7-baa6-41b2-9b15-beaa40e0f40b",
     "status": "ready",
     "progress": {
-      "done": 8,
-      "total": 8
+      "done": 12,
+      "total": 32
     },
     "children": [
+      {
+        "type": "phase",
+        "id": "runtime-architecture",
+        "canonicalId": "runtime-architecture",
+        "status": "IN_PROGRESS",
+        "progress": {
+          "done": 4,
+          "total": 24
+        },
+        "children": [
+          {
+            "type": "change",
+            "id": "ra-01-verified-session",
+            "status": "COMPLETE",
+            "progress": {
+              "done": 8,
+              "total": 8
+            }
+          },
+          {
+            "type": "change",
+            "id": "ra-02-durable-affirmation",
+            "status": "COMPLETE",
+            "progress": {
+              "done": 9,
+              "total": 9
+            }
+          },
+          {
+            "type": "change",
+            "id": "ra-03-clinical-command-parity",
+            "status": "COMPLETE",
+            "progress": {
+              "done": 9,
+              "total": 9
+            }
+          },
+          {
+            "type": "change",
+            "id": "ra-04-projection-grants",
+            "status": "COMPLETE",
+            "progress": {
+              "done": 12,
+              "total": 12
+            }
+          },
+          {
+            "type": "change",
+            "id": "ra-05-authorized-shape-facade",
+            "status": "PENDING",
+            "progress": {
+              "done": 0,
+              "total": 0
+            }
+          },
+          {
+            "type": "change",
+            "id": "ra-06-bounded-revocation",
+            "status": "PENDING",
+            "progress": {
+              "done": 0,
+              "total": 0
+            }
+          },
+          {
+            "type": "change",
+            "id": "ra-07-scoped-pem-runtime",
+            "status": "PENDING",
+            "progress": {
+              "done": 0,
+              "total": 0
+            }
+          },
+          {
+            "type": "change",
+            "id": "ra-08-committed-graph-projection",
+            "status": "PENDING",
+            "progress": {
+              "done": 0,
+              "total": 0
+            }
+          },
+          {
+            "type": "change",
+            "id": "ra-09-pem-delivery-gate",
+            "status": "PENDING",
+            "progress": {
+              "done": 0,
+              "total": 0
+            }
+          },
+          {
+            "type": "change",
+            "id": "ra-10-remove-transitive-query-cache",
+            "status": "PENDING",
+            "progress": {
+              "done": 0,
+              "total": 0
+            }
+          },
+          {
+            "type": "change",
+            "id": "ra-11a-sync-conformance",
+            "status": "PENDING",
+            "progress": {
+              "done": 0,
+              "total": 0
+            }
+          },
+          {
+            "type": "change",
+            "id": "ra-11b-worker-ownership",
+            "status": "PENDING",
+            "progress": {
+              "done": 0,
+              "total": 0
+            }
+          },
+          {
+            "type": "change",
+            "id": "ra-11c-sql-materialization",
+            "status": "PENDING",
+            "progress": {
+              "done": 0,
+              "total": 0
+            }
+          },
+          {
+            "type": "change",
+            "id": "ra-12-public-auth-startup",
+            "status": "PENDING",
+            "progress": {
+              "done": 0,
+              "total": 0
+            }
+          },
+          {
+            "type": "change",
+            "id": "ra-13-epoch-logout-and-drafts",
+            "status": "PENDING",
+            "progress": {
+              "done": 0,
+              "total": 0
+            }
+          },
+          {
+            "type": "change",
+            "id": "ra-14-live-evidence-timeline",
+            "status": "PENDING",
+            "progress": {
+              "done": 0,
+              "total": 0
+            }
+          },
+          {
+            "type": "change",
+            "id": "ra-15-attributed-annotations",
+            "status": "PENDING",
+            "progress": {
+              "done": 0,
+              "total": 0
+            }
+          },
+          {
+            "type": "change",
+            "id": "ra-16-authorized-source-preview",
+            "status": "PENDING",
+            "progress": {
+              "done": 0,
+              "total": 0
+            }
+          },
+          {
+            "type": "change",
+            "id": "ra-17-native-session-transport",
+            "status": "PENDING",
+            "progress": {
+              "done": 0,
+              "total": 0
+            }
+          },
+          {
+            "type": "change",
+            "id": "ra-18-tauri-pglite-baseline",
+            "status": "PENDING",
+            "progress": {
+              "done": 0,
+              "total": 0
+            }
+          },
+          {
+            "type": "change",
+            "id": "ra-19-native-sqlite-parity",
+            "status": "PENDING",
+            "progress": {
+              "done": 0,
+              "total": 0
+            }
+          },
+          {
+            "type": "change",
+            "id": "ra-20-safe-browser-updates",
+            "status": "PENDING",
+            "progress": {
+              "done": 0,
+              "total": 0
+            }
+          },
+          {
+            "type": "change",
+            "id": "ra-21-safe-native-updates",
+            "status": "PENDING",
+            "progress": {
+              "done": 0,
+              "total": 0
+            }
+          },
+          {
+            "type": "change",
+            "id": "ra-22-runtime-certification",
+            "status": "PENDING",
+            "progress": {
+              "done": 0,
+              "total": 0
+            }
+          }
+        ],
+        "annotations": []
+      },
       {
         "type": "phase",
         "id": "web-ui-architecture",

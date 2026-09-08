@@ -1,0 +1,852 @@
+{
+  "result": "Passed",
+  "scope": "Scoped deterministic content/evidence gate; current T0, focused T1 and current-hash recorded live receipts; no phase T2 or release T3.",
+  "check_count": 109,
+  "issue_count": 0,
+  "checks": [
+    {
+      "check": "schema:artifact_manifest.json",
+      "result": "Passed",
+      "detail": "Full Draft-07 validation"
+    },
+    {
+      "check": "schema:constraints.json",
+      "result": "Passed",
+      "detail": "Full Draft-07 validation"
+    },
+    {
+      "check": "schema:.refiner/artifacts/ra-03-clinical-command-parity/state.json",
+      "result": "Passed",
+      "detail": "Full Draft-07 validation"
+    },
+    {
+      "check": "file:dist/report.md",
+      "result": "Passed",
+      "detail": "Nonempty file under scoped dist"
+    },
+    {
+      "check": "file:dist/checklist.json",
+      "result": "Passed",
+      "detail": "Nonempty file under scoped dist"
+    },
+    {
+      "check": "manifest:exact-dist-coverage",
+      "result": "Passed",
+      "detail": {
+        "manifest": [
+          "dist/report.md",
+          "dist/checklist.json"
+        ],
+        "actual": [
+          "dist/checklist.json",
+          "dist/report.md"
+        ]
+      }
+    },
+    {
+      "check": "inventory:current:.claude/rules/rust.md",
+      "result": "Passed",
+      "detail": {
+        "expected": "b6dc067c0d2e4241f09eb46ae5f920fffeee3342cb3a7fd6db372c6677575d1c",
+        "actual": "b6dc067c0d2e4241f09eb46ae5f920fffeee3342cb3a7fd6db372c6677575d1c"
+      }
+    },
+    {
+      "check": "inventory:current:crates/aso-host/Cargo.toml",
+      "result": "Passed",
+      "detail": {
+        "expected": "803e198282fcfe9096f2a8b6319946b1907aff1043fd6f336ec4565980db31ee",
+        "actual": "803e198282fcfe9096f2a8b6319946b1907aff1043fd6f336ec4565980db31ee"
+      }
+    },
+    {
+      "check": "inventory:current:crates/aso-host/src/lib.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "bc988055953f4c0c7f1ae924a7ae7a5405921c4d86e7991f321c8eac5285f817",
+        "actual": "bc988055953f4c0c7f1ae924a7ae7a5405921c4d86e7991f321c8eac5285f817"
+      }
+    },
+    {
+      "check": "inventory:current:crates/aso-host/src/ports/mod.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "74c7081590548d6c159d561bb9ee20dbae01db38dd8a8d750dc9974c7fd43a7a",
+        "actual": "74c7081590548d6c159d561bb9ee20dbae01db38dd8a8d750dc9974c7fd43a7a"
+      }
+    },
+    {
+      "check": "inventory:current:crates/aso-host/src/reassessment.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "561d088d65559b894a65d1f63250550ce188b5201e564037ba35107841230d43",
+        "actual": "561d088d65559b894a65d1f63250550ce188b5201e564037ba35107841230d43"
+      }
+    },
+    {
+      "check": "inventory:current:crates/aso-host/src/signing.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "c2c608b621458c58db12a871e5ec88582e344ace1ebe2bfafb4b10e7cd59bf66",
+        "actual": "c2c608b621458c58db12a871e5ec88582e344ace1ebe2bfafb4b10e7cd59bf66"
+      }
+    },
+    {
+      "check": "inventory:current:crates/aso-server-axum/src/lib.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "8f8857800d1dd3e5a821d1b7d8b53265c3db50fddb6d4c7321e7691eb46dbc6e",
+        "actual": "8f8857800d1dd3e5a821d1b7d8b53265c3db50fddb6d4c7321e7691eb46dbc6e"
+      }
+    },
+    {
+      "check": "inventory:current:crates/aso-server-axum/src/routes/evidence.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "976785d671013f82a7c996f060f56cf8242bde648f84b4b11ff809669197412a",
+        "actual": "976785d671013f82a7c996f060f56cf8242bde648f84b4b11ff809669197412a"
+      }
+    },
+    {
+      "check": "inventory:current:crates/aso-server-axum/src/routes/evidence/tests.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "5345ceb3ff316ab3233be015d6fde4f8f207652a02f454fb5e2b6d854f630608",
+        "actual": "5345ceb3ff316ab3233be015d6fde4f8f207652a02f454fb5e2b6d854f630608"
+      }
+    },
+    {
+      "check": "inventory:current:crates/aso-server-axum/src/routes/gate.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "5f855239082391c5c3d1011befd4106af32d80ad3451c72bfdd634bfe17d7f51",
+        "actual": "5f855239082391c5c3d1011befd4106af32d80ad3451c72bfdd634bfe17d7f51"
+      }
+    },
+    {
+      "check": "inventory:current:crates/aso-server-axum/src/routes/gate/tests.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "4e6db8e0527b61122dbac476910bd5578d9d11f23979380b836d303bda1b9584",
+        "actual": "4e6db8e0527b61122dbac476910bd5578d9d11f23979380b836d303bda1b9584"
+      }
+    },
+    {
+      "check": "inventory:current:crates/aso-server-axum/src/routes/letters.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "38e7a634de1d75637523574ba2c5807cbb67480583af372acaacbfb0dc8cd9cb",
+        "actual": "38e7a634de1d75637523574ba2c5807cbb67480583af372acaacbfb0dc8cd9cb"
+      }
+    },
+    {
+      "check": "inventory:current:crates/aso-server-axum/src/routes/letters/tests.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "1e28eb45f1107e153bcfdd2a0a84cfb3b284104157596e77383f89829c8d967a",
+        "actual": "1e28eb45f1107e153bcfdd2a0a84cfb3b284104157596e77383f89829c8d967a"
+      }
+    },
+    {
+      "check": "inventory:current:crates/aso-server-axum/src/routes/mod.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "625ab50d083ad09decfde7c9a0b92b79467bdd0850b29980a5ccc3d3a7d4df60",
+        "actual": "625ab50d083ad09decfde7c9a0b92b79467bdd0850b29980a5ccc3d3a7d4df60"
+      }
+    },
+    {
+      "check": "inventory:current:crates/aso-web-server/src/adapters/gate.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "acba2e30d2e2a5e8da8f19bc79561106cedba8b98bde564c9a0934098591d962",
+        "actual": "acba2e30d2e2a5e8da8f19bc79561106cedba8b98bde564c9a0934098591d962"
+      }
+    },
+    {
+      "check": "inventory:current:crates/aso-web-server/src/adapters/gate/reassessment_transaction_tests.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "fa4256b602e4704c099a655bd1e9206173a139172d52b74f8dbb0daea85c5ac7",
+        "actual": "fa4256b602e4704c099a655bd1e9206173a139172d52b74f8dbb0daea85c5ac7"
+      }
+    },
+    {
+      "check": "inventory:current:crates/aso-web-server/src/adapters/gate/signing_transaction_tests.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "a8e7f03d3c3066e72b63966f4b851150839d2fdfaf1dbfe4a334d5bcd78dc29b",
+        "actual": "a8e7f03d3c3066e72b63966f4b851150839d2fdfaf1dbfe4a334d5bcd78dc29b"
+      }
+    },
+    {
+      "check": "inventory:current:crates/aso-web-server/src/adapters/memory.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "7e1b70a655ecafe6cd6d555807e1a715ce76625122a127f8932b0bfc3b22fafe",
+        "actual": "7e1b70a655ecafe6cd6d555807e1a715ce76625122a127f8932b0bfc3b22fafe"
+      }
+    },
+    {
+      "check": "inventory:current:crates/aso-web-server/src/adapters/mod.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "51983e58a169a8acc7b870fa2030848a28af18cee4e45164c295964edc4d021b",
+        "actual": "51983e58a169a8acc7b870fa2030848a28af18cee4e45164c295964edc4d021b"
+      }
+    },
+    {
+      "check": "inventory:current:crates/aso-web-server/src/adapters/unavailable.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "e382daf0940bb6b17a054183c7ddadbe330b1a0a19b5149bec8d25d7d5abf043",
+        "actual": "e382daf0940bb6b17a054183c7ddadbe330b1a0a19b5149bec8d25d7d5abf043"
+      }
+    },
+    {
+      "check": "inventory:current:crates/aso-web-server/src/main.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "0d5d17ed2257ce37f80538f0ff90e4aaf0826dc18907c9f8f54430611da2b64a",
+        "actual": "0d5d17ed2257ce37f80538f0ff90e4aaf0826dc18907c9f8f54430611da2b64a"
+      }
+    },
+    {
+      "check": "inventory:current:crates/aso-web-server/src/migrations.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "5ed494372778d06b17507a7d9170b309eccd39dc2fa3b4a377cbc15b992cea18",
+        "actual": "5ed494372778d06b17507a7d9170b309eccd39dc2fa3b4a377cbc15b992cea18"
+      }
+    },
+    {
+      "check": "inventory:current:desktop/src-tauri/Cargo.toml",
+      "result": "Passed",
+      "detail": {
+        "expected": "da70caa43aeecb62eb04772f33826c7ada27be3101cf03d7229b018cfee9c08a",
+        "actual": "da70caa43aeecb62eb04772f33826c7ada27be3101cf03d7229b018cfee9c08a"
+      }
+    },
+    {
+      "check": "inventory:current:desktop/src-tauri/src/lib.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "7e36082f60644ca1693a058a98f0019767a256225e815368b3daa95ee508f8e3",
+        "actual": "7e36082f60644ca1693a058a98f0019767a256225e815368b3daa95ee508f8e3"
+      }
+    },
+    {
+      "check": "inventory:current:docker/flint-gate/config.yaml",
+      "result": "Passed",
+      "detail": {
+        "expected": "b156f0047fb8d860d7b9acffe49c7b705e290a666d53746dc80cb7e6f09bf9f5",
+        "actual": "b156f0047fb8d860d7b9acffe49c7b705e290a666d53746dc80cb7e6f09bf9f5"
+      }
+    },
+    {
+      "check": "inventory:current:docs/architecture/adr-002-clinical-authority.md",
+      "result": "Passed",
+      "detail": {
+        "expected": "cd593432f1692d3010d516739bf7e3bd7d9247a8952ef1ce8db3eb17b99ff95a",
+        "actual": "cd593432f1692d3010d516739bf7e3bd7d9247a8952ef1ce8db3eb17b99ff95a"
+      }
+    },
+    {
+      "check": "inventory:current:docs/architecture/adr-009-authorized-replicas-and-updates.md",
+      "result": "Passed",
+      "detail": {
+        "expected": "e9075f9fd2f551d2137d4e25547d2541e2bc651357302dbb73bc28df4e7d2895",
+        "actual": "e9075f9fd2f551d2137d4e25547d2541e2bc651357302dbb73bc28df4e7d2895"
+      }
+    },
+    {
+      "check": "inventory:current:docs/architecture/application-runtime-architecture.md",
+      "result": "Passed",
+      "detail": {
+        "expected": "e7afcafbe499921005c5fc6407b6adbb76e2a9978279d9b81ba336ab4cdd9e08",
+        "actual": "e7afcafbe499921005c5fc6407b6adbb76e2a9978279d9b81ba336ab4cdd9e08"
+      }
+    },
+    {
+      "check": "inventory:current:docs/architecture/react-ui-component-architecture.md",
+      "result": "Passed",
+      "detail": {
+        "expected": "dbcef807ebf330a23ccd6ccacdc6671052f0960be73f88da508be190476ddac6",
+        "actual": "dbcef807ebf330a23ccd6ccacdc6671052f0960be73f88da508be190476ddac6"
+      }
+    },
+    {
+      "check": "inventory:current:migrations/server/2026090600_local_publication_boundary.sql",
+      "result": "Passed",
+      "detail": {
+        "expected": "ad67e6acada48afbe114d3a410e9fe16cab3ec4396002fc1ed9cf6817686914b",
+        "actual": "ad67e6acada48afbe114d3a410e9fe16cab3ec4396002fc1ed9cf6817686914b"
+      }
+    },
+    {
+      "check": "inventory:current:migrations/server/2026090602_durable_signing.sql",
+      "result": "Passed",
+      "detail": {
+        "expected": "3eb225a6c7477cd5c015c1552b752b6ed0d2a1497d5646f7e9e8ceeba418ccba",
+        "actual": "3eb225a6c7477cd5c015c1552b752b6ed0d2a1497d5646f7e9e8ceeba418ccba"
+      }
+    },
+    {
+      "check": "inventory:current:migrations/server/2026090603_durable_reassessment.sql",
+      "result": "Passed",
+      "detail": {
+        "expected": "cc51e8d22b71349ba044567f53ddc95d4c663c822009f9d24baf92ffe3320cd3",
+        "actual": "cc51e8d22b71349ba044567f53ddc95d4c663c822009f9d24baf92ffe3320cd3"
+      }
+    },
+    {
+      "check": "inventory:current:migrations/server/2026090604_immutable_approved_sources.sql",
+      "result": "Passed",
+      "detail": {
+        "expected": "1f2fbf4694ac54894654a38a2c7ff6fb0756646365dd6ea513a9ab9eadaf79af",
+        "actual": "1f2fbf4694ac54894654a38a2c7ff6fb0756646365dd6ea513a9ab9eadaf79af"
+      }
+    },
+    {
+      "check": "inventory:current:migrations/server/2026090605_clinical_revision_guards.sql",
+      "result": "Passed",
+      "detail": {
+        "expected": "f89bf095be110260b342138d59629beab7eb9ea966a0bf5a6873a09ce04d48fc",
+        "actual": "f89bf095be110260b342138d59629beab7eb9ea966a0bf5a6873a09ce04d48fc"
+      }
+    },
+    {
+      "check": "inventory:current:migrations/server/2026090606_clinical_truncate_guards.sql",
+      "result": "Passed",
+      "detail": {
+        "expected": "9dddd0c8b518daadf2c5062150e40d4674a9203001707bc7bbc3e7934274f9b6",
+        "actual": "9dddd0c8b518daadf2c5062150e40d4674a9203001707bc7bbc3e7934274f9b6"
+      }
+    },
+    {
+      "check": "inventory:current:migrations/server/2026090607_publication_ddl_serialization.sql",
+      "result": "Passed",
+      "detail": {
+        "expected": "06da883ad3445492f2a25a0f1db00b0ef5eb2bc886bd32b4aa77c7e42584155c",
+        "actual": "06da883ad3445492f2a25a0f1db00b0ef5eb2bc886bd32b4aa77c7e42584155c"
+      }
+    },
+    {
+      "check": "inventory:current:migrations/server/2026090608_approval_qa_serialization.sql",
+      "result": "Passed",
+      "detail": {
+        "expected": "d56180aaf6b2c57235fdd52b0356af5743b73d532a4442416985cef08fa65a6a",
+        "actual": "d56180aaf6b2c57235fdd52b0356af5743b73d532a4442416985cef08fa65a6a"
+      }
+    },
+    {
+      "check": "inventory:current:scripts/test-reassessment-transaction.py",
+      "result": "Passed",
+      "detail": {
+        "expected": "fa3abe2c9baff69e4f3d81d29b83430769fffa3c362c3fe3c1e75d796f17c747",
+        "actual": "fa3abe2c9baff69e4f3d81d29b83430769fffa3c362c3fe3c1e75d796f17c747"
+      }
+    },
+    {
+      "check": "inventory:current:scripts/test-session-boundary.py",
+      "result": "Passed",
+      "detail": {
+        "expected": "b2771a4062131a7557d204c726575ae50897366296938becd5f65fa8e1820cdf",
+        "actual": "b2771a4062131a7557d204c726575ae50897366296938becd5f65fa8e1820cdf"
+      }
+    },
+    {
+      "check": "inventory:current:scripts/test-session-context.py",
+      "result": "Passed",
+      "detail": {
+        "expected": "ed49781cc088b6f4c2e6c9c61166727061f49f63e02796dbd0f92d2cd1c298d0",
+        "actual": "ed49781cc088b6f4c2e6c9c61166727061f49f63e02796dbd0f92d2cd1c298d0"
+      }
+    },
+    {
+      "check": "inventory:current:scripts/test-session-gateway.py",
+      "result": "Passed",
+      "detail": {
+        "expected": "a7b1c0ffd020acf7632cb6d9cfe1eed901f307d5071d08fbce8b0596ba3129d5",
+        "actual": "a7b1c0ffd020acf7632cb6d9cfe1eed901f307d5071d08fbce8b0596ba3129d5"
+      }
+    },
+    {
+      "check": "inventory:current:scripts/test-signing-transaction.py",
+      "result": "Passed",
+      "detail": {
+        "expected": "0b581986e8c0ab05a2ab1b47ba92e6a8b0246d3429b17ad16619b7bf991203bc",
+        "actual": "0b581986e8c0ab05a2ab1b47ba92e6a8b0246d3429b17ad16619b7bf991203bc"
+      }
+    },
+    {
+      "check": "inventory:current:web/src/features/evidence-timeline/api/timeline-api.ts",
+      "result": "Passed",
+      "detail": {
+        "expected": "009458cc0afd4f489d5bae69f79f69ffb68ce7859d7b0c8f8a113da007d6da7f",
+        "actual": "009458cc0afd4f489d5bae69f79f69ffb68ce7859d7b0c8f8a113da007d6da7f"
+      }
+    },
+    {
+      "check": "inventory:current:web/src/features/evidence-timeline/hooks/use-evidence-timeline.test.tsx",
+      "result": "Passed",
+      "detail": {
+        "expected": "17e155dc14ffd71859d143cba66dd0e14bc23b16ab8a8fddac115c40fa6d3cbc",
+        "actual": "17e155dc14ffd71859d143cba66dd0e14bc23b16ab8a8fddac115c40fa6d3cbc"
+      }
+    },
+    {
+      "check": "inventory:current:web/src/features/evidence-timeline/hooks/use-evidence-timeline.ts",
+      "result": "Passed",
+      "detail": {
+        "expected": "c0e192a01b06f90415704c2f40f83f9efcdf72f38760fdbb41ea1c1226a8ea89",
+        "actual": "c0e192a01b06f90415704c2f40f83f9efcdf72f38760fdbb41ea1c1226a8ea89"
+      }
+    },
+    {
+      "check": "inventory:current:web/src/features/surgeon-gate/api/gate-api.ts",
+      "result": "Passed",
+      "detail": {
+        "expected": "c7521c19bae355f71075030d1f5b724d9bdcb49e76e4f122eb49f41d7153d95b",
+        "actual": "c7521c19bae355f71075030d1f5b724d9bdcb49e76e4f122eb49f41d7153d95b"
+      }
+    },
+    {
+      "check": "inventory:current:web/src/features/surgeon-gate/hooks/use-surgeon-gate.test.tsx",
+      "result": "Passed",
+      "detail": {
+        "expected": "bd32956755d7764e5b48e889d6912862feab802f8848b480b77d21c24b60bfd6",
+        "actual": "bd32956755d7764e5b48e889d6912862feab802f8848b480b77d21c24b60bfd6"
+      }
+    },
+    {
+      "check": "inventory:current:web/src/features/surgeon-gate/hooks/use-surgeon-gate.ts",
+      "result": "Passed",
+      "detail": {
+        "expected": "7568f00752652f7c0ad3e7a8ec81adcd8bebe3b534f84b499bdbd94383c97bd0",
+        "actual": "7568f00752652f7c0ad3e7a8ec81adcd8bebe3b534f84b499bdbd94383c97bd0"
+      }
+    },
+    {
+      "check": "inventory:current:web/src/shared/api/http-client.ts",
+      "result": "Passed",
+      "detail": {
+        "expected": "c987cd24e1c869b8d6af13e96119b875ac344a5ca326f0493d4f81af0719cb24",
+        "actual": "c987cd24e1c869b8d6af13e96119b875ac344a5ca326f0493d4f81af0719cb24"
+      }
+    },
+    {
+      "check": "inventory:current:web/src/shared/runtime-command-registry.ts",
+      "result": "Passed",
+      "detail": {
+        "expected": "19198d08108273dd294ce9ec87db1bef06579a96bfc2ad0b8a41b2972c7cbf9c",
+        "actual": "19198d08108273dd294ce9ec87db1bef06579a96bfc2ad0b8a41b2972c7cbf9c"
+      }
+    },
+    {
+      "check": "acceptance:5:result",
+      "result": "Passed",
+      "detail": "Fresh live disposable PostgreSQL campaign plus focused host, HTTP and inactive desktop contract tests against current sources."
+    },
+    {
+      "check": "acceptance:6:result",
+      "result": "Passed",
+      "detail": "Current-hash signing receipt, fresh live reassessment campaign, focused service/HTTP/hook tests, and static production call-path exclusion proof."
+    },
+    {
+      "check": "acceptance:7:result",
+      "result": "Passed",
+      "detail": "Focused current service/policy tests plus current-hash validation of the immediately preceding live signing and reassessment PostgreSQL campaigns."
+    },
+    {
+      "check": "receipt-hash:task-8-signing-fresh.json",
+      "result": "Passed",
+      "detail": {
+        "expected": "61e0b03b5a2cf2f603f3ed3c227faec05c711eec31c4ad177871e8d6cc346663",
+        "actual": "61e0b03b5a2cf2f603f3ed3c227faec05c711eec31c4ad177871e8d6cc346663"
+      }
+    },
+    {
+      "check": "receipt-hash:task-8-signing-upgrade.json",
+      "result": "Passed",
+      "detail": {
+        "expected": "1d926fccdd5051a15732a61e90f257260e767eab49e8a09db0d0ec7c3b09951d",
+        "actual": "1d926fccdd5051a15732a61e90f257260e767eab49e8a09db0d0ec7c3b09951d"
+      }
+    },
+    {
+      "check": "receipt-hash:task-8-reassessment-fresh.json",
+      "result": "Passed",
+      "detail": {
+        "expected": "363db758de0fd324166e079fb2fa6c6b0c3b8dea603c114e6ece9294b06147bd",
+        "actual": "363db758de0fd324166e079fb2fa6c6b0c3b8dea603c114e6ece9294b06147bd"
+      }
+    },
+    {
+      "check": "receipt-hash:task-8-reassessment-upgrade.json",
+      "result": "Passed",
+      "detail": {
+        "expected": "7cafeeecf42b406ab1eda35803c61cd95546fa96dd90c2b2b0009fabfa47c702",
+        "actual": "7cafeeecf42b406ab1eda35803c61cd95546fa96dd90c2b2b0009fabfa47c702"
+      }
+    },
+    {
+      "check": "receipt-hash:task-8-pem-exclusion.json",
+      "result": "Passed",
+      "detail": {
+        "expected": "8e005d28f2358890ccd04c5cf0509d56bf2b43dbdefac072f42a68948d1cb880",
+        "actual": "8e005d28f2358890ccd04c5cf0509d56bf2b43dbdefac072f42a68948d1cb880"
+      }
+    },
+    {
+      "check": "receipt-hash:task-8-http-uncertainty-red-proof.json",
+      "result": "Passed",
+      "detail": {
+        "expected": "c8dddb9482051ac7ce054995c0462d4a4b70fda05bd501e19521b9918ac8c33c",
+        "actual": "c8dddb9482051ac7ce054995c0462d4a4b70fda05bd501e19521b9918ac8c33c"
+      }
+    },
+    {
+      "check": "receipt-hash:task-8-publication-identity-red-proof.json",
+      "result": "Passed",
+      "detail": {
+        "expected": "11fa4aed79580f351e1bd9bc0d05b7d1dc03de791a19c3325ea2e43aae262835",
+        "actual": "11fa4aed79580f351e1bd9bc0d05b7d1dc03de791a19c3325ea2e43aae262835"
+      }
+    },
+    {
+      "check": "receipt-hash:task-8-schema-publication-red-proof.json",
+      "result": "Passed",
+      "detail": {
+        "expected": "cc24f8d37a81421115015fedddddd4a7ad5c6e5c29cba325f834a1f59df0faf7",
+        "actual": "cc24f8d37a81421115015fedddddd4a7ad5c6e5c29cba325f834a1f59df0faf7"
+      }
+    },
+    {
+      "check": "receipt-hash:task-8-truncate-guard-red-proof.json",
+      "result": "Passed",
+      "detail": {
+        "expected": "1d78ff6e9c66605cd4fa1b90700af866f0c05c506cb7378bfecf00843b4e5cf7",
+        "actual": "1d78ff6e9c66605cd4fa1b90700af866f0c05c506cb7378bfecf00843b4e5cf7"
+      }
+    },
+    {
+      "check": "receipt-hash:task-8-unresolved-slot-red-proof.json",
+      "result": "Passed",
+      "detail": {
+        "expected": "6af8fa21e99a3291883912186cde8fba08c2c61405f2f6c9b383c903ebfc4964",
+        "actual": "6af8fa21e99a3291883912186cde8fba08c2c61405f2f6c9b383c903ebfc4964"
+      }
+    },
+    {
+      "check": "receipt-hash:task-8-publication-concurrency-red-proof.json",
+      "result": "Passed",
+      "detail": {
+        "expected": "ab24673b834268a8cafea9f842c5cd163cea0b0455403d4b33392e11bd469085",
+        "actual": "ab24673b834268a8cafea9f842c5cd163cea0b0455403d4b33392e11bd469085"
+      }
+    },
+    {
+      "check": "receipt-hash:task-8-approval-truncate-concurrency-red-proof.json",
+      "result": "Passed",
+      "detail": {
+        "expected": "f7736883a85e92df0f490eb31d10f99106200167b51d1f54254b51d856088074",
+        "actual": "f7736883a85e92df0f490eb31d10f99106200167b51d1f54254b51d856088074"
+      }
+    },
+    {
+      "check": "receipt-hash:task-8-claim-truncate-concurrency-red-proof.json",
+      "result": "Passed",
+      "detail": {
+        "expected": "3a22c467d002d0b31cf3051c17d7a4fa1e99a5053cc9ed990370a76aaf27fe51",
+        "actual": "3a22c467d002d0b31cf3051c17d7a4fa1e99a5053cc9ed990370a76aaf27fe51"
+      }
+    },
+    {
+      "check": "receipt-hash:task-8-evidence-practice-red-proof.json",
+      "result": "Passed",
+      "detail": {
+        "expected": "b8afb4e008de649554f0d0da97976483144f5880e874018ac26dac8d9481b36d",
+        "actual": "b8afb4e008de649554f0d0da97976483144f5880e874018ac26dac8d9481b36d"
+      }
+    },
+    {
+      "check": "receipt-hash:task-8-navigation-command-red-proof.json",
+      "result": "Passed",
+      "detail": {
+        "expected": "781db783fa8603731e6081b7c073b2e467d67c35649b551b382afd0ace535f4d",
+        "actual": "781db783fa8603731e6081b7c073b2e467d67c35649b551b382afd0ace535f4d"
+      }
+    },
+    {
+      "check": "receipt-hash:task-8-gate-unavailability-red-proof.json",
+      "result": "Passed",
+      "detail": {
+        "expected": "c6760b1c92c67709f07195f660091e9f9d8fa0c433c8077113c0f4994e1180d8",
+        "actual": "c6760b1c92c67709f07195f660091e9f9d8fa0c433c8077113c0f4994e1180d8"
+      }
+    },
+    {
+      "check": "database-receipt:task-8-signing-fresh.json",
+      "result": "Passed",
+      "detail": {
+        "install_mode": "fresh",
+        "checks": 25,
+        "cleanup": 6,
+        "source_current": true
+      }
+    },
+    {
+      "check": "database-receipt:task-8-signing-upgrade.json",
+      "result": "Passed",
+      "detail": {
+        "install_mode": "upgrade",
+        "checks": 31,
+        "cleanup": 6,
+        "source_current": true
+      }
+    },
+    {
+      "check": "database-receipt:task-8-reassessment-fresh.json",
+      "result": "Passed",
+      "detail": {
+        "install_mode": "fresh",
+        "checks": 16,
+        "cleanup": 6,
+        "source_current": true
+      }
+    },
+    {
+      "check": "database-receipt:task-8-reassessment-upgrade.json",
+      "result": "Passed",
+      "detail": {
+        "install_mode": "upgrade",
+        "checks": 22,
+        "cleanup": 6,
+        "source_current": true
+      }
+    },
+    {
+      "check": "publication-boundary:fresh",
+      "result": "Passed",
+      "detail": {
+        "checks": 25,
+        "expected": 25
+      }
+    },
+    {
+      "check": "publication-boundary:upgrade",
+      "result": "Passed",
+      "detail": {
+        "checks": 31,
+        "expected": 31
+      }
+    },
+    {
+      "check": "negative-control:task-8-http-uncertainty-red-proof.json",
+      "result": "Passed",
+      "detail": {
+        "observed_exit": 1,
+        "restored": true
+      }
+    },
+    {
+      "check": "negative-control:task-8-publication-identity-red-proof.json",
+      "result": "Passed",
+      "detail": {
+        "observed_exit": 1,
+        "restored": true
+      }
+    },
+    {
+      "check": "negative-control:task-8-schema-publication-red-proof.json",
+      "result": "Passed",
+      "detail": {
+        "observed_exit": 1,
+        "restored": true
+      }
+    },
+    {
+      "check": "negative-control:task-8-truncate-guard-red-proof.json",
+      "result": "Passed",
+      "detail": {
+        "observed_exit": 1,
+        "restored": true
+      }
+    },
+    {
+      "check": "negative-control:task-8-unresolved-slot-red-proof.json",
+      "result": "Passed",
+      "detail": {
+        "observed_exit": 1,
+        "restored": true
+      }
+    },
+    {
+      "check": "negative-control:task-8-publication-concurrency-red-proof.json",
+      "result": "Passed",
+      "detail": {
+        "observed_exit": 1,
+        "restored": true
+      }
+    },
+    {
+      "check": "negative-control:task-8-approval-truncate-concurrency-red-proof.json",
+      "result": "Passed",
+      "detail": {
+        "observed_exit": 1,
+        "restored": true
+      }
+    },
+    {
+      "check": "negative-control:task-8-claim-truncate-concurrency-red-proof.json",
+      "result": "Passed",
+      "detail": {
+        "observed_exit": 1,
+        "restored": true
+      }
+    },
+    {
+      "check": "negative-control:task-8-evidence-practice-red-proof.json",
+      "result": "Passed",
+      "detail": {
+        "observed_exit": 1,
+        "restored": true
+      }
+    },
+    {
+      "check": "negative-control:task-8-navigation-command-red-proof.json",
+      "result": "Passed",
+      "detail": {
+        "observed_exit": 1,
+        "restored": true
+      }
+    },
+    {
+      "check": "negative-control:task-8-gate-unavailability-red-proof.json",
+      "result": "Passed",
+      "detail": {
+        "observed_exit": 101,
+        "restored": true
+      }
+    },
+    {
+      "check": "database-receipts:key-markers",
+      "result": "Passed",
+      "detail": {
+        "missing": []
+      }
+    },
+    {
+      "check": "recorded-T1:mounted-session-compatibility",
+      "result": "Passed",
+      "detail": {
+        "checks": 34,
+        "cleanup": 9
+      }
+    },
+    {
+      "check": "architecture:no-pem-command-replay",
+      "result": "Passed",
+      "detail": [
+        "actorless_evidence_count_route_unmounted",
+        "affirmation_hook_calls_feature_http_api",
+        "affirmation_hook_has_no_graph_or_sync_import",
+        "clinical_commands_absent_from_shared_sync",
+        "no_web_signing_mutation_caller_exists",
+        "reassessment_write_calls_feature_http_api",
+        "runtime_command_registry_is_not_a_sync_or_pem_replay_queue",
+        "uncertain_http_results_preserve_reconciliation_contract"
+      ]
+    },
+    {
+      "check": "caller:crates/aso-web-server/src/main.rs",
+      "result": "Passed",
+      "detail": {
+        "missing": []
+      }
+    },
+    {
+      "check": "caller:crates/aso-server-axum/src/lib.rs",
+      "result": "Passed",
+      "detail": {
+        "missing": []
+      }
+    },
+    {
+      "check": "caller:crates/aso-host/src/signing.rs",
+      "result": "Passed",
+      "detail": {
+        "missing": []
+      }
+    },
+    {
+      "check": "caller:crates/aso-host/src/reassessment.rs",
+      "result": "Passed",
+      "detail": {
+        "missing": []
+      }
+    },
+    {
+      "check": "caller:docker/flint-gate/config.yaml",
+      "result": "Passed",
+      "detail": {
+        "missing": []
+      }
+    },
+    {
+      "check": "composition:actorless-evidence-count-unmounted",
+      "result": "Passed",
+      "detail": "Production composition excludes the legacy actorless count router"
+    },
+    {
+      "check": "composition:memory-test-only",
+      "result": "Passed",
+      "detail": "Memory adapter is excluded from production compilation"
+    },
+    {
+      "check": "caller:web-evidence-read-mounted-mutation-inactive",
+      "result": "Passed",
+      "detail": "Route mounts timeline read; component contains no reassessment invocation"
+    },
+    {
+      "check": "caller:web-gate-hook-inactive",
+      "result": "Passed",
+      "detail": [
+        "web/src/features/surgeon-gate/hooks/use-surgeon-gate.test.tsx",
+        "web/src/features/surgeon-gate/hooks/use-surgeon-gate.ts"
+      ]
+    },
+    {
+      "check": "caller:desktop-inactive",
+      "result": "Passed",
+      "detail": "No Tauri dependency or command registration; wrappers fail closed"
+    },
+    {
+      "check": "constraints:exact-checklist-coverage",
+      "result": "Passed",
+      "detail": "Every applicable constraint has one checklist result"
+    },
+    {
+      "check": "constraints:applicable-satisfaction",
+      "result": "Passed",
+      "detail": "Unverified delivery surfaces are separate from satisfied RA-03 constraints"
+    },
+    {
+      "check": "state:iteration-consistency",
+      "result": "Passed",
+      "detail": "Initial refinement plus six isolated-review remediation cycles"
+    },
+    {
+      "check": "state:completed-phases",
+      "result": "Passed",
+      "detail": [
+        "specify",
+        "plan",
+        "execute",
+        "reflect",
+        "persist"
+      ]
+    }
+  ]
+}

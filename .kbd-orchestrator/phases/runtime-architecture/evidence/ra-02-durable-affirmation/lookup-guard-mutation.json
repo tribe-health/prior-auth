@@ -1,0 +1,25 @@
+{
+  "tier0": {
+    "command": [
+      "pnpm",
+      "--dir",
+      "web",
+      "typecheck"
+    ],
+    "exit_code": 0,
+    "output": "$ tsc --noEmit\n"
+  },
+  "tier1": {
+    "command": [
+      "pnpm",
+      "--dir",
+      "web",
+      "test",
+      "src/features/surgeon-gate/hooks/use-surgeon-gate.test.tsx"
+    ],
+    "exit_code": 1,
+    "output": "\n RUN  v3.2.7 /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web\n\n \u276f src/features/surgeon-gate/hooks/use-surgeon-gate.test.tsx (12 tests | 1 failed) 1061ms\n   \u2713 the surgeon gate uses authenticated command DTOs > adapts snapshots and mutation receipts while sending only kind and a fresh command ID 90ms\n   \u00d7 the surgeon gate uses authenticated command DTOs > retains an uncertain command for explicit lookup without retrying the write 72ms\n     \u2192 expected { affirmed: true, outstanding: [] } to deeply equal { affirmed: false, \u2026(1) }\n   \u2713 the surgeon gate uses authenticated command DTOs > surfaces a refusal without converting the committed gate to an unaffirmed state 57ms\n   \u2713 the surgeon gate uses authenticated command DTOs > clears prior data and command feedback immediately on a case switch 57ms\n   \u2713 the surgeon gate uses authenticated command DTOs > clears prior data and command feedback immediately on a practice switch 56ms\n   \u2713 the surgeon gate uses authenticated command DTOs > fences a late read after a case switch 57ms\n   \u2713 the surgeon gate uses authenticated command DTOs > fences a late read after a practice switch 52ms\n   \u2713 the surgeon gate uses authenticated command DTOs > fences a late mutation success after leaving and returning to a scope 182ms\n   \u2713 the surgeon gate uses authenticated command DTOs > fences a late mutation refusal after leaving and returning to a scope 164ms\n   \u2713 the surgeon gate uses authenticated command DTOs > fences a late lookup receipt after a practice switch 110ms\n   \u2713 the surgeon gate uses authenticated command DTOs > fences a late lookup refresh after a practice switch 108ms\n   \u2713 the surgeon gate uses authenticated command DTOs > clears a prior read error when the practice changes 55ms\n\n Test Files  1 failed (1)\n      Tests  1 failed | 11 passed (12)\n   Start at  14:52:15\n   Duration  4.39s (transform 192ms, setup 0ms, collect 712ms, tests 1.06s, environment 1.33s, prepare 491ms)\n\n[ELIFECYCLE] Test failed. See above for more details.\n$ vitest run src/features/surgeon-gate/hooks/use-surgeon-gate.test.tsx\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af Failed Tests 1 \u23af\u23af\u23af\u23af\u23af\u23af\u23af\n\n FAIL  src/features/surgeon-gate/hooks/use-surgeon-gate.test.tsx > the surgeon gate uses authenticated command DTOs > retains an uncertain command for explicit lookup without retrying the write\nAssertionError: expected { affirmed: true, outstanding: [] } to deeply equal { affirmed: false, \u2026(1) }\n\n- Expected\n+ Received\n\n  {\n-   \"affirmed\": false,\n-   \"outstanding\": [\n-     \"section\",\n-     \"plan\",\n-   ],\n+   \"affirmed\": true,\n+   \"outstanding\": [],\n  }\n\n \u276f src/features/surgeon-gate/hooks/use-surgeon-gate.test.tsx:107:34\n    105|     );\n    106|     expect(httpClient.get).toHaveBeenLastCalledWith(`/api/cases/${case\u2026\n    107|     expect(result.current.state).toEqual({ affirmed: false, outstandin\u2026\n       |                                  ^\n    108|     expect(httpClient.post).toHaveBeenCalledTimes(1);\n    109|     expect(result.current.lastCommandId).toBe(commandId);\n\n\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af\u23af[1/1]\u23af\n\n"
+  },
+  "restored_sha256": "74b56476fc1fe2d82dbf63cc59cb54e81b46e18a0684b434b655ac0fddf3785c",
+  "restored": true
+}

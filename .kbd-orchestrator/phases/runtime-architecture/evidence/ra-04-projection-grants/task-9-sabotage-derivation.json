@@ -1,0 +1,18 @@
+{
+  "result": "Failed",
+  "verification_tier": 1,
+  "observed_at": "2026-09-08T13:50:40.119140+00:00",
+  "scope": "Seven practice-derivation cases on fresh and upgraded schema through a non-owner NOBYPASSRLS login",
+  "command": "python3 scripts/test-practice-derivation.py --output <receipt>",
+  "modes": {},
+  "cleanup": {
+    "synthetic_ra04_fresh_a5a5dec141ca4bbaae75515644adacc2": "Passed",
+    "login": "Passed"
+  },
+  "unverified": [
+    "Electric delivery is outside this database-boundary fixture.",
+    "Production deployment roles and physical clients are outside this synthetic local integration run."
+  ],
+  "failure": "AssertionError:T3_direct_practice_update_is_forced_back",
+  "failure_stage": "fresh_exercise_derivation_cases"
+}

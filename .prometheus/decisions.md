@@ -271,3 +271,218 @@ Verification script — run this whenever the tree is touched:
 One unrelated peer warning remains and is left alone: `@ai-sdk/react@4.0.95`
 wants React `^19.2.1` against the installed 19.2.0. React is a pinned framework
 core; changing it needs its own decision.
+
+
+## 2026-09-06 — RA-01 mounted session authority (task 1.2)
+
+Resolve raw Cookie/Bearer/X-Session-Token freshly with pinned self-hosted Kratos,
+then derive scope/capabilities from active ASO membership in a read-only Postgres
+transaction. Browser and native sessions retain their own verified expiry;
+authorization equality does not mean equal expiry timestamps. Ignore caller
+identity/role hints and require user_roles membership even for the home practice.
+
+Use an incarnation plus global monotonic authorization revision, advanced by
+transactional statement triggers on the four authority tables. This catches
+remove-and-restore authority changes without changing clinical tables. Accepted
+cost: unrelated users and no-op updates can invalidate summaries. Restoring a
+backup requires rotating incarnation before serving; this is not stream-revocation
+certification. Runtime credentials cannot migrate or write. The dedicated login
+and reader role are checked for effective ownership/write privileges after an
+independent critic found the initial schema-owner-only check insufficient.
+
+Evidence: .kbd-orchestrator/phases/runtime-architecture/evidence/ra-01-verified-session/task-2.md.
+PEM pins are unchanged. Gate routing, pool cleanup/cancellation and native
+credential ownership remain later tasks; no production database was migrated.
+
+
+## 2026-09-06 — RA-01 task 1.3 transaction lifecycle
+
+Keep identity in a transaction-local GUC owned by the membership adapter's
+begin_scoped operation, receiving only the shell-neutral provider-verified
+identity. SQLx Drop queues rollback; on-release ping flushes it or discards the
+connection. Observed SQLx 0.8.3 cancellation discards the interrupted backend
+after the statement timeout. Tests require same-backend restored state on normal
+exits; cancellation permits replacement only with clean state and old-backend
+absence. Immediate HTTP disconnect cancellation remains unverified.
+
+Desktop current_session remains inactive even with an accepting injected port.
+No credentials enter from the renderer; activation remains ra-17. Evidence:
+.kbd-orchestrator/phases/runtime-architecture/evidence/ra-01-verified-session/task-3.md.
+
+
+## 2026-09-06 — RA-01 task 1.4 Gate session discovery route
+
+Route exact GET /api/session through an anonymous passthrough provider, with
+upstream base on the site so practiceId survives. ASO validates the raw credential
+freshly and derives membership; Gate identity metadata/cache grants no authority.
+Gate's Kratos middleware omits X-Session-Token and changes outage semantics.
+The route is limited to session discovery, not clinical authorization.
+
+Mounted two-identity test proved one shared PostgreSQL backend with correct
+A/B GUC and reader role through real Gate/ASO/Kratos. Current Gate collapses
+repeated same-name credential headers; direct-HTTP duplicate rejection parity is
+not claimed. Mixed distinct sources are rejected. Carry that transport limitation
+into full-change acceptance/review. No companion Gate implementation changed.
+Evidence: .kbd-orchestrator/phases/runtime-architecture/evidence/ra-01-verified-session/task-4.md.
+
+
+## 2026-09-06 — RA-01 completion review transport
+
+Accepted the adversarial-review skill's native fallback after configured k3
+REST dispatch timed out after180seconds (HTTP000,exit3,no verdict). A fresh
+context gpt-5.6-sol judge received mandate plus complete packet; it is distinct
+from producing gpt-6-astra and independent of the source critic. Returned PASS,
+zero findings, six checked classes; strict report screen score0.0. Record weaker
+harness-native transport isolation explicitly instead of attributing a pass to
+the unavailable REST judge. Receipt: .kbd-orchestrator/phases/runtime-architecture/review/ra-01-verified-session/judge-transport.json.
+
+## RA-02 durable gate backend (2026-09-06)
+
+Task 1.2 uses a separate NOLOGIN function owner and restricted executor; the
+session reader is unchanged. The explicit --migrate-server deployment command
+uses separate migration credentials and SQLx 0.8.3 checksums. The local-privacy
+command ledger binds verified identity/practice/ID to actor and payload.
+Original results survive subsequent gate changes; command then case locks
+serialize retries and summary derivation. Upgrade reconciliation updates only
+inconsistent summaries before direct-column protection. These choices address
+clinical authority, durable reconciliation and existing-store compatibility.
+The adapter is staged: mounted transport/composition/Gate/desktop belong to task
+1.3; no production clinical behavior is inferred from backend T1. Evidence:
+.kbd-orchestrator/phases/runtime-architecture/evidence/ra-02-durable-affirmation/task-2.md.
+
+
+## 2026-09-06 — RA-02 mounted gate policy
+
+Task 1.3 adds a narrow Gate pre-request callback because current ASO membership,
+capability and case scope are absent from Gate identity middleware. Gate passes
+one raw credential and original method/URI to read-only ASO policy; only 204
+authorizes forwarding. Mutation resolves the session again, then independently
+checks AppServices authority and the existing database trigger. A native debug
+Gate plus accepting sink and disabled-hook control passed 81 checks; all 17
+cleanup checks passed. This is route-specific source/runtime evidence, not
+container deployment certification. Native gate wrappers remain unavailable
+until RA-17 owns credentials. No actor argument or local write can authorize them.
+Evidence: .kbd-orchestrator/phases/runtime-architecture/evidence/ra-02-durable-affirmation/task-3.md.
+
+## 2026-09-06 — RA-02 verified principal and command ordering
+
+Authenticated identity providers own principal provenance. The Kratos adapter
+stamps `User`; `SessionService` refuses `Agent` and `Service` before membership
+resolution. For a verified identity and selected practice, an existing command
+ID is compared with the submitted payload before target-case authority in both
+AppServices and PostgreSQL. This makes changed case, kind or action conflicts
+stable without exposing receipts across identity or practice scope. New and
+exact-replay commands still pass all three independent clinical-authority
+checks. Evidence: .kbd-orchestrator/phases/runtime-architecture/evidence/ra-02-durable-affirmation/task-9.md.
+
+## 2026-09-06 — RA-03 task 1.2 verified signing boundary
+
+Signing commands accept only a command ID and expected letter, QA and current
+signature revisions. Identity, actor, principal, practice and signature asset
+come from a fresh verified context and authoritative database state. Gate,
+AppServices and PostgreSQL enforce authority independently. Until claim origin
+is modeled separately, every claim on a signable letter requires a scoped
+document, page, effective date, content hash and valid page count; annotation-only
+claims are refused. Service replay/result lookup remains RA-03 task 1.3, and
+injected rollback proof remains task 1.4. Evidence:
+`.kbd-orchestrator/phases/runtime-architecture/evidence/ra-03-clinical-command-parity/task-2.md`.
+
+## 2026-09-06 — RA-03 task 1.3 durable clinical command reconciliation
+
+Evidence reassessment uses a dedicated immutable command ledger with command ID,
+case, evidence, target state and expected `assessedAt` revision. Exact signing and
+reassessment retries resolve the stored receipt before mutable target reads, then
+recheck current authority and exact payload identity. HTTP exposes explicit
+receipt lookups; desktop declares the same operations but stays unavailable until
+native credentials exist. React retains uncertain correlation and waits for the
+authoritative projection. Signing, reassessment and affirmation commands use
+their feature APIs and never enter PEM replay. Evidence:
+`.kbd-orchestrator/phases/runtime-architecture/evidence/ra-03-clinical-command-parity/task-3.md`.
+
+## 2026-09-06 — RA-03 task 1.4 fail-closed clinical composition
+
+The mounted web server requires Kratos, the restricted session login and the
+restricted clinical executor login against one PostgreSQL database. One
+`PgGateRepository` supplies mounted case, evidence, letter and authority ports;
+memory clinical adapters compile only for tests. Unimplemented criteria reads
+fail explicitly instead of substituting process-local records. Signing and
+reassessment transactions are accepted only when the final clinical row, audit
+event and immutable command receipt can commit together. Evidence:
+`.kbd-orchestrator/phases/runtime-architecture/evidence/ra-03-clinical-command-parity/task-4.md`.
+
+## 2026-09-08 — RA-03 local ledgers are registered by PostgreSQL relation OID
+
+Migration 2026090600 precedes every clinical command-ledger migration and
+registers excluded relations by OID. Publication and table DDL triggers consult
+that registry, so rename and schema moves preserve the exclusion. Migration
+preflight and postflight also reject broad publications and explicit legacy
+ledger membership.
+
+## 2026-09-08 — Actorless evidence counts stay outside production composition
+
+The legacy evidence-count route has no verified-context read contract. It is
+unmounted from the production Axum router until that contract exists; the
+verified evidence reassessment route remains mounted. Synthetic memory counts
+do not return as a fallback.
+
+## 2026-09-08 — RA-03 protects schema publication and statement-level deletion
+
+The local-ledger event trigger and migration pre/postflight compare registered
+relation OIDs with both explicit and schema publication catalogs. Migration
+0606 independently refuses truncation of QA results and source mappings used by
+approved or signed letters. These controls remain additive and checksummed for
+fresh and populated upgrades.
+
+## 2026-09-08 — RA-03 uncertain commands retain exclusive scope ownership
+
+Gate affirmation and evidence reassessment hooks keep one command owner in
+either `submitting` or `uncertain` state. Network, HTTP 408, and HTTP 5xx outcomes
+move the owner to `uncertain`; only a matching successful command lookup releases
+that slot. This keeps later mutations from erasing reconciliation identity.
+
+
+## 2026-09-08 — RA-03 serializes clinical DDL and unresolved UI ownership
+
+Migration 0607 takes the publication boundary lock at DDL-command start so protected table DDL and publication DDL cannot validate against stale catalog snapshots; a waiting transaction retries from a fresh snapshot with SQLSTATE 40001. Migration 0608 gives letter approval and QA truncation a common relation lock and revalidates required QA while holding it. Browser command ownership lives in a process-scoped registry keyed by feature, verified identity, practice and case, so navigation cannot discard an unresolved command. Evidence reassessment and lookup carry the selected practice, and Gate target-reader outages remain HTTP 503 instead of becoming policy denials.
+
+
+## 2026-09-08 — RA-03 approval binds the complete claim set under a relation lock
+
+Migration 0608 gives approval a `ROW SHARE` lock on `letter_claims`, requires at least one document-backed claim, and revalidates cited document provenance and page bounds before binding the approved revision. The lock conflicts with `TRUNCATE`: truncation-first makes approval return A0306, while approval-first makes truncation wait and then return 42501. Fresh and populated-upgrade fixtures prove both orders.
+
+
+## 2026-09-08 — RA-04 eligibility keeps projection authority server-side
+
+RA-04 may proceed with synthetic contract fixtures because RA-03 is canonically complete and archived. The five base-table candidates begin protected, with explicit allowlists for rows, primary keys, and columns. The server owns practice scope, originating session, projection revision, issuer, audience, scope, and expiry. Gate may mint allowlisted claims; FRF verifies them. Shape transport remains RA-05, PEM adoption remains RA-09, and real clinical persistence remains blocked by G-DATA.
+
+## 2026-09-08 — RA-04 projection revision 1 is an exact server-owned registry
+
+The verified session boundary derives a replica grant from its resolved
+practice and membership authorization revision. The caller cannot supply a
+relation, predicate, primary key or column list. Revision 1 contains exactly
+five base-table projections, explicitly keys `evidence_states` by `key`, and
+adds `cases.gate_affirmed_at` while keeping `gate_affirmed_by` protected.
+Unknown metadata stays protected through absence from the allowlist. The same
+host-neutral contract serves web and desktop; desktop refuses the grant until
+RA-17 provides native credential ownership. Evidence:
+`.kbd-orchestrator/phases/runtime-architecture/evidence/ra-04-projection-grants/task-2.md`.
+
+## 2026-09-08 — RA-04 uses a typed, session-bound replica token
+
+The verified ASO grant is the only input to Gate's dedicated replica minter.
+The token carries an exact audience, fixed `aso.replica.read` scope, projection
+revision 1, the five approved projection identifiers, practice tenant,
+membership authorization revision, originating Kratos session, and an expiry
+bounded by both the session and Gate's configured maximum. Identity traits,
+request headers, table names, predicates, columns, and service tokens cannot
+populate or activate this claim set. FRF rejects malformed token/session IDs
+instead of inventing replacements and checks the full replica contract before
+shape resolution. RA-05 remains responsible for the deployed Electric facade.
+## 2026-09-08 — Replica-grant failure proof stops at an accepting downstream
+
+RA04 task 1.4 tests the actual Gate process against a downstream that accepts
+every request and records each call. Grant, membership, session-linkage and
+required-minter failures pass only when that downstream receives nothing. This
+keeps the refusal attributable to Gate and prevents a later FRF denial from
+masking permissive gateway pass-through. The deployed FRF/Electric facade
+remains RA05 scope.

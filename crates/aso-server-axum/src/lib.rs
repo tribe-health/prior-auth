@@ -31,7 +31,8 @@ pub struct ServerState {
 pub fn api_router(state: ServerState) -> Router {
     Router::new()
         .merge(routes::health::router())
-        .merge(routes::cases::router())
+        .merge(session::router())
+        .merge(routes::evidence::router())
         .merge(routes::gate::router())
         .merge(routes::letters::router())
         .with_state(state)

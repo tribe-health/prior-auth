@@ -1,0 +1,18 @@
+## 1. Eligibility and bounded implementation
+
+- [x] 1.1 Confirm dependency completion (ra-03-clinical-command-parity), the assigned file ownership and applicable phase decision gates before code changes; verify canonical dependency status and retain the gate decision/evidence artifact.
+- [x] 1.2 Record the privacy/projection contract and negative request fixtures in the mounted grant boundary; keep existing exclusions and defer criterion-label expansion. Verification: The five-table projection registry is evaluated for two practices must produce this observed outcome: Only authorized rows/columns are permitted; evidence_states explicitly uses key; remaining metadata is treated as protected unless approved otherwise.
+- [x] 1.3 Implement strict claim allowlisting, originating-session linkage, expiry and issuer/audience validation across Gate and FRF. Verification: A caller supplies table/where/columns, forged traits, headers or another service token must produce this observed outcome: None broadens the server grant; wrong issuer/audience/scope/revision is rejected.
+- [x] 1.4 Prove modified clients cannot broaden grant scope and required mint failure refuses access. Re-run the seven established practice-derivation cases against fresh and upgraded schema, including direct practice_id writes and parent changes. Verification: Required token minting or membership resolution fails must produce this observed outcome: Protected downstream access is denied; no permissive pass-through or invented session linkage is used.
+
+## 2. Behavioral acceptance
+
+- [x] 2.1 Prove: when The five-table projection registry is evaluated for two practices, then Only authorized rows/columns are permitted; evidence_states explicitly uses key; remaining metadata is treated as protected unless approved otherwise. Record the actual command, prerequisite availability and observed result.
+- [x] 2.2 Prove: when A caller supplies table/where/columns, forged traits, headers or another service token, then None broadens the server grant; wrong issuer/audience/scope/revision is rejected. Record the actual command, prerequisite availability and observed result.
+- [x] 2.3 Prove: when Required token minting or membership resolution fails, then Protected downstream access is denied; no permissive pass-through or invented session linkage is used. Record the actual command, prerequisite availability and observed result.
+- [x] 2.4 Prove: when A committed gate affirmation is removed in another session at the authoritative repository boundary, then The authoritative producer clears cases.gate_affirmed_at; the approved projection and mounted authorized route preserve the nullable field, and the navigation handoff names this entity field for its future graph owner. Record the actual command, prerequisite availability and observed result.
+- [x] 2.5 Prove: when Fresh and upgraded databases receive forged practice_id, parent-key changes and permitted parent transfers under the non-bypass role, then The existing case_evidence, evidence_citations and documents triggers overwrite forged derived practice IDs and preserve tested cascades. Cases use authorized practice ownership/RLS; evidence_states remains explicitly approved reference data without an invented practice trigger. Record the actual command, prerequisite availability and observed result.
+
+## 3. Completion evidence
+
+- [x] 3.1 Complete applicable T0/T1 and the phase-prescribed artifact-refiner then adversarial review; preserve synthetic evidence, confirm real callers and mark only actually satisfied work complete. Do not run broad phase/release tiers early.

@@ -18,7 +18,10 @@ macro_rules! id_type {
     };
 }
 
-id_type!(ActorId, "An application user, mapped 1:1 to an Ory Kratos identity.");
+id_type!(
+    ActorId,
+    "An application user, mapped 1:1 to an Ory Kratos identity."
+);
 id_type!(CaseId, "One authorization case.");
 id_type!(LetterId, "One version of a letter of medical necessity.");
 id_type!(CriterionId, "One addressable payer requirement.");
@@ -89,7 +92,9 @@ pub struct GateState {
 
 impl GateState {
     pub fn is_affirmed(&self) -> bool {
-        GateAffirmationKind::ALL.iter().all(|k| self.affirmed.contains(k))
+        GateAffirmationKind::ALL
+            .iter()
+            .all(|k| self.affirmed.contains(k))
     }
     pub fn outstanding(&self) -> Vec<GateAffirmationKind> {
         GateAffirmationKind::ALL
@@ -154,9 +159,17 @@ pub enum Attribution {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "source", rename_all = "snake_case")]
 pub enum ClaimSource {
-    Document { document_id: DocumentId, page: Option<u32> },
-    Annotation { annotation_id: AnnotationId },
-    Criterion { criterion_id: CriterionId, attribution: Attribution },
+    Document {
+        document_id: DocumentId,
+        page: Option<u32>,
+    },
+    Annotation {
+        annotation_id: AnnotationId,
+    },
+    Criterion {
+        criterion_id: CriterionId,
+        attribution: Attribution,
+    },
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -181,7 +194,10 @@ pub enum LetterStatus {
 #[derive(Debug, thiserror::Error)]
 pub enum DomainError {
     #[error("actor {actor} does not hold the {capability:?} capability")]
-    CapabilityDenied { capability: Capability, actor: ActorId },
+    CapabilityDenied {
+        capability: Capability,
+        actor: ActorId,
+    },
 
     #[error("case {case_id} has not been affirmed at the surgeon gate")]
     GateNotAffirmed { case_id: CaseId },
@@ -220,8 +236,15 @@ mod tests {
 
     #[test]
     fn derived_grades_are_never_citable_as_policy() {
-        for g in [EvidenceGrade::DerivedObserved, EvidenceGrade::PeerShared, EvidenceGrade::PayerVerbal] {
-            assert!(!g.citable_as_policy(), "{g:?} must not be citable as policy");
+        for g in [
+            EvidenceGrade::DerivedObserved,
+            EvidenceGrade::PeerShared,
+            EvidenceGrade::PayerVerbal,
+        ] {
+            assert!(
+                !g.citable_as_policy(),
+                "{g:?} must not be citable as policy"
+            );
             assert_ne!(g.attribution(), Attribution::PublishedPolicy);
         }
         assert!(EvidenceGrade::Published.citable_as_policy());
@@ -230,7 +253,10 @@ mod tests {
     #[test]
     fn only_derived_knowledge_decays() {
         assert!(EvidenceGrade::Published.decay_half_life_days().is_none());
-        assert_eq!(EvidenceGrade::DerivedObserved.decay_half_life_days(), Some(180));
+        assert_eq!(
+            EvidenceGrade::DerivedObserved.decay_half_life_days(),
+            Some(180)
+        );
     }
 
     #[test]

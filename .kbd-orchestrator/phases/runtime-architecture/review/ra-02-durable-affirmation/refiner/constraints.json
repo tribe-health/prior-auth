@@ -1,0 +1,112 @@
+{
+  "artifact_type": "content",
+  "constraints": [
+    {
+      "id": "current-evidence",
+      "description": "Current implementation and acceptance receipts match their recorded SHA-256 values.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "Acceptance 2.1 through 2.4 hashes and task-4 source inventory; validate.py recomputes them."
+      }
+    },
+    {
+      "id": "atomic-durability",
+      "description": "Affirmation, audit, immutable command result and derived case summary commit or roll back together.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "Fresh and upgrade PostgreSQL receipts plus the mounted HTTP receipt, including forced audit failure."
+      }
+    },
+    {
+      "id": "independent-authority",
+      "description": "Gate policy, AppServices and PostgreSQL each independently refuse administrator, agent and foreign-practice authority.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "task-6-acceptance.json and recorded positive-control bypass campaigns at each layer."
+      }
+    },
+    {
+      "id": "idempotent-reconciliation",
+      "description": "A lost response is recoverable by lookup or retry without a second effect; changed command payloads conflict.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "task-7-acceptance.json and mounted loss-proxy checks."
+      }
+    },
+    {
+      "id": "derived-summary-integrity",
+      "description": "Later adds and removals update or clear the derived case summary transactionally, and direct spoofing is refused.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "task-8-acceptance.json, fresh/upgrade campaigns and restored summary-guard mutation control."
+      }
+    },
+    {
+      "id": "migration-compatibility",
+      "description": "The additive checksummed migration succeeds for fresh and populated upgrade installations.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "task-4-fresh.json and task-4-upgrade.json with complete disposable-resource cleanup."
+      }
+    },
+    {
+      "id": "caller-truth",
+      "description": "The report distinguishes mounted server and Gate callers from test-only browser and desktop contracts.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "Static composition anchors, mounted T1 receipt and explicit source-usage inventory."
+      }
+    },
+    {
+      "id": "host-boundary",
+      "description": "Shell routes call AppServices and do not reach through it into repository ports.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "Gate policy source contains AppServices::read_verified_gate usage and no services.cases access."
+      }
+    },
+    {
+      "id": "bounded-verification",
+      "description": "Only applicable T0/T1 claims are Passed; phase T2 and release T3 stay deferred.",
+      "severity": "high",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "Report and checklist identify scoped checks, recorded T1 campaigns and unverified surfaces."
+      }
+    },
+    {
+      "id": "bundle-integrity",
+      "description": "Manifest, constraints, state and referenced outputs validate, and the iteration records agree.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "Full Draft-07 schema checks, exact nonempty dist coverage and iteration-consistency checks."
+      }
+    }
+  ],
+  "global_rules": [
+    "Scope is RA-02 completion evidence and the one caller-audit boundary correction.",
+    "No broad phase T2, release T3, commit, deployment or publication occurs in refinement."
+  ],
+  "termination_conditions": [
+    "All ten applicable constraints are satisfied and validate.py exits zero."
+  ]
+}

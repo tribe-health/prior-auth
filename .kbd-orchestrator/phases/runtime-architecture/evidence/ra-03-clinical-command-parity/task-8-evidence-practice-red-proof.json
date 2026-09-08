@@ -1,0 +1,17 @@
+{
+  "result": "Passed",
+  "verification_tier": 1,
+  "failure_injected": "Evidence reassessment and lookup omitted the selected practice argument",
+  "command": "bunx vitest run use-evidence-timeline.test.tsx -t sends the selected secondary practice for reassessment and command lookup",
+  "expected_exit": "nonzero when the secondary practice is omitted",
+  "observed_exit": 1,
+  "source_sha256_before": "c0e192a01b06f90415704c2f40f83f9efcdf72f38760fdbb41ea1c1226a8ea89",
+  "source_sha256_after_restore": "c0e192a01b06f90415704c2f40f83f9efcdf72f38760fdbb41ea1c1226a8ea89",
+  "selected_output": [
+    "     \u2192 expected \"spy\" to be called with arguments: [ \u2026(6) ]",
+    "Received: ",
+    " FAIL  src/features/evidence-timeline/hooks/use-evidence-timeline.test.tsx > evidence reassessment command reconciliation > sends the selected secondary practice for reassessment and command lookup",
+    "AssertionError: expected \"spy\" to be called with arguments: [ \u2026(6) ]",
+    "Received: "
+  ]
+}

@@ -1,0 +1,371 @@
+{
+  "result": "Passed",
+  "verification_tier": 1,
+  "observed_at": "2026-09-06T17:53:44.600067+00:00",
+  "scope": "Real disposable Gate and ASO application with two Kratos identities and shared PostgreSQL pool",
+  "commands": [
+    "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-session-gateway.py"
+  ],
+  "checks": {
+    "synthetic_native_and_browser_flows": {
+      "result": "Passed",
+      "identity_equal": true,
+      "distinct_sessions": true
+    },
+    "disposable_login_is_nonowner_nonbypass_reader_member": {
+      "result": "Passed",
+      "psql_output": "t"
+    },
+    "actual_application_readiness": {
+      "result": "Passed",
+      "status": 401,
+      "no_store": true
+    },
+    "anonymous": {
+      "result": "Passed",
+      "status": 401,
+      "expected_status": 401,
+      "no_store": true,
+      "sanitized_contract": true
+    },
+    "A_bearer": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "A"
+    },
+    "A_x-session-token": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "A"
+    },
+    "A_cookie": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "A"
+    },
+    "B_bearer": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "B"
+    },
+    "B_x-session-token": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "B"
+    },
+    "B_cookie": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "B"
+    },
+    "alternating_pool_0": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "A"
+    },
+    "alternating_pool_1": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "A"
+    },
+    "alternating_pool_2": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "B"
+    },
+    "alternating_pool_3": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "B"
+    },
+    "alternating_pool_4": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "B"
+    },
+    "alternating_pool_5": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "A"
+    },
+    "alternating_pool_6": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "A"
+    },
+    "alternating_pool_7": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "A"
+    },
+    "alternating_pool_8": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "B"
+    },
+    "alternating_pool_9": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "B"
+    },
+    "alternating_pool_10": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "B"
+    },
+    "alternating_pool_11": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "A"
+    },
+    "spoof_without_credential": {
+      "result": "Passed",
+      "status": 401,
+      "expected_status": 401,
+      "no_store": true,
+      "sanitized_contract": true
+    },
+    "spoof_with_A_credential": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "A"
+    },
+    "A_foreign_practice": {
+      "result": "Passed",
+      "status": 403,
+      "expected_status": 403,
+      "no_store": true,
+      "sanitized_contract": true
+    },
+    "B_foreign_practice": {
+      "result": "Passed",
+      "status": 403,
+      "expected_status": 403,
+      "no_store": true,
+      "sanitized_contract": true
+    },
+    "mixed_identity_tokens": {
+      "result": "Passed",
+      "status": 401,
+      "expected_status": 401,
+      "no_store": true,
+      "sanitized_contract": true
+    },
+    "B_membership_removed": {
+      "result": "Passed",
+      "status": 403,
+      "expected_status": 403,
+      "no_store": true,
+      "sanitized_contract": true
+    },
+    "A_unaffected_by_B_membership_removal": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "A"
+    },
+    "B_membership_restored": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "B"
+    },
+    "A_deactivated": {
+      "result": "Passed",
+      "status": 403,
+      "expected_status": 403,
+      "no_store": true,
+      "sanitized_contract": true
+    },
+    "B_unaffected_by_A_deactivation": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "B"
+    },
+    "unavailable_Kratos_A": {
+      "result": "Passed",
+      "status": 503,
+      "expected_status": 503,
+      "no_store": true,
+      "sanitized_contract": true
+    },
+    "unavailable_Kratos_B": {
+      "result": "Passed",
+      "status": 503,
+      "expected_status": 503,
+      "no_store": true,
+      "sanitized_contract": true
+    },
+    "anonymous_with_unavailable_Kratos": {
+      "result": "Passed",
+      "status": 401,
+      "expected_status": 401,
+      "no_store": true,
+      "sanitized_contract": true
+    },
+    "B_after_provider_recovery": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "B"
+    }
+  },
+  "app_response_count": 34,
+  "no_store_response_count": 34,
+  "cleanup": {
+    "disposable_gate_removed": true,
+    "provider_proxy_stopped": true,
+    "second_synthetic_identity_deleted": true,
+    "second_native_session_revoked": true,
+    "second_browser_session_revoked": true,
+    "second_preexisting_reader_preserved": true,
+    "application_process_stopped": true,
+    "temporary_process_log_deleted": true,
+    "synthetic_identity_deleted": true,
+    "native_session_revoked": true,
+    "browser_session_revoked": true,
+    "disposable_database_deleted": true,
+    "disposable_login_deleted": true,
+    "probe_created_reader_deleted": true,
+    "temporary_gate_config_removed": true
+  },
+  "unverified": [
+    "Native UI/IPC, production deployment and HTTP disconnect propagation are not tested.",
+    "Gate collapses repeated same-name credential headers; mixed distinct sources are tested, duplicate-header rejection parity is not claimed."
+  ],
+  "attempt_history": [
+    {
+      "observed_at": "2026-09-06T17:49:53.512098+00:00",
+      "result": "Failed",
+      "failure": {
+        "stage": "two_identities_through_gate_with_shared_pool",
+        "type": "AssertionError"
+      },
+      "app_exit_code": null,
+      "cleanup": {
+        "disposable_gate_removed": true,
+        "provider_proxy_stopped": true,
+        "second_synthetic_identity_deleted": true,
+        "second_native_session_revoked": true,
+        "second_browser_session_revoked": true,
+        "second_preexisting_reader_preserved": true,
+        "application_process_stopped": true,
+        "temporary_process_log_deleted": true,
+        "synthetic_identity_deleted": true,
+        "native_session_revoked": true,
+        "browser_session_revoked": true,
+        "disposable_database_deleted": true,
+        "disposable_login_deleted": true,
+        "probe_created_reader_deleted": true,
+        "temporary_gate_config_removed": true
+      },
+      "diagnosis": "Fixture used coordinator instead of schema role key staff, so its second subject had no capabilities. Corrected to the checked-in staff role; deactivation uses checked-in deactivated status."
+    },
+    {
+      "observed_at": "2026-09-06T17:53:26.965645+00:00",
+      "result": "Failed",
+      "failure": {
+        "stage": "two_identities_through_gate_with_shared_pool",
+        "type": "AssertionError"
+      },
+      "app_exit_code": null,
+      "cleanup": {
+        "disposable_gate_removed": true,
+        "provider_proxy_stopped": true,
+        "second_synthetic_identity_deleted": true,
+        "second_native_session_revoked": true,
+        "second_browser_session_revoked": true,
+        "second_preexisting_reader_preserved": true,
+        "application_process_stopped": true,
+        "temporary_process_log_deleted": true,
+        "synthetic_identity_deleted": true,
+        "native_session_revoked": true,
+        "browser_session_revoked": true,
+        "disposable_database_deleted": true,
+        "disposable_login_deleted": true,
+        "probe_created_reader_deleted": true,
+        "temporary_gate_config_removed": true
+      },
+      "diagnosis": "See recorded failure stage."
+    }
+  ],
+  "kratos_version": "v26.2.0",
+  "postgres_published_port": 55432,
+  "gate_image_id": "sha256:074c1a3083f5b4c64403b4b763b734a4eaf2f7db0fff80264f0dfa46f36c020c",
+  "pool_reuse": {
+    "result": "Passed",
+    "backend_counts": {
+      "A": 1,
+      "B": 1
+    },
+    "shared_backend_count": 1
+  },
+  "check_count": 36,
+  "completed_at": "2026-09-06T17:54:05.039223+00:00"
+}

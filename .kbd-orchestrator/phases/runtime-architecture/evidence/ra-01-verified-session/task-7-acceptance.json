@@ -1,0 +1,309 @@
+{
+  "task": "2.3",
+  "driver_ordinal": 7,
+  "result": "Passed",
+  "recorded_at": "2026-09-06T19:58:20.514075+00:00",
+  "evidence_mode": "Acceptance mapping of prior T1 runs; no live rerun or current service availability claim",
+  "current_hash_verification": {
+    "result": "Passed",
+    "count": 18,
+    "files": [
+      {
+        "path": "Cargo.toml",
+        "sha256": "cf5078a47344c0aeb8391245b40885fae2f4c5ffd93ce62e57e51c329820d39d"
+      },
+      {
+        "path": "Cargo.lock",
+        "sha256": "cf262d424a41b275f00aca2696eb487f2d16df818145cb98db789d39b031aa3d"
+      },
+      {
+        "path": "crates/aso-host/src/lib.rs",
+        "sha256": "1c7871bf053bb6b13e1da256a306a7cc06b781a229fdbc4cc76545aa99bd1eca"
+      },
+      {
+        "path": "crates/aso-host/src/session.rs",
+        "sha256": "bcccd5d563c5f9e1ac9646b7a784fd28a0b831143f0aba19b2f8d829498cae43"
+      },
+      {
+        "path": "crates/aso-server-axum/src/lib.rs",
+        "sha256": "b71d6149a490a26e7181c7972b61e20a6c8da5b4d7e413605a4058ace1e1d2b4"
+      },
+      {
+        "path": "crates/aso-server-axum/src/session.rs",
+        "sha256": "6d0deebbd2f35ab0cd8e755994b0b324c85f5722f53fa4d080faf4c7298f195b"
+      },
+      {
+        "path": "crates/aso-web-server/Cargo.toml",
+        "sha256": "c9d8678d438a95b3d3ba9c4c615696351deae1b162832355d7767b0c0c328905"
+      },
+      {
+        "path": "crates/aso-web-server/src/main.rs",
+        "sha256": "a6c1e85fe9f2a6ce5d4268709bbb8d69139e659f16edd5084cad29c1485b8260"
+      },
+      {
+        "path": "crates/aso-web-server/src/adapters/mod.rs",
+        "sha256": "f6acbc994c8a8095856e3148049fcc189f49ab13917e96b5ef2770382eb73318"
+      },
+      {
+        "path": "crates/aso-web-server/src/adapters/session.rs",
+        "sha256": "7c2838b08b273ceef01f38df6bb310f385088fc17bee858b246f02895c5db510"
+      },
+      {
+        "path": "desktop/src-tauri/src/lib.rs",
+        "sha256": "790621cbaf115742a332a998b852c3f04f02f67557952c21a391b86ccfd693ec"
+      },
+      {
+        "path": "docker/bootstrap/25-session-authority.sql",
+        "sha256": "55a7029d1f683c208005262d1bbbd554f9f9a6e1791bbdace70a87f664760f42"
+      },
+      {
+        "path": "scripts/test-session-boundary.py",
+        "sha256": "e27706b7b4d036b5b61bc98ac4d15dff6324a16a7fbfb8decb0d133c9981e600"
+      },
+      {
+        "path": "crates/aso-web-server/src/adapters/session/transaction_tests.rs",
+        "sha256": "0eed3cd8d501a64f2fe2b8d8cdd71a19a0da79d4df1b283a4ec6574a50b09309"
+      },
+      {
+        "path": "scripts/test-session-context.py",
+        "sha256": "ed49781cc088b6f4c2e6c9c61166727061f49f63e02796dbd0f92d2cd1c298d0"
+      },
+      {
+        "path": "openspec/changes/ra-01-verified-session/design.md",
+        "sha256": "b311b96b7d2cdbdf65a48fab5cadf3f4af525e8249e3aa514ee5b3fbbe5cf79b"
+      },
+      {
+        "path": "docker/flint-gate/config.yaml",
+        "sha256": "888a44a67379c1e9b3047aa13f3449b198131990df3dfc6437120d5cc79230d3"
+      },
+      {
+        "path": "scripts/test-session-gateway.py",
+        "sha256": "a7b1c0ffd020acf7632cb6d9cfe1eed901f307d5071d08fbce8b0596ba3129d5"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "path": ".kbd-orchestrator/phases/runtime-architecture/evidence/ra-01-verified-session/gateway-session.json",
+      "sha256": "ceb985a378539bf3e919c9faf155a92cf6fbd84a5f4891e09ceb418defbed292",
+      "command": "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-session-gateway.py",
+      "completed_at": "2026-09-06T17:54:05.039223+00:00",
+      "result": "Passed"
+    },
+    {
+      "path": ".kbd-orchestrator/phases/runtime-architecture/evidence/ra-01-verified-session/context-session.json",
+      "sha256": "07b5474cd230283cc0419391d72187e1079f5ce707a002371256c1738be3cf0c",
+      "command": "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-session-context.py",
+      "completed_at": "2026-09-06T16:28:18.894660+00:00",
+      "result": "Passed"
+    }
+  ],
+  "prerequisites_at_execution": {
+    "kratos_version": "v26.2.0",
+    "gate_image_id": "sha256:074c1a3083f5b4c64403b4b763b734a4eaf2f7db0fff80264f0dfa46f36c020c",
+    "postgres_published_port": 55432,
+    "restricted_login": {
+      "result": "Passed",
+      "psql_output": "t"
+    },
+    "actual_app": {
+      "result": "Passed",
+      "status": 401,
+      "no_store": true
+    }
+  },
+  "pool_reuse": {
+    "result": "Passed",
+    "backend_counts": {
+      "A": 1,
+      "B": 1
+    },
+    "shared_backend_count": 1
+  },
+  "observations": {
+    "alternating_pool_0": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "A"
+    },
+    "alternating_pool_1": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "A"
+    },
+    "alternating_pool_2": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "B"
+    },
+    "alternating_pool_3": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "B"
+    },
+    "alternating_pool_4": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "B"
+    },
+    "alternating_pool_5": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "A"
+    },
+    "alternating_pool_6": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "A"
+    },
+    "alternating_pool_7": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "A"
+    },
+    "alternating_pool_8": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "B"
+    },
+    "alternating_pool_9": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "B"
+    },
+    "alternating_pool_10": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "B"
+    },
+    "alternating_pool_11": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "A"
+    },
+    "B_membership_removed": {
+      "result": "Passed",
+      "status": 403,
+      "expected_status": 403,
+      "no_store": true,
+      "sanitized_contract": true
+    },
+    "A_unaffected_by_B_membership_removal": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "A"
+    },
+    "B_membership_restored": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "B"
+    },
+    "A_deactivated": {
+      "result": "Passed",
+      "status": 403,
+      "expected_status": 403,
+      "no_store": true,
+      "sanitized_contract": true
+    },
+    "B_unaffected_by_A_deactivation": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_contract": true,
+      "verified_database_context": "B"
+    }
+  },
+  "transaction_lifecycle": {
+    "scope": "Separate single-identity test of the production transaction owner; not two-identity HTTP cancellation",
+    "command": "cargo test -p aso-web-server session_transaction_context_lifecycle -- --ignored --nocapture",
+    "exit": 0,
+    "output": [
+      "context check passed: explicit_commit",
+      "context check passed: mounted_repository_success",
+      "context check passed: mounted_repository_denial",
+      "context check passed: sql_error_drop_rollback",
+      "context check passed: explicit_rollback",
+      "context check passed: in_flight_cancellation_clean_or_discarded (replaced=true)",
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 5.14s"
+    ]
+  },
+  "cleanup": {
+    "gateway": {
+      "disposable_gate_removed": true,
+      "provider_proxy_stopped": true,
+      "second_synthetic_identity_deleted": true,
+      "second_native_session_revoked": true,
+      "second_browser_session_revoked": true,
+      "second_preexisting_reader_preserved": true,
+      "application_process_stopped": true,
+      "temporary_process_log_deleted": true,
+      "synthetic_identity_deleted": true,
+      "native_session_revoked": true,
+      "browser_session_revoked": true,
+      "disposable_database_deleted": true,
+      "disposable_login_deleted": true,
+      "probe_created_reader_deleted": true,
+      "temporary_gate_config_removed": true
+    },
+    "context": {
+      "application_process_stopped": true,
+      "temporary_process_log_deleted": true,
+      "synthetic_identity_deleted": true,
+      "native_session_revoked": true,
+      "browser_session_revoked": true,
+      "disposable_database_deleted": true,
+      "disposable_login_deleted": true,
+      "probe_created_reader_deleted": true
+    },
+    "controlled_provider_stopped": true
+  },
+  "limits": [
+    "Successful Gate reads assert actual database identity and reader role; denied requests assert response refusal, not per-denial database trace identity.",
+    "Sequential two-identity reuse and separate single-identity transaction cleanup do not certify general concurrency or HTTP-disconnect propagation.",
+    "Gate collapses repeated same-name credential headers; duplicate-header refusal parity remains unverified.",
+    "Native UI/IPC, full production configuration/deployment and full-change QA remain unverified."
+  ]
+}

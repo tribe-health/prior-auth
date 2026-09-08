@@ -1,0 +1,290 @@
+{
+  "result": "Passed",
+  "task": 10,
+  "scope": "RA04 final-review source and evidence inventory",
+  "sources": [
+    {
+      "root": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth",
+      "path": "crates/aso-host/src/projection.rs",
+      "sha256": "789bc2fc16c5d832fbd64c2b70359ae7a8031c89212b1ac2e829bbea138b9035"
+    },
+    {
+      "root": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth",
+      "path": "crates/aso-host/src/session.rs",
+      "sha256": "bbd28f8125b02b3b86f4db23403995528db9c8dd7adbf40314928537593d6b03"
+    },
+    {
+      "root": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth",
+      "path": "crates/aso-server-axum/src/lib.rs",
+      "sha256": "8f8857800d1dd3e5a821d1b7d8b53265c3db50fddb6d4c7321e7691eb46dbc6e"
+    },
+    {
+      "root": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth",
+      "path": "crates/aso-server-axum/src/session.rs",
+      "sha256": "b6720f6e1dad171cfd41059e4ea99445a272f14cb0cffc0910292a50a04427ed"
+    },
+    {
+      "root": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth",
+      "path": "desktop/src-tauri/src/lib.rs",
+      "sha256": "02185090bfd79ebe6099c0e09da3a16dd9832d152c4d407bef214e1df7400bc6"
+    },
+    {
+      "root": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth",
+      "path": "web/src/app/shell/app-shell.tsx",
+      "sha256": "d30d0b96fc633352de2d44f50e35f80052984f5e91b041d1df344cbf2b212069"
+    },
+    {
+      "root": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth",
+      "path": "scripts/test-replica-grant.py",
+      "sha256": "35c4e9aa940289450e29fe289f0fab5a1be05adaa693f7afeac61b1eacfef157"
+    },
+    {
+      "root": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth",
+      "path": "scripts/test-practice-derivation.py",
+      "sha256": "c06a17513d6925b4873930cd1af590b482813a9c0b1ffc8984643672d8ac3ae5"
+    },
+    {
+      "root": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth",
+      "path": "scripts/test-gate-transaction.py",
+      "sha256": "43cb4a51653d10234cda052805b868612f0795f13373562b05e36c542e51f3f2"
+    },
+    {
+      "root": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth",
+      "path": "docker/bootstrap/15-denormalize-practice-id.sql",
+      "sha256": "a99e12477298e76a1efb18aebe5c2563707d9cb2d0662fbf58f8b576d9935bb4"
+    },
+    {
+      "root": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth",
+      "path": "docs/design/schema/schema.sql",
+      "sha256": "d38fee2050e0de053c3b04c73f5215447900da5aee1a06a749fd5abdb7f9b15d"
+    },
+    {
+      "root": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth",
+      "path": "docker/flint-gate/config.yaml",
+      "sha256": "8a0102489d72f6479267311b0dca4377d6a38aebb3e71f24a9be00ac46af7971"
+    },
+    {
+      "root": "/Users/gqadonis/Projects/prometheus/flint-gate",
+      "path": "crates/flint-gate-core/src/auth/jwt_mint.rs",
+      "sha256": "5e3f0a400bae90e7574824300ce61abc8c5f4d34591b44d1f860c4b2e5a537af"
+    },
+    {
+      "root": "/Users/gqadonis/Projects/prometheus/flint-gate",
+      "path": "crates/flint-gate-core/src/config/lookup.rs",
+      "sha256": "3b212397a0e1ee5b050960692917a34af9fc2d5d9cefccb03cf201fc317c2d15"
+    },
+    {
+      "root": "/Users/gqadonis/Projects/prometheus/flint-gate",
+      "path": "crates/flint-gate-core/src/config/types.rs",
+      "sha256": "2e7ea16a00fc65f7aa088d73165cad98c5625a628a475307cd663e3f6c9dc40e"
+    },
+    {
+      "root": "/Users/gqadonis/Projects/prometheus/flint-gate",
+      "path": "crates/flint-gate-core/src/middleware/mod.rs",
+      "sha256": "1e1b5a1dc6105e0175c30e80b5feb3de9021d181706388ae5a00c3f291af8376"
+    },
+    {
+      "root": "/Users/gqadonis/Projects/prometheus/flint-gate",
+      "path": "crates/flint-gate-core/src/middleware/pipeline.rs",
+      "sha256": "26b12428d0a6bb6b591d1c27f5c00d45460b70b7c22f8ac23ec45bae64dab7e1"
+    },
+    {
+      "root": "/Users/gqadonis/Projects/prometheus/flint-gate",
+      "path": "crates/flint-gate-core/src/middleware/aso_replica_grant.rs",
+      "sha256": "708bff642f8976ce5fcefafa133163b1fdcb30cb160c4d28862faeb28ec8f2ac"
+    },
+    {
+      "root": "/Users/gqadonis/Projects/prometheus/flint-realtime-fabric",
+      "path": "crates/frf-ports/src/identity.rs",
+      "sha256": "2dd1d4b8ebf9257af092d68a574c0e0ddd3f53ed2b17e7b367cbbbb83a6328b7"
+    },
+    {
+      "root": "/Users/gqadonis/Projects/prometheus/flint-realtime-fabric",
+      "path": "crates/frf-identity-ory/src/claims.rs",
+      "sha256": "e6648d7616b9eef3ca1f3f92917795e800de4cfcf89fd667ad6eb78ceeefb4c2"
+    },
+    {
+      "root": "/Users/gqadonis/Projects/prometheus/flint-realtime-fabric",
+      "path": "crates/frf-identity-ory/src/verifier.rs",
+      "sha256": "735a74c78929257170d7d1b6571e106bdff4633f51873469a61440dcedde3018"
+    },
+    {
+      "root": "/Users/gqadonis/Projects/prometheus/flint-realtime-fabric",
+      "path": "crates/frf-gateway/src/lib.rs",
+      "sha256": "d543b6ebbc879a9f74c8b7ba1eafd2438d1707bd088a9e7f572baed433a2c1e7"
+    },
+    {
+      "root": "/Users/gqadonis/Projects/prometheus/flint-realtime-fabric",
+      "path": "crates/frf-gateway/src/routes/shape.rs",
+      "sha256": "442309138e9c04577b851974b68f30b2748a34511099a7e8ea5261ec3c0f8373"
+    },
+    {
+      "root": "/Users/gqadonis/Projects/prometheus/flint-realtime-fabric",
+      "path": "crates/frf-gateway/tests/shape_projection_grant.rs",
+      "sha256": "315471265d216f3a5e09cd383b8dc9f7b2c5f53bcd5d375b2f81208a2a60eea4"
+    },
+    {
+      "root": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth",
+      "path": "crates/aso-server-axum/src/routes/cases.rs",
+      "sha256": "335ece109d36b76e43c7b54c6d3bf9e335aa76d92a96dac10103a49459525805"
+    },
+    {
+      "root": "/Users/gqadonis/Projects/prometheus/flint-gate",
+      "path": "crates/flint-gate-core/src/middleware/aso_clinical_authorize.rs",
+      "sha256": "8b0b4e75dfcfde84d9f4628f8b8a91999592fc14c947651d888f974a2589ce4d"
+    },
+    {
+      "root": "/Users/gqadonis/Projects/prometheus/flint-realtime-fabric",
+      "path": "crates/frf-gateway/src/config/mod.rs",
+      "sha256": "3c4f87352f1af4b7e3fd7d067c812267a7374a6223469de9e8f43acaea4fdbd8"
+    },
+    {
+      "root": "/Users/gqadonis/Projects/prometheus/flint-realtime-fabric",
+      "path": "crates/frf-gateway/src/config/tests.rs",
+      "sha256": "bab2e135645da43ce183b1af41b4c56b6c1c8f8f53688672959d7bf01cd4e4e1"
+    },
+    {
+      "root": "/Users/gqadonis/Projects/prometheus/flint-realtime-fabric",
+      "path": "crates/frf-gateway/src/main.rs",
+      "sha256": "323aeb3a3c7b2f9efcf2be94b20139f7efb8f21be657f5fa655c96b315376401"
+    }
+  ],
+  "receipts": [
+    {
+      "path": "task-5-acceptance.json",
+      "sha256": "4e1105a0103127db5517e940ef989f65246e9f369d4ffe567dfb562314a23802"
+    },
+    {
+      "path": "task-6-acceptance.json",
+      "sha256": "b83ca4de95b1abf18756c919f3c45fb5ec21e7241ea54be5e763f665a97dc8f4"
+    },
+    {
+      "path": "task-7-acceptance.json",
+      "sha256": "4b40e8e4284dd199a4f37e3bbd5448a7ec0b404977591dba46c02943b93578f3"
+    },
+    {
+      "path": "task-8-acceptance.json",
+      "sha256": "c64f10e2b83d5b614e86f9e2bae9c3afd513e8beeb42f66c2efd51d210689bad"
+    },
+    {
+      "path": "task-9-acceptance.json",
+      "sha256": "6ffb837c60ce2cb10312f9b14f8f6eb8b9e8607acbbce563a89af75d1c7dcf24"
+    },
+    {
+      "path": "task-10-primary-t0-t1.txt",
+      "sha256": "69bc9e299c59d502ff262d02025f762de588ac6e679637d8a3c6f01c4b187dd7"
+    },
+    {
+      "path": "task-10-gate-t0-t1.txt",
+      "sha256": "a8ad2fd9f1888b3f099d64a665ba0933d7ce88536939556189ac83f58e3f19ee"
+    },
+    {
+      "path": "task-10-frf-t0-t1.txt",
+      "sha256": "372230757921f8d4aaf6eecc314b74f36599c3cfadff716339b711dfc02bee7e"
+    },
+    {
+      "path": "task-10-web-t0.txt",
+      "sha256": "62015374a940d01bc9b5d39b21ab96bfebeacb83522c6348fa2691928427407e"
+    },
+    {
+      "path": "task-10-mounted-grant.json",
+      "sha256": "25fdc8d011f7bee8a5f608c4ee09c341d8b4d9b9799e93d77b80268336db4e00"
+    },
+    {
+      "path": "task-10-mounted-grant.txt",
+      "sha256": "2e1f454ad98c923e2a36f009f040ca5baf5e8bfb5c7baa4ea168552ad098ba7d"
+    },
+    {
+      "path": "task-10-gate-fresh.json",
+      "sha256": "921b7c6882816de11747ede80d5dd5f52a64757affda755e02eb895d043a0005"
+    },
+    {
+      "path": "task-10-gate-fresh.txt",
+      "sha256": "6f121fa493600ae68ca36c64f7fe623379cbf75ef94686e62a9b64aaac904855"
+    },
+    {
+      "path": "task-10-gate-upgrade.json",
+      "sha256": "0890fc3848dd604bf11a4b7bedfe1af38b16957fb2d7ca0a1c1330a9c7577b58"
+    },
+    {
+      "path": "task-10-gate-upgrade.txt",
+      "sha256": "6e4e924ef23fd9e635c175abff91fa061a9e074b9e41483e4ef9a87e91e1f3f2"
+    },
+    {
+      "path": "task-10-practice-derivation.json",
+      "sha256": "2a7fc41081044ecd826c8caef1449a862f0cf5a375c3e093ca69b644d55c9375"
+    },
+    {
+      "path": "task-10-practice-derivation.txt",
+      "sha256": "8a4a12aa672d23d31ee58c133ac9e1bdc06eade91a6bfef77a3df8d449927e3a"
+    },
+    {
+      "path": "task-10-principal-guard-red.txt",
+      "sha256": "edcadd5bc7362926e758b840e10ccb712c94a01e034b277df21883f4fd824bd4"
+    },
+    {
+      "path": "task-10-principal-guard-restored.txt",
+      "sha256": "7cc770ae9f75e87a4ca1761fa0b8d47c594bf45e9be92115172a2df61abf0732"
+    },
+    {
+      "path": "task-10-frf-production-issuer.txt",
+      "sha256": "2504b5249eb5771af90c90f13f1af98aac8d032d0954c44f7103c41414da1af9"
+    },
+    {
+      "path": "task-10-frf-production-issuer-restored.txt",
+      "sha256": "ab7ae936b36a44a752152d0c259d43a656a0fb92ba6fc9e0100523287d597040"
+    },
+    {
+      "path": "task-10-primary-t0-t1-restored.txt",
+      "sha256": "6fde76c7a1ec39e5653ddf3d25b5f424ea937cf916d2623c060a1636a68ba0c8"
+    },
+    {
+      "path": "task-10-credential-hygiene-red.txt",
+      "sha256": "19434c330aa48f8c3ff2efd8d7fedb2aa24e6f30b0fe4d1b652227d0d255e86a"
+    },
+    {
+      "path": "task-10-credential-hygiene-restored.txt",
+      "sha256": "5f9a1c3a24653300584c43dbcac66242f044d5008952228df6ee2c87c7eb0f07"
+    },
+    {
+      "path": "task-10-frf-nonreplica-jti-red.txt",
+      "sha256": "b7039e3d1724a5b4fd27886792aff6bc64c3600dcd71e3dd418fbfdf9403adcc"
+    },
+    {
+      "path": "task-10-frf-jti-restored.txt",
+      "sha256": "3c1f9be14480cb13cb826e14fe71adf79b98f730158e308de013d0c882a4d4c2"
+    },
+    {
+      "path": "task-10-current-session-guard-red.txt",
+      "sha256": "90376b6eeb5b721587e7a0094319e840df76350a4c4e900598d01a241eab3c18"
+    },
+    {
+      "path": "task-10-current-session-guard-restored.txt",
+      "sha256": "5373cf82af0ff969c5724c20614ecedb71261a81ebe253fb71ec03ccf605ea95"
+    },
+    {
+      "path": "task-10-private-error-red.json",
+      "sha256": "b8a94c6551b3cf979fe12d39e1cf5059f8f7661529aa0f1c9393039483a467ff"
+    },
+    {
+      "path": "task-10-private-error-red.txt",
+      "sha256": "a4a65e7002398d39f7cd233fdab1275dc6b70c505ee80551adb23c979ad0b22e"
+    },
+    {
+      "path": "task-10-private-error-restored.json",
+      "sha256": "1a8534b9ea624655f02b68b4c9be5417ce8cf77f5eb354052f9da7b5410b9ee2"
+    },
+    {
+      "path": "task-10-private-error-restored.txt",
+      "sha256": "39008c6f4931927fb65760ef59d6a79a224edb89f9260fffd9ba3d465373891c"
+    },
+    {
+      "path": "task-10-primary-t0-t1-final.txt",
+      "sha256": "5906ef169e100fa9d54dae6699d9158b70855ed70cbe1d3d0220c7fd5ae3a4f7"
+    },
+    {
+      "path": "task-10-gate-t0-t1-final.txt",
+      "sha256": "55519c2dff2f3178db8cc31211ef04227ff027e356253ba03ee78fd0427a48c4"
+    }
+  ]
+}

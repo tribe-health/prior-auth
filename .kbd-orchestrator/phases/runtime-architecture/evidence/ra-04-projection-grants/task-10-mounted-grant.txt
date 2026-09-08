@@ -1,0 +1,14 @@
+{
+  "result": "Passed",
+  "checks": 17,
+  "observed_counts": {
+    "whoami": 2,
+    "grant": 4,
+    "downstream": 1
+  },
+  "cleanup": {
+    "gate_without_minter": "Passed",
+    "gate_with_minter": "Passed",
+    "synthetic_http_endpoints": "Passed"
+  }
+}

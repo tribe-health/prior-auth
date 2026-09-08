@@ -1,0 +1,41 @@
+{
+  "check": {
+    "command": [
+      "cargo",
+      "+1.97.1",
+      "check",
+      "-p",
+      "aso-server-axum",
+      "--tests"
+    ],
+    "exit_code": 0,
+    "output": "    Checking aso-server-axum v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-server-axum)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.21s\n"
+  },
+  "clippy": {
+    "command": [
+      "cargo",
+      "+1.97.1",
+      "clippy",
+      "-p",
+      "aso-server-axum",
+      "--tests",
+      "--no-deps"
+    ],
+    "exit_code": 0,
+    "output": "    Checking aso-server-axum v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-server-axum)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.25s\n"
+  },
+  "test": {
+    "command": [
+      "cargo",
+      "+1.97.1",
+      "test",
+      "-p",
+      "aso-server-axum",
+      "policy_checks_fresh_capability_without_calling_service_authority_or_commands"
+    ],
+    "exit_code": 101,
+    "output": "\nrunning 1 test\ntest routes::gate::tests::policy_checks_fresh_capability_without_calling_service_authority_or_commands ... FAILED\n\nfailures:\n\n---- routes::gate::tests::policy_checks_fresh_capability_without_calling_service_authority_or_commands stdout ----\n\nthread 'routes::gate::tests::policy_checks_fresh_capability_without_calling_service_authority_or_commands' (91996495) panicked at crates/aso-server-axum/src/routes/gate/tests.rs:143:5:\nassertion `left == right` failed\n  left: 204\n right: 403\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n\n\nfailures:\n    routes::gate::tests::policy_checks_fresh_capability_without_calling_service_authority_or_commands\n\ntest result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 10 filtered out; finished in 0.00s\n\n   Compiling aso-server-axum v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-server-axum)\n    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.44s\n     Running unittests src/lib.rs (/Users/gqadonis/.cargo/build-cache/02/70d32e977a4fbf/debug/deps/aso_server_axum-10c5da0d821be14e)\nerror: test failed, to rerun pass `-p aso-server-axum --lib`\n"
+  },
+  "restored": true,
+  "restored_sha256": "f63cd3a46c937f497611ae128fb1fed71e4e3a6cef1ce48b9e8760c6930c90a1"
+}

@@ -1,0 +1,17 @@
+{
+  "result": "Passed",
+  "verification_tier": 1,
+  "failure_injected": "Letter and evidence target-read unavailability was converted to policy denial",
+  "command": "RUSTUP_TOOLCHAIN=1.97.1 cargo test -p aso-server-axum policy_preserves_target_read_outages",
+  "expected_exit": "nonzero in both HTTP 503 policy outage tests",
+  "observed_exit": 101,
+  "source_sha256_before": "5f855239082391c5c3d1011befd4106af32d80ad3451c72bfdd634bfe17d7f51",
+  "source_sha256_after_restore": "5f855239082391c5c3d1011befd4106af32d80ad3451c72bfdd634bfe17d7f51",
+  "selected_output": [
+    "test routes::gate::tests::evidence_policy_preserves_target_read_outages ... FAILED",
+    "test routes::gate::tests::letter_policy_preserves_target_read_outages ... FAILED",
+    "assertion `left == right` failed",
+    "assertion `left == right` failed",
+    "test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 21 filtered out; finished in 0.00s"
+  ]
+}

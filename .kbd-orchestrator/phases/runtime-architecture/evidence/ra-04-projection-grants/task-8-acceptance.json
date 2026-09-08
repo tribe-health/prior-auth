@@ -1,0 +1,188 @@
+{
+  "result": "Passed",
+  "task": 8,
+  "openspec_task": "2.4",
+  "scope": "RA04 producer, approved projection, authorized route preservation and downstream navigation-source contract",
+  "requirement": "A later authorized surgeon removal clears cases.gate_affirmed_at; the approved server projection carries the nullable field without actor identity, and the authorized route preserves it for the graph-backed navigation owner.",
+  "prerequisites": [
+    {
+      "name": "Existing local Compose PostgreSQL service and configured container administrator",
+      "available": true,
+      "published_port": 55432
+    },
+    {
+      "name": "Pinned Rust 1.97.1 toolchain and resolved local dependencies",
+      "available": true
+    },
+    {
+      "name": "Live Electric composition, SQL/PEM materializer and RA14 graph navigation",
+      "required_for_this_ra04_contract_task": false,
+      "future_owners": [
+        "ra-05-authorized-shape-facade",
+        "ra-11c-sql-materialization",
+        "ra-14-live-evidence-timeline"
+      ]
+    }
+  ],
+  "commands": [
+    "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-gate-transaction.py --install-mode fresh --output .kbd-orchestrator/phases/runtime-architecture/evidence/ra-04-projection-grants/task-8-gate-fresh-restored.json",
+    "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-gate-transaction.py --install-mode upgrade --output .kbd-orchestrator/phases/runtime-architecture/evidence/ra-04-projection-grants/task-8-gate-upgrade.json",
+    "cargo test -p aso-host projection::tests -- --nocapture",
+    "cargo test -p frf-gateway --features shape-facade --test shape_projection_grant",
+    "cargo check -p aso-host",
+    "cargo clippy -p aso-host --no-deps",
+    "cargo check -p frf-gateway --features shape-facade",
+    "cargo clippy -p frf-gateway --features shape-facade --test shape_projection_grant --no-deps",
+    "pnpm --dir web typecheck",
+    "pnpm --dir web lint"
+  ],
+  "observed_results": {
+    "fresh_transaction": {
+      "result": "Passed",
+      "assertion_count": 18,
+      "proof": [
+        "surgeon B removed a required affirmation after surgeon A completed the gate",
+        "cases.gate_affirmed_at and gate_affirmed_by committed as null",
+        "the earlier immutable command result remained available",
+        "all disposable database and role resources were removed"
+      ],
+      "marker": "gate_transaction_check: derived_summary_and_original_result_survive_later_removal",
+      "raw_output": "task-8-gate-fresh-restored.json",
+      "raw_output_sha256": "ea69d99171ed88ebf83c3b304c71a9db9fc5baf61f5b525f30c3d3b3029ddef6"
+    },
+    "upgrade_transaction": {
+      "result": "Passed",
+      "assertion_count": 18,
+      "proof": [
+        "legacy summaries were repaired or preserved before the current lifecycle",
+        "surgeon B removal cleared the derived gate summary transactionally",
+        "all disposable database and role resources were removed"
+      ],
+      "marker": "gate_transaction_check: derived_summary_and_original_result_survive_later_removal",
+      "raw_output": "task-8-gate-upgrade.json",
+      "raw_output_sha256": "d91d6267d87f24f8b1be5ae7188efbf6540f0521d0994a85485eebb0c04e874f"
+    },
+    "host_projection": {
+      "result": "Passed",
+      "passed": 3,
+      "failed": 0,
+      "proof": [
+        "cases projection contains exactly id, practice_id, status, gate_affirmed_at, created_at and updated_at",
+        "gate_affirmed_by remains excluded",
+        "the existing five-table practice scope and protected metadata tests remain passing"
+      ],
+      "raw_output": "task-8-host-t0-t1.txt",
+      "raw_output_sha256": "f8f4ac18eae44fdb9b87bdfee9afc527e9eb99f71f4ba50851225bcdaef35652"
+    },
+    "authorized_route": {
+      "result": "Passed",
+      "passed": 3,
+      "failed": 0,
+      "proof": [
+        "valid ASO replica claims authorize the server-declared cases shape once",
+        "the request uses the verified practice predicate and exact six-column allowlist",
+        "gate_affirmed_by is absent",
+        "a body containing gate_affirmed_at null is returned unchanged",
+        "wrong scope and revision remain rejected before data access"
+      ],
+      "raw_output": "task-8-frf-t0-t1.txt",
+      "raw_output_sha256": "89456e64de88d3ef0beadc6f3ebe329a68b07f5ed0c48f9b8c7b418b17fa8f0a"
+    },
+    "web_tier_0": {
+      "result": "Passed",
+      "proof": [
+        "TypeScript typecheck exited zero",
+        "oxlint exited zero with one pre-existing prefer-string-starts-ends-with warning in replica-rebuild.test.ts"
+      ],
+      "raw_output": "task-8-web-t0.txt",
+      "raw_output_sha256": "62015374a940d01bc9b5d39b21ab96bfebeacb83522c6348fa2691928427407e"
+    },
+    "projection_negative_control": {
+      "result": "Passed",
+      "expected_test_exit": 101,
+      "observed_test_exit": 101,
+      "proof": "Removing gate_affirmed_at from the ASO projection made the focused exact-column guard fail; restoration returned the host suite to 3 of 3 passing.",
+      "raw_output": "task-8-sabotage-projection.txt",
+      "raw_output_sha256": "4ee89250f3dcd25e3c404ee3f02cd973fe03067ecb29c6988f804f5a4bab8253"
+    },
+    "stream_negative_control": {
+      "result": "Passed",
+      "expected_test_exit": 101,
+      "observed_test_exit": 101,
+      "proof": "Dropping the body at the mounted FRF shape route made only the cleared-summary transport guard fail; restoration returned all 3 tests to passing.",
+      "raw_output": "task-8-sabotage-stream-body.txt",
+      "raw_output_sha256": "0a2a1f71714c146e167ecdae367fc44b812a48eb19f0b1101880464271bd21f6"
+    },
+    "navigation_handoff": {
+      "result": "Passed",
+      "proof": [
+        "AppShell names cases.gate_affirmed_at and RA14 as the graph-selector owner",
+        "navigation currently has no HTTP client or gate API dependency",
+        "the current placeholder remains fail-closed",
+        "the plan assigns live delivery to RA05, materialization to RA11c and graph-backed navigation to RA14"
+      ],
+      "runtime_graph_selector_implemented": false,
+      "raw_output": "task-8-navigation-handoff.json",
+      "raw_output_sha256": "2cade7441b5782ec284a4cbd19561cdce20f59c8b0bdfd4f5087a1f77fc5a426"
+    },
+    "cleanup": {
+      "result": "Passed",
+      "fixture_databases": 0,
+      "fixture_roles": 0,
+      "raw_output": "task-8-cleanup.txt",
+      "raw_output_sha256": "1a296b8e7767b1c85fae9b16cefe04d85b7bbf50cd48a6d618969db96e567897"
+    }
+  },
+  "current_source_sha256": [
+    {
+      "path": "crates/aso-host/src/projection.rs",
+      "sha256": "789bc2fc16c5d832fbd64c2b70359ae7a8031c89212b1ac2e829bbea138b9035"
+    },
+    {
+      "path": "crates/aso-web-server/src/adapters/gate/transaction_tests.rs",
+      "sha256": "9690fe42a3cda9fc797b1bd6cfbd844155581d64227f75fc8ecd5a65e4196695"
+    },
+    {
+      "path": "scripts/test-gate-transaction.py",
+      "sha256": "43cb4a51653d10234cda052805b868612f0795f13373562b05e36c542e51f3f2"
+    },
+    {
+      "path": "web/src/app/shell/app-shell.tsx",
+      "sha256": "d30d0b96fc633352de2d44f50e35f80052984f5e91b041d1df344cbf2b212069"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-gateway/src/routes/shape.rs",
+      "sha256": "442309138e9c04577b851974b68f30b2748a34511099a7e8ea5261ec3c0f8373"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-gateway/tests/shape_projection_grant.rs",
+      "sha256": "315471265d216f3a5e09cd383b8dc9f7b2c5f53bcd5d375b2f81208a2a60eea4"
+    }
+  ],
+  "guards_added": [
+    {
+      "path": "crates/aso-host/src/projection.rs",
+      "failure_scenario": "The versioned cases projection drops gate_affirmed_at or exposes gate_affirmed_by.",
+      "negative_control_proved": true
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-gateway/tests/shape_projection_grant.rs",
+      "failure_scenario": "The mounted authorized route drops a null gate summary or resolves it outside the verified practice and exact column allowlist.",
+      "negative_control_proved": true
+    }
+  ],
+  "fixture_repair": {
+    "observed_problem": "The fresh runner's broad gate_transaction_lifecycle filter matched three ignored RA03 database tests and allowed them to collide in one fixture.",
+    "change": "The runner now supplies the exact module-qualified gate test name and Cargo --exact.",
+    "failed_receipt": "task-8-gate-fresh.json",
+    "failed_receipt_sha256": "551a3c6a09e1aea6e0debc55a27df00b6c25709990f08e1c8b37e0b6251dc59a",
+    "cleanup_after_failed_attempt": "Passed"
+  },
+  "unverified": [
+    "One live committed row traversing ASO, Gate, FRF and Electric",
+    "SQL and PEM materialization of the gate summary",
+    "Navigation relocking from a remote revocation without route reload",
+    "Tier 2, Tier 3, Tauri window and physical-device surfaces",
+    "G-DATA approval for persistent real clinical data"
+  ]
+}

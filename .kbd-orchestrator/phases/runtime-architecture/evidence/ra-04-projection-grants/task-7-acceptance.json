@@ -1,0 +1,140 @@
+{
+  "result": "Passed",
+  "task": 7,
+  "openspec_task": "2.3",
+  "requirement": "When required token minting or membership resolution fails, protected downstream access is denied without permissive pass-through or invented session linkage.",
+  "evidence_mode": "Current actual Gate binary mounted against synthetic dependencies, plus the actual mounted ASO replica-grant route with synthetic session results.",
+  "prerequisites": [
+    {
+      "name": "Current Gate source and locally built debug executable",
+      "available": true,
+      "binary_sha256": "be857d9b3933a259d151f57fd8dc7c421d98ff6579f49867e051cb9cff4bf6ca"
+    },
+    {
+      "name": "Loopback ports and synthetic Kratos, ASO and downstream endpoints",
+      "available": true
+    },
+    {
+      "name": "External network, database, Electric server or credential",
+      "required": false
+    }
+  ],
+  "commands": [
+    "cargo build -p flint-gate",
+    "python3 scripts/test-replica-grant.py --gate-binary /Users/gqadonis/Projects/prometheus/flint-gate/target/debug/flint-gate --output .kbd-orchestrator/phases/runtime-architecture/evidence/ra-04-projection-grants/task-7-mounted-grant.json",
+    "cargo test -p aso-server-axum session::tests::mounted_registry_refuses_failed_or_expired_membership_resolution -- --nocapture",
+    "cargo test -p aso-server-axum session::tests -- --nocapture",
+    "rustfmt --edition 2024 --check crates/aso-server-axum/src/session.rs",
+    "python3 ast.parse of scripts/test-replica-grant.py",
+    "cargo check -p aso-server-axum",
+    "cargo clippy -p aso-server-axum --no-deps"
+  ],
+  "observed_results": {
+    "gate_build": {
+      "result": "Passed",
+      "proof": "The current flint-gate debug target completed successfully.",
+      "raw_output": "task-7-gate-build.txt",
+      "raw_output_sha256": "2a776ad0aaab2123b9867b0cbff496715f250ae35d4976a7b59c39ef9b64a97f"
+    },
+    "mounted_gate": {
+      "result": "Passed",
+      "checks": 17,
+      "observed_counts": {
+        "whoami": 2,
+        "grant": 4,
+        "downstream": 1
+      },
+      "proof": [
+        "membership denial returned 403 without downstream access",
+        "membership resolution failure returned 503 without downstream access",
+        "mismatched originating-session linkage returned 403 without downstream access",
+        "mixed credentials returned 401 without downstream access",
+        "a non-session service principal returned 403 without grant callback or downstream access",
+        "absence of the required JWT minter returned 503 without downstream access",
+        "only the valid human session reached downstream and all disposable processes and endpoints were cleaned up"
+      ],
+      "raw_output": "task-7-mounted-grant.json",
+      "raw_output_sha256": "e2e0dcd17db3b26a7da91ebc87d19e3605c6aff6d95cd63e4c10585128e52fe1"
+    },
+    "aso_session_boundary": {
+      "result": "Passed",
+      "passed": 4,
+      "failed": 0,
+      "proof": [
+        "practice denial returns 403 with only practice_denied",
+        "membership resolver unavailability returns 503 with only session_unavailable",
+        "an expired resolved session returns 401 with only unauthenticated",
+        "existing two-practice grant and caller-control boundaries remain passing"
+      ],
+      "raw_output": "task-7-aso-session.txt",
+      "raw_output_sha256": "08b5b6a24d77c97da7192f63d5029d261f8c8be5127fe0d18c0fae8017aaf7a5"
+    },
+    "negative_control": {
+      "result": "Passed",
+      "expected_test_exit": 101,
+      "observed_test_exit": 101,
+      "proof": "Temporarily mapping PracticeDenied to HTTP 200 made the mounted ASO failure test fail with observed 200 versus required 403; exact restoration returned the test to passing.",
+      "raw_output": "task-7-sabotage-membership.txt",
+      "raw_output_sha256": "bfa6ac34fefda5be8c26445a06878a3229b88f04248a973cdb1546c704195d37"
+    },
+    "tier_0": {
+      "result": "Passed",
+      "proof": [
+        "target file rustfmt check passed",
+        "fixture Python AST parsing passed without creating retained bytecode",
+        "aso-server-axum cargo check passed",
+        "aso-server-axum no-dependency Clippy exited zero with ten pre-existing result_large_err warnings in untouched route functions"
+      ],
+      "raw_output": "task-7-t0-restored.txt",
+      "raw_output_sha256": "ec418f00444d0aa23ebd7625eada143772cce248226bc474ead18a58ec97ba71"
+    },
+    "receipt_preservation": {
+      "result": "Passed",
+      "proof": "The explicit task-7 output path created a separate receipt and preserved the task-4 receipt hash before and after the run.",
+      "raw_output": "task-7-receipt-preservation.txt",
+      "raw_output_sha256": "134c8ab17a7245816d595bf26587aec37c71f36b812f151821f3b75ab0bd49e7"
+    }
+  },
+  "current_source_sha256": [
+    {
+      "path": "scripts/test-replica-grant.py",
+      "sha256": "7fac43b1af2b15769c807ba0dc894f00be7c7c932620e683bf83abf3ef1ddeb3"
+    },
+    {
+      "path": "crates/aso-server-axum/src/session.rs",
+      "sha256": "2cb22e89b7fd0c35a754b8e0fe1cffd7e3f2b0dc2c631e8aa6c802ebf6e0c184"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core/src/middleware/pipeline.rs",
+      "sha256": "095408c0b3dd5f147d707f4878ac44d00f8fc104fd6de367beefe9adc3dd73d5"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core/src/middleware/aso_replica_grant.rs",
+      "sha256": "708bff642f8976ce5fcefafa133163b1fdcb30cb160c4d28862faeb28ec8f2ac"
+    }
+  ],
+  "guards_added": [
+    {
+      "path": "crates/aso-server-axum/src/session.rs",
+      "failure_scenario": "A denied, unavailable or expired membership result emits a successful replica-grant response or exposes grant fields.",
+      "negative_control_proved": true
+    }
+  ],
+  "harness_change": {
+    "path": "scripts/test-replica-grant.py",
+    "observed_problem": "Later acceptance runs overwrote the task-4 JSON receipt because the output path was fixed.",
+    "change": "Added an explicit --output option while retaining the existing default for compatibility.",
+    "verified": "The task-7 run produced a separate receipt and left the task-4 receipt hash unchanged."
+  },
+  "excluded_attempts": [
+    {
+      "raw_output": "task-7-t0.txt",
+      "observed": "The first group reported a rustfmt difference but continued because immediate shell exit was not enabled. It was excluded; the correction was applied and the full group was rerun with set -euo pipefail."
+    }
+  ],
+  "unverified": [
+    "Deployed ASO to Gate to FRF to Electric topology and live key rotation",
+    "G-DATA approval for persistent real clinical data",
+    "Tier 2, Tier 3, browser, Tauri and physical-device surfaces"
+  ]
+}

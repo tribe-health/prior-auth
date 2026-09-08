@@ -4,7 +4,7 @@
 **ADR reconciliation:** 2026-09-06; see the [complete ADR index](README.md).  
 **Date:** 2026-09-06.  
 **Scope:** Prior Authorization Workbench, Flint Forge, Flint Gate, Flint Realtime Fabric, Prometheus entity management, and self-hosted Ory Kratos.  
-**Phase:** Spec/Plan within `web-ui-architecture`. No application implementation accompanies this document.
+**Phase:** Accepted design from `web-ui-architecture`; implementation proceeds through `runtime-architecture`. RA-01 through RA-03 updates below describe bounded delivery, not certification of the full target.
 
 ## 1. Decision and the difficult tradeoff
 
@@ -18,11 +18,13 @@ This design preserves clinical authority in gateway policy, `AppServices`, and P
 
 ## 2. Workspace and evidence baseline
 
+The table records the original architecture assessment. Later implementation updates are recorded in RA-01 through RA-03; these supersede the corresponding session, gate-transport and signing observations without certifying the remaining target architecture.
+
 Open [prior-auth.code-workspace](../../prior-auth.code-workspace) to work across all five folders. The four companion folders are references to existing repositories, not copied source, Git submodules, or package-manager dependencies. The file does not alter Codex sidebar/project settings. Relative paths assume the current sibling layout beneath `Projects/`.
 
 | Repository | Responsibility in this design | Observed source and limitation |
 |---|---|---|
-| `prior-auth` | Shared UI, application startup, domain services, clinical policy integration, deployment composition | `web/src/main.tsx` supplies a development-only stand-in session and a null production session pending Kratos integration; `graph-provider.tsx` opens in-memory PGlite and does not await or retain the local-first runtime. `desktop/src-tauri` contains pure service wrappers, without the Tauri runtime dependency. |
+| `prior-auth` | Shared UI, application startup, domain services, clinical policy integration, deployment composition | The mounted server requires Kratos plus restricted session and clinical PostgreSQL logins against one database; it has no production memory clinical fallback. The legacy actor-less evidence-count route is unmounted until verified-context conversion. `web/src/main.tsx` still supplies a development-only stand-in session and a null production session pending browser Kratos integration; `graph-provider.tsx` opens in-memory PGlite and does not await or retain the local-first runtime. `desktop/src-tauri` contains pure service wrappers, without the Tauri runtime dependency. |
 | `flint-forge` | Practice Postgres substrate; database access, RLS and Cedar capabilities where Forge services are used | `crates/fdb-gateway/src/bootstrap.rs`, `authz_mode.rs`, and `crates/fdb-postgres`. ASO currently composes Forge's Postgres image; this does not prove every Forge API is on the ASO request path. |
 | `flint-gate` | Public entry point, Kratos session validation, policy, downstream identity projection | `crates/flint-gate-core/src/auth/kratos.rs` forwards cookies and Authorization to Kratos; `auth/jwt_mint.rs` supplies JWT minting. Route-specific integration and revocation behavior still need proof. |
 | `flint-realtime-fabric` | Authorized realtime facade; relational shape routing plus separate event/CRDT lanes | Its router and TS `RealtimeAdapter` expose event services; the inspected code contains no Electric shape proxy or PGlite table materializer. `main.rs` composes an in-memory entity read store. An Electric facade is proposed work. |
@@ -258,7 +260,49 @@ sequenceDiagram
   G-->>UI: Reconciled record
 ```
 
-Expected revision, idempotency key and command correlation are proposed contract additions, not claims about existing ASO endpoints. A response lost after commit must not produce a duplicate clinical operation. A local pending indicator is permitted; a locally predicted “signed” state is not authoritative. Do not replay signing or gate affirmation automatically through PEM's generic offline-action mechanism.
+RA-02 gate operations use a command ID and persisted result lookup for idempotency and reconciliation. Within an identity and selected practice, command reuse is resolved before the payload's target-case authority check, so changing the case, kind or action yields one stable conflict even when that changed case is missing or outside the practice. Cross-identity receipt lookup remains unavailable.
+
+RA-03 signing accepts no caller-selected actor or signature. It binds the command to expected letter, QA and current signature revisions and stores the authoritative result in an immutable identity/practice-scoped ledger. Gate, `AppServices` and PostgreSQL each refuse the wrong principal or scope; the service and database independently refuse stale revisions, incomplete QA and incomplete sources. An exact repeated command is resolved from the persisted result before mutable letter state is read, and `GET /api/letters/{letterId}/sign/commands/{commandId}` reconciles a lost response without another clinical effect.
+
+Approval also freezes the claim set and every cited document version through
+database triggers and shared transaction locks. Approval is terminal except for
+the transition to signed; a QA row cannot be moved away from an approved letter.
+Approval takes relation locks that conflict with QA and claim truncation, then
+revalidates the complete QA set, requires document-backed claims, and rechecks
+their cited document provenance before binding its revision. Corrected source
+content is a new document row and a new letter revision, so signing cannot
+accept changed document content under an old approval. Before
+any separately committed server migration runs, and again afterward, the
+migration entry point refuses all-table, `aso` schema or explicit-table
+publications that capture local command ledgers. Migrations `2026090600` and
+`2026090607` install the OID registry, DDL-start serialization, and end
+validation before any command ledger can commit. Table DDL and publication DDL
+take conflicting transaction advisory locks; a waiter aborts with `40001` and
+must retry with a fresh catalog snapshot. The protected identity follows a
+table across rename and schema moves, and explicit membership plus published
+namespaces are checked. Removing an existing unsafe publication, checking
+possible exposure and rerunning the checksummed migration set is the recovery
+path.
+
+Evidence reassessment follows the same command boundary. The timeline submits `commandId`, the selected `met`/`gap`/`void` state and its observed `assessedAt` timestamp to `POST /api/cases/{caseId}/evidence/{evidenceId}/state`, including the selected practice on both mutation and lookup. Gate requires `annotate`; `AppServices` and PostgreSQL independently enforce the verified human, practice, resource and current-revision checks. The database commits the new state, surgeon attribution, audit event and immutable result together. Explicit lookup reconciles an uncertain response. A runtime command registry keys ownership by feature, verified identity, selected practice and case. It survives route navigation and hook unmount/remount, hides another scope's feedback, and continues to refuse mutation in the original scope until the matching command reaches a definitive result or successful lookup. It waits for the authorized relational projection to change rendered entities, writes neither PEM nor local SQL, and enqueues no PEM replay action. The registry is memory-only; process restart recovery remains outside this task and cannot be claimed as implemented.
+
+Gate policy keeps target-reader outages distinct from clinical denial: typed
+unavailable and native-authentication-unavailable results return `503`, while
+typed denial or hidden-not-found results return `403`.
+
+The web-server composition fails startup unless `ASO_DATABASE_URL`,
+`ASO_GATE_DATABASE_URL` and `ASO_KRATOS_PUBLIC_URL` are all configured, and the
+two database URLs must identify the same host, port and database. The restricted
+PostgreSQL repository supplies every mounted clinical command port. Its memory
+adapters compile only for tests; criteria has an explicit stateless unavailable
+port until its authoritative read adapter is scheduled. Fresh and upgrade
+fixtures force the final signing and reassessment receipt inserts to fail and
+observe rollback of the clinical row and audit before retrying the same command
+successfully. The actor-less evidence-count endpoint is absent from production
+router composition and requires verified-context conversion before it can be
+mounted.
+
+A local pending indicator is permitted; a locally predicted signed or reassessed state is not authoritative. One scope has one mutation slot. A definitive success, refusal, conflict or successful lookup clears its matching command correlation. A network exception, HTTP 408 or HTTP 5xx response retains the correlation because the command may already have committed. Do not replay signing, gate affirmation or reassessment automatically through PEM's generic offline-action mechanism.
 
 The FRF event lane may carry presence, task progress or CRDT document changes under separate typed contracts. For a relational clinical entity, those events can request resynchronization but cannot race Electric as a second writer. CRDT documents require their own privacy classification and citation/signing boundary; realtime transport alone does not grant editing authority.
 
@@ -268,7 +312,7 @@ The FRF event lane may carry presence, task progress or CRDT document changes un
 
 Use Kratos browser flows through a same-origin public proxy with secure cookie handling, credentials and CSRF protection. Login begins at `/self-service/login/browser`; submit the returned flow's UI/action contract, preserving validation errors and flow expiry handling. Session inspection uses `/sessions/whoami`. Do not use native `/api` flows in a browser SPA to avoid cookie/CSRF requirements. [Ory browser versus native](https://www.ory.com/docs/identities/native-browser)
 
-Expose only the Kratos public surface. Administrative identity APIs stay server-side. The app session operation combines verified Kratos identity with ASO membership and clinical capabilities. It is a proposed application endpoint, not a Kratos API. Roles and practice membership do not become trusted merely because they appear in user-editable identity traits.
+Expose only the Kratos public surface. Administrative identity APIs stay server-side. The app session operation combines verified Kratos identity with ASO membership and clinical capabilities. RA-01 implements this application operation as GET `/api/session`; Kratos supplies identity validation, while ASO supplies current membership and capabilities. Roles and practice membership do not become trusted merely because they appear in user-editable identity traits.
 
 ### Tauri
 
@@ -276,7 +320,7 @@ The trusted host performs native flow requests, validates the resulting opaque s
 
 For SSO methods requiring a browser, use the system browser and an Ory-supported native completion/exchange flow verified against the pinned self-hosted server. That capability and its callback binding are an implementation gate; do not invent an OAuth issuer or pass a long-lived session token in a deep link. A Tauri webview does not automatically share the system browser's cookies.
 
-The Gate authenticator inspected here forwards cookies and Authorization; it does not explicitly forward `X-Session-Token`. Standardize native-to-Gate transport on its supported Bearer header and prove it against the deployed Kratos server, or add an explicit tested header translation. Direct Kratos SDK examples commonly use `xSessionToken`. Do not assume every hop accepts every form.
+Gate’s general Kratos authenticator forwards Cookie and Authorization and does not explicitly forward `X-Session-Token`. RA-02 gate routes instead use passthrough authentication and the mandatory `aso_clinical_authorize` hook, which forwards exactly one original Cookie, Authorization or X-Session-Token credential to ASO for fresh validation. This route-specific transport does not establish the native credential owner or certify other Gate routes. Native gate wrappers remain unavailable until RA-17.
 
 ### Fabric credential bridge
 
@@ -380,7 +424,7 @@ Server changes use expand/migrate/contract: deploy additive schema/API support, 
 - Keep replica diagnostics to counts, durations, schema versions, anonymized correlation and error classes. Do not log rows, tokens, chart content or generated clinical text. Disable sensitive graph/devtool snapshots in deployed clinical sessions.
 - Operate FRF's actual dependencies explicitly: broker, identity/JWKS, Keto where used, stores and CDC resources. If its CDC and Electric both consume Postgres, size and monitor replication slots, retained WAL and replay lag. Do not start duplicate consumers without a stated data lane.
 
-These controls trace to real boundaries and named scenarios in this design: cross-account disclosure, widened shape requests, stale stream authorization, duplicate clinical commands, partial migration, stale snapshot replay and interrupted updates. No new control is implemented by this document.
+These controls trace to real boundaries and named scenarios in this design: cross-account disclosure, widened shape requests, stale stream authorization, duplicate clinical commands, partial migration, stale snapshot replay and interrupted updates. This document itself implements no control; RA-01 through RA-03 provide bounded source and test evidence for session, gate and signing paths only.
 
 ## 13. Coordinated implementation sequence
 

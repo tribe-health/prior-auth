@@ -1,0 +1,62 @@
+{
+  "result": "Passed",
+  "verification_tier": 1,
+  "failure_injected": "Migration 2026090607 was omitted from both server migration passes",
+  "command": "RUSTUP_TOOLCHAIN=1.97.1 python3 /tmp/ra03-publication-negative-runner.py",
+  "fixture_output": "/tmp/ra03-publication-concurrency-red-fixture.json",
+  "fixture_prerequisite_bypass": "The fresh-install 0607 ordering assertion was bypassed so the fixture reached the two-session publication race.",
+  "expected_exit": "nonzero when publication DDL does not wait behind the protected schema move",
+  "observed_exit": 1,
+  "failed_checks": {
+    "actual_appservices_pg_repository_lifecycle": {
+      "result": "Failed",
+      "return_code": 101,
+      "assertion_count": 11
+    }
+  },
+  "matching_failure_output": [
+    "publication behind protected schema move did not reach a database lock wait"
+  ],
+  "cleanup": {
+    "disposable_database_deleted": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "disposable_login_deleted": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "disposable_owner_role": {
+      "result": "Passed",
+      "action": "already_absent"
+    },
+    "aso_session_reader": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    },
+    "aso_gate_executor": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    },
+    "aso_gate_owner": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    }
+  },
+  "source_sha256_before": {
+    "crates/aso-web-server/src/migrations.rs": "5ed494372778d06b17507a7d9170b309eccd39dc2fa3b4a377cbc15b992cea18",
+    "migrations/server/2026090607_publication_ddl_serialization.sql": "06da883ad3445492f2a25a0f1db00b0ef5eb2bc886bd32b4aa77c7e42584155c",
+    "crates/aso-web-server/src/adapters/gate/signing_transaction_tests.rs": "25b0bd92486088122681fcd20ceafc5c347f1ab7b894df4fe06d2a82ffe96668",
+    "scripts/test-signing-transaction.py": "0b581986e8c0ab05a2ab1b47ba92e6a8b0246d3429b17ad16619b7bf991203bc"
+  },
+  "migration_runner_sha256_during_injection": "93a09c355d4ad57c26c07823e121e19c623f7b7759abb04dfb5ccadcfaf48acd",
+  "source_sha256_after_restore": {
+    "crates/aso-web-server/src/migrations.rs": "5ed494372778d06b17507a7d9170b309eccd39dc2fa3b4a377cbc15b992cea18",
+    "migrations/server/2026090607_publication_ddl_serialization.sql": "06da883ad3445492f2a25a0f1db00b0ef5eb2bc886bd32b4aa77c7e42584155c",
+    "crates/aso-web-server/src/adapters/gate/signing_transaction_tests.rs": "25b0bd92486088122681fcd20ceafc5c347f1ab7b894df4fe06d2a82ffe96668",
+    "scripts/test-signing-transaction.py": "0b581986e8c0ab05a2ab1b47ba92e6a8b0246d3429b17ad16619b7bf991203bc"
+  }
+}

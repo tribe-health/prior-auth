@@ -1,0 +1,21 @@
+{
+  "stages": [
+    "Read RA-03 tasks, acceptance receipts, current sources and applicable T0/T1 rules.",
+    "Define constraints for verified context, independent authority, reconciliation, state fidelity, composition and caller truth.",
+    "Run bounded T0/T1 checks and validate live database receipts against current source hashes.",
+    "Generate a report and checklist that separate delivered behavior from inactive browser and desktop contracts.",
+    "Persist deterministic validation output, decisions, iteration history and exact artifact coverage.",
+    "For each blocking isolated finding, add a focused failing-path guard, rerun fresh and populated local integration fixtures, and rebuild the packet before a fresh critic."
+  ],
+  "tool": "Trusted-host shell commands plus local Python 3 and jsonschema; Rust builds remain single-writer.",
+  "state_updates": [
+    "constraints.json",
+    "artifact_manifest.json",
+    "refinement_log.md",
+    "decisions.md",
+    ".refiner/",
+    "dist/",
+    "validate.py"
+  ],
+  "template": "Scoped Markdown completion report with a JSON constraint checklist; visual preview does not apply."
+}

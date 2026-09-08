@@ -1,0 +1,171 @@
+{
+  "result": "Passed",
+  "task": 6,
+  "openspec_task": "2.2",
+  "requirement": "Caller-supplied query controls, forged identity data and another service token cannot broaden the server grant; wrong issuer, audience, scope or projection revision is rejected.",
+  "evidence_mode": "Mounted Gate campaign, real FRF verifier tests, mounted Axum shape-route tests and shape-policy tests using synthetic identities and data.",
+  "prerequisites": [
+    {
+      "name": "Current Gate debug binary and synthetic HTTP fixture endpoints",
+      "available": true
+    },
+    {
+      "name": "Current Gate and FRF Rust workspaces with resolved local dependencies",
+      "available": true
+    },
+    {
+      "name": "Database, Electric server or external identity service",
+      "required": false
+    }
+  ],
+  "commands": [
+    "cargo test -p flint-gate-core middleware::aso_replica_grant",
+    "cargo test -p flint-gate-core replica_mint_emits_only_the_typed_allowlist_and_bounds_expiry",
+    "cargo test -p frf-identity-ory",
+    "cargo test -p frf-gateway --features shape-facade --test shape_projection_grant",
+    "cargo test -p frf-shape-electric a_client_cannot_widen_the_shape_by_supplying_the_scope_column",
+    "cargo test -p frf-shape-electric a_param_outside_the_allow_list_is_an_error_not_a_silent_drop",
+    "python3 scripts/test-replica-grant.py --gate-binary /Users/gqadonis/Projects/prometheus/flint-gate/target/debug/flint-gate",
+    "rustfmt --edition 2024 --check crates/frf-gateway/tests/shape_projection_grant.rs",
+    "cargo check -p frf-gateway --features shape-facade",
+    "cargo clippy -p frf-gateway --features shape-facade --test shape_projection_grant --no-deps"
+  ],
+  "observed_results": {
+    "gate_units": {
+      "result": "Passed",
+      "passed": 3,
+      "failed": 0,
+      "proof": [
+        "caller fields and forged identity data cannot enter the typed replica claims",
+        "service identity and wrong projection revision are rejected",
+        "mint output contains only the typed allowlist and bounded expiry"
+      ],
+      "raw_output": "task-6-gate.txt",
+      "raw_output_sha256": "98fd051eb472e92b9f8748903328542ccae9c9a7d0598cf0d5f2a6639a9ca877"
+    },
+    "frf_identity": {
+      "result": "Passed",
+      "passed": 9,
+      "failed": 0,
+      "proof": [
+        "malformed token and originating-session identifiers are rejected rather than invented",
+        "scope, projection revision and session linkage must match exactly",
+        "missing or wrong issuer, wrong audience and expired tokens are rejected"
+      ],
+      "raw_output": "task-6-frf.txt",
+      "raw_output_sha256": "a7f202d5709187f5fb815c1f0519e2a7a45bddfffab4e0a64c33ed7266a864eb"
+    },
+    "mounted_shape_route": {
+      "result": "Passed",
+      "passed": 2,
+      "failed": 0,
+      "proof": [
+        "wrong scope returns HTTP 403 before resolver authorization or facade fetch",
+        "wrong projection revision returns HTTP 403 before resolver authorization or facade fetch"
+      ],
+      "raw_output": "task-6-frf-restored.txt",
+      "raw_output_sha256": "230767eec93a8677515510f997d7b78cf898421566e9a9f5b26771f95d263bc2"
+    },
+    "shape_widening": {
+      "result": "Passed",
+      "passed": 2,
+      "failed": 0,
+      "proof": [
+        "caller-supplied scope column cannot widen the shape",
+        "a parameter outside the server allowlist is an error"
+      ],
+      "raw_output": "task-6-frf-widening.txt",
+      "raw_output_sha256": "56702c538770cbd30361f9d314e7751720b04e77df0d99c06e93ec1fa827295b"
+    },
+    "mounted_gate": {
+      "result": "Passed",
+      "checks": 17,
+      "observed_counts": {
+        "whoami": 2,
+        "grant": 4,
+        "downstream": 1
+      },
+      "proof": [
+        "only the valid human session reached downstream",
+        "caller query controls, forged identity material, mixed credentials, anonymous access and service principals did not broaden access",
+        "all disposable synthetic endpoints and both Gate processes were cleaned up"
+      ],
+      "raw_output": "task-6-mounted-gate.txt",
+      "raw_output_sha256": "2e1f454ad98c923e2a36f009f040ca5baf5e8bfb5c7baa4ea168552ad098ba7d"
+    },
+    "tier_0": {
+      "result": "Passed",
+      "proof": [
+        "rustfmt check passed",
+        "frf-gateway shape-facade cargo check passed",
+        "focused no-dependency Clippy passed without warnings"
+      ],
+      "raw_output": "task-6-frf-t0.txt",
+      "raw_output_sha256": "2f0ba51f7364e513abb0ed341ea00ef19b2159ca6c285cea49b42c034c94eec9"
+    },
+    "negative_control": {
+      "result": "Passed",
+      "expected_test_exit": 101,
+      "observed_test_exit": 101,
+      "proof": "Temporarily bypassing the mounted route grant validation made both new route tests fail with HTTP 404 instead of the required 403; exact restoration returned 2 of 2 to passing.",
+      "raw_output": "task-6-frf-sabotage-route.txt",
+      "raw_output_sha256": "cd58aa513558678022a192330374e55dcddad608816dbb6bdf6344727a68b096"
+    }
+  },
+  "current_source_sha256": [
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core/src/auth/jwt_mint.rs",
+      "sha256": "5e3f0a400bae90e7574824300ce61abc8c5f4d34591b44d1f860c4b2e5a537af"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core/src/middleware/aso_replica_grant.rs",
+      "sha256": "708bff642f8976ce5fcefafa133163b1fdcb30cb160c4d28862faeb28ec8f2ac"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-ports/src/identity.rs",
+      "sha256": "2dd1d4b8ebf9257af092d68a574c0e0ddd3f53ed2b17e7b367cbbbb83a6328b7"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-identity-ory/src/claims.rs",
+      "sha256": "9d16fc0e6df6a7662edc9f33a79f22e99515788ca2d095c7f7791372c50c0df0"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-identity-ory/src/verifier.rs",
+      "sha256": "735a74c78929257170d7d1b6571e106bdff4633f51873469a61440dcedde3018"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-gateway/src/routes/shape.rs",
+      "sha256": "442309138e9c04577b851974b68f30b2748a34511099a7e8ea5261ec3c0f8373"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-gateway/tests/shape_projection_grant.rs",
+      "sha256": "764e466eef7786496944689f0d2f59cf3f6347d95d33e50d98ea472a5a11e828"
+    },
+    {
+      "path": "scripts/test-replica-grant.py",
+      "sha256": "4fc8613370ab0e8372f2870f3c72519de81dc907005c6533a898841e47ed6d87"
+    }
+  ],
+  "guards_added": [
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-gateway/tests/shape_projection_grant.rs",
+      "failure_scenario": "A mounted shape route accepts a verified token whose ASO scope or projection revision is wrong and reaches resolver or facade data access.",
+      "negative_control_proved": true
+    }
+  ],
+  "command_corrections": [
+    {
+      "command": "cargo test -p flint-gate-core mint_replica",
+      "observed": "Completed with zero matching tests and was excluded from evidence."
+    },
+    {
+      "command": "cargo test -p frf-gateway --features frf-identity-ory routes::shape::tests",
+      "observed": "Failed because frf-gateway has no feature named frf-identity-ory; corrected to the declared shape-facade feature."
+    }
+  ],
+  "unverified": [
+    "Deployed Gate to FRF to Electric delivery and live key rotation",
+    "G-DATA approval for persistent real clinical data",
+    "Tier 2, Tier 3, browser, Tauri and physical-device surfaces"
+  ]
+}

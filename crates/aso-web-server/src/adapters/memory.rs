@@ -1,48 +1,14 @@
-//! In-memory adapters.
-//!
-//! Deliberately faithful to the invariants rather than permissive: the
-//! authority stub grants a surgeon exactly the capabilities a surgeon holds,
-//! so a test that accidentally proves an administrator can sign a letter fails
-//! here rather than passing against a stub that says yes to everything.
+//! In-memory fixtures compiled only for focused adapter tests.
 
 use std::{collections::HashMap, sync::Mutex};
 
 use aso_host::{
     domain::*,
     ports::{
-        AuthorityPort, CaseRepository, Criterion, CriteriaRepository, EvidenceCounts,
-        EvidenceRepository, LetterRepository,
+        CriteriaRepository, Criterion, EvidenceCounts, EvidenceRepository, LetterRepository,
     },
 };
 use async_trait::async_trait;
-
-#[derive(Default)]
-pub struct MemoryCaseRepo {
-    gates: Mutex<HashMap<CaseId, Vec<GateAffirmationKind>>>,
-}
-
-#[async_trait]
-impl CaseRepository for MemoryCaseRepo {
-    async fn gate_state(&self, case_id: CaseId) -> Result<GateState, DomainError> {
-        let g = self.gates.lock().unwrap();
-        Ok(GateState { affirmed: g.get(&case_id).cloned().unwrap_or_default() })
-    }
-
-    async fn record_affirmation(
-        &self,
-        case_id: CaseId,
-        kind: GateAffirmationKind,
-        _actor: ActorId,
-        _at: chrono::DateTime<chrono::Utc>,
-    ) -> Result<GateState, DomainError> {
-        let mut g = self.gates.lock().unwrap();
-        let e = g.entry(case_id).or_default();
-        if !e.contains(&kind) {
-            e.push(kind);
-        }
-        Ok(GateState { affirmed: e.clone() })
-    }
-}
 
 #[derive(Default)]
 pub struct MemoryEvidenceRepo;
@@ -53,7 +19,11 @@ impl EvidenceRepository for MemoryEvidenceRepo {
         // Shaped like the Kaminski case in the prototype: more voids than gaps,
         // which is the usual real distribution and the reason the distinction
         // earns its own state.
-        Ok(EvidenceCounts { met: 7, gap: 1, void: 2 })
+        Ok(EvidenceCounts {
+            met: 7,
+            gap: 1,
+            void: 2,
+        })
     }
 }
 
@@ -78,13 +48,19 @@ pub struct MemoryLetterRepo {
 #[async_trait]
 impl LetterRepository for MemoryLetterRepo {
     async fn get(&self, id: LetterId) -> Result<Letter, DomainError> {
-        Ok(self.signed.lock().unwrap().get(&id).cloned().unwrap_or(Letter {
-            id,
-            case_id: CaseId(uuid::Uuid::nil()),
-            version: 1,
-            status: LetterStatus::Draft,
-            signed_at: None,
-        }))
+        Ok(self
+            .signed
+            .lock()
+            .unwrap()
+            .get(&id)
+            .cloned()
+            .unwrap_or(Letter {
+                id,
+                case_id: CaseId(uuid::Uuid::nil()),
+                version: 1,
+                status: LetterStatus::Draft,
+                signed_at: None,
+            }))
     }
 
     async fn unresolved_non_policy_retrievals(
@@ -109,23 +85,5 @@ impl LetterRepository for MemoryLetterRepo {
         };
         self.signed.lock().unwrap().insert(id, letter.clone());
         Ok(letter)
-    }
-}
-
-/// Capability stub. Any actor is treated as a surgeon EXCEPT the nil UUID,
-/// which stands in for an administrator — so the clinical boundary is
-/// exercised by the test suite rather than assumed.
-#[derive(Default)]
-pub struct MemoryAuthority;
-
-#[async_trait]
-impl AuthorityPort for MemoryAuthority {
-    async fn holds(&self, actor: ActorId, capability: Capability) -> Result<bool, DomainError> {
-        let is_admin = actor.0.is_nil();
-        Ok(match capability {
-            Capability::Configure | Capability::ViewAudit => is_admin,
-            c if c.is_clinical() => !is_admin,
-            _ => true,
-        })
     }
 }

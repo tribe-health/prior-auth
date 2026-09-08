@@ -1,0 +1,12 @@
+{
+  "artifact_name": "ra-01-verified-session",
+  "artifact_type": "content",
+  "content_type": "direct:content",
+  "clarified_intent": "Produce a bounded verified completion-evidence artifact for existing RA-01 implementation.",
+  "target_state": "Deterministic current-hash, recorded behavioral, mounted-caller and scoped architectural checks with explicit limitations.",
+  "requires_code_execution": true,
+  "unknowns": [
+    "Current service availability and native UI/IPC are outside this gate."
+  ],
+  "scope": "Only this refiner directory is writable."
+}

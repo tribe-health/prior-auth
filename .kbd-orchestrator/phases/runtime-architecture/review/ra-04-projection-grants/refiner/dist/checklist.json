@@ -1,0 +1,56 @@
+{
+  "artifact": "ra-04-projection-grants",
+  "result": "Passed",
+  "constraints": [
+    {
+      "id": "fixed-projection-registry",
+      "result": "Passed",
+      "evidence": "Validated by current source inventory, final receipts and report."
+    },
+    {
+      "id": "typed-grant-boundary",
+      "result": "Passed",
+      "evidence": "Validated by current source inventory, final receipts and report."
+    },
+    {
+      "id": "fresh-session-linkage",
+      "result": "Passed",
+      "evidence": "Validated by current source inventory, final receipts and report."
+    },
+    {
+      "id": "authorized-shape-resolution",
+      "result": "Passed",
+      "evidence": "Validated by current source inventory, final receipts and report."
+    },
+    {
+      "id": "derived-practice-integrity",
+      "result": "Passed",
+      "evidence": "Validated by current source inventory, final receipts and report."
+    },
+    {
+      "id": "affirmation-projection",
+      "result": "Passed",
+      "evidence": "Validated by current source inventory, final receipts and report."
+    },
+    {
+      "id": "caller-truth",
+      "result": "Passed",
+      "evidence": "Validated by current source inventory, final receipts and report."
+    },
+    {
+      "id": "bounded-verification",
+      "result": "Passed",
+      "evidence": "Validated by current source inventory, final receipts and report."
+    },
+    {
+      "id": "evidence-integrity",
+      "result": "Passed",
+      "evidence": "Validated by current source inventory, final receipts and report."
+    },
+    {
+      "id": "bundle-integrity",
+      "result": "Passed",
+      "evidence": "Validated by current source inventory, final receipts and report."
+    }
+  ]
+}

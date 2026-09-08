@@ -1,0 +1,18 @@
+{
+  "mode": "diff",
+  "verdict": "PASS",
+  "judge_model": "gpt-5.6-sol",
+  "isolation_mode": "harness-native",
+  "producer_model": "gpt-6-astra",
+  "cross_model_check": "verified-distinct",
+  "findings": [],
+  "checked_classes": [
+    "Authorization and error classification \u2014 request DTOs exclude authority fields, three authority layers refuse unauthorized actions, and Gate preserves availability as 503 and denial as 403.",
+    "Idempotency and lost-response reconciliation \u2014 scoped immutable ledgers resolve exact repeats before mutable target reads and current receipts prove one effect, audit, and result.",
+    "Browser scope and reconciliation ownership \u2014 evidence carries selected practice and the runtime registry keys ownership by feature, identity, practice, and case across navigation.",
+    "Clinical-state integrity and races \u2014 met/gap/void remain distinct, and migrations 0605/0606/0608 serialize and revalidate approval against QA, claim, document, and truncation races.",
+    "Migration and publication safety \u2014 migrations 0600 and 0607 install OID identity, DDL-start serialization, end validation, and fresh/upgrade publication checks before command ledgers.",
+    "Production composition and shell parity \u2014 production uses restricted PostgreSQL adapters, actorless evidence counts stay unmounted, and inactive desktop wrappers fail closed.",
+    "Constraint and evidence support \u2014 all 50 current-hash sources, four live database campaigns, 11 red proofs, focused T0/T1, and explicit unverified surfaces are present."
+  ]
+}

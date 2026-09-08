@@ -1,0 +1,49 @@
+{
+  "result": "Passed",
+  "scope": "Static production call-path proof that clinical signing and affirmation commands do not enter PEM or shared sync replay",
+  "command": "python3 inline source-boundary check over production web TypeScript",
+  "checks": {
+    "affirmation_hook_calls_feature_http_api": {
+      "result": "Passed"
+    },
+    "affirmation_hook_has_no_graph_or_sync_import": {
+      "result": "Passed"
+    },
+    "reassessment_write_calls_feature_http_api": {
+      "result": "Passed"
+    },
+    "clinical_commands_absent_from_shared_sync": {
+      "result": "Passed"
+    },
+    "no_web_signing_mutation_caller_exists": {
+      "result": "Passed"
+    }
+  },
+  "mechanism": {
+    "affirmation": "useSurgeonGate -> gateApi -> httpClient POST; command ID is retained locally only for explicit server receipt lookup.",
+    "signing": "No production web signing mutation caller exists; server and inactive desktop operations call AppServices directly and expose no PEM port.",
+    "reassessment": "useEvidenceTimeline reads PGlite but sends reassessment and lookup through timelineApi HTTP; it does not write the local database or graph.",
+    "shared_sync": "Production shared sync sources contain none of the signing, gate-mutation or reassessment command contracts/routes."
+  },
+  "source_sha256": [
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/features/surgeon-gate/hooks/use-surgeon-gate.ts",
+      "sha256": "713fe84581bb7d029d718d4de7109b594deb660e06d95eb2e70649bdb8a72f9e"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/features/surgeon-gate/api/gate-api.ts",
+      "sha256": "c7521c19bae355f71075030d1f5b724d9bdcb49e76e4f122eb49f41d7153d95b"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/features/evidence-timeline/hooks/use-evidence-timeline.ts",
+      "sha256": "9da623970de081edd16c18a6a1ac4412186fe393857bda6737460dd3a33d396a"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/features/evidence-timeline/api/timeline-api.ts",
+      "sha256": "c8be5ae76b5145218fa431f0f5091945434fb34f6f82f97d37de61487c5cdaab"
+    }
+  ],
+  "unverified": [
+    "A future source change could add a new command caller; task 8 must revalidate this boundary against the final artifact."
+  ]
+}

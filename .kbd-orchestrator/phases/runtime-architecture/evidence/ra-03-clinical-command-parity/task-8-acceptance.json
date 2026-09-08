@@ -1,0 +1,139 @@
+{
+  "result": "Passed",
+  "task": 8,
+  "task_id": "ra03-final-review",
+  "requirement": "Complete applicable T0/T1 and the phase-prescribed artifact-refiner then adversarial review; preserve synthetic evidence, confirm real callers and mark only actually satisfied work complete. Do not run broad phase/release tiers early.",
+  "evidence_mode": "Current-hash source inventory, focused local T0/T1, fresh and populated-upgrade PostgreSQL campaigns, deliberate red proofs, deterministic refinement, and a fresh isolated cross-model adversarial verdict.",
+  "commands": [
+    "RUSTUP_TOOLCHAIN=1.97.1 cargo check -p <each scoped crate>",
+    "RUSTUP_TOOLCHAIN=1.97.1 cargo clippy -p <each scoped crate> --no-deps",
+    "RUSTUP_TOOLCHAIN=1.97.1 cargo test -p aso-host signing::tests | reassessment::tests",
+    "RUSTUP_TOOLCHAIN=1.97.1 cargo test -p aso-server-axum routes::letters::tests | routes::evidence::tests | routes::gate::tests",
+    "RUSTUP_TOOLCHAIN=1.97.1 cargo test -p aso-web-server deployment_tests",
+    "RUSTUP_TOOLCHAIN=1.97.1 cargo test -p aso-desktop",
+    "pnpm --dir web typecheck; pnpm --dir web lint; pnpm --dir web exec vitest run <two exact hook test files>",
+    "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-signing-transaction.py --install-mode fresh|upgrade",
+    "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-reassessment-transaction.py --install-mode fresh|upgrade",
+    "python3 refiner/validate.py; adversarial findings Draft-07 validation; check-findings-sycophancy.sh"
+  ],
+  "observed_results": {
+    "rust_t0": {
+      "result": "Passed",
+      "commands": 8,
+      "warnings": 0,
+      "toolchain": "1.97.1"
+    },
+    "rust_t1": {
+      "result": "Passed",
+      "host_signing": "5/5",
+      "host_reassessment": "4/4",
+      "axum_letters": "5/5",
+      "axum_evidence": "4/4",
+      "axum_gate": "13/13",
+      "web_server_deployment": "2/2",
+      "desktop": "4/4"
+    },
+    "web": {
+      "result": "Passed",
+      "typecheck": "exit 0",
+      "lint": "exit 0 with one unrelated warning",
+      "focused_hooks": "25/25"
+    },
+    "postgres": {
+      "result": "Passed",
+      "signing_fresh": "25 checks, 24 lifecycle markers, 6/6 cleanup",
+      "signing_upgrade": "31 checks, 24 lifecycle markers, 6/6 cleanup",
+      "reassessment_fresh": "16 checks, 7 lifecycle markers, 6/6 cleanup",
+      "reassessment_upgrade": "22 checks, 7 lifecycle markers, 6/6 cleanup"
+    },
+    "negative_controls": {
+      "result": "Passed",
+      "count": 11,
+      "receipts": {
+        "task-8-approval-truncate-concurrency-red-proof.json": "f7736883a85e92df0f490eb31d10f99106200167b51d1f54254b51d856088074",
+        "task-8-claim-truncate-concurrency-red-proof.json": "3a22c467d002d0b31cf3051c17d7a4fa1e99a5053cc9ed990370a76aaf27fe51",
+        "task-8-evidence-practice-red-proof.json": "b8afb4e008de649554f0d0da97976483144f5880e874018ac26dac8d9481b36d",
+        "task-8-gate-unavailability-red-proof.json": "c6760b1c92c67709f07195f660091e9f9d8fa0c433c8077113c0f4994e1180d8",
+        "task-8-http-uncertainty-red-proof.json": "c8dddb9482051ac7ce054995c0462d4a4b70fda05bd501e19521b9918ac8c33c",
+        "task-8-navigation-command-red-proof.json": "781db783fa8603731e6081b7c073b2e467d67c35649b551b382afd0ace535f4d",
+        "task-8-publication-concurrency-red-proof.json": "ab24673b834268a8cafea9f842c5cd163cea0b0455403d4b33392e11bd469085",
+        "task-8-publication-identity-red-proof.json": "11fa4aed79580f351e1bd9bc0d05b7d1dc03de791a19c3325ea2e43aae262835",
+        "task-8-schema-publication-red-proof.json": "cc24f8d37a81421115015fedddddd4a7ad5c6e5c29cba325f834a1f59df0faf7",
+        "task-8-truncate-guard-red-proof.json": "1d78ff6e9c66605cd4fa1b90700af866f0c05c506cb7378bfecf00843b4e5cf7",
+        "task-8-unresolved-slot-red-proof.json": "6af8fa21e99a3291883912186cde8fba08c2c61405f2f6c9b383c903ebfc4964"
+      }
+    },
+    "structural": {
+      "result": "Passed",
+      "python_ast_scripts": 7,
+      "gate_yaml": "parsed",
+      "openspec_strict": "1/1 valid",
+      "architecture_links": "76/76",
+      "git_diff_check": "exit 0"
+    },
+    "artifact_refiner": {
+      "result": "Passed",
+      "iteration": 7,
+      "checks": "109/109",
+      "validation_sha256": "0ee8f96b8f69f21e0bf266f1cf16b4110e93b606cfec51672345e7ed8c3e2594"
+    },
+    "adversarial_review": {
+      "result": "Passed",
+      "attempts": 7,
+      "final": "0 critical, 0 warning, 0 suggestion",
+      "judge_model": "gpt-5.6-sol",
+      "cross_model_check": "verified-distinct",
+      "findings_sha256": "e0f46ec936c911e33ca42b1d6491a26a70723b674fcb4ca70fd0c790c132d4e1",
+      "sycophancy_gate": "Passed, score 0.0 strict",
+      "sycophancy_screen_sha256": "1a03ec3b2b960621250b4b86426df7189377c2f61e323043329437f4f6f2da55"
+    }
+  },
+  "receipts": {
+    "task-8-signing-fresh.json": {
+      "result": "Passed",
+      "sha256": "61e0b03b5a2cf2f603f3ed3c227faec05c711eec31c4ad177871e8d6cc346663"
+    },
+    "task-8-signing-upgrade.json": {
+      "result": "Passed",
+      "sha256": "1d926fccdd5051a15732a61e90f257260e767eab49e8a09db0d0ec7c3b09951d"
+    },
+    "task-8-reassessment-fresh.json": {
+      "result": "Passed",
+      "sha256": "363db758de0fd324166e079fb2fa6c6b0c3b8dea603c114e6ece9294b06147bd"
+    },
+    "task-8-reassessment-upgrade.json": {
+      "result": "Passed",
+      "sha256": "7cafeeecf42b406ab1eda35803c61cd95546fa96dd90c2b2b0009fabfa47c702"
+    },
+    "task-8-pem-exclusion.json": {
+      "result": "Passed",
+      "sha256": "8e005d28f2358890ccd04c5cf0509d56bf2b43dbdefac072f42a68948d1cb880"
+    }
+  },
+  "source_inventory": {
+    "result": "Passed",
+    "files": 50,
+    "sha256": "9a8a357c5d6ce2416c82b60e256dd96ab88e872a6f54e85ed0d3d7bef562ffab"
+  },
+  "caller_truth": {
+    "http": "mounted",
+    "browser_evidence_read": "mounted",
+    "browser_clinical_mutation_controls": "inactive",
+    "desktop_contracts": "present but no Tauri registration"
+  },
+  "unverified": [
+    "Production Gate image and deployment",
+    "Browser rendering and user-reachable clinical mutation controls",
+    "Tauri IPC, native credentials, window behavior and physical devices",
+    "Renderer reload/process-restart correlation recovery"
+  ],
+  "unrequested_additions": [],
+  "guards": {
+    "publication_ddl_serialization": "Observed publication/table DDL write-skew finding",
+    "approval_qa_serialization": "Observed approval/QA-TRUNCATE race",
+    "approval_claim_serialization": "Observed approval/claim-TRUNCATE race",
+    "runtime_command_registry": "Observed navigation loss of unresolved ownership",
+    "practice_scoped_evidence": "Observed selected-practice omission",
+    "gate_unavailability_mapping": "Observed outage-to-denial misclassification"
+  }
+}

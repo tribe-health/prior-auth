@@ -1,0 +1,13 @@
+{
+  "result": "Failed",
+  "checks": 8,
+  "observed_counts": {
+    "whoami": 1,
+    "grant": 2,
+    "downstream": 1
+  },
+  "cleanup": {
+    "gate_with_minter": "Passed",
+    "synthetic_http_endpoints": "Passed"
+  }
+}

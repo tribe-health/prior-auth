@@ -1,0 +1,285 @@
+{
+  "result": "Passed",
+  "verification_tier": 1,
+  "install_mode": "fresh",
+  "observed_at": "2026-09-08T14:22:30.088096+00:00",
+  "scope": "Actual AppServices and PgGateRepository against a disposable PostgreSQL database",
+  "prerequisites": [
+    "Existing Docker Compose db service with schema extensions available",
+    "Configured PostgreSQL admin password from container environment",
+    "Pinned Rust toolchain and idle workspace Cargo build directory",
+    "No concurrent database fixtures; a local exclusive lock covers this runner"
+  ],
+  "commands": [
+    "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-gate-transaction.py --install-mode fresh",
+    "docker compose port db 5432",
+    "docker compose exec -T db printenv POSTGRES_PASSWORD (captured only)",
+    "docker compose exec -T db psql -U <configured admin> -X -A -t -q -v ON_ERROR_STOP=1 -d <disposable database> (SQL on stdin)",
+    "cargo run -p aso-web-server -- --migrate-server",
+    "cargo test -p aso-web-server adapters::gate::transaction_tests::gate_transaction_lifecycle -- --ignored --exact --nocapture"
+  ],
+  "environment_contract": {
+    "migration": [
+      "ASO_MIGRATION_DATABASE_URL"
+    ],
+    "test": [
+      "ASO_TEST_DATABASE_URL",
+      "ASO_TEST_ADMIN_DATABASE_URL",
+      "ASO_TEST_OWNER_ROLE",
+      "ASO_TEST_GATE_CONTEXTS",
+      "ASO_TEST_GATE_CASE_ID",
+      "ASO_TEST_FOREIGN_CASE_ID"
+    ],
+    "credentials": "Disposable passwords supplied only through environment or captured SQL stdin"
+  },
+  "checks": {
+    "postgres_port_discovery": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "configured_admin_password_available": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "fresh_schema_has_no_clinical_rows_before_migration": {
+      "result": "Passed",
+      "row_counts": {
+        "cases": 0,
+        "users": 0,
+        "letters": 0,
+        "patients": 0,
+        "receipts": 0,
+        "documents": 0,
+        "practices": 0,
+        "user_roles": 0,
+        "annotations": 0,
+        "submissions": 0,
+        "audit_events": 0,
+        "peer_reviews": 0,
+        "case_evidence": 0,
+        "case_pathways": 0,
+        "letter_claims": 0,
+        "receipt_items": 0,
+        "custody_events": 0,
+        "determinations": 0,
+        "gate_affirmations": 0,
+        "letter_qa_results": 0,
+        "evidence_citations": 0,
+        "patient_identities": 0,
+        "case_diagnosis_codes": 0,
+        "case_procedure_codes": 0,
+        "submission_attachments": 0
+      }
+    },
+    "initial_server_migration": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "fresh_migration_leaves_clinical_rows_empty": {
+      "result": "Passed",
+      "row_counts": {
+        "cases": 0,
+        "users": 0,
+        "letters": 0,
+        "patients": 0,
+        "receipts": 0,
+        "documents": 0,
+        "practices": 0,
+        "user_roles": 0,
+        "annotations": 0,
+        "submissions": 0,
+        "audit_events": 0,
+        "peer_reviews": 0,
+        "case_evidence": 0,
+        "case_pathways": 0,
+        "gate_commands": 0,
+        "letter_claims": 0,
+        "receipt_items": 0,
+        "custody_events": 0,
+        "determinations": 0,
+        "gate_affirmations": 0,
+        "letter_qa_results": 0,
+        "evidence_citations": 0,
+        "patient_identities": 0,
+        "case_diagnosis_codes": 0,
+        "case_procedure_codes": 0,
+        "submission_attachments": 0
+      }
+    },
+    "fresh_fixture_seeded_after_migration": {
+      "result": "Passed"
+    },
+    "unchanged_migration_rerun": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "migration_ledger_and_populated_cases_unchanged": {
+      "result": "Passed"
+    },
+    "durable_gate_migration_recorded": {
+      "result": "Passed"
+    },
+    "checksum_mismatch_refused": {
+      "result": "Passed",
+      "return_code": 1,
+      "checksum_mismatch_reported": true
+    },
+    "checksum_refusal_preserves_populated_cases": {
+      "result": "Passed"
+    },
+    "restored_checksum_rerun": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "checksum_restoration_preserves_ledger_and_cases": {
+      "result": "Passed"
+    },
+    "runtime_login_nonowner_nonbypass_executor_member": {
+      "result": "Passed",
+      "psql_output": "t"
+    },
+    "fixture_owner_role_initially_absent": {
+      "result": "Passed"
+    },
+    "actual_appservices_pg_repository_lifecycle": {
+      "result": "Passed",
+      "return_code": 0,
+      "assertion_count": 18
+    }
+  },
+  "processes": [
+    {
+      "label": "initial_server_migration",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 0,
+      "actual_result_output": []
+    },
+    {
+      "label": "unchanged_server_migration_rerun",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 0,
+      "actual_result_output": []
+    },
+    {
+      "label": "checksum_mismatch_refusal",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 1,
+      "actual_result_output": [],
+      "checksum_mismatch_reported": true
+    },
+    {
+      "label": "restored_checksum_migration_rerun",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 0,
+      "actual_result_output": []
+    },
+    {
+      "label": "actual_gate_transaction_lifecycle",
+      "command": [
+        "cargo",
+        "test",
+        "-p",
+        "aso-web-server",
+        "adapters::gate::transaction_tests::gate_transaction_lifecycle",
+        "--",
+        "--ignored",
+        "--exact",
+        "--nocapture"
+      ],
+      "return_code": 0,
+      "actual_result_output": [
+        "gate_transaction_check: runtime_refuses_privileged_login",
+        "gate_transaction_check: runtime_refuses_noninherited_owner_membership",
+        "gate_transaction_check: service_authority_and_principal_independent",
+        "gate_transaction_check: real_service_authority_refuses_admin_foreign_and_agent_without_write_trigger",
+        "gate_transaction_check: authorized_atomic_command_and_stable_replay",
+        "gate_transaction_check: changed_payload_conflicts_without_writes",
+        "gate_transaction_check: out_of_scope_and_missing_changed_payload_conflict_before_target_authority",
+        "gate_transaction_check: derived_summary_and_original_result_survive_later_removal",
+        "gate_transaction_check: database_independently_refuses_admin_agent_expiry_and_foreign_scope",
+        "gate_transaction_check: authority_trigger_independently_checks_insert_and_delete",
+        "gate_transaction_check: authority_trigger_mutation_control_restored",
+        "gate_transaction_check: selected_practice_membership_drives_authority",
+        "gate_transaction_check: runtime_table_writes_refused",
+        "gate_transaction_check: summary_guard_and_immutable_result_refuse_direct_admin_writes",
+        "gate_transaction_check: summary_guard_mutation_control_restored",
+        "gate_transaction_check: audit_failure_rolls_back_affirmation_summary_and_result",
+        "gate_transaction_check: concurrent_duplicate_commits_one_audit_and_result",
+        "gate_transaction_check: same_case_concurrency_preserves_complete_derived_summary",
+        "test adapters::gate::transaction_tests::gate_transaction_lifecycle ... ok",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.98s"
+      ]
+    }
+  ],
+  "cleanup": {
+    "disposable_database_deleted": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "disposable_login_deleted": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "disposable_owner_role": {
+      "result": "Passed",
+      "action": "already_absent"
+    },
+    "aso_session_reader": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    },
+    "aso_gate_executor": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    },
+    "aso_gate_owner": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    }
+  },
+  "unverified": [
+    "Mounted HTTP/gateway, UI and physical devices are outside this transaction fixture."
+  ],
+  "source_sha256": {
+    "migrations/server/2026090601_durable_gate.sql": "b3da2e91629534c011c6186eeb658fc2286896d2d491ca94dcda03a2f009a899",
+    "crates/aso-web-server/src/adapters/gate.rs": "acba2e30d2e2a5e8da8f19bc79561106cedba8b98bde564c9a0934098591d962",
+    "crates/aso-web-server/src/adapters/gate/transaction_tests.rs": "9690fe42a3cda9fc797b1bd6cfbd844155581d64227f75fc8ecd5a65e4196695",
+    "crates/aso-host/src/affirmation.rs": "adc28699815e2e24016b99742820eb3731a3ee31d2c0750721866b2a5fe679bb",
+    "crates/aso-host/src/lib.rs": "0d3030e94842a38840fc72a99d3d473eeb8ba71d7cb94a1abff39e807f35f067",
+    "docs/design/schema/schema.sql": "d38fee2050e0de053c3b04c73f5215447900da5aee1a06a749fd5abdb7f9b15d",
+    "docker/bootstrap/25-session-authority.sql": "55a7029d1f683c208005262d1bbbd554f9f9a6e1791bbdace70a87f664760f42",
+    "scripts/test-gate-transaction.py": "43cb4a51653d10234cda052805b868612f0795f13373562b05e36c542e51f3f2"
+  },
+  "completed_at": "2026-09-08T14:22:53.777377+00:00"
+}

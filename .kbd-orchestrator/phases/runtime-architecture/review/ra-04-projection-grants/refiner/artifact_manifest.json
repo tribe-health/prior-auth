@@ -1,0 +1,25 @@
+{
+  "artifact_type": "content",
+  "variants": [
+    {
+      "name": "RA04 scope, evidence and delivery limits",
+      "file": "dist/report.md",
+      "format": "markdown"
+    },
+    {
+      "name": "Applicable constraint evidence",
+      "file": "dist/checklist.json",
+      "format": "json"
+    }
+  ],
+  "generated_at": "2026-09-08T15:20:20Z",
+  "preview": {
+    "required": false,
+    "runs": []
+  },
+  "validation": {
+    "notes": [
+      "This is a deterministic code-and-evidence review; a visual preview does not apply."
+    ]
+  }
+}

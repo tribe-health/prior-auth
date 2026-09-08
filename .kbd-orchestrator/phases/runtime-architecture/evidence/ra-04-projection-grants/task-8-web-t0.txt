@@ -1,0 +1,3 @@
+$ tsc --noEmit
+$ oxlint
+src/shared/sync/replica-rebuild.test.ts:72:50: warning unicorn(prefer-string-starts-ends-with): Prefer String#startsWith over a regex with a caret. help: Replace `/^DELETE FROM/.test(c.sql)` with `c.sql.startsWith('DELETE FROM')`.

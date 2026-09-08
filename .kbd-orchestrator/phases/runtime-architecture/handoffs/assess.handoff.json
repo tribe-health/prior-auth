@@ -1,0 +1,13 @@
+{
+  "stage": "assess",
+  "completedAt": "2026-09-06T11:51:20Z",
+  "outputs": [
+    "assessment.md",
+    "review/assess/review.md",
+    "review/assess/findings-final.json"
+  ],
+  "nextStage": "analyze",
+  "summaryForNext": "D1-D3 remain, and the composed clinical API accepts caller actors with memory authority; order 1 must establish verified membership and authoritative commands before FRF authorization, scoped PEM lifecycle and worker SQL-to-graph materialization in orders 2-4. Read review/assess/review.md with assessment.md: judge PASS carries source-excerpt limitations and the newly confirmed transitive SWR dependency requiring disposition; include distinct evidence-state keys and prohibit automatic clinical replay. Preserve 12 placeholders, map annotations/preview and native/update/release dependencies, and retain publication BLOCKED until authorized synthetic-row browser proof.",
+  "skipped": false,
+  "skipReason": null
+}

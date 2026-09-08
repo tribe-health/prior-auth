@@ -1,0 +1,26 @@
+   Compiling frf-gateway v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-gateway)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.07s
+     Running tests/shape_projection_grant.rs (/Users/gqadonis/.cargo/build-cache/25/5c2ebd31dad868/debug/deps/shape_projection_grant-9047ec6f44399a4c)
+
+running 3 tests
+test mounted_shape_route_rejects_wrong_scope_before_resolver_or_facade ... ok
+test mounted_shape_route_rejects_wrong_revision_before_resolver_or_facade ... ok
+test authorized_shape_route_preserves_a_cleared_gate_summary ... FAILED
+
+failures:
+
+---- authorized_shape_route_preserves_a_cleared_gate_summary stdout ----
+
+thread 'authorized_shape_route_preserves_a_cleared_gate_summary' (7047215) panicked at crates/frf-gateway/tests/shape_projection_grant.rs:243:5:
+assertion `left == right` failed
+  left: b""
+ right: [91, 123, 34, 105, 100, 34, 58, 34, 115, 121, 110, 116, 104, 101, 116, 105, 99, 45, 99, 97, 115, 101, 34, 44, 34, 103, 97, 116, 101, 95, 97, 102, 102, 105, 114, 109, 101, 100, 95, 97, 116, 34, 58, 110, 117, 108, 108, 125, 93]
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    authorized_shape_route_preserves_a_cleared_gate_summary
+
+test result: FAILED. 2 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p frf-gateway --test shape_projection_grant`

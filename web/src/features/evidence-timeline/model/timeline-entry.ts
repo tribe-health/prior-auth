@@ -54,6 +54,16 @@ export interface TimelineEntry {
   citations: readonly TimelineCitation[];
 }
 
+export interface ReassessEvidenceResult {
+  commandId: string;
+  caseId: string;
+  evidenceId: string;
+  previousState: EvidenceState;
+  state: EvidenceState;
+  expectedAssessedAt: string;
+  assessedAt: string;
+}
+
 /**
  * Is this entry adequately supported?
  *

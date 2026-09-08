@@ -1,0 +1,8 @@
+{
+  "result": "Failed",
+  "modes": {},
+  "cleanup": {
+    "synthetic_ra04_fresh_a5a5dec141ca4bbaae75515644adacc2": "Passed",
+    "login": "Passed"
+  }
+}

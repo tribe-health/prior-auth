@@ -1,0 +1,7 @@
+{
+  "provider_type": "filesystem",
+  "config": {
+    "state_directory": ".refiner",
+    "scope": "project"
+  }
+}

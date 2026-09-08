@@ -1,0 +1,43 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.6-sol",
+  "isolation_mode": "harness-native",
+  "producer_model": "gpt-6-astra",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "crates/aso-web-server/src/migrations.rs",
+      "line": 114,
+      "claim": "A concurrent publication can expose a local command ledger after its migration commits and before the publication event trigger is installed by migration 2026090605.",
+      "evidence": "The runner explicitly states that server migrations commit separately, performs only a preflight at line 114, and installs aso_local_command_publication_guard in the fifth migration; the postflight detects an unsafe publication only after the exposure window.",
+      "suggested_fix": "Install the publication guard before any ledger-creating migration can commit, or hold a database-level exclusion mechanism honored by publication DDL across the entire separately committed migration sequence."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "migrations/server/2026090605_clinical_revision_guards.sql",
+      "line": 199,
+      "claim": "The publication guard can be bypassed by renaming a command-ledger table before explicitly publishing it.",
+      "evidence": "The event trigger ran only for CREATE PUBLICATION and ALTER PUBLICATION, while its predicate identified protected relations solely by mutable table names. ALTER TABLE RENAME was not inspected.",
+      "suggested_fix": "Track protected relations by durable identity or immutable metadata and test rename then publish."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "web/src/features/evidence-timeline/hooks/use-evidence-timeline.ts",
+      "line": 124,
+      "claim": "An uncertain HTTP gateway failure discards the command ID required to reconcile a reassessment that may already have committed.",
+      "evidence": "The catch block retained commandId only for non-ApiError failures; every ApiError outside capability and precondition cases cleared lastCommandId. Gateway 502, 503, 504, or timeout responses can arrive after commit. use-surgeon-gate.ts used the same classification.",
+      "suggested_fix": "Retain the scoped command ID for transport-uncertain HTTP statuses and network exceptions; clear it only when the response conclusively proves no commit."
+    },
+    {
+      "severity": "WARNING",
+      "file": "crates/aso-web-server/src/adapters/gate.rs",
+      "line": 380,
+      "claim": "Production composition leaves an existing mounted evidence-count route permanently unavailable.",
+      "evidence": "PgGateRepository counts always returns DomainError::Storage while the actorless route remained mounted.",
+      "suggested_fix": "Implement a verified PostgreSQL read before mounting, or unmount the endpoint until its verified-context contract exists."
+    }
+  ],
+  "checked_classes": []
+}

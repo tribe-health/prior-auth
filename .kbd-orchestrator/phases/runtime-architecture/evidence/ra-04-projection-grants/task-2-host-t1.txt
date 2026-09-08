@@ -1,0 +1,9 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.16s
+     Running unittests src/lib.rs (/Users/gqadonis/.cargo/build-cache/02/70d32e977a4fbf/debug/deps/aso_host-5d7dc30b50b7565c)
+
+running 2 tests
+test projection::tests::five_table_registry_is_exact_and_practice_scoped ... ok
+test projection::tests::unapproved_metadata_and_deferred_criterion_labels_stay_protected ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 13 filtered out; finished in 0.00s
+

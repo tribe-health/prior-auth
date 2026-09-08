@@ -1,0 +1,10 @@
+{
+  "result": "Passed",
+  "strictness": "strict",
+  "score": 0.0,
+  "screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

@@ -1,0 +1,33 @@
+   Compiling frf-gateway v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-gateway)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.72s
+     Running tests/shape_projection_grant.rs (/Users/gqadonis/.cargo/build-cache/25/5c2ebd31dad868/debug/deps/shape_projection_grant-9047ec6f44399a4c)
+
+running 2 tests
+test mounted_shape_route_rejects_wrong_revision_before_resolver_or_facade ... FAILED
+test mounted_shape_route_rejects_wrong_scope_before_resolver_or_facade ... FAILED
+
+failures:
+
+---- mounted_shape_route_rejects_wrong_revision_before_resolver_or_facade stdout ----
+
+thread 'mounted_shape_route_rejects_wrong_revision_before_resolver_or_facade' (6705043) panicked at crates/frf-gateway/tests/shape_projection_grant.rs:185:5:
+assertion `left == right` failed
+  left: 404
+ right: 403
+
+---- mounted_shape_route_rejects_wrong_scope_before_resolver_or_facade stdout ----
+
+thread 'mounted_shape_route_rejects_wrong_scope_before_resolver_or_facade' (6705044) panicked at crates/frf-gateway/tests/shape_projection_grant.rs:185:5:
+assertion `left == right` failed
+  left: 404
+ right: 403
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    mounted_shape_route_rejects_wrong_revision_before_resolver_or_facade
+    mounted_shape_route_rejects_wrong_scope_before_resolver_or_facade
+
+test result: FAILED. 0 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p frf-gateway --test shape_projection_grant`

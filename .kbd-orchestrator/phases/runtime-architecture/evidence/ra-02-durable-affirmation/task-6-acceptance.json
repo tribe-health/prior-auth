@@ -1,0 +1,244 @@
+{
+  "result": "Passed",
+  "task": 6,
+  "requirement": "Administrator, Agent and foreign-practice refusals at each layer independently.",
+  "evidence_mode": "Current-hash audit of task3 router and task4 live campaigns; no new runtime execution.",
+  "sources": [
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/.kbd-orchestrator/phases/runtime-architecture/evidence/ra-02-durable-affirmation/task-4-mounted.json",
+      "sha256": "d94ad07f1a369b4b787d57d052d6c795fb4eaeae51a1692a3a08a23d2ee41e7c",
+      "assertions": [
+        "gateway_admin_denied_independently",
+        "gateway_foreign_denied_independently",
+        "gateway_non_kratos_agent_denied",
+        "gateway_disabled_hook_admin_reaches_accepting_sink",
+        "gateway_enabled_hook_still_denies_same_admin",
+        "gateway_policy_and_sink_do_not_write_clinical_commands"
+      ],
+      "commands": [
+        "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-gate-mounted.py --gate-binary <debug executable>"
+      ],
+      "prerequisites": [
+        "Existing Docker Compose db service with schema extensions available",
+        "Configured PostgreSQL admin password from container environment",
+        "Pinned Rust toolchain and idle workspace Cargo build directory",
+        "No concurrent database fixtures; a local exclusive lock covers this runner"
+      ],
+      "result": "Passed"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/.kbd-orchestrator/phases/runtime-architecture/evidence/ra-02-durable-affirmation/task-4-fresh.json",
+      "sha256": "ea7ffaadec8d507ace61c7b7d404a90a7c89be679d8b8658e32e066678e17ca9",
+      "assertions": [
+        "real_service_authority_refuses_admin_foreign_and_agent_without_write_trigger",
+        "database_independently_refuses_admin_agent_expiry_and_foreign_scope",
+        "authority_trigger_independently_checks_insert_and_delete",
+        "authority_trigger_mutation_control_restored"
+      ],
+      "commands": [
+        "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-gate-transaction.py --install-mode fresh",
+        "docker compose port db 5432",
+        "docker compose exec -T db printenv POSTGRES_PASSWORD (captured only)",
+        "docker compose exec -T db psql -U <configured admin> -X -A -t -q -v ON_ERROR_STOP=1 -d <disposable database> (SQL on stdin)",
+        "cargo run -p aso-web-server -- --migrate-server",
+        "cargo test -p aso-web-server gate_transaction_lifecycle -- --ignored --nocapture"
+      ],
+      "prerequisites": [
+        "Existing Docker Compose db service with schema extensions available",
+        "Configured PostgreSQL admin password from container environment",
+        "Pinned Rust toolchain and idle workspace Cargo build directory",
+        "No concurrent database fixtures; a local exclusive lock covers this runner"
+      ],
+      "result": "Passed"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/.kbd-orchestrator/phases/runtime-architecture/evidence/ra-02-durable-affirmation/task-4-upgrade.json",
+      "sha256": "33f3ab20dc9f8bf6e5fe3a9b871cf9d8e517288c6fbfc5dbd01ee23bf2482bb8",
+      "assertions": [
+        "real_service_authority_refuses_admin_foreign_and_agent_without_write_trigger",
+        "authority_trigger_independently_checks_insert_and_delete"
+      ],
+      "commands": [
+        "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-gate-transaction.py --install-mode upgrade",
+        "docker compose port db 5432",
+        "docker compose exec -T db printenv POSTGRES_PASSWORD (captured only)",
+        "docker compose exec -T db psql -U <configured admin> -X -A -t -q -v ON_ERROR_STOP=1 -d <disposable database> (SQL on stdin)",
+        "cargo run -p aso-web-server -- --migrate-server",
+        "cargo test -p aso-web-server gate_transaction_lifecycle -- --ignored --nocapture"
+      ],
+      "prerequisites": [
+        "Existing Docker Compose db service with schema extensions available",
+        "Configured PostgreSQL admin password from container environment",
+        "Pinned Rust toolchain and idle workspace Cargo build directory",
+        "No concurrent database fixtures; a local exclusive lock covers this runner"
+      ],
+      "result": "Passed"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/.kbd-orchestrator/phases/runtime-architecture/evidence/ra-02-durable-affirmation/task-3.md",
+      "sha256": "e04c267dd9880600d7d07331b22e5122af72060e6103709ebb1276b86f750ba1",
+      "assertions": [
+        "Recorded T1 router10/10 includes fresh Agent and Service principals with accepting downstream ports."
+      ],
+      "command": "cargo +1.97.1 test -p aso-server-axum routes::gate::tests",
+      "result": "Passed"
+    }
+  ],
+  "current_hash_verification": {
+    "files": [
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/Cargo.lock",
+        "sha256": "cf262d424a41b275f00aca2696eb487f2d16df818145cb98db789d39b031aa3d"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/Cargo.toml",
+        "sha256": "c497ea0223e088c096a5229977e38b6040068073f41b99b1725295b8338c6e26"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host/src/affirmation.rs",
+        "sha256": "0aa4070c1ab8948a3e9d9ffae2052a1fc08accb74356e2efdb95faef182f17ab"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host/src/lib.rs",
+        "sha256": "dfa245a2ba58cca78c8814e29e61ba26f8ba2316f4405ab390c94a51e06f6ec9"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host/src/ports/mod.rs",
+        "sha256": "233b06c434aaf30abb3a43dfbab1e115f9a70ab853b4eaa70b333c8636e76608"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host/src/session.rs",
+        "sha256": "f9b71d6b940c735091d7d3a8b324a1efbd23842c67d23999245daf62b4931a70"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-server-axum/src/routes/gate.rs",
+        "sha256": "eee7ffce1e2c96add0735de1a6a69b0bc78fb59fc43d0ae43bb37504f4c27006"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-server-axum/src/routes/gate/tests.rs",
+        "sha256": "e1f8e59aa7208801d2dbc6af47d74803bb1a79d1af1de3bc424dce26a5a49aad"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-server-axum/src/session.rs",
+        "sha256": "6b4aa3f920bb0037233a7f5aff8c0a42676f27e186205759d03faf2c492e9e6f"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/gate.rs",
+        "sha256": "ad5ced9995d425e86f34f9dca7c37b5feeeaa2dae057459460672ec4a0a550a3"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/gate/transaction_tests.rs",
+        "sha256": "7b873318d7455ba2ce9a29a54dde7898218820b52b12f029ead71f0636727a79"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/mod.rs",
+        "sha256": "c6e487b3a54ec96ba5a67b433edbb1265b60da91c18602ccdaa172000f0a6024"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/session.rs",
+        "sha256": "13a3cdd9149e5059507439eda5a6219ada123ff3e679bec7de07eb33f9ca30f8"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/session/transaction_tests.rs",
+        "sha256": "779b88f42cd1b72911fb890a2265b32df1bbce2c6d9889c6681817302fff8cd7"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/main.rs",
+        "sha256": "f38a4f809dcaedab503e9350c73b8c0005c926fc0cde941b0971e6aab73507ee"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/migrations.rs",
+        "sha256": "7611397b2191dad024dceff3622e12231b6eef7b5e3c4dcaa165cce081143c7c"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/desktop/src-tauri/src/lib.rs",
+        "sha256": "fdb457f2e43dad09b76ed99e32988b1291cefadfe01cba504cf6b8ca4e93da96"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/docker/flint-gate/config.yaml",
+        "sha256": "5ee0e5433c0fdd3a23b9bda0ccd3e20ac1b91f43c70753c34b9051733da928d4"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/docs/architecture/adr-002-clinical-authority.md",
+        "sha256": "3885e1b6e777101203661dc961cc722d74aa22c4f472dd940f68d32d28822b93"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/docs/architecture/adr-005-navigation-and-gating.md",
+        "sha256": "cbfa7ad6420848a22f18a4c17ad67b5e41cfb2a6184037ff796554cec441f6b9"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/docs/architecture/adr-007-local-first-sync.md",
+        "sha256": "2de1b11a61564088b5356a12745545d65d8201c34110cf368e896ca4732af6fc"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/docs/architecture/application-runtime-architecture.md",
+        "sha256": "c0f1862fad5f4bac804933fd2525bffc83d9dfe9810b231da20ef9e88f51ced1"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/migrations/server/2026090601_durable_gate.sql",
+        "sha256": "b3da2e91629534c011c6186eeb658fc2286896d2d491ca94dcda03a2f009a899"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/openspec/changes/ra-02-durable-affirmation/design.md",
+        "sha256": "5a37bb84dacf88d3d022683ac4fc4599e80b566f8920b45fc392c611a0e86be3"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/scripts/test-gate-mounted.py",
+        "sha256": "0e777288e608fe7bae88ea2cf7ee42b62c68877f4bedf4891aea13aa3fb35ad1"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/scripts/test-gate-transaction.py",
+        "sha256": "e7bde1314ea928999e769b5036c5505d68c24e91e20423e727266f8663346a53"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/versions.toml",
+        "sha256": "c2f34161027178bedc80c6903ad8f084e26de06805e0638dd927af3104a1d638"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/features/surgeon-gate/api/gate-api.ts",
+        "sha256": "c7521c19bae355f71075030d1f5b724d9bdcb49e76e4f122eb49f41d7153d95b"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/features/surgeon-gate/hooks/use-surgeon-gate.test.tsx",
+        "sha256": "86721dd794ad0f10d05036022677bdefa7c9fca042ca575fab735105c2433c9a"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/features/surgeon-gate/hooks/use-surgeon-gate.ts",
+        "sha256": "713fe84581bb7d029d718d4de7109b594deb660e06d95eb2e70649bdb8a72f9e"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/features/surgeon-gate/model/gate-state.ts",
+        "sha256": "b2b9112e01b97437647aa84f72fdd3842622fe6fad4c4bb17b0ad2c50daca115"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core/src/config/lookup.rs",
+        "sha256": "2551a0b643633fa1e548859e017aa04bcca1373a0fcbf89cc7a554fa777a6e5e"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core/src/config/types.rs",
+        "sha256": "2eb57f1ad1760d01cae2a12c3c3cb96532f8e83395e111c08645cb8587b15966"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core/src/middleware/aso_clinical_authorize.rs",
+        "sha256": "4049a7d4348d116972ac4c098c5607d305fe11bc249e43ea2b02c29c4d666000"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core/src/middleware/mod.rs",
+        "sha256": "36514fcc60242cbe1d715ec54bb2deb6f7447950d7d017ebd4dc24a7fe858403"
+      },
+      {
+        "path": "/Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core/src/middleware/pipeline.rs",
+        "sha256": "89b4b3d9aa6d1f91191869eff599fba5bbad99dfd0330eada8c8b512904fe76a"
+      }
+    ]
+  },
+  "isolation": {
+    "Gateway": "Actual Gate with accepting sink; disabled-hook admin positive control. Callback fresh Agent context tested with accepting downstream ports.",
+    "AppServices": "Real Postgres authority plus accepting write repository: surgeon passes, administrator/foreign/Agent refuse for affirm/remove.",
+    "Database": "Direct owner-role INSERT/DELETE bypass service and command function, forbidden contexts refuse, authorized controls work; trigger disablement allows forbidden insert and rollback restores."
+  },
+  "unverified": [
+    "Live delegated-agent provider is not implemented; non-Kratos credential is refused, never relabelled as a provisioned agent.",
+    "Browser UI, deployment and devices"
+  ]
+}

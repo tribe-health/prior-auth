@@ -1,0 +1,15 @@
+Controlled sabotage: removed the originating-session equality check.
+Expected nonzero exit: 1
+{
+  "result": "Failed",
+  "checks": 10,
+  "observed_counts": {
+    "whoami": 1,
+    "grant": 4,
+    "downstream": 2
+  },
+  "cleanup": {
+    "gate_with_minter": "Passed",
+    "synthetic_http_endpoints": "Passed"
+  }
+}

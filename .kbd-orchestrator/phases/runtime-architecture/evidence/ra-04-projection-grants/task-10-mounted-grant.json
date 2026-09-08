@@ -1,0 +1,96 @@
+{
+  "result": "Passed",
+  "verification_tier": 1,
+  "observed_at": "2026-09-08T14:21:33.219443+00:00",
+  "scope": "Actual Gate binary with synthetic Kratos/ASO and an accepting downstream",
+  "command": "python3 scripts/test-replica-grant.py --gate-binary <debug executable> --output <receipt>",
+  "checks": {
+    "valid_grant_reaches_downstream": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "downstream_reached": true
+    },
+    "valid_grant_reaches_downstream_once": {
+      "result": "Passed"
+    },
+    "inbound_credential_is_replaced": {
+      "result": "Passed"
+    },
+    "mounted_token_has_exact_allowlist": {
+      "result": "Passed",
+      "claim_count": 12
+    },
+    "grant_callback_receives_only_raw_credential_authority": {
+      "result": "Passed"
+    },
+    "membership_denial_stops_before_downstream": {
+      "result": "Passed",
+      "status": 403,
+      "expected_status": 403,
+      "downstream_reached": false
+    },
+    "membership_denial_has_no_pass_through": {
+      "result": "Passed"
+    },
+    "membership_resolution_failure_stops_before_downstream": {
+      "result": "Passed",
+      "status": 503,
+      "expected_status": 503,
+      "downstream_reached": false
+    },
+    "membership_failure_has_no_pass_through": {
+      "result": "Passed"
+    },
+    "invented_session_linkage_is_refused": {
+      "result": "Passed",
+      "status": 403,
+      "expected_status": 403,
+      "downstream_reached": false
+    },
+    "invented_linkage_has_no_pass_through": {
+      "result": "Passed"
+    },
+    "mixed_credentials_are_refused": {
+      "result": "Passed",
+      "status": 401,
+      "expected_status": 401,
+      "downstream_reached": false
+    },
+    "mixed_credentials_have_no_pass_through": {
+      "result": "Passed"
+    },
+    "non_session_service_principal_is_refused": {
+      "result": "Passed",
+      "status": 403,
+      "expected_status": 403,
+      "downstream_reached": false
+    },
+    "service_principal_has_no_callback_or_downstream": {
+      "result": "Passed"
+    },
+    "required_minter_absence_stops_before_downstream": {
+      "result": "Passed",
+      "status": 503,
+      "expected_status": 503,
+      "downstream_reached": false
+    },
+    "mint_failure_has_no_pass_through": {
+      "result": "Passed"
+    }
+  },
+  "cleanup": {
+    "gate_without_minter": "Passed",
+    "gate_with_minter": "Passed",
+    "synthetic_http_endpoints": "Passed"
+  },
+  "unverified": [
+    "RA05 owns the deployed Gate to FRF to Electric facade and continuation protocol.",
+    "This fixture validates the mounted Gate boundary but does not claim a production network topology."
+  ],
+  "observed_counts": {
+    "whoami": 2,
+    "grant": 4,
+    "downstream": 1
+  }
+}

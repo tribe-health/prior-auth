@@ -1,0 +1,17 @@
+{
+  "role": "artifact-critic",
+  "isolation_mode": "harness-native",
+  "generation_history_provided": false,
+  "result": "Passed",
+  "findings": [],
+  "checked_classes": [
+    "Credential forgery and transport ambiguity: mounted extraction and fresh Kratos verification",
+    "Unauthorized practice and inactive membership: verified identity binding, active ASO user and current practice grant",
+    "Expiry and revision correctness: post-read expiry check and four authority-table revision triggers",
+    "Pooled identity leakage: transaction-local role/GUC, shared backend evidence and six cleanup exits",
+    "Silent provider failure and credential exposure: explicit errors, bounded provider processing, nonserializable credentials and no-store responses",
+    "Shell and clinical authority regressions: shell-neutral host, inactive desktop contract and explicit later-change scope",
+    "Verification scope inflation: prior T0/T1 distinguished from current execution; transport/concurrency/native/deployment limits retained"
+  ],
+  "scope": "Read-only source, migration, caller, assertion and recorded evidence review; no builds, live tests or edits. Root transcribed the independent critic result; separate configured cross-model judge receipt follows."
+}

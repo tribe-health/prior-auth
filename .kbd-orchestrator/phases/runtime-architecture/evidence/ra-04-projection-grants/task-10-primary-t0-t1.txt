@@ -1,0 +1,72 @@
+    Checking aso-host v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.58s
+    Checking aso-host v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.73s
+    Checking aso-host v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host)
+    Checking aso-server-axum v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-server-axum)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.59s
+    Checking aso-host v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host)
+    Checking aso-server-axum v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-server-axum)
+warning: this `MutexGuard` is held across an await point
+   --> crates/aso-server-axum/src/routes/letters/tests.rs:279:9
+    |
+279 |     let commands = fixture.signing.commands.lock().unwrap();
+    |         ^^^^^^^^
+    |
+    = help: consider using an async-aware `Mutex` type or ensuring the `MutexGuard` is dropped before calling `await`
+note: these are all the await points this lock is held through
+   --> crates/aso-server-axum/src/routes/letters/tests.rs:294:49
+    |
+294 |     let response = fixture.request(&uri, stale).await;
+    |                                                 ^^^^^
+295 |     assert_eq!(response.status(), StatusCode::CONFLICT);
+296 |     assert_eq!(error_code(response).await, "revision_conflict");
+    |                                     ^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#await_holding_lock
+    = note: `#[warn(clippy::await_holding_lock)]` on by default
+
+warning: `aso-server-axum` (lib test) generated 1 warning
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.93s
+    Checking aso-host v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host)
+    Checking aso-desktop v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/desktop/src-tauri)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.24s
+    Checking aso-host v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host)
+    Checking aso-desktop v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/desktop/src-tauri)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.25s
+   Compiling aso-host v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.74s
+     Running unittests src/lib.rs (/Users/gqadonis/.cargo/build-cache/02/70d32e977a4fbf/debug/deps/aso_host-aaa007064ef1f05d)
+
+running 3 tests
+test projection::tests::five_table_registry_is_exact_and_practice_scoped ... ok
+test projection::tests::reactive_gate_summary_is_approved_without_actor_identity ... ok
+test projection::tests::unapproved_metadata_and_deferred_criterion_labels_stay_protected ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 13 filtered out; finished in 0.00s
+
+   Compiling aso-host v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host)
+   Compiling aso-server-axum v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-server-axum)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 9.21s
+     Running unittests src/lib.rs (/Users/gqadonis/.cargo/build-cache/02/70d32e977a4fbf/debug/deps/aso_server_axum-10c5da0d821be14e)
+
+running 4 tests
+test session::tests::an_agent_may_not_attempt_a_clinical_act ... ok
+test session::tests::mounted_registry_derives_two_practice_grants ... ok
+test session::tests::mounted_registry_refuses_failed_or_expired_membership_resolution ... ok
+test session::tests::mounted_registry_rejects_client_projection_controls ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 22 filtered out; finished in 0.00s
+
+   Compiling aso-host v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host)
+   Compiling aso-desktop v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.22s
+     Running unittests src/lib.rs (/Users/gqadonis/.cargo/build-cache/02/70d32e977a4fbf/debug/deps/aso_desktop_lib-6b15795ab592bccb)
+
+running 4 tests
+test session_contract_tests::reassessment_refuses_even_when_injected_ports_accept ... ok
+test session_contract_tests::current_session_refuses_even_when_injected_port_can_return_authority ... ok
+test session_contract_tests::gate_commands_refuse_even_when_injected_ports_accept ... ok
+test session_contract_tests::signing_refuses_even_when_injected_ports_accept ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

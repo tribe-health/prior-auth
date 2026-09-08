@@ -2,16 +2,16 @@
   "schemaVersion": "2",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 43,
-  "derivedRevision": 43,
+  "sourceRevision": 296,
+  "derivedRevision": 296,
   "frontier": {
-    "e9a7936c-0a01-43d5-9004-b93a4e5fd031": 43
+    "e9a7936c-0a01-43d5-9004-b93a4e5fd031": 296
   },
   "conflictCount": 0,
   "phase": "web-ui-architecture",
   "phaseId": "web-ui-architecture",
   "parentPhase": null,
-  "last_updated": "2026-09-06T11:04:42.705205Z",
+  "last_updated": "2026-09-08T13:59:56.578736Z",
   "last_updated_by": "kbd-runtime",
   "changes_total": 8,
   "changes_completed": 8,

@@ -1,0 +1,14 @@
+{
+  "result": "Passed",
+  "verification_tier": 1,
+  "failure_injected": "Runtime command ownership was deleted when the last scope listener unsubscribed",
+  "command": "bunx vitest run <two hook files> -t restores a late uncertain response after navigation unmounts and remounts the hook",
+  "expected_exit": "nonzero in both unmount/remount recovery cases",
+  "observed_exit": 1,
+  "source_sha256_before": "19198d08108273dd294ce9ec87db1bef06579a96bfc2ad0b8a41b2972c7cbf9c",
+  "source_sha256_after_restore": "19198d08108273dd294ce9ec87db1bef06579a96bfc2ad0b8a41b2972c7cbf9c",
+  "selected_output": [
+    " FAIL  src/features/evidence-timeline/hooks/use-evidence-timeline.test.tsx > evidence reassessment command reconciliation > restores a late uncertain response after navigation unmounts and remounts the hook",
+    " FAIL  src/features/surgeon-gate/hooks/use-surgeon-gate.test.tsx > the surgeon gate uses authenticated command DTOs > restores a late uncertain response after navigation unmounts and remounts the hook"
+  ]
+}

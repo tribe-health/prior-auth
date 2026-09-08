@@ -387,3 +387,195 @@ Check it explicitly:
     python3 -c "import json;print(json.load(open('web/node_modules/@prometheus-ags/entity-graph-core/package.json'))['version'])"
 
 All Prometheus entity-management modules must be **4.0.0**.
+
+
+## KBD completed-change projection label (2026-09-06)
+
+Observed after RA-01 task8: progress.json exposes status DONE and
+implementation_status COMPLETE, while canonical prometheus kbd status --json
+exposes change.status complete. A completion assertion requiring projected
+status COMPLETE failed even though all8tasks were complete and archive succeeded.
+Validate the canonical status or the actual projection pair; do not issue an
+unnecessary state repair to satisfy a guessed display label.
+
+## RA-02 role checks and independent trigger proof (2026-09-06)
+
+USAGE membership checks miss NOINHERIT roles that permit SET ROLE. Clinical
+connection validation now checks MEMBER closure, ownership, write grants and
+privileged flags. An independent critic found this and a stale-summary upgrade
+gap; both have live regression proof. Command-function denials do not prove
+the underlying trigger checks authority. Tests must bypass the function with a
+disposable owner-role transaction, then verify authorized controls and rollback
+DDL/data after trigger sabotage. All final 16 lifecycle checks passed.
+
+An early migration probe inherited stable instead of the selected 1.97.1
+toolchain and was interrupted/cleaned. One full run used an incomplete fixture
+environment contract and failed before command execution; its receipt remains.
+Use RUSTUP_TOOLCHAIN=1.97.1 for the fixture and wait for both script/test contract
+edits before executing. The final fixture cleaned its database, login and
+precisely tracked roles. Cargo.lock remains identical to the RA-01 baseline.
+
+
+## 2026-09-06 — Durable receipts are historical, not current gate state
+
+RA-02 task 1.3 independent review found that successful command lookup after a
+lost removal response returned a receipt but left the hook showing an affirmed
+gate. Lookup now performs a separate current-state read. A deliberately removed
+publication failed the real-hook regression (1 failed, 11 passed); restoration
+passed all 12. Case/practice generation identity also fences late completions,
+including A → B → A selection. This is a bounded feature hook; runtime-wide
+session epoch and entity-store activation remain later work.
+
+## 2026-09-06 — Review packets can omit the implementation under review
+
+The adversarial diff packet builder includes tracked Git diffs. RA-02 had
+untracked new modules and a companion flint-gate repository, so the first judge
+correctly reported that the packet did not contain a buildable implementation.
+For cross-repository changes, compare the packet with the task source inventory
+and append untracked sources plus each companion diff before dispatch. Preserve
+the incomplete-packet finding as evidence; do not recast it as a product defect.
+
+The final judge also found that the credential-bearing Gate callback accepts a
+configured plaintext HTTP URL. Synthetic mounted tests use internal HTTP. Keep
+this visible as a deployment warning until callback transport is constrained or
+protected and certified.
+
+## 2026-09-06 — Approved source guards must inspect both claim owners
+
+An UPDATE of `letter_claims.letter_id` has two protected resources: the old
+letter loses a source and the new letter gains one. Checking only `NEW.letter_id`
+allows a claim to move away from an approved letter. The RA-03 signing migration
+checks approved/signed state for both OLD and NEW, and a deliberately weakened
+trigger made the real PostgreSQL test fail before exact restoration.
+
+## 2026-09-06 — A persisted signing receipt is not service replay
+
+The database can return a stored result for an exact command while AppServices
+still rejects the already-signed target before reaching that branch. Do not
+claim lost-response reconciliation until the service performs authorized command
+lookup before current-target validation. RA-03 task 1.3 owns that contract.
+
+## 2026-09-06 — Receipt identity includes the command ID and every revision
+
+Looking up a receipt by command ID does not make a service replay safe by itself.
+The returned receipt must match the submitted command ID, resource IDs, requested
+clinical state and every expected revision. Removing only the signing command-ID
+comparison accepted another command's receipt; a negative control caught it.
+Resolve an exact receipt before mutable target validation, recheck current
+authority, and keep clinical retries out of PEM. Evidence:
+`.kbd-orchestrator/phases/runtime-architecture/evidence/ra-03-clinical-command-parity/task-3.md`.
+
+## 2026-09-06 — Fail-closed composition changes every mounted fixture
+
+Removing a production memory fallback means every fixture that starts the real
+binary must supply both database URLs and grant its disposable login the
+restricted reader and executor roles. Keep role creation and deletion ownership
+explicit so a fixture never removes a pre-existing deployment role. A direct
+trigger test that asserts only `.is_err()` can also pass on a later signature or
+constraint failure; require the authority SQLSTATE `42501`. The legacy
+actor-less evidence-count endpoint must remain unavailable until it gains fresh
+verified context rather than regaining synthetic memory counts.
+
+## 2026-09-07 — Repeated canonical task titles cannot be addressed safely
+
+RA-01 and RA-03 registered the same numeric task ID and exact 3.1 title. The
+KBD boundary guard refused RA-03 because that subject was not unique. Cancelling
+the unaddressable RA-03 duplicate and registering `ra03-final-review` with the
+same work statement restored a unique guarded task without changing scope. The
+OpenSpec task line must carry that unique ID so `end-task` can mark the correct
+checkbox. The top-level waypoint can still show `currentTask: null` while the
+canonical task and phase task projection show `IN_PROGRESS`; use the canonical
+status and hook log as the task-boundary evidence in that case.
+
+## 2026-09-08 — Publication boundaries need durable identity before the first ledger commit
+
+A preflight and postflight can detect an unsafe publication while still leaving
+a separately committed exposure window. Install the DDL boundary before command
+ledger migrations. Table-name predicates also fail after rename; key the
+exclusion registry by relation OID and keep a durable privacy comment for
+legacy preflight detection. The signing fixture proves the rename test turns red
+when the guard is weakened back to mutable names.
+
+## 2026-09-08 — Structured HTTP errors can still have uncertain commit outcomes
+
+A network exception is not the only lost-response path. HTTP 408 and 5xx can be
+returned by an upstream after the clinical transaction commits. Gate and
+evidence hooks retain the owning command ID for explicit lookup on those
+statuses, while definitive refusal, conflict, success and lookup clear it. The
+focused negative control turns both hook tests red when this classification is
+disabled.
+
+## 2026-09-08 — Explicit publications and schema publications are separate boundaries
+
+An OID registry checked through `pg_publication_rel` still permits a protected
+relation to enter a schema publication through `pg_publication_namespace`.
+Compare each registered relation's current namespace with schema publications,
+and reject both moving a ledger into a published schema and publishing the
+schema that contains a moved ledger. The focused database negative control
+failed when this membership check was disabled and restored the migration hash.
+
+## 2026-09-08 — Row triggers do not protect against TRUNCATE
+
+PostgreSQL row triggers for `INSERT`, `UPDATE`, and `DELETE` do not fire for
+`TRUNCATE`. Clinical tables that bind approved or signed evidence need explicit
+`BEFORE TRUNCATE FOR EACH STATEMENT` guards. Removing migration 0606 made the
+real signing lifecycle fail because approved QA rows were removed; restoration
+returned the migration runner to its exact hash.
+
+## 2026-09-08 — An uncertain command ID must retain the mutation slot
+
+Displaying `lastCommandId` is insufficient if the internal command owner is
+cleared. A second mutation can overwrite the only correlation needed to resolve
+the first command. Keep the pending owner in an `uncertain` state until matching
+lookup succeeds. Clearing that owner made both focused 503-then-second-mutation
+tests fail before exact restoration.
+
+
+## 2026-09-08 — End-of-DDL checks can still admit write skew
+
+Two DDL transactions can each validate a catalog snapshot that predates the other. A publication event trigger that checks only at command end does not serialize publication creation with protected table creation or schema movement. Acquire a shared/exclusive advisory lock at DDL-command start and force a waiting loser to retry from a fresh transaction snapshot.
+
+## 2026-09-08 — Component lifetime cannot own lost-response reconciliation
+
+Hook-local refs disappear on unmount. An unresolved clinical command therefore needs process-scoped ownership keyed by verified identity, practice and resource scope. This covers navigation and remount within one renderer process; reload and process restart still require a durable command ID outside the in-memory registry.
+
+## 2026-09-08 — Policy denial and policy dependency failure are different results
+
+A missing or denied target may use the hidden 403 response. A repository or native-authentication outage means the policy decision could not be computed and must remain an availability failure. Converting that failure to denial hides an operational outage and defeats reconciliation behavior for uncertain server outcomes.
+
+
+## 2026-09-08 — A guard for approved rows does not cover draft-to-approved races
+
+A `BEFORE TRUNCATE` trigger that checks only approved or signed letters can pass while an approval is uncommitted. If approval waits without revalidation, it can commit after the cited rows disappear. Approval must take a relation lock that conflicts with truncation and must revalidate the protected set after acquiring it. RA-03 applies this rule to both QA rows and claim mappings.
+
+## 2026-09-08 — Format dirty companion files by the minimum span
+
+Running standalone `rustfmt` on a whole dirty companion file can reformat
+unrelated in-progress work even when the semantic change is narrow. Review the
+diff immediately and restore formatting-only churn before recording evidence;
+prefer a minimum-span edit and the repository's own format check.
+## 2026-09-08 — Historical database claims need executable receipts
+
+The handoff said seven practice-derivation tests passed, but the repository held
+the migration and prose only; it held no rerunnable fixture. RA04 added a
+disposable fresh/upgrade runner and found that a synthetically inserted MRI
+document must satisfy the existing typed JSON schema before the derivation
+trigger can be tested. A failed insert at a different guard is not evidence for
+tenant derivation. The final fixture supplies valid synthetic document data,
+uses a non-owner NOBYPASSRLS login and cleans both databases and the login.
+
+## 2026-09-08 — Rerunnable fixtures need caller-selected evidence paths
+
+A verification fixture with a task-specific output path silently rewrites old
+evidence when a later acceptance task reruns it. `test-replica-grant.py` now
+accepts `--output`; every later run must name its own task receipt. The default
+remains the task-4 path for compatibility, so an evidence-producing rerun must
+not omit the option.
+
+## 2026-09-08 — Cargo substring filters can collide as lifecycle suites grow
+
+`cargo test gate_transaction_lifecycle` originally selected one ignored test.
+After signing and reassessment added tests with the same suffix, it selected
+three database lifecycles and ran them against one gate-only fixture. Database
+fixture runners must use the module-qualified test name with `--exact`; a test
+count greater than one is a fixture-selection failure, not broader coverage.

@@ -1,0 +1,38 @@
+{
+  "result": "Passed",
+  "verification_tier": 1,
+  "failure_injected": "Published-schema membership check for registered relation OIDs was disabled",
+  "command": "python3 scripts/test-signing-transaction.py --install-mode fresh --output /tmp/ra03-schema-red-fixture.json",
+  "expected_exit": "nonzero at local_ledger_cannot_move_into_published_schema",
+  "observed_exit": 1,
+  "failed_checks": {
+    "local_ledger_cannot_move_into_published_schema": {
+      "result": "Failed",
+      "return_code": 0,
+      "remained_in_aso": false
+    }
+  },
+  "cleanup": {
+    "disposable_database_deleted": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "aso_session_reader": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    },
+    "aso_gate_executor": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    },
+    "aso_gate_owner": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    }
+  },
+  "source_sha256_before": "ad67e6acada48afbe114d3a410e9fe16cab3ec4396002fc1ed9cf6817686914b",
+  "source_sha256_after_restore": "ad67e6acada48afbe114d3a410e9fe16cab3ec4396002fc1ed9cf6817686914b"
+}

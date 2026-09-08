@@ -1,0 +1,30 @@
+   Compiling frf-identity-ory v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-identity-ory)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.66s
+     Running unittests src/lib.rs (/Users/gqadonis/.cargo/build-cache/25/5c2ebd31dad868/debug/deps/frf_identity_ory-5c48f8dcfcc71282)
+
+running 3 tests
+test claims::tests::non_replica_tokens_keep_legacy_optional_token_ids ... ok
+test claims::tests::malformed_token_and_origin_ids_are_not_invented ... ok
+test claims::tests::replica_claims_require_exact_scope_revision_and_session_linkage ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/verifier.rs (/Users/gqadonis/.cargo/build-cache/25/5c2ebd31dad868/debug/deps/verifier-472c4b749768e548)
+
+running 7 tests
+test verify_rejects_token_with_wrong_issuer ... ok
+test verify_expired_jwt_returns_error ... ok
+test verify_valid_jwt_returns_claims ... ok
+test verify_rejects_token_with_missing_issuer_when_issuer_required ... ok
+test verify_bad_audience_returns_error ... ok
+test verify_accepts_token_with_matching_issuer ... ok
+test verify_unknown_kid_refreshes_jwks_and_retries ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+   Doc-tests frf_identity_ory
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

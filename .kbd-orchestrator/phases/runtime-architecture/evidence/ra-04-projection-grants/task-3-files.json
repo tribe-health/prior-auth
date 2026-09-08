@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "files": [
+    {
+      "repository": "prior-auth",
+      "path": "crates/aso-host/src/session.rs",
+      "sha256": "bbd28f8125b02b3b86f4db23403995528db9c8dd7adbf40314928537593d6b03"
+    },
+    {
+      "repository": "prior-auth",
+      "path": "crates/aso-host/src/projection.rs",
+      "sha256": "1b75fa885e420bb3c7c58113c273a2df87d9ade0bdfe9c8044560daf9cb04296"
+    },
+    {
+      "repository": "prior-auth",
+      "path": "crates/aso-server-axum/src/session.rs",
+      "sha256": "a00e33ec6d8699d982e44ea6cbd6f26976e707be62a9602db4e8b597023ffbfa"
+    },
+    {
+      "repository": "prior-auth",
+      "path": "crates/aso-server-axum/src/routes/gate/tests.rs",
+      "sha256": "f825197fe1c0340029b1d2f4d14bb51fee118c183fa11ca83b559c09e30bbbda"
+    },
+    {
+      "repository": "prior-auth",
+      "path": "crates/aso-server-axum/src/routes/evidence/tests.rs",
+      "sha256": "64c3e3e25fbced81ef55dc4f0771a34cf464e4e9628cd45ee3b7c6a8be4a0710"
+    },
+    {
+      "repository": "prior-auth",
+      "path": "crates/aso-server-axum/src/routes/letters/tests.rs",
+      "sha256": "161a7041ad838b2454abf9f4c8f87956e5c4b7509b0ea8114525d10945728d13"
+    },
+    {
+      "repository": "prior-auth",
+      "path": "desktop/src-tauri/src/lib.rs",
+      "sha256": "02185090bfd79ebe6099c0e09da3a16dd9832d152c4d407bef214e1df7400bc6"
+    },
+    {
+      "repository": "flint-gate",
+      "path": "crates/flint-gate-core/src/auth/jwt_mint.rs",
+      "sha256": "5e3f0a400bae90e7574824300ce61abc8c5f4d34591b44d1f860c4b2e5a537af"
+    },
+    {
+      "repository": "flint-gate",
+      "path": "crates/flint-gate-core/src/config/types.rs",
+      "sha256": "2e7ea16a00fc65f7aa088d73165cad98c5625a628a475307cd663e3f6c9dc40e"
+    },
+    {
+      "repository": "flint-gate",
+      "path": "crates/flint-gate-core/src/config/lookup.rs",
+      "sha256": "3b212397a0e1ee5b050960692917a34af9fc2d5d9cefccb03cf201fc317c2d15"
+    },
+    {
+      "repository": "flint-gate",
+      "path": "crates/flint-gate-core/src/middleware/aso_clinical_authorize.rs",
+      "sha256": "8b0b4e75dfcfde84d9f4628f8b8a91999592fc14c947651d888f974a2589ce4d"
+    },
+    {
+      "repository": "flint-gate",
+      "path": "crates/flint-gate-core/src/middleware/aso_replica_grant.rs",
+      "sha256": "708bff642f8976ce5fcefafa133163b1fdcb30cb160c4d28862faeb28ec8f2ac"
+    },
+    {
+      "repository": "flint-gate",
+      "path": "crates/flint-gate-core/src/middleware/mod.rs",
+      "sha256": "1e1b5a1dc6105e0175c30e80b5feb3de9021d181706388ae5a00c3f291af8376"
+    },
+    {
+      "repository": "flint-gate",
+      "path": "crates/flint-gate-core/src/middleware/pipeline.rs",
+      "sha256": "095408c0b3dd5f147d707f4878ac44d00f8fc104fd6de367beefe9adc3dd73d5"
+    },
+    {
+      "repository": "flint-realtime-fabric",
+      "path": "crates/frf-ports/src/identity.rs",
+      "sha256": "2dd1d4b8ebf9257af092d68a574c0e0ddd3f53ed2b17e7b367cbbbb83a6328b7"
+    },
+    {
+      "repository": "flint-realtime-fabric",
+      "path": "crates/frf-identity-ory/src/claims.rs",
+      "sha256": "9d16fc0e6df6a7662edc9f33a79f22e99515788ca2d095c7f7791372c50c0df0"
+    },
+    {
+      "repository": "flint-realtime-fabric",
+      "path": "crates/frf-identity-ory/src/verifier.rs",
+      "sha256": "735a74c78929257170d7d1b6571e106bdff4633f51873469a61440dcedde3018"
+    },
+    {
+      "repository": "flint-realtime-fabric",
+      "path": "crates/frf-identity-ory/tests/verifier.rs",
+      "sha256": "ce9e46e0c9319f23faf24df54e30ce9f24db02e299499333c3060dbdc34985c1"
+    },
+    {
+      "repository": "flint-realtime-fabric",
+      "path": "crates/frf-gateway/src/routes/shape.rs",
+      "sha256": "442309138e9c04577b851974b68f30b2748a34511099a7e8ea5261ec3c0f8373"
+    },
+    {
+      "repository": "flint-realtime-fabric",
+      "path": "crates/frf-app/tests/authz_usecase.rs",
+      "sha256": "ad4afee137ecaecb96ec1b82ab476ae71a7e07854fa40dd7a87c7a1b49977892"
+    },
+    {
+      "repository": "flint-realtime-fabric",
+      "path": "crates/frf-app/tests/entity_usecase.rs",
+      "sha256": "4395c23e642ad7c2927468d0b43871eabac2ad7e01b7f5dca69a7a769bb4f0f9"
+    },
+    {
+      "repository": "flint-realtime-fabric",
+      "path": "crates/frf-app/tests/publish_usecase.rs",
+      "sha256": "99684b9d19b6154a6d255a6f4328e2c792d2e0dc05d0b160f9e67e180a54bbcc"
+    },
+    {
+      "repository": "flint-realtime-fabric",
+      "path": "crates/frf-app/tests/subscribe_pipeline.rs",
+      "sha256": "3561d4659291bc89013b8639ce86c546cefe54234a85244457a86ff1865b3144"
+    },
+    {
+      "repository": "flint-realtime-fabric",
+      "path": "crates/frf-gateway/tests/signal_mux.rs",
+      "sha256": "9cd383373c242fae357e2e1f98dfa1c810342e9f078dd0bc281f40a3b92d0280"
+    }
+  ]
+}

@@ -33,7 +33,7 @@ writes:  component → feature api → Axum → Postgres
 ```
 
 **Writes never travel the shape stream.** They go through the Axum API, because
-that is where clinical authority is checked — `AppServices::affirm_gate`,
+that is where clinical authority is checked — `AppServices::execute_gate_command`,
 `sign_letter`, and the capability seam ADR-002 describes. A write path that
 bypassed the API would bypass the second of ADR-002's three layers.
 

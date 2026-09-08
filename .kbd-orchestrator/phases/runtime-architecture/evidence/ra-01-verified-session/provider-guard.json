@@ -1,0 +1,17 @@
+{
+  "guard": "Kratos active session required",
+  "mutation": "Removed active-state refusal while retaining expiry check",
+  "command": "cargo +1.97.1 test -p aso-web-server session_provider_refuses_invalid_or_unavailable_authority",
+  "sabotage_exit": 101,
+  "observed": "running 1 test\ntest adapters::session::tests::session_provider_refuses_invalid_or_unavailable_authority ... FAILED\n\nfailures:\n\n---- adapters::session::tests::session_provider_refuses_invalid_or_unavailable_authority stdout ----\n\nthread 'adapters::session::tests::session_provider_refuses_invalid_or_unavailable_authority' (89374523) panicked at crates/aso-web-server/src/adapters/session.rs:299:13:\nassertion failed: matches!(result, Err(error) if error == expected)\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n\n\nfailures:\n    adapters::session::tests::session_provider_refuses_invalid_or_unavailable_authority\n\ntest result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.01s",
+  "source_restored": true,
+  "restored_sha256": "8cbfcab50522846c6141ad2d7074d53ae4a6a1dd0005bd2abcac2f9b239f59d1",
+  "restored_verification": {
+    "command": "cargo +1.97.1 check -p aso-web-server && cargo +1.97.1 clippy -p aso-web-server --no-deps && cargo +1.97.1 test -p aso-web-server adapters::session::tests",
+    "exit": 0,
+    "tests_passed": 3,
+    "tests_failed": 0,
+    "tests_ignored": 0,
+    "clippy_warnings": "Three preexisting default_constructed_unit_structs warnings in memory composition"
+  }
+}

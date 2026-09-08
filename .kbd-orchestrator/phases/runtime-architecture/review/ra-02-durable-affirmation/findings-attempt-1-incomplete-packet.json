@@ -1,0 +1,35 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.6-sol",
+  "isolation_mode": "harness-native",
+  "producer_model": "gpt-5",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "crates/aso-host/src/lib.rs",
+      "line": 13,
+      "claim": "The submitted diff declares the new affirmation, session, gate-adapter, and migration modules but contains none of their source or migration files, so the patch cannot establish a buildable durable-affirmation implementation.",
+      "evidence": "The standard packet omitted untracked files required by acceptance criterion 1.2.",
+      "resolution": "Packet defect: the corrected packet includes every untracked RA-02 inventory file."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "docker/flint-gate/config.yaml",
+      "line": 313,
+      "claim": "The gateway policy cannot ship from this change because the hook implementation was absent from the packet.",
+      "evidence": "The standard single-repository packet omitted the companion flint-gate diff.",
+      "resolution": "Packet defect: the corrected packet includes tracked and untracked companion flint-gate changes."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "web/src/features/surgeon-gate/hooks/use-surgeon-gate.ts",
+      "line": 53,
+      "claim": "The hook's second string argument silently changes meaning from actor ID to practice ID without a caller migration.",
+      "evidence": "The incomplete packet contained no untracked test caller hunk.",
+      "resolution": "The complete review retained this as a warning; iteration 2 replaced the positional value with a typed options object."
+    }
+  ],
+  "checked_classes": []
+}

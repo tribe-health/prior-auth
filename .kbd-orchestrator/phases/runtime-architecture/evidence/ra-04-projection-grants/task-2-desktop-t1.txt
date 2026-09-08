@@ -1,0 +1,10 @@
+   Compiling aso-host v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host)
+   Compiling aso-desktop v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/desktop/src-tauri)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.59s
+     Running unittests src/lib.rs (/Users/gqadonis/.cargo/build-cache/02/70d32e977a4fbf/debug/deps/aso_desktop_lib-ece85b4627b9832a)
+
+running 1 test
+test session_contract_tests::current_session_refuses_even_when_injected_port_can_return_authority ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.00s
+

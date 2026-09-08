@@ -1,0 +1,19 @@
+{
+  "stages": [
+    "Read canonical skill/controllers/schemas and concrete RA-01 evidence/source.",
+    "Resolve scoped filesystem state; define applicable constraints and source-evidence checklist.",
+    "Execute deterministic current hashes, receipt assertions, caller anchors and schema/file/state validation.",
+    "Persist report, decisions, state and actual validation stdout."
+  ],
+  "tool": "local python3 via trusted host; jsonschema already installed",
+  "state_updates": [
+    "constraints.json",
+    "artifact_manifest.json",
+    "refinement_log.md",
+    "decisions.md",
+    ".refiner/",
+    "dist/",
+    "validate.py"
+  ],
+  "template": "Scoped Markdown evidence report; no UI/HTML/PDF output requested."
+}

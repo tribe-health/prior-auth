@@ -1,0 +1,530 @@
+{
+  "result": "Passed",
+  "verification_tier": 1,
+  "install_mode": "upgrade",
+  "observed_at": "2026-09-06T23:07:24.996199+00:00",
+  "scope": "Mounted Gate clinical routes and independent gateway denial against an accepting sink",
+  "prerequisites": [
+    "Existing Docker Compose db service with schema extensions available",
+    "Configured PostgreSQL admin password from container environment",
+    "Pinned Rust toolchain and idle workspace Cargo build directory",
+    "No concurrent database fixtures; a local exclusive lock covers this runner"
+  ],
+  "commands": [
+    "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-gate-mounted.py --gate-binary <debug executable>"
+  ],
+  "environment_contract": {
+    "migration": [
+      "ASO_MIGRATION_DATABASE_URL"
+    ],
+    "application": [
+      "ASO_DATABASE_URL",
+      "ASO_GATE_DATABASE_URL",
+      "ASO_KRATOS_PUBLIC_URL",
+      "ASO_ALLOW_INSECURE_KRATOS",
+      "ASO_PORT"
+    ],
+    "gateway": [
+      "FLINT_GATE_CONFIG"
+    ],
+    "credentials": "Captured in memory and supplied through request headers, environment or SQL stdin only"
+  },
+  "checks": {
+    "gate_binary_executable": {
+      "result": "Passed"
+    },
+    "gate_and_application_source_files_present": {
+      "result": "Passed"
+    },
+    "four_real_kratos_identities_mapped_before_seed": {
+      "result": "Passed"
+    },
+    "postgres_port_discovery": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "configured_admin_password_available": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "populated_upgrade_fixture_created": {
+      "result": "Passed"
+    },
+    "legacy_stale_and_valid_summary_fixtures_created": {
+      "result": "Passed"
+    },
+    "mounted_fixture_migrated": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "runtime_login_is_restricted_reader_and_executor": {
+      "result": "Passed"
+    },
+    "application_ready": {
+      "result": "Passed",
+      "status": 401
+    },
+    "actual_upstream_gate_checked_in_routes_present": {
+      "result": "Passed"
+    },
+    "actual_upstream_gate_site_passthrough": {
+      "result": "Passed"
+    },
+    "actual_upstream_gate_aso-gate-read_policy_hook": {
+      "result": "Passed"
+    },
+    "actual_upstream_gate_aso-gate-affirm_policy_hook": {
+      "result": "Passed"
+    },
+    "actual_upstream_gate_aso-gate-remove_policy_hook": {
+      "result": "Passed"
+    },
+    "actual_upstream_gate_aso-gate-command_policy_hook": {
+      "result": "Passed"
+    },
+    "actual_upstream_gate_ready": {
+      "result": "Passed",
+      "status": 401
+    },
+    "mounted_read": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true
+    },
+    "mounted_snapshot_contract": {
+      "result": "Passed"
+    },
+    "mounted_affirm": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true
+    },
+    "mounted_command_contract": {
+      "result": "Passed"
+    },
+    "mounted_affirm_durable_sql": {
+      "result": "Passed"
+    },
+    "mounted_replay": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200
+    },
+    "mounted_browser_cookie_post_replay": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true
+    },
+    "mounted_lookup": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200
+    },
+    "mounted_replay_lookup_equal_original": {
+      "result": "Passed"
+    },
+    "mounted_conflicting_replay": {
+      "result": "Passed",
+      "status": 409,
+      "expected_status": 409,
+      "error_code": "command_conflict"
+    },
+    "mounted_actor_body_rejected": {
+      "result": "Passed",
+      "status": 400,
+      "expected_status": 400,
+      "error_code": "invalid_gate_request"
+    },
+    "mounted_admin_denied": {
+      "result": "Passed",
+      "status": 403,
+      "expected_status": 403,
+      "error_code": "clinical_authorization_denied"
+    },
+    "mounted_foreign_denied": {
+      "result": "Passed",
+      "status": 403,
+      "expected_status": 403,
+      "error_code": "clinical_authorization_denied"
+    },
+    "mounted_anonymous_denied": {
+      "result": "Passed",
+      "status": 401,
+      "expected_status": 401,
+      "error_code": "clinical_authorization_denied"
+    },
+    "direct_application_admin_denied": {
+      "result": "Passed",
+      "status": 403,
+      "expected_status": 403,
+      "no_store": true,
+      "error_code": "gate_denied"
+    },
+    "direct_application_foreign_denied": {
+      "result": "Passed",
+      "status": 403,
+      "expected_status": 403,
+      "no_store": true,
+      "error_code": "practice_denied"
+    },
+    "mounted_denials_create_no_commands": {
+      "result": "Passed"
+    },
+    "mounted_browser_cookie_json": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true
+    },
+    "mounted_browser_snapshot_matches": {
+      "result": "Passed"
+    },
+    "mounted_native_x_session_token": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200
+    },
+    "mounted_second_identity_cannot_lookup_first_receipt": {
+      "result": "Passed",
+      "status": 404,
+      "expected_status": 404,
+      "error_code": "gate_not_found"
+    },
+    "mounted_remove": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200
+    },
+    "mounted_remove_durable_sql": {
+      "result": "Passed"
+    },
+    "mounted_identity_revoked": {
+      "result": "Passed"
+    },
+    "mounted_revoked_credential_denied": {
+      "result": "Passed",
+      "status": 401,
+      "expected_status": 401,
+      "error_code": "clinical_authorization_denied"
+    },
+    "lost_response_client_received_no_headers": {
+      "result": "Passed"
+    },
+    "lost_response_gate_returned_committed_result": {
+      "result": "Passed"
+    },
+    "lost_response_one_affirmation_audit_and_command": {
+      "result": "Passed"
+    },
+    "lost_response_lookup": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200
+    },
+    "lost_response_lookup_recovers_original": {
+      "result": "Passed"
+    },
+    "lost_response_deliberate_retry_returns_original": {
+      "result": "Passed"
+    },
+    "lost_response_lookup_retry_have_no_second_effect": {
+      "result": "Passed"
+    },
+    "lost_response_conflict_affirm": {
+      "result": "Passed",
+      "status": 409,
+      "expected_status": 409,
+      "error_code": "command_conflict"
+    },
+    "lost_response_conflict_remove": {
+      "result": "Passed",
+      "status": 409,
+      "expected_status": 409,
+      "error_code": "command_conflict"
+    },
+    "lost_response_changed_case_conflicts": {
+      "result": "Passed"
+    },
+    "lost_response_all_payload_conflicts_have_no_effect": {
+      "result": "Passed"
+    },
+    "lost_response_later_removal": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200
+    },
+    "lost_response_historical_lookup": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200
+    },
+    "lost_response_current_read": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200
+    },
+    "lost_response_historical_receipt_does_not_replace_current_gate": {
+      "result": "Passed"
+    },
+    "accepting_sink_gate_checked_in_routes_present": {
+      "result": "Passed"
+    },
+    "accepting_sink_gate_site_passthrough": {
+      "result": "Passed"
+    },
+    "accepting_sink_gate_aso-gate-read_policy_hook": {
+      "result": "Passed"
+    },
+    "accepting_sink_gate_aso-gate-affirm_policy_hook": {
+      "result": "Passed"
+    },
+    "accepting_sink_gate_aso-gate-remove_policy_hook": {
+      "result": "Passed"
+    },
+    "accepting_sink_gate_aso-gate-command_policy_hook": {
+      "result": "Passed"
+    },
+    "accepting_sink_gate_ready": {
+      "result": "Passed",
+      "status": 401
+    },
+    "gateway_permit_forward_control": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200
+    },
+    "gateway_permit_forward_control_downstream_calls": {
+      "result": "Passed",
+      "downstream_calls": 1
+    },
+    "gateway_permit_forward_control_accepting_sink_control": {
+      "result": "Passed"
+    },
+    "gateway_admin_denied_independently": {
+      "result": "Passed",
+      "status": 403,
+      "expected_status": 403,
+      "error_code": "clinical_authorization_denied"
+    },
+    "gateway_admin_denied_independently_downstream_calls": {
+      "result": "Passed",
+      "downstream_calls": 0
+    },
+    "disabled_policy_control_gate_checked_in_routes_present": {
+      "result": "Passed"
+    },
+    "disabled_policy_control_gate_site_passthrough": {
+      "result": "Passed"
+    },
+    "disabled_policy_control_gate_aso-gate-read_policy_hook": {
+      "result": "Passed"
+    },
+    "disabled_policy_control_gate_aso-gate-affirm_policy_hook": {
+      "result": "Passed"
+    },
+    "disabled_policy_control_gate_aso-gate-remove_policy_hook": {
+      "result": "Passed"
+    },
+    "disabled_policy_control_gate_aso-gate-command_policy_hook": {
+      "result": "Passed"
+    },
+    "disabled_policy_control_gate_ready": {
+      "result": "Passed",
+      "status": 200
+    },
+    "gateway_disabled_hook_allows_admin_control": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200
+    },
+    "gateway_disabled_hook_admin_reaches_accepting_sink": {
+      "result": "Passed",
+      "downstream_calls": 1
+    },
+    "gateway_enabled_hook_still_denies_same_admin": {
+      "result": "Passed",
+      "status": 403,
+      "expected_status": 403,
+      "error_code": "clinical_authorization_denied"
+    },
+    "gateway_enabled_hook_still_denies_same_admin_downstream_calls": {
+      "result": "Passed",
+      "downstream_calls": 0
+    },
+    "gateway_foreign_denied_independently": {
+      "result": "Passed",
+      "status": 403,
+      "expected_status": 403,
+      "error_code": "clinical_authorization_denied"
+    },
+    "gateway_foreign_denied_independently_downstream_calls": {
+      "result": "Passed",
+      "downstream_calls": 0
+    },
+    "gateway_non_kratos_agent_denied": {
+      "result": "Passed",
+      "status": 401,
+      "expected_status": 401,
+      "error_code": "clinical_authorization_denied"
+    },
+    "gateway_non_kratos_agent_denied_downstream_calls": {
+      "result": "Passed",
+      "downstream_calls": 0
+    },
+    "gateway_missing_credential_denied": {
+      "result": "Passed",
+      "status": 401,
+      "expected_status": 401,
+      "error_code": "clinical_authorization_denied"
+    },
+    "gateway_missing_credential_denied_downstream_calls": {
+      "result": "Passed",
+      "downstream_calls": 0
+    },
+    "gateway_mixed_credential_denied": {
+      "result": "Passed",
+      "status": 401,
+      "expected_status": 401,
+      "error_code": "clinical_authorization_denied"
+    },
+    "gateway_mixed_credential_denied_downstream_calls": {
+      "result": "Passed",
+      "downstream_calls": 0
+    },
+    "gateway_fresh_capability_removal_denied": {
+      "result": "Passed",
+      "status": 403,
+      "expected_status": 403,
+      "error_code": "clinical_authorization_denied"
+    },
+    "gateway_fresh_capability_removal_denied_downstream_calls": {
+      "result": "Passed",
+      "downstream_calls": 0
+    },
+    "gateway_capability_restoration_permit": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200
+    },
+    "gateway_capability_restoration_permit_downstream_calls": {
+      "result": "Passed",
+      "downstream_calls": 1
+    },
+    "gateway_capability_restoration_permit_accepting_sink_control": {
+      "result": "Passed"
+    },
+    "gateway_policy_and_sink_do_not_write_clinical_commands": {
+      "result": "Passed"
+    },
+    "gateway_policy_unavailable_denied": {
+      "result": "Passed",
+      "status": 503,
+      "expected_status": 503,
+      "error_code": "clinical_authorization_unavailable"
+    },
+    "gateway_policy_unavailable_denied_downstream_calls": {
+      "result": "Passed",
+      "downstream_calls": 0
+    }
+  },
+  "processes": [
+    {
+      "label": "mounted_fixture_server_migration",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 0,
+      "actual_result_output": []
+    }
+  ],
+  "cleanup": {
+    "response_loss_proxy_stopped": {
+      "result": "Passed"
+    },
+    "disabled_policy_control_gate_process_and_log": {
+      "result": "Passed"
+    },
+    "accepting_sink_gate_process_and_log": {
+      "result": "Passed"
+    },
+    "actual_upstream_gate_process_and_log": {
+      "result": "Passed"
+    },
+    "application_process_and_log": {
+      "result": "Passed"
+    },
+    "recording_sink_stopped": {
+      "result": "Passed"
+    },
+    "A_synthetic_identity_and_sessions": {
+      "result": "Passed"
+    },
+    "B_synthetic_identity_and_sessions": {
+      "result": "Passed"
+    },
+    "admin_synthetic_identity_and_sessions": {
+      "result": "Passed"
+    },
+    "foreign_synthetic_identity_and_sessions": {
+      "result": "Passed"
+    },
+    "temporary_gate_config_0": {
+      "result": "Passed"
+    },
+    "temporary_gate_config_1": {
+      "result": "Passed"
+    },
+    "temporary_gate_config_2": {
+      "result": "Passed"
+    },
+    "disposable_database_deleted": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "disposable_login_deleted": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "aso_session_reader": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    },
+    "aso_gate_executor": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    },
+    "aso_gate_owner": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    }
+  },
+  "unverified": [
+    "Physical devices, browser UI and production deployment are outside this mounted HTTP fixture.",
+    "The agent negative control uses a non-Kratos credential, not a provisioned delegated agent identity.",
+    "Repeated same-name credential headers are not exercised by this HTTP client."
+  ],
+  "gate_binary_sha256": "03f85d0b2e7ab8f219ed3c2edb88825233d34d8b542abd0bcd6fea76161ce420",
+  "source_sha256": {
+    "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/docker/flint-gate/config.yaml": "5ee0e5433c0fdd3a23b9bda0ccd3e20ac1b91f43c70753c34b9051733da928d4",
+    "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-server-axum/src/routes/gate.rs": "eee7ffce1e2c96add0735de1a6a69b0bc78fb59fc43d0ae43bb37504f4c27006",
+    "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/scripts/test-gate-mounted.py": "0e777288e608fe7bae88ea2cf7ee42b62c68877f4bedf4891aea13aa3fb35ad1",
+    "/Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core/src/config/types.rs": "2eb57f1ad1760d01cae2a12c3c3cb96532f8e83395e111c08645cb8587b15966",
+    "/Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core/src/config/lookup.rs": "2551a0b643633fa1e548859e017aa04bcca1373a0fcbf89cc7a554fa777a6e5e",
+    "/Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core/src/middleware/mod.rs": "36514fcc60242cbe1d715ec54bb2deb6f7447950d7d017ebd4dc24a7fe858403",
+    "/Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core/src/middleware/pipeline.rs": "89b4b3d9aa6d1f91191869eff599fba5bbad99dfd0330eada8c8b512904fe76a",
+    "/Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core/src/middleware/aso_clinical_authorize.rs": "4049a7d4348d116972ac4c098c5607d305fe11bc249e43ea2b02c29c4d666000"
+  },
+  "completed_at": "2026-09-06T23:07:52.751496+00:00",
+  "check_count": 96
+}

@@ -1,0 +1,22 @@
+{
+  "mode": "diff",
+  "verdict": "PASS",
+  "judge_model": "gpt-5.6-sol",
+  "isolation_mode": "harness-native",
+  "producer_model": "gpt-6-astra",
+  "cross_model_check": "verified-distinct",
+  "findings": [],
+  "checked_classes": [
+    "Spec violations \u2014 the diff implements the mounted session path, sanitized response, fresh Kratos validation, Postgres-backed membership, explicit 401/403/503 semantics, inactive desktop wrapper, and pooled transaction scoping required by the acceptance criteria.",
+    "Correctness \u2014 credential-source rejection, expiry checks, practice selection, membership denial, transaction completion, provider response bounds, and authorization revision updates have explicit paths without an identified logic defect in the packet.",
+    "Regressions \u2014 clean-checkout composition remains available through UnavailableSessions, existing clinical adapters remain unchanged, and the desktop counterpart stays inactive as required.",
+    "Security \u2014 caller identity hints are unused, credentials do not serialize, provider redirects and response size are bounded, database reads use a checked non-owner/non-bypass role with transaction-local identity context, and responses disable caching.",
+    "Constraint breaches \u2014 the diff preserves shell neutrality, clinical-principal separation, three evidence states, generated theme outputs, and the no-query-cache rule; added Rust dependencies are exact pins.",
+    "Silent failure \u2014 partial runtime configuration fails startup, provider and database failures map to Unavailable, malformed or ambiguous credentials are rejected, and membership absence maps to PracticeDenied rather than a permissive fallback."
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

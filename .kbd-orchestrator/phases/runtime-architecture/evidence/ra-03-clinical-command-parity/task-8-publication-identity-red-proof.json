@@ -1,0 +1,38 @@
+{
+  "result": "Passed",
+  "verification_tier": 1,
+  "failure_injected": "Publication guard was weakened to mutable names and stopped checking ALTER TABLE renames",
+  "command": "python3 scripts/test-signing-transaction.py --install-mode fresh --output /tmp/ra03-publication-red-fixture.json",
+  "expected_exit": "nonzero at renamed_local_ledger_remains_excluded_by_relation_identity",
+  "observed_exit": 1,
+  "failed_checks": {
+    "renamed_local_ledger_remains_excluded_by_relation_identity": {
+      "result": "Failed",
+      "return_code": 0,
+      "renamed_ledger_excluded": false
+    }
+  },
+  "cleanup": {
+    "disposable_database_deleted": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "aso_session_reader": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    },
+    "aso_gate_executor": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    },
+    "aso_gate_owner": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    }
+  },
+  "source_sha256_before": "cd8b1092b8229e57b4c7010da588f8dfb2aaa6e06f583901ab4c1baeaa05eba9",
+  "source_sha256_after_restore": "cd8b1092b8229e57b4c7010da588f8dfb2aaa6e06f583901ab4c1baeaa05eba9"
+}

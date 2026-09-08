@@ -1,0 +1,36 @@
+{
+  "mode": "artifact",
+  "verdict": "PASS",
+  "judge_model": "k3",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "claim": "Multiple plan-driving claims cite exact file:line locations in companion and ASO sources that have no excerpt anywhere in the packet, and cited_paths marks every one of those paths MISSING, so the next stage would be planning on unverifiable assertions.",
+      "evidence": "A2 asserts \"Generic minting merges traits and additional claims (auth/jwt_mint.rs:223)\", \"Its JWT verifier checks signature/audience/expiry and an optionally configured issuer (crates/frf-identity-ory/src/verifier.rs:74)\", \"claims enhancement (middleware/pipeline.rs:319)\", and \"Agent streams instead subscribe to the tenant bus after initial verification (crates/frf-gateway/src/routes/agents.rs:45)\"; A3 asserts \"Its realtime manager flush instead performs separate mutations (adapters/realtime-manager.ts:127)\" and \"FRF's entity SDK translates fabric envelopes into graph events, also without materialization (sdks/entity-management/src/adapter.ts:19)\"; A4 cites \"graph-actions.ts:50\" and \"packages/entity-graph-react/src/graph-store.ts:64\"; A5 cites \"interaction-store.ts:62\", \"citation-chip.tsx:27\", and \"http-client.ts:29\". None of these appear in source_evidence, and cited_paths lists all of them as MISSING. The packet's own evidence_scope only vouches for claims with excerpts.",
+      "suggested_fix": "Attach a bounded source excerpt for each line-cited claim the plan will rely on (at minimum jwt_mint.rs, verifier.rs, realtime-manager.ts, graph-store.ts, interaction-store.ts, citation-chip.tsx, http-client.ts), or explicitly downgrade them to unverified-severity observations so planning does not treat them as confirmed seams."
+    },
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "claim": "Goal 7's gap analysis is incomplete: the goal-progress row reports PARTIAL citing only exact pins and three-state primitives, but two of the four invariants named in the goal \u2014 the single generated design-token source and the no-query-cache rule \u2014 receive no current-state assessment.",
+      "evidence": "Goal 7 requires preserving \"met/gap/void, independent Gate/AppServices/Postgres clinical authority, one generated design-token source, and no query cache.\" The GOAL PROGRESS table row 7 states only \"Exact pins and three-state primitives remain; integrated authority/state ownership fails.\" The pin comparison checked versions.toml and web/package.json for the two PEM packages only; no check is reported for a query-cache dependency in web/package.json, and no check confirms web/src/theme.css and mobile/lib/core/theme/tokens.dart are currently generated-only and unmodified. If a query-cache library or a hand-edited token file already exists, the plan stage would inherit an undetected invariant violation.",
+      "suggested_fix": "Extend the goal-7 evidence with a dependency scan of web/package.json (and pnpm-lock.yaml) for query-cache libraries and a read-only check that the two generated theme files match tokens.toml output, or state explicitly why current-state verification of those two invariants is out of scope for assessment."
+    },
+    {
+      "severity": "SUGGESTION",
+      "file": "assessment.md",
+      "claim": "The claim that database signing/authorization controls exist at schema.sql:1294 and that Forge provides authorization primitives at bootstrap.rs:60/211 is load-bearing for the A1 remediation direction but neither location is excerpted in the packet.",
+      "evidence": "A1 states \"Database signing controls exist in docs/design/schema/schema.sql:1294\" and \"Forge provides transactional context and authorization primitives (crates/fdb-gateway/src/bootstrap.rs:60, bootstrap.rs:211, crates/fdb-postgres/src/backend.rs:70)\"; only backend.rs:70 and schema.sql:1735-1770 have excerpts, and cited_paths marks bootstrap.rs and crates/fdb-gateway/src/bootstrap.rs MISSING. The packet excerpt of schema.sql covers RLS policies, not the line-1294 signing controls.",
+      "suggested_fix": "Include a short excerpt of schema.sql around line 1294 and fdb-gateway bootstrap.rs so the plan's order-1 work rests on verified controls rather than a cited-but-unshown design document."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

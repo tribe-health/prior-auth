@@ -1,0 +1,55 @@
+{
+  "result": "Failed",
+  "verification_tier": 1,
+  "observed_at": "2026-09-08T15:16:55.021550+00:00",
+  "scope": "Actual Gate binary with synthetic Kratos/ASO and an accepting downstream",
+  "command": "python3 scripts/test-replica-grant.py --gate-binary <debug executable> --output <receipt>",
+  "checks": {
+    "valid_grant_reaches_downstream": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "downstream_reached": true
+    },
+    "valid_grant_reaches_downstream_once": {
+      "result": "Passed"
+    },
+    "inbound_credential_is_replaced": {
+      "result": "Passed"
+    },
+    "mounted_token_has_exact_allowlist": {
+      "result": "Passed",
+      "claim_count": 12
+    },
+    "grant_callback_receives_only_raw_credential_authority": {
+      "result": "Passed"
+    },
+    "membership_denial_stops_before_downstream": {
+      "result": "Passed",
+      "status": 403,
+      "expected_status": 403,
+      "downstream_reached": false
+    },
+    "membership_denial_has_no_pass_through": {
+      "result": "Passed"
+    },
+    "membership_denial_response_is_private": {
+      "result": "Failed"
+    }
+  },
+  "cleanup": {
+    "gate_with_minter": "Passed",
+    "synthetic_http_endpoints": "Passed"
+  },
+  "unverified": [
+    "RA05 owns the deployed Gate to FRF to Electric facade and continuation protocol.",
+    "This fixture validates the mounted Gate boundary but does not claim a production network topology."
+  ],
+  "failure": "AssertionError:membership_denial_response_is_private",
+  "failure_stage": "mounted_gate_with_required_minter",
+  "observed_counts": {
+    "whoami": 1,
+    "grant": 2,
+    "downstream": 1
+  }
+}

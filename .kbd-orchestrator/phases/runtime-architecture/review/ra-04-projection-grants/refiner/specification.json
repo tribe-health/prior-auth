@@ -1,0 +1,15 @@
+{
+  "artifact_name": "ra-04-projection-grants",
+  "artifact_type": "content",
+  "content_type": "direct:content",
+  "clarified_intent": "Produce bounded completion evidence for RA04 projection grants after implementation and behavioral acceptance.",
+  "target_state": "A deterministic report that validates fixed projections, typed session-linked grants, fail-closed Gate and FRF boundaries, derived practice integrity and truthful caller composition.",
+  "requires_code_execution": true,
+  "unknowns": [
+    "The project Gate deployment config does not enable aso_replica_grant.",
+    "The FRF shape route is feature-gated and no live Electric exchange is certified by RA04.",
+    "The desktop wrapper has no active Tauri IPC registration.",
+    "The web shell retains a fail-closed placeholder until graph-backed navigation work."
+  ],
+  "scope": "RA04 completion evidence only; no RA05 live shape-facade delivery or later runtime work is claimed."
+}

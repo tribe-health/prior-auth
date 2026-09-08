@@ -1,0 +1,25 @@
+{
+  "artifact_type": "content",
+  "variants": [
+    {
+      "name": "RA-01 scope and limitations",
+      "file": "dist/report.md",
+      "format": "markdown"
+    },
+    {
+      "name": "Applicable constraint evidence",
+      "file": "dist/checklist.json",
+      "format": "json"
+    }
+  ],
+  "generated_at": "2026-09-06T20:24:14.677573+00:00",
+  "preview": {
+    "required": false,
+    "runs": []
+  },
+  "validation": {
+    "notes": [
+      "Read-only source review and deterministic evidence gate; no visual preview applies."
+    ]
+  }
+}

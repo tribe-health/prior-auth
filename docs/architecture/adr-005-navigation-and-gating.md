@@ -41,7 +41,7 @@ layers, none of which may assume another ran.
 If navigation gates on a boolean the client owns, the client has become a
 fourth layer that ADR-002 never authorised, and the weakest one: a flag can be
 flipped by a bug, a stale cache, or a devtools console. The gateway policy,
-`AppServices::affirm_gate`, and the Postgres trigger would still refuse the
+`AppServices::execute_gate_command`, and the Postgres trigger would still refuse the
 action — so the failure is not a security breach. It is worse in a different
 way: **a screen that lets a coordinator draft a letter the system will refuse to
 transmit**, discovered after the work is done.

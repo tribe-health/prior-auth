@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "path": "docker/flint-gate/config.yaml",
+      "sha256": "888a44a67379c1e9b3047aa13f3449b198131990df3dfc6437120d5cc79230d3"
+    },
+    {
+      "path": "scripts/test-session-gateway.py",
+      "sha256": "a7b1c0ffd020acf7632cb6d9cfe1eed901f307d5071d08fbce8b0596ba3129d5"
+    },
+    {
+      "path": "openspec/changes/ra-01-verified-session/design.md",
+      "sha256": "b311b96b7d2cdbdf65a48fab5cadf3f4af525e8249e3aa514ee5b3fbbe5cf79b"
+    }
+  ]
+}

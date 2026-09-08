@@ -1,0 +1,12 @@
+{
+  "result": "Passed",
+  "modes": {
+    "fresh": "Passed",
+    "upgrade": "Passed"
+  },
+  "cleanup": {
+    "synthetic_ra04_upgrade_a1d27d6c6cb6448d8d164d073d9b8b6f": "Passed",
+    "synthetic_ra04_fresh_a1d27d6c6cb6448d8d164d073d9b8b6f": "Passed",
+    "login": "Passed"
+  }
+}

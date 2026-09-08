@@ -24,6 +24,11 @@ export class ApiError extends Error {
   get isPreconditionUnmet() {
     return this.status === 409;
   }
+
+  /** The command may have committed before an upstream timeout or failure. */
+  get isCommitOutcomeUncertain() {
+    return this.status === 408 || this.status >= 500;
+  }
 }
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {

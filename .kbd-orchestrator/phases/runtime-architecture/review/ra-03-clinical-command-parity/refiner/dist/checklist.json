@@ -1,0 +1,68 @@
+{
+  "artifact": "ra-03-clinical-command-parity",
+  "result": "Passed",
+  "verification_tier": 1,
+  "constraints": [
+    {
+      "id": "verified-context",
+      "status": "satisfied",
+      "evidence": "Host signing 5/5 and reassessment 4/4; HTTP signing 5/5 and evidence 4/4."
+    },
+    {
+      "id": "independent-clinical-controls",
+      "status": "satisfied",
+      "evidence": "Task 5 and 7 receipts validate service/function/trigger refusal for forged, stale, administrator, agent and foreign-scope attempts; 13 Gate route tests distinguish denial from target-reader unavailability."
+    },
+    {
+      "id": "durable-reconciliation",
+      "status": "satisfied",
+      "evidence": "Current live receipts and 25/25 hook tests prove stored lookup/repeat without duplicate effect; a process-scoped identity/practice/case owner survives unmount/remount and blocks another mutation until reconciliation."
+    },
+    {
+      "id": "three-evidence-states",
+      "status": "satisfied",
+      "evidence": "Reassessment receipt records void-to-gap and void/gap/met transitions with one audit and receipt each."
+    },
+    {
+      "id": "no-pem-command-replay",
+      "status": "satisfied",
+      "evidence": "Task 8 PEM exclusion receipt contains eight passed production-call-path checks against the current sources, including the runtime registry boundary."
+    },
+    {
+      "id": "production-composition",
+      "status": "satisfied",
+      "evidence": "Mounted server composition uses PostgreSQL clinical adapters; two deployment tests passed; production memory clinical composition and the actorless evidence-count route are absent."
+    },
+    {
+      "id": "shell-parity-truth",
+      "status": "satisfied",
+      "evidence": "HTTP is mounted; reassessment and gate hooks lack reachable browser controls; desktop wrappers lack Tauri registration."
+    },
+    {
+      "id": "migration-compatibility",
+      "status": "satisfied",
+      "evidence": "Fresh signing 25/25 and upgrade signing 31/31 pass with 24 lifecycle markers; migrations 0607 and 0608 cover both publication/table-DDL, approval/QA-truncation, and approval/claim-truncation commit orders, including upgrades from applied 0600\u20130606."
+    },
+    {
+      "id": "bounded-verification",
+      "status": "satisfied",
+      "evidence": "T0/T1 only; broad phase, release, browser, Tauri and device claims remain unverified."
+    },
+    {
+      "id": "bundle-integrity",
+      "status": "satisfied",
+      "evidence": "Schemas, current hashes, exact dist coverage, receipts, state and caller anchors pass validate.py."
+    }
+  ],
+  "observed_nonblocking": [
+    "Oxlint exited zero with one warning in web/src/shared/sync/replica-rebuild.test.ts.",
+    "Cargo check and clippy exited zero without warnings for all four scoped crates under Rust 1.97.1.",
+    "An earlier accidental broad Vitest invocation exposed one unrelated timeout in graph-session-manager.test.ts; the correctly scoped RA-03 run passed 25/25."
+  ],
+  "unverified": [
+    "Production Gate image and deployment",
+    "Browser rendering and user-reachable signing/reassessment controls",
+    "Tauri IPC registration, native credentials, window behavior and physical devices",
+    "Command recovery after renderer reload or process restart; the runtime command registry is memory-only"
+  ]
+}

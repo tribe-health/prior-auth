@@ -1,0 +1,24 @@
+{
+  "files": [
+    {
+      "path": "crates/aso-web-server/src/adapters/session.rs",
+      "sha256": "7c2838b08b273ceef01f38df6bb310f385088fc17bee858b246f02895c5db510"
+    },
+    {
+      "path": "crates/aso-web-server/src/adapters/session/transaction_tests.rs",
+      "sha256": "0eed3cd8d501a64f2fe2b8d8cdd71a19a0da79d4df1b283a4ec6574a50b09309"
+    },
+    {
+      "path": "desktop/src-tauri/src/lib.rs",
+      "sha256": "790621cbaf115742a332a998b852c3f04f02f67557952c21a391b86ccfd693ec"
+    },
+    {
+      "path": "scripts/test-session-context.py",
+      "sha256": "ed49781cc088b6f4c2e6c9c61166727061f49f63e02796dbd0f92d2cd1c298d0"
+    },
+    {
+      "path": "openspec/changes/ra-01-verified-session/design.md",
+      "sha256": "20cf50db95e7de436c648ec0824c6af83873eb976bb07001307a71bd05de823e"
+    }
+  ]
+}

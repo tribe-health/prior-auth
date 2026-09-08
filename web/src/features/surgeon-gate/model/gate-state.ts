@@ -1,6 +1,5 @@
-// Mirrors aso_host::domain::GateState. The four kinds and the all-four rule
-// live in the Rust core; this type exists so the UI can render outstanding
-// affirmations without inventing a second definition of "affirmed".
+// Wire types mirror aso_host::affirmation; GateState adapts the committed
+// snapshot for the existing affirmation list.
 
 export const GATE_KINDS = ['policy', 'section', 'pathway', 'plan'] as const;
 export type GateAffirmationKind = (typeof GATE_KINDS)[number];
@@ -8,6 +7,30 @@ export type GateAffirmationKind = (typeof GATE_KINDS)[number];
 export interface GateState {
   affirmed: boolean;
   outstanding: GateAffirmationKind[];
+}
+
+export interface GateSnapshot {
+  caseId: string;
+  affirmed: GateAffirmationKind[];
+  gateAffirmedAt: string | null;
+  gateAffirmedBy: string | null;
+}
+
+export interface GateMutation {
+  commandId: string;
+  kind: GateAffirmationKind;
+}
+
+export interface GateCommandResult extends GateMutation {
+  caseId: string;
+  action: 'affirm' | 'remove';
+  gate: GateSnapshot;
+  committedAt: string;
+}
+
+export function gateStateFromSnapshot(snapshot: GateSnapshot): GateState {
+  const outstanding = GATE_KINDS.filter((kind) => !snapshot.affirmed.includes(kind));
+  return { affirmed: outstanding.length === 0, outstanding };
 }
 
 export const gateKindLabel: Record<GateAffirmationKind, string> = {

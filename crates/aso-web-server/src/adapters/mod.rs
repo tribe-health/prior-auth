@@ -1,3 +1,7 @@
-//! Outbound adapters. `memory` lets a clean checkout run and be tested without
-//! a database; a `postgres` module implementing the same ports lands beside it.
+//! Outbound adapters. Production routes use verified external authority;
+//! memory adapters exist only as focused test fixtures.
+pub mod gate;
+#[cfg(test)]
 pub mod memory;
+pub mod session;
+pub mod unavailable;

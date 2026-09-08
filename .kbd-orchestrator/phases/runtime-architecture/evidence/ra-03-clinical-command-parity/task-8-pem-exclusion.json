@@ -1,0 +1,71 @@
+{
+  "result": "Passed",
+  "scope": "Static production call-path proof that clinical signing, affirmation and reassessment commands do not enter PEM or shared sync replay",
+  "command": "python3 inline source-boundary check over production web TypeScript and Axum router composition",
+  "checks": {
+    "affirmation_hook_calls_feature_http_api": {
+      "result": "Passed"
+    },
+    "affirmation_hook_has_no_graph_or_sync_import": {
+      "result": "Passed"
+    },
+    "reassessment_write_calls_feature_http_api": {
+      "result": "Passed"
+    },
+    "clinical_commands_absent_from_shared_sync": {
+      "result": "Passed"
+    },
+    "no_web_signing_mutation_caller_exists": {
+      "result": "Passed"
+    },
+    "actorless_evidence_count_route_unmounted": {
+      "result": "Passed"
+    },
+    "uncertain_http_results_preserve_reconciliation_contract": {
+      "result": "Passed"
+    },
+    "runtime_command_registry_is_not_a_sync_or_pem_replay_queue": {
+      "result": "Passed"
+    }
+  },
+  "mechanism": {
+    "affirmation": "useSurgeonGate -> gateApi -> httpClient POST; process-scoped ownership is keyed by feature, verified identity, practice and case and survives hook remount until reconciliation.",
+    "signing": "No production web signing mutation caller exists; server and inactive desktop operations expose no PEM port.",
+    "reassessment": "useEvidenceTimeline reads PGlite but sends practice-scoped reassessment and lookup through timelineApi HTTP; its runtime owner stores correlation only and never writes the local database or graph.",
+    "shared_sync": "Production shared sync sources contain none of the signing, gate-mutation or reassessment command contracts/routes.",
+    "legacy_count": "The actorless evidence-count route remains source-visible but is absent from production router composition until verified-context conversion."
+  },
+  "source_sha256": [
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/features/surgeon-gate/hooks/use-surgeon-gate.ts",
+      "sha256": "7568f00752652f7c0ad3e7a8ec81adcd8bebe3b534f84b499bdbd94383c97bd0"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/features/surgeon-gate/api/gate-api.ts",
+      "sha256": "c7521c19bae355f71075030d1f5b724d9bdcb49e76e4f122eb49f41d7153d95b"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/features/evidence-timeline/hooks/use-evidence-timeline.ts",
+      "sha256": "c0e192a01b06f90415704c2f40f83f9efcdf72f38760fdbb41ea1c1226a8ea89"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/features/evidence-timeline/api/timeline-api.ts",
+      "sha256": "009458cc0afd4f489d5bae69f79f69ffb68ce7859d7b0c8f8a113da007d6da7f"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/shared/api/http-client.ts",
+      "sha256": "c987cd24e1c869b8d6af13e96119b875ac344a5ca326f0493d4f81af0719cb24"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-server-axum/src/lib.rs",
+      "sha256": "8f8857800d1dd3e5a821d1b7d8b53265c3db50fddb6d4c7321e7691eb46dbc6e"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/shared/runtime-command-registry.ts",
+      "sha256": "19198d08108273dd294ce9ec87db1bef06579a96bfc2ad0b8a41b2972c7cbf9c"
+    }
+  ],
+  "unverified": [
+    "A future source change could add a command caller; the final artifact validator rechecks the current inventory."
+  ]
+}

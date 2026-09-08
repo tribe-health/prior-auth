@@ -1,0 +1,39 @@
+{
+  "command": "prometheus kbd status --json",
+  "revision": 196,
+  "phase": {
+    "id": "runtime-architecture",
+    "status": "in_progress"
+  },
+  "dependency": {
+    "id": "ra-02-durable-affirmation",
+    "status": "complete",
+    "implementationStatus": "complete",
+    "task_count": 9,
+    "completed": 9
+  },
+  "current_change": {
+    "id": "ra-03-clinical-command-parity",
+    "status": "in_progress",
+    "implementationStatus": "in_progress",
+    "task_count": 8,
+    "in_progress": [
+      "1"
+    ],
+    "pending": [
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8"
+    ]
+  },
+  "apply_progress_before_completion": {
+    "command": "kbd-apply.sh progress ra-03-clinical-command-parity",
+    "total": 8,
+    "complete": 0,
+    "remaining": 8
+  }
+}

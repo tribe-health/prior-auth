@@ -1,0 +1,88 @@
+{
+  "task": "1.2",
+  "driver_ordinal": 2,
+  "scope": "Verified-context signing, revision/QA/source preconditions, and Gate/service/database refusal tests; replay and rollback remain later tasks",
+  "files": [
+    {
+      "path": "crates/aso-host/Cargo.toml",
+      "sha256": "803e198282fcfe9096f2a8b6319946b1907aff1043fd6f336ec4565980db31ee"
+    },
+    {
+      "path": "crates/aso-host/src/lib.rs",
+      "sha256": "4d5a6c6066e7f125c2910db9757cd9960e3a7ff5010232d70b1b8d44ce44e838"
+    },
+    {
+      "path": "crates/aso-host/src/ports/mod.rs",
+      "sha256": "117ea4d5162f0d3b22e6a52a92503e6786f169876ff507cfdad50b9a183deffd"
+    },
+    {
+      "path": "crates/aso-host/src/signing.rs",
+      "sha256": "907a80717f11aa9290ef47331c657118adacc04939faccc1ac55120eddecf9ff"
+    },
+    {
+      "path": "crates/aso-server-axum/src/session.rs",
+      "sha256": "8d02f4d5c4962f25c7d3a808c1f85b752b4896813e34009632471e9c8762b5d8"
+    },
+    {
+      "path": "crates/aso-server-axum/src/routes/gate.rs",
+      "sha256": "43fb9b1b0bea0dbb36f9164a1fe33dd2027cac9ba54304345f388a7d6b43e796"
+    },
+    {
+      "path": "crates/aso-server-axum/src/routes/letters.rs",
+      "sha256": "e67496c56f04413955ff3071f12dd2297dd0b654f35b45ad485becbf2bc26210"
+    },
+    {
+      "path": "crates/aso-server-axum/src/routes/letters/tests.rs",
+      "sha256": "e37961e19664178dd792279042b1399e27784e538472cd47b3ac7ec0a60f38e0"
+    },
+    {
+      "path": "crates/aso-web-server/src/adapters/gate.rs",
+      "sha256": "dcca789028bb57bfc172dc1881643512b3df7d89feab0e323cac2df5fb2aa5ff"
+    },
+    {
+      "path": "crates/aso-web-server/src/adapters/gate/signing_transaction_tests.rs",
+      "sha256": "e79ef237d493ffbb330ee1f4d8c3f281a2a8be09841cd21f663b183a99571f3d"
+    },
+    {
+      "path": "crates/aso-web-server/src/main.rs",
+      "sha256": "0abfede1ad27134d5fca8c9a92ce64bee06adb41324d4188f33447a34db4c8d0"
+    },
+    {
+      "path": "crates/aso-web-server/src/migrations.rs",
+      "sha256": "6b8643d8835a222808cba5a80c8d906e69f287021c1d117b8dfb50bbe8b5b45a"
+    },
+    {
+      "path": "migrations/server/2026090602_durable_signing.sql",
+      "sha256": "3eb225a6c7477cd5c015c1552b752b6ed0d2a1497d5646f7e9e8ceeba418ccba"
+    },
+    {
+      "path": "desktop/src-tauri/src/lib.rs",
+      "sha256": "de119e21f599e49e7666578503d427ea87f47feb54aa118bea8d72a4bdbf6b53"
+    },
+    {
+      "path": "docker/flint-gate/config.yaml",
+      "sha256": "49b8cc4f1e672b81b9bad2348c150bae99aee4d4670ddeac3d5e3e0f6194f3c5"
+    },
+    {
+      "path": "scripts/test-signing-transaction.py",
+      "sha256": "31077af039006ba0ae709962ab3aa504094d83e79d21f2eca80dbd54d190934c"
+    },
+    {
+      "path": "docs/architecture/adr-002-clinical-authority.md",
+      "sha256": "1d9e019ad9b5980bfbed8b9652cc152ae7c3844ee577ff5026fc583e7ce3d16a"
+    },
+    {
+      "path": "docs/architecture/adr-009-authorized-replicas-and-updates.md",
+      "sha256": "f2c67b668a9af5b86f26b106d44bbe1690d5063518882524343a06f6bc60e5f6"
+    },
+    {
+      "path": "docs/architecture/application-runtime-architecture.md",
+      "sha256": "677d28f11585a91720fe9f30197521b183c732023f42c131cdf5aa1f584f8f20"
+    }
+  ],
+  "dependency_versions_changed": false,
+  "final_receipts": [
+    "signing-transaction-fresh-final-2.json",
+    "signing-transaction-upgrade-final.json"
+  ]
+}

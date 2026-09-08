@@ -1,0 +1,117 @@
+{
+  "task": "1.1",
+  "driver_ordinal": 1,
+  "task_total": 8,
+  "result": "Passed",
+  "scope": "Eligibility only; no signing or reassessment implementation or live prerequisite certified",
+  "observed_at": "2026-09-07T00:08:42Z",
+  "canonical_revision": 196,
+  "dependency": {
+    "id": "ra-02-durable-affirmation",
+    "status": "complete",
+    "implementation_status": "complete",
+    "tasks_complete": 9,
+    "archive": "openspec/changes/archive/2026-09-06-ra-02-durable-affirmation",
+    "promoted_spec": "openspec/specs/ra-02-durable-affirmation/spec.md",
+    "qa": "Artifact refiner Passed; adversarial review PASS with zero critical findings and one retained transport warning"
+  },
+  "dependency_hash_verification": {
+    "result": "Passed",
+    "references_matched": 7,
+    "references_total": 7,
+    "archive_tasks": {
+      "path": "openspec/changes/archive/2026-09-06-ra-02-durable-affirmation/tasks.md",
+      "sha256": "aa7e4f48bd28de0481c0a036d678dfd0b04ab6abe460052b13f16925b1954d0b"
+    },
+    "acceptance_receipt": {
+      "path": ".kbd-orchestrator/phases/runtime-architecture/evidence/ra-02-durable-affirmation/task-9-acceptance.json",
+      "sha256": "eff7f07103674fb6bfa989598de7a9a27ebbfe29620e10682244452a84bbfb76"
+    },
+    "refiner_validation": {
+      "path": ".kbd-orchestrator/phases/runtime-architecture/review/ra-02-durable-affirmation/refiner/validation-output.json",
+      "sha256": "ffdde0191aec659043ea0d7598480b56bb4c696cfe243926e58903ac5f6c0d57"
+    },
+    "refiner_report": {
+      "path": ".kbd-orchestrator/phases/runtime-architecture/review/ra-02-durable-affirmation/refiner/dist/report.md",
+      "sha256": "9150f50a8a30503a4723800b43753d0b8c99bcc8ce9de83b520e5c5fd5787764"
+    },
+    "review_packet": {
+      "path": ".kbd-orchestrator/phases/runtime-architecture/review/ra-02-durable-affirmation/packet.json",
+      "sha256": "9153710a08a41c8a27ad840d590343fbf623771dc2d716b9401f78604a33f826"
+    },
+    "final_findings": {
+      "path": ".kbd-orchestrator/phases/runtime-architecture/review/ra-02-durable-affirmation/findings.json",
+      "sha256": "1e2c3a73283cf534e9a68ee3a0e54990119a220d0842ae590f1151917bec0ed7"
+    },
+    "historical_attempts": [
+      {
+        "path": ".kbd-orchestrator/phases/runtime-architecture/review/ra-02-durable-affirmation/findings-attempt-1-incomplete-packet.json",
+        "sha256": "2980b0a4407f6a1c78800e6c0610b550c458d532f5e77b3b592fd0882b116666"
+      },
+      {
+        "path": ".kbd-orchestrator/phases/runtime-architecture/review/ra-02-durable-affirmation/findings-attempt-2-pre-fix.json",
+        "sha256": "49e4ac603b773ea6ee9dd949e014f172efe7fb175e24d42755c3614290d50f64"
+      },
+      {
+        "path": ".kbd-orchestrator/phases/runtime-architecture/review/ra-02-durable-affirmation/findings-attempt-3-pre-fix.json",
+        "sha256": "a17582e356379c0f80e1d7ee7a5e9c5fe1eb450f87b2c84504a71315b9278122"
+      }
+    ]
+  },
+  "retained_dependency_warning": "The Gate authorization callback permits configured plaintext HTTP while forwarding session credentials; RA03 does not claim production transport safety or widen scope to repair that control.",
+  "ownership": {
+    "prior_auth": "Shared service/ports, HTTP routes, PostgreSQL adapter and migration, desktop parity wrapper, deployed Gate route policy, synthetic verification",
+    "flint_gate": "Generic route-policy hook support only if an observed limitation requires it; no ASO clinical rule ownership",
+    "flint_forge": "PostgreSQL substrate only; no RA03 write",
+    "flint_realtime_fabric": "No RA03 write or clinical command replay",
+    "prometheus_entity_management": "No RA03 write, clinical business state or pin change"
+  },
+  "observed_starting_gaps": [
+    "HTTP and desktop signing accept a caller-supplied actor",
+    "Signing lacks verified principal/practice, stable command result, expected revision and complete QA/source preconditions",
+    "The React reassessment client calls an HTTP route that is not mounted",
+    "Mounted evidence, criteria and letter operations still use memory repositories",
+    "Database signing controls do not yet prove the full RA03 identity, practice, revision and QA/source contract",
+    "Deployed Gate policy has no matching signing or reassessment routes"
+  ],
+  "decision_gates": {
+    "G-PIN": "No PEM adoption or pin change; preserve exact 4.0.0 pins",
+    "G-REV": "No bounded active-stream revocation claim; expected/current letter revision is an independent command precondition",
+    "G-DATA": "Synthetic server fixtures only; no real PHI, persistent client data or release approval inferred",
+    "G-SYNC": "No Electric or materializer adoption",
+    "G-NATIVE": "Typed desktop refusal/parity required; credential and IPC activation waits for RA17",
+    "G-MEASURE": "No browser, device or performance certification"
+  },
+  "registration": {
+    "canonical_total": 8,
+    "only_started_task": "1",
+    "remaining_tasks": "2 through 8 registered pending via typed CLI"
+  },
+  "dirty_repositories_preserved": [
+    "prior-auth",
+    "flint-gate",
+    "flint-forge",
+    "flint-realtime-fabric",
+    "prometheus-entity-management"
+  ],
+  "t0": {
+    "json_round_trip": "Passed",
+    "local_markdown_links": "Passed: 0 missing",
+    "whitespace": "Passed: git diff --check returned no output",
+    "openspec_strict": "Passed: 1 passed, 0 failed, 0 issues"
+  },
+  "independent_critic": {
+    "result": "Passed",
+    "final_verdict": "PASS",
+    "actionable_findings": 0
+  },
+  "completion": {
+    "task_completed_revision": 198,
+    "projection_restored_revision": 199,
+    "change_status": "in_progress",
+    "tasks_complete": 1,
+    "tasks_total": 8,
+    "tasks_remaining": 7
+  },
+  "no_application_changes": true
+}

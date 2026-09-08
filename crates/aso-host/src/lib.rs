@@ -10,8 +10,13 @@
 //! trigger, the type system mirrors it, so a violation is a compile error on
 //! the way to being a runtime refusal.
 
+pub mod affirmation;
 pub mod domain;
 pub mod ports;
+pub mod projection;
+pub mod reassessment;
+pub mod session;
+pub mod signing;
 
 use std::sync::Arc;
 
@@ -27,6 +32,7 @@ pub struct AppServices {
     pub letters: Arc<dyn ports::LetterRepository>,
     pub authority: Arc<dyn ports::AuthorityPort>,
     pub clock: Arc<dyn ports::Clock>,
+    pub sessions: Arc<dyn session::SessionPort>,
 }
 
 impl AppServices {
@@ -42,43 +48,18 @@ impl AppServices {
         case_id: domain::CaseId,
         kind: domain::GateAffirmationKind,
     ) -> Result<domain::GateState, domain::DomainError> {
-        if !self.authority.holds(actor, domain::Capability::AffirmGate).await? {
+        if !self
+            .authority
+            .holds(actor, domain::Capability::AffirmGate)
+            .await?
+        {
             return Err(domain::DomainError::CapabilityDenied {
                 capability: domain::Capability::AffirmGate,
                 actor,
             });
         }
-        self.cases.record_affirmation(case_id, kind, actor, self.clock.now()).await
-    }
-
-    /// Sign a letter. Refuses unless the gate is fully affirmed AND every
-    /// non-citable criterion retrieved into the draft has been resolved.
-    ///
-    /// Both conditions are also enforced by database triggers. A caller that
-    /// skips this method still cannot produce a signed letter.
-    pub async fn sign_letter(
-        &self,
-        actor: domain::ActorId,
-        letter_id: domain::LetterId,
-    ) -> Result<domain::Letter, domain::DomainError> {
-        if !self.authority.holds(actor, domain::Capability::SignLetter).await? {
-            return Err(domain::DomainError::CapabilityDenied {
-                capability: domain::Capability::SignLetter,
-                actor,
-            });
-        }
-
-        let letter = self.letters.get(letter_id).await?;
-        let gate = self.cases.gate_state(letter.case_id).await?;
-        if !gate.is_affirmed() {
-            return Err(domain::DomainError::GateNotAffirmed { case_id: letter.case_id });
-        }
-
-        let open = self.letters.unresolved_non_policy_retrievals(letter_id).await?;
-        if !open.is_empty() {
-            return Err(domain::DomainError::UnattributedCriteria { count: open.len() });
-        }
-
-        self.letters.sign(letter_id, actor, self.clock.now()).await
+        self.cases
+            .record_affirmation(case_id, kind, actor, self.clock.now())
+            .await
     }
 }

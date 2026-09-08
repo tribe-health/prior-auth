@@ -1,0 +1,11 @@
+{
+  "artifacts": [
+    {
+      "artifact_name": "ra-04-projection-grants",
+      "refinement_id": "545bd853-a6fe-4471-9c8b-e9e16bcc52f6",
+      "state_path": ".refiner/artifacts/ra-04-projection-grants/state.json",
+      "status": "finalized",
+      "updated_at": "2026-09-08T15:28:56Z"
+    }
+  ]
+}

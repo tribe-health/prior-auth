@@ -1,0 +1,17 @@
+Passed: scripts/test-gate-transaction.py parses
+Passed: scripts/test-replica-grant.py parses
+    Checking aso-host v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.51s
+    Checking aso-host v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.15s
+   Compiling aso-host v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.11s
+     Running unittests src/lib.rs (/Users/gqadonis/.cargo/build-cache/02/70d32e977a4fbf/debug/deps/aso_host-5d7dc30b50b7565c)
+
+running 3 tests
+test projection::tests::reactive_gate_summary_is_approved_without_actor_identity ... ok
+test projection::tests::five_table_registry_is_exact_and_practice_scoped ... ok
+test projection::tests::unapproved_metadata_and_deferred_criterion_labels_stay_protected ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 13 filtered out; finished in 0.00s
+

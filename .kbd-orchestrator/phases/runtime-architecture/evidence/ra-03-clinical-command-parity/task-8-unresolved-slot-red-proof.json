@@ -1,0 +1,28 @@
+{
+  "result": "Passed",
+  "verification_tier": 1,
+  "failure_injected": "Uncertain commands released their mutation slots before explicit reconciliation",
+  "command": "bunx vitest run <two hook test files> -t gateway failure leaves commit outcome uncertain",
+  "expected_exit": "nonzero in both 503-then-second-mutation cases",
+  "observed_exit": 1,
+  "source_sha256_before": {
+    "web/src/features/evidence-timeline/hooks/use-evidence-timeline.ts": "f27f884c0d15dfb4e9bfd88796e6f517dc0a6741ec31dc20850972c8e2a5a51a",
+    "web/src/features/surgeon-gate/hooks/use-surgeon-gate.ts": "86fd19a8c1292cc8780749825e8f33556aea5173d37d4f31690441ecfb302293"
+  },
+  "source_sha256_after_restore": {
+    "web/src/features/evidence-timeline/hooks/use-evidence-timeline.ts": "f27f884c0d15dfb4e9bfd88796e6f517dc0a6741ec31dc20850972c8e2a5a51a",
+    "web/src/features/surgeon-gate/hooks/use-surgeon-gate.ts": "86fd19a8c1292cc8780749825e8f33556aea5173d37d4f31690441ecfb302293"
+  },
+  "selected_output": [
+    "     \u2192 expected [Function] to throw error including 'The prior evidence reassessment outco\u2026' but got 'Gateway unavailable after command sub\u2026'",
+    "     \u2192 expected [Function] to throw error including 'The prior gate command outcome must b\u2026' but got 'Bad gateway after command submission'",
+    " FAIL  src/features/evidence-timeline/hooks/use-evidence-timeline.test.tsx > evidence reassessment command reconciliation > retains command correlation when a gateway failure leaves commit outcome uncertain",
+    "AssertionError: expected [Function] to throw error including 'The prior evidence reassessment outco\u2026' but got 'Gateway unavailable after command sub\u2026'",
+    "Expected: \"The prior evidence reassessment outcome must be reconciled.\"",
+    "    129|       'The prior evidence reassessment outcome must be reconciled.',",
+    " FAIL  src/features/surgeon-gate/hooks/use-surgeon-gate.test.tsx > the surgeon gate uses authenticated command DTOs > retains command correlation when a gateway failure leaves commit outcome uncertain",
+    "AssertionError: expected [Function] to throw error including 'The prior gate command outcome must b\u2026' but got 'Bad gateway after command submission'",
+    "Expected: \"The prior gate command outcome must be reconciled.\"",
+    "    151|       'The prior gate command outcome must be reconciled.',"
+  ]
+}

@@ -275,6 +275,13 @@ approval:
 # A site maps one or more domains to a default auth provider and upstream.
 
 sites:
+  # Session discovery owns fresh Kratos + ASO membership validation in the
+  # application. No Gate identity/cache result grants authority on this route.
+  - id: "aso-session"
+    domains: ["localhost:4456", "127.0.0.1:4456"]
+    default_auth: passthrough
+    default_upstream: "http://host.docker.internal:8787"
+
   - id: "my-app"
     domains:
       - "app.example.com"
@@ -293,6 +300,129 @@ sites:
 # then by path specificity (longer patterns first).
 
 routes:
+  # Fresh clinical policy is mandatory before forwarding. The callback resolves
+  # raw Kratos credentials and ASO case scope; cached Gate identity grants nothing.
+  # Requires the Gate build containing the aso_clinical_authorize hook.
+  - id: "aso-gate-read"
+    site: "aso-session"
+    match:
+      path: "/api/cases/*/gate"
+      methods: ["GET"]
+    auth: passthrough
+    priority: 100
+    hooks:
+      pre_request:
+        - type: aso_clinical_authorize
+          config:
+            url: "http://host.docker.internal:8787/internal/gate/authorize"
+
+  - id: "aso-gate-affirm"
+    site: "aso-session"
+    match:
+      path: "/api/cases/*/gate/affirm"
+      methods: ["POST"]
+    auth: passthrough
+    priority: 100
+    hooks:
+      pre_request:
+        - type: aso_clinical_authorize
+          config:
+            url: "http://host.docker.internal:8787/internal/gate/authorize"
+
+  - id: "aso-gate-remove"
+    site: "aso-session"
+    match:
+      path: "/api/cases/*/gate/remove"
+      methods: ["POST"]
+    auth: passthrough
+    priority: 100
+    hooks:
+      pre_request:
+        - type: aso_clinical_authorize
+          config:
+            url: "http://host.docker.internal:8787/internal/gate/authorize"
+
+  - id: "aso-gate-command"
+    site: "aso-session"
+    match:
+      path: "/api/cases/*/gate/commands/*"
+      methods: ["GET"]
+    auth: passthrough
+    priority: 100
+    hooks:
+      pre_request:
+        - type: aso_clinical_authorize
+          config:
+            url: "http://host.docker.internal:8787/internal/gate/authorize"
+
+  - id: "aso-letter-sign"
+    site: "aso-session"
+    match:
+      path: "/api/letters/*/sign"
+      methods: ["POST"]
+    auth: passthrough
+    priority: 100
+    hooks:
+      pre_request:
+        - type: aso_clinical_authorize
+          config:
+            url: "http://host.docker.internal:8787/internal/gate/authorize"
+
+  - id: "aso-letter-sign-command"
+    site: "aso-session"
+    match:
+      path: "/api/letters/*/sign/commands/*"
+      methods: ["GET"]
+    auth: passthrough
+    priority: 101
+    hooks:
+      pre_request:
+        - type: aso_clinical_authorize
+          config:
+            url: "http://host.docker.internal:8787/internal/gate/authorize"
+
+  - id: "aso-evidence-reassess"
+    site: "aso-session"
+    match:
+      path: "/api/cases/*/evidence/*/state"
+      methods: ["POST"]
+    auth: passthrough
+    priority: 101
+    hooks:
+      pre_request:
+        - type: aso_clinical_authorize
+          config:
+            url: "http://host.docker.internal:8787/internal/gate/authorize"
+
+  - id: "aso-evidence-reassessment-command"
+    site: "aso-session"
+    match:
+      path: "/api/cases/*/evidence/*/commands/*"
+      methods: ["GET"]
+    auth: passthrough
+    priority: 101
+    hooks:
+      pre_request:
+        - type: aso_clinical_authorize
+          config:
+            url: "http://host.docker.internal:8787/internal/gate/authorize"
+
+  # Keep upstream on the site: a route-level upstream replaces the query too.
+  # This exact GET route preserves practiceId and all supported credentials;
+  # the host returns no-store 200/401/403/503 after authoritative validation.
+  - id: "aso-session"
+    site: "aso-session"
+    match:
+      path: "/api/session"
+      methods: ["GET"]
+    auth: passthrough
+    priority: 100
+
+  # /api/session/replica-grant is deliberately absent from the client-facing
+  # route table. A configured claims_enhancement hook calls that ASO endpoint
+  # as an internal upstream callback; clients receive only the resulting
+  # authorized FRF facade response. RA05 owns that deployment composition.
+
   # ── LLM Chat (streaming) ──────────────────────────────────────────────────
   - id: "chat-stream"
     site: "my-app"

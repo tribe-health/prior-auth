@@ -1,0 +1,247 @@
+{
+  "result": "Passed",
+  "verification_tier": 1,
+  "observed_at": "2026-09-07T05:12:47.643605+00:00",
+  "scope": "Mounted aso-web-server /api/session with real Kratos and a disposable PostgreSQL database",
+  "commands": [
+    "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-session-boundary.py",
+    "docker compose exec -T db psql -U <configured admin> -X -A -t -q -v ON_ERROR_STOP=1 -d <disposable database> (SQL on stdin)",
+    "cargo run -p aso-web-server (configuration and disposable password supplied through environment)"
+  ],
+  "checks": {
+    "synthetic_native_and_browser_flows": {
+      "result": "Passed",
+      "identity_equal": true,
+      "distinct_sessions": true
+    },
+    "disposable_login_is_nonowner_nonbypass_reader_and_executor_member": {
+      "result": "Passed",
+      "psql_output": "t"
+    },
+    "actual_application_readiness": {
+      "result": "Passed",
+      "status": 401,
+      "no_store": true
+    },
+    "native_bearer": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_summary": true
+    },
+    "native_x_session_token": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_summary": true
+    },
+    "browser_cookie": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_summary": true
+    },
+    "transport_projection_matches_authoritative_whoami_and_database": {
+      "result": "Passed",
+      "identity_equal": true,
+      "capability_count": 4,
+      "native_expiry_matches_whoami": true,
+      "browser_expiry_matches_whoami": true,
+      "unchanged_authorization_revision_equal": true
+    },
+    "default_home_practice": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_summary": true
+    },
+    "anonymous": {
+      "result": "Passed",
+      "status": 401,
+      "expected_status": 401,
+      "no_store": true
+    },
+    "invalid_bearer": {
+      "result": "Passed",
+      "status": 401,
+      "expected_status": 401,
+      "no_store": true
+    },
+    "invalid_x_session_token": {
+      "result": "Passed",
+      "status": 401,
+      "expected_status": 401,
+      "no_store": true
+    },
+    "invalid_cookie": {
+      "result": "Passed",
+      "status": 401,
+      "expected_status": 401,
+      "no_store": true
+    },
+    "forged_headers_without_credential": {
+      "result": "Passed",
+      "status": 401,
+      "expected_status": 401,
+      "no_store": true
+    },
+    "valid_credential_ignores_forged_headers": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_summary": true
+    },
+    "foreign_practice": {
+      "result": "Passed",
+      "status": 403,
+      "expected_status": 403,
+      "no_store": true
+    },
+    "extra_query_rejected": {
+      "result": "Passed",
+      "status": 400,
+      "expected_status": 400,
+      "no_store": true
+    },
+    "mixed_native_credentials": {
+      "result": "Passed",
+      "status": 401,
+      "expected_status": 401,
+      "no_store": true
+    },
+    "mixed_cookie_and_bearer": {
+      "result": "Passed",
+      "status": 401,
+      "expected_status": 401,
+      "no_store": true
+    },
+    "capability_removal_visible_next_request": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_summary": true
+    },
+    "capability_restore_visible_next_request": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_summary": true
+    },
+    "authorization_revision_resists_aba": {
+      "result": "Passed",
+      "capabilities_restored": true,
+      "revision_not_reused": true
+    },
+    "membership_removal_visible_next_request": {
+      "result": "Passed",
+      "status": 403,
+      "expected_status": 403,
+      "no_store": true
+    },
+    "default_home_requires_membership": {
+      "result": "Passed",
+      "status": 403,
+      "expected_status": 403,
+      "no_store": true
+    },
+    "membership_restore_visible_next_request": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_summary": true
+    },
+    "suspended_user_refused": {
+      "result": "Passed",
+      "status": 403,
+      "expected_status": 403,
+      "no_store": true
+    },
+    "suspended_user_restored": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_summary": true
+    },
+    "deactivated_user_refused": {
+      "result": "Passed",
+      "status": 403,
+      "expected_status": 403,
+      "no_store": true
+    },
+    "deactivated_user_restored": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_summary": true
+    },
+    "runtime_login_column_write_grant_refused": {
+      "result": "Passed",
+      "status": 503,
+      "expected_status": 503,
+      "no_store": true
+    },
+    "runtime_login_column_write_revoked_read_restored": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_summary": true
+    },
+    "runtime_login_table_ownership_refused": {
+      "result": "Passed",
+      "status": 503,
+      "expected_status": 503,
+      "no_store": true
+    },
+    "runtime_login_table_ownership_restored_read_restored": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_summary": true
+    },
+    "revoked_native_session_refused": {
+      "result": "Passed",
+      "status": 401,
+      "expected_status": 401,
+      "no_store": true
+    },
+    "revoked_browser_session_refused": {
+      "result": "Passed",
+      "status": 401,
+      "expected_status": 401,
+      "no_store": true
+    }
+  },
+  "app_response_count": 30,
+  "no_store_response_count": 30,
+  "cleanup": {
+    "application_process_stopped": true,
+    "temporary_process_log_deleted": true,
+    "synthetic_identity_deleted": true,
+    "native_session_revoked": true,
+    "browser_session_revoked": true,
+    "disposable_database_deleted": true,
+    "disposable_login_deleted": true,
+    "probe_created_reader_deleted": true,
+    "probe_created_executor_deleted": true
+  },
+  "unverified": [
+    "Mounted gateway routing and physical native/browser UI are outside this direct HTTP probe.",
+    "Unavailable-provider behavior is covered separately by application tests."
+  ],
+  "kratos_version": "v26.2.0",
+  "postgres_published_port": 55432,
+  "check_count": 34,
+  "completed_at": "2026-09-07T05:12:56.349406+00:00"
+}

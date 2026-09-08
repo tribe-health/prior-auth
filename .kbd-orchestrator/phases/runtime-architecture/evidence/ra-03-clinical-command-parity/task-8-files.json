@@ -1,0 +1,208 @@
+{
+  "task": "3.1",
+  "driver_ordinal": 8,
+  "scope": "Current RA-03 implementation, policy, migration, caller, architecture and focused-test source inventory",
+  "files": [
+    {
+      "path": ".claude/rules/rust.md",
+      "sha256": "b6dc067c0d2e4241f09eb46ae5f920fffeee3342cb3a7fd6db372c6677575d1c"
+    },
+    {
+      "path": "crates/aso-host/Cargo.toml",
+      "sha256": "803e198282fcfe9096f2a8b6319946b1907aff1043fd6f336ec4565980db31ee"
+    },
+    {
+      "path": "crates/aso-host/src/lib.rs",
+      "sha256": "bc988055953f4c0c7f1ae924a7ae7a5405921c4d86e7991f321c8eac5285f817"
+    },
+    {
+      "path": "crates/aso-host/src/ports/mod.rs",
+      "sha256": "74c7081590548d6c159d561bb9ee20dbae01db38dd8a8d750dc9974c7fd43a7a"
+    },
+    {
+      "path": "crates/aso-host/src/reassessment.rs",
+      "sha256": "561d088d65559b894a65d1f63250550ce188b5201e564037ba35107841230d43"
+    },
+    {
+      "path": "crates/aso-host/src/signing.rs",
+      "sha256": "c2c608b621458c58db12a871e5ec88582e344ace1ebe2bfafb4b10e7cd59bf66"
+    },
+    {
+      "path": "crates/aso-server-axum/src/lib.rs",
+      "sha256": "8f8857800d1dd3e5a821d1b7d8b53265c3db50fddb6d4c7321e7691eb46dbc6e"
+    },
+    {
+      "path": "crates/aso-server-axum/src/routes/evidence.rs",
+      "sha256": "976785d671013f82a7c996f060f56cf8242bde648f84b4b11ff809669197412a"
+    },
+    {
+      "path": "crates/aso-server-axum/src/routes/evidence/tests.rs",
+      "sha256": "5345ceb3ff316ab3233be015d6fde4f8f207652a02f454fb5e2b6d854f630608"
+    },
+    {
+      "path": "crates/aso-server-axum/src/routes/gate.rs",
+      "sha256": "5f855239082391c5c3d1011befd4106af32d80ad3451c72bfdd634bfe17d7f51"
+    },
+    {
+      "path": "crates/aso-server-axum/src/routes/gate/tests.rs",
+      "sha256": "4e6db8e0527b61122dbac476910bd5578d9d11f23979380b836d303bda1b9584"
+    },
+    {
+      "path": "crates/aso-server-axum/src/routes/letters.rs",
+      "sha256": "38e7a634de1d75637523574ba2c5807cbb67480583af372acaacbfb0dc8cd9cb"
+    },
+    {
+      "path": "crates/aso-server-axum/src/routes/letters/tests.rs",
+      "sha256": "1e28eb45f1107e153bcfdd2a0a84cfb3b284104157596e77383f89829c8d967a"
+    },
+    {
+      "path": "crates/aso-server-axum/src/routes/mod.rs",
+      "sha256": "625ab50d083ad09decfde7c9a0b92b79467bdd0850b29980a5ccc3d3a7d4df60"
+    },
+    {
+      "path": "crates/aso-web-server/src/adapters/gate.rs",
+      "sha256": "acba2e30d2e2a5e8da8f19bc79561106cedba8b98bde564c9a0934098591d962"
+    },
+    {
+      "path": "crates/aso-web-server/src/adapters/gate/reassessment_transaction_tests.rs",
+      "sha256": "fa4256b602e4704c099a655bd1e9206173a139172d52b74f8dbb0daea85c5ac7"
+    },
+    {
+      "path": "crates/aso-web-server/src/adapters/gate/signing_transaction_tests.rs",
+      "sha256": "a8e7f03d3c3066e72b63966f4b851150839d2fdfaf1dbfe4a334d5bcd78dc29b"
+    },
+    {
+      "path": "crates/aso-web-server/src/adapters/memory.rs",
+      "sha256": "7e1b70a655ecafe6cd6d555807e1a715ce76625122a127f8932b0bfc3b22fafe"
+    },
+    {
+      "path": "crates/aso-web-server/src/adapters/mod.rs",
+      "sha256": "51983e58a169a8acc7b870fa2030848a28af18cee4e45164c295964edc4d021b"
+    },
+    {
+      "path": "crates/aso-web-server/src/adapters/unavailable.rs",
+      "sha256": "e382daf0940bb6b17a054183c7ddadbe330b1a0a19b5149bec8d25d7d5abf043"
+    },
+    {
+      "path": "crates/aso-web-server/src/main.rs",
+      "sha256": "0d5d17ed2257ce37f80538f0ff90e4aaf0826dc18907c9f8f54430611da2b64a"
+    },
+    {
+      "path": "crates/aso-web-server/src/migrations.rs",
+      "sha256": "5ed494372778d06b17507a7d9170b309eccd39dc2fa3b4a377cbc15b992cea18"
+    },
+    {
+      "path": "desktop/src-tauri/Cargo.toml",
+      "sha256": "da70caa43aeecb62eb04772f33826c7ada27be3101cf03d7229b018cfee9c08a"
+    },
+    {
+      "path": "desktop/src-tauri/src/lib.rs",
+      "sha256": "7e36082f60644ca1693a058a98f0019767a256225e815368b3daa95ee508f8e3"
+    },
+    {
+      "path": "docker/flint-gate/config.yaml",
+      "sha256": "b156f0047fb8d860d7b9acffe49c7b705e290a666d53746dc80cb7e6f09bf9f5"
+    },
+    {
+      "path": "docs/architecture/adr-002-clinical-authority.md",
+      "sha256": "cd593432f1692d3010d516739bf7e3bd7d9247a8952ef1ce8db3eb17b99ff95a"
+    },
+    {
+      "path": "docs/architecture/adr-009-authorized-replicas-and-updates.md",
+      "sha256": "e9075f9fd2f551d2137d4e25547d2541e2bc651357302dbb73bc28df4e7d2895"
+    },
+    {
+      "path": "docs/architecture/application-runtime-architecture.md",
+      "sha256": "e7afcafbe499921005c5fc6407b6adbb76e2a9978279d9b81ba336ab4cdd9e08"
+    },
+    {
+      "path": "docs/architecture/react-ui-component-architecture.md",
+      "sha256": "dbcef807ebf330a23ccd6ccacdc6671052f0960be73f88da508be190476ddac6"
+    },
+    {
+      "path": "migrations/server/2026090600_local_publication_boundary.sql",
+      "sha256": "ad67e6acada48afbe114d3a410e9fe16cab3ec4396002fc1ed9cf6817686914b"
+    },
+    {
+      "path": "migrations/server/2026090602_durable_signing.sql",
+      "sha256": "3eb225a6c7477cd5c015c1552b752b6ed0d2a1497d5646f7e9e8ceeba418ccba"
+    },
+    {
+      "path": "migrations/server/2026090603_durable_reassessment.sql",
+      "sha256": "cc51e8d22b71349ba044567f53ddc95d4c663c822009f9d24baf92ffe3320cd3"
+    },
+    {
+      "path": "migrations/server/2026090604_immutable_approved_sources.sql",
+      "sha256": "1f2fbf4694ac54894654a38a2c7ff6fb0756646365dd6ea513a9ab9eadaf79af"
+    },
+    {
+      "path": "migrations/server/2026090605_clinical_revision_guards.sql",
+      "sha256": "f89bf095be110260b342138d59629beab7eb9ea966a0bf5a6873a09ce04d48fc"
+    },
+    {
+      "path": "migrations/server/2026090606_clinical_truncate_guards.sql",
+      "sha256": "9dddd0c8b518daadf2c5062150e40d4674a9203001707bc7bbc3e7934274f9b6"
+    },
+    {
+      "path": "migrations/server/2026090607_publication_ddl_serialization.sql",
+      "sha256": "06da883ad3445492f2a25a0f1db00b0ef5eb2bc886bd32b4aa77c7e42584155c"
+    },
+    {
+      "path": "migrations/server/2026090608_approval_qa_serialization.sql",
+      "sha256": "d56180aaf6b2c57235fdd52b0356af5743b73d532a4442416985cef08fa65a6a"
+    },
+    {
+      "path": "scripts/test-reassessment-transaction.py",
+      "sha256": "fa3abe2c9baff69e4f3d81d29b83430769fffa3c362c3fe3c1e75d796f17c747"
+    },
+    {
+      "path": "scripts/test-session-boundary.py",
+      "sha256": "b2771a4062131a7557d204c726575ae50897366296938becd5f65fa8e1820cdf"
+    },
+    {
+      "path": "scripts/test-session-context.py",
+      "sha256": "ed49781cc088b6f4c2e6c9c61166727061f49f63e02796dbd0f92d2cd1c298d0"
+    },
+    {
+      "path": "scripts/test-session-gateway.py",
+      "sha256": "a7b1c0ffd020acf7632cb6d9cfe1eed901f307d5071d08fbce8b0596ba3129d5"
+    },
+    {
+      "path": "scripts/test-signing-transaction.py",
+      "sha256": "0b581986e8c0ab05a2ab1b47ba92e6a8b0246d3429b17ad16619b7bf991203bc"
+    },
+    {
+      "path": "web/src/features/evidence-timeline/api/timeline-api.ts",
+      "sha256": "009458cc0afd4f489d5bae69f79f69ffb68ce7859d7b0c8f8a113da007d6da7f"
+    },
+    {
+      "path": "web/src/features/evidence-timeline/hooks/use-evidence-timeline.test.tsx",
+      "sha256": "17e155dc14ffd71859d143cba66dd0e14bc23b16ab8a8fddac115c40fa6d3cbc"
+    },
+    {
+      "path": "web/src/features/evidence-timeline/hooks/use-evidence-timeline.ts",
+      "sha256": "c0e192a01b06f90415704c2f40f83f9efcdf72f38760fdbb41ea1c1226a8ea89"
+    },
+    {
+      "path": "web/src/features/surgeon-gate/api/gate-api.ts",
+      "sha256": "c7521c19bae355f71075030d1f5b724d9bdcb49e76e4f122eb49f41d7153d95b"
+    },
+    {
+      "path": "web/src/features/surgeon-gate/hooks/use-surgeon-gate.test.tsx",
+      "sha256": "bd32956755d7764e5b48e889d6912862feab802f8848b480b77d21c24b60bfd6"
+    },
+    {
+      "path": "web/src/features/surgeon-gate/hooks/use-surgeon-gate.ts",
+      "sha256": "7568f00752652f7c0ad3e7a8ec81adcd8bebe3b534f84b499bdbd94383c97bd0"
+    },
+    {
+      "path": "web/src/shared/api/http-client.ts",
+      "sha256": "c987cd24e1c869b8d6af13e96119b875ac344a5ca326f0493d4f81af0719cb24"
+    },
+    {
+      "path": "web/src/shared/runtime-command-registry.ts",
+      "sha256": "19198d08108273dd294ce9ec87db1bef06579a96bfc2ad0b8a41b2972c7cbf9c"
+    }
+  ],
+  "result": "Passed"
+}

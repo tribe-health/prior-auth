@@ -1,0 +1,30 @@
+{
+  "items": [
+    {
+      "id": "ra-08-committed-graph-projection",
+      "type": "change",
+      "valid": true,
+      "issues": [],
+      "durationMs": 12
+    }
+  ],
+  "summary": {
+    "totals": {
+      "items": 1,
+      "passed": 1,
+      "failed": 0
+    },
+    "byType": {
+      "change": {
+        "items": 1,
+        "passed": 1,
+        "failed": 0
+      }
+    }
+  },
+  "version": "1.0",
+  "root": {
+    "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth",
+    "source": "nearest"
+  }
+}

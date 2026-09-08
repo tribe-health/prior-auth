@@ -76,11 +76,50 @@ avoid dropping changes at the boundary.
 
 Clinical writes always pass the three independent authority layers in ADR-002.
 Local optimistic overlays can show pending intent but cannot invent a committed
-affirmation or signature. Use server-validated revision/idempotency/correlation
-contracts and do not automatically replay signing through a generic offline
-queue. These contracts are design requirements, not claims about current APIs.
+affirmation, signature or evidence state. Gate affirmation, signing and evidence
+reassessment use server-validated command IDs and identity/practice-scoped result
+lookup; changed payloads conflict before mutable target state is evaluated.
+Signing binds expected letter, QA and signature revisions, while database
+triggers and shared transaction locks make the approved claim set, QA rows and
+cited document versions immutable. Approval is terminal except for signing.
+Approval also locks the QA and claim relations against truncation and
+revalidates the complete required QA and cited-document sets before binding its
+revision.
+Reassessment binds the observed assessment timestamp and preserves `met`, `gap`
+and `void` as distinct values. Their authoritative transactions store immutable
+results and audit events. Do not automatically replay these operations through
+a generic offline queue or PEM action replay.
+
+The mounted ASO server refuses startup unless Kratos, the restricted session
+database login and the restricted clinical-command database login are all
+configured against the same database. One PostgreSQL adapter supplies case,
+evidence, letter and authority command ports; no production path substitutes
+process-local clinical state. The legacy actor-less evidence-count route is
+unmounted until it is converted to fresh verified context. It must not regain
+synthetic memory data as a compatibility fallback.
 
 ### Migration, update and recovery
+
+The server migration entry point rejects all-table, `aso` schema and explicit
+table publications containing a local command ledger before any separately
+committed migration runs, and repeats the check afterward. Migration
+`2026090600` and `2026090607` run in a pre-ledger pass. They install the OID
+registry, end validation, and a DDL-start advisory-lock protocol. Table creation
+and alteration take the shared lock; publication creation and alteration take
+the exclusive lock. A waiter aborts with SQLSTATE `40001` after the winner
+commits so its DDL can be retried with a fresh catalog snapshot. The relation
+identity remains protected across a rename or schema move. The guard compares
+registered relation namespaces with schema publications as well as inspecting
+explicit table membership. The preflight also recognizes the durable local
+privacy comment on an older renamed or moved ledger before the registry exists.
+After an unsafe publication is repaired and possible exposure is checked, the
+same checksummed migration set can be rerun. Fixtures prove first-install
+refusal leaves no server migration ledger or signing table, legacy explicit or
+schema exposure blocks upgrades, and direct, rename, schema-move and concurrent
+table/publication attempts are refused. Migration `2026090608` repairs existing
+deployments additively by serializing approval with QA and claim truncation,
+then rechecking required QA rows, document-backed claims, and cited document
+provenance.
 
 Version server schema, logical replica schema, storage-engine format, graph
 snapshot, shape projection and application/host compatibility independently.

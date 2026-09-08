@@ -1,0 +1,59 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.6-sol",
+  "isolation_mode": "harness-native",
+  "producer_model": "gpt-6-astra",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "crates/aso-web-server/src/migrations.rs",
+      "line": 60,
+      "claim": "The publication preflight permits an explicit-table publication that already contains a local clinical command ledger.",
+      "evidence": "The preflight checked all-table and schema publications but did not inspect pg_publication_rel.",
+      "suggested_fix": "Check explicit membership and install a structural DDL guard against later additions."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "migrations/server/2026090602_durable_signing.sql",
+      "line": 215,
+      "claim": "An approved letter can be demoted to draft and thereby escape claim and document immutability controls.",
+      "evidence": "The approval trigger protected selected fields but omitted the status transition itself.",
+      "suggested_fix": "Make approval terminal except for the approved-to-signed transition."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "migrations/server/2026090604_immutable_approved_sources.sql",
+      "line": 18,
+      "claim": "A source mutation can race letter approval and commit after approval without being rejected.",
+      "evidence": "The source trigger used an unlocked status query while approval changed the letter independently.",
+      "suggested_fix": "Serialize approval and source mutations through shared transaction locks."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "migrations/server/2026090602_durable_signing.sql",
+      "line": 193,
+      "claim": "Moving a QA result to another letter can remove QA evidence from an approved letter without checking the old letter.",
+      "evidence": "The UPDATE path selected only NEW.letter_id while DELETE selected OLD.letter_id.",
+      "suggested_fix": "Lock and validate both old and new letter IDs and update both revisions only when allowed."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "web/src/features/evidence-timeline/hooks/use-evidence-timeline.ts",
+      "line": 95,
+      "claim": "Overlapping reassessments can erase the command ID needed to reconcile a later response-loss outcome.",
+      "evidence": "Every request overwrote one shared correlation and any success cleared it without command ownership.",
+      "suggested_fix": "Allow one pending mutation per scope or track pending commands separately."
+    },
+    {
+      "severity": "WARNING",
+      "file": "web/src/features/surgeon-gate/hooks/use-surgeon-gate.ts",
+      "line": 94,
+      "claim": "Successful gate mutations and command lookups leave lastCommandId populated even though it represents uncertain outcomes only.",
+      "evidence": "The success paths updated gate state without clearing their matching correlation.",
+      "suggested_fix": "Clear only the matching correlation on definitive success and successful lookup."
+    }
+  ],
+  "checked_classes": []
+}

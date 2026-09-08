@@ -1,0 +1,19 @@
+   Compiling aso-host v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.13s
+     Running unittests src/lib.rs (/Users/gqadonis/.cargo/build-cache/02/70d32e977a4fbf/debug/deps/aso_host-5d7dc30b50b7565c)
+
+running 1 test
+
+thread 'projection::tests::unapproved_metadata_and_deferred_criterion_labels_stay_protected' (4671434) panicked at crates/aso-host/src/projection.rs:258:13:
+assertion failed: !grant.projection(projection).unwrap().permits_column(column)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test projection::tests::unapproved_metadata_and_deferred_criterion_labels_stay_protected ... FAILED
+
+failures:
+
+failures:
+    projection::tests::unapproved_metadata_and_deferred_criterion_labels_stay_protected
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 14 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p aso-host --lib`

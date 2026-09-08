@@ -1,0 +1,28 @@
+{
+  "reviewer": "independent artifact-critic /root/ra02_transaction_critic",
+  "generation_history_shared": false,
+  "method": "Read-only source and receipt inspection; root owns live execution",
+  "initial_findings": [
+    {
+      "priority": 1,
+      "finding": "Non-inherited owner membership could evade USAGE checks",
+      "resolution": "Validate MEMBER closure and reject roles with ownership, write grants or privileged flags",
+      "proof": "runtime_refuses_noninherited_owner_membership"
+    },
+    {
+      "priority": 2,
+      "finding": "Upgrade retained inconsistent derived summaries",
+      "resolution": "Recompute differing pairs before installing summary guard, preserve valid rows",
+      "proof": "upgrade_clears_stale_empty_gate_summary; upgrade_recomputes_stale_complete_gate_summary; upgrade_preserves_correct_complete_case_including_updated_at"
+    },
+    {
+      "priority": 2,
+      "finding": "Command-function refusals did not independently reach the authority trigger",
+      "resolution": "Direct owner-role INSERT/DELETE probes, authorized controls and rollback-only trigger sabotage",
+      "proof": "authority_trigger_independently_checks_insert_and_delete; authority_trigger_mutation_control_restored"
+    }
+  ],
+  "final_actionable_findings": 0,
+  "root_reconciliation": "All cited checks passed in final transaction.json; service capability mutation failed as intended then source restored byte-for-byte",
+  "scope_limit": "No Gateway/HTTP/desktop claim; full change refiner and adversarial completion gate remains task 3.1"
+}

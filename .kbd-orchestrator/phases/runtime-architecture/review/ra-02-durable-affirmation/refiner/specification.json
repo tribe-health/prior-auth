@@ -1,0 +1,12 @@
+{
+  "artifact_name": "ra-02-durable-affirmation",
+  "artifact_type": "content",
+  "content_type": "direct:content",
+  "clarified_intent": "Produce a bounded completion-evidence artifact for RA-02 after its implementation and behavioral acceptance work.",
+  "target_state": "Deterministic current-hash, recorded T1, caller-mount and architecture-boundary checks with explicit delivery limits.",
+  "requires_code_execution": true,
+  "unknowns": [
+    "Browser UI mounting, Tauri IPC registration, production deployment and physical-device behavior are outside RA-02."
+  ],
+  "scope": "Only this refiner directory is writable during refinement; application source is an input to validation."
+}

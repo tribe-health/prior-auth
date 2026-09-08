@@ -1,0 +1,12 @@
+{
+  "artifacts": {
+    "ra-03-clinical-command-parity": {
+      "refinement_id": "0f4d5758-05cb-4c05-b769-65797806937f",
+      "artifact_type": "content",
+      "content_type": "direct:content",
+      "state": ".refiner/artifacts/ra-03-clinical-command-parity/state.json",
+      "status": "finalized",
+      "updated_at": "2026-09-08T15:30:00Z"
+    }
+  }
+}

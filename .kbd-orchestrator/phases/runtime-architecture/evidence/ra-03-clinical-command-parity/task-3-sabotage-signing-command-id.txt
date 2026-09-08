@@ -1,0 +1,24 @@
+   Compiling aso-host v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.87s
+     Running unittests src/lib.rs (/Users/gqadonis/.cargo/build-cache/02/70d32e977a4fbf/debug/deps/aso_host-aaa007064ef1f05d)
+
+running 1 test
+test signing::tests::a_repository_receipt_for_another_command_is_refused ... FAILED
+
+failures:
+
+---- signing::tests::a_repository_receipt_for_another_command_is_refused stdout ----
+
+thread 'signing::tests::a_repository_receipt_for_another_command_is_refused' (93829125) panicked at crates/aso-host/src/signing.rs:596:9:
+assertion `left == right` failed
+  left: Ok(SignLetterResult { command_id: 00000000-0000-0000-0000-000000000063, letter_id: 00000000-0000-0000-0000-000000000005, case_id: 00000000-0000-0000-0000-000000000006, letter_version: 7, qa_revision: 11, signature_id: 00000000-0000-0000-0000-000000000007, signature_version: 3, signed_at: 2026-09-06T12:00:00Z })
+ right: Err(CommandConflict)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    signing::tests::a_repository_receipt_for_another_command_is_refused
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 12 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p aso-host --lib`

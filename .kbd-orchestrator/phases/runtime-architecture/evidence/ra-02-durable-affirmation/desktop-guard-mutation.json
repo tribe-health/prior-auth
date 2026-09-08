@@ -1,0 +1,39 @@
+{
+  "check": {
+    "command": [
+      "cargo",
+      "+1.97.1",
+      "check",
+      "-p",
+      "aso-desktop"
+    ],
+    "exit_code": 0,
+    "output": "    Checking aso-desktop v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/desktop/src-tauri)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.33s\n"
+  },
+  "clippy": {
+    "command": [
+      "cargo",
+      "+1.97.1",
+      "clippy",
+      "-p",
+      "aso-desktop",
+      "--no-deps"
+    ],
+    "exit_code": 0,
+    "output": "    Checking aso-desktop v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/desktop/src-tauri)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.74s\n"
+  },
+  "test": {
+    "command": [
+      "cargo",
+      "+1.97.1",
+      "test",
+      "-p",
+      "aso-desktop",
+      "gate_commands_refuse_even_when_injected_ports_accept"
+    ],
+    "exit_code": 101,
+    "output": "\nrunning 1 test\ntest session_contract_tests::gate_commands_refuse_even_when_injected_ports_accept ... FAILED\n\nfailures:\n\n---- session_contract_tests::gate_commands_refuse_even_when_injected_ports_accept stdout ----\n\nthread 'session_contract_tests::gate_commands_refuse_even_when_injected_ports_accept' (92018466) panicked at desktop/src-tauri/src/lib.rs:335:13:\nassertion `left == right` failed\n  left: Ok(GateSnapshot { case_id: 1c82289f-8bcf-4696-8cee-dd37d58a0d62, affirmed: [Policy], gate_affirmed_at: None, gate_affirmed_by: None })\n right: Err(NativeAuthenticationUnavailable)\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n\n\nfailures:\n    session_contract_tests::gate_commands_refuse_even_when_injected_ports_accept\n\ntest result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s\n\n   Compiling aso-desktop v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/desktop/src-tauri)\n    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.87s\n     Running unittests src/lib.rs (/Users/gqadonis/.cargo/build-cache/02/70d32e977a4fbf/debug/deps/aso_desktop_lib-6b15795ab592bccb)\nerror: test failed, to rerun pass `-p aso-desktop --lib`\n"
+  },
+  "restored": true,
+  "restored_sha256": "fdb457f2e43dad09b76ed99e32988b1291cefadfe01cba504cf6b8ca4e93da96"
+}

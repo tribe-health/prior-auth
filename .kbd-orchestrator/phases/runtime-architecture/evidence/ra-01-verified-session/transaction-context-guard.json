@@ -1,0 +1,145 @@
+{
+  "mutation": "Changed transaction-local identity GUC to session-persistent setting",
+  "command": "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-session-context.py",
+  "exit": 1,
+  "observed": {
+    "result": "Failed",
+    "verification_tier": 1,
+    "observed_at": "2026-09-06T16:27:19.408167+00:00",
+    "scope": "Task 1.3: real PostgreSQL transaction lifecycle and mounted session authority refusals",
+    "commands": [
+      "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-session-context.py",
+      "docker compose exec -T db psql -U <configured admin> -X -A -t -q -v ON_ERROR_STOP=1 -d <disposable database> (SQL on stdin)",
+      "cargo run -p aso-web-server (configuration and disposable password supplied through environment)",
+      "cargo test -p aso-web-server session_transaction_context_lifecycle -- --ignored --nocapture"
+    ],
+    "checks": {
+      "synthetic_native_and_browser_flows": {
+        "result": "Passed",
+        "identity_equal": true,
+        "distinct_sessions": true
+      },
+      "disposable_login_is_nonowner_nonbypass_reader_member": {
+        "result": "Passed",
+        "psql_output": "t"
+      }
+    },
+    "app_response_count": 0,
+    "no_store_response_count": 0,
+    "cleanup": {
+      "synthetic_identity_deleted": true,
+      "native_session_revoked": true,
+      "browser_session_revoked": true,
+      "disposable_database_deleted": true,
+      "disposable_login_deleted": true,
+      "probe_created_reader_deleted": true
+    },
+    "unverified": [
+      "Gate routing, two-identity assembled pool campaign and physical native UI remain later tasks.",
+      "Cancellation is proved on the production transaction owner with an active PostgreSQL query; HTTP disconnect propagation is not claimed."
+    ],
+    "attempt_history": [
+      {
+        "observed_at": "2026-09-06T16:24:09.478121+00:00",
+        "result": "Failed",
+        "failure": {
+          "stage": "real_transaction_lifecycle",
+          "type": "AssertionError"
+        },
+        "app_exit_code": null,
+        "cleanup": {
+          "synthetic_identity_deleted": true,
+          "native_session_revoked": true,
+          "browser_session_revoked": true,
+          "disposable_database_deleted": true,
+          "disposable_login_deleted": true,
+          "probe_created_reader_deleted": true
+        },
+        "diagnosis": "See recorded failure stage."
+      },
+      {
+        "observed_at": "2026-09-06T16:24:44.551123+00:00",
+        "result": "Failed",
+        "failure": {
+          "stage": "real_transaction_lifecycle",
+          "type": "AssertionError"
+        },
+        "app_exit_code": null,
+        "cleanup": {
+          "synthetic_identity_deleted": true,
+          "native_session_revoked": true,
+          "browser_session_revoked": true,
+          "disposable_database_deleted": true,
+          "disposable_login_deleted": true,
+          "probe_created_reader_deleted": true
+        },
+        "diagnosis": "Test required same backend PID after cancellation; SQLx 0.8.3 discards connection on release ping error. Both contexts were clean; test now verifies same-PID cleanup for normal exits, and cleanup plus old backend removal if cancellation replaces it."
+      },
+      {
+        "observed_at": "2026-09-06T16:25:23.793190+00:00",
+        "result": "Failed",
+        "failure": {
+          "stage": "mount_actual_application",
+          "type": "AssertionError"
+        },
+        "app_exit_code": null,
+        "cleanup": {
+          "application_process_stopped": true,
+          "temporary_process_log_deleted": true,
+          "synthetic_identity_deleted": true,
+          "native_session_revoked": true,
+          "browser_session_revoked": true,
+          "disposable_database_deleted": true,
+          "disposable_login_deleted": true,
+          "probe_created_reader_deleted": true
+        },
+        "diagnosis": "Reused fixture classified every 403 as practice_denied. Provider 403 correctly returns reauthentication_required. Added explicit mounted status/body/no-store assertion for that contract."
+      }
+    ],
+    "kratos_version": "v26.2.0",
+    "postgres_published_port": 55432,
+    "transaction_test": {
+      "exit": 101,
+      "output": [
+        "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.07s"
+      ],
+      "diagnostic": "\nrunning 1 test\ntest adapters::session::transaction_tests::session_transaction_context_lifecycle ... FAILED\n\nfailures:\n\nfailures:\n    adapters::session::transaction_tests::session_transaction_context_lifecycle\n\ntest result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.07s\n\n   Compiling aso-web-server v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server)\n    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.37s\n     Running unittests src/main.rs (/Users/gqadonis/.cargo/build-cache/02/70d32e977a4fbf/debug/deps/aso_web_server-b67069ade2a5d53e)\n\nthread 'adapters::session::transaction_tests::session_transaction_context_lifecycle' (89655894) panicked at crates/aso-web-server/src/adapters/session/transaction_tests.rs:19:5:\nassertion `left == right` failed: connection context leaked after explicit_commit\n  left: (44998, true, \"<redacted>\", \"\\\"$user\\\", public\", \"0\", \"off\", \"read committed\")\n right: (44998, true, \"\", \"\\\"$user\\\", public\", \"0\", \"off\", \"read committed\")\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\nerror: test failed, to rerun pass `-p aso-web-server --bin aso-web-server`\n"
+    },
+    "failure": {
+      "stage": "real_transaction_lifecycle",
+      "type": "AssertionError"
+    },
+    "check_count": 2,
+    "completed_at": "2026-09-06T16:27:26.980583+00:00"
+  },
+  "source_restored": true,
+  "restored_sha256": "7c2838b08b273ceef01f38df6bb310f385088fc17bee858b246f02895c5db510",
+  "restored_verification": {
+    "command": "cargo +1.97.1 check -p aso-web-server --tests && cargo +1.97.1 clippy -p aso-web-server --tests --no-deps && RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-session-context.py",
+    "exit": 0,
+    "checks": 41,
+    "no_store_responses": 37,
+    "transaction_test": {
+      "exit": 0,
+      "output": [
+        "context check passed: explicit_commit",
+        "context check passed: mounted_repository_success",
+        "context check passed: mounted_repository_denial",
+        "context check passed: sql_error_drop_rollback",
+        "context check passed: explicit_rollback",
+        "context check passed: in_flight_cancellation_clean_or_discarded (replaced=true)",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 5.14s"
+      ]
+    },
+    "cleanup": {
+      "application_process_stopped": true,
+      "temporary_process_log_deleted": true,
+      "synthetic_identity_deleted": true,
+      "native_session_revoked": true,
+      "browser_session_revoked": true,
+      "disposable_database_deleted": true,
+      "disposable_login_deleted": true,
+      "probe_created_reader_deleted": true
+    }
+  }
+}

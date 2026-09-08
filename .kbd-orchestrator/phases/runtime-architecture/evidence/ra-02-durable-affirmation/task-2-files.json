@@ -1,0 +1,56 @@
+{
+  "task": "1.2",
+  "driver_ordinal": 2,
+  "scope": "Backend implementation; mounted transport and change acceptance remain pending",
+  "files": [
+    {
+      "path": "Cargo.toml",
+      "sha256": "c497ea0223e088c096a5229977e38b6040068073f41b99b1725295b8338c6e26"
+    },
+    {
+      "path": "crates/aso-host/src/lib.rs",
+      "sha256": "dfa245a2ba58cca78c8814e29e61ba26f8ba2316f4405ab390c94a51e06f6ec9"
+    },
+    {
+      "path": "crates/aso-host/src/ports/mod.rs",
+      "sha256": "233b06c434aaf30abb3a43dfbab1e115f9a70ab853b4eaa70b333c8636e76608"
+    },
+    {
+      "path": "crates/aso-host/src/affirmation.rs",
+      "sha256": "57d27ba9b5a1f9b5641b729804300b3daa855bdc20e55bf12cb12cb7b4253f54"
+    },
+    {
+      "path": "crates/aso-web-server/src/main.rs",
+      "sha256": "e75778a4d55b25be4a906b4471a49784c37706d3d2bf756c98490f9b2c1c641d"
+    },
+    {
+      "path": "crates/aso-web-server/src/adapters/mod.rs",
+      "sha256": "c6e487b3a54ec96ba5a67b433edbb1265b60da91c18602ccdaa172000f0a6024"
+    },
+    {
+      "path": "crates/aso-web-server/src/adapters/gate.rs",
+      "sha256": "ad5ced9995d425e86f34f9dca7c37b5feeeaa2dae057459460672ec4a0a550a3"
+    },
+    {
+      "path": "crates/aso-web-server/src/adapters/gate/transaction_tests.rs",
+      "sha256": "fe05d3fbcd982e8f38334676a0d45bb171a4cd583c4506836185b40909dd1910"
+    },
+    {
+      "path": "crates/aso-web-server/src/migrations.rs",
+      "sha256": "7611397b2191dad024dceff3622e12231b6eef7b5e3c4dcaa165cce081143c7c"
+    },
+    {
+      "path": "migrations/server/2026090601_durable_gate.sql",
+      "sha256": "56ddfac493255e0ec5f4b9840af6004b120d6ff4359dec47569ee7b100d1007d"
+    },
+    {
+      "path": "scripts/test-gate-transaction.py",
+      "sha256": "29c71dc522aec11b79a65f5ecb57677980ceb267df5b404bd6884f384a1d847d"
+    },
+    {
+      "path": "openspec/changes/ra-02-durable-affirmation/design.md",
+      "sha256": "8229f8b87df9b335c4f3d95c85342c870609df4455feea426ce1373b043993ad"
+    }
+  ],
+  "cargo_lock_unchanged_from_ra01": true
+}

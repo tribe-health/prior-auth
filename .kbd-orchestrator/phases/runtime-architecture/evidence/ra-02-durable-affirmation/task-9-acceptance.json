@@ -1,0 +1,73 @@
+{
+  "result": "Passed",
+  "task": 9,
+  "verification_tier": 1,
+  "artifact_refiner": {
+    "result": "Passed",
+    "iterations": 3,
+    "checks": 190,
+    "issues": 0,
+    "validation_output": {
+      "path": ".kbd-orchestrator/phases/runtime-architecture/review/ra-02-durable-affirmation/refiner/validation-output.json",
+      "sha256": "ffdde0191aec659043ea0d7598480b56bb4c696cfe243926e58903ac5f6c0d57"
+    },
+    "report": {
+      "path": ".kbd-orchestrator/phases/runtime-architecture/review/ra-02-durable-affirmation/refiner/dist/report.md",
+      "sha256": "9150f50a8a30503a4723800b43753d0b8c99bcc8ce9de83b520e5c5fd5787764"
+    }
+  },
+  "adversarial_review": {
+    "result": "Passed",
+    "verdict": "PASS",
+    "critical": 0,
+    "warnings": 1,
+    "suggestions": 0,
+    "judge_model": "gpt-5.6-sol",
+    "isolation_mode": "harness-native",
+    "cross_model_check": "verified-distinct",
+    "packet": {
+      "path": ".kbd-orchestrator/phases/runtime-architecture/review/ra-02-durable-affirmation/packet.json",
+      "sha256": "9153710a08a41c8a27ad840d590343fbf623771dc2d716b9401f78604a33f826"
+    },
+    "findings": {
+      "path": ".kbd-orchestrator/phases/runtime-architecture/review/ra-02-durable-affirmation/findings.json",
+      "sha256": "1e2c3a73283cf534e9a68ee3a0e54990119a220d0842ae590f1151917bec0ed7"
+    },
+    "historical_attempts": [
+      {
+        "path": ".kbd-orchestrator/phases/runtime-architecture/review/ra-02-durable-affirmation/findings-attempt-1-incomplete-packet.json",
+        "sha256": "2980b0a4407f6a1c78800e6c0610b550c458d532f5e77b3b592fd0882b116666"
+      },
+      {
+        "path": ".kbd-orchestrator/phases/runtime-architecture/review/ra-02-durable-affirmation/findings-attempt-2-pre-fix.json",
+        "sha256": "49e4ac603b773ea6ee9dd949e014f172efe7fb175e24d42755c3614290d50f64"
+      },
+      {
+        "path": ".kbd-orchestrator/phases/runtime-architecture/review/ra-02-durable-affirmation/findings-attempt-3-pre-fix.json",
+        "sha256": "a17582e356379c0f80e1d7ee7a5e9c5fe1eb450f87b2c84504a71315b9278122"
+      }
+    ],
+    "anti_sycophancy": {
+      "result": "Passed",
+      "strictness": "strict",
+      "score": 0.0803571417927742
+    }
+  },
+  "callers": {
+    "mounted": [
+      "aso-web-server -> api_router -> gate routes -> AppServices -> PgGateRepository",
+      "flint-gate config -> middleware pipeline -> ASO authorization callback"
+    ],
+    "test_only": [
+      "React useSurgeonGate hook; current browser route is a placeholder",
+      "desktop typed wrappers; no Tauri command registration"
+    ]
+  },
+  "deferred": [
+    "Phase T2 and release T3",
+    "Browser surgeon-gate view",
+    "Tauri IPC and native credential ownership",
+    "Production deployment and physical devices",
+    "Production restriction or protection for plaintext Gate callback transport"
+  ]
+}

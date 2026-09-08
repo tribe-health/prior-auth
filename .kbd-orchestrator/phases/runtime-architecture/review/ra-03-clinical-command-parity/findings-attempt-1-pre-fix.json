@@ -1,0 +1,50 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.6-sol",
+  "isolation_mode": "harness-native",
+  "producer_model": "gpt-6-astra",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "crates/aso-web-server/src/migrations.rs",
+      "line": 1,
+      "claim": "A local signing ledger migration can commit before a later publication check, so an all-table or schema publication can expose local command state.",
+      "evidence": "The migration runner commits each checksummed version independently while the original publication guard was later than the signing ledger migration.",
+      "suggested_fix": "Reject unsafe publications before the first separately committed server migration and prove repair plus rerun."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "migrations/server/2026090602_durable_signing.sql",
+      "line": 1,
+      "claim": "An approved claim mapping is immutable, but its referenced document content can still change before signing.",
+      "evidence": "The approval trigger protects claim-to-document identifiers but the referenced documents row was mutable.",
+      "suggested_fix": "Freeze the referenced document version for approved or signed letters and require corrections to create a new document and letter revision."
+    },
+    {
+      "severity": "WARNING",
+      "file": "web/src/features/evidence-timeline/hooks/use-evidence-timeline.ts",
+      "line": 1,
+      "claim": "Evidence-hook refusal and command correlation are not request-generation scoped and can be written by a late A-to-B-to-A completion.",
+      "evidence": "The hook keyed requests only by the case identifier, allowing a stale completion to match after navigation returned to the same case.",
+      "suggested_fix": "Fence hook updates by case-scope object identity and clear prior-case state immediately."
+    },
+    {
+      "severity": "WARNING",
+      "file": "web/src/features/evidence-timeline/hooks/use-evidence-timeline.ts",
+      "line": 1,
+      "claim": "A successful reassessment leaves lastCommandId populated even though correlation should remain only for uncertain outcomes.",
+      "evidence": "The success path retained the generated command identifier after receiving a definitive server receipt.",
+      "suggested_fix": "Clear correlation on success, definitive refusal or conflict, and successful lookup."
+    }
+  ],
+  "checked_classes": [
+    "authorization",
+    "data-boundary",
+    "clinical-integrity",
+    "state-isolation",
+    "reconciliation",
+    "migration-safety"
+  ]
+}

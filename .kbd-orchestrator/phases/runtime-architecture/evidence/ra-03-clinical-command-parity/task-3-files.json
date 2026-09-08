@@ -1,0 +1,123 @@
+{
+  "task": "1.3",
+  "driver_ordinal": 3,
+  "scope": "Authoritative evidence reassessment plus HTTP/desktop operation parity, durable signing and reassessment reconciliation, and explicit exclusion from PEM replay",
+  "files": [
+    {
+      "path": "crates/aso-host/src/lib.rs",
+      "sha256": "bc988055953f4c0c7f1ae924a7ae7a5405921c4d86e7991f321c8eac5285f817"
+    },
+    {
+      "path": "crates/aso-host/src/ports/mod.rs",
+      "sha256": "74c7081590548d6c159d561bb9ee20dbae01db38dd8a8d750dc9974c7fd43a7a"
+    },
+    {
+      "path": "crates/aso-host/src/reassessment.rs",
+      "sha256": "561d088d65559b894a65d1f63250550ce188b5201e564037ba35107841230d43"
+    },
+    {
+      "path": "crates/aso-host/src/signing.rs",
+      "sha256": "c2c608b621458c58db12a871e5ec88582e344ace1ebe2bfafb4b10e7cd59bf66"
+    },
+    {
+      "path": "crates/aso-server-axum/src/lib.rs",
+      "sha256": "a0522aa5b65c9e5facef5ae3a953c1173da74a71630f8b704970b0031d120ba2"
+    },
+    {
+      "path": "crates/aso-server-axum/src/routes/mod.rs",
+      "sha256": "625ab50d083ad09decfde7c9a0b92b79467bdd0850b29980a5ccc3d3a7d4df60"
+    },
+    {
+      "path": "crates/aso-server-axum/src/routes/gate.rs",
+      "sha256": "a03f8e72d17156dcd54359064b4fc6f323ee234700fc7b120526b2165978373d"
+    },
+    {
+      "path": "crates/aso-server-axum/src/routes/evidence.rs",
+      "sha256": "976785d671013f82a7c996f060f56cf8242bde648f84b4b11ff809669197412a"
+    },
+    {
+      "path": "crates/aso-server-axum/src/routes/evidence/tests.rs",
+      "sha256": "fe028d613f43a6c5357ab2dcd452e41be5236252cf0a0a50ef04dd1c9d7040e2"
+    },
+    {
+      "path": "crates/aso-server-axum/src/routes/letters.rs",
+      "sha256": "38e7a634de1d75637523574ba2c5807cbb67480583af372acaacbfb0dc8cd9cb"
+    },
+    {
+      "path": "crates/aso-server-axum/src/routes/letters/tests.rs",
+      "sha256": "5cae3f81eef71c20e94198e60d4d30b595dad0a60338bd06e93c10c3b691fb76"
+    },
+    {
+      "path": "crates/aso-web-server/src/adapters/gate.rs",
+      "sha256": "acba2e30d2e2a5e8da8f19bc79561106cedba8b98bde564c9a0934098591d962"
+    },
+    {
+      "path": "crates/aso-web-server/src/adapters/gate/reassessment_transaction_tests.rs",
+      "sha256": "69c17f8d656c947b2830eec7ec3f44c0743ff1492168519e9e2ed96a01b627fc"
+    },
+    {
+      "path": "crates/aso-web-server/src/adapters/gate/signing_transaction_tests.rs",
+      "sha256": "b0cc4acb7daf0dae6906e4db5e42018b80f8138e0d27e57fd79d050c72e24949"
+    },
+    {
+      "path": "crates/aso-web-server/src/main.rs",
+      "sha256": "30d5b04c85106a45ba0531c8990bb77726ce4f96c824d95409bfbafe8fe5f033"
+    },
+    {
+      "path": "crates/aso-web-server/src/migrations.rs",
+      "sha256": "6e261cb7697a90b827cc9ebbcb37d096d87ec2e6e42db4a732c34bba84377f9c"
+    },
+    {
+      "path": "migrations/server/2026090603_durable_reassessment.sql",
+      "sha256": "cc51e8d22b71349ba044567f53ddc95d4c663c822009f9d24baf92ffe3320cd3"
+    },
+    {
+      "path": "desktop/src-tauri/src/lib.rs",
+      "sha256": "7e36082f60644ca1693a058a98f0019767a256225e815368b3daa95ee508f8e3"
+    },
+    {
+      "path": "docker/flint-gate/config.yaml",
+      "sha256": "b156f0047fb8d860d7b9acffe49c7b705e290a666d53746dc80cb7e6f09bf9f5"
+    },
+    {
+      "path": "web/src/features/evidence-timeline/model/timeline-entry.ts",
+      "sha256": "c6d3a9be59d8a147c65f28711e45f19053274d959898aab66aac308608e96fd5"
+    },
+    {
+      "path": "web/src/features/evidence-timeline/api/timeline-api.ts",
+      "sha256": "c8be5ae76b5145218fa431f0f5091945434fb34f6f82f97d37de61487c5cdaab"
+    },
+    {
+      "path": "web/src/features/evidence-timeline/hooks/use-evidence-timeline.ts",
+      "sha256": "9da623970de081edd16c18a6a1ac4412186fe393857bda6737460dd3a33d396a"
+    },
+    {
+      "path": "web/src/features/evidence-timeline/hooks/use-evidence-timeline.test.tsx",
+      "sha256": "39b013dcb30c3aa9788c935beeee8fba218d27f375052066db00b04d2b83ceaf"
+    },
+    {
+      "path": "docs/architecture/adr-002-clinical-authority.md",
+      "sha256": "5f8d03dc7ad1c4fb0de2b1dc26f5443d9525b84bf5951c82f0e6b22d5634ba6b"
+    },
+    {
+      "path": "docs/architecture/adr-009-authorized-replicas-and-updates.md",
+      "sha256": "c4e26909dc14c53004f2c316a8a0e0ce36e8b67d455806d8d46bf83e3c02fc17"
+    },
+    {
+      "path": "docs/architecture/application-runtime-architecture.md",
+      "sha256": "db6a1f505f46cba340f58144e44c32c020627c38f2d0a87e4022899adbb11014"
+    },
+    {
+      "path": "docs/architecture/react-ui-component-architecture.md",
+      "sha256": "e17b429cfb3b0519644c311327cecb2a149a8a211cb4bbcfc3ce67a02ed4304e"
+    },
+    {
+      "path": "scripts/test-reassessment-transaction.py",
+      "sha256": "c297cafdd69716a08631dca958a03caa1b854a92cb56d6ad88580d59e7b3aca9"
+    },
+    {
+      "path": "scripts/test-signing-transaction.py",
+      "sha256": "31077af039006ba0ae709962ab3aa504094d83e79d21f2eca80dbd54d190934c"
+    }
+  ]
+}

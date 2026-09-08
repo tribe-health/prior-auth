@@ -1,0 +1,67 @@
+{
+  "task": "1.4",
+  "driver_ordinal": 4,
+  "scope": "Fail-closed production clinical composition plus independent signing and reassessment refusal, rollback, reconciliation and three-state audit proof",
+  "files": [
+    {
+      "path": ".claude/rules/rust.md",
+      "sha256": "b6dc067c0d2e4241f09eb46ae5f920fffeee3342cb3a7fd6db372c6677575d1c"
+    },
+    {
+      "path": "crates/aso-web-server/src/main.rs",
+      "sha256": "0d5d17ed2257ce37f80538f0ff90e4aaf0826dc18907c9f8f54430611da2b64a"
+    },
+    {
+      "path": "crates/aso-web-server/src/adapters/mod.rs",
+      "sha256": "51983e58a169a8acc7b870fa2030848a28af18cee4e45164c295964edc4d021b"
+    },
+    {
+      "path": "crates/aso-web-server/src/adapters/memory.rs",
+      "sha256": "7e1b70a655ecafe6cd6d555807e1a715ce76625122a127f8932b0bfc3b22fafe"
+    },
+    {
+      "path": "crates/aso-web-server/src/adapters/unavailable.rs",
+      "sha256": "e382daf0940bb6b17a054183c7ddadbe330b1a0a19b5149bec8d25d7d5abf043"
+    },
+    {
+      "path": "crates/aso-web-server/src/adapters/gate/signing_transaction_tests.rs",
+      "sha256": "3f29caabdd117a44a0bd2fac5597b7734bcecd57aa1eaa6b8b629e271fac82fc"
+    },
+    {
+      "path": "crates/aso-web-server/src/adapters/gate/reassessment_transaction_tests.rs",
+      "sha256": "fa4256b602e4704c099a655bd1e9206173a139172d52b74f8dbb0daea85c5ac7"
+    },
+    {
+      "path": "scripts/test-session-boundary.py",
+      "sha256": "b2771a4062131a7557d204c726575ae50897366296938becd5f65fa8e1820cdf"
+    },
+    {
+      "path": "scripts/test-session-context.py",
+      "sha256": "ed49781cc088b6f4c2e6c9c61166727061f49f63e02796dbd0f92d2cd1c298d0"
+    },
+    {
+      "path": "scripts/test-session-gateway.py",
+      "sha256": "a7b1c0ffd020acf7632cb6d9cfe1eed901f307d5071d08fbce8b0596ba3129d5"
+    },
+    {
+      "path": "scripts/test-signing-transaction.py",
+      "sha256": "31077af039006ba0ae709962ab3aa504094d83e79d21f2eca80dbd54d190934c"
+    },
+    {
+      "path": "scripts/test-reassessment-transaction.py",
+      "sha256": "c297cafdd69716a08631dca958a03caa1b854a92cb56d6ad88580d59e7b3aca9"
+    },
+    {
+      "path": "docs/architecture/adr-002-clinical-authority.md",
+      "sha256": "10a1d2359251fac16c2df5099601789133a3ec8a891b63b1326e6a4931d4a837"
+    },
+    {
+      "path": "docs/architecture/adr-009-authorized-replicas-and-updates.md",
+      "sha256": "0f89d32a9d53c280060ab5c5ec1a9e9d0adf23c840a61f11d1748e50a61d37ec"
+    },
+    {
+      "path": "docs/architecture/application-runtime-architecture.md",
+      "sha256": "dc6b388f52fd9df95d58efc7866f201da78f1c7e891ad9069f46fcba728958b8"
+    }
+  ]
+}

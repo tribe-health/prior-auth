@@ -1,0 +1,130 @@
+{
+  "result": "Passed",
+  "verification_tier": 1,
+  "observed_at": "2026-09-08T12:48:47.433073+00:00",
+  "scope": "Seven practice-derivation cases on fresh and upgraded schema through a non-owner NOBYPASSRLS login",
+  "command": "python3 scripts/test-practice-derivation.py",
+  "modes": {
+    "fresh": {
+      "result": "Passed",
+      "install": "schema then derivation migration",
+      "restricted_login": "non-owner NOSUPERUSER NOBYPASSRLS",
+      "checks": {
+        "migration_or_fresh_seed_has_derived_baseline": {
+          "result": "Passed",
+          "observed": "1"
+        },
+        "T1_insert_without_practice_is_derived": {
+          "result": "Passed",
+          "observed": "practice_a"
+        },
+        "T2_insert_false_practice_is_overwritten": {
+          "result": "Passed",
+          "observed": "practice_a"
+        },
+        "T3_direct_practice_update_is_forced_back": {
+          "result": "Passed",
+          "observed": "practice_a"
+        },
+        "T5_unattached_document_derives_from_patient": {
+          "result": "Passed",
+          "observed": "practice_a"
+        },
+        "T6_citation_inherits_evidence_practice": {
+          "result": "Passed",
+          "observed": "practice_a"
+        },
+        "T4_case_move_cascades_children_both_directions": {
+          "result": "Passed",
+          "observed": [
+            true,
+            true
+          ]
+        },
+        "T7_patient_move_cascades_documents_both_directions": {
+          "result": "Passed",
+          "observed": [
+            true,
+            true
+          ]
+        },
+        "cases_rls_refuses_unowned_practice": {
+          "result": "Passed",
+          "observed": 3
+        },
+        "evidence_states_remains_approved_reference_without_trigger": {
+          "result": "Passed",
+          "observed": {
+            "trigger_count": "0",
+            "keys": "gap,met,void"
+          }
+        }
+      }
+    },
+    "upgrade": {
+      "result": "Passed",
+      "install": "schema and legacy rows then derivation migration",
+      "restricted_login": "non-owner NOSUPERUSER NOBYPASSRLS",
+      "checks": {
+        "migration_or_fresh_seed_has_derived_baseline": {
+          "result": "Passed",
+          "observed": "1"
+        },
+        "T1_insert_without_practice_is_derived": {
+          "result": "Passed",
+          "observed": "practice_a"
+        },
+        "T2_insert_false_practice_is_overwritten": {
+          "result": "Passed",
+          "observed": "practice_a"
+        },
+        "T3_direct_practice_update_is_forced_back": {
+          "result": "Passed",
+          "observed": "practice_a"
+        },
+        "T5_unattached_document_derives_from_patient": {
+          "result": "Passed",
+          "observed": "practice_a"
+        },
+        "T6_citation_inherits_evidence_practice": {
+          "result": "Passed",
+          "observed": "practice_a"
+        },
+        "T4_case_move_cascades_children_both_directions": {
+          "result": "Passed",
+          "observed": [
+            true,
+            true
+          ]
+        },
+        "T7_patient_move_cascades_documents_both_directions": {
+          "result": "Passed",
+          "observed": [
+            true,
+            true
+          ]
+        },
+        "cases_rls_refuses_unowned_practice": {
+          "result": "Passed",
+          "observed": 3
+        },
+        "evidence_states_remains_approved_reference_without_trigger": {
+          "result": "Passed",
+          "observed": {
+            "trigger_count": "0",
+            "keys": "gap,met,void"
+          }
+        }
+      }
+    }
+  },
+  "cleanup": {
+    "synthetic_ra04_upgrade_156f52974c03412aad2b2aaac7f75ef2": "Passed",
+    "synthetic_ra04_fresh_156f52974c03412aad2b2aaac7f75ef2": "Passed",
+    "login": "Passed"
+  },
+  "unverified": [
+    "Electric delivery is outside this database-boundary fixture.",
+    "Production deployment roles and physical clients are outside this synthetic local integration run."
+  ]
+}

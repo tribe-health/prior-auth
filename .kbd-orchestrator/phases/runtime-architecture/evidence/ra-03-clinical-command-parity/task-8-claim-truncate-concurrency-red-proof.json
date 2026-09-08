@@ -1,0 +1,71 @@
+{
+  "result": "Passed",
+  "verification_tier": 1,
+  "failure_injected": "The 0608 letter_claims relation lock and cited-source revalidation were removed while the prior row-lock-only behavior remained",
+  "command": "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-signing-transaction.py --install-mode fresh --output /tmp/ra03-claims-truncate-concurrency-red-fixture.json",
+  "fixture_output": "/tmp/ra03-claims-truncate-concurrency-red-fixture.json",
+  "expected_exit": "nonzero when approval commits after concurrent letter_claims TRUNCATE",
+  "observed_exit": 1,
+  "failed_checks": {
+    "actual_appservices_pg_repository_lifecycle": {
+      "result": "Failed",
+      "return_code": 101,
+      "assertion_count": 0
+    }
+  },
+  "matching_failure_output": [
+    "approval committed after concurrent claim truncation: PgQueryResult { rows_affected: 1 }"
+  ],
+  "cleanup": {
+    "disposable_database_deleted": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "disposable_login_deleted": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "disposable_owner_role": {
+      "result": "Passed",
+      "action": "already_absent"
+    },
+    "aso_session_reader": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    },
+    "aso_gate_executor": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    },
+    "aso_gate_owner": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    }
+  },
+  "source_sha256_before": {
+    "migrations/server/2026090608_approval_qa_serialization.sql": "d56180aaf6b2c57235fdd52b0356af5743b73d532a4442416985cef08fa65a6a",
+    "crates/aso-web-server/src/migrations.rs": "5ed494372778d06b17507a7d9170b309eccd39dc2fa3b4a377cbc15b992cea18",
+    "crates/aso-web-server/src/adapters/gate/signing_transaction_tests.rs": "a8e7f03d3c3066e72b63966f4b851150839d2fdfaf1dbfe4a334d5bcd78dc29b",
+    "scripts/test-signing-transaction.py": "0b581986e8c0ab05a2ab1b47ba92e6a8b0246d3429b17ad16619b7bf991203bc"
+  },
+  "migration_0608_sha256_during_injection": "c596de643df4c09bb1c6784750bae32c65f4ab784691c22f87928469e8d5eb4d",
+  "source_sha256_after_restore": {
+    "migrations/server/2026090608_approval_qa_serialization.sql": "d56180aaf6b2c57235fdd52b0356af5743b73d532a4442416985cef08fa65a6a",
+    "crates/aso-web-server/src/migrations.rs": "5ed494372778d06b17507a7d9170b309eccd39dc2fa3b4a377cbc15b992cea18",
+    "crates/aso-web-server/src/adapters/gate/signing_transaction_tests.rs": "a8e7f03d3c3066e72b63966f4b851150839d2fdfaf1dbfe4a334d5bcd78dc29b",
+    "scripts/test-signing-transaction.py": "0b581986e8c0ab05a2ab1b47ba92e6a8b0246d3429b17ad16619b7bf991203bc"
+  },
+  "preserved_migration_sha256": {
+    "migrations/server/2026090600_local_publication_boundary.sql": "ad67e6acada48afbe114d3a410e9fe16cab3ec4396002fc1ed9cf6817686914b",
+    "migrations/server/2026090601_durable_gate.sql": "b3da2e91629534c011c6186eeb658fc2286896d2d491ca94dcda03a2f009a899",
+    "migrations/server/2026090602_durable_signing.sql": "3eb225a6c7477cd5c015c1552b752b6ed0d2a1497d5646f7e9e8ceeba418ccba",
+    "migrations/server/2026090603_durable_reassessment.sql": "cc51e8d22b71349ba044567f53ddc95d4c663c822009f9d24baf92ffe3320cd3",
+    "migrations/server/2026090604_immutable_approved_sources.sql": "1f2fbf4694ac54894654a38a2c7ff6fb0756646365dd6ea513a9ab9eadaf79af",
+    "migrations/server/2026090605_clinical_revision_guards.sql": "f89bf095be110260b342138d59629beab7eb9ea966a0bf5a6873a09ce04d48fc",
+    "migrations/server/2026090606_clinical_truncate_guards.sql": "9dddd0c8b518daadf2c5062150e40d4674a9203001707bc7bbc3e7934274f9b6",
+    "migrations/server/2026090607_publication_ddl_serialization.sql": "06da883ad3445492f2a25a0f1db00b0ef5eb2bc886bd32b4aa77c7e42584155c"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "scope": "RA-02 evidence and caller checks; static observations corroborate recorded mounted tests and are not fresh deployment proof.",
+  "constraints": [
+    {"id": "current-evidence", "severity": "blocking", "status": "satisfied", "evidence": "Acceptance 2.1-2.4 receipts and task-4-files.json bind current source and evidence hashes; validate.py recomputes them."},
+    {"id": "atomic-durability", "severity": "blocking", "status": "satisfied", "evidence": "Mounted, fresh and upgrade T1 receipts prove atomic affirmation/audit/result/summary behavior and forced-failure rollback."},
+    {"id": "independent-authority", "severity": "blocking", "status": "satisfied", "evidence": "task-6-acceptance.json records Gate, AppServices and database isolation with accepting bypass controls; an authoritative Agent identity is refused before accepting membership resolution."},
+    {"id": "idempotent-reconciliation", "severity": "blocking", "status": "satisfied", "evidence": "task-7-acceptance.json records a lost-response proxy, lookup/retry recovery and fixed effect counts. Fresh and upgrade transaction receipts prove changed-case conflicts are resolved before target authority, including missing and out-of-practice cases."},
+    {"id": "derived-summary-integrity", "severity": "blocking", "status": "satisfied", "evidence": "task-8-acceptance.json records add/remove recomputation, same-case concurrency, spoof refusal and restored mutation control."},
+    {"id": "migration-compatibility", "severity": "blocking", "status": "satisfied", "evidence": "Fresh and populated-upgrade PostgreSQL campaigns Passed with six cleanup results each."},
+    {"id": "caller-truth", "severity": "blocking", "status": "satisfied", "evidence": "main -> api_router -> gate route -> AppServices -> PgGateRepository and Gate config -> middleware -> authorization callback are mounted; useSurgeonGate uses typed practice options but remains test-only, as do desktop wrappers."},
+    {"id": "host-boundary", "severity": "blocking", "status": "satisfied", "evidence": "Gate authorization calls services.read_verified_gate and contains no services.cases access; focused check and 11 route tests Passed."},
+    {"id": "bounded-verification", "severity": "high", "status": "satisfied", "evidence": "Report lists the scoped T0/T1 commands and keeps UI, Tauri IPC, deployment, phase T2 and release T3 unverified."},
+    {"id": "bundle-integrity", "severity": "blocking", "status": "satisfied", "evidence": "Full Draft-07 schemas, exact dist coverage, nonempty outputs, JSON parsing and iteration consistency are checked by validate.py."}
+  ],
+  "deferred": [
+    {"constraint": "Workspace-wide, web production, Flutter and architecture phase checks", "status": "deferred-to-phase-T2", "reason": "The phase execution contract reserves broad checks for phase completion."},
+    {"constraint": "Surgeon-gate browser view mounting and Tauri command registration", "status": "future-scoped", "reason": "The active route is a placeholder and desktop wrappers have no registered native IPC caller."},
+    {"constraint": "Production deployment and physical-device execution", "status": "unverified", "reason": "Recorded campaigns use synthetic disposable resources."},
+    {"constraint": "Independent adversarial review", "status": "pending-parent-stage", "reason": "It runs after this artifact-refiner gate."
+    }
+  ]
+}

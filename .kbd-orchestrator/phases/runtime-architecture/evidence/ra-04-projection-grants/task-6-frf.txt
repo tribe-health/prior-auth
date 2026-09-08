@@ -1,0 +1,96 @@
+    Blocking waiting for file lock on package cache
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.72s
+     Running unittests src/lib.rs (/Users/gqadonis/.cargo/build-cache/25/5c2ebd31dad868/debug/deps/frf_identity_ory-5c48f8dcfcc71282)
+
+running 2 tests
+test claims::tests::malformed_token_and_origin_ids_are_not_invented ... ok
+test claims::tests::replica_claims_require_exact_scope_revision_and_session_linkage ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/verifier.rs (/Users/gqadonis/.cargo/build-cache/25/5c2ebd31dad868/debug/deps/verifier-472c4b749768e548)
+
+running 7 tests
+test verify_valid_jwt_returns_claims ... ok
+test verify_rejects_token_with_missing_issuer_when_issuer_required ... ok
+test verify_bad_audience_returns_error ... ok
+test verify_expired_jwt_returns_error ... ok
+test verify_unknown_kid_refreshes_jwks_and_retries ... ok
+test verify_rejects_token_with_wrong_issuer ... ok
+test verify_accepts_token_with_matching_issuer ... ok
+
+test result: ok. 7 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+   Doc-tests frf_identity_ory
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: the package 'frf-gateway' does not contain this feature: frf-identity-ory
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+   Compiling frf-ports v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-ports)
+   Compiling frf-media-str0m v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-media-str0m)
+   Compiling frf-broker-iggy v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-broker-iggy)
+   Compiling frf-bridge-atproto v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-bridge-atproto)
+   Compiling frf-postgres-cdc v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-postgres-cdc)
+   Compiling frf-bridge-matrix v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-bridge-matrix)
+   Compiling frf-shape-electric v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-shape-electric)
+   Compiling frf-app v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-app)
+   Compiling frf-identity-ory v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-identity-ory)
+   Compiling frf-store-surreal v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-store-surreal)
+   Compiling frf-authz-keto v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-authz-keto)
+   Compiling frf-crdt v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-crdt)
+   Compiling frf-policy-cedar v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-policy-cedar)
+   Compiling frf-librefang v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-librefang)
+   Compiling frf-store-redb v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-store-redb)
+   Compiling frf-media-livekit v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-media-livekit)
+   Compiling frf-gateway v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-gateway)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.90s
+     Running unittests src/lib.rs (/Users/gqadonis/.cargo/build-cache/25/5c2ebd31dad868/debug/deps/frf_gateway-d98a57f3fe424ddb)
+
+running 3 tests
+test routes::shape::tests::no_cursor_means_a_cold_start ... ok
+test routes::shape::tests::a_cursor_with_both_handle_and_offset_resumes ... ok
+test routes::shape::tests::a_partial_cursor_falls_back_to_initial_rather_than_guessing ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 42 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (/Users/gqadonis/.cargo/build-cache/25/5c2ebd31dad868/debug/deps/frf_gateway-4f394d7b0fc0f479)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/graceful_shutdown.rs (/Users/gqadonis/.cargo/build-cache/25/5c2ebd31dad868/debug/deps/graceful_shutdown-002e2dbd843347a6)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+
+     Running tests/health.rs (/Users/gqadonis/.cargo/build-cache/25/5c2ebd31dad868/debug/deps/health-ed43bfff55f13cbe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+     Running tests/security_layers.rs (/Users/gqadonis/.cargo/build-cache/25/5c2ebd31dad868/debug/deps/security_layers-0018f0596bb94fd5)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.00s
+
+     Running tests/signal_mux.rs (/Users/gqadonis/.cargo/build-cache/25/5c2ebd31dad868/debug/deps/signal_mux-5b15b26cca583bcd)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 0.00s
+
+     Running tests/subscribe_mux.rs (/Users/gqadonis/.cargo/build-cache/25/5c2ebd31dad868/debug/deps/subscribe_mux-1f4b77e040c1ed32)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+

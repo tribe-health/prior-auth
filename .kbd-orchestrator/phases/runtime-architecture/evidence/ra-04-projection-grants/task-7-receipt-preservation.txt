@@ -1,0 +1,4 @@
+Passed: explicit task-7 output preserved task-4 receipt
+task-4-before=1b3f60e587f20fd1990866dde3e39dfeb0390710520b970502403b10e0acfe60
+task-4-after=1b3f60e587f20fd1990866dde3e39dfeb0390710520b970502403b10e0acfe60
+task-7-sha256=e2e0dcd17db3b26a7da91ebc87d19e3605c6aff6d95cd63e4c10585128e52fe1

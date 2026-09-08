@@ -1,0 +1,385 @@
+{
+  "result": "Passed",
+  "verification_tier": 1,
+  "install_mode": "fresh",
+  "observed_at": "2026-09-08T07:40:41.568099+00:00",
+  "scope": "Actual AppServices and PgGateRepository verified signing command against a disposable PostgreSQL database",
+  "prerequisites": [
+    "Existing Docker Compose db service with schema extensions available",
+    "Configured PostgreSQL admin password from container environment",
+    "Pinned Rust toolchain and idle workspace Cargo build directory",
+    "No concurrent database fixtures; a local exclusive lock covers this runner"
+  ],
+  "commands": [
+    "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-signing-transaction.py --install-mode fresh",
+    "docker compose port db 5432",
+    "docker compose exec -T db printenv POSTGRES_PASSWORD (captured only)",
+    "docker compose exec -T db psql -U <configured admin> -X -A -t -q -v ON_ERROR_STOP=1 -d <disposable database> (SQL on stdin)",
+    "cargo run -p aso-web-server -- --migrate-server",
+    "cargo test -p aso-web-server signing_gate_transaction_lifecycle -- --ignored --nocapture"
+  ],
+  "environment_contract": {
+    "migration": [
+      "ASO_MIGRATION_DATABASE_URL"
+    ],
+    "test": [
+      "ASO_TEST_DATABASE_URL",
+      "ASO_TEST_ADMIN_DATABASE_URL",
+      "ASO_TEST_OWNER_ROLE",
+      "ASO_TEST_GATE_CONTEXTS",
+      "ASO_TEST_GATE_CASE_ID",
+      "ASO_TEST_FOREIGN_CASE_ID"
+    ],
+    "credentials": "Disposable passwords supplied only through environment or captured SQL stdin"
+  },
+  "checks": {
+    "postgres_port_discovery": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "configured_admin_password_available": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "fresh_schema_has_no_clinical_rows_before_migration": {
+      "result": "Passed",
+      "row_counts": {
+        "cases": 0,
+        "users": 0,
+        "letters": 0,
+        "patients": 0,
+        "receipts": 0,
+        "documents": 0,
+        "practices": 0,
+        "user_roles": 0,
+        "annotations": 0,
+        "submissions": 0,
+        "audit_events": 0,
+        "peer_reviews": 0,
+        "case_evidence": 0,
+        "case_pathways": 0,
+        "letter_claims": 0,
+        "receipt_items": 0,
+        "custody_events": 0,
+        "determinations": 0,
+        "gate_affirmations": 0,
+        "letter_qa_results": 0,
+        "evidence_citations": 0,
+        "patient_identities": 0,
+        "case_diagnosis_codes": 0,
+        "case_procedure_codes": 0,
+        "submission_attachments": 0
+      }
+    },
+    "unsafe_publication_refused_before_first_server_migration": {
+      "result": "Passed",
+      "return_code": 1,
+      "publication_preflight_reported": true,
+      "schema_untouched": true
+    },
+    "initial_server_migration": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "fresh_migration_leaves_clinical_rows_empty": {
+      "result": "Passed",
+      "row_counts": {
+        "cases": 0,
+        "users": 0,
+        "letters": 0,
+        "patients": 0,
+        "receipts": 0,
+        "documents": 0,
+        "practices": 0,
+        "user_roles": 0,
+        "annotations": 0,
+        "submissions": 0,
+        "audit_events": 0,
+        "peer_reviews": 0,
+        "case_evidence": 0,
+        "case_pathways": 0,
+        "gate_commands": 0,
+        "letter_claims": 0,
+        "receipt_items": 0,
+        "custody_events": 0,
+        "determinations": 0,
+        "gate_affirmations": 0,
+        "letter_qa_results": 0,
+        "evidence_citations": 0,
+        "patient_identities": 0,
+        "case_diagnosis_codes": 0,
+        "case_procedure_codes": 0,
+        "letter_sign_commands": 0,
+        "submission_attachments": 0
+      }
+    },
+    "fresh_fixture_seeded_after_migration": {
+      "result": "Passed"
+    },
+    "unchanged_migration_rerun": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "migration_ledger_and_populated_cases_unchanged": {
+      "result": "Passed"
+    },
+    "checksum_mismatch_refused": {
+      "result": "Passed",
+      "return_code": 1,
+      "checksum_mismatch_reported": true
+    },
+    "checksum_refusal_preserves_populated_cases": {
+      "result": "Passed"
+    },
+    "restored_checksum_rerun": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "checksum_restoration_preserves_ledger_and_cases": {
+      "result": "Passed"
+    },
+    "publication_serialization_installed_before_local_ledgers": {
+      "result": "Passed",
+      "psql_output": "t"
+    },
+    "explicit_table_publication_excludes_local_command_ledgers": {
+      "result": "Passed",
+      "psql_output": "t"
+    },
+    "publication_ddl_guard_refuses_local_command_ledger": {
+      "result": "Passed",
+      "return_code": 3,
+      "local_ledger_excluded": true
+    },
+    "renamed_local_ledger_remains_excluded_by_relation_identity": {
+      "result": "Passed",
+      "return_code": 3,
+      "renamed_ledger_excluded": true
+    },
+    "local_ledger_cannot_move_into_published_schema": {
+      "result": "Passed",
+      "return_code": 3,
+      "remained_in_aso": true
+    },
+    "moved_local_ledger_blocks_schema_publication": {
+      "result": "Passed",
+      "return_code": 3,
+      "publication_absent": true
+    },
+    "explicit_local_ledger_publication_is_refused_on_upgrade": {
+      "result": "Passed",
+      "return_code": 1,
+      "publication_preflight_reported": true
+    },
+    "schema_local_ledger_publication_is_refused_on_upgrade": {
+      "result": "Passed",
+      "return_code": 1,
+      "publication_preflight_reported": true
+    },
+    "durable_signing_migration_recorded": {
+      "result": "Passed"
+    },
+    "runtime_login_nonowner_nonbypass_executor_member": {
+      "result": "Passed",
+      "psql_output": "t"
+    },
+    "fixture_owner_role_initially_absent": {
+      "result": "Passed"
+    },
+    "actual_verified_signing_appservices_pg_repository_lifecycle": {
+      "result": "Passed",
+      "return_code": 0,
+      "assertion_count": 24
+    }
+  },
+  "processes": [
+    {
+      "label": "unsafe_publication_preflight_refusal",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 1,
+      "actual_result_output": [],
+      "publication_preflight_reported": true
+    },
+    {
+      "label": "initial_server_migration",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 0,
+      "actual_result_output": []
+    },
+    {
+      "label": "unchanged_server_migration_rerun",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 0,
+      "actual_result_output": []
+    },
+    {
+      "label": "checksum_mismatch_refusal",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 1,
+      "actual_result_output": [],
+      "checksum_mismatch_reported": true
+    },
+    {
+      "label": "restored_checksum_migration_rerun",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 0,
+      "actual_result_output": []
+    },
+    {
+      "label": "explicit_local_ledger_publication_preflight_refusal",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 1,
+      "actual_result_output": [],
+      "explicit_local_ledger_reported": true
+    },
+    {
+      "label": "schema_local_ledger_publication_preflight_refusal",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 1,
+      "actual_result_output": [],
+      "schema_local_ledger_reported": true
+    },
+    {
+      "label": "actual_gate_transaction_lifecycle",
+      "command": [
+        "cargo",
+        "test",
+        "-p",
+        "aso-web-server",
+        "signing_gate_transaction_lifecycle",
+        "--",
+        "--ignored",
+        "--nocapture"
+      ],
+      "return_code": 0,
+      "actual_result_output": [
+        "gate_transaction_check: signing_claims_truncate_commits_first_and_concurrent_approval_is_refused",
+        "gate_transaction_check: signing_approval_commits_first_and_concurrent_claims_truncate_is_refused",
+        "gate_transaction_check: signing_qa_truncate_commits_first_and_concurrent_approval_is_refused",
+        "gate_transaction_check: signing_approval_commits_first_and_concurrent_qa_truncate_is_refused",
+        "gate_transaction_check: signing_complete_target_observed",
+        "gate_transaction_check: signing_service_and_database_refuse_stale_letter_qa_and_signature_revisions",
+        "gate_transaction_check: signing_approved_source_mapping_cannot_move_to_draft_letter",
+        "gate_transaction_check: signing_approved_qa_cannot_move_to_draft_letter",
+        "gate_transaction_check: signing_approved_qa_cannot_be_truncated",
+        "gate_transaction_check: signing_approved_source_mappings_cannot_be_truncated",
+        "gate_transaction_check: signing_approved_letter_cannot_return_to_draft",
+        "gate_transaction_check: signing_approved_source_document_content_is_immutable",
+        "gate_transaction_check: signing_source_mutation_cannot_commit_after_concurrent_approval",
+        "gate_transaction_check: signing_protected_schema_move_commits_first_and_publication_is_refused",
+        "gate_transaction_check: signing_publication_commits_first_and_protected_schema_move_is_refused",
+        "gate_transaction_check: signing_protected_table_creation_commits_first_and_publication_is_refused",
+        "gate_transaction_check: signing_publication_commits_first_and_protected_table_creation_is_refused",
+        "gate_transaction_check: signing_service_function_and_trigger_independently_refuse_admin_agent_and_foreign_scope",
+        "gate_transaction_check: signing_receipt_failure_rolls_back_letter_audit_and_command",
+        "gate_transaction_check: signing_authorized_signing_commits_one_letter_audit_and_result",
+        "gate_transaction_check: signing_lost_response_repeat_and_lookup_return_one_signing_effect",
+        "gate_transaction_check: signing_incomplete_qa_cannot_be_approved_or_signed",
+        "gate_transaction_check: signing_incomplete_sources_cannot_be_approved_or_signed",
+        "gate_transaction_check: signing_annotation_only_assertion_cannot_be_approved_as_document_citation",
+        "test adapters::gate::signing_transaction_tests::signing_gate_transaction_lifecycle ... ok",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 8 filtered out; finished in 0.74s"
+      ]
+    }
+  ],
+  "cleanup": {
+    "disposable_database_deleted": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "disposable_login_deleted": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "disposable_owner_role": {
+      "result": "Passed",
+      "action": "already_absent"
+    },
+    "aso_session_reader": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    },
+    "aso_gate_executor": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    },
+    "aso_gate_owner": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    }
+  },
+  "unverified": [
+    "Mounted HTTP/gateway, UI and physical devices are outside this transaction fixture."
+  ],
+  "source_sha256": {
+    "migrations/server/2026090600_local_publication_boundary.sql": "ad67e6acada48afbe114d3a410e9fe16cab3ec4396002fc1ed9cf6817686914b",
+    "migrations/server/2026090602_durable_signing.sql": "3eb225a6c7477cd5c015c1552b752b6ed0d2a1497d5646f7e9e8ceeba418ccba",
+    "crates/aso-host/src/signing.rs": "c2c608b621458c58db12a871e5ec88582e344ace1ebe2bfafb4b10e7cd59bf66",
+    "crates/aso-host/src/ports/mod.rs": "74c7081590548d6c159d561bb9ee20dbae01db38dd8a8d750dc9974c7fd43a7a",
+    "crates/aso-server-axum/src/routes/letters.rs": "38e7a634de1d75637523574ba2c5807cbb67480583af372acaacbfb0dc8cd9cb",
+    "crates/aso-web-server/src/adapters/gate.rs": "acba2e30d2e2a5e8da8f19bc79561106cedba8b98bde564c9a0934098591d962",
+    "crates/aso-web-server/src/adapters/gate/signing_transaction_tests.rs": "a8e7f03d3c3066e72b63966f4b851150839d2fdfaf1dbfe4a334d5bcd78dc29b",
+    "crates/aso-web-server/src/migrations.rs": "5ed494372778d06b17507a7d9170b309eccd39dc2fa3b4a377cbc15b992cea18",
+    "desktop/src-tauri/src/lib.rs": "7e36082f60644ca1693a058a98f0019767a256225e815368b3daa95ee508f8e3",
+    "docker/flint-gate/config.yaml": "b156f0047fb8d860d7b9acffe49c7b705e290a666d53746dc80cb7e6f09bf9f5",
+    "migrations/server/2026090604_immutable_approved_sources.sql": "1f2fbf4694ac54894654a38a2c7ff6fb0756646365dd6ea513a9ab9eadaf79af",
+    "migrations/server/2026090605_clinical_revision_guards.sql": "f89bf095be110260b342138d59629beab7eb9ea966a0bf5a6873a09ce04d48fc",
+    "migrations/server/2026090606_clinical_truncate_guards.sql": "9dddd0c8b518daadf2c5062150e40d4674a9203001707bc7bbc3e7934274f9b6",
+    "migrations/server/2026090607_publication_ddl_serialization.sql": "06da883ad3445492f2a25a0f1db00b0ef5eb2bc886bd32b4aa77c7e42584155c",
+    "migrations/server/2026090608_approval_qa_serialization.sql": "d56180aaf6b2c57235fdd52b0356af5743b73d532a4442416985cef08fa65a6a",
+    "scripts/test-signing-transaction.py": "0b581986e8c0ab05a2ab1b47ba92e6a8b0246d3429b17ad16619b7bf991203bc"
+  },
+  "completed_at": "2026-09-08T07:41:00.566946+00:00"
+}

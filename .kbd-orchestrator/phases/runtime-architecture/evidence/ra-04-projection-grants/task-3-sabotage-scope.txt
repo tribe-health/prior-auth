@@ -1,0 +1,22 @@
+   Compiling frf-ports v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-ports)
+   Compiling frf-identity-ory v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-identity-ory)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.76s
+     Running unittests src/lib.rs (/Users/gqadonis/.cargo/build-cache/25/5c2ebd31dad868/debug/deps/frf_identity_ory-5c48f8dcfcc71282)
+
+running 1 test
+
+thread 'claims::tests::replica_claims_require_exact_scope_revision_and_session_linkage' (6101619) panicked at crates/frf-identity-ory/src/claims.rs:118:13:
+assertion failed: to_verified_claims(claims).unwrap().aso_replica_scope().is_err()
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test claims::tests::replica_claims_require_exact_scope_revision_and_session_linkage ... FAILED
+
+failures:
+
+failures:
+    claims::tests::replica_claims_require_exact_scope_revision_and_session_linkage
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p frf-identity-ory --lib`
+
+SABOTAGE_EXIT=101

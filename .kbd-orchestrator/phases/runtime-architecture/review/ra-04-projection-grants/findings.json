@@ -1,0 +1,31 @@
+{
+  "mode": "diff",
+  "verdict": "PASS",
+  "judge_model": "k3",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "SUGGESTION",
+      "file": "crates/flint-gate-core/src/middleware/pipeline.rs",
+      "line": 1064,
+      "claim": "aso_replica_error labels every non-503 failure \"replica_grant_denied\", so a malformed request (invalid or duplicated practiceId, which selected_practice rejects with BAD_REQUEST) returns HTTP 400 with the misleading body {\"error\": \"replica_grant_denied\"}, and that 400 path has no test in the packet.",
+      "evidence": "aso_replica_grant.rs: `selected_practice` returns `Err(StatusCode::BAD_REQUEST)` for an unparseable or repeated `practiceId`; pipeline.rs: `fn aso_replica_error(status)` maps any status other than SERVICE_UNAVAILABLE to `\"replica_grant_denied\"`. The visible unit tests in aso_replica_grant.rs cover only forged-claim and wrong-revision refusals, and scripts/test-replica-grant.py never sends an invalid practiceId, so the client-format failure class is both mislabeled and unverified.",
+      "suggested_fix": "Distinguish the 400 case (e.g., \"invalid_projection_request\", matching the ASO handler's vocabulary) and add a unit test asserting duplicate/invalid practiceId yields 400 before any callback or mint occurs."
+    },
+    {
+      "severity": "SUGGESTION",
+      "file": "crates/aso-server-axum/src/session.rs",
+      "line": 128,
+      "claim": "The expiry + human-principal guard pair is now hand-duplicated in three places (current_session, replica_grant, clinical_context), and the packet's own red receipts prove this exact duplication already drifted once: current_session shipped without the guards while replica_grant had them.",
+      "evidence": "completion_evidence/task-10-current-session-guard-red.txt shows `mounted_current_session_refuses_expired_or_nonhuman_port_results` failing with `left: 200, right: 401` on a handler missing guards that replica_grant already contained; the fix copies the same two `Ok(summary) if ...` arms into current_session rather than sharing a helper. A fourth future session-derived endpoint has no compile-time or shared-code force preventing the same omission.",
+      "suggested_fix": "Extract a single `guard_summary(state, summary) -> Result<SessionSummary, Response>` (or fold the checks into one shared resolver wrapper) used by current_session, replica_grant and clinical_context so the principal/expiry refusal cannot diverge per endpoint."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

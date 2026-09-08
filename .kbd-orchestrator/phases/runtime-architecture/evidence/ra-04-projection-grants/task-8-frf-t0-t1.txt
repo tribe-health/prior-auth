@@ -1,0 +1,15 @@
+    Checking frf-gateway v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-gateway)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.97s
+    Checking frf-gateway v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-gateway)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.50s
+   Compiling frf-gateway v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-gateway)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 4.83s
+     Running tests/shape_projection_grant.rs (/Users/gqadonis/.cargo/build-cache/25/5c2ebd31dad868/debug/deps/shape_projection_grant-9047ec6f44399a4c)
+
+running 3 tests
+test mounted_shape_route_rejects_wrong_revision_before_resolver_or_facade ... ok
+test mounted_shape_route_rejects_wrong_scope_before_resolver_or_facade ... ok
+test authorized_shape_route_preserves_a_cleared_gate_summary ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

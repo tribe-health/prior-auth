@@ -1,0 +1,11 @@
+{
+  "artifacts": {
+    "ra-01-verified-session": {
+      "path": ".refiner/artifacts/ra-01-verified-session",
+      "artifact_type": "content",
+      "content_type": "direct:content",
+      "updated_at": "2026-09-06T20:25:14Z",
+      "finalized_at": "2026-09-06T20:25:14Z"
+    }
+  }
+}

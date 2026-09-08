@@ -1,0 +1,9 @@
+Passed: Python fixture parses
+Passed: fresh 10/10 and upgrade 10/10 exact checks
+Passed: restricted login posture recorded in both modes
+Passed: passing and sabotage cleanup complete
+Passed: sabotage failed at T3 direct forged practice update
+Passed: migration restored to a99e12477298e76a1efb18aebe5c2563707d9cb2d0662fbf58f8b576d9935bb4
+Passed: task-4 receipt preserved
+fixture_databases=0
+fixture_roles=0

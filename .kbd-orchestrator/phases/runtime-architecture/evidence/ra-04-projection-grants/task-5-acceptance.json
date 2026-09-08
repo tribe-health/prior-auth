@@ -1,0 +1,67 @@
+{
+  "result": "Passed",
+  "task": 5,
+  "openspec_task": "2.1",
+  "requirement": "Two practice-scoped evaluations yield only the fixed five authorized projections and columns; evidence_states uses key; absent metadata remains protected.",
+  "evidence_mode": "Current host registry tests plus the mounted Axum grant route tests.",
+  "prerequisites": [
+    {
+      "name": "RA04 implementation tasks 1.2 through 1.4",
+      "available": true
+    },
+    {
+      "name": "Current ASO Rust workspace and resolved debug dependencies",
+      "available": true
+    },
+    {
+      "name": "Database or external service",
+      "required": false
+    }
+  ],
+  "commands": [
+    "cargo test -p aso-host projection::tests -- --nocapture",
+    "cargo test -p aso-server-axum session::tests::mounted_registry -- --nocapture"
+  ],
+  "observed_results": {
+    "host_registry": {
+      "result": "Passed",
+      "passed": 2,
+      "failed": 0,
+      "proof": [
+        "exactly five projections for each of two practices",
+        "four record projections bind practice_id to the selected verified practice",
+        "evidence_states primary key and approved-reference key are key",
+        "fourteen named sensitive metadata columns and policy_criteria stay absent"
+      ],
+      "raw_output": "task-5-host.txt",
+      "raw_output_sha256": "68dcd8c74966f8007ed237a85db59cfd855b3d4a10c2543574491816492e2e61"
+    },
+    "mounted_registry": {
+      "result": "Passed",
+      "passed": 2,
+      "failed": 0,
+      "proof": [
+        "two practice selections return distinct server-derived scopes",
+        "table, where and columns inputs return HTTP 400 before session resolution"
+      ],
+      "raw_output": "task-5-http.txt",
+      "raw_output_sha256": "e003f70944b9d8732bb49354f96643ebc99aa0c03eb78b25af7de96d3fb43d50"
+    }
+  },
+  "current_source_sha256": [
+    {
+      "path": "crates/aso-host/src/projection.rs",
+      "sha256": "1b75fa885e420bb3c7c58113c273a2df87d9ade0bdfe9c8044560daf9cb04296"
+    },
+    {
+      "path": "crates/aso-server-axum/src/session.rs",
+      "sha256": "a00e33ec6d8699d982e44ea6cbd6f26976e707be62a9602db4e8b597023ffbfa"
+    }
+  ],
+  "guards_added": [],
+  "unverified": [
+    "G-DATA approval for persistent real clinical data",
+    "Deployed Gate to FRF to Electric delivery and topology",
+    "Tier 2, Tier 3, browser, Tauri and physical-device surfaces"
+  ]
+}

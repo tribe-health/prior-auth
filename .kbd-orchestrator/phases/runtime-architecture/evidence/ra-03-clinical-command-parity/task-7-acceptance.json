@@ -1,0 +1,186 @@
+{
+  "result": "Passed",
+  "task": 7,
+  "requirement": "Administrator or agent direct access to signing controls is independently refused; authorized evidence changes retain met/gap/void and an audit record.",
+  "evidence_mode": "Focused current service/policy tests plus current-hash validation of the immediately preceding live signing and reassessment PostgreSQL campaigns.",
+  "commands": [
+    "RUSTUP_TOOLCHAIN=1.97.1 cargo test -p aso-host signing::tests",
+    "RUSTUP_TOOLCHAIN=1.97.1 cargo test -p aso-host reassessment::tests",
+    "RUSTUP_TOOLCHAIN=1.97.1 cargo test -p aso-server-axum routes::letters::tests",
+    "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-signing-transaction.py --install-mode fresh",
+    "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-reassessment-transaction.py --install-mode fresh",
+    "python3 inline current-hash, lifecycle-marker and source-assertion validation"
+  ],
+  "prerequisites": [
+    "Existing Docker Compose db service with schema extensions available",
+    "Configured PostgreSQL admin password from container environment",
+    "Pinned Rust toolchain and idle workspace Cargo build directory",
+    "No concurrent database fixtures; a local exclusive lock covers this runner"
+  ],
+  "observed_results": {
+    "host_signing": {
+      "result": "Passed",
+      "passed": 5,
+      "failed": 0,
+      "covers": [
+        "nonhuman and denied contexts never reach write",
+        "verified human/current authority required"
+      ]
+    },
+    "host_reassessment": {
+      "result": "Passed",
+      "passed": 4,
+      "failed": 0,
+      "covers": [
+        "nonhuman and denied contexts never reach write",
+        "new command checks revision and authority"
+      ]
+    },
+    "gate_policy_and_http_signing": {
+      "result": "Passed",
+      "passed": 5,
+      "failed": 0,
+      "covers": [
+        "Gate callback requires sign capability and letter scope without writing",
+        "agent refused before signing ports even with sign capability"
+      ]
+    },
+    "signing_database": {
+      "result": "Passed",
+      "receipt": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/.kbd-orchestrator/phases/runtime-architecture/evidence/ra-03-clinical-command-parity/task-5-signing-proof.json",
+      "sha256": "eb19b88a46623cd41bb1f503cedd25a5caa1540208ceb622559dda4681c03fc1",
+      "selected_marker": "gate_transaction_check: signing_service_function_and_trigger_independently_refuse_admin_agent_and_foreign_scope",
+      "assertion_count": 10,
+      "cleanup": {
+        "disposable_database_deleted": {
+          "result": "Passed",
+          "return_code": 0
+        },
+        "disposable_login_deleted": {
+          "result": "Passed",
+          "return_code": 0
+        },
+        "disposable_owner_role": {
+          "result": "Passed",
+          "action": "already_absent"
+        },
+        "aso_session_reader": {
+          "result": "Passed",
+          "action": "fixture_created_role_deletion",
+          "return_code": 0
+        },
+        "aso_gate_executor": {
+          "result": "Passed",
+          "action": "fixture_created_role_deletion",
+          "return_code": 0
+        },
+        "aso_gate_owner": {
+          "result": "Passed",
+          "action": "fixture_created_role_deletion",
+          "return_code": 0
+        }
+      }
+    },
+    "reassessment_database": {
+      "result": "Passed",
+      "receipt": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/.kbd-orchestrator/phases/runtime-architecture/evidence/ra-03-clinical-command-parity/task-6-reassessment-proof.json",
+      "sha256": "4377ed1266606665cee202d4c46012e0dfeac08d2479ede4209b0dc147af0e3a",
+      "selected_markers": [
+        "gate_transaction_check: reassessment_authorized_reassessment_preserves_void_to_gap_distinction",
+        "gate_transaction_check: reassessment_allowed_transitions_retain_met_gap_void_with_one_audit_and_receipt_each"
+      ],
+      "assertion_count": 7,
+      "cleanup": {
+        "disposable_database_deleted": {
+          "result": "Passed",
+          "return_code": 0
+        },
+        "disposable_login_deleted": {
+          "result": "Passed",
+          "return_code": 0
+        },
+        "disposable_owner_role": {
+          "result": "Passed",
+          "action": "already_absent"
+        },
+        "aso_session_reader": {
+          "result": "Passed",
+          "action": "fixture_created_role_deletion",
+          "return_code": 0
+        },
+        "aso_gate_executor": {
+          "result": "Passed",
+          "action": "fixture_created_role_deletion",
+          "return_code": 0
+        },
+        "aso_gate_owner": {
+          "result": "Passed",
+          "action": "fixture_created_role_deletion",
+          "return_code": 0
+        }
+      }
+    },
+    "source_assertions": {
+      "signing_denied_callers_include_admin_agent_foreign": {
+        "result": "Passed"
+      },
+      "signing_service_and_repository_each_expect_denied": {
+        "result": "Passed"
+      },
+      "signing_direct_trigger_requires_authority_sqlstate": {
+        "result": "Passed"
+      },
+      "authorized_signing_trigger_control_affects_one_then_rolls_back": {
+        "result": "Passed"
+      },
+      "reassessment_transitions_cover_void_gap_met": {
+        "result": "Passed"
+      },
+      "reassessment_final_observation_requires_three_audits_and_receipts": {
+        "result": "Passed"
+      }
+    }
+  },
+  "current_source_sha256": [
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host/src/signing.rs",
+      "sha256": "c2c608b621458c58db12a871e5ec88582e344ace1ebe2bfafb4b10e7cd59bf66"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host/src/reassessment.rs",
+      "sha256": "561d088d65559b894a65d1f63250550ce188b5201e564037ba35107841230d43"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-server-axum/src/routes/letters.rs",
+      "sha256": "38e7a634de1d75637523574ba2c5807cbb67480583af372acaacbfb0dc8cd9cb"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-server-axum/src/routes/letters/tests.rs",
+      "sha256": "5cae3f81eef71c20e94198e60d4d30b595dad0a60338bd06e93c10c3b691fb76"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/gate.rs",
+      "sha256": "acba2e30d2e2a5e8da8f19bc79561106cedba8b98bde564c9a0934098591d962"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/gate/signing_transaction_tests.rs",
+      "sha256": "3f29caabdd117a44a0bd2fac5597b7734bcecd57aa1eaa6b8b629e271fac82fc"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/gate/reassessment_transaction_tests.rs",
+      "sha256": "fa4256b602e4704c099a655bd1e9206173a139172d52b74f8dbb0daea85c5ac7"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/migrations/server/2026090602_durable_signing.sql",
+      "sha256": "3eb225a6c7477cd5c015c1552b752b6ed0d2a1497d5646f7e9e8ceeba418ccba"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/migrations/server/2026090603_durable_reassessment.sql",
+      "sha256": "cc51e8d22b71349ba044567f53ddc95d4c663c822009f9d24baf92ffe3320cd3"
+    }
+  ],
+  "mechanism": "Gate performs a read-only capability/scope refusal; AppServices checks trusted principal and authority before write; the restricted PostgreSQL function repeats authority checks; a direct trigger bypass probe still returns SQLSTATE 42501. Authorized reassessment commits distinct states with surgeon attribution, one audit and one receipt per transition.",
+  "unverified": [
+    "Production Gate image, browser UI, native credentials, Tauri window and physical devices remain outside this focused Tier 1 proof."
+  ]
+}

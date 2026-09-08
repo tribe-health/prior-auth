@@ -1,0 +1,4 @@
+warning: profiles for the non root package will be ignored, specify profiles at the workspace root:
+package:   /Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate/Cargo.toml
+workspace: /Users/gqadonis/Projects/prometheus/flint-gate/Cargo.toml
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.86s

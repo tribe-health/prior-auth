@@ -1,0 +1,53 @@
+{
+  "result": "Passed",
+  "task": 8,
+  "requirement": "Another authorized surgeon adds or removes a required affirmation; cases.gate_affirmed_at updates or clears transactionally and callers cannot spoof it.",
+  "evidence_mode": "Current-hash audit of the fresh and populated-upgrade PostgreSQL campaigns; no redundant live rerun.",
+  "sources": [
+    {
+      "path": ".kbd-orchestrator/phases/runtime-architecture/evidence/ra-02-durable-affirmation/task-4-fresh.json",
+      "sha256": "ea7ffaadec8d507ace61c7b7d404a90a7c89be679d8b8658e32e066678e17ca9",
+      "result": "Passed",
+      "fixture_checks": 16,
+      "lifecycle_markers": 18,
+      "cleanup_checks": 6
+    },
+    {
+      "path": ".kbd-orchestrator/phases/runtime-architecture/evidence/ra-02-durable-affirmation/task-4-upgrade.json",
+      "sha256": "33f3ab20dc9f8bf6e5fe3a9b871cf9d8e517288c6fbfc5dbd01ee23bf2482bb8",
+      "result": "Passed",
+      "fixture_checks": 22,
+      "lifecycle_markers": 18,
+      "cleanup_checks": 6
+    }
+  ],
+  "current_source_inventory": {
+    "path": ".kbd-orchestrator/phases/runtime-architecture/evidence/ra-02-durable-affirmation/task-4-files.json",
+    "sha256": "8eac3f9b153ab175a4f9fdfe9ed191381cafe7051d2f2530008157cfaf6436bd"
+  },
+  "assertions": [
+    "derived_summary_and_original_result_survive_later_removal",
+    "same_case_concurrency_preserves_complete_derived_summary",
+    "selected_practice_membership_drives_authority",
+    "summary_guard_and_immutable_result_refuse_direct_admin_writes",
+    "summary_guard_mutation_control_restored"
+  ],
+  "observed_behavior": {
+    "remove": "After surgeon A completed all four required affirmations, surgeon B removed plan; the authoritative snapshot had three kinds and null gate_affirmed_at/gate_affirmed_by.",
+    "add": "A same-case concurrent campaign had surgeons A and B add the four required kinds; the authoritative summary matched the latest committed affirmation timestamp and actor.",
+    "spoof_refusal": "Restricted runtime and direct administrator attempts to set gate_affirmed_at/gate_affirmed_by were refused. Controlled summary-trigger disablement allowed the synthetic spoof, then rollback restored the guard.",
+    "atomicity": "Command, affirmation, audit and derived summary share the PostgreSQL transaction; forced audit failure preserved prior counts and snapshot."
+  },
+  "actual_commands": [
+    "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-gate-transaction.py --install-mode fresh --output .kbd-orchestrator/phases/runtime-architecture/evidence/ra-02-durable-affirmation/task-4-fresh.json",
+    "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-gate-transaction.py --install-mode upgrade --output .kbd-orchestrator/phases/runtime-architecture/evidence/ra-02-durable-affirmation/task-4-upgrade.json"
+  ],
+  "prerequisites": [
+    "Existing Compose PostgreSQL service and configured administrative credential were available.",
+    "Rust 1.97.1 and the single-writer workspace build directory were available.",
+    "All records were synthetic and all disposable resources were cleaned."
+  ],
+  "unverified": [
+    "Production deployment, browser UI and physical devices remain outside this PostgreSQL acceptance proof."
+  ]
+}

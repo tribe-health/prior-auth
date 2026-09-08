@@ -1,0 +1,42 @@
+{
+  "mode": "diff",
+  "verdict": "PASS",
+  "judge_model": "k3",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "WARNING",
+      "file": "crates/aso-server-axum/src/session.rs",
+      "line": 99,
+      "claim": "The duplicate-`ory_kratos_session` cookie rejection is bypassable with whitespace before the `=` sign, defeating the stated anti-ambiguity control.",
+      "evidence": "credential(): `pair.trim().split_once('=').is_some_and(|(key, _)| key == \"ory_kratos_session\")` \u2014 for the pair ` ory_kratos_session =b`, trim removes only outer whitespace, so the key retains a trailing space (`ory_kratos_session `) and fails the equality check. A header `ory_kratos_session=a; ory_kratos_session =b` carries two session cookies yet passes the duplicate guard, even though the function's comment says it exists to \"Reject ambiguous credential sources so the gateway and service cannot authenticate different identities from the same request.\" Prior review flagged this and it was left unchanged; the resolution (\"no duplicate-cookie bypass was used to derive a grant in evidence\") does not fix the parsing gap.",
+      "suggested_fix": "Trim the key before comparing: `pair.split_once('=').is_some_and(|(key, _)| key.trim() == \"ory_kratos_session\")`."
+    },
+    {
+      "severity": "WARNING",
+      "file": "crates/frf-identity-ory/src/claims.rs",
+      "line": 21,
+      "claim": "Changing `jti` from tolerated-optional to a required UUID claim tightens verification for every FRF lane (publish, subscribe, agents, signal), not just the ASO replica path, with no packet evidence that other lanes' token issuers always supply a UUID `jti`.",
+      "evidence": "Diff changes `pub jti: Option<String>` (previously `Uuid::parse_str(jti).unwrap_or_else(|_| Uuid::new_v4())` on parse failure, and `SessionId::new()` when absent) to `pub jti: String` with `Uuid::parse_str(&claims.jti).map_err(...)`. Any existing FRF client whose token omits `jti` or carries a non-UUID `jti` is now rejected gateway-wide. The new tests cover only the replica claim shape; no fixture demonstrates a non-ASO (event-lane) token still verifying.",
+      "suggested_fix": "Either confirm with a fixture that all existing FRF token issuers emit UUID `jti` claims, or scope the strict `jti` requirement to the ASO replica contract (e.g., enforce UUID jti only inside `aso_replica_scope`) while preserving prior behavior for other lanes."
+    },
+    {
+      "severity": "SUGGESTION",
+      "file": "crates/aso-server-axum/src/session.rs",
+      "line": 75,
+      "claim": "ASO's credential extractor accepts whitespace-only header values that Gate's equivalent helper rejects, leaving the two boundaries with inconsistent input hygiene.",
+      "evidence": "ASO credential() checks only `value.is_empty()`; flint-gate's aso_clinical_authorize::credential_headers rejects `value.as_bytes().iter().all(u8::is_ascii_whitespace)`. A request reaching ASO directly (the server is also host-published on 8787 per docker/flint-gate/config.yaml upstreams) with `X-Session-Token: \" \"` produces SessionCredential::NativeToken(\" \") and an unnecessary identity-provider round trip instead of an immediate 401.",
+      "suggested_fix": "Mirror Gate's check: reject values that are empty or entirely ASCII whitespace in credential()."
+    },
+    {
+      "severity": "SUGGESTION",
+      "file": "docker/flint-gate/config.yaml",
+      "line": 280,
+      "claim": "The deployment config documents the aso_clinical_authorize hook contract but records no constraint that any future aso_replica_grant route must authenticate with the Kratos session provider, a coupling only discoverable at request time.",
+      "evidence": "pipeline.rs requires `matches!(auth_method, AuthMethod::KratosSession)` inside aso_replica_grant::mint, returning 403 otherwise, and rejects a mint_jwt/as\u043e_replica_grant conflict with a per-request 503. A future operator enabling the hook with `auth: passthrough` (the aso-session site default used throughout this config) would get a running route that fails every request, with no startup or lint signal.",
+      "suggested_fix": "Add a config-validation rule (alongside agent_governance_lint) that refuses aso_replica_grant on a route whose auth provider is not the Kratos session provider, and that rejects the mint_jwt conflict at load/hot-reload rather than per request."
+    }
+  ]
+}

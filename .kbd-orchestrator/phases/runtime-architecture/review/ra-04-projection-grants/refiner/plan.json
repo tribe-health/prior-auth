@@ -1,0 +1,21 @@
+{
+  "stages": [
+    "Read RA04 tasks, acceptance receipts, current sources and applicable T0/T1 rules.",
+    "Build a hash-addressed inventory across prior-auth, flint-gate and flint-realtime-fabric.",
+    "Validate final T0/T1 logs and mounted synthetic Gate and PostgreSQL receipts.",
+    "Inspect actual route, middleware, feature, desktop and web callers and record inactive composition honestly.",
+    "Generate a completion report and machine-readable checklist, then run schema and deterministic validation.",
+    "Pass the complete scoped packet to an isolated cross-model adversarial critic before archive."
+  ],
+  "tool": "Trusted-host shell, local Python 3/jsonschema and existing local Rust/TypeScript/integration receipts.",
+  "state_updates": [
+    "constraints.json",
+    "artifact_manifest.json",
+    "refinement_log.md",
+    "decisions.md",
+    ".refiner/",
+    "dist/",
+    "validate.py"
+  ],
+  "template": "Scoped Markdown completion report with JSON constraint checklist; visual preview does not apply."
+}

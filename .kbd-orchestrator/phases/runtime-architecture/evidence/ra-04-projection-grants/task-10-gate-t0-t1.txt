@@ -1,0 +1,158 @@
+warning: profiles for the non root package will be ignored, specify profiles at the workspace root:
+package:   /Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate/Cargo.toml
+workspace: /Users/gqadonis/Projects/prometheus/flint-gate/Cargo.toml
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Checking flint-gate-core v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 21.06s
+warning: profiles for the non root package will be ignored, specify profiles at the workspace root:
+package:   /Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate/Cargo.toml
+workspace: /Users/gqadonis/Projects/prometheus/flint-gate/Cargo.toml
+    Checking tokio v1.50.0
+    Checking num_cpus v1.17.0
+    Checking deadpool-runtime v0.1.4
+    Checking assert-json-diff v2.0.2
+    Checking tokio-util v0.7.18
+    Checking tokio-rustls v0.26.4
+    Checking tokio-stream v0.1.18
+    Checking async-compression v0.4.41
+    Checking tokio-native-tls v0.3.1
+    Checking fs-err v3.3.0
+    Checking deadpool v0.12.3
+    Checking tokio-tungstenite v0.28.0
+    Checking sqlx-core v0.8.6
+    Checking tokio-test v0.4.5
+    Checking h2 v0.4.13
+    Checking tower v0.5.3
+    Checking combine v4.6.7
+    Checking tower-http v0.6.8
+    Checking sqlx-postgres v0.8.6
+    Checking redis v1.2.4
+    Checking hyper v1.8.1
+    Checking hyper-util v0.1.20
+    Checking sqlx v0.8.6
+    Checking axum v0.8.8
+    Checking hyper-timeout v0.5.2
+    Checking hyper-rustls v0.27.7
+    Checking hyper-tls v0.6.0
+    Checking axum-server v0.7.3
+    Checking wiremock v0.6.5
+    Checking reqwest v0.12.28
+    Checking tonic v0.14.6
+    Checking rust-embed v8.11.0
+    Checking utoipa-swagger-ui v9.0.2
+    Checking tower_governor v0.8.0
+    Checking flint-gate-core v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core)
+warning: this function has a `#[must_use]` attribute with no message, but returns a type already marked as `#[must_use]`
+  --> crates/flint-gate-core/src/auth/jwks_publish.rs:93:1
+   |
+93 | pub fn build_jwks(keys: &[crate::db::JwtSigningKeyPublic]) -> anyhow::Result<JwkSet> {
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |
+   = help: either add some descriptive message or remove the attribute
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#double_must_use
+   = note: `#[warn(clippy::double_must_use)]` on by default
+
+warning: this call to `as_ref` does nothing
+  --> crates/flint-gate-core/src/authz/schema.rs:60:27
+   |
+60 |             let key_str = key.as_ref();
+   |                           ^^^^^^^^^^^^ help: try: `key`
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#useless_asref
+   = note: `#[warn(clippy::useless_asref)]` on by default
+
+warning: this function has too many arguments (8/7)
+  --> crates/flint-gate-core/src/stream/websocket.rs:45:1
+   |
+45 | / pub async fn ws_bridge(
+46 | |     client_socket: WebSocket,
+47 | |     upstream_url: &str,
+48 | |     config: &StreamConfig,
+...  |
+53 | |     approval_handle: Option<ApprovalHandleParts>,
+54 | | ) -> StreamMetrics {
+   | |__________________^
+   |
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#too_many_arguments
+   = note: `#[warn(clippy::too_many_arguments)]` on by default
+
+warning: `flint-gate-core` (lib) generated 3 warnings (run `cargo clippy --fix --lib -p flint-gate-core -- --no-deps` to apply 1 suggestion)
+warning: clamp-like pattern without using clamp function
+    --> crates/flint-gate-core/src/stream/processor.rs:1149:26
+     |
+1149 |                 .map(|t| (t / 2).max(10).min(300))
+     |                          ^^^^^^^^^^^^^^^^^^^^^^^^ help: replace with clamp: `(t / 2).clamp(10, 300)`
+     |
+     = note: clamp will panic if max < min
+     = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#manual_clamp
+     = note: `#[warn(clippy::manual_clamp)]` on by default
+
+warning: clamp-like pattern without using clamp function
+    --> crates/flint-gate-core/src/stream/processor.rs:1163:26
+     |
+1163 |                 .map(|t| (t / 2).max(10).min(300))
+     |                          ^^^^^^^^^^^^^^^^^^^^^^^^ help: replace with clamp: `(t / 2).clamp(10, 300)`
+     |
+     = note: clamp will panic if max < min
+     = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#manual_clamp
+
+warning: clamp-like pattern without using clamp function
+    --> crates/flint-gate-core/src/stream/processor.rs:1177:26
+     |
+1177 |                 .map(|t| (t / 2).max(10).min(300))
+     |                          ^^^^^^^^^^^^^^^^^^^^^^^^ help: replace with clamp: `(t / 2).clamp(10, 300)`
+     |
+     = note: clamp will panic if max < min
+     = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#manual_clamp
+
+warning: `flint-gate-core` (lib test) generated 6 warnings (3 duplicates)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 49.16s
+warning: profiles for the non root package will be ignored, specify profiles at the workspace root:
+package:   /Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate/Cargo.toml
+workspace: /Users/gqadonis/Projects/prometheus/flint-gate/Cargo.toml
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+   Compiling flint-gate-core v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 35.29s
+     Running unittests src/lib.rs (/Users/gqadonis/.cargo/build-cache/26/a0fea4fb871c07/debug/deps/flint_gate_core-31b2d3f6291159ea)
+
+running 2 tests
+test middleware::aso_replica_grant::tests::service_identity_and_wrong_revision_are_refused ... ok
+test middleware::aso_replica_grant::tests::caller_fields_and_forged_identity_data_cannot_enter_replica_claims ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 579 filtered out; finished in 0.01s
+
+     Running tests/mcp_e2e.rs (/Users/gqadonis/.cargo/build-cache/26/a0fea4fb871c07/debug/deps/mcp_e2e-1d0810bd1cc9d3dd)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 5 filtered out; finished in 0.00s
+
+warning: profiles for the non root package will be ignored, specify profiles at the workspace root:
+package:   /Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate/Cargo.toml
+workspace: /Users/gqadonis/Projects/prometheus/flint-gate/Cargo.toml
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.78s
+     Running unittests src/lib.rs (/Users/gqadonis/.cargo/build-cache/26/a0fea4fb871c07/debug/deps/flint_gate_core-31b2d3f6291159ea)
+
+running 1 test
+test auth::jwt_mint::tests::replica_mint_emits_only_the_typed_allowlist_and_bounds_expiry ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 580 filtered out; finished in 0.00s
+
+     Running tests/mcp_e2e.rs (/Users/gqadonis/.cargo/build-cache/26/a0fea4fb871c07/debug/deps/mcp_e2e-1d0810bd1cc9d3dd)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 5 filtered out; finished in 0.00s
+
+warning: profiles for the non root package will be ignored, specify profiles at the workspace root:
+package:   /Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate/Cargo.toml
+workspace: /Users/gqadonis/Projects/prometheus/flint-gate/Cargo.toml
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+   Compiling flint-gate-core v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core)
+   Compiling flint-gate v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1m 19s

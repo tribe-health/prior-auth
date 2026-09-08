@@ -1,0 +1,15 @@
+{
+  "artifact_name": "ra-03-clinical-command-parity",
+  "artifact_type": "content",
+  "content_type": "direct:content",
+  "clarified_intent": "Produce bounded completion evidence for RA-03 after verified-context signing and reassessment implementation and behavioral acceptance.",
+  "target_state": "A deterministic report that validates current source hashes, focused T0/T1 evidence, independent authority, durable reconciliation, three-state preservation and caller truth.",
+  "requires_code_execution": true,
+  "unknowns": [
+    "The browser exposes reassessment in a hook but no mounted control invokes it.",
+    "The browser surgeon-gate route remains a placeholder and exposes no signing operation.",
+    "Desktop wrappers have no Tauri command registration or native credential owner.",
+    "Production deployment, browser rendering, Tauri windows and physical devices are outside RA-03."
+  ],
+  "scope": "The review begins with read-only assessment. A blocking isolated finding may reopen the task for the minimum source, test, architecture and evidence changes needed to satisfy the stated constraints."
+}

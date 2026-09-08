@@ -1,0 +1,36 @@
+{
+  "mode": "artifact",
+  "verdict": "PASS",
+  "judge_model": "k3",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "claim": "A2 asserts specific Gate session-cache revocation facts \u2014 L1 TTL 60s, fixed L2 TTL 60s, invalidate_session having only a test caller \u2014 but the packet contains no source excerpt for Gate's cache/mod.rs, and the cited-path resolution for 'cache/mod.rs' matched only unrelated ASO files.",
+      "evidence": "Assessment: \"Cached identities are accepted first; configured L1 TTL is 60 seconds, optional L2 has a fixed 60-second TTL, and invalidate_session has only a test caller (`cache/mod.rs:50`, 182, 198; `middleware/pipeline.rs:177`).\" cited_paths: \"EXISTS cache/mod.rs -> 3 matches (crates/aso-host/src/domain/mod.rs, crates/aso-host/src/ports/mod.rs, crates/aso-server-axum/src/routes/mod.rs)\" \u2014 none of these is the Gate file the claim is about, and no excerpt of Gate cache/mod.rs or pipeline.rs appears in source_evidence. These numeric facts ground the A2 conclusion that bounded session revocation is missing, which planning will design a revocation budget against.",
+      "suggested_fix": "Include a bounded excerpt of Gate's cache/mod.rs (TTL configuration and invalidate_session callers) and pipeline.rs:177, or downgrade the claim to 'TTL values unverified; revocation contract absent because no invalidation caller was found' with the search scope stated."
+    },
+    {
+      "severity": "WARNING",
+      "file": "assessment.md",
+      "claim": "The assessment never evaluates PEM's pending-action replay channel against the explicit phase invariant that clinical commands cannot be replayed by local SQL or Zustand actions, even though the packet quotes that exact code and the assessment recommends assigning PEM lifecycle/publication ownership.",
+      "evidence": "source_evidence local-first-runtime.ts lines 244-256 show `replayActionWithRetry(action, policy, storeApi)` looping over persisted pendingActions on startup; goal 7 states \"Clinical commands remain authoritative and cannot be replayed by local SQL or Zustand actions.\" A4 discusses hydration, disposal, globals, and Ready semantics from this same file but is silent on the replay channel, and GOAL PROGRESS row 7 evidence (\"Exact pins and three-state primitives remain; integrated authority/state ownership fails\") does not mention replay. 'Inputs for the next stage' directs planning to assign PEM lifecycle ownership without flagging that replayPendingActions must be disabled or fenced for command-like actions.",
+      "suggested_fix": "Add an explicit finding to A4 (or a new gap note) stating that PEM's replay-pending-actions mechanism must be disabled, restricted to non-clinical actions, or epoch-fenced before PEM lifecycle adoption, so the plan cannot silently route clinical commands through a replayable channel."
+    },
+    {
+      "severity": "SUGGESTION",
+      "file": "assessment.md",
+      "claim": "Several load-bearing, line-precise claims have no excerpt anywhere in the packet, so the planning stage cannot re-verify them without redoing the searches.",
+      "evidence": "Unexcerpted citations include: \"the release refusal found in `routes/gate.rs:45`\"; \"`crates/aso-host/src/lib.rs:45` and line 64 check capabilities of that supplied actor\"; \"`app/shell/app-shell.tsx:27` still returns false for gate affirmation\"; \"Compose publishes insecure upstream Electric on port 3000 (`docker-compose.yaml:87`)\"; \"two independent SQL reads (`api/timeline-api.ts:46`, 55)\"; \"_graph_snapshot rows (`adapters/pglite-persistence.ts:71`, `adapters/tauri-sql-persistence.ts:67`)\"; and \"HTTP also exposes evidence counts with no counterpart in this wrapper set\" (the aso-server-axum lib.rs excerpt shows only health/cases/gate/letters routers).",
+      "suggested_fix": "Attach one- to five-line excerpts for each of these citations, or mark them explicitly as 'line number from inspection, excerpt not retained' so downstream stages know which facts need re-confirmation before being planned against."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

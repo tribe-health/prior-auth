@@ -1,4 +1,8 @@
-use axum::{extract::{Path, State}, routing::get, Json, Router};
+use axum::{
+    Json, Router,
+    extract::{Path, State},
+    routing::get,
+};
 use serde::Serialize;
 use uuid::Uuid;
 
@@ -25,5 +29,9 @@ async fn evidence_counts(
     Path(case_id): Path<Uuid>,
 ) -> Result<Json<EvidenceCountsDto>, crate::routes::letters::ApiError> {
     let c = state.services.evidence.counts(CaseId(case_id)).await?;
-    Ok(Json(EvidenceCountsDto { met: c.met, gap: c.gap, void: c.void }))
+    Ok(Json(EvidenceCountsDto {
+        met: c.met,
+        gap: c.gap,
+        void: c.void,
+    }))
 }

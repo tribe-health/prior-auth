@@ -1,0 +1,82 @@
+{
+  "scope": "Evidence checks for RA-01; static observations corroborate recorded mounted tests and are not fresh runtime proof.",
+  "constraints": [
+    {
+      "id": "current-evidence",
+      "severity": "blocking",
+      "status": "satisfied",
+      "evidence": "Acceptance 2.1/2.2/2.3 source and evidence hashes; validate.py recomputes all hashes."
+    },
+    {
+      "id": "transport-authority",
+      "severity": "blocking",
+      "status": "satisfied",
+      "evidence": "task-5-acceptance.json; mounted-session.json 34 checks and context-session.json 41 checks; exact contract checks in hashed test scripts."
+    },
+    {
+      "id": "untrusted-scope",
+      "severity": "blocking",
+      "status": "satisfied",
+      "evidence": "task-6-acceptance.json; context provider-trait/outage/reauthentication checks; gateway-session.json spoof and foreign-practice controls."
+    },
+    {
+      "id": "transaction-isolation",
+      "severity": "blocking",
+      "status": "satisfied",
+      "evidence": "task-7-acceptance.json; shared backend A=1/B=1/intersection=1; six production transaction exit markers; identity/local-setting mutation failures and restoration."
+    },
+    {
+      "id": "mounted-callers",
+      "severity": "blocking",
+      "status": "satisfied",
+      "evidence": "main.rs configured_sessions -> api_router -> session::router -> sessions.resolve -> identities.authenticate/memberships.resolve; actual cargo-run harness and Gate route checks."
+    },
+    {
+      "id": "inactive-desktop",
+      "severity": "blocking",
+      "status": "satisfied",
+      "evidence": "desktop/src-tauri/src/lib.rs wrapper; task-3.md accepting-port test 1 passed; desktop-context-guard.json bypass failed 101 and restored test passed."
+    },
+    {
+      "id": "architecture-scope",
+      "severity": "blocking",
+      "status": "satisfied",
+      "evidence": "Explicit aso-host dependency inventory and 25-session-authority.sql classification comments; clinical authority and replica flows remain future scoped changes."
+    },
+    {
+      "id": "mutation-proof",
+      "severity": "high",
+      "status": "satisfied",
+      "evidence": "provider-guard, membership-guard, transaction-context-guard, desktop-context-guard and gateway-identity-guard receipts; original failures retained."
+    },
+    {
+      "id": "limits",
+      "severity": "high",
+      "status": "satisfied",
+      "evidence": "dist/report.md records reused evidence, Gate duplicate headers, native UI, cancellation/concurrency, deployment, phase T2 and independent adversarial gate limits."
+    },
+    {
+      "id": "bundle-integrity",
+      "severity": "blocking",
+      "status": "satisfied",
+      "evidence": "Full Draft-07 schema checks; nonempty exact dist coverage; consistent log/decisions/state; persisted actual validate.py stdout."
+    }
+  ],
+  "deferred": [
+    {
+      "constraint": "Inherited workspace build/test, Flutter, web build, architecture audit",
+      "status": "deferred-to-phase-T2",
+      "reason": "execution.md and AGENTS tier order supersede stale blanket constraints.md commands."
+    },
+    {
+      "constraint": "Web UI accessibility, no-any/no-console, generated themes and existing query-cache removal",
+      "status": "outside-touched-scope",
+      "reason": "RA-01 does not edit these surfaces; no blanket absence-based Passed claim."
+    },
+    {
+      "constraint": "Independent adversarial completion gate",
+      "status": "pending-parent-stage",
+      "reason": "Runs after this deterministic refiner stage."
+    }
+  ]
+}

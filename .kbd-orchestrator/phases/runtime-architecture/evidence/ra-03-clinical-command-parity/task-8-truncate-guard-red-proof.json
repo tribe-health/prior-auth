@@ -1,0 +1,49 @@
+{
+  "result": "Passed",
+  "verification_tier": 1,
+  "failure_injected": "Migration 2026090606 was removed from the server migration set",
+  "command": "python3 scripts/test-signing-transaction.py --install-mode fresh --output /tmp/ra03-truncate-red-fixture.json",
+  "expected_exit": "nonzero when TRUNCATE succeeds without the statement guard",
+  "observed_exit": 1,
+  "failed_checks": {
+    "actual_appservices_pg_repository_lifecycle": {
+      "result": "Failed",
+      "return_code": 101,
+      "assertion_count": 4
+    }
+  },
+  "matching_failure_output": [
+    "approved QA rows were truncated: PgQueryResult { rows_affected: 0 }"
+  ],
+  "cleanup": {
+    "disposable_database_deleted": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "disposable_login_deleted": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "disposable_owner_role": {
+      "result": "Passed",
+      "action": "already_absent"
+    },
+    "aso_session_reader": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    },
+    "aso_gate_executor": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    },
+    "aso_gate_owner": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    }
+  },
+  "source_sha256_before": "77782bbf3dc22b37463ffa0168e17919a9bc9bc0c19ac1f46bb545034c5e7d29",
+  "source_sha256_after_restore": "77782bbf3dc22b37463ffa0168e17919a9bc9bc0c19ac1f46bb545034c5e7d29"
+}

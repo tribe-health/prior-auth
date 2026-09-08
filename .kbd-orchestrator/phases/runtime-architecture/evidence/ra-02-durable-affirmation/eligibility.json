@@ -1,0 +1,159 @@
+{
+  "task": "1.1",
+  "driver_ordinal": 1,
+  "task_total": 9,
+  "result": "Passed",
+  "scope": "Eligibility only; no durable affirmation implementation or live prerequisites certified",
+  "observed_at": "2026-09-06T20:43:52.316128+00:00",
+  "canonical_revision": 144,
+  "dependency": {
+    "id": "ra-01-verified-session",
+    "status": "complete",
+    "implementation_status": "complete",
+    "tasks_complete": 8,
+    "archive": "openspec/changes/archive/2026-09-06-ra-01-verified-session",
+    "promoted_spec": "openspec/specs/ra-01-verified-session/spec.md",
+    "qa": "Refiner Passed; independent critic and native fallback judge Passed; REST timeout explicitly retained"
+  },
+  "current_hash_verification": {
+    "result": "Passed",
+    "count": 20,
+    "files": [
+      {
+        "original_path": "Cargo.toml",
+        "resolved_path": "Cargo.toml",
+        "sha256": "cf5078a47344c0aeb8391245b40885fae2f4c5ffd93ce62e57e51c329820d39d"
+      },
+      {
+        "original_path": "Cargo.lock",
+        "resolved_path": "Cargo.lock",
+        "sha256": "cf262d424a41b275f00aca2696eb487f2d16df818145cb98db789d39b031aa3d"
+      },
+      {
+        "original_path": "crates/aso-host/src/lib.rs",
+        "resolved_path": "crates/aso-host/src/lib.rs",
+        "sha256": "1c7871bf053bb6b13e1da256a306a7cc06b781a229fdbc4cc76545aa99bd1eca"
+      },
+      {
+        "original_path": "crates/aso-host/src/session.rs",
+        "resolved_path": "crates/aso-host/src/session.rs",
+        "sha256": "bcccd5d563c5f9e1ac9646b7a784fd28a0b831143f0aba19b2f8d829498cae43"
+      },
+      {
+        "original_path": "crates/aso-server-axum/src/lib.rs",
+        "resolved_path": "crates/aso-server-axum/src/lib.rs",
+        "sha256": "b71d6149a490a26e7181c7972b61e20a6c8da5b4d7e413605a4058ace1e1d2b4"
+      },
+      {
+        "original_path": "crates/aso-server-axum/src/session.rs",
+        "resolved_path": "crates/aso-server-axum/src/session.rs",
+        "sha256": "6d0deebbd2f35ab0cd8e755994b0b324c85f5722f53fa4d080faf4c7298f195b"
+      },
+      {
+        "original_path": "crates/aso-web-server/Cargo.toml",
+        "resolved_path": "crates/aso-web-server/Cargo.toml",
+        "sha256": "c9d8678d438a95b3d3ba9c4c615696351deae1b162832355d7767b0c0c328905"
+      },
+      {
+        "original_path": "crates/aso-web-server/src/main.rs",
+        "resolved_path": "crates/aso-web-server/src/main.rs",
+        "sha256": "a6c1e85fe9f2a6ce5d4268709bbb8d69139e659f16edd5084cad29c1485b8260"
+      },
+      {
+        "original_path": "crates/aso-web-server/src/adapters/mod.rs",
+        "resolved_path": "crates/aso-web-server/src/adapters/mod.rs",
+        "sha256": "f6acbc994c8a8095856e3148049fcc189f49ab13917e96b5ef2770382eb73318"
+      },
+      {
+        "original_path": "crates/aso-web-server/src/adapters/session.rs",
+        "resolved_path": "crates/aso-web-server/src/adapters/session.rs",
+        "sha256": "7c2838b08b273ceef01f38df6bb310f385088fc17bee858b246f02895c5db510"
+      },
+      {
+        "original_path": "desktop/src-tauri/src/lib.rs",
+        "resolved_path": "desktop/src-tauri/src/lib.rs",
+        "sha256": "790621cbaf115742a332a998b852c3f04f02f67557952c21a391b86ccfd693ec"
+      },
+      {
+        "original_path": "docker/bootstrap/25-session-authority.sql",
+        "resolved_path": "docker/bootstrap/25-session-authority.sql",
+        "sha256": "55a7029d1f683c208005262d1bbbd554f9f9a6e1791bbdace70a87f664760f42"
+      },
+      {
+        "original_path": "scripts/test-session-boundary.py",
+        "resolved_path": "scripts/test-session-boundary.py",
+        "sha256": "e27706b7b4d036b5b61bc98ac4d15dff6324a16a7fbfb8decb0d133c9981e600"
+      },
+      {
+        "original_path": "crates/aso-web-server/src/adapters/session/transaction_tests.rs",
+        "resolved_path": "crates/aso-web-server/src/adapters/session/transaction_tests.rs",
+        "sha256": "0eed3cd8d501a64f2fe2b8d8cdd71a19a0da79d4df1b283a4ec6574a50b09309"
+      },
+      {
+        "original_path": "scripts/test-session-context.py",
+        "resolved_path": "scripts/test-session-context.py",
+        "sha256": "ed49781cc088b6f4c2e6c9c61166727061f49f63e02796dbd0f92d2cd1c298d0"
+      },
+      {
+        "original_path": "openspec/changes/ra-01-verified-session/design.md",
+        "resolved_path": "openspec/changes/archive/2026-09-06-ra-01-verified-session/design.md",
+        "sha256": "b311b96b7d2cdbdf65a48fab5cadf3f4af525e8249e3aa514ee5b3fbbe5cf79b"
+      },
+      {
+        "original_path": "docker/flint-gate/config.yaml",
+        "resolved_path": "docker/flint-gate/config.yaml",
+        "sha256": "888a44a67379c1e9b3047aa13f3449b198131990df3dfc6437120d5cc79230d3"
+      },
+      {
+        "original_path": "scripts/test-session-gateway.py",
+        "resolved_path": "scripts/test-session-gateway.py",
+        "sha256": "a7b1c0ffd020acf7632cb6d9cfe1eed901f307d5071d08fbce8b0596ba3129d5"
+      },
+      {
+        "original_path": ".kbd-orchestrator/phases/runtime-architecture/evidence/ra-01-verified-session/gateway-session.json",
+        "resolved_path": ".kbd-orchestrator/phases/runtime-architecture/evidence/ra-01-verified-session/gateway-session.json",
+        "sha256": "ceb985a378539bf3e919c9faf155a92cf6fbd84a5f4891e09ceb418defbed292"
+      },
+      {
+        "original_path": ".kbd-orchestrator/phases/runtime-architecture/evidence/ra-01-verified-session/context-session.json",
+        "resolved_path": ".kbd-orchestrator/phases/runtime-architecture/evidence/ra-01-verified-session/context-session.json",
+        "sha256": "07b5474cd230283cc0419391d72187e1079f5ce707a002371256c1738be3cf0c"
+      }
+    ]
+  },
+  "decision_gates": {
+    "G-PIN": "No PEM adoption or pin change in RA02",
+    "G-REV": "No bounded active-stream revocation claim in RA02",
+    "G-DATA": "Synthetic server fixtures only; no real clinical data or browser/native private persistence approval inferred",
+    "G-SYNC": "No materializer adoption in RA02",
+    "G-NATIVE": "Typed wrapper remains inactive until RA17 supplies approved native authority",
+    "G-MEASURE": "No surface, performance or device certification in this eligibility task"
+  },
+  "registration": {
+    "canonical_total": 9,
+    "only_started_task": "1",
+    "remaining_tasks": "2 through 9 registered pending via typed CLI"
+  },
+  "historical_unresolved_blockers": [
+    {
+      "id": "bottleneck-1cbbd4ffeb64d651067d2bc8b1dafebb5da095699cbd06771802e9930aa03f73",
+      "summary": "Task Before boundary 1.2 Implement verified identity resolution and the ASO membership read in one mounted session path; verify pinned Kratos native-token transport before selecting header translation. blocked: Task subject 1.2 Implement verified identity resolution and the ASO membership read in one mounted session path; verify pinned Kratos native-token transport before selecting header translation. is not a unique canonical work item"
+    },
+    {
+      "id": "bottleneck-ee6cb6b6dd42b283b1638a2e440287de1a6a38c949083658392f66a58dfc7935",
+      "summary": "Phase After boundary web-ui-architecture::pem-refresh-3-3-0 blocked: boundary web-ui-architecture::pem-refresh-3-3-0 has no matching start receipt"
+    }
+  ],
+  "historical_blocker_disposition": "Existing RA01 abbreviated-task-subject and prior child-phase boundary entries retained. Canonical RA01 is complete and current RA02 start boundary succeeded. These are not erased or reported resolved by this eligibility task. Phase publication remains blocked.",
+  "no_application_changes": true,
+  "completion": {
+    "revision": 147,
+    "tasks_done": 1,
+    "tasks_total": 9,
+    "status": "IN_PROGRESS",
+    "next": "/kbd-apply ra-02-durable-affirmation",
+    "phase_complete": 1,
+    "phase_total": 24,
+    "publication": "BLOCKED"
+  }
+}

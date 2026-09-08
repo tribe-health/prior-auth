@@ -1,0 +1,122 @@
+{
+  "result": "Passed",
+  "checks": [
+    {
+      "name": "schema:artifact_manifest.json",
+      "result": "Passed",
+      "detail": "Draft-07 valid"
+    },
+    {
+      "name": "schema:constraints.json",
+      "result": "Passed",
+      "detail": "Draft-07 valid"
+    },
+    {
+      "name": "schema:.refiner/artifacts/ra-04-projection-grants/state.json",
+      "result": "Passed",
+      "detail": "Draft-07 valid"
+    },
+    {
+      "name": "manifest-dist-coverage",
+      "result": "Passed",
+      "detail": "declared=['dist/checklist.json', 'dist/report.md'] actual=['dist/checklist.json', 'dist/report.md']"
+    },
+    {
+      "name": "constraint-coverage",
+      "result": "Passed",
+      "detail": "10/10 constraints Passed"
+    },
+    {
+      "name": "current-source-inventory",
+      "result": "Passed",
+      "detail": "29 source hashes current"
+    },
+    {
+      "name": "final-receipt-inventory",
+      "result": "Passed",
+      "detail": "34 receipt hashes current"
+    },
+    {
+      "name": "behavioral-acceptance-receipts",
+      "result": "Passed",
+      "detail": "tasks 2.1 through 2.5 are Passed and their cited raw outputs retain recorded hashes"
+    },
+    {
+      "name": "mounted-gate",
+      "result": "Passed",
+      "detail": "19 checks, private typed failure responses, expected caller counts and all synthetic process cleanup Passed"
+    },
+    {
+      "name": "gate-database-fixtures",
+      "result": "Passed",
+      "detail": "fresh=16 checks/18 lifecycle assertions/cleanup 6; upgrade=22 checks/18 lifecycle assertions/cleanup 6"
+    },
+    {
+      "name": "practice-derivation",
+      "result": "Passed",
+      "detail": "fresh 10/10, upgrade 10/10 and three cleanup entries Passed"
+    },
+    {
+      "name": "applicable-t0-t1",
+      "result": "Passed",
+      "detail": "primary, Gate, FRF and web final logs contain expected passing checks and no failed test result"
+    },
+    {
+      "name": "nonhuman-principal-negative-control",
+      "result": "Passed",
+      "detail": "injected non-human session failed at HTTP 200 before the handler guard and passed at HTTP 403 after restoration"
+    },
+    {
+      "name": "current-session-negative-control",
+      "result": "Passed",
+      "detail": "injected expired/non-human session failed at HTTP 200 before independent route guards and passed after restoration"
+    },
+    {
+      "name": "credential-ambiguity-negative-control",
+      "result": "Passed",
+      "detail": "whitespace-confusable duplicate cookie and blank native token failed before parsing fixes and passed after restoration"
+    },
+    {
+      "name": "replica-only-jti-strictness",
+      "result": "Passed",
+      "detail": "strict UUID token ID remains mandatory for ASO replica claims while missing or legacy non-UUID IDs remain compatible on non-replica lanes"
+    },
+    {
+      "name": "production-issuer-config",
+      "result": "Passed",
+      "detail": "corrected --lib command proves production configuration refuses a missing issuer; initial feature-mismatched command remains excluded evidence"
+    },
+    {
+      "name": "private-grant-errors",
+      "result": "Passed",
+      "detail": "mounted Gate fixture failed before private typed replica errors and passed 19 checks after no-store/Vary responses were restored"
+    },
+    {
+      "name": "fixed-projection-source",
+      "result": "Passed",
+      "detail": "revision 1 contains the five approved relations, evidence_states key approval and gate_affirmed_at"
+    },
+    {
+      "name": "caller-and-deployment-truth",
+      "result": "Passed",
+      "detail": "ASO mounted; removed cases router had one actor-less route; Gate hook present but deployment disabled; production FRF requires issuer and shape remains feature-gated; desktop IPC inactive; web graph selector deferred"
+    },
+    {
+      "name": "openspec-task-state",
+      "result": "Passed",
+      "detail": "nine prior tasks checked and final review task present"
+    },
+    {
+      "name": "bounded-reporting",
+      "result": "Passed",
+      "detail": "report preserves deployment, live Electric, desktop, web, G-DATA and tier limits"
+    },
+    {
+      "name": "git-diff-check",
+      "result": "Passed",
+      "detail": "prior-auth=0, flint-gate=0, flint-realtime-fabric=0"
+    }
+  ],
+  "passed": 23,
+  "failed": 0
+}

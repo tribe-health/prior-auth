@@ -1,0 +1,116 @@
+{
+  "result": "Passed",
+  "task": 9,
+  "openspec_task": "2.5",
+  "requirement": "Fresh and upgraded databases overwrite forged derived practice IDs and preserve parent-transfer cascades under a non-owner NOBYPASSRLS role; cases RLS denies an unowned practice and evidence_states remains approved reference data without an invented trigger.",
+  "evidence_mode": "Disposable local PostgreSQL integration fixture using the current schema and derivation migration with synthetic records.",
+  "prerequisites": [
+    {
+      "name": "Existing local Compose PostgreSQL service and in-container flint administrator",
+      "available": true
+    },
+    {
+      "name": "Current schema and docker/bootstrap/15-denormalize-practice-id.sql",
+      "available": true
+    },
+    {
+      "name": "External network, production credential or patient record",
+      "required": false
+    }
+  ],
+  "commands": [
+    "python3 scripts/test-practice-derivation.py --output .kbd-orchestrator/phases/runtime-architecture/evidence/ra-04-projection-grants/task-9-practice-derivation-restored.json",
+    "docker compose exec -T db psql -U flint -d postgres ... count synthetic_ra04_% databases and roles"
+  ],
+  "observed_results": {
+    "practice_derivation": {
+      "result": "Passed",
+      "modes": {
+        "fresh": {
+          "passed": 10,
+          "failed": 0,
+          "restricted_login": "non-owner NOSUPERUSER NOBYPASSRLS"
+        },
+        "upgrade": {
+          "passed": 10,
+          "failed": 0,
+          "restricted_login": "non-owner NOSUPERUSER NOBYPASSRLS"
+        }
+      },
+      "proof": [
+        "case_evidence missing and false practice values derive from the case",
+        "direct case_evidence practice forgery is overwritten",
+        "unattached documents derive from the required patient",
+        "evidence citations derive from their evidence row",
+        "permitted case transfers cascade case_evidence and evidence_citations in both directions",
+        "permitted patient transfers cascade documents in both directions",
+        "cases RLS refuses an unowned practice",
+        "evidence_states has zero application triggers and exactly gap, met and void"
+      ],
+      "raw_output": "task-9-practice-derivation-restored.json",
+      "raw_output_sha256": "918f60ad3e591a703e10b570cc830c5cf7d8c4d5c1c909d535f146989b43fd26"
+    },
+    "negative_control": {
+      "result": "Passed",
+      "expected_fixture_exit": 1,
+      "observed_fixture_exit": 1,
+      "expected_failure": "AssertionError:T3_direct_practice_update_is_forced_back",
+      "observed_failure": "AssertionError:T3_direct_practice_update_is_forced_back",
+      "cleanup": "Passed",
+      "raw_output": "task-9-sabotage-derivation.json",
+      "raw_output_sha256": "9d3f9b537f2da1f7e2d89dc3f49971f4b16e2af3ff599465b7c763232b21d286"
+    },
+    "receipt_audit_and_cleanup": {
+      "result": "Passed",
+      "fixture_databases": 0,
+      "fixture_roles": 0,
+      "proof": [
+        "passing receipt contains the exact ten-check set in both modes",
+        "all passing and sabotage cleanup entries passed",
+        "migration hash was restored",
+        "task-4 receipt remained unchanged"
+      ],
+      "raw_output": "task-9-audit.txt",
+      "raw_output_sha256": "e9fc233efb18cdba5b73d5a401f1412dbd7d4705bfa9da28dbf525894ccd69dd"
+    }
+  },
+  "current_source_sha256": [
+    {
+      "path": "scripts/test-practice-derivation.py",
+      "sha256": "c06a17513d6925b4873930cd1af590b482813a9c0b1ffc8984643672d8ac3ae5"
+    },
+    {
+      "path": "docker/bootstrap/15-denormalize-practice-id.sql",
+      "sha256": "a99e12477298e76a1efb18aebe5c2563707d9cb2d0662fbf58f8b576d9935bb4"
+    },
+    {
+      "path": "docs/design/schema/schema.sql",
+      "sha256": "d38fee2050e0de053c3b04c73f5215447900da5aee1a06a749fd5abdb7f9b15d"
+    },
+    {
+      "path": "openspec/changes/ra-04-projection-grants/specs/ra-04-projection-grants/spec.md",
+      "sha256": "e5ff4309740be5af62ab757b01e945042a363d20c2450fc0e8fbd3f20641fcdd"
+    }
+  ],
+  "guards_added": [],
+  "guards_exercised": [
+    {
+      "path": "docker/bootstrap/15-denormalize-practice-id.sql",
+      "failure_scenario": "A direct practice_id update bypasses the case_evidence derivation trigger.",
+      "negative_control_proved": true,
+      "restored_sha256": "a99e12477298e76a1efb18aebe5c2563707d9cb2d0662fbf58f8b576d9935bb4"
+    }
+  ],
+  "harness_change": {
+    "path": "scripts/test-practice-derivation.py",
+    "observed_problem": "The fixed task-4 output path allowed later acceptance runs to overwrite earlier evidence.",
+    "change": "Added an explicit --output option while retaining the original default.",
+    "verified": "The task-9 receipt was created and the task-4 receipt hash remained aa5021cb7ee5ad0c99053013bca4cfbe50123a68469c4fdd4559fc42cfc00b50."
+  },
+  "unverified": [
+    "Electric delivery",
+    "Production deployment role installation",
+    "Tier 2, Tier 3, browser, Tauri and physical-device surfaces",
+    "G-DATA approval for persistent real clinical data"
+  ]
+}

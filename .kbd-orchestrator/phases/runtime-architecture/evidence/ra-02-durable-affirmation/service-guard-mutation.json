@@ -1,0 +1,17 @@
+{
+  "status": "Passed",
+  "guard": "AppServices clinical capability check",
+  "mutation": "Bypass authority refusal while keeping repository and test unchanged",
+  "original_sha256": "57d27ba9b5a1f9b5641b729804300b3daa855bdc20e55bf12cb12cb7b4253f54",
+  "command": "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-gate-transaction.py",
+  "return_code": 1,
+  "actual_output": [
+    "gate_transaction_check: runtime_refuses_privileged_login",
+    "gate_transaction_check: runtime_refuses_noninherited_owner_membership",
+    "test adapters::gate::transaction_tests::gate_transaction_lifecycle ... FAILED",
+    "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 4 filtered out; finished in 0.15s"
+  ],
+  "mutation_detected": true,
+  "restored_sha256": "57d27ba9b5a1f9b5641b729804300b3daa855bdc20e55bf12cb12cb7b4253f54",
+  "restored_byte_for_byte": true
+}

@@ -1,0 +1,11 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.07s
+     Running unittests src/lib.rs (/Users/gqadonis/.cargo/build-cache/02/70d32e977a4fbf/debug/deps/aso_server_axum-f8afc4fcd3fc590a)
+
+running 4 tests
+test session::tests::an_agent_may_not_attempt_a_clinical_act ... ok
+test session::tests::mounted_registry_refuses_failed_or_expired_membership_resolution ... ok
+test session::tests::mounted_registry_rejects_client_projection_controls ... ok
+test session::tests::mounted_registry_derives_two_practice_grants ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 22 filtered out; finished in 0.00s
+

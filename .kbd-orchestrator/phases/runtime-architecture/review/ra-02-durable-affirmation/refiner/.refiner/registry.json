@@ -1,0 +1,11 @@
+{
+  "artifacts": {
+    "ra-02-durable-affirmation": {
+      "path": ".refiner/artifacts/ra-02-durable-affirmation",
+      "artifact_type": "content",
+      "content_type": "direct:content",
+      "updated_at": "2026-09-06T23:14:09Z",
+      "finalized_at": "2026-09-06T23:14:09Z"
+    }
+  }
+}

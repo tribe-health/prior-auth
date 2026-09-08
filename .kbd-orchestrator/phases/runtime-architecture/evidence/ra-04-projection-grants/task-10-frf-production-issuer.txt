@@ -1,0 +1,43 @@
+   Compiling frf-gateway v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-gateway)
+error[E0432]: unresolved import `frf_shape_electric`
+  --> crates/frf-gateway/tests/shape_projection_grant.rs:16:5
+   |
+16 | use frf_shape_electric::{ShapeCatalog, ShapeResolver};
+   |     ^^^^^^^^^^^^^^^^^^ use of unresolved module or unlinked crate `frf_shape_electric`
+   |
+   = help: if you wanted to use a crate named `frf_shape_electric`, use `cargo add frf_shape_electric` to add it to your `Cargo.toml`
+
+error[E0433]: cannot find `shape` in `routes`
+   --> crates/frf-gateway/tests/shape_projection_grant.rs:175:38
+    |
+175 |             get(frf_gateway::routes::shape::get_shape::<
+    |                                      ^^^^^ could not find `shape` in `routes`
+    |
+note: found an item that was configured out
+   --> crates/frf-gateway/src/routes/mod.rs:8:9
+    |
+  7 | #[cfg(feature = "shape-facade")]
+    |       ------------------------ the item is gated behind the `shape-facade` feature
+  8 | pub mod shape;
+    |         ^^^^^
+
+error[E0560]: struct `AppState<NoopBroker, CountingAuthz, FixedIdentity, (), (), ()>` has no field named `shape_facade`
+   --> crates/frf-gateway/tests/shape_projection_grant.rs:167:9
+    |
+167 |         shape_facade: Some(facade.clone()),
+    |         ^^^^^^^^^^^^ `AppState<_, _, _, _, _, _>` does not have this field
+    |
+    = note: all struct fields are already assigned
+
+error[E0560]: struct `AppState<NoopBroker, CountingAuthz, FixedIdentity, (), (), ()>` has no field named `shape_resolver`
+   --> crates/frf-gateway/tests/shape_projection_grant.rs:168:9
+    |
+168 |         shape_resolver: Some(resolver),
+    |         ^^^^^^^^^^^^^^ `AppState<_, _, _, _, _, _>` does not have this field
+    |
+    = note: all struct fields are already assigned
+
+Some errors have detailed explanations: E0432, E0433, E0560.
+For more information about an error, try `rustc --explain E0432`.
+error: could not compile `frf-gateway` (test "shape_projection_grant") due to 4 previous errors
+warning: build failed, waiting for other jobs to finish...

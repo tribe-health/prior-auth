@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "files": [
+    {
+      "repository": "prior-auth",
+      "path": "scripts/test-practice-derivation.py",
+      "sha256": "c7a4acfe28d79a00dc3cd13cb1405c819a9e9d1b0fc99a28ee50f6f75a12906b"
+    },
+    {
+      "repository": "prior-auth",
+      "path": "scripts/test-replica-grant.py",
+      "sha256": "4fc8613370ab0e8372f2870f3c72519de81dc907005c6533a898841e47ed6d87"
+    },
+    {
+      "repository": "prior-auth",
+      "path": "docker/bootstrap/15-denormalize-practice-id.sql",
+      "sha256": "a99e12477298e76a1efb18aebe5c2563707d9cb2d0662fbf58f8b576d9935bb4"
+    },
+    {
+      "repository": "prior-auth",
+      "path": "openspec/changes/ra-04-projection-grants/tasks.md",
+      "sha256": "2ad01a958f1b2a8d382601dcd5401c2150e7bd5240ab693240b20087f5e8d2ac"
+    },
+    {
+      "repository": "prior-auth",
+      "path": ".kbd-orchestrator/phases/runtime-architecture/evidence/ra-04-projection-grants/task-4.md",
+      "sha256": "a5833f476bd0d8670c27f787a28e1e528c63b4fdf78a90cedcf254f00f7990a4"
+    },
+    {
+      "repository": "prior-auth",
+      "path": ".kbd-orchestrator/phases/runtime-architecture/evidence/ra-04-projection-grants/task-4-mounted-grant.json",
+      "sha256": "28567c637b7d580205e56cd88c5387f5996822aa5c36a14483b37274a2454cec"
+    },
+    {
+      "repository": "prior-auth",
+      "path": ".kbd-orchestrator/phases/runtime-architecture/evidence/ra-04-projection-grants/task-4-practice-derivation.json",
+      "sha256": "aa5021cb7ee5ad0c99053013bca4cfbe50123a68469c4fdd4559fc42cfc00b50"
+    },
+    {
+      "repository": "prior-auth",
+      "path": ".kbd-orchestrator/phases/runtime-architecture/evidence/ra-04-projection-grants/task-4-sabotage-linkage.txt",
+      "sha256": "c56e5279393798c86eda0e57e61771257df2aa1a959127ec3b9db5d74ba6cf5e"
+    },
+    {
+      "repository": "prior-auth",
+      "path": ".prometheus/decisions.md",
+      "sha256": "0d3d419923a5f7b26d60cfc05905aa32f371e387b7ab3068e4abbb1e77c66ef8"
+    },
+    {
+      "repository": "prior-auth",
+      "path": ".prometheus/gotchas.md",
+      "sha256": "8e982fb9f21123f2b30f10384b30b52a864625193c6afde265c84486d8882d3d"
+    },
+    {
+      "repository": "prior-auth",
+      "path": ".prometheus/session-log.md",
+      "sha256": "e2611da04c51abdc6e4cfbd5d8e9cd73db0f6170217b63ce09b734649a2fedca"
+    },
+    {
+      "repository": "flint-gate",
+      "path": "crates/flint-gate-core/src/middleware/aso_replica_grant.rs",
+      "sha256": "708bff642f8976ce5fcefafa133163b1fdcb30cb160c4d28862faeb28ec8f2ac"
+    },
+    {
+      "repository": "flint-gate",
+      "path": "crates/flint-gate-core/src/middleware/pipeline.rs",
+      "sha256": "095408c0b3dd5f147d707f4878ac44d00f8fc104fd6de367beefe9adc3dd73d5"
+    }
+  ]
+}

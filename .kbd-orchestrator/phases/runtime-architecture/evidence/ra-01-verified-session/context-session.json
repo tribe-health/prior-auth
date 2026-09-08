@@ -1,0 +1,378 @@
+{
+  "result": "Passed",
+  "verification_tier": 1,
+  "observed_at": "2026-09-06T16:27:58.589637+00:00",
+  "scope": "Task 1.3: real PostgreSQL transaction lifecycle and mounted session authority refusals",
+  "commands": [
+    "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-session-context.py",
+    "docker compose exec -T db psql -U <configured admin> -X -A -t -q -v ON_ERROR_STOP=1 -d <disposable database> (SQL on stdin)",
+    "cargo run -p aso-web-server (configuration and disposable password supplied through environment)",
+    "cargo test -p aso-web-server session_transaction_context_lifecycle -- --ignored --nocapture"
+  ],
+  "checks": {
+    "synthetic_native_and_browser_flows": {
+      "result": "Passed",
+      "identity_equal": true,
+      "distinct_sessions": true
+    },
+    "disposable_login_is_nonowner_nonbypass_reader_member": {
+      "result": "Passed",
+      "psql_output": "t"
+    },
+    "production_transaction_lifecycle": {
+      "result": "Passed",
+      "exit_paths": 6
+    },
+    "actual_application_readiness": {
+      "result": "Passed",
+      "status": 401,
+      "no_store": true
+    },
+    "native_bearer": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_summary": true
+    },
+    "native_x_session_token": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_summary": true
+    },
+    "browser_cookie": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_summary": true
+    },
+    "transport_projection_matches_authoritative_whoami_and_database": {
+      "result": "Passed",
+      "identity_equal": true,
+      "capability_count": 4,
+      "native_expiry_matches_whoami": true,
+      "browser_expiry_matches_whoami": true,
+      "unchanged_authorization_revision_equal": true
+    },
+    "default_home_practice": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_summary": true
+    },
+    "anonymous": {
+      "result": "Passed",
+      "status": 401,
+      "expected_status": 401,
+      "no_store": true
+    },
+    "invalid_bearer": {
+      "result": "Passed",
+      "status": 401,
+      "expected_status": 401,
+      "no_store": true
+    },
+    "invalid_x_session_token": {
+      "result": "Passed",
+      "status": 401,
+      "expected_status": 401,
+      "no_store": true
+    },
+    "invalid_cookie": {
+      "result": "Passed",
+      "status": 401,
+      "expected_status": 401,
+      "no_store": true
+    },
+    "forged_headers_without_credential": {
+      "result": "Passed",
+      "status": 401,
+      "expected_status": 401,
+      "no_store": true
+    },
+    "valid_credential_ignores_forged_headers": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_summary": true
+    },
+    "foreign_practice": {
+      "result": "Passed",
+      "status": 403,
+      "expected_status": 403,
+      "no_store": true
+    },
+    "extra_query_rejected": {
+      "result": "Passed",
+      "status": 400,
+      "expected_status": 400,
+      "no_store": true
+    },
+    "mixed_native_credentials": {
+      "result": "Passed",
+      "status": 401,
+      "expected_status": 401,
+      "no_store": true
+    },
+    "mixed_cookie_and_bearer": {
+      "result": "Passed",
+      "status": 401,
+      "expected_status": 401,
+      "no_store": true
+    },
+    "capability_removal_visible_next_request": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_summary": true
+    },
+    "capability_restore_visible_next_request": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_summary": true
+    },
+    "authorization_revision_resists_aba": {
+      "result": "Passed",
+      "capabilities_restored": true,
+      "revision_not_reused": true
+    },
+    "membership_removal_visible_next_request": {
+      "result": "Passed",
+      "status": 403,
+      "expected_status": 403,
+      "no_store": true
+    },
+    "default_home_requires_membership": {
+      "result": "Passed",
+      "status": 403,
+      "expected_status": 403,
+      "no_store": true
+    },
+    "membership_restore_visible_next_request": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_summary": true
+    },
+    "suspended_user_refused": {
+      "result": "Passed",
+      "status": 403,
+      "expected_status": 403,
+      "no_store": true
+    },
+    "suspended_user_restored": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_summary": true
+    },
+    "deactivated_user_refused": {
+      "result": "Passed",
+      "status": 403,
+      "expected_status": 403,
+      "no_store": true
+    },
+    "deactivated_user_restored": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_summary": true
+    },
+    "runtime_login_column_write_grant_refused": {
+      "result": "Passed",
+      "status": 503,
+      "expected_status": 503,
+      "no_store": true
+    },
+    "runtime_login_column_write_revoked_read_restored": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_summary": true
+    },
+    "runtime_login_table_ownership_refused": {
+      "result": "Passed",
+      "status": 503,
+      "expected_status": 503,
+      "no_store": true
+    },
+    "runtime_login_table_ownership_restored_read_restored": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_summary": true
+    },
+    "revoked_native_session_refused": {
+      "result": "Passed",
+      "status": 401,
+      "expected_status": 401,
+      "no_store": true
+    },
+    "revoked_browser_session_refused": {
+      "result": "Passed",
+      "status": 401,
+      "expected_status": 401,
+      "no_store": true
+    },
+    "provider_traits_do_not_grant_authority": {
+      "result": "Passed",
+      "status": 200,
+      "expected_status": 200,
+      "no_store": true,
+      "sanitized_summary": true
+    },
+    "provider_traits_do_not_grant_foreign_practice": {
+      "result": "Passed",
+      "status": 403,
+      "expected_status": 403,
+      "no_store": true
+    },
+    "mounted_provider_outage_is_unavailable": {
+      "result": "Passed",
+      "status": 503,
+      "expected_status": 503,
+      "no_store": true
+    },
+    "anonymous_during_provider_outage": {
+      "result": "Passed",
+      "status": 401,
+      "expected_status": 401,
+      "no_store": true
+    },
+    "mounted_invalid_provider_session_is_unauthenticated": {
+      "result": "Passed",
+      "status": 401,
+      "expected_status": 401,
+      "no_store": true
+    },
+    "mounted_provider_requires_reauthentication": {
+      "result": "Passed",
+      "status": 403,
+      "expected_status": 403,
+      "no_store": true,
+      "reauthentication_code_matches": true
+    }
+  },
+  "app_response_count": 37,
+  "no_store_response_count": 37,
+  "cleanup": {
+    "application_process_stopped": true,
+    "temporary_process_log_deleted": true,
+    "synthetic_identity_deleted": true,
+    "native_session_revoked": true,
+    "browser_session_revoked": true,
+    "disposable_database_deleted": true,
+    "disposable_login_deleted": true,
+    "probe_created_reader_deleted": true
+  },
+  "unverified": [
+    "Gate routing, two-identity assembled pool campaign and physical native UI remain later tasks.",
+    "Cancellation is proved on the production transaction owner with an active PostgreSQL query; HTTP disconnect propagation is not claimed."
+  ],
+  "attempt_history": [
+    {
+      "observed_at": "2026-09-06T16:24:09.478121+00:00",
+      "result": "Failed",
+      "failure": {
+        "stage": "real_transaction_lifecycle",
+        "type": "AssertionError"
+      },
+      "app_exit_code": null,
+      "cleanup": {
+        "synthetic_identity_deleted": true,
+        "native_session_revoked": true,
+        "browser_session_revoked": true,
+        "disposable_database_deleted": true,
+        "disposable_login_deleted": true,
+        "probe_created_reader_deleted": true
+      },
+      "diagnosis": "See recorded failure stage."
+    },
+    {
+      "observed_at": "2026-09-06T16:24:44.551123+00:00",
+      "result": "Failed",
+      "failure": {
+        "stage": "real_transaction_lifecycle",
+        "type": "AssertionError"
+      },
+      "app_exit_code": null,
+      "cleanup": {
+        "synthetic_identity_deleted": true,
+        "native_session_revoked": true,
+        "browser_session_revoked": true,
+        "disposable_database_deleted": true,
+        "disposable_login_deleted": true,
+        "probe_created_reader_deleted": true
+      },
+      "diagnosis": "Test required same backend PID after cancellation; SQLx 0.8.3 discards connection on release ping error. Both contexts were clean; test now verifies same-PID cleanup for normal exits, and cleanup plus old backend removal if cancellation replaces it."
+    },
+    {
+      "observed_at": "2026-09-06T16:25:23.793190+00:00",
+      "result": "Failed",
+      "failure": {
+        "stage": "mount_actual_application",
+        "type": "AssertionError"
+      },
+      "app_exit_code": null,
+      "cleanup": {
+        "application_process_stopped": true,
+        "temporary_process_log_deleted": true,
+        "synthetic_identity_deleted": true,
+        "native_session_revoked": true,
+        "browser_session_revoked": true,
+        "disposable_database_deleted": true,
+        "disposable_login_deleted": true,
+        "probe_created_reader_deleted": true
+      },
+      "diagnosis": "Reused fixture classified every 403 as practice_denied. Provider 403 correctly returns reauthentication_required. Added explicit mounted status/body/no-store assertion for that contract."
+    },
+    {
+      "observed_at": "2026-09-06T16:27:19.408167+00:00",
+      "result": "Failed",
+      "failure": {
+        "stage": "real_transaction_lifecycle",
+        "type": "AssertionError"
+      },
+      "app_exit_code": null,
+      "cleanup": {
+        "synthetic_identity_deleted": true,
+        "native_session_revoked": true,
+        "browser_session_revoked": true,
+        "disposable_database_deleted": true,
+        "disposable_login_deleted": true,
+        "probe_created_reader_deleted": true
+      },
+      "diagnosis": "See recorded failure stage."
+    }
+  ],
+  "kratos_version": "v26.2.0",
+  "postgres_published_port": 55432,
+  "transaction_test": {
+    "exit": 0,
+    "output": [
+      "context check passed: explicit_commit",
+      "context check passed: mounted_repository_success",
+      "context check passed: mounted_repository_denial",
+      "context check passed: sql_error_drop_rollback",
+      "context check passed: explicit_rollback",
+      "context check passed: in_flight_cancellation_clean_or_discarded (replaced=true)",
+      "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 5.14s"
+    ]
+  },
+  "controlled_provider_stopped": true,
+  "check_count": 41,
+  "completed_at": "2026-09-06T16:28:18.894660+00:00"
+}

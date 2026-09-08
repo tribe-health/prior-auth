@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "change": "ra-04-projection-grants",
+  "task": "1.2",
+  "outcome": "Passed",
+  "changedFiles": [
+    {
+      "path": "crates/aso-host/src/projection.rs",
+      "sha256": "b0b5818b5e91c235bb8c82756adae2425d9ef7ec555104b00e9e3aa6bb3d7d62",
+      "purpose": "Host-neutral five-table projection registry and focused contract tests"
+    },
+    {
+      "path": "crates/aso-host/src/lib.rs",
+      "sha256": "0d3030e94842a38840fc72a99d3d473eeb8ba71d7cb94a1abff39e807f35f067",
+      "purpose": "Public projection contract module"
+    },
+    {
+      "path": "crates/aso-server-axum/src/session.rs",
+      "sha256": "50bcc9a020bd66eddf66e337160b4e8cff4ef4acad1d914a0bef9e5872984057",
+      "purpose": "Mounted verified-session replica-grant boundary and negative request tests"
+    },
+    {
+      "path": "desktop/src-tauri/src/lib.rs",
+      "sha256": "79993bd70c371587f3b37e7c7b3a1620b6c430d186804f7e959475158dbad264",
+      "purpose": "Matching inactive native command contract"
+    }
+  ],
+  "rawEvidence": [
+    {
+      "path": ".kbd-orchestrator/phases/runtime-architecture/evidence/ra-04-projection-grants/task-2-protected-column-red-proof.txt",
+      "sha256": "4cc241849fc0ddaf9b53d709a9984c262760886c4d578b26178fb8c9f10a0ae2",
+      "observedExit": 101,
+      "expected": "The protected-column test fails while gate_affirmed_by is temporarily allowlisted"
+    },
+    {
+      "path": ".kbd-orchestrator/phases/runtime-architecture/evidence/ra-04-projection-grants/task-2-host-t1.txt",
+      "sha256": "e5e36b40c8d02bcbd729ae4dcdae8e5cdf9da1bb9c12ef79d3c74814794deefc",
+      "observedExit": 0,
+      "expected": "Two projection registry tests pass after restoration"
+    },
+    {
+      "path": ".kbd-orchestrator/phases/runtime-architecture/evidence/ra-04-projection-grants/task-2-http-t1.txt",
+      "sha256": "70b1f05ce3e4973ceddc02f0be6c5e1deec8b06fdf7600c8258b0f3a5595390d",
+      "observedExit": 0,
+      "expected": "Two mounted boundary tests pass"
+    },
+    {
+      "path": ".kbd-orchestrator/phases/runtime-architecture/evidence/ra-04-projection-grants/task-2-desktop-t1.txt",
+      "sha256": "99961b20436728780fcb47a2a1b948b8bddfa429457100e18b98db631d49b97a",
+      "observedExit": 0,
+      "expected": "The inactive native session/grant command test passes"
+    }
+  ],
+  "scope": {
+    "productRepositoriesChanged": ["prior-auth"],
+    "companionRepositoriesChanged": [],
+    "dependenciesChanged": false,
+    "databaseChanged": false,
+    "realClinicalDataUsed": false,
+    "tier2OrTier3Run": false
+  }
+}

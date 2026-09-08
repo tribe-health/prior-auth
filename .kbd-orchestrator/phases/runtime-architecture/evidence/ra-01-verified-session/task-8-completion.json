@@ -1,0 +1,20 @@
+{
+  "result": "Passed",
+  "archive": "openspec/changes/archive/2026-09-06-ra-01-verified-session",
+  "promoted_spec": "openspec/specs/ra-01-verified-session/spec.md",
+  "revision": 133,
+  "canonical_status": "complete",
+  "projection_status": "DONE",
+  "tasks_done": 8,
+  "tasks_total": 8,
+  "phase_complete": 1,
+  "phase_total": 24,
+  "publication": "BLOCKED",
+  "next": "/kbd-apply ra-02-durable-affirmation",
+  "post_archive_refiner": {
+    "result": "Passed",
+    "checks": 96,
+    "issues": 0
+  },
+  "verification_probe_correction": "Initial local assertion expected projection status COMPLETE; actual projection is DONE with implementation_status COMPLETE and canonical status complete. Corrected read-only assertion; no state repair was needed."
+}

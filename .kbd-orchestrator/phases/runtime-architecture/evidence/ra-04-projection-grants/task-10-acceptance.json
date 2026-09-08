@@ -1,0 +1,127 @@
+{
+  "result": "Passed",
+  "task": 10,
+  "openspec_task": "3.1",
+  "observed_at": "2026-09-08T15:30:08.325225+00:00",
+  "scope": "RA04 applicable T0/T1, artifact-refiner, isolated adversarial review and truthful caller inventory",
+  "commands": [
+    "Primary Rust format/check/Clippy and focused projection/session/desktop tests",
+    "Gate format/check/Clippy, focused replica tests, binary build and mounted 19-check synthetic campaign",
+    "FRF format/check/Clippy, identity/verifier/shape tests and production issuer validation",
+    "Web TypeScript typecheck and lint",
+    "Fresh and upgrade gate transaction fixtures plus fresh and upgrade practice derivation fixtures",
+    "python3 .kbd-orchestrator/phases/runtime-architecture/review/ra-04-projection-grants/refiner/validate.py",
+    "adversarial-review diff pipeline and strict anti-sycophancy screen"
+  ],
+  "observed_results": {
+    "artifact_refiner": {
+      "result": "Passed",
+      "checks": 23,
+      "validation_output": "review/ra-04-projection-grants/refiner/validation-output.json",
+      "sha256": "bac6c293d6b09d73081464bcf6c41eb82117aece6569eea741327f3aa475b2ac"
+    },
+    "adversarial_review": {
+      "result": "Passed",
+      "verdict": "PASS",
+      "judge_model": "k3",
+      "producer_model": "gpt-6-astra",
+      "cross_model_check": "verified-distinct",
+      "critical": 0,
+      "warnings": 0,
+      "suggestions": 2,
+      "anti_sycophancy": "Passed (score=0.0, strictness=strict)",
+      "findings": "review/ra-04-projection-grants/findings.json",
+      "sha256": "e1d6a2062f618f38829d3a22c0b29f54ce0fee31b94c24d55808de01501025d8"
+    },
+    "source_and_receipt_inventory": {
+      "result": "Passed",
+      "sources": 29,
+      "receipts": 34,
+      "path": "task-10-files.json",
+      "sha256": "5857aa2210742111451637a67081c658cbbf51787e56d69e0f62b9fb9166b5b7"
+    },
+    "mounted_gate": {
+      "result": "Passed",
+      "checks": 19,
+      "observed_counts": {
+        "whoami": 2,
+        "grant": 4,
+        "downstream": 1
+      },
+      "private_failure_responses": "Passed",
+      "cleanup": "Passed",
+      "path": "task-10-private-error-restored.json",
+      "sha256": "1a8534b9ea624655f02b68b4c9be5417ce8cf77f5eb354052f9da7b5410b9ee2"
+    },
+    "database": {
+      "result": "Passed",
+      "fresh_checks": 16,
+      "upgrade_checks": 22,
+      "lifecycle_assertions_each": 18,
+      "cleanup_entries_each": 6
+    },
+    "practice_derivation": {
+      "result": "Passed",
+      "fresh_checks": 10,
+      "upgrade_checks": 10,
+      "cleanup_entries": 3
+    },
+    "caller_truth": {
+      "result": "Passed",
+      "aso_route": "mounted",
+      "gate_replica_hook": "implemented and exercised in actual Gate process with synthetic config; absent from project deployment config",
+      "frf_shape": "feature-gated and route-tested; live Electric exchange deferred to RA05",
+      "desktop": "wrapper present without active Tauri IPC registration",
+      "web": "fail-closed placeholder; graph selector deferred to RA14"
+    }
+  },
+  "guards_added_during_final_review": [
+    {
+      "path": "crates/aso-server-axum/src/session.rs",
+      "failure_scenario": "An injected session port returns an active agent or service summary and the replica grant handler emits a five-projection grant.",
+      "negative_control": "task-10-principal-guard-red.txt",
+      "restored": "task-10-principal-guard-restored.txt"
+    },
+    {
+      "path": "crates/aso-server-axum/src/session.rs",
+      "failure_scenario": "A whitespace-confusable duplicate Kratos cookie or blank native token bypasses credential ambiguity rejection.",
+      "negative_control": "task-10-credential-hygiene-red.txt",
+      "restored": "task-10-credential-hygiene-restored.txt"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-identity-ory/src/claims.rs",
+      "failure_scenario": "Replica-only UUID token-ID strictness rejects legacy non-replica FRF tokens with missing or non-UUID token IDs.",
+      "negative_control": "task-10-frf-nonreplica-jti-red.txt",
+      "restored": "task-10-frf-jti-restored.txt"
+    },
+    {
+      "path": "crates/aso-server-axum/src/session.rs",
+      "failure_scenario": "An injected session port returns an expired or non-human summary and /api/session serializes it as HTTP 200.",
+      "negative_control": "task-10-current-session-guard-red.txt",
+      "restored": "task-10-current-session-guard-restored.txt"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core/src/middleware/pipeline.rs",
+      "failure_scenario": "Replica denial or unavailable errors omit typed JSON and private cache headers.",
+      "negative_control": "task-10-private-error-red.json",
+      "restored": "task-10-private-error-restored.json"
+    }
+  ],
+  "accepted_nonblocking_suggestions": [
+    "A malformed or duplicated practiceId returns HTTP 400 with the broad replica_grant_denied error code.",
+    "The three current expiry/principal guard sites could be refactored through one shared helper after this bounded change."
+  ],
+  "excluded_attempts": [
+    {
+      "path": "task-10-frf-production-issuer.txt",
+      "reason": "The initial cargo test command compiled feature-gated integration tests without shape-facade and failed before the focused config test ran; the corrected --lib command passed and is recorded separately."
+    }
+  ],
+  "unverified": [
+    "G-DATA approval for persistent real clinical data",
+    "Project deployment configuration for the Gate replica hook and a real Gate-minted asymmetric token through FRF",
+    "Live Gate to FRF to Electric delivery, continuations and bypass topology (RA05)",
+    "SQL/PEM materialization and graph-backed navigation (RA11c/RA14)",
+    "Broad phase T2, release T3, browser rendering, Tauri IPC/windows and physical devices"
+  ]
+}

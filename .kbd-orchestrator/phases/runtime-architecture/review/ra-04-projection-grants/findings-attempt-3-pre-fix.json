@@ -1,0 +1,34 @@
+{
+  "mode": "diff",
+  "verdict": "PASS",
+  "judge_model": "k3",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "WARNING",
+      "file": "crates/aso-server-axum/src/session.rs",
+      "line": 128,
+      "claim": "The current_session handler lacks the independent expiry and principal guards that were added to replica_grant after prior review, so an injected SessionPort returning an expired or non-human summary yields a 200 with a valid-looking session from /api/session.",
+      "evidence": "replica_grant() now contains `Ok(summary) if summary.expires_at <= state.services.clock.now() => session_error(Unauthenticated)` and `Ok(summary) if summary.principal != Principal::User => session_error(PracticeDenied)`, and clinical_context() performs the same two checks. current_session() ends at `Ok(summary) => Json(summary).into_response()` with no handler-level check. The completion report claims the session boundary \"independently refuses expired and non-human sessions\"; the prior-review resolution (\"fixed with observed red/green HTTP 200 to 403 proof\") applied that handler-level defense only to the grant route. The production SessionService does enforce both conditions, so the gap is reachable only with a substituted port \u2014 but the handler tests in this same file demonstrate exactly that injection seam, and the fix pattern was already judged necessary one function below.",
+      "suggested_fix": "Apply the same two guards in current_session before serializing the summary (expiry against state.services.clock.now(), principal == Principal::User), mirroring replica_grant."
+    },
+    {
+      "severity": "SUGGESTION",
+      "file": "docker/flint-gate/config.yaml",
+      "line": 415,
+      "claim": "The Gate deployment config routes /api/session but not /api/session/replica-grant, so the grant endpoint is unreachable through the gateway for any external caller and is usable only via the host-published ASO port (8787) or Gate's internal hook callback.",
+      "evidence": "The routes block adds an exact GET route for `/api/session` (\"This exact GET route preserves practiceId and all supported credentials\") and eight aso_clinical_authorize clinical routes, but no route matching `/api/session/replica-grant`. The only consumer wired today is Gate's own claims_enhancement callback (`url: \".../api/session/replica-grant\"` in the synthetic fixture config). If internal-only exposure is intended, the config comment block should say so explicitly; otherwise a same-shaped exact GET route is missing.",
+      "suggested_fix": "Either add an exact-match passthrough route for /api/session/replica-grant mirroring the /api/session entry, or extend the comment to state the endpoint is deliberately internal-only."
+    },
+    {
+      "severity": "SUGGESTION",
+      "file": "crates/flint-gate-core/src/middleware/pipeline.rs",
+      "line": 356,
+      "claim": "Replica-mint failures propagate as a bare StatusCode via `.await?`, bypassing the no-store/Vary headers and typed JSON error body that the adjacent aso_clinical_authorize arm sets for its failures.",
+      "evidence": "The AsoClinicalAuthorize arm builds `(status, [(CACHE_CONTROL, \"no-store\"), (VARY, \"Cookie, Authorization, X-Session-Token\")], Json({\"error\": ...}))` before returning. The aso_replica_grant arm ends with `mint(...).await?`, where every error (401/403/503 from mint()) flows into the generic `Err(StatusCode)` path with no cache headers and no error code. Credential-bearing responses on this boundary are otherwise consistently marked non-cacheable.",
+      "suggested_fix": "Map the mint() error into the same response shape as the clinical-authorize arm (no-store, Vary, typed error JSON) instead of propagating a bare StatusCode."
+    }
+  ]
+}

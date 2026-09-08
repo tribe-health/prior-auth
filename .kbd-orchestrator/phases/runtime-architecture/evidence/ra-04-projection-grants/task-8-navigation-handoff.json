@@ -1,0 +1,37 @@
+{
+  "result": "Passed",
+  "scope": "RA04 navigation source and downstream ownership handoff",
+  "checks": {
+    "app_shell_names_projected_case_field": {
+      "result": "Passed"
+    },
+    "app_shell_names_ra14_owner": {
+      "result": "Passed"
+    },
+    "navigation_has_no_http_client_dependency": {
+      "result": "Passed"
+    },
+    "current_placeholder_fails_closed": {
+      "result": "Passed"
+    },
+    "ra04_approves_field": {
+      "result": "Passed"
+    },
+    "ra11c_materializes_field": {
+      "result": "Passed"
+    },
+    "ra14_reads_streamed_field": {
+      "result": "Passed"
+    }
+  },
+  "current_navigation_runtime": "fail-closed placeholder",
+  "runtime_graph_selector_implemented": false,
+  "runtime_graph_selector_owner": "ra-14-live-evidence-timeline",
+  "materialization_owner": "ra-11c-sql-materialization",
+  "live_authorized_delivery_owner": "ra-05-authorized-shape-facade",
+  "source_sha256": {
+    "web/src/app/shell/app-shell.tsx": "d30d0b96fc633352de2d44f50e35f80052984f5e91b041d1df344cbf2b212069",
+    ".kbd-orchestrator/phases/runtime-architecture/plan.md": "d0ea75f7881129291f02ed85c30e88dadb2e4b2341aec5d493fd78c13ef54c24",
+    "openspec/changes/ra-14-live-evidence-timeline/design.md": "ebf794fb1793c9a212871b0ac82fb26c9a801072cce1e0c863d6987d022277e0"
+  }
+}

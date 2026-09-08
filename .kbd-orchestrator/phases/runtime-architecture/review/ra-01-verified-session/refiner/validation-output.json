@@ -1,0 +1,930 @@
+{
+  "result": "Passed",
+  "scope": "Scoped deterministic content/evidence gate. Reused T0/T1 receipts; no live service, Cargo, phase T2 or release T3 execution.",
+  "check_count": 96,
+  "issue_count": 0,
+  "checks": [
+    {
+      "check": "schema:artifact_manifest.json",
+      "result": "Passed",
+      "detail": "Full Draft-07 validation, including formats"
+    },
+    {
+      "check": "schema:constraints.json",
+      "result": "Passed",
+      "detail": "Full Draft-07 validation, including formats"
+    },
+    {
+      "check": "schema:.refiner/artifacts/ra-01-verified-session/state.json",
+      "result": "Passed",
+      "detail": "Full Draft-07 validation, including formats"
+    },
+    {
+      "check": "file:dist/report.md",
+      "result": "Passed",
+      "detail": "Required nonempty file under scoped dist; JSON parsed where applicable"
+    },
+    {
+      "check": "file:dist/checklist.json",
+      "result": "Passed",
+      "detail": "Required nonempty file under scoped dist; JSON parsed where applicable"
+    },
+    {
+      "check": "manifest:exact-dist-coverage",
+      "result": "Passed",
+      "detail": "No unlisted dist outputs"
+    },
+    {
+      "check": "acceptance:5:recorded-result",
+      "result": "Passed",
+      "detail": "Acceptance mapping of existing T1 results; no live rerun or new runtime verification claimed"
+    },
+    {
+      "check": "acceptance:5:hash:Cargo.toml",
+      "result": "Passed",
+      "detail": {
+        "expected": "cf5078a47344c0aeb8391245b40885fae2f4c5ffd93ce62e57e51c329820d39d",
+        "actual": "cf5078a47344c0aeb8391245b40885fae2f4c5ffd93ce62e57e51c329820d39d",
+        "resolved_path": "Cargo.toml"
+      }
+    },
+    {
+      "check": "acceptance:5:hash:Cargo.lock",
+      "result": "Passed",
+      "detail": {
+        "expected": "cf262d424a41b275f00aca2696eb487f2d16df818145cb98db789d39b031aa3d",
+        "actual": "cf262d424a41b275f00aca2696eb487f2d16df818145cb98db789d39b031aa3d",
+        "resolved_path": "Cargo.lock"
+      }
+    },
+    {
+      "check": "acceptance:5:hash:crates/aso-host/src/lib.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "1c7871bf053bb6b13e1da256a306a7cc06b781a229fdbc4cc76545aa99bd1eca",
+        "actual": "1c7871bf053bb6b13e1da256a306a7cc06b781a229fdbc4cc76545aa99bd1eca",
+        "resolved_path": "crates/aso-host/src/lib.rs"
+      }
+    },
+    {
+      "check": "acceptance:5:hash:crates/aso-host/src/session.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "bcccd5d563c5f9e1ac9646b7a784fd28a0b831143f0aba19b2f8d829498cae43",
+        "actual": "bcccd5d563c5f9e1ac9646b7a784fd28a0b831143f0aba19b2f8d829498cae43",
+        "resolved_path": "crates/aso-host/src/session.rs"
+      }
+    },
+    {
+      "check": "acceptance:5:hash:crates/aso-server-axum/src/lib.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "b71d6149a490a26e7181c7972b61e20a6c8da5b4d7e413605a4058ace1e1d2b4",
+        "actual": "b71d6149a490a26e7181c7972b61e20a6c8da5b4d7e413605a4058ace1e1d2b4",
+        "resolved_path": "crates/aso-server-axum/src/lib.rs"
+      }
+    },
+    {
+      "check": "acceptance:5:hash:crates/aso-server-axum/src/session.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "6d0deebbd2f35ab0cd8e755994b0b324c85f5722f53fa4d080faf4c7298f195b",
+        "actual": "6d0deebbd2f35ab0cd8e755994b0b324c85f5722f53fa4d080faf4c7298f195b",
+        "resolved_path": "crates/aso-server-axum/src/session.rs"
+      }
+    },
+    {
+      "check": "acceptance:5:hash:crates/aso-web-server/Cargo.toml",
+      "result": "Passed",
+      "detail": {
+        "expected": "c9d8678d438a95b3d3ba9c4c615696351deae1b162832355d7767b0c0c328905",
+        "actual": "c9d8678d438a95b3d3ba9c4c615696351deae1b162832355d7767b0c0c328905",
+        "resolved_path": "crates/aso-web-server/Cargo.toml"
+      }
+    },
+    {
+      "check": "acceptance:5:hash:crates/aso-web-server/src/main.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "a6c1e85fe9f2a6ce5d4268709bbb8d69139e659f16edd5084cad29c1485b8260",
+        "actual": "a6c1e85fe9f2a6ce5d4268709bbb8d69139e659f16edd5084cad29c1485b8260",
+        "resolved_path": "crates/aso-web-server/src/main.rs"
+      }
+    },
+    {
+      "check": "acceptance:5:hash:crates/aso-web-server/src/adapters/mod.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "f6acbc994c8a8095856e3148049fcc189f49ab13917e96b5ef2770382eb73318",
+        "actual": "f6acbc994c8a8095856e3148049fcc189f49ab13917e96b5ef2770382eb73318",
+        "resolved_path": "crates/aso-web-server/src/adapters/mod.rs"
+      }
+    },
+    {
+      "check": "acceptance:5:hash:crates/aso-web-server/src/adapters/session.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "7c2838b08b273ceef01f38df6bb310f385088fc17bee858b246f02895c5db510",
+        "actual": "7c2838b08b273ceef01f38df6bb310f385088fc17bee858b246f02895c5db510",
+        "resolved_path": "crates/aso-web-server/src/adapters/session.rs"
+      }
+    },
+    {
+      "check": "acceptance:5:hash:desktop/src-tauri/src/lib.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "790621cbaf115742a332a998b852c3f04f02f67557952c21a391b86ccfd693ec",
+        "actual": "790621cbaf115742a332a998b852c3f04f02f67557952c21a391b86ccfd693ec",
+        "resolved_path": "desktop/src-tauri/src/lib.rs"
+      }
+    },
+    {
+      "check": "acceptance:5:hash:docker/bootstrap/25-session-authority.sql",
+      "result": "Passed",
+      "detail": {
+        "expected": "55a7029d1f683c208005262d1bbbd554f9f9a6e1791bbdace70a87f664760f42",
+        "actual": "55a7029d1f683c208005262d1bbbd554f9f9a6e1791bbdace70a87f664760f42",
+        "resolved_path": "docker/bootstrap/25-session-authority.sql"
+      }
+    },
+    {
+      "check": "acceptance:5:hash:scripts/test-session-boundary.py",
+      "result": "Passed",
+      "detail": {
+        "expected": "e27706b7b4d036b5b61bc98ac4d15dff6324a16a7fbfb8decb0d133c9981e600",
+        "actual": "e27706b7b4d036b5b61bc98ac4d15dff6324a16a7fbfb8decb0d133c9981e600",
+        "resolved_path": "scripts/test-session-boundary.py"
+      }
+    },
+    {
+      "check": "acceptance:5:hash:crates/aso-web-server/src/adapters/session/transaction_tests.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "0eed3cd8d501a64f2fe2b8d8cdd71a19a0da79d4df1b283a4ec6574a50b09309",
+        "actual": "0eed3cd8d501a64f2fe2b8d8cdd71a19a0da79d4df1b283a4ec6574a50b09309",
+        "resolved_path": "crates/aso-web-server/src/adapters/session/transaction_tests.rs"
+      }
+    },
+    {
+      "check": "acceptance:5:hash:scripts/test-session-context.py",
+      "result": "Passed",
+      "detail": {
+        "expected": "ed49781cc088b6f4c2e6c9c61166727061f49f63e02796dbd0f92d2cd1c298d0",
+        "actual": "ed49781cc088b6f4c2e6c9c61166727061f49f63e02796dbd0f92d2cd1c298d0",
+        "resolved_path": "scripts/test-session-context.py"
+      }
+    },
+    {
+      "check": "acceptance:5:hash:openspec/changes/ra-01-verified-session/design.md",
+      "result": "Passed",
+      "detail": {
+        "expected": "b311b96b7d2cdbdf65a48fab5cadf3f4af525e8249e3aa514ee5b3fbbe5cf79b",
+        "actual": "b311b96b7d2cdbdf65a48fab5cadf3f4af525e8249e3aa514ee5b3fbbe5cf79b",
+        "resolved_path": "openspec/changes/ra-01-verified-session/design.md"
+      }
+    },
+    {
+      "check": "acceptance:5:hash:docker/flint-gate/config.yaml",
+      "result": "Passed",
+      "detail": {
+        "expected": "888a44a67379c1e9b3047aa13f3449b198131990df3dfc6437120d5cc79230d3",
+        "actual": "888a44a67379c1e9b3047aa13f3449b198131990df3dfc6437120d5cc79230d3",
+        "resolved_path": "docker/flint-gate/config.yaml"
+      }
+    },
+    {
+      "check": "acceptance:5:hash:scripts/test-session-gateway.py",
+      "result": "Passed",
+      "detail": {
+        "expected": "a7b1c0ffd020acf7632cb6d9cfe1eed901f307d5071d08fbce8b0596ba3129d5",
+        "actual": "a7b1c0ffd020acf7632cb6d9cfe1eed901f307d5071d08fbce8b0596ba3129d5",
+        "resolved_path": "scripts/test-session-gateway.py"
+      }
+    },
+    {
+      "check": "acceptance:5:hash:.kbd-orchestrator/phases/runtime-architecture/evidence/ra-01-verified-session/gateway-session.json",
+      "result": "Passed",
+      "detail": {
+        "expected": "ceb985a378539bf3e919c9faf155a92cf6fbd84a5f4891e09ceb418defbed292",
+        "actual": "ceb985a378539bf3e919c9faf155a92cf6fbd84a5f4891e09ceb418defbed292",
+        "resolved_path": ".kbd-orchestrator/phases/runtime-architecture/evidence/ra-01-verified-session/gateway-session.json"
+      }
+    },
+    {
+      "check": "acceptance:5:hash:.kbd-orchestrator/phases/runtime-architecture/evidence/ra-01-verified-session/context-session.json",
+      "result": "Passed",
+      "detail": {
+        "expected": "07b5474cd230283cc0419391d72187e1079f5ce707a002371256c1738be3cf0c",
+        "actual": "07b5474cd230283cc0419391d72187e1079f5ce707a002371256c1738be3cf0c",
+        "resolved_path": ".kbd-orchestrator/phases/runtime-architecture/evidence/ra-01-verified-session/context-session.json"
+      }
+    },
+    {
+      "check": "acceptance:6:recorded-result",
+      "result": "Passed",
+      "detail": "Acceptance mapping of prior T1 runs; no live rerun or current service availability claim"
+    },
+    {
+      "check": "acceptance:6:hash:Cargo.toml",
+      "result": "Passed",
+      "detail": {
+        "expected": "cf5078a47344c0aeb8391245b40885fae2f4c5ffd93ce62e57e51c329820d39d",
+        "actual": "cf5078a47344c0aeb8391245b40885fae2f4c5ffd93ce62e57e51c329820d39d",
+        "resolved_path": "Cargo.toml"
+      }
+    },
+    {
+      "check": "acceptance:6:hash:Cargo.lock",
+      "result": "Passed",
+      "detail": {
+        "expected": "cf262d424a41b275f00aca2696eb487f2d16df818145cb98db789d39b031aa3d",
+        "actual": "cf262d424a41b275f00aca2696eb487f2d16df818145cb98db789d39b031aa3d",
+        "resolved_path": "Cargo.lock"
+      }
+    },
+    {
+      "check": "acceptance:6:hash:crates/aso-host/src/lib.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "1c7871bf053bb6b13e1da256a306a7cc06b781a229fdbc4cc76545aa99bd1eca",
+        "actual": "1c7871bf053bb6b13e1da256a306a7cc06b781a229fdbc4cc76545aa99bd1eca",
+        "resolved_path": "crates/aso-host/src/lib.rs"
+      }
+    },
+    {
+      "check": "acceptance:6:hash:crates/aso-host/src/session.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "bcccd5d563c5f9e1ac9646b7a784fd28a0b831143f0aba19b2f8d829498cae43",
+        "actual": "bcccd5d563c5f9e1ac9646b7a784fd28a0b831143f0aba19b2f8d829498cae43",
+        "resolved_path": "crates/aso-host/src/session.rs"
+      }
+    },
+    {
+      "check": "acceptance:6:hash:crates/aso-server-axum/src/lib.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "b71d6149a490a26e7181c7972b61e20a6c8da5b4d7e413605a4058ace1e1d2b4",
+        "actual": "b71d6149a490a26e7181c7972b61e20a6c8da5b4d7e413605a4058ace1e1d2b4",
+        "resolved_path": "crates/aso-server-axum/src/lib.rs"
+      }
+    },
+    {
+      "check": "acceptance:6:hash:crates/aso-server-axum/src/session.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "6d0deebbd2f35ab0cd8e755994b0b324c85f5722f53fa4d080faf4c7298f195b",
+        "actual": "6d0deebbd2f35ab0cd8e755994b0b324c85f5722f53fa4d080faf4c7298f195b",
+        "resolved_path": "crates/aso-server-axum/src/session.rs"
+      }
+    },
+    {
+      "check": "acceptance:6:hash:crates/aso-web-server/Cargo.toml",
+      "result": "Passed",
+      "detail": {
+        "expected": "c9d8678d438a95b3d3ba9c4c615696351deae1b162832355d7767b0c0c328905",
+        "actual": "c9d8678d438a95b3d3ba9c4c615696351deae1b162832355d7767b0c0c328905",
+        "resolved_path": "crates/aso-web-server/Cargo.toml"
+      }
+    },
+    {
+      "check": "acceptance:6:hash:crates/aso-web-server/src/main.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "a6c1e85fe9f2a6ce5d4268709bbb8d69139e659f16edd5084cad29c1485b8260",
+        "actual": "a6c1e85fe9f2a6ce5d4268709bbb8d69139e659f16edd5084cad29c1485b8260",
+        "resolved_path": "crates/aso-web-server/src/main.rs"
+      }
+    },
+    {
+      "check": "acceptance:6:hash:crates/aso-web-server/src/adapters/mod.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "f6acbc994c8a8095856e3148049fcc189f49ab13917e96b5ef2770382eb73318",
+        "actual": "f6acbc994c8a8095856e3148049fcc189f49ab13917e96b5ef2770382eb73318",
+        "resolved_path": "crates/aso-web-server/src/adapters/mod.rs"
+      }
+    },
+    {
+      "check": "acceptance:6:hash:crates/aso-web-server/src/adapters/session.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "7c2838b08b273ceef01f38df6bb310f385088fc17bee858b246f02895c5db510",
+        "actual": "7c2838b08b273ceef01f38df6bb310f385088fc17bee858b246f02895c5db510",
+        "resolved_path": "crates/aso-web-server/src/adapters/session.rs"
+      }
+    },
+    {
+      "check": "acceptance:6:hash:desktop/src-tauri/src/lib.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "790621cbaf115742a332a998b852c3f04f02f67557952c21a391b86ccfd693ec",
+        "actual": "790621cbaf115742a332a998b852c3f04f02f67557952c21a391b86ccfd693ec",
+        "resolved_path": "desktop/src-tauri/src/lib.rs"
+      }
+    },
+    {
+      "check": "acceptance:6:hash:docker/bootstrap/25-session-authority.sql",
+      "result": "Passed",
+      "detail": {
+        "expected": "55a7029d1f683c208005262d1bbbd554f9f9a6e1791bbdace70a87f664760f42",
+        "actual": "55a7029d1f683c208005262d1bbbd554f9f9a6e1791bbdace70a87f664760f42",
+        "resolved_path": "docker/bootstrap/25-session-authority.sql"
+      }
+    },
+    {
+      "check": "acceptance:6:hash:scripts/test-session-boundary.py",
+      "result": "Passed",
+      "detail": {
+        "expected": "e27706b7b4d036b5b61bc98ac4d15dff6324a16a7fbfb8decb0d133c9981e600",
+        "actual": "e27706b7b4d036b5b61bc98ac4d15dff6324a16a7fbfb8decb0d133c9981e600",
+        "resolved_path": "scripts/test-session-boundary.py"
+      }
+    },
+    {
+      "check": "acceptance:6:hash:crates/aso-web-server/src/adapters/session/transaction_tests.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "0eed3cd8d501a64f2fe2b8d8cdd71a19a0da79d4df1b283a4ec6574a50b09309",
+        "actual": "0eed3cd8d501a64f2fe2b8d8cdd71a19a0da79d4df1b283a4ec6574a50b09309",
+        "resolved_path": "crates/aso-web-server/src/adapters/session/transaction_tests.rs"
+      }
+    },
+    {
+      "check": "acceptance:6:hash:scripts/test-session-context.py",
+      "result": "Passed",
+      "detail": {
+        "expected": "ed49781cc088b6f4c2e6c9c61166727061f49f63e02796dbd0f92d2cd1c298d0",
+        "actual": "ed49781cc088b6f4c2e6c9c61166727061f49f63e02796dbd0f92d2cd1c298d0",
+        "resolved_path": "scripts/test-session-context.py"
+      }
+    },
+    {
+      "check": "acceptance:6:hash:openspec/changes/ra-01-verified-session/design.md",
+      "result": "Passed",
+      "detail": {
+        "expected": "b311b96b7d2cdbdf65a48fab5cadf3f4af525e8249e3aa514ee5b3fbbe5cf79b",
+        "actual": "b311b96b7d2cdbdf65a48fab5cadf3f4af525e8249e3aa514ee5b3fbbe5cf79b",
+        "resolved_path": "openspec/changes/ra-01-verified-session/design.md"
+      }
+    },
+    {
+      "check": "acceptance:6:hash:docker/flint-gate/config.yaml",
+      "result": "Passed",
+      "detail": {
+        "expected": "888a44a67379c1e9b3047aa13f3449b198131990df3dfc6437120d5cc79230d3",
+        "actual": "888a44a67379c1e9b3047aa13f3449b198131990df3dfc6437120d5cc79230d3",
+        "resolved_path": "docker/flint-gate/config.yaml"
+      }
+    },
+    {
+      "check": "acceptance:6:hash:scripts/test-session-gateway.py",
+      "result": "Passed",
+      "detail": {
+        "expected": "a7b1c0ffd020acf7632cb6d9cfe1eed901f307d5071d08fbce8b0596ba3129d5",
+        "actual": "a7b1c0ffd020acf7632cb6d9cfe1eed901f307d5071d08fbce8b0596ba3129d5",
+        "resolved_path": "scripts/test-session-gateway.py"
+      }
+    },
+    {
+      "check": "acceptance:6:hash:.kbd-orchestrator/phases/runtime-architecture/evidence/ra-01-verified-session/gateway-session.json",
+      "result": "Passed",
+      "detail": {
+        "expected": "ceb985a378539bf3e919c9faf155a92cf6fbd84a5f4891e09ceb418defbed292",
+        "actual": "ceb985a378539bf3e919c9faf155a92cf6fbd84a5f4891e09ceb418defbed292",
+        "resolved_path": ".kbd-orchestrator/phases/runtime-architecture/evidence/ra-01-verified-session/gateway-session.json"
+      }
+    },
+    {
+      "check": "acceptance:6:hash:.kbd-orchestrator/phases/runtime-architecture/evidence/ra-01-verified-session/context-session.json",
+      "result": "Passed",
+      "detail": {
+        "expected": "07b5474cd230283cc0419391d72187e1079f5ce707a002371256c1738be3cf0c",
+        "actual": "07b5474cd230283cc0419391d72187e1079f5ce707a002371256c1738be3cf0c",
+        "resolved_path": ".kbd-orchestrator/phases/runtime-architecture/evidence/ra-01-verified-session/context-session.json"
+      }
+    },
+    {
+      "check": "acceptance:7:recorded-result",
+      "result": "Passed",
+      "detail": "Acceptance mapping of prior T1 runs; no live rerun or current service availability claim"
+    },
+    {
+      "check": "acceptance:7:hash:Cargo.toml",
+      "result": "Passed",
+      "detail": {
+        "expected": "cf5078a47344c0aeb8391245b40885fae2f4c5ffd93ce62e57e51c329820d39d",
+        "actual": "cf5078a47344c0aeb8391245b40885fae2f4c5ffd93ce62e57e51c329820d39d",
+        "resolved_path": "Cargo.toml"
+      }
+    },
+    {
+      "check": "acceptance:7:hash:Cargo.lock",
+      "result": "Passed",
+      "detail": {
+        "expected": "cf262d424a41b275f00aca2696eb487f2d16df818145cb98db789d39b031aa3d",
+        "actual": "cf262d424a41b275f00aca2696eb487f2d16df818145cb98db789d39b031aa3d",
+        "resolved_path": "Cargo.lock"
+      }
+    },
+    {
+      "check": "acceptance:7:hash:crates/aso-host/src/lib.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "1c7871bf053bb6b13e1da256a306a7cc06b781a229fdbc4cc76545aa99bd1eca",
+        "actual": "1c7871bf053bb6b13e1da256a306a7cc06b781a229fdbc4cc76545aa99bd1eca",
+        "resolved_path": "crates/aso-host/src/lib.rs"
+      }
+    },
+    {
+      "check": "acceptance:7:hash:crates/aso-host/src/session.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "bcccd5d563c5f9e1ac9646b7a784fd28a0b831143f0aba19b2f8d829498cae43",
+        "actual": "bcccd5d563c5f9e1ac9646b7a784fd28a0b831143f0aba19b2f8d829498cae43",
+        "resolved_path": "crates/aso-host/src/session.rs"
+      }
+    },
+    {
+      "check": "acceptance:7:hash:crates/aso-server-axum/src/lib.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "b71d6149a490a26e7181c7972b61e20a6c8da5b4d7e413605a4058ace1e1d2b4",
+        "actual": "b71d6149a490a26e7181c7972b61e20a6c8da5b4d7e413605a4058ace1e1d2b4",
+        "resolved_path": "crates/aso-server-axum/src/lib.rs"
+      }
+    },
+    {
+      "check": "acceptance:7:hash:crates/aso-server-axum/src/session.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "6d0deebbd2f35ab0cd8e755994b0b324c85f5722f53fa4d080faf4c7298f195b",
+        "actual": "6d0deebbd2f35ab0cd8e755994b0b324c85f5722f53fa4d080faf4c7298f195b",
+        "resolved_path": "crates/aso-server-axum/src/session.rs"
+      }
+    },
+    {
+      "check": "acceptance:7:hash:crates/aso-web-server/Cargo.toml",
+      "result": "Passed",
+      "detail": {
+        "expected": "c9d8678d438a95b3d3ba9c4c615696351deae1b162832355d7767b0c0c328905",
+        "actual": "c9d8678d438a95b3d3ba9c4c615696351deae1b162832355d7767b0c0c328905",
+        "resolved_path": "crates/aso-web-server/Cargo.toml"
+      }
+    },
+    {
+      "check": "acceptance:7:hash:crates/aso-web-server/src/main.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "a6c1e85fe9f2a6ce5d4268709bbb8d69139e659f16edd5084cad29c1485b8260",
+        "actual": "a6c1e85fe9f2a6ce5d4268709bbb8d69139e659f16edd5084cad29c1485b8260",
+        "resolved_path": "crates/aso-web-server/src/main.rs"
+      }
+    },
+    {
+      "check": "acceptance:7:hash:crates/aso-web-server/src/adapters/mod.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "f6acbc994c8a8095856e3148049fcc189f49ab13917e96b5ef2770382eb73318",
+        "actual": "f6acbc994c8a8095856e3148049fcc189f49ab13917e96b5ef2770382eb73318",
+        "resolved_path": "crates/aso-web-server/src/adapters/mod.rs"
+      }
+    },
+    {
+      "check": "acceptance:7:hash:crates/aso-web-server/src/adapters/session.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "7c2838b08b273ceef01f38df6bb310f385088fc17bee858b246f02895c5db510",
+        "actual": "7c2838b08b273ceef01f38df6bb310f385088fc17bee858b246f02895c5db510",
+        "resolved_path": "crates/aso-web-server/src/adapters/session.rs"
+      }
+    },
+    {
+      "check": "acceptance:7:hash:desktop/src-tauri/src/lib.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "790621cbaf115742a332a998b852c3f04f02f67557952c21a391b86ccfd693ec",
+        "actual": "790621cbaf115742a332a998b852c3f04f02f67557952c21a391b86ccfd693ec",
+        "resolved_path": "desktop/src-tauri/src/lib.rs"
+      }
+    },
+    {
+      "check": "acceptance:7:hash:docker/bootstrap/25-session-authority.sql",
+      "result": "Passed",
+      "detail": {
+        "expected": "55a7029d1f683c208005262d1bbbd554f9f9a6e1791bbdace70a87f664760f42",
+        "actual": "55a7029d1f683c208005262d1bbbd554f9f9a6e1791bbdace70a87f664760f42",
+        "resolved_path": "docker/bootstrap/25-session-authority.sql"
+      }
+    },
+    {
+      "check": "acceptance:7:hash:scripts/test-session-boundary.py",
+      "result": "Passed",
+      "detail": {
+        "expected": "e27706b7b4d036b5b61bc98ac4d15dff6324a16a7fbfb8decb0d133c9981e600",
+        "actual": "e27706b7b4d036b5b61bc98ac4d15dff6324a16a7fbfb8decb0d133c9981e600",
+        "resolved_path": "scripts/test-session-boundary.py"
+      }
+    },
+    {
+      "check": "acceptance:7:hash:crates/aso-web-server/src/adapters/session/transaction_tests.rs",
+      "result": "Passed",
+      "detail": {
+        "expected": "0eed3cd8d501a64f2fe2b8d8cdd71a19a0da79d4df1b283a4ec6574a50b09309",
+        "actual": "0eed3cd8d501a64f2fe2b8d8cdd71a19a0da79d4df1b283a4ec6574a50b09309",
+        "resolved_path": "crates/aso-web-server/src/adapters/session/transaction_tests.rs"
+      }
+    },
+    {
+      "check": "acceptance:7:hash:scripts/test-session-context.py",
+      "result": "Passed",
+      "detail": {
+        "expected": "ed49781cc088b6f4c2e6c9c61166727061f49f63e02796dbd0f92d2cd1c298d0",
+        "actual": "ed49781cc088b6f4c2e6c9c61166727061f49f63e02796dbd0f92d2cd1c298d0",
+        "resolved_path": "scripts/test-session-context.py"
+      }
+    },
+    {
+      "check": "acceptance:7:hash:openspec/changes/ra-01-verified-session/design.md",
+      "result": "Passed",
+      "detail": {
+        "expected": "b311b96b7d2cdbdf65a48fab5cadf3f4af525e8249e3aa514ee5b3fbbe5cf79b",
+        "actual": "b311b96b7d2cdbdf65a48fab5cadf3f4af525e8249e3aa514ee5b3fbbe5cf79b",
+        "resolved_path": "openspec/changes/ra-01-verified-session/design.md"
+      }
+    },
+    {
+      "check": "acceptance:7:hash:docker/flint-gate/config.yaml",
+      "result": "Passed",
+      "detail": {
+        "expected": "888a44a67379c1e9b3047aa13f3449b198131990df3dfc6437120d5cc79230d3",
+        "actual": "888a44a67379c1e9b3047aa13f3449b198131990df3dfc6437120d5cc79230d3",
+        "resolved_path": "docker/flint-gate/config.yaml"
+      }
+    },
+    {
+      "check": "acceptance:7:hash:scripts/test-session-gateway.py",
+      "result": "Passed",
+      "detail": {
+        "expected": "a7b1c0ffd020acf7632cb6d9cfe1eed901f307d5071d08fbce8b0596ba3129d5",
+        "actual": "a7b1c0ffd020acf7632cb6d9cfe1eed901f307d5071d08fbce8b0596ba3129d5",
+        "resolved_path": "scripts/test-session-gateway.py"
+      }
+    },
+    {
+      "check": "acceptance:7:hash:.kbd-orchestrator/phases/runtime-architecture/evidence/ra-01-verified-session/gateway-session.json",
+      "result": "Passed",
+      "detail": {
+        "expected": "ceb985a378539bf3e919c9faf155a92cf6fbd84a5f4891e09ceb418defbed292",
+        "actual": "ceb985a378539bf3e919c9faf155a92cf6fbd84a5f4891e09ceb418defbed292",
+        "resolved_path": ".kbd-orchestrator/phases/runtime-architecture/evidence/ra-01-verified-session/gateway-session.json"
+      }
+    },
+    {
+      "check": "acceptance:7:hash:.kbd-orchestrator/phases/runtime-architecture/evidence/ra-01-verified-session/context-session.json",
+      "result": "Passed",
+      "detail": {
+        "expected": "07b5474cd230283cc0419391d72187e1079f5ce707a002371256c1738be3cf0c",
+        "actual": "07b5474cd230283cc0419391d72187e1079f5ce707a002371256c1738be3cf0c",
+        "resolved_path": ".kbd-orchestrator/phases/runtime-architecture/evidence/ra-01-verified-session/context-session.json"
+      }
+    },
+    {
+      "check": "recorded-T1:mounted-session.json",
+      "result": "Passed",
+      "detail": {
+        "checks": 34,
+        "responses": 30,
+        "no_store": 30,
+        "commands": [
+          "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-session-boundary.py",
+          "docker compose exec -T db psql -U <configured admin> -X -A -t -q -v ON_ERROR_STOP=1 -d <disposable database> (SQL on stdin)",
+          "cargo run -p aso-web-server (configuration and disposable password supplied through environment)"
+        ],
+        "completed_at": "2026-09-06T16:15:42.674282+00:00",
+        "live_rerun": false
+      }
+    },
+    {
+      "check": "recorded-T1:context-session.json",
+      "result": "Passed",
+      "detail": {
+        "checks": 41,
+        "responses": 37,
+        "no_store": 37,
+        "commands": [
+          "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-session-context.py",
+          "docker compose exec -T db psql -U <configured admin> -X -A -t -q -v ON_ERROR_STOP=1 -d <disposable database> (SQL on stdin)",
+          "cargo run -p aso-web-server (configuration and disposable password supplied through environment)",
+          "cargo test -p aso-web-server session_transaction_context_lifecycle -- --ignored --nocapture"
+        ],
+        "completed_at": "2026-09-06T16:28:18.894660+00:00",
+        "live_rerun": false
+      }
+    },
+    {
+      "check": "recorded-T1:gateway-session.json",
+      "result": "Passed",
+      "detail": {
+        "checks": 36,
+        "responses": 34,
+        "no_store": 34,
+        "commands": [
+          "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-session-gateway.py"
+        ],
+        "completed_at": "2026-09-06T17:54:05.039223+00:00",
+        "live_rerun": false
+      }
+    },
+    {
+      "check": "recorded-T1:actual-two-identity-backend",
+      "result": "Passed",
+      "detail": {
+        "result": "Passed",
+        "backend_counts": {
+          "A": 1,
+          "B": 1
+        },
+        "shared_backend_count": 1
+      }
+    },
+    {
+      "check": "recorded-mutation:provider-guard.json",
+      "result": "Passed",
+      "detail": {
+        "mutation": "Removed active-state refusal while retaining expiry check",
+        "restored_sha256": "8cbfcab50522846c6141ad2d7074d53ae4a6a1dd0005bd2abcac2f9b239f59d1",
+        "note": "Historical mutation proof; earlier task-2 source hash predates task-3 extraction. Currentness uses acceptance hashes above."
+      }
+    },
+    {
+      "check": "recorded-mutation:membership-guard.json",
+      "result": "Passed",
+      "detail": {
+        "mutation": "Temporarily removed membership EXISTS predicate",
+        "restored_sha256": "8cbfcab50522846c6141ad2d7074d53ae4a6a1dd0005bd2abcac2f9b239f59d1",
+        "note": "Historical mutation proof; earlier task-2 source hash predates task-3 extraction. Currentness uses acceptance hashes above."
+      }
+    },
+    {
+      "check": "recorded-mutation:transaction-context-guard.json",
+      "result": "Passed",
+      "detail": {
+        "mutation": "Changed transaction-local identity GUC to session-persistent setting",
+        "restored_sha256": "7c2838b08b273ceef01f38df6bb310f385088fc17bee858b246f02895c5db510",
+        "note": "Historical mutation proof; earlier task-2 source hash predates task-3 extraction. Currentness uses acceptance hashes above."
+      }
+    },
+    {
+      "check": "recorded-mutation:desktop-context-guard.json",
+      "result": "Passed",
+      "detail": {
+        "mutation": "Bypassed inactive desktop refusal by calling injected session port with a synthetic token",
+        "restored_sha256": "790621cbaf115742a332a998b852c3f04f02f67557952c21a391b86ccfd693ec",
+        "note": "Historical mutation proof; earlier task-2 source hash predates task-3 extraction. Currentness uses acceptance hashes above."
+      }
+    },
+    {
+      "check": "recorded-mutation:gateway-identity-guard.json",
+      "result": "Passed",
+      "detail": {
+        "mutation": "Removed verified identity GUC setup while retaining the rest of the mounted application",
+        "restored_sha256": "7c2838b08b273ceef01f38df6bb310f385088fc17bee858b246f02895c5db510",
+        "note": "Historical mutation proof; earlier task-2 source hash predates task-3 extraction. Currentness uses acceptance hashes above."
+      }
+    },
+    {
+      "check": "recorded-T1:six-transaction-exits",
+      "result": "Passed",
+      "detail": [
+        "context check passed: explicit_commit",
+        "context check passed: mounted_repository_success",
+        "context check passed: mounted_repository_denial",
+        "context check passed: sql_error_drop_rollback",
+        "context check passed: explicit_rollback",
+        "context check passed: in_flight_cancellation_clean_or_discarded (replaced=true)",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 3 filtered out; finished in 5.14s"
+      ]
+    },
+    {
+      "check": "source-call-path:crates/aso-web-server/src/main.rs",
+      "result": "Passed",
+      "detail": {
+        "anchors": [
+          {
+            "anchor": "adapters::session::configured_sessions(",
+            "line": 27
+          },
+          {
+            "anchor": "let mut app = api_router(state)",
+            "line": 46
+          },
+          {
+            "anchor": "axum::serve(listener, app)",
+            "line": 64
+          }
+        ],
+        "missing": [],
+        "scope": "Static caller corroboration of recorded runtime campaign, not a new runtime proof"
+      }
+    },
+    {
+      "check": "source-call-path:crates/aso-server-axum/src/lib.rs",
+      "result": "Passed",
+      "detail": {
+        "anchors": [
+          {
+            "anchor": ".merge(session::router())",
+            "line": 34
+          }
+        ],
+        "missing": [],
+        "scope": "Static caller corroboration of recorded runtime campaign, not a new runtime proof"
+      }
+    },
+    {
+      "check": "source-call-path:crates/aso-server-axum/src/session.rs",
+      "result": "Passed",
+      "detail": {
+        "anchors": [
+          {
+            "anchor": "route(\"/api/session\", get(current_session))",
+            "line": 25
+          },
+          {
+            "anchor": "state.services.sessions.resolve(&credential, query.practice_id).await",
+            "line": 69
+          },
+          {
+            "anchor": "\"no-store\"",
+            "line": 76
+          }
+        ],
+        "missing": [],
+        "scope": "Static caller corroboration of recorded runtime campaign, not a new runtime proof"
+      }
+    },
+    {
+      "check": "source-call-path:crates/aso-host/src/session.rs",
+      "result": "Passed",
+      "detail": {
+        "anchors": [
+          {
+            "anchor": "self.identities.authenticate(credential).await?",
+            "line": 126
+          },
+          {
+            "anchor": "self.memberships.resolve(&identity, practice).await?",
+            "line": 130
+          },
+          {
+            "anchor": "principal: Principal::User",
+            "line": 140
+          },
+          {
+            "anchor": "expires_at: identity.expires_at",
+            "line": 142
+          }
+        ],
+        "missing": [],
+        "scope": "Static caller corroboration of recorded runtime campaign, not a new runtime proof"
+      }
+    },
+    {
+      "check": "source-call-path:crates/aso-web-server/src/adapters/session.rs",
+      "result": "Passed",
+      "detail": {
+        "anchors": [
+          {
+            "anchor": "SET LOCAL ROLE aso_session_reader",
+            "line": 168
+          },
+          {
+            "anchor": "SELECT set_config('aso.kratos_identity_id', $1, true)",
+            "line": 176
+          },
+          {
+            "anchor": "let mut tx = self.begin_scoped(identity).await?",
+            "line": 219
+          },
+          {
+            "anchor": "u.status = 'active'",
+            "line": 229
+          },
+          {
+            "anchor": "ur.practice_id = COALESCE($2, u.practice_id)",
+            "line": 231
+          },
+          {
+            "anchor": "tx.commit().await",
+            "line": 234
+          }
+        ],
+        "missing": [],
+        "scope": "Static caller corroboration of recorded runtime campaign, not a new runtime proof"
+      }
+    },
+    {
+      "check": "source-call-path:scripts/test-session-boundary.py",
+      "result": "Passed",
+      "detail": {
+        "anchors": [
+          {
+            "anchor": "\"cargo\", \"run\", \"-p\", \"aso-web-server\"",
+            "line": 303
+          }
+        ],
+        "missing": [],
+        "scope": "Static caller corroboration of recorded runtime campaign, not a new runtime proof"
+      }
+    },
+    {
+      "check": "source-call-path:scripts/test-session-gateway.py",
+      "result": "Passed",
+      "detail": {
+        "anchors": [
+          {
+            "anchor": "r[\"id\"] == \"aso-session\"",
+            "line": 124
+          },
+          {
+            "anchor": "self.trace_pids[\"A\"] & self.trace_pids[\"B\"]",
+            "line": 216
+          },
+          {
+            "anchor": "role == \"aso_session_reader\"",
+            "line": 198
+          }
+        ],
+        "missing": [],
+        "scope": "Static caller corroboration of recorded runtime campaign, not a new runtime proof"
+      }
+    },
+    {
+      "check": "desktop:typed-inactive-boundary",
+      "result": "Passed",
+      "detail": "Wrapper signature and body read; recorded accepting-port test plus failed bypass mutation provide behavioral proof. Native UI/IPC remains Build-only."
+    },
+    {
+      "check": "architecture:host-dependency-allowlist",
+      "result": "Passed",
+      "detail": {
+        "dependencies": [
+          "serde",
+          "serde_json",
+          "uuid",
+          "thiserror",
+          "async-trait",
+          "chrono"
+        ],
+        "scope": "Actual manifest dependency inventory; no broad architecture-audit execution claimed"
+      }
+    },
+    {
+      "check": "architecture:revision-classification",
+      "result": "Passed",
+      "detail": "Explicit lane/privacy declaration in additive revision migration"
+    },
+    {
+      "check": "T0:python-syntax:scripts/test-session-boundary.py",
+      "result": "Passed",
+      "detail": "ast.parse completed"
+    },
+    {
+      "check": "T0:python-syntax:scripts/test-session-context.py",
+      "result": "Passed",
+      "detail": "ast.parse completed"
+    },
+    {
+      "check": "T0:python-syntax:scripts/test-session-gateway.py",
+      "result": "Passed",
+      "detail": "ast.parse completed"
+    },
+    {
+      "check": "constraints:exact-checklist-coverage",
+      "result": "Passed",
+      "detail": "Every applicable constraint has an explicit evidence evaluation"
+    },
+    {
+      "check": "constraints:applicable-satisfaction",
+      "result": "Passed",
+      "detail": "Applicable constraints have affirmative evidence; out-of-scope checks are separately deferred, never assigned Passed"
+    },
+    {
+      "check": "state:iteration-consistency",
+      "result": "Passed",
+      "detail": "One log iteration, one convergence decision, one state history entry"
+    },
+    {
+      "check": "state:completed-phases",
+      "result": "Passed",
+      "detail": [
+        "specify",
+        "plan",
+        "execute",
+        "reflect",
+        "persist"
+      ]
+    }
+  ]
+}

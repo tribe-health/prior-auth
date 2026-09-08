@@ -1,0 +1,89 @@
+{
+  "result": "Passed",
+  "verification_tier": 1,
+  "observed_at": "2026-09-06T15:53:15.509287+00:00",
+  "scope": "Unique disposable database loaded only from schema.sql and 25-session-authority.sql; no existing application database modified",
+  "checks": {
+    "original_schema_load": "Passed",
+    "unsafe_preexisting_role_refused_atomically": "Passed",
+    "migration_syntax_and_initial_revision": "Passed",
+    "four_statement_triggers_security_definer_and_role_flags": "Passed",
+    "insert_update_delete_truncate_on_all_four_tables_and_rollback": "Passed",
+    "idempotent_rerun_preserves_incarnation_and_revision": "Passed",
+    "separate_nonowner_login_can_set_local_reader_and_read_six_relations": "Passed",
+    "reader_write_function_patient_and_schema_create_refused": "Passed",
+    "preexisting_write_grant_refused_without_revision_reset": "Passed",
+    "column_level_write_grant_refused": "Passed",
+    "final_migration_syntax_and_idempotence": "Passed",
+    "committed_absent_present_absent_does_not_reuse_revision": "Passed"
+  },
+  "cleanup": {
+    "disposable_database_deleted": true,
+    "disposable_login_deleted": true,
+    "probe_created_reader_deleted": true,
+    "column_probe_database_deleted": true,
+    "column_probe_reader_deleted": true
+  },
+  "sources": [
+    "https://www.postgresql.org/docs/18/sql-createtrigger.html",
+    "https://www.postgresql.org/docs/18/sql-createfunction.html",
+    "https://www.postgresql.org/docs/18/sql-createrole.html",
+    "https://www.postgresql.org/docs/18/functions-info.html"
+  ],
+  "commands": [
+    {
+      "command": "docker compose exec -T db psql -U flint -X -A -t -q -v ON_ERROR_STOP=1 -d postgres",
+      "stdin": "CREATE DATABASE <unique disposable>; CREATE ROLE <unique disposable login> LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS; GRANT aso_session_reader TO <unique disposable login>;",
+      "note": "Statements executed in separate calls; reader created by migration. No password was set."
+    },
+    {
+      "command": "docker compose exec -T db psql -U flint -X -A -t -q -v ON_ERROR_STOP=1 -d <unique disposable>",
+      "stdin_file": "docs/design/schema/schema.sql",
+      "exit_code": 0
+    },
+    {
+      "command": "docker compose exec -T db psql -U flint -X -A -t -q -v ON_ERROR_STOP=1 -d <unique disposable>",
+      "stdin_file": "docker/bootstrap/25-session-authority.sql",
+      "note": "Initial load and rerun exited 0; privileged preexisting role and table/column grant probes were rejected."
+    },
+    {
+      "command": "docker compose exec -T db psql -U flint -X -A -t -q -v ON_ERROR_STOP=1 -d <unique disposable>",
+      "stdin_pattern": "BEGIN; CREATE TEMP TABLE revision_before AS SELECT * FROM aso.authorization_revision; <INSERT/UPDATE/DELETE/TRUNCATE of an authorization table>; SELECT a.revision>b.revision AND a.incarnation=b.incarnation FROM aso.authorization_revision a CROSS JOIN revision_before b; ROLLBACK; SELECT incarnation,revision FROM aso.authorization_revision;",
+      "note": "16 combinations: four operations on each of users, user_roles, role_capabilities, capabilities. All returned true before rollback and the original pair after rollback; UUIDs redacted."
+    },
+    {
+      "command": "docker compose exec -T db psql -U flint -X -A -t -q -v ON_ERROR_STOP=1 -d <unique disposable>",
+      "stdin_pattern": "SET SESSION AUTHORIZATION <unique disposable login>; BEGIN; SET LOCAL ROLE aso_session_reader; <read or denied operation>;",
+      "note": "Read all six allowed relations. Refused UPDATE revision, DELETE users, TRUNCATE user_roles, direct function execution, patient SELECT and CREATE TABLE in aso."
+    },
+    {
+      "command": "docker compose exec -T db psql -U flint -X -A -t -q -v ON_ERROR_STOP=1 -d postgres",
+      "stdin": "DROP DATABASE <unique disposable>; DROP ROLE <unique disposable login>; DROP ROLE aso_session_reader;",
+      "note": "Only resources created by the verification were deleted, in separate calls."
+    }
+  ],
+  "unverified": [
+    "Production login/password provisioning and migration application to existing flint database are intentionally not performed.",
+    "Backup restore must rotate incarnation; PostgreSQL restores stored revision and incarnation from its backup.",
+    "This run uses SET SESSION AUTHORIZATION for the disposable nonowner LOGIN; password authentication is not exercised."
+  ],
+  "observed_outputs": {
+    "initial_revision": 1,
+    "trigger_function_and_role_contract_stdout": "t\nt\nt\n",
+    "statement_events_and_rollback": {
+      "events_checked": 16,
+      "revision_advanced_each": true,
+      "rollback_restored_original_incarnation_and_revision_each": true
+    },
+    "reader_login_contract_stdout": "t\nt\nt\nt\nt\n",
+    "denied_runtime_actions": {
+      "count": 6,
+      "error_fragment": "permission denied"
+    },
+    "privileged_preexisting_role_error_fragment": "aso_session_reader already exists with privileged access",
+    "preexisting_column_write_table_vs_column_privilege_stdout": "f|t\n",
+    "final_migration_and_rerun_exit_code": 0,
+    "final_revision_and_trigger_count_assertions_stdout": "t\nt\n"
+  },
+  "completed_at": "2026-09-06T15:56:17.264275+00:00"
+}

@@ -1,0 +1,19 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.6-sol",
+  "isolation_mode": "harness-native",
+  "producer_model": "gpt-6-astra",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "migrations/server/2026090608_approval_qa_serialization.sql",
+      "line": 48,
+      "claim": "A concurrent TRUNCATE can remove a draft letter's claim mappings and still allow that letter's approval to commit without its cited assertion set.",
+      "evidence": "Approval locks letter_qa_results, but only performs a row-level SELECT ... FOR SHARE on letter_claims and never verifies that any claims remain. The TRUNCATE guard checks only currently approved or signed letters. If TRUNCATE commits while the letter is visibly draft, blocked approval resumes with zero claims and can still approve, contrary to the architecture claim that approval freezes the claim set. Existing concurrency receipts cover only letter_qa_results TRUNCATE.",
+      "suggested_fix": "Make approval acquire a relation lock on letter_claims that conflicts with TRUNCATE, revalidate the complete cited claim/document set, and test both commit orders."
+    }
+  ],
+  "checked_classes": []
+}

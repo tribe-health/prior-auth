@@ -1,0 +1,35 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.6-sol",
+  "isolation_mode": "harness-native",
+  "producer_model": "gpt-6-astra",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "migrations/server/2026090600_local_publication_boundary.sql",
+      "line": 76,
+      "claim": "A registered local command ledger can still be published through a non-aso schema publication after a schema move.",
+      "evidence": "The guard rejected the literal aso schema and explicit pg_publication_rel membership, but did not compare registered relation namespaces with pg_publication_namespace.",
+      "suggested_fix": "Join registered relation OIDs through pg_class.relnamespace to publication namespaces and add schema-move tests."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "migrations/server/2026090602_durable_signing.sql",
+      "line": 205,
+      "claim": "TRUNCATE can remove QA results or claim mappings supporting approved and signed letters without invoking either immutability guard.",
+      "evidence": "The QA and claim guards were row triggers for INSERT, UPDATE and DELETE only; no statement-level TRUNCATE trigger existed.",
+      "suggested_fix": "Add BEFORE TRUNCATE guards and negative integration tests."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "web/src/features/evidence-timeline/hooks/use-evidence-timeline.ts",
+      "line": 100,
+      "claim": "The hook permits a new reassessment while a prior command outcome remains unknown and silently discards the only reconciliation identifier.",
+      "evidence": "The duplicate guard checked only the in-flight ref; the uncertain path cleared it while retaining lastCommandId, and the next mutation reset lastCommandId. use-surgeon-gate had the same state pattern.",
+      "suggested_fix": "Keep the unresolved command slot until successful lookup or track multiple unresolved commands; add 503-then-second-command tests."
+    }
+  ],
+  "checked_classes": []
+}

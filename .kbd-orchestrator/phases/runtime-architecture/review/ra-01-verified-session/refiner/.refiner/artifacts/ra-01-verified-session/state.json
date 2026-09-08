@@ -1,0 +1,157 @@
+{
+  "refinement_id": "87ca3763-4609-4bf0-8695-d8391feafd96",
+  "artifact_name": "ra-01-verified-session",
+  "artifact_type": "content",
+  "content_type": "direct:content",
+  "started_at": "2026-09-06T20:20:43Z",
+  "updated_at": "2026-09-06T20:25:14Z",
+  "current_iteration": 1,
+  "max_iterations": 1,
+  "goals": [
+    "Bounded RA-01 completion evidence gate"
+  ],
+  "constraints": [
+    {
+      "id": "current-evidence",
+      "description": "Current implementation and acceptance receipts match their recorded SHA-256 values.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "Acceptance 2.1/2.2/2.3 source and evidence hashes; validate.py recomputes all hashes."
+      }
+    },
+    {
+      "id": "transport-authority",
+      "description": "Mounted browser/native transports return sanitized fresh database scope and verified expiry.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "task-5-acceptance.json; mounted-session.json 34 checks and context-session.json 41 checks; exact contract checks in hashed test scripts."
+      }
+    },
+    {
+      "id": "untrusted-scope",
+      "description": "Forged hints and unauthorized practice cannot grant authority; 401/403/503 remain distinct.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "task-6-acceptance.json; context provider-trait/outage/reauthentication checks; gateway-session.json spoof and foreign-practice controls."
+      }
+    },
+    {
+      "id": "transaction-isolation",
+      "description": "Verified identity remains transaction-local under the restricted reader and clean connection reuse.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "task-7-acceptance.json; shared backend A=1/B=1/intersection=1; six production transaction exit markers; identity/local-setting mutation failures and restoration."
+      }
+    },
+    {
+      "id": "mounted-callers",
+      "description": "Production HTTP composition reaches real session provider and membership repository.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "main.rs configured_sessions -> api_router -> session::router -> sessions.resolve -> identities.authenticate/memberships.resolve; actual cargo-run harness and Gate route checks."
+      }
+    },
+    {
+      "id": "inactive-desktop",
+      "description": "Desktop exposes a typed counterpart that refuses native session authority until ra-17.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "desktop/src-tauri/src/lib.rs wrapper; task-3.md accepting-port test 1 passed; desktop-context-guard.json bypass failed 101 and restored test passed."
+      }
+    },
+    {
+      "id": "architecture-scope",
+      "description": "Host stays shell-neutral; revision metadata declares relational/trusted classification.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "Explicit aso-host dependency inventory and 25-session-authority.sql classification comments; clinical authority and replica flows remain future scoped changes."
+      }
+    },
+    {
+      "id": "mutation-proof",
+      "description": "Authority guards have recorded failing controls and restored successful checks.",
+      "severity": "high",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "provider-guard, membership-guard, transaction-context-guard, desktop-context-guard and gateway-identity-guard receipts; original failures retained."
+      }
+    },
+    {
+      "id": "limits",
+      "description": "Gate limitations and deferred verification stay explicit; no absence-only runtime Passed claim.",
+      "severity": "high",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "dist/report.md records reused evidence, Gate duplicate headers, native UI, cancellation/concurrency, deployment, phase T2 and independent adversarial gate limits."
+      }
+    },
+    {
+      "id": "bundle-integrity",
+      "description": "Manifest, constraints, state and referenced outputs validate and iteration records agree.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "Full Draft-07 schema checks; nonempty exact dist coverage; consistent log/decisions/state; persisted actual validate.py stdout."
+      }
+    }
+  ],
+  "phases_completed": [
+    "specify",
+    "plan",
+    "execute",
+    "reflect",
+    "persist"
+  ],
+  "convergence_status": "converged",
+  "iteration_history": [
+    {
+      "iteration": 1,
+      "phases_completed": [
+        "specify",
+        "plan",
+        "execute",
+        "reflect",
+        "persist"
+      ],
+      "constraints_satisfied": 10,
+      "constraints_total": 10,
+      "decision": "terminate",
+      "timestamp": "2026-09-06T20:24:14.677573+00:00"
+    }
+  ],
+  "workflow_triggers": [],
+  "checkpoints": [
+    {
+      "checkpoint_id": "36307e0b",
+      "phase": "persist",
+      "iteration": 1,
+      "timestamp": "2026-09-06T20:25:12Z"
+    }
+  ],
+  "prior_cycle_id": null,
+  "state_provider": {
+    "provider_type": "filesystem",
+    "config": {
+      "state_directory": ".refiner",
+      "scope": "project"
+    }
+  },
+  "finalized_at": "2026-09-06T20:25:14Z"
+}

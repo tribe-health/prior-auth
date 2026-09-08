@@ -1,0 +1,112 @@
+{
+  "artifact_type": "content",
+  "constraints": [
+    {
+      "id": "fixed-projection-registry",
+      "description": "The server grant contains exactly the five approved projections, practice predicates for clinical records, evidence_states keyed by key, and no unapproved columns.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "validate.py checks current source, receipt or caller evidence."
+      }
+    },
+    {
+      "id": "typed-grant-boundary",
+      "description": "Caller query controls, forged identity material, service principals and wrong issuer, audience, scope or revision cannot broaden a grant.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "validate.py checks current source, receipt or caller evidence."
+      }
+    },
+    {
+      "id": "fresh-session-linkage",
+      "description": "Replica grants retain the verified originating session and bounded expiry; membership denial, resolution failure and missing minting refuse downstream access.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "validate.py checks current source, receipt or caller evidence."
+      }
+    },
+    {
+      "id": "authorized-shape-resolution",
+      "description": "FRF verifies the replica token and re-resolves authorization on each initial or continuation request before facade access.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "validate.py checks current source, receipt or caller evidence."
+      }
+    },
+    {
+      "id": "derived-practice-integrity",
+      "description": "Fresh and upgraded PostgreSQL installs overwrite forged derived practice IDs and preserve tested parent-transfer cascades under a non-bypass role.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "validate.py checks current source, receipt or caller evidence."
+      }
+    },
+    {
+      "id": "affirmation-projection",
+      "description": "Authorized removal clears cases.gate_affirmed_at and the approved nullable field remains in the cases projection without actor identity.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "validate.py checks current source, receipt or caller evidence."
+      }
+    },
+    {
+      "id": "caller-truth",
+      "description": "The report distinguishes mounted ASO routing and synthetic Gate execution from absent deployment configuration, feature-gated FRF composition, inactive desktop IPC and deferred web graph consumption.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "validate.py checks current source, receipt or caller evidence."
+      }
+    },
+    {
+      "id": "bounded-verification",
+      "description": "Only applicable T0/T1 and local synthetic integration results are Passed; live Electric exchange, deployment, browser rendering, Tauri IPC and physical devices remain unverified.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "validate.py checks current source, receipt or caller evidence."
+      }
+    },
+    {
+      "id": "evidence-integrity",
+      "description": "Every cited current source and final receipt is hash-addressed and all disposable database roles, databases and HTTP processes report cleanup.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "validate.py checks current source, receipt or caller evidence."
+      }
+    },
+    {
+      "id": "bundle-integrity",
+      "description": "The manifest, constraints, named state, registry, report and checklist are complete, schema-valid and deterministically reproducible.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "validate.py checks current source, receipt or caller evidence."
+      }
+    }
+  ],
+  "global_rules": [
+    "Scope is RA04 completion evidence.",
+    "No broad phase T2, release T3, deployment, publication or persistent real clinical data is included."
+  ],
+  "termination_conditions": [
+    "All ten constraints are Passed and validate.py exits zero."
+  ]
+}

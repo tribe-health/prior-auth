@@ -1,0 +1,47 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.6-sol",
+  "isolation_mode": "harness-native",
+  "producer_model": "gpt-5",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "crates/aso-host/src/session.rs",
+      "line": 140,
+      "claim": "The production session path cannot distinguish an authenticated delegated agent from a human and therefore cannot prove the required independent agent refusal.",
+      "evidence": "SessionService unconditionally emitted Principal::User while the authenticated identity carried no authoritative principal.",
+      "suggested_fix": "Carry principal from a trusted identity source and prove an authenticated Agent is refused with an accepting downstream control.",
+      "resolution": "Implemented in refiner iteration 2; the trusted identity carries principal and SessionService refuses Agent before accepting membership resolution."
+    },
+    {
+      "severity": "WARNING",
+      "file": "web/src/features/surgeon-gate/hooks/use-surgeon-gate.ts",
+      "line": 32,
+      "claim": "The hook silently changes its second string argument from actor ID to practice ID.",
+      "evidence": "Both values used the same positional string type.",
+      "suggested_fix": "Use a typed options object.",
+      "resolution": "Implemented in refiner iteration 2 as { practiceId?: string }; typecheck and 69 tests pass."
+    },
+    {
+      "severity": "WARNING",
+      "file": "crates/flint-gate-core/src/middleware/aso_clinical_authorize.rs",
+      "line": 19,
+      "claim": "Every protected request constructs and drops a new HTTP client.",
+      "evidence": "authorize built a reqwest Client for every invocation.",
+      "suggested_fix": "Reuse a hardened client.",
+      "resolution": "Implemented in refiner iteration 2 with a process-wide LazyLock client; all 8 focused tests pass."
+    },
+    {
+      "severity": "WARNING",
+      "file": "crates/aso-web-server/src/main.rs",
+      "line": 31,
+      "claim": "Startup does not enforce that session and gate credentials address the same authoritative ASO deployment.",
+      "evidence": "The two connection strings were opened independently.",
+      "suggested_fix": "Compare a stable database target before composition.",
+      "resolution": "Implemented in refiner iteration 2 by comparing parsed host, port and database; mismatch controls pass."
+    }
+  ],
+  "checked_classes": []
+}

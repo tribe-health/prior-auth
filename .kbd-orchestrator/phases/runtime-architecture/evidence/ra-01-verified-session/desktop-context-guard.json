@@ -1,0 +1,13 @@
+{
+  "mutation": "Bypassed inactive desktop refusal by calling injected session port with a synthetic token",
+  "command": "cargo +1.97.1 test -p aso-desktop session_contract_tests",
+  "exit": 101,
+  "output": "\nrunning 1 test\ntest session_contract_tests::current_session_refuses_even_when_injected_port_can_return_authority ... FAILED\n\nfailures:\n\n---- session_contract_tests::current_session_refuses_even_when_injected_port_can_return_authority stdout ----\n\nthread 'session_contract_tests::current_session_refuses_even_when_injected_port_can_return_authority' (89652567) panicked at desktop/src-tauri/src/lib.rs:200:13:\nassertion `left == right` failed: practice selection None must not activate native authentication\n  left: Ok(SessionSummary { identity_id: 48b498bf-3c72-43c2-8747-f041f47b1b87, user_id: b937724f-94f4-4ccf-8cfd-3b4fc16254c7, practice_id: 8dbfe861-f2ed-4d06-9eba-a1078fc5d938, display_name: \"Synthetic surgeon\", principal: User, capabilities: [\"affirm_gate\", \"sign_letter\"], expires_at: 2026-09-06T16:27:02.344627Z, authorization_revision: \"desktop-test\" })\n right: Err(NativeAuthenticationUnavailable)\nnote: run with `RUST_BACKTRACE=1` environment variable to display a backtrace\n\n\nfailures:\n    session_contract_tests::current_session_refuses_even_when_injected_port_can_return_authority\n\ntest result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s\n\n",
+  "source_restored": true,
+  "restored_sha256": "790621cbaf115742a332a998b852c3f04f02f67557952c21a391b86ccfd693ec",
+  "restored_verification": {
+    "command": "cargo +1.97.1 check -p aso-desktop --tests && cargo +1.97.1 clippy -p aso-desktop --tests --no-deps && cargo +1.97.1 test -p aso-desktop session_contract_tests",
+    "exit": 0,
+    "output": "1 passed; 0 failed; 0 ignored"
+  }
+}

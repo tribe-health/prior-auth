@@ -1,0 +1,313 @@
+{
+  "schemaVersion": "2",
+  "generatedBy": "kbd-runtime",
+  "projectionContractVersion": 2,
+  "sourceRevision": 304,
+  "derivedRevision": 304,
+  "frontier": {
+    "e9a7936c-0a01-43d5-9004-b93a4e5fd031": 304
+  },
+  "conflictCount": 0,
+  "phase": "runtime-architecture",
+  "phaseId": "runtime-architecture",
+  "parentPhase": null,
+  "last_updated": "2026-09-08T15:33:46.673347Z",
+  "last_updated_by": "kbd-runtime",
+  "changes_total": 24,
+  "changes_completed": 4,
+  "implementation_total": 24,
+  "implementation_completed": 4,
+  "completion": {
+    "primaryCounter": "implementation",
+    "implementation": {
+      "completed": 4,
+      "total": 24,
+      "status": "IN_PROGRESS"
+    },
+    "evidence": {
+      "status": "COMPLETE",
+      "summary": "Every change carries a result.md with observed command output. Six behavioural guards each sabotaged, observed failing, reverted. Live-stack evidence: 60 tables, 5/5 and 11/11 schema refusals, tenant isolation and PHI projection verified through Electric against real rows. NOT evidence of visual correctness — nothing has rendered in a browser.",
+      "blockers": []
+    },
+    "certification": {
+      "status": "COMPLETE",
+      "summary": "Both gates ran. artifact-refiner: 11/11 blocking constraints pass across web, Rust and Flutter surfaces; one warning finding (empty [pins] in versions.toml, operator-owned). Adversarial review by a fresh-context critic: 2 CRITICAL, 3 HIGH, 3 MEDIUM, 1 LOW. Six fixed here (misleading compose comment, gate read failing open, worklist hiding a gap behind a void, tautological stub, unreachable type variant, false verification claim in a test comment, double-negative copy). Three carried to runtime-architecture with stated reasons: the sync layer has no callers, GraphProvider conflates three states, and two tests mirror the implementation. Gates after: 57/57 tests, typecheck 0, lint clean, build green, audit PASS 6/6.",
+      "blockers": []
+    },
+    "publication": {
+      "status": "BLOCKED",
+      "summary": "The web READ PATH is disconnected: createEvidenceSyncAdapter has no callers and nothing writes rows into PGlite, so every case renders 'No evidence has been recorded' regardless of the truth. Not publishable. Wiring it is the first work item of runtime-architecture.",
+      "blockers": [
+        "Read path disconnected — sync adapter never constructed; PGlite never populated"
+      ]
+    }
+  },
+  "changes": [
+    {
+      "id": "ra-01-verified-session",
+      "title": "Return an authoritative ASO session and practice scope",
+      "status": "DONE",
+      "implementation_status": "COMPLETE",
+      "tasks_total": 8,
+      "tasks_done": 8,
+      "last_task_completed": "3.1 Complete applicable T0/T1 and the phase-prescribed artifact-refiner then adversarial review; preserve synthetic evidence, confirm real callers and mark only actually satisfied work complete. Do not run broad phase/release tiers early.",
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "ra-02-durable-affirmation",
+      "title": "Persist authenticated gate affirmation with independent controls",
+      "status": "DONE",
+      "implementation_status": "COMPLETE",
+      "tasks_total": 9,
+      "tasks_done": 9,
+      "last_task_completed": "3.1 Complete applicable T0/T1 and the phase-prescribed artifact-refiner then adversarial review; preserve synthetic evidence, confirm real callers and mark only actually satisfied work complete. Do not run broad phase/release tiers early.",
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "ra-03-clinical-command-parity",
+      "title": "Use verified context for signing and evidence reassessment",
+      "status": "DONE",
+      "implementation_status": "COMPLETE",
+      "tasks_total": 9,
+      "tasks_done": 9,
+      "last_task_completed": "ra03-final-review — 3.1 Complete applicable T0/T1 and the phase-prescribed artifact-refiner then adversarial review; preserve synthetic evidence, confirm real callers and mark only actually satisfied work complete. Do not run broad phase/release tiers early.",
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "ra-04-projection-grants",
+      "title": "Derive replica grants and FRF identity on the server",
+      "status": "DONE",
+      "implementation_status": "COMPLETE",
+      "tasks_total": 12,
+      "tasks_done": 12,
+      "last_task_completed": "ra04-final-review — Complete RA04 applicable T0/T1, artifact-refiner and adversarial review; preserve synthetic evidence, confirm real callers and mark only actually satisfied work complete.",
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "ra-05-authorized-shape-facade",
+      "title": "Serve Electric snapshots and continuations through the authorized facade",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "ra-06-bounded-revocation",
+      "title": "Expire and revoke active replica delivery within a measured bound",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "ra-07-scoped-pem-runtime",
+      "title": "Own hydration, status, listeners and persistence per runtime",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "ra-08-committed-graph-projection",
+      "title": "Publish committed replica batches atomically into PEM",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "ra-09-pem-delivery-gate",
+      "title": "Prove and adopt the actual PEM package artifact",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "ra-10-remove-transitive-query-cache",
+      "title": "Remove the unused bridge that brings SWR into the application",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "ra-11a-sync-conformance",
+      "title": "Prove the selected SQL materializer and commit contract",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "ra-11b-worker-ownership",
+      "title": "Own database opening, migrations and leader handover",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "ra-11c-sql-materialization",
+      "title": "Apply authorized streams and publish committed graph batches",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "ra-12-public-auth-startup",
+      "title": "Mount real public authentication and explicit startup states",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "ra-13-epoch-logout-and-drafts",
+      "title": "Fence scope changes and failed logout across tabs and reloads",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "ra-14-live-evidence-timeline",
+      "title": "Render the first authorized persisted row through graph selectors",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "ra-15-attributed-annotations",
+      "title": "Persist attributed annotations with scoped draft recovery",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "ra-16-authorized-source-preview",
+      "title": "Open cited sources through an authorized adaptive preview",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "ra-17-native-session-transport",
+      "title": "Own native credentials and verified commands in the Tauri host",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "ra-18-tauri-pglite-baseline",
+      "title": "Run the shared evidence runtime in Tauri with PGlite",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "ra-19-native-sqlite-parity",
+      "title": "Evaluate a native SQLite materializer against the PGlite baseline",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "ra-20-safe-browser-updates",
+      "title": "Coordinate compatible web code, schema and draft updates",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "ra-21-safe-native-updates",
+      "title": "Update paired native host/frontend bundles safely",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "ra-22-runtime-certification",
+      "title": "Certify the assembled runtime against the full acceptance matrix",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 0,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": null,
+      "blockers": []
+    }
+  ],
+  "children": {},
+  "migrationStatus": null
+}

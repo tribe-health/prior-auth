@@ -1,0 +1,29 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.6-sol",
+  "isolation_mode": "harness-native",
+  "producer_model": "gpt-5",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "migrations/server/2026090601_durable_gate.sql",
+      "line": 376,
+      "claim": "A reused command ID with a changed case payload can return denial or not-found instead of the explicit command conflict required by acceptance criterion 2.3.",
+      "evidence": "The SQL function and AppServices checked target-case authority before reading the identity/practice/command-ID record.",
+      "suggested_fix": "Resolve the scoped command record before target-case authorization and return CommandConflict for a payload mismatch.",
+      "resolution": "Implemented in refiner iteration 3 in both AppServices and PostgreSQL. Fresh and upgrade transaction campaigns prove missing and foreign changed-case payloads conflict before target authority."
+    },
+    {
+      "severity": "WARNING",
+      "file": "web/src/features/surgeon-gate/hooks/use-surgeon-gate.ts",
+      "line": 99,
+      "claim": "A definitive capability refusal leaves lastCommandId populated even though that field is recovery state for an uncertain response.",
+      "evidence": "The hook stored the command ID before sending and the capability-denied branch retained it after a definitive 403.",
+      "suggested_fix": "Clear lastCommandId on definitive denial and retain it only when commit status is uncertain.",
+      "resolution": "Implemented in refiner iteration 3; hook tests assert a capability denial clears the command ID."
+    }
+  ],
+  "checked_classes": []
+}

@@ -1,0 +1,12 @@
+{
+  "result": "Passed",
+  "phase": "runtime-architecture",
+  "stage": "Execute",
+  "change": "ra-02-durable-affirmation",
+  "status": "in_progress",
+  "completed_tasks": 3,
+  "total_tasks": 9,
+  "revision": 157,
+  "next_command": "/kbd-apply ra-02-durable-affirmation",
+  "note": "Driver completed task3; typed change transition retained in-progress after driver projected pending. No generated state edited."
+}

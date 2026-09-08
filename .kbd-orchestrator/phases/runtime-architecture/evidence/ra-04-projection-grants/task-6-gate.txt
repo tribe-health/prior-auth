@@ -1,0 +1,55 @@
+warning: profiles for the non root package will be ignored, specify profiles at the workspace root:
+package:   /Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate/Cargo.toml
+workspace: /Users/gqadonis/Projects/prometheus/flint-gate/Cargo.toml
+    Blocking waiting for file lock on package cache
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.89s
+     Running unittests src/lib.rs (/Users/gqadonis/.cargo/build-cache/26/a0fea4fb871c07/debug/deps/flint_gate_core-61eb425f7dbb8ec7)
+
+running 2 tests
+test middleware::aso_replica_grant::tests::service_identity_and_wrong_revision_are_refused ... ok
+test middleware::aso_replica_grant::tests::caller_fields_and_forged_identity_data_cannot_enter_replica_claims ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 579 filtered out; finished in 0.06s
+
+     Running tests/mcp_e2e.rs (/Users/gqadonis/.cargo/build-cache/26/a0fea4fb871c07/debug/deps/mcp_e2e-94e31579c869b632)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 5 filtered out; finished in 0.00s
+
+warning: profiles for the non root package will be ignored, specify profiles at the workspace root:
+package:   /Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate/Cargo.toml
+workspace: /Users/gqadonis/Projects/prometheus/flint-gate/Cargo.toml
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.25s
+     Running unittests src/lib.rs (/Users/gqadonis/.cargo/build-cache/26/a0fea4fb871c07/debug/deps/flint_gate_core-61eb425f7dbb8ec7)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 581 filtered out; finished in 0.00s
+
+     Running tests/mcp_e2e.rs (/Users/gqadonis/.cargo/build-cache/26/a0fea4fb871c07/debug/deps/mcp_e2e-94e31579c869b632)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 5 filtered out; finished in 0.00s
+
+warning: profiles for the non root package will be ignored, specify profiles at the workspace root:
+package:   /Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate/Cargo.toml
+workspace: /Users/gqadonis/Projects/prometheus/flint-gate/Cargo.toml
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.73s
+     Running unittests src/lib.rs (/Users/gqadonis/.cargo/build-cache/26/a0fea4fb871c07/debug/deps/flint_gate_core-61eb425f7dbb8ec7)
+
+running 1 test
+test auth::jwt_mint::tests::replica_mint_emits_only_the_typed_allowlist_and_bounds_expiry ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 580 filtered out; finished in 0.00s
+
+     Running tests/mcp_e2e.rs (/Users/gqadonis/.cargo/build-cache/26/a0fea4fb871c07/debug/deps/mcp_e2e-94e31579c869b632)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 5 filtered out; finished in 0.00s
+

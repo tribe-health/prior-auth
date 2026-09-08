@@ -1,0 +1,20 @@
+{
+  "producer_model": "gpt-6-astra",
+  "primary": {
+    "model": "k3",
+    "endpoint": "http://localhost:4000/v1",
+    "command": "KBD_PRODUCER_MODEL=gpt-6-astra ADV_JUDGE_TIMEOUT=180 ADV_JUDGE_RETRIES=1 bash /Users/gqadonis/.codex/skills/adversarial-review/scripts/dispatch-judge.sh --mode diff --packet .kbd-orchestrator/phases/runtime-architecture/review/ra-01-verified-session/packet.json --out .kbd-orchestrator/phases/runtime-architecture/review/ra-01-verified-session/findings.json",
+    "exit_code": 3,
+    "http_status": "000",
+    "timeout_seconds": 180,
+    "attempts": 1,
+    "verdict_received": false
+  },
+  "fallback": {
+    "model": "gpt-5.6-sol",
+    "isolation_mode": "harness-native",
+    "generation_history_provided": false,
+    "inputs": ["reviewer-mandate-diff.md", "packet.json"],
+    "reason": "Documented adversarial-review fallback for dispatcher exit 3. Separate native agent and model, with weaker transport isolation than a standalone REST request."
+  }
+}

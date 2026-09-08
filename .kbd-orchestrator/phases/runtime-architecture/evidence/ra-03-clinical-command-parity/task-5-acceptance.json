@@ -1,0 +1,131 @@
+{
+  "result": "Passed",
+  "task": 5,
+  "requirement": "Forged surgeon actor and stale letter/QA/signature revisions are denied; request-body identity grants no authority.",
+  "evidence_mode": "Fresh live disposable PostgreSQL campaign plus focused host, HTTP and inactive desktop contract tests against current sources.",
+  "prerequisites": [
+    "Existing Docker Compose db service with schema extensions available",
+    "Configured PostgreSQL admin password from container environment",
+    "Pinned Rust toolchain and idle workspace Cargo build directory",
+    "No concurrent database fixtures; a local exclusive lock covers this runner"
+  ],
+  "commands": [
+    "RUSTUP_TOOLCHAIN=1.97.1 cargo test -p aso-host signing::tests",
+    "RUSTUP_TOOLCHAIN=1.97.1 cargo test -p aso-server-axum routes::letters::tests",
+    "RUSTUP_TOOLCHAIN=1.97.1 cargo test -p aso-desktop signing_refuses_even_when_injected_ports_accept",
+    "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-signing-transaction.py --install-mode fresh --output .kbd-orchestrator/phases/runtime-architecture/evidence/ra-03-clinical-command-parity/task-5-signing-proof.json"
+  ],
+  "observed_results": {
+    "host_signing_tests": {
+      "result": "Passed",
+      "passed": 5,
+      "failed": 0,
+      "covers": [
+        "caller-selected authority rejected during deserialization",
+        "stale letter and QA/signature revisions refused",
+        "agent/service/expired/denied contexts never reach write"
+      ]
+    },
+    "http_letter_route_tests": {
+      "result": "Passed",
+      "passed": 5,
+      "failed": 0,
+      "covers": [
+        "actor field rejected before session or service access",
+        "verified session context drives signing",
+        "stale revisions conflict",
+        "agent refused even with capability"
+      ]
+    },
+    "desktop_signing_boundary": {
+      "result": "Passed",
+      "passed": 1,
+      "failed": 0,
+      "covers": [
+        "native command remains unavailable before injected accepting ports can run"
+      ]
+    },
+    "postgres_signing_campaign": {
+      "result": "Passed",
+      "receipt": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/.kbd-orchestrator/phases/runtime-architecture/evidence/ra-03-clinical-command-parity/task-5-signing-proof.json",
+      "receipt_sha256": "eb19b88a46623cd41bb1f503cedd25a5caa1540208ceb622559dda4681c03fc1",
+      "fixture_checks": 16,
+      "lifecycle_assertions": 10,
+      "selected_markers": [
+        "gate_transaction_check: signing_service_and_database_refuse_stale_letter_qa_and_signature_revisions",
+        "gate_transaction_check: signing_service_function_and_trigger_independently_refuse_admin_agent_and_foreign_scope"
+      ],
+      "cleanup": {
+        "disposable_database_deleted": {
+          "result": "Passed",
+          "return_code": 0
+        },
+        "disposable_login_deleted": {
+          "result": "Passed",
+          "return_code": 0
+        },
+        "disposable_owner_role": {
+          "result": "Passed",
+          "action": "already_absent"
+        },
+        "aso_session_reader": {
+          "result": "Passed",
+          "action": "fixture_created_role_deletion",
+          "return_code": 0
+        },
+        "aso_gate_executor": {
+          "result": "Passed",
+          "action": "fixture_created_role_deletion",
+          "return_code": 0
+        },
+        "aso_gate_owner": {
+          "result": "Passed",
+          "action": "fixture_created_role_deletion",
+          "return_code": 0
+        }
+      }
+    }
+  },
+  "current_source_sha256": [
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host/src/signing.rs",
+      "sha256": "c2c608b621458c58db12a871e5ec88582e344ace1ebe2bfafb4b10e7cd59bf66"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-server-axum/src/routes/letters.rs",
+      "sha256": "38e7a634de1d75637523574ba2c5807cbb67480583af372acaacbfb0dc8cd9cb"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-server-axum/src/routes/letters/tests.rs",
+      "sha256": "5cae3f81eef71c20e94198e60d4d30b595dad0a60338bd06e93c10c3b691fb76"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/gate.rs",
+      "sha256": "acba2e30d2e2a5e8da8f19bc79561106cedba8b98bde564c9a0934098591d962"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/gate/signing_transaction_tests.rs",
+      "sha256": "3f29caabdd117a44a0bd2fac5597b7734bcecd57aa1eaa6b8b629e271fac82fc"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/desktop/src-tauri/src/lib.rs",
+      "sha256": "7e36082f60644ca1693a058a98f0019767a256225e815368b3daa95ee508f8e3"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/migrations/server/2026090602_durable_signing.sql",
+      "sha256": "3eb225a6c7477cd5c015c1552b752b6ed0d2a1497d5646f7e9e8ceeba418ccba"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/docker/flint-gate/config.yaml",
+      "sha256": "b156f0047fb8d860d7b9acffe49c7b705e290a666d53746dc80cb7e6f09bf9f5"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/scripts/test-signing-transaction.py",
+      "sha256": "31077af039006ba0ae709962ab3aa504094d83e79d21f2eca80dbd54d190934c"
+    }
+  ],
+  "mechanism": "The transport schema denies unknown actor/identity fields; verified ClinicalContext supplies authority; AppServices and the restricted PostgreSQL function independently compare letter, QA and current signature revisions before write.",
+  "unverified": [
+    "Production Gate image, browser UI, native credential owner and physical devices remain outside this focused Tier 1 proof."
+  ]
+}

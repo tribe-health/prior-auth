@@ -1,0 +1,218 @@
+{
+  "result": "Passed",
+  "task": 6,
+  "requirement": "A lost signing or reassessment response is resolved from the persisted command result; repeat and lookup create no duplicate clinical effect; signing and affirmation do not enter PEM replay.",
+  "evidence_mode": "Current-hash signing receipt, fresh live reassessment campaign, focused service/HTTP/hook tests, and static production call-path exclusion proof.",
+  "commands": [
+    "RUSTUP_TOOLCHAIN=1.97.1 cargo test -p aso-host signing::tests",
+    "RUSTUP_TOOLCHAIN=1.97.1 cargo test -p aso-host reassessment::tests",
+    "RUSTUP_TOOLCHAIN=1.97.1 cargo test -p aso-server-axum routes::letters::tests",
+    "RUSTUP_TOOLCHAIN=1.97.1 cargo test -p aso-server-axum routes::evidence::tests",
+    "pnpm --dir web exec vitest run src/features/surgeon-gate/hooks/use-surgeon-gate.test.tsx src/features/evidence-timeline/hooks/use-evidence-timeline.test.tsx",
+    "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-reassessment-transaction.py --install-mode fresh --output .kbd-orchestrator/phases/runtime-architecture/evidence/ra-03-clinical-command-parity/task-6-reassessment-proof.json",
+    "python3 inline source-boundary check over production web TypeScript"
+  ],
+  "prerequisites": [
+    "Existing Docker Compose db service with schema extensions available",
+    "Configured PostgreSQL admin password from container environment",
+    "Pinned Rust toolchain and idle workspace Cargo build directory",
+    "No concurrent database fixtures; a local exclusive lock covers this runner"
+  ],
+  "observed_results": {
+    "host_signing": {
+      "result": "Passed",
+      "passed": 5,
+      "failed": 0,
+      "selected": "stored_result_reconciles_before_mutable_target_reads"
+    },
+    "host_reassessment": {
+      "result": "Passed",
+      "passed": 4,
+      "failed": 0,
+      "selected": "stored_result_resolves_without_repeating_the_clinical_write"
+    },
+    "http_signing": {
+      "result": "Passed",
+      "passed": 5,
+      "failed": 0,
+      "selected": "lost_signing_response_is_reconciled_by_repeat_and_lookup"
+    },
+    "http_reassessment": {
+      "result": "Passed",
+      "passed": 4,
+      "failed": 0,
+      "selected": "lost_response_is_reconciled_without_a_second_clinical_effect"
+    },
+    "web_hooks": {
+      "result": "Passed",
+      "files_passed": 2,
+      "tests_passed": 14,
+      "failed": 0,
+      "covers": [
+        "uncertain affirmation retains command ID for lookup without retry",
+        "reassessment lookup does not replay write",
+        "scope changes fence late gate recovery"
+      ]
+    },
+    "signing_database": {
+      "result": "Passed",
+      "receipt": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/.kbd-orchestrator/phases/runtime-architecture/evidence/ra-03-clinical-command-parity/task-5-signing-proof.json",
+      "sha256": "eb19b88a46623cd41bb1f503cedd25a5caa1540208ceb622559dda4681c03fc1",
+      "selected_marker": "gate_transaction_check: signing_lost_response_repeat_and_lookup_return_one_signing_effect",
+      "assertion_count": 10,
+      "cleanup": {
+        "disposable_database_deleted": {
+          "result": "Passed",
+          "return_code": 0
+        },
+        "disposable_login_deleted": {
+          "result": "Passed",
+          "return_code": 0
+        },
+        "disposable_owner_role": {
+          "result": "Passed",
+          "action": "already_absent"
+        },
+        "aso_session_reader": {
+          "result": "Passed",
+          "action": "fixture_created_role_deletion",
+          "return_code": 0
+        },
+        "aso_gate_executor": {
+          "result": "Passed",
+          "action": "fixture_created_role_deletion",
+          "return_code": 0
+        },
+        "aso_gate_owner": {
+          "result": "Passed",
+          "action": "fixture_created_role_deletion",
+          "return_code": 0
+        }
+      }
+    },
+    "reassessment_database": {
+      "result": "Passed",
+      "receipt": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/.kbd-orchestrator/phases/runtime-architecture/evidence/ra-03-clinical-command-parity/task-6-reassessment-proof.json",
+      "sha256": "4377ed1266606665cee202d4c46012e0dfeac08d2479ede4209b0dc147af0e3a",
+      "selected_marker": "gate_transaction_check: reassessment_lost_response_repeat_and_lookup_return_one_persisted_effect",
+      "assertion_count": 7,
+      "cleanup": {
+        "disposable_database_deleted": {
+          "result": "Passed",
+          "return_code": 0
+        },
+        "disposable_login_deleted": {
+          "result": "Passed",
+          "return_code": 0
+        },
+        "disposable_owner_role": {
+          "result": "Passed",
+          "action": "already_absent"
+        },
+        "aso_session_reader": {
+          "result": "Passed",
+          "action": "fixture_created_role_deletion",
+          "return_code": 0
+        },
+        "aso_gate_executor": {
+          "result": "Passed",
+          "action": "fixture_created_role_deletion",
+          "return_code": 0
+        },
+        "aso_gate_owner": {
+          "result": "Passed",
+          "action": "fixture_created_role_deletion",
+          "return_code": 0
+        }
+      }
+    },
+    "pem_exclusion": {
+      "result": "Passed",
+      "receipt": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/.kbd-orchestrator/phases/runtime-architecture/evidence/ra-03-clinical-command-parity/task-6-pem-exclusion.json",
+      "sha256": "3c33ae997432461f17ebbc6b7c1869537657e2ba265d4c55df6a92eaeac27839",
+      "checks": {
+        "affirmation_hook_calls_feature_http_api": {
+          "result": "Passed"
+        },
+        "affirmation_hook_has_no_graph_or_sync_import": {
+          "result": "Passed"
+        },
+        "reassessment_write_calls_feature_http_api": {
+          "result": "Passed"
+        },
+        "clinical_commands_absent_from_shared_sync": {
+          "result": "Passed"
+        },
+        "no_web_signing_mutation_caller_exists": {
+          "result": "Passed"
+        }
+      }
+    }
+  },
+  "current_source_sha256": [
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host/src/signing.rs",
+      "sha256": "c2c608b621458c58db12a871e5ec88582e344ace1ebe2bfafb4b10e7cd59bf66"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host/src/reassessment.rs",
+      "sha256": "561d088d65559b894a65d1f63250550ce188b5201e564037ba35107841230d43"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-server-axum/src/routes/letters.rs",
+      "sha256": "38e7a634de1d75637523574ba2c5807cbb67480583af372acaacbfb0dc8cd9cb"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-server-axum/src/routes/letters/tests.rs",
+      "sha256": "5cae3f81eef71c20e94198e60d4d30b595dad0a60338bd06e93c10c3b691fb76"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-server-axum/src/routes/evidence.rs",
+      "sha256": "976785d671013f82a7c996f060f56cf8242bde648f84b4b11ff809669197412a"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-server-axum/src/routes/evidence/tests.rs",
+      "sha256": "fe028d613f43a6c5357ab2dcd452e41be5236252cf0a0a50ef04dd1c9d7040e2"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/gate.rs",
+      "sha256": "acba2e30d2e2a5e8da8f19bc79561106cedba8b98bde564c9a0934098591d962"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/gate/signing_transaction_tests.rs",
+      "sha256": "3f29caabdd117a44a0bd2fac5597b7734bcecd57aa1eaa6b8b629e271fac82fc"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/gate/reassessment_transaction_tests.rs",
+      "sha256": "fa4256b602e4704c099a655bd1e9206173a139172d52b74f8dbb0daea85c5ac7"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/features/surgeon-gate/hooks/use-surgeon-gate.ts",
+      "sha256": "713fe84581bb7d029d718d4de7109b594deb660e06d95eb2e70649bdb8a72f9e"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/features/surgeon-gate/hooks/use-surgeon-gate.test.tsx",
+      "sha256": "86721dd794ad0f10d05036022677bdefa7c9fca042ca575fab735105c2433c9a"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/features/surgeon-gate/api/gate-api.ts",
+      "sha256": "c7521c19bae355f71075030d1f5b724d9bdcb49e76e4f122eb49f41d7153d95b"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/features/evidence-timeline/hooks/use-evidence-timeline.ts",
+      "sha256": "9da623970de081edd16c18a6a1ac4412186fe393857bda6737460dd3a33d396a"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/features/evidence-timeline/hooks/use-evidence-timeline.test.tsx",
+      "sha256": "39b013dcb30c3aa9788c935beeee8fba218d27f375052066db00b04d2b83ceaf"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/features/evidence-timeline/api/timeline-api.ts",
+      "sha256": "c8be5ae76b5145218fa431f0f5091945434fb34f6f82f97d37de61487c5cdaab"
+    }
+  ],
+  "mechanism": "Each service checks an immutable scoped receipt before mutable target validation; exact repeat and explicit lookup return the stored result, while database counts remain one clinical row effect, one audit and one receipt. Web command hooks call feature HTTP APIs; shared sync/PEM has no clinical command path.",
+  "unverified": [
+    "Production Gate image, browser rendering, native credentials, Tauri window and physical devices remain outside this focused Tier 1 proof."
+  ]
+}

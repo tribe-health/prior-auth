@@ -1,0 +1,133 @@
+{
+  "result": "Failed",
+  "verification_tier": 1,
+  "install_mode": "fresh",
+  "observed_at": "2026-09-07T00:34:18.463472+00:00",
+  "scope": "Actual AppServices and PgGateRepository against a disposable PostgreSQL database",
+  "prerequisites": [
+    "Existing Docker Compose db service with schema extensions available",
+    "Configured PostgreSQL admin password from container environment",
+    "Pinned Rust toolchain and idle workspace Cargo build directory",
+    "No concurrent database fixtures; a local exclusive lock covers this runner"
+  ],
+  "commands": [
+    "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-gate-transaction.py --install-mode fresh",
+    "docker compose port db 5432",
+    "docker compose exec -T db printenv POSTGRES_PASSWORD (captured only)",
+    "docker compose exec -T db psql -U <configured admin> -X -A -t -q -v ON_ERROR_STOP=1 -d <disposable database> (SQL on stdin)",
+    "cargo run -p aso-web-server -- --migrate-server",
+    "cargo test -p aso-web-server gate_transaction_lifecycle -- --ignored --nocapture"
+  ],
+  "environment_contract": {
+    "migration": [
+      "ASO_MIGRATION_DATABASE_URL"
+    ],
+    "test": [
+      "ASO_TEST_DATABASE_URL",
+      "ASO_TEST_ADMIN_DATABASE_URL",
+      "ASO_TEST_OWNER_ROLE",
+      "ASO_TEST_GATE_CONTEXTS",
+      "ASO_TEST_GATE_CASE_ID",
+      "ASO_TEST_FOREIGN_CASE_ID"
+    ],
+    "credentials": "Disposable passwords supplied only through environment or captured SQL stdin"
+  },
+  "checks": {
+    "postgres_port_discovery": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "configured_admin_password_available": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "fresh_schema_has_no_clinical_rows_before_migration": {
+      "result": "Passed",
+      "row_counts": {
+        "cases": 0,
+        "users": 0,
+        "letters": 0,
+        "patients": 0,
+        "receipts": 0,
+        "documents": 0,
+        "practices": 0,
+        "user_roles": 0,
+        "annotations": 0,
+        "submissions": 0,
+        "audit_events": 0,
+        "peer_reviews": 0,
+        "case_evidence": 0,
+        "case_pathways": 0,
+        "letter_claims": 0,
+        "receipt_items": 0,
+        "custody_events": 0,
+        "determinations": 0,
+        "gate_affirmations": 0,
+        "letter_qa_results": 0,
+        "evidence_citations": 0,
+        "patient_identities": 0,
+        "case_diagnosis_codes": 0,
+        "case_procedure_codes": 0,
+        "submission_attachments": 0
+      }
+    },
+    "initial_server_migration": {
+      "result": "Failed",
+      "return_code": 1
+    }
+  },
+  "processes": [
+    {
+      "label": "initial_server_migration",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 1,
+      "actual_result_output": []
+    }
+  ],
+  "cleanup": {
+    "disposable_database_deleted": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "aso_session_reader": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    },
+    "aso_gate_executor": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    },
+    "aso_gate_owner": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    }
+  },
+  "unverified": [
+    "Mounted HTTP/gateway, UI and physical devices are outside this transaction fixture."
+  ],
+  "source_sha256": {
+    "migrations/server/2026090601_durable_gate.sql": "b3da2e91629534c011c6186eeb658fc2286896d2d491ca94dcda03a2f009a899",
+    "crates/aso-web-server/src/adapters/gate.rs": "6734d0517e5d63c1f777f740a58c5f13226e214ea058c3ea16d4b6090b119da3",
+    "crates/aso-web-server/src/adapters/gate/transaction_tests.rs": "7b873318d7455ba2ce9a29a54dde7898218820b52b12f029ead71f0636727a79",
+    "crates/aso-host/src/affirmation.rs": "0aa4070c1ab8948a3e9d9ffae2052a1fc08accb74356e2efdb95faef182f17ab",
+    "crates/aso-host/src/lib.rs": "4d5a6c6066e7f125c2910db9757cd9960e3a7ff5010232d70b1b8d44ce44e838",
+    "docs/design/schema/schema.sql": "d38fee2050e0de053c3b04c73f5215447900da5aee1a06a749fd5abdb7f9b15d",
+    "docker/bootstrap/25-session-authority.sql": "55a7029d1f683c208005262d1bbbd554f9f9a6e1791bbdace70a87f664760f42",
+    "scripts/test-gate-transaction.py": "e7bde1314ea928999e769b5036c5505d68c24e91e20423e727266f8663346a53"
+  },
+  "failure": {
+    "stage": "initial_server_migration",
+    "type": "AssertionError"
+  },
+  "completed_at": "2026-09-07T00:34:32.468532+00:00"
+}

@@ -19,9 +19,9 @@ import { cn } from "@/lib/utils";
 /**
  * Whether the surgeon gate is affirmed for the open case.
  *
- * Placeholder: W7 replaces this with a read of `gate_affirmations` through the
- * entity graph. It returns **false** so the gated steps are locked by default —
- * a stub that defaulted to open would be a stub that silently disables the
+ * Placeholder: RA14 replaces this with a graph selector for the projected
+ * `cases.gate_affirmed_at` field. It returns **false** so the gated steps are
+ * locked by default — a stub that defaulted to open would silently disable the
  * gate, and this is the one place a wrong default is unsafe.
  */
 function useGateAffirmed(_caseId: string | undefined): boolean {

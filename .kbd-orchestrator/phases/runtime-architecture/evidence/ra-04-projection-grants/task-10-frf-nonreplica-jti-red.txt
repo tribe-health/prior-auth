@@ -1,0 +1,19 @@
+   Compiling frf-identity-ory v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-identity-ory)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.44s
+     Running unittests src/lib.rs (/Users/gqadonis/.cargo/build-cache/25/5c2ebd31dad868/debug/deps/frf_identity_ory-5c48f8dcfcc71282)
+
+running 1 test
+
+thread 'claims::tests::non_replica_tokens_keep_legacy_optional_token_ids' (8866207) panicked at crates/frf-identity-ory/src/claims.rs:150:67:
+called `Result::unwrap()` on an `Err` value: Error("missing field `jti`", line: 0, column: 0)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test claims::tests::non_replica_tokens_keep_legacy_optional_token_ids ... FAILED
+
+failures:
+
+failures:
+    claims::tests::non_replica_tokens_keep_legacy_optional_token_ids
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p frf-identity-ory --lib`

@@ -1,0 +1,59 @@
+{
+  "result": "Passed",
+  "verification_tier": 1,
+  "scope": "Direct localhost Kratos HTTP transports; synthetic identity only",
+  "observed_at": "2026-09-06T15:48:01.029881+00:00",
+  "sources": [
+    "https://github.com/ory/kratos/blob/v26.2.0/spec/api.json",
+    "https://github.com/ory/kratos/blob/v26.2.0/session/handler.go",
+    "https://github.com/ory/kratos/blob/v26.2.0/session/manager_http.go"
+  ],
+  "context7_library": "/ory/kratos-client-go/v26.2.0",
+  "cleanup": {
+    "identity_created": true,
+    "identity_deleted": true,
+    "delete_status": 204,
+    "lookup_after_delete_status": 404,
+    "native_session_after_delete_status": 401,
+    "browser_session_after_delete_status": 401
+  },
+  "version": "v26.2.0",
+  "identity_create_status": 201,
+  "native_flow_status": 200,
+  "native_login_status": 200,
+  "authorization_bearer": {
+    "status": 200,
+    "identity_matches_created": true,
+    "session_id_present": true,
+    "active": true,
+    "expiry_present": true,
+    "expiry_in_future": true
+  },
+  "x_session_token": {
+    "status": 200,
+    "identity_matches_created": true,
+    "session_id_present": true,
+    "active": true,
+    "expiry_present": true,
+    "expiry_in_future": true
+  },
+  "native_transport_session_ids_equal": true,
+  "browser_flow_status": 200,
+  "browser_login_status": 200,
+  "browser_cookie": {
+    "status": 200,
+    "identity_matches_created": true,
+    "session_id_present": true,
+    "active": true,
+    "expiry_present": true,
+    "expiry_in_future": true
+  },
+  "browser_and_native_identity_ids_equal": true,
+  "browser_and_native_session_ids_distinct": true,
+  "negative_controls": {
+    "missing_credential": 401,
+    "invalid_bearer": 401,
+    "invalid_session_token": 401,
+    "invalid_cookie": 401
+  }
+}

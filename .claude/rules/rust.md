@@ -50,9 +50,10 @@ arm is a compile error, and that is deliberate — `Void` is not a weak `Gap`.
 Clinical authority (`AppServices::affirm_gate`, `sign_letter`) returns a typed
 `CapabilityDenied` rather than a constraint violation, because "you may not
 affirm this case" is actionable and a Postgres error code is not.
-`MemoryAuthority` in the web binary models the boundary faithfully rather than
-approving everything — a test that accidentally proves an administrator can sign
-a letter must fail locally, not in production.
+Production composition uses the restricted PostgreSQL authority repository and
+fails startup when its database or Kratos configuration is absent. Memory
+authority adapters are test-only — a test that accidentally proves an
+administrator can sign a letter must fail locally, not in production.
 
 An AI agent acting for a surgeon is a different principal: `Agent`, not `User`.
 A policy granting the surgeon signing authority grants a delegated agent

@@ -1,0 +1,112 @@
+{
+  "artifact_type": "content",
+  "constraints": [
+    {
+      "id": "verified-context",
+      "description": "Signing and reassessment derive identity, practice and clinical authority from verified context; caller-supplied actors cannot grant authority.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "Focused host and HTTP tests plus source anchors in the current inventory."
+      }
+    },
+    {
+      "id": "independent-clinical-controls",
+      "description": "Gate policy, AppServices and PostgreSQL independently refuse administrator, agent, stale revision and foreign-scope signing attempts; policy-reader outages remain availability failures rather than denials.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "Task 5 and 7 acceptance receipts, current hashes and live PostgreSQL markers."
+      }
+    },
+    {
+      "id": "durable-reconciliation",
+      "description": "Signing and reassessment command results survive a lost response and React navigation; the process-scoped identity/practice/case owner retains its mutation slot until lookup, and retry or lookup creates no duplicate clinical effect.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "Task 6 acceptance receipt and focused service, HTTP and hook tests."
+      }
+    },
+    {
+      "id": "three-evidence-states",
+      "description": "Authorized reassessment retains met, gap and void as distinct states with surgeon attribution, audit and receipt records.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "Task 6 and 7 reassessment receipt hashes and lifecycle markers."
+      }
+    },
+    {
+      "id": "no-pem-command-replay",
+      "description": "Signing, gate affirmation and reassessment mutations do not enter PEM or local sync replay paths.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "Task 8 PEM exclusion receipt and current production TypeScript import/call paths."
+      }
+    },
+    {
+      "id": "production-composition",
+      "description": "The mounted server uses restricted PostgreSQL clinical repositories and fails closed when required clinical dependencies are unavailable.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "Mounted composition anchors, deployment tests and test-only memory-adapter assertions."
+      }
+    },
+    {
+      "id": "shell-parity-truth",
+      "description": "The report distinguishes mounted HTTP operations from browser hooks without reachable controls and inactive desktop wrappers without Tauri registration.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "Static caller inventory over route composition, React routes/components and desktop command registration."
+      }
+    },
+    {
+      "id": "migration-compatibility",
+      "description": "Checksummed additive migrations preserve fresh and populated upgrades, serialize publication against protected table DDL from command start, serialize approval against QA and claim truncation, and revalidate complete QA and cited-document sets under those locks.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "Current source hashes and task 8 fresh/upgrade signing and reassessment receipts with complete cleanup."
+      }
+    },
+    {
+      "id": "bounded-verification",
+      "description": "Only applicable T0/T1 work is marked Passed; production deployment, browser rendering, Tauri IPC and physical-device behavior remain unverified.",
+      "severity": "high",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "Completion report and checklist enumerate actual commands, observed results and explicit delivery limits."
+      }
+    },
+    {
+      "id": "bundle-integrity",
+      "description": "Manifest, constraints, persistent state, evidence inventory and generated outputs are complete and schema-valid.",
+      "severity": "blocking",
+      "type": "technical",
+      "validation": {
+        "requires_code_execution": true,
+        "validation_method": "Draft-07 schema validation, exact dist coverage and deterministic validate.py checks."
+      }
+    }
+  ],
+  "global_rules": [
+    "Scope is RA-03 completion evidence; no new product behavior is added during refinement.",
+    "No broad phase T2, release T3, commit, deployment or publication occurs in refinement."
+  ],
+  "termination_conditions": [
+    "All ten applicable constraints are satisfied and validate.py exits zero."
+  ]
+}

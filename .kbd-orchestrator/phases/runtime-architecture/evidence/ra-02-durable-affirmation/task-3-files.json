@@ -1,0 +1,93 @@
+{
+  "files": [
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host/src/affirmation.rs",
+      "sha256": "5c2af57e1839c69f1b51f44cdec30ac5031a2bf7a0198a5488d148b2e2516ee7"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-server-axum/src/routes/gate.rs",
+      "sha256": "f63cd3a46c937f497611ae128fb1fed71e4e3a6cef1ce48b9e8760c6930c90a1"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-server-axum/src/routes/gate/tests.rs",
+      "sha256": "e10452684737c7f24951301d0082c8773fa8fc84cc706287d2ff72dc3c198371"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-server-axum/src/session.rs",
+      "sha256": "6b4aa3f920bb0037233a7f5aff8c0a42676f27e186205759d03faf2c492e9e6f"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/main.rs",
+      "sha256": "c7b1650ec0817a2f3e28855a02d930686742796206e601c5ac74679a601a43c5"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/desktop/src-tauri/src/lib.rs",
+      "sha256": "fdb457f2e43dad09b76ed99e32988b1291cefadfe01cba504cf6b8ca4e93da96"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/docker/flint-gate/config.yaml",
+      "sha256": "5ee0e5433c0fdd3a23b9bda0ccd3e20ac1b91f43c70753c34b9051733da928d4"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/features/surgeon-gate/api/gate-api.ts",
+      "sha256": "c7521c19bae355f71075030d1f5b724d9bdcb49e76e4f122eb49f41d7153d95b"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/features/surgeon-gate/model/gate-state.ts",
+      "sha256": "b2b9112e01b97437647aa84f72fdd3842622fe6fad4c4bb17b0ad2c50daca115"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/features/surgeon-gate/hooks/use-surgeon-gate.ts",
+      "sha256": "74b56476fc1fe2d82dbf63cc59cb54e81b46e18a0684b434b655ac0fddf3785c"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/features/surgeon-gate/hooks/use-surgeon-gate.test.tsx",
+      "sha256": "abae8e974039efd12d21a71d8d3927c90c2849188ea8ce21d40b89f357f07a06"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/scripts/test-gate-mounted.py",
+      "sha256": "c6e504bf7b55b8c11b93e1a9286e6f97650df654c2294b0c32e5cf770c0baa3c"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/docs/architecture/adr-002-clinical-authority.md",
+      "sha256": "77d79f04fd8b4d1e11d69203447eb4a3f098e268cba7a5585c88b560ca9158c8"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/docs/architecture/adr-005-navigation-and-gating.md",
+      "sha256": "cbfa7ad6420848a22f18a4c17ad67b5e41cfb2a6184037ff796554cec441f6b9"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/docs/architecture/adr-007-local-first-sync.md",
+      "sha256": "2de1b11a61564088b5356a12745545d65d8201c34110cf368e896ca4732af6fc"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/docs/architecture/application-runtime-architecture.md",
+      "sha256": "46c5d7eff3e2c8bb6dfd6a1be480a994a379337d643be5fba31bb92ac3ad3332"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/openspec/changes/ra-02-durable-affirmation/design.md",
+      "sha256": "2763aacd5ad32e38940c4d0f044e3825f8eac4babf80bb9ddf998fb662ba9b54"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core/src/config/types.rs",
+      "sha256": "2eb57f1ad1760d01cae2a12c3c3cb96532f8e83395e111c08645cb8587b15966"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core/src/config/lookup.rs",
+      "sha256": "2551a0b643633fa1e548859e017aa04bcca1373a0fcbf89cc7a554fa777a6e5e"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core/src/middleware/mod.rs",
+      "sha256": "36514fcc60242cbe1d715ec54bb2deb6f7447950d7d017ebd4dc24a7fe858403"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core/src/middleware/pipeline.rs",
+      "sha256": "89b4b3d9aa6d1f91191869eff599fba5bbad99dfd0330eada8c8b512904fe76a"
+    },
+    {
+      "path": "/Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core/src/middleware/aso_clinical_authorize.rs",
+      "sha256": "f1afa5b6b02264a6a207794b0fc491066f6c55f5fa3e3248a36b08d47cec5715"
+    }
+  ],
+  "unchanged_aso_cargo_lock_sha256": "cf262d424a41b275f00aca2696eb487f2d16df818145cb98db789d39b031aa3d"
+}

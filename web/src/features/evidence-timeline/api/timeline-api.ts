@@ -16,7 +16,11 @@ import type { PGlite } from '@electric-sql/pglite';
 import { httpClient } from '../../../shared/api/http-client';
 import type { EvidenceState } from '../../../shared/model/evidence-state';
 import { EVIDENCE_STATES } from '../../../shared/model/evidence-state';
-import type { TimelineCitation, TimelineEntry } from '../model/timeline-entry';
+import type {
+  ReassessEvidenceResult,
+  TimelineCitation,
+  TimelineEntry,
+} from '../model/timeline-entry';
 
 interface EntryRow {
   id: string;
@@ -109,8 +113,34 @@ function toEvidenceState(value: string): EvidenceState {
   );
 }
 
+function practiceSelection(practiceId?: string): string {
+  return practiceId ? `?practiceId=${encodeURIComponent(practiceId)}` : '';
+}
+
 /** Writes. Server-side, audited, capability-checked — never a local mutation. */
 export const timelineApi = {
-  reassess: (caseId: string, entryId: string, state: EvidenceState) =>
-    httpClient.post<void>(`/api/cases/${caseId}/evidence/${entryId}/state`, { state }),
+  reassess: (
+    caseId: string,
+    entryId: string,
+    commandId: string,
+    state: EvidenceState,
+    expectedAssessedAt: string,
+    practiceId?: string,
+  ) =>
+    httpClient.post<ReassessEvidenceResult>(
+      `/api/cases/${encodeURIComponent(caseId)}/evidence/${encodeURIComponent(entryId)}/state` +
+        practiceSelection(practiceId),
+      { commandId, state, expectedAssessedAt },
+    ),
+
+  lookupCommand: (
+    caseId: string,
+    entryId: string,
+    commandId: string,
+    practiceId?: string,
+  ) =>
+    httpClient.get<ReassessEvidenceResult>(
+      `/api/cases/${encodeURIComponent(caseId)}/evidence/${encodeURIComponent(entryId)}` +
+        `/commands/${encodeURIComponent(commandId)}` + practiceSelection(practiceId),
+    ),
 };

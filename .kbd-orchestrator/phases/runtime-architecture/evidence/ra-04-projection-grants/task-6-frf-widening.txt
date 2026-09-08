@@ -1,0 +1,18 @@
+   Compiling frf-ports v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-ports)
+   Compiling frf-shape-electric v0.1.0 (/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-shape-electric)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1.80s
+     Running unittests src/lib.rs (/Users/gqadonis/.cargo/build-cache/25/5c2ebd31dad868/debug/deps/frf_shape_electric-9c9870599ea91451)
+
+running 1 test
+test resolver::tests::a_client_cannot_widen_the_shape_by_supplying_the_scope_column ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 16 filtered out; finished in 0.00s
+
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.20s
+     Running unittests src/lib.rs (/Users/gqadonis/.cargo/build-cache/25/5c2ebd31dad868/debug/deps/frf_shape_electric-9c9870599ea91451)
+
+running 1 test
+test policy::tests::a_param_outside_the_allow_list_is_an_error_not_a_silent_drop ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 16 filtered out; finished in 0.00s
+
