@@ -56,6 +56,25 @@ bash scripts/gen-design-tokens.sh .       # regenerate themes
 cd mobile && flutter pub get && flutter test
 ```
 
+### Web replica storage
+
+`VITE_ASO_REPLICA_PERSISTENCE` decides where the local replica lives.
+
+| Value | Effect |
+|---|---|
+| unset *(default)* | Memory-only. Nothing survives a reload. |
+| `memory` | Memory-only, stated explicitly. |
+| `persistent` | IndexedDB at `idb://<storage-key>`, namespaced per principal/practice/identity. |
+
+**The default is memory on purpose.** A persisted replica is protected health
+information at rest on a machine this application does not control, and ADR-009
+permits it *"only where device policy permits; unmanaged/shared use is
+memory-only."* A shared clinic workstation is the normal case.
+
+An unrecognised value (`true`, `1`, `yes`, …) resolves to memory **and logs an
+error** — ADR-009 forbids a silent fallback, so a deployment that meant to
+persist and mistyped finds out rather than quietly running ephemeral.
+
 ## The four rules this codebase will not bend
 
 **1. Three evidence states, never two.** `met` / `gap` / `void`. A gap is a

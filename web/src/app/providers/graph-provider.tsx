@@ -27,6 +27,10 @@ import {
 import { PGLITE_SCHEMA_SQL } from "@/shared/sync/pglite-schema";
 import type { VerifiedSession } from "@/shared/model/session";
 import { GraphSessionManager } from "@/shared/sync/graph-session-manager";
+import { createWebLeaseStore } from "@/shared/sync/lease-store-web";
+import { ensureLedger } from "@/shared/sync/migration-ledger";
+import { ReplicaLease } from "@/shared/sync/replica-owner";
+import { pgliteDataDir, resolveStoragePolicy } from "@/shared/sync/storage-policy";
 import { useSession } from "./session-provider";
 
 type GraphStore = ReturnType<typeof createGraphStore>;
@@ -51,7 +55,7 @@ export function useLocalStore(): PGlite | null {
 }
 
 /** Bumped when the local schema changes shape; old namespaces are then dead. */
-const REPLICA_GENERATION = 1;
+const REPLICA_GENERATION = 2;
 
 /**
  * The persisted namespace for a session's graph.
@@ -68,11 +72,9 @@ const REPLICA_GENERATION = 1;
  * separates a user's namespace from an agent's, per ADR-002's rule that an
  * agent acting for a clinician is a different principal.
  *
- * Authorization-scope revision is **not** yet a component: `VerifiedSession`
- * carries `capabilities` but no revision counter to key on. Recorded in
- * `docs/architecture/frf-shape-facade-integration.md` as an open item rather
- * than approximated by hashing the capability list, which would churn the
- * namespace on unrelated changes.
+ * Session ID and the authority service's revision fence reuse after logout,
+ * login as another user, and role changes. A capability-list hash is not an
+ * authority revision and is deliberately absent.
  */
 export function graphStorageKey(session: VerifiedSession): string {
   return [
@@ -81,6 +83,8 @@ export function graphStorageKey(session: VerifiedSession): string {
     session.principal,
     session.practiceId,
     session.identityId,
+    session.sessionId,
+    session.authorizationRevision,
   ].join(":");
 }
 
@@ -93,11 +97,49 @@ export function graphStorageKey(session: VerifiedSession): string {
  */
 const sessionManager = new GraphSessionManager({
   async open(key: string) {
-    // In-memory for now. A persisted store (idb://) survives reloads and is the
-    // point of local-first — but it also means PHI at rest in the browser,
-    // which is a decision this phase has not taken. Deliberately ephemeral.
-    const pglite = new PGlite();
-    await pglite.exec(PGLITE_SCHEMA_SQL);
+    // Storage is a deployment decision, not a default. ADR-009: "Persistent
+    // IndexedDB only where device policy permits; unmanaged/shared use is
+    // memory-only. No silent runtime fallback changes storage." An unset or
+    // unrecognised value therefore resolves to memory — a shared clinic
+    // workstation is the assumption until a deployment states otherwise.
+    //
+    // The data directory is namespaced by `key`, which already composes
+    // generation, principal, practice and identity, so two clinicians on one
+    // browser never share a replica.
+    const policy = resolveStoragePolicy(import.meta.env.VITE_ASO_REPLICA_PERSISTENCE);
+    if (policy.misconfigured) {
+      // Loud, because a deployment that meant to persist and mistyped the value
+      // would otherwise run ephemeral and appear to work.
+      console.error(
+        `[replica] VITE_ASO_REPLICA_PERSISTENCE is not recognised; ` +
+          `falling back to memory-only storage. Expected "persistent" or "memory".`,
+      );
+    }
+
+    const dataDir = pgliteDataDir(policy, key);
+    const pglite = dataDir ? new PGlite(dataDir) : new PGlite();
+
+    // Exactly one context may migrate a persisted replica. Two tabs both hold
+    // handles to the same IndexedDB database and both would apply DDL, so the
+    // lease is taken before the schema is touched.
+    //
+    // Losing is not an error. A passenger tab reads the replica the owner
+    // maintains — blocking its reads would make a background tab appear broken
+    // for no safety gain (ADR-009).
+    const lease = new ReplicaLease({
+      store: createWebLeaseStore(key),
+      holder: `${key}#${crypto.randomUUID()}`,
+    });
+    const owns = policy.mode === "memory" ? true : (await lease.acquire()).granted;
+
+    // An in-memory replica is private to this tab, so there is nothing to
+    // contend over and the schema always applies. A persisted one applies it
+    // only when this tab owns the lease; the owner has already created it, or
+    // is about to.
+    if (owns) {
+      await pglite.exec(PGLITE_SCHEMA_SQL);
+      await ensureLedger(pglite);
+    }
 
     const storage = await createPGlitePersistenceAdapter(pglite);
     const store = createGraphStore();
@@ -112,6 +154,11 @@ const sessionManager = new GraphSessionManager({
       async dispose() {
         await runtime.dispose();
         await pglite.close();
+        // Release last. Holding the lease past teardown would make the next tab
+        // wait out the TTL for a replica nobody is using — and a release before
+        // the database is closed could let a successor migrate underneath a
+        // still-open handle.
+        if (owns) await lease.release().catch(() => undefined);
       },
     };
   },
