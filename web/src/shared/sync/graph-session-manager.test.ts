@@ -14,13 +14,26 @@ import { describe, expect, it } from "vitest";
 import { GraphSessionManager, type GraphSessionFactory } from "./graph-session-manager";
 
 /**
+ * Yield repeatedly until the microtask queue is idle.
+ *
+ * `await Promise.resolve()` advances exactly one tick. Any assertion that a
+ * pending operation has *not* completed needs the queue drained first, or it
+ * passes for the wrong reason — the operation simply had not had time to run.
+ */
+async function flushMicrotasks(ticks = 50): Promise<void> {
+  for (let i = 0; i < ticks; i += 1) await Promise.resolve();
+}
+
+/**
  * A factory recording its lifecycle, with disposal that can be held open so a
  * re-open races a close in flight.
  */
 function recordingFactory() {
   const opened: string[] = [];
   const disposed: string[] = [];
-  let holdDispose: (() => void) | null = null;
+  // The gate a blocked dispose awaits. `block()` installs one; `release()`
+  // resolves *this* promise, which is the one dispose() is actually parked on.
+  let gate: Promise<void> | null = null;
 
   const factory: GraphSessionFactory = {
     open: async (key: string) => {
@@ -29,15 +42,11 @@ function recordingFactory() {
         pglite: { key } as never,
         store: { key },
         dispose: async () => {
-          if (holdDispose) {
-            await new Promise<void>((resolve) => {
-              const prev = holdDispose;
-              holdDispose = () => {
-                prev?.();
-                resolve();
-              };
-            });
-          }
+          // Read the gate once and clear it, so a held dispose blocks exactly
+          // once and a later dispose is not caught by a stale gate.
+          const held = gate;
+          gate = null;
+          if (held) await held;
           disposed.push(key);
         },
       };
@@ -52,7 +61,7 @@ function recordingFactory() {
     block() {
       let resolve!: () => void;
       const done = new Promise<void>((r) => (resolve = r));
-      holdDispose = resolve;
+      gate = done;
       return { release: () => resolve(), done };
     },
   };
@@ -126,8 +135,11 @@ describe("GraphSessionManager", () => {
       reopened = true;
     });
 
-    // The close has not finished, so the reopen must not have either.
-    await Promise.resolve();
+    // Drain the microtask queue. A single `await Promise.resolve()` yields
+    // one tick, which open() cannot complete in *regardless* of the barrier —
+    // so it asserts nothing. Flushing until the queue is idle means the only
+    // thing that can still be holding the reopen is the barrier itself.
+    await flushMicrotasks();
     expect(reopened).toBe(false);
 
     held.release();
