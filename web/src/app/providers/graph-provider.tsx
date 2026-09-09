@@ -27,10 +27,32 @@ import {
 import { PGLITE_SCHEMA_SQL } from "@/shared/sync/pglite-schema";
 import type { VerifiedSession } from "@/shared/model/session";
 import { GraphSessionManager } from "@/shared/sync/graph-session-manager";
+import { createFrfShapeTransport } from "@/shared/sync/frf-shape-transport";
 import { createWebLeaseStore } from "@/shared/sync/lease-store-web";
 import { ensureLedger } from "@/shared/sync/migration-ledger";
 import { ReplicaLease } from "@/shared/sync/replica-owner";
+import { startReplicaRuntime } from "@/shared/sync/replica-runtime";
+import {
+  CHECKPOINT_SCHEMA_SQL,
+  REPLICA_SHAPES,
+  REPLICA_TARGETS,
+  createPGliteCheckpointStore,
+  entityTypeFor,
+} from "@/shared/sync/replica-wiring";
 import { pgliteDataDir, resolveStoragePolicy } from "@/shared/sync/storage-policy";
+
+/**
+ * Gate's base URL — the only endpoint the browser talks to for shapes.
+ *
+ * Deliberately *not* Electric's URL. ADR-009 restricts direct Electric access
+ * to an operator-loopback diagnostic and never a client path, so pointing this
+ * at Electric would bypass the authorization boundary entirely.
+ *
+ * Unset means no sync: the replica opens and reads whatever it already holds.
+ * That is the correct default for a build that has not been given a gateway,
+ * and it fails visibly rather than silently reaching for an unauthorized path.
+ */
+const FACADE_URL: string | undefined = import.meta.env.VITE_ASO_SHAPE_GATEWAY;
 import { useSession } from "./session-provider";
 
 type GraphStore = ReturnType<typeof createGraphStore>;
@@ -55,7 +77,7 @@ export function useLocalStore(): PGlite | null {
 }
 
 /** Bumped when the local schema changes shape; old namespaces are then dead. */
-const REPLICA_GENERATION = 2;
+const REPLICA_GENERATION = 3;
 
 /**
  * The persisted namespace for a session's graph.
@@ -138,12 +160,39 @@ const sessionManager = new GraphSessionManager({
     // is about to.
     if (owns) {
       await pglite.exec(PGLITE_SCHEMA_SQL);
+      await pglite.exec(CHECKPOINT_SCHEMA_SQL);
       await ensureLedger(pglite);
     }
 
     const storage = await createPGlitePersistenceAdapter(pglite);
     const store = createGraphStore();
     const runtime = startLocalFirstGraph({ storage, store, key });
+
+    // Sync reads through the FRF authorized shape facade (ADR-009). The client
+    // names a shape id and echoes an opaque cursor; rows, columns and practice
+    // scope are derived server-side from verified identity, so a modified
+    // client cannot widen its own grant.
+    //
+    // Only the lease owner syncs. A passenger tab reads what the owner writes.
+    // Failures are surfaced, not thrown: a replica that cannot reach the
+    // facade is stale, not broken, and the UI still renders what it has.
+    if (owns && FACADE_URL) {
+      void startReplicaRuntime({
+        client: pglite,
+        transport: createFrfShapeTransport({
+          gateUrl: FACADE_URL,
+          shapes: REPLICA_SHAPES,
+        }),
+        checkpoints: createPGliteCheckpointStore(pglite),
+        graph: store as never,
+        lease,
+        storageKey: key,
+        targets: REPLICA_TARGETS,
+        entityTypeFor,
+      }).catch((cause: unknown) => {
+        console.error("[replica] sync stopped", cause);
+      });
+    }
 
     return {
       pglite,

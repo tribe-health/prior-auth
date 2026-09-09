@@ -87,8 +87,8 @@ const SYNC_RELATIONS: Record<PGliteTable, string> = {
  * boundary an accident of the schema rather than a decision. Every column
  * absent here is absent for a reason recorded in `OMITTED_COLUMNS`.
  */
-const SYNC_COLUMNS: Record<PGliteTable, readonly string[]> = {
-  cases: ["id", "practice_id", "status", "created_at", "updated_at"],
+export const SYNC_COLUMNS: Record<PGliteTable, readonly string[]> = {
+  cases: ["id", "practice_id", "status", "gate_affirmed_at", "created_at", "updated_at"],
   case_evidence: [
     "id", "practice_id", "case_id", "policy_criterion_id",
     "state", "assessed_at", "created_at", "updated_at",
@@ -105,7 +105,7 @@ const SYNC_COLUMNS: Record<PGliteTable, readonly string[]> = {
 };
 
 /** Entity type name in the graph, per table. */
-const ENTITY_TYPES: Record<PGliteTable, string> = {
+export const ENTITY_TYPES: Record<PGliteTable, string> = {
   cases: "Case",
   case_evidence: "CaseEvidence",
   evidence_states: "EvidenceState",

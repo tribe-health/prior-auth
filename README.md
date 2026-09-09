@@ -75,6 +75,20 @@ An unrecognised value (`true`, `1`, `yes`, …) resolves to memory **and logs an
 error** — ADR-009 forbids a silent fallback, so a deployment that meant to
 persist and mistyped finds out rather than quietly running ephemeral.
 
+### Where reads come from
+
+`VITE_ASO_SHAPE_GATEWAY` is Gate's base URL — the only endpoint the browser
+talks to for shape data. Unset means no sync: the replica opens and reads
+whatever it already holds.
+
+**Point this at Gate, never at Electric.** ADR-009 restricts direct Electric
+access to an operator-loopback diagnostic and never a client path. The client
+sends a shape id and an opaque cursor; rows, columns and practice scope are
+derived server-side from verified identity, so a modified client cannot widen
+its own grant. FRF's catalog allows no narrowing parameters, and
+`catalog-conformance.test.ts` asserts that alongside column-for-column
+agreement between the catalog and this replica's schema.
+
 ## The four rules this codebase will not bend
 
 **1. Three evidence states, never two.** `met` / `gap` / `void`. A gap is a

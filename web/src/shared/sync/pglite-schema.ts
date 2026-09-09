@@ -101,11 +101,17 @@ CREATE TABLE IF NOT EXISTS evidence_states (
 );
 
 CREATE TABLE IF NOT EXISTS cases (
-  id           UUID PRIMARY KEY,
-  practice_id  UUID NOT NULL,
-  status       TEXT,
-  created_at   TIMESTAMPTZ,
-  updated_at   TIMESTAMPTZ
+  id                UUID PRIMARY KEY,
+  practice_id       UUID NOT NULL,
+  status            TEXT,
+  -- When the clinical-authority gate was affirmed, or NULL if it has not been.
+  -- A timestamp, not chart content: it records that a physician affirmed, never
+  -- what they affirmed about. Present because the FRF replica grant includes it
+  -- and the case queue reads it; without the column the row would arrive and be
+  -- silently dropped by the writer's projection.
+  gate_affirmed_at  TIMESTAMPTZ,
+  created_at        TIMESTAMPTZ,
+  updated_at        TIMESTAMPTZ
 );
 
 -- practice_id is DENORMALIZED on the server (15-denormalize-practice-id.sql)
