@@ -105,11 +105,47 @@ describe("writeChunk", () => {
     expect(insert?.sql).not.toMatch(/secret_note/);
   });
 
-  it("writes null for a declared column the row omits", async () => {
+  it("omits a declared column the row does not carry, rather than nulling it", async () => {
+    // Electric update frames carry only the columns that changed. Padding the
+    // row out to the full declared list would write NULL over every column the
+    // frame did not mention — silent data loss on the first update after a
+    // snapshot. The column must not appear in the statement at all.
     const { client, calls } = mockClient();
     await writeChunk(client, widgets, [{ id: "w1", label: "One" }]);
     const insert = calls.find((c) => /INSERT INTO/.test(c.sql));
+    expect(insert?.params).toEqual(["w1", "One"]);
+    expect(insert?.sql).not.toMatch(/\bsize\b/);
+  });
+
+  it("still writes an explicit null the frame actually sent", async () => {
+    // Absent and explicitly-null are different: clearing a value is a real
+    // update, and must not be confused with "this frame did not mention it".
+    const { client, calls } = mockClient();
+    await writeChunk(client, widgets, [{ id: "w1", label: "One", size: null }]);
+    const insert = calls.find((c) => /INSERT INTO/.test(c.sql));
     expect(insert?.params).toEqual(["w1", "One", null]);
+    expect(insert?.sql).toMatch(/\bsize\b/);
+  });
+
+  it("updates only the columns a partial frame carries", async () => {
+    const { client, calls } = mockClient();
+    await writeChunk(client, widgets, [{ id: "w1", size: 7 }]);
+    const insert = calls.find((c) => /INSERT INTO/.test(c.sql));
+    expect(insert?.params).toEqual(["w1", 7]);
+    expect(insert?.sql).toMatch(/size = EXCLUDED\.size/);
+    expect(insert?.sql).not.toMatch(/label = EXCLUDED\.label/);
+  });
+
+  it("makes an id-only frame a no-op instead of a conflicting empty update", async () => {
+    const { client, calls } = mockClient();
+    await writeChunk(client, widgets, [{ id: "w1" }]);
+    const insert = calls.find((c) => /INSERT INTO/.test(c.sql));
+    expect(insert?.sql).toMatch(/DO NOTHING/);
+  });
+
+  it("refuses a row with no id — there is no conflict key to upsert on", async () => {
+    const { client } = mockClient();
+    await expect(writeChunk(client, widgets, [{ label: "orphan" }])).rejects.toThrow(/no id/);
   });
 
   it("returns the ids it wrote, in order", async () => {

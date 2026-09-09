@@ -90,6 +90,11 @@ export function validateTarget(target: TableTarget): void {
  * shape request were ever mis-projected upstream, the extra field still does not
  * land in local storage.
  *
+ * A declared column the row does **not** carry is omitted from the statement
+ * rather than written as NULL. Electric update frames carry only the columns
+ * that changed, so padding to the full column list would null out everything the
+ * frame did not mention.
+ *
  * Runs inside one transaction so a chunk lands whole or not at all; a partially
  * applied chunk would leave the caller unable to say what its checkpoint means.
  */
@@ -102,23 +107,42 @@ export async function writeChunk(
   const idColumn = target.idColumn ?? "id";
   if (rows.length === 0) return { table: target.table, written: 0, ids: [] };
 
-  const columnList = target.columns.join(", ");
-  const updates = target.columns
-    .filter((c) => c !== idColumn)
-    .map((c) => `${c} = EXCLUDED.${c}`)
-    .join(", ");
-
   const ids: string[] = [];
   await client.exec("BEGIN");
   try {
     for (const row of rows) {
-      // Projection: only declared columns are read off the row.
-      const values = target.columns.map((c) => row[c] ?? null);
-      const placeholders = target.columns.map((_, i) => `$${i + 1}`).join(", ");
+      // Projection AND presence: a declared column the row does not carry is
+      // omitted from the statement entirely, not written as NULL.
+      //
+      // Electric update frames carry only the columns that changed. Padding the
+      // row out to every declared column would write NULL over every column the
+      // frame did not mention — silently destroying data on the first update
+      // after a snapshot. Undeclared columns are still dropped, so the column
+      // list remains an enforced boundary.
+      const present = target.columns.filter((c) =>
+        Object.prototype.hasOwnProperty.call(row, c),
+      );
+      if (!present.includes(idColumn)) {
+        throw new Error(
+          `chunk row for ${target.table} has no ${idColumn}; cannot upsert without the conflict key`,
+        );
+      }
+
+      const values = present.map((c) => row[c] ?? null);
+      const placeholders = present.map((_, i) => `$${i + 1}`).join(", ");
+      const updates = present
+        .filter((c) => c !== idColumn)
+        .map((c) => `${c} = EXCLUDED.${c}`)
+        .join(", ");
+      // An id-only frame is a no-op rather than a conflict with nothing to set.
+      const onConflict = updates
+        ? `DO UPDATE SET ${updates}`
+        : "DO NOTHING";
+
       await client.query(
-        `INSERT INTO ${target.table} (${columnList})
+        `INSERT INTO ${target.table} (${present.join(", ")})
          VALUES (${placeholders})
-         ON CONFLICT (${idColumn}) DO UPDATE SET ${updates}`,
+         ON CONFLICT (${idColumn}) ${onConflict}`,
         values,
       );
       ids.push(String(row[idColumn]));
