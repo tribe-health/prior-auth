@@ -121,6 +121,56 @@ impl MigrationSource<'static> for ServerMigrations {
                     .into(),
                     false,
                 ),
+                Migration::new(
+                    2026090609,
+                    "durable session authority".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090609_durable_session_authority.sql"
+                    )
+                    .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090610,
+                    "session logout executor".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090610_session_logout_executor.sql"
+                    )
+                    .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090611,
+                    "Gate authority event reader".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090611_gate_authority_event_reader.sql"
+                    )
+                    .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090612,
+                    "Gate authority function boundary".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090612_gate_authority_function_boundary.sql"
+                    )
+                    .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090613,
+                    "Restore session reader execute".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090613_restore_session_reader_execute.sql"
+                    )
+                    .into(),
+                    false,
+                ),
             ])
         })
     }
