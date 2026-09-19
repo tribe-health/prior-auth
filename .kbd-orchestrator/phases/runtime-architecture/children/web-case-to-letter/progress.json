@@ -2,44 +2,42 @@
   "schemaVersion": "2",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 1981,
-  "derivedRevision": 1981,
+  "sourceRevision": 2009,
+  "derivedRevision": 2009,
   "frontier": {
-    "e9a7936c-0a01-43d5-9004-b93a4e5fd031": 1981
+    "e9a7936c-0a01-43d5-9004-b93a4e5fd031": 2009
   },
   "conflictCount": 0,
   "phase": "web-case-to-letter",
   "phaseId": "runtime-architecture::web-case-to-letter",
   "parentPhase": "runtime-architecture",
-  "last_updated": "2026-09-19T18:56:39.432938Z",
+  "last_updated": "2026-09-19T19:04:50.068198Z",
   "last_updated_by": "kbd-runtime",
   "changes_total": 22,
-  "changes_completed": 20,
+  "changes_completed": 22,
   "implementation_total": 22,
-  "implementation_completed": 20,
+  "implementation_completed": 22,
   "completion": {
     "primaryCounter": "implementation",
     "implementation": {
-      "completed": 20,
+      "completed": 22,
       "total": 22,
-      "status": "IN_PROGRESS"
+      "status": "COMPLETE"
     },
     "evidence": {
       "status": "COMPLETE",
-      "summary": "Every change carries a result.md with observed command output. Six behavioural guards each sabotaged, observed failing, reverted. Live-stack evidence: 60 tables, 5/5 and 11/11 schema refusals, tenant isolation and PHI projection verified through Electric against real rows. NOT evidence of visual correctness — nothing has rendered in a browser.",
+      "summary": "Passed: revision-12 retains local Rust, web, SQL, mounted replica/browser, protocol, responsive, fixture, and negative-control outputs.",
       "blockers": []
     },
     "certification": {
       "status": "COMPLETE",
-      "summary": "Both gates ran. artifact-refiner: 11/11 blocking constraints pass across web, Rust and Flutter surfaces; one warning finding (empty [pins] in versions.toml, operator-owned). Adversarial review by a fresh-context critic: 2 CRITICAL, 3 HIGH, 3 MEDIUM, 1 LOW. Six fixed here (misleading compose comment, gate read failing open, worklist hiding a gap behind a void, tautological stub, unreachable type variant, false verification claim in a test comment, double-negative copy). Three carried to runtime-architecture with stated reasons: the sync layer has no callers, GraphProvider conflates three states, and two tests mirror the implementation. Gates after: 57/57 tests, typecheck 0, lint clean, build green, audit PASS 6/6.",
+      "summary": "Passed: frozen browser-first candidate passed full local integration, responsive/reduced-motion review, and independent critic/judge; no CI/native result substituted.",
       "blockers": []
     },
     "publication": {
-      "status": "BLOCKED",
-      "summary": "The web READ PATH is disconnected: createEvidenceSyncAdapter has no callers and nothing writes rows into PGlite, so every case renders 'No evidence has been recorded' regardless of the truth. Not publishable. Wiring it is the first work item of runtime-architecture.",
-      "blockers": [
-        "Read path disconnected — sync adapter never constructed; PGlite never populated"
-      ]
+      "status": "COMPLETE",
+      "summary": "Passed: FRF authorized shapes materialize through PGlite into PEM/Zustand, and the complete synthetic web workflow is demo-ready at the local Compose URL.",
+      "blockers": []
     }
   },
   "changes": [
@@ -233,12 +231,12 @@
     {
       "id": "web-15a-browser-hardening",
       "title": "Harden browser behavior and review packets",
-      "status": "PENDING",
-      "implementation_status": "PENDING",
+      "status": "DONE",
+      "implementation_status": "COMPLETE",
       "tasks_total": 6,
-      "tasks_done": 5,
-      "last_task_completed": "2.1 Verify packet format and manifest hygiene, then run the small-packet parallel adversarial review and one repair-delta confirmation round.",
-      "next_task_pending": "3.1 Record actual commands and outputs, reconcile every deferred-proof ledger to zero, commit the change, and hand off Web-16.",
+      "tasks_done": 6,
+      "last_task_completed": "3.1 Record actual commands and outputs, reconcile every deferred-proof ledger to zero, commit the change, and hand off Web-16.",
+      "next_task_pending": null,
       "blockers": []
     },
     {
@@ -277,12 +275,12 @@
     {
       "id": "web-17-browser-scenario-certification",
       "title": "Certify the complete local web scenario",
-      "status": "PENDING",
-      "implementation_status": "PENDING",
+      "status": "DONE",
+      "implementation_status": "COMPLETE",
       "tasks_total": 11,
-      "tasks_done": 0,
-      "last_task_completed": null,
-      "next_task_pending": "1.1 Confirm dependency completion, assigned file ownership, frozen web-00 contracts, and applicable decision gates before edits; verify canonical KBD/OpenSpec state and retain the result.",
+      "tasks_done": 11,
+      "last_task_completed": "12.4 Record actual local outputs and reconcile KBD through supported runtime commands; no CI/native result substitutes for browser certification.",
+      "next_task_pending": null,
       "blockers": []
     }
   ],

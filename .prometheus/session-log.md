@@ -2754,3 +2754,11 @@ The composed web stack now initializes a synthetic case, processes uploaded text
 ## 2026-09-19 — Revision 12 implementation in progress
 
 Web layout repair passed desktop/mobile/full-viewport/form-preservation and independent artifact review. FRF transient502 recovery passed in the browser. Repeat demo initialization preserved revisions and identity. Migration0637 applied through checksum-verified migrator; SQL stale/matching regression passed; browser policy selection, evidence r2 and clinical-appeal draft generation returned200. KBD plan12 registered without reset; completed statuses preserved. Host document generation contracts/source validation/digest binding passed5 focused tests, with a failing source-quote mutation and restored green run. New inference/assembly adapters compile but are not yet wired into runtime. SQL task persistence, protocol adapters, shared UI integration, corrected response classification, Compose integration and final certification remain underway. No full agent certification claim.
+
+## 2026-09-19 — Web case-to-letter revision 12 complete
+
+- Phase: Execute; child `runtime-architecture / web-case-to-letter` is complete at 22/22 changes. Parent implementation is 57/61; the four remaining changes are the explicitly deferred native phases.
+- Commit `07208d1` freezes the browser-first implementation. A second ledger commit records the final certification transition.
+- Local evidence passed: full Rust workspace, 689 web tests with mounted suites run separately, six architecture checks, mounted replica/browser campaigns, deterministic task/persistence/submission scenarios, repeat initialization, A2A/MCP/MCP App smoke, and strict validation for all 19 active OpenSpec changes.
+- The fixture verifier passed three standalone positive families and four isolated negative controls. Actual browser evidence covered generation, review, approval, signing, submission acknowledgement, desktop/mobile overflow, and reduced motion.
+- The public demo remains synthetic. Production patient-data inference remains disabled pending provider qualification.

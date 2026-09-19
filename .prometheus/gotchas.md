@@ -862,3 +862,7 @@ A surgeon with `sign_letter` authority still receives `signatureVersion: null` w
 ## 2026-09-19 — PostgreSQL CURRENT_CATALOG shadows a local revision variable
 
 The real policy-selection UI rejected matching resolution/catalog tokens. A PL/pgSQL local named current_catalog resolved to PostgreSQL CURRENT_CATALOG (database name) in SQL expressions. Forward migration 0637 renames both affected function locals; a local executor regression now rejects stale tokens and accepts matching tokens/current snapshots. Avoid SQL value-expression keywords for revision variables.
+
+## 2026-09-19 — Assembly package digests are loaded at service startup
+
+After changing a template and its frozen manifest digest, a running API process still used the package digest loaded at startup and correctly refused the request as `auth-required` or `invalid_assembly`. Recreate the API service after an authorized package-manifest change before running live generation. Do not weaken digest validation or silently update the expected digest.
