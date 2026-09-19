@@ -1,0 +1,58 @@
+[
+  {
+    "id": "web-case-to-letter",
+    "keyword": "Feature",
+    "name": "Web case-to-letter customer demo",
+    "uri": "scripts/record-web-case-to-letter-demo.py",
+    "elements": [
+      {
+        "id": "web-case-to-letter;01-initial-request",
+        "keyword": "Scenario",
+        "name": "Initial request through payer acknowledgement",
+        "type": "scenario",
+        "steps": [
+          {
+            "keyword": "When ",
+            "name": "the clinician completes the workflow in the browser",
+            "result": {
+              "status": "passed",
+              "duration": 63039000000
+            }
+          }
+        ]
+      },
+      {
+        "id": "web-case-to-letter;02-corrected-resubmission",
+        "keyword": "Scenario",
+        "name": "Corrected resubmission through payer acknowledgement",
+        "type": "scenario",
+        "steps": [
+          {
+            "keyword": "When ",
+            "name": "the clinician completes the workflow in the browser",
+            "result": {
+              "status": "passed",
+              "duration": 63357000000
+            }
+          }
+        ]
+      },
+      {
+        "id": "web-case-to-letter;03-clinical-appeal",
+        "keyword": "Scenario",
+        "name": "Clinical appeal with fresh surgeon affirmation through payer acknowledgement",
+        "type": "scenario",
+        "steps": [
+          {
+            "keyword": "When ",
+            "name": "the clinician completes the workflow in the browser",
+            "result": {
+              "status": "passed",
+              "duration": 75356000000
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ASO web case-to-letter certification</title>
+  <style>
+    :root { color-scheme: light; font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+    body { margin: 0; background: #f5f1eb; color: #1f1b18; }
+    main { width: min(1120px, calc(100% - 32px)); margin: 0 auto; padding: 48px 0 72px; }
+    header { margin-bottom: 32px; }
+    h1 { max-width: 780px; font-family: Georgia, serif; font-size: clamp(2rem, 5vw, 4rem); line-height: 1.02; }
+    .meta { color: #625b55; line-height: 1.6; }
+    article { margin: 24px 0; padding: clamp(18px, 3vw, 32px); border: 1px solid #d7cec3; border-radius: 18px; background: #fff; box-shadow: 0 18px 44px rgb(51 42 34 / 8%); }
+    .eyebrow { color: #a85417; font-size: .78rem; font-weight: 750; letter-spacing: .08em; text-transform: uppercase; }
+    h2 { font-family: Georgia, serif; font-size: clamp(1.35rem, 3vw, 2rem); }
+    video { display: block; width: 100%; margin: 18px 0; border-radius: 12px; background: #111; }
+    a { color: #184f68; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="eyebrow">Advanced Spine &amp; Orthopedics · browser evidence</p>
+      <h1>Web case-to-letter customer demo</h1>
+      <p class="meta">All three synthetic workflows reached payer acknowledgement in the real browser against the local Compose stack.<br>
+      Implementation commit <code>4cb7b636334aa0e3ff0e2a9d025e786c9c986786</code> · observed 2026-09-19T19:58:04.057660+00:00</p>
+    </header>
+
+      <article>
+        <p class="eyebrow">Passed · 63.0 seconds</p>
+        <h2>Initial request through payer acknowledgement</h2>
+        <video controls preload="metadata" src="videos/01-initial-request.mp4"></video>
+        <a href="screenshots/01-initial-request-complete.png">Open completion screenshot</a>
+      </article>
+
+      <article>
+        <p class="eyebrow">Passed · 63.4 seconds</p>
+        <h2>Corrected resubmission through payer acknowledgement</h2>
+        <video controls preload="metadata" src="videos/02-corrected-resubmission.mp4"></video>
+        <a href="screenshots/02-corrected-resubmission-complete.png">Open completion screenshot</a>
+      </article>
+
+      <article>
+        <p class="eyebrow">Passed · 75.4 seconds</p>
+        <h2>Clinical appeal with fresh surgeon affirmation through payer acknowledgement</h2>
+        <video controls preload="metadata" src="videos/03-clinical-appeal.mp4"></video>
+        <a href="screenshots/03-clinical-appeal-complete.png">Open completion screenshot</a>
+      </article>
+  </main>
+</body>
+</html>
