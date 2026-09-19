@@ -15,6 +15,12 @@ import shutil
 import subprocess
 import sys
 
+from pri_c015_fixture import (
+    cleanup_switch_fixture,
+    prepare_switch_fixture,
+    remove_materializer_scratch,
+)
+
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE_PATH = ROOT / "scripts/test-ra11a-sync-conformance.py"
@@ -26,6 +32,7 @@ STATIC_CAMPAIGN_INPUT_PATHS = (
     "docker/frf/shape-catalog.json",
     "scripts/ra05-stack.sh",
     "scripts/ra06c_campaign_config.py",
+    "scripts/pri_c015_fixture.py",
     "scripts/test-authorized-shape-composition.py",
     "scripts/test-ra11a-sync-conformance.py",
     "scripts/test-ra11c-browser-memory.py",
@@ -131,6 +138,18 @@ class MaterializationProbe(base.SyncConformanceProbe):
         })
 
     def cleanup(self) -> None:
+        try:
+            remaining = cleanup_switch_fixture(self)
+            self.report["cleanup"]["switch_practice_rows"] = (
+                "Passed"
+                if not remaining or all(value == 0 for value in remaining.values())
+                else "Failed"
+            )
+        except Exception as error:
+            self.report["cleanup"]["switch_practice_rows"] = "Failed"
+            self.report["cleanup"]["switch_practice_rows_error"] = self.redact(
+                str(error)
+            )
         super().cleanup()
         try:
             after = campaign_input_fingerprints()
@@ -151,6 +170,8 @@ class MaterializationProbe(base.SyncConformanceProbe):
             }
 
     def run_materializer(self, session_token: str) -> None:
+        if not getattr(self, "switch_fixture", None):
+            prepare_switch_fixture(self)
         self.secret_values = tuple(sorted(
             set((*self.secret_values, session_token, "Bearer " + session_token)),
             key=len,
@@ -239,11 +260,14 @@ class MaterializationProbe(base.SyncConformanceProbe):
             and self.report["browser_memory"].get("result") == "Passed",
             exit_code=browser_child.returncode,
         )
+        self.report["cleanup"]["materializer_scratch"] = (
+            "Passed" if remove_materializer_scratch(self) else "Failed"
+        )
 
 
 def parser() -> argparse.ArgumentParser:
     result = argparse.ArgumentParser(description=__doc__)
-    result.add_argument("--callback-port", type=int, default=8788)
+    result.add_argument("--callback-port", type=int, default=18788)
     result.add_argument("--campaign-secrets", type=Path, default=base.DEFAULT_SECRETS)
     result.add_argument("--data-dir", type=Path, default=DEFAULT_DATA_DIR)
     result.add_argument("--output", type=Path, required=True)

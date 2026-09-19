@@ -1,0 +1,24 @@
+{
+  "mode": "diff",
+  "verdict": "PASS",
+  "judge_model": "gpt-5.5",
+  "isolation_mode": "harness-native",
+  "producer_model": "gpt-6-astra",
+  "cross_model_check": "verified-distinct",
+  "checked_classes": [
+    "Selected-practice isolation: dist/docs/architecture/web-case-to-letter-contract.md requires aso.selected_practice_id to belong to the current identity and expose exactly one practice; dist/docs/design/schema/schema-web-authority-checks.sql probes multi-practice membership with practice A selected while targeting practice B, so extra memberships do not broaden active scope.",
+    "Same-case provenance: dist/docs/architecture/web-case-to-letter-contract.md requires document/version/page/span/date and same-case composite relationships; dist/docs/design/schema/schema-web-letter-flow-checks.sql attempts and refuses a cross-case cited document, so a valid-looking document from another case cannot satisfy provenance.",
+    "Signatures: dist/docs/architecture/fixtures/web-case-to-letter/README.md requires a current synthetic signature per positive case and signatureId plus signatureRevision per signing payload; fixture-manifest.json supplies them for all initial and response sign commands, so signature inputs are explicit.",
+    "Server-owned generation seam: dist/openspec/changes/web-00-workflow-contract/specs/workflow-contract/spec.md forbids client-supplied generated claims and assigns candidate production to the inference adapter; fixture-manifest.json sends only command identity, revisions, and purpose while command_result_fixture supplies the missing-citation candidate.",
+    "UUIDv5 encoding: dist/docs/architecture/fixtures/web-case-to-letter/README.md fixes RFC 4122 UUIDv5, SHA-1, UTF-8 bytes, canonical lowercase UUID text, and the exact name template; fixture-manifest.json includes recomputable conformance samples, so remapping is not implementation-defined.",
+    "Three evidence states and citations: dist/docs/architecture/web-case-to-letter-contract.md keeps met, gap, and void distinct, blocks authority on unresolved mandatory work, and mandates document/page/date provenance; verify.py checks the exact state and source contracts, so unsupported assertions cannot silently enter prose.",
+    "Independent clinical authority: dist/docs/architecture/web-case-to-letter-contract.md requires Gate, AppServices, and PostgreSQL enforcement; dist/docs/design/schema/schema-web-authority-checks.sql probes affirmation, annotation, approval, signing, and practice-reassignment refusals, so no single layer is trusted alone.",
+    "Browser-first sequencing: dist/openspec/changes/web-00-workflow-contract/design.md orders web-00 through web-17, ra-20, then browser-scoped ra-22; dist/docs/architecture/web-case-to-letter-contract.md assigns readiness only to the actual browser campaign, so native/mobile or fixture evidence cannot substitute."
+  ],
+  "findings": [],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

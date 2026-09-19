@@ -1,0 +1,74 @@
+{
+  "artifact": "web-03-administering-entity-resolution",
+  "reviewType": "fresh-independent-artifact-critic",
+  "reviewedArtifact": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/.refiner/artifacts/web-03-administering-entity-resolution",
+  "verdict": "BLOCK",
+  "counts": {
+    "critical": 0,
+    "major": 0,
+    "minor": 2,
+    "total": 2
+  },
+  "manifestVerification": {
+    "expectedDigest": "146c33d2418f3d9e22c345c159da4c9574d8c7a5b98a3089db95ef7e7281ed49",
+    "observedDigest": "146c33d2418f3d9e22c345c159da4c9574d8c7a5b98a3089db95ef7e7281ed49",
+    "digestMatches": true,
+    "manifestEntries": 101,
+    "currentSourceHashesPassed": 101,
+    "currentSourceHashesFailed": 0,
+    "byteIdenticalSnapshotsPassed": 101,
+    "byteIdenticalSnapshotsFailed": 0
+  },
+  "findings": [
+    {
+      "id": "WEB03-FINAL101-001",
+      "severity": "minor",
+      "title": "The authoritative expired-state label still falsely attributes expiry to the rule",
+      "location": {
+        "file": "dist/migrations/server/2026090618_administering_entity_resolution_schema.sql",
+        "line": 125
+      },
+      "evidence": "The state catalog persists expired as 'Matching rule expired'. The frozen resolver and retained plan-ended and enrollment-ended probes establish that the earliest exclusive end may belong to the payer plan or member enrollment, and the frozen UI deliberately uses the neutral label 'Coverage path expired'. The same stale label is also copied into dist/docs/design/schema/schema-web-case-to-letter.sql at line 290.",
+      "impact": "Any consumer that uses the database state catalog rather than the current React-local copy will make a false causal claim for valid plan-ended or enrollment-ended outcomes. The frozen artifact therefore does not consistently satisfy its neutral expired-state semantic across its authoritative schema and UI.",
+      "requiredChange": "Change the expired label in the executable migration and schema-of-record snapshot to neutral coverage-path wording, then retain a check that plan-ended and enrollment-ended states cannot expose rule-specific copy."
+    },
+    {
+      "id": "WEB03-FINAL101-002",
+      "severity": "minor",
+      "title": "The frozen result summary understates the final browser test count",
+      "location": {
+        "file": "dist/openspec/changes/web-03-administering-entity-resolution/result.md",
+        "line": 16
+      },
+      "evidence": "The result states that focused evidence passed 30 browser tests and repeats a 30-test final five-file suite claim at line 31. The final frozen task-6-focused-web.log and task-6-command-receipt.json both report 5 files and 33 tests passed.",
+      "impact": "The artifact gives two different exact counts for the same final qualification run, so its evidence summary is stale and cannot be treated as a truthful exact account of the frozen candidate.",
+      "requiredChange": "Update the result summary to the retained 33-test observation, or narrow and name a distinct 30-test command with its own retained output if that is the intended claim."
+    }
+  ],
+  "domainAssessment": {
+    "correctness": "PASS_WITH_BLOCKING_ARTIFACT_CONTRADICTIONS",
+    "authority": "PASS",
+    "concurrency": "PASS",
+    "halfOpenValidity": "PASS",
+    "futureDisjointExpiredSemantics": "PASS",
+    "planEndedAndEnrollmentEndedHandling": "PASS",
+    "uiCopy": "BLOCK",
+    "mountedRequestChain": "PASS",
+    "evidenceTruthfulness": "BLOCK",
+    "claimBoundaries": "PASS"
+  },
+  "verifiedObservations": [
+    "The resolve mutation accepts only commandId and expectedCaseInputRevision; the server chooses the entity and path.",
+    "AppServices and PostgreSQL independently enforce user principal, capability, verified practice, and case target authority.",
+    "Resolution and authoritative mutations acquire input-table locks before the case-row lock; retained red and restored race evidence exercises both transaction orders.",
+    "Effective intervals are evaluated as half-open, and the UI labels validTo as exclusive.",
+    "Future-effective and disjoint historical windows resolve missing; a non-empty compatible intersection ending on or before the service date resolves expired.",
+    "Plan-ended and enrollment-ended probes both resolve the neutral expired state in the command result and current React panel.",
+    "The mounted path runs CaseDetail to the resolution hook, typed HTTP client, Axum router, AppServices, restricted PostgreSQL adapter, and resolver function.",
+    "The artifact limits its completion claim to focused Web-03 T0/T1 evidence and assigns the complete actual-browser case-to-letter result to Web-17."
+  ],
+  "unverifiedByThisReview": [
+    "No new product tests or integration stack were run because this review was restricted to the frozen artifact and its persisted dist snapshots.",
+    "The complete actual-browser case-to-letter workflow remains outside this artifact's stated boundary."
+  ]
+}

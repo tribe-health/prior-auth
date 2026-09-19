@@ -1,0 +1,48 @@
+
+ RUN  v3.2.7 /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web
+
+ ❯ src/shared/sync/migration-ledger.test.ts (10 tests | 1 failed | 9 skipped) 1064ms
+   ↓ migrateReplicaSchema > requires a held ownership lease before migration
+   ↓ migrateReplicaSchema > applies a checksummed logical version and generation atomically
+   × migrateReplicaSchema > starts a strictly newer generation before a cutover migration 1063ms
+     → expected { status: 'ready', …(3) } to match object { status: 'ready', generation: 10 }
+(2 matching properties omitted from actual)
+   ↓ migrateReplicaSchema > returns recovery-required on checksum drift without mutating the generation
+   ↓ migrateReplicaSchema > fences an older logical schema and preserves a generation advanced by refetch
+   ↓ migrateReplicaSchema > rejects a changed migration set without a logical version bump
+   ↓ migrateReplicaSchema > rejects duplicate migration identifiers before applying schema changes
+   ↓ migrateReplicaSchema > rolls back the whole generation when a migration fails
+   ↓ migrateReplicaSchema > reports storage failure separately from migration DDL failure
+   ↓ migrateReplicaSchema > fences a recorded migration history that is not the plan prefix
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/sync/migration-ledger.test.ts > migrateReplicaSchema > starts a strictly newer generation before a cutover migration
+AssertionError: expected { status: 'ready', …(3) } to match object { status: 'ready', generation: 10 }
+(2 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "generation": 10,
++   "generation": 9,
+    "status": "ready",
+  }
+
+ ❯ src/shared/sync/migration-ledger.test.ts:117:5
+    115|       startsNewGeneration: true,
+    116|     };
+    117|     await expect(
+       |     ^
+    118|       ownedMigrate(db, {
+    119|         logicalVersion: 2,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 9 skipped (10)
+   Start at  10:40:06
+   Duration  2.16s (transform 47ms, setup 0ms, collect 61ms, tests 1.06s, environment 635ms, prepare 87ms)
+

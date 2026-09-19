@@ -20,8 +20,9 @@ use crate::{
 use aso_host::{
     domain::{DomainError, LetterId},
     letter_workflow::{
-        ApproveLetterCommand, GenerateLetterCommand, LetterCommandResult, LetterSnapshot,
-        LetterWorkflowError, ReviewLetterCommand,
+        ApproveLetterCommand, ConfirmResponseModeCommand, DeterminationResponseModeResult,
+        DeterminationSnapshot, GenerateLetterCommand, LetterCommandResult, LetterSnapshot,
+        LetterWorkflowError, RecordDeterminationCommand, ReviewLetterCommand,
     },
     signing::{
         SignLetterCommand, SignLetterMutation, SignLetterResult, SigningError, SigningTarget,
@@ -31,6 +32,18 @@ use aso_host::{
 pub fn router() -> Router<ServerState> {
     Router::new()
         .route("/api/cases/{case_id}/letters", post(generate))
+        .route(
+            "/api/cases/{case_id}/determinations/latest",
+            get(read_latest_determination),
+        )
+        .route(
+            "/api/cases/{case_id}/determinations",
+            post(record_determination),
+        )
+        .route(
+            "/api/cases/{case_id}/determinations/response-mode",
+            post(confirm_response_mode),
+        )
         .route(
             "/api/cases/{case_id}/letter-commands/{command_id}",
             get(lookup_workflow),
@@ -45,6 +58,67 @@ pub fn router() -> Router<ServerState> {
             get(lookup),
         )
         .layer(middleware::from_fn(no_store))
+}
+
+async fn confirm_response_mode(
+    State(state): State<ServerState>,
+    headers: HeaderMap,
+    path: Result<Path<Uuid>, PathRejection>,
+    query: Result<Query<SignQuery>, QueryRejection>,
+    body: Result<Json<ConfirmResponseModeCommand>, JsonRejection>,
+) -> Result<Json<DeterminationResponseModeResult>, Response> {
+    let Path(case_id) = path.map_err(|_| invalid_signing_request())?;
+    let Query(query) = query.map_err(|_| invalid_signing_request())?;
+    let Json(command) = body.map_err(|_| invalid_signing_request())?;
+    let (context, capabilities) = clinical_context(&state, &headers, query.practice_id)
+        .await
+        .map_err(workflow_context_error)?;
+    state
+        .services
+        .confirm_response_mode(&context, &capabilities, case_id, &command)
+        .await
+        .map(Json)
+        .map_err(workflow_error)
+}
+
+async fn record_determination(
+    State(state): State<ServerState>,
+    headers: HeaderMap,
+    path: Result<Path<Uuid>, PathRejection>,
+    query: Result<Query<SignQuery>, QueryRejection>,
+    body: Result<Json<RecordDeterminationCommand>, JsonRejection>,
+) -> Result<Json<DeterminationSnapshot>, Response> {
+    let Path(case_id) = path.map_err(|_| invalid_signing_request())?;
+    let Query(query) = query.map_err(|_| invalid_signing_request())?;
+    let Json(command) = body.map_err(|_| invalid_signing_request())?;
+    let (context, capabilities) = clinical_context(&state, &headers, query.practice_id)
+        .await
+        .map_err(workflow_context_error)?;
+    state
+        .services
+        .record_determination(&context, &capabilities, case_id, &command)
+        .await
+        .map(Json)
+        .map_err(workflow_error)
+}
+
+async fn read_latest_determination(
+    State(state): State<ServerState>,
+    headers: HeaderMap,
+    path: Result<Path<Uuid>, PathRejection>,
+    query: Result<Query<SignQuery>, QueryRejection>,
+) -> Result<Json<DeterminationSnapshot>, Response> {
+    let Path(case_id) = path.map_err(|_| invalid_signing_request())?;
+    let Query(query) = query.map_err(|_| invalid_signing_request())?;
+    let (context, capabilities) = clinical_context(&state, &headers, query.practice_id)
+        .await
+        .map_err(workflow_context_error)?;
+    state
+        .services
+        .read_latest_determination(&context, &capabilities, case_id)
+        .await
+        .map(Json)
+        .map_err(workflow_error)
 }
 
 async fn read_target(

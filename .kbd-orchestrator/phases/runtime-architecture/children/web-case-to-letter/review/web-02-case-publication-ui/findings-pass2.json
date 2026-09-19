@@ -1,0 +1,31 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "web/src/shared/sync/pglite-schema.ts",
+      "line": 276,
+      "claim": "The case-summary migration cannot be applied to an existing replica that already contains case rows because it adds several NOT NULL columns without defaults or backfill.",
+      "evidence": "PGLITE_CASE_SUMMARY_SQL adds `case_number TEXT NOT NULL`, `patient_id UUID NOT NULL`, `surgeon_id UUID NOT NULL`, `payer_id UUID NOT NULL`, and `revision BIGINT NOT NULL` directly via `ALTER TABLE cases`; acceptance criterion 1.2 requires extending PGlite/materializer mappings, not only creating an empty current schema.",
+      "suggested_fix": "Use a real migration sequence: add the columns nullable or with safe defaults, backfill from the authorized source during a generation reset/rebuild, then enforce NOT NULL only after rows are valid; add a test that applies the migration to a non-empty revision-3 database."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "web/src/shared/sync/pglite-schema.ts",
+      "line": 239,
+      "claim": "The change durably persists annotation bodies in PGlite while the migration comment states those bodies are only allowed in the memory-only runtime.",
+      "evidence": "The new annotation migration says `the body is available only inside the authorized memory-only client runtime until G-DATA approves durable client persistence`, but immediately creates a durable PGlite `annotations` table with `body TEXT NOT NULL`; acceptance criterion 1.2 is specifically about registering privacy/columns for the case-summary lane and verifying forbidden columns cannot materialize.",
+      "suggested_fix": "Do not add `annotations.body` to the durable PGlite schema/SYNC_COLUMNS until durable annotation persistence is approved, or change the approved privacy contract and tests to explicitly allow it."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

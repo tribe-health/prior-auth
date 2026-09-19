@@ -1,0 +1,33 @@
+
+ RUN  v3.2.7 /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web
+
+ ❯ src/features/administering-entity/components/administering-entity-panel.test.tsx (3 tests | 1 failed) 53ms
+   × AdministeringEntityPanel > renders the resolved path as responsive fields and exposes refresh actions 33ms
+     → expected 'The controlling entity and payer path…' to contain 'Revision 2'
+   ✓ AdministeringEntityPanel > names a parked state and states that downstream work is blocked 10ms
+   ✓ AdministeringEntityPanel > describes a missing active entity without calling the rule expired 9ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/administering-entity/components/administering-entity-panel.test.tsx > AdministeringEntityPanel > renders the resolved path as responsive fields and exposes refresh actions
+AssertionError: expected 'The controlling entity and payer path…' to contain 'Revision 2'
+
+Expected: "Revision 2"
+Received: "The controlling entity and payer paths are version-matched.Administering entitySynthetic Utilization PartnerCriteria setcriteria-2026Submission channelpayer-portalAppeal pathstandard-appealEffective from2026-01-01Effective throughNot availableSource documentSynthetic delegation sourceSource effective date2026-01-01Source versionVersion 1Entity revisionNot availablePlan revisionRevision 3Enrollment revisionRevision 4Rule revisionRevision 5"
+
+ ❯ src/features/administering-entity/components/administering-entity-panel.test.tsx:35:70
+     33|     expect(screen.getByTestId('resolved-coverage-path').textContent).t…
+     34|     expect(screen.getByTestId('resolved-coverage-path').textContent).t…
+     35|     expect(screen.getByTestId('resolved-coverage-path').textContent).t…
+       |                                                                      ^
+     36|     expect(screen.getByTestId('resolved-coverage-path').textContent).t…
+     37|     expect(screen.getByTestId('resolved-coverage-path').textContent).t…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  10:00:04
+   Duration  1.22s (transform 70ms, setup 0ms, collect 252ms, tests 53ms, environment 567ms, prepare 126ms)
+

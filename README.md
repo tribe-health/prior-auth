@@ -4,7 +4,7 @@
 
 Start the complete browser stack, including PostgreSQL bootstrap, checksum-verified
 server migrations, Kratos migrations, the synthetic demo identity, API, Electric,
-Flint Gate, and Vite:
+Flint Gate, Realtime Fabric, the document assembly service, Liter-LLM, and Vite:
 
 ```bash
 docker compose up --build --wait
@@ -23,6 +23,9 @@ the database and reapplies only pending migrations. For a clean demonstration:
 docker compose down --volumes
 docker compose up --build --wait
 ```
+
+The included Qwen route is for the synthetic demo case only. Production patient-data
+inference stays disabled until a separate US provider qualification passes.
 
 Override the local-only credentials through `ASO_DEMO_EMAIL`,
 `ASO_DEMO_PASSWORD`, `ASO_RUNTIME_DATABASE_PASSWORD`, and

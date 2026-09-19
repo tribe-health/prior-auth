@@ -1,0 +1,122 @@
+{
+  "result": "Failed",
+  "verification_tier": 1,
+  "install_mode": "upgrade",
+  "observed_at": "2026-09-18T08:06:37.908763+00:00",
+  "scope": "Web-04 additive processing/staging schema, least-privilege reserve/commit/read/lookup functions, transaction rollback, cleanup, idempotency, revision, capability, and tenant refusal",
+  "prerequisites": [
+    "Existing Docker Compose db service with schema extensions available",
+    "Configured PostgreSQL admin password from container environment",
+    "Pinned Rust toolchain and idle workspace Cargo build directory",
+    "No concurrent database fixtures; a local exclusive lock covers this runner"
+  ],
+  "commands": [
+    "python3 scripts/test-web04-document-upload-schema.py --install-mode upgrade --output .kbd-orchestrator/phases/runtime-architecture/children/web-case-to-letter/evidence/web-04-document-upload-core/task-2-upgrade-schema.json",
+    "cargo run -p aso-web-server -- --migrate-server"
+  ],
+  "environment_contract": {
+    "migration": [
+      "ASO_MIGRATION_DATABASE_URL"
+    ],
+    "test": [
+      "ASO_TEST_DATABASE_URL",
+      "ASO_TEST_ADMIN_DATABASE_URL",
+      "ASO_TEST_OWNER_ROLE",
+      "ASO_TEST_GATE_CONTEXTS",
+      "ASO_TEST_GATE_CASE_ID",
+      "ASO_TEST_FOREIGN_CASE_ID"
+    ],
+    "credentials": "Disposable passwords supplied only through environment or captured SQL stdin"
+  },
+  "checks": {
+    "postgres_port_discovery": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "configured_admin_password_available": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "populated_upgrade_fixture_created": {
+      "result": "Passed"
+    },
+    "legacy_stale_and_valid_summary_fixtures_created": {
+      "result": "Passed"
+    },
+    "initial_server_migration": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "original_case_ids_and_contents_survive_upgrade": {
+      "result": "Failed"
+    }
+  },
+  "processes": [
+    {
+      "label": "initial_server_migration",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 0,
+      "actual_result_output": []
+    }
+  ],
+  "cleanup": {
+    "disposable_database_deleted": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "aso_session_reader": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_gate_executor": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_gate_owner": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_case_executor": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_case_owner": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_authority_event_reader": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    }
+  },
+  "unverified": [
+    "DocumentStore byte writes, AppServices orchestration, multipart HTTP, React UI, actual browser, Tauri, and mobile are outside Web-04 task 1.2."
+  ],
+  "source_sha256": {
+    "migrations/server/2026090601_durable_gate.sql": "b3da2e91629534c011c6186eeb658fc2286896d2d491ca94dcda03a2f009a899",
+    "crates/aso-web-server/src/adapters/gate.rs": "f78ee42fe9f94ff2936fa7e9e1d36aa48ef8b67537b668bea16912c2a4721369",
+    "crates/aso-web-server/src/adapters/gate/transaction_tests.rs": "9690fe42a3cda9fc797b1bd6cfbd844155581d64227f75fc8ecd5a65e4196695",
+    "crates/aso-host/src/affirmation.rs": "adc28699815e2e24016b99742820eb3731a3ee31d2c0750721866b2a5fe679bb",
+    "crates/aso-host/src/lib.rs": "0088cb4804de85badf782f2e737eab9bc0a7e17ea5147d9a15036ba7496e7ab4",
+    "docs/design/schema/schema.sql": "0659af835b02cd91b697f5c29f5ad6ff1e34ecad92dcf7a7d41eb14391ea9679",
+    "docker/bootstrap/25-session-authority.sql": "fae999acbbaf98ca6b3ae107670ea25511426a233fa4ced5e72556c3fbc8c21b",
+    "scripts/test-gate-transaction.py": "7d96318b843f93455f9d30462f56e63c36f618d4569ccbd3d1a15704566a0787",
+    "migrations/server/2026090617_durable_case_commands.sql": "6ed504bdff3e4abe464179101d55c7fd23c4b6e9c1ef5e67e6e3854b010d3a86",
+    "migrations/server/2026090620_document_upload_schema.sql": "5b6ff35b0d64ed48436506d95059ccb211eea32cae76bc83b57e17ba5b743a3c",
+    "crates/aso-web-server/src/migrations.rs": "730cd713e6787412d5eef817018c6343dc0e82dc7ea5432d6133a34abcfb4d05",
+    "docs/design/schema/schema-web-case-to-letter.sql": "35cd668d991dd4b06b2a21a642c1370476a9b4052500b27dd9637fa43a8dec3e",
+    "scripts/test-web04-document-upload-schema.py": "8174ad95c652630020e0f6548f8bf2322d9b824ec5c6fd342c65bcb2a0d57d87"
+  },
+  "failure": {
+    "stage": "initial_server_migration",
+    "type": "AssertionError"
+  },
+  "completed_at": "2026-09-18T08:06:42.364581+00:00"
+}

@@ -1,0 +1,31 @@
+{% include "core/letterhead.md.j2" %}
+
+
+**RE: {% if ctx.payer_type == "medicare_advantage" %}Request for Pre-Service Organization Determination{% else %}Prior Authorization Request{% endif %}**
+
+{% include "core/re_block.md.j2" %}
+
+
+Dear Utilization Management Reviewer,
+
+Please review this request for {{ ctx.request.procedure }} for {{ ctx.member.name }}. The source-cited statements and requested services follow.
+
+{% include "core/request_summary.md.j2" %}
+
+
+{% include "core/clinical_summary.md.j2" %}
+
+
+{% include "core/criteria_table.md.j2" %}
+
+
+{% include "core/necessity.md.j2" %}
+
+
+{% include "routing/initial/" ~ ctx.payer_type ~ ".md.j2" %}
+
+
+{% include "core/requested_action.md.j2" %}
+
+
+{% include "core/enclosures.md.j2" %}

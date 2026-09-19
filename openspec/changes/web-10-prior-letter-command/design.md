@@ -25,3 +25,19 @@ This is ordered change `web-10-prior-letter-command` in the reviewed `runtime-ar
 ## Migration Plan
 
 Apply additive schema and contract changes before enabling their callers. Preserve existing reads until the focused migration is verified. Roll back callers first; never delete historical clinical or audit records as rollback.
+
+## 2026-09-19 approved revision-12 target — Agent-backed initial request
+
+The [implementation addendum](../../../docs/handoff/web-case-to-letter-revision-12-agent-integration.md) supplies the current
+agent scope and dependencies after responsive web UI acceptance. Its synthetic
+Liter-LLM inference, live AG-UI and interoperable task interfaces supersede older
+no-external-inference/templates-only/optional-stream wording above. Production PHI
+inference remains disabled pending qualification; Tauri and Flutter remain deferred.
+The rendering kernel stays store-free, and model/tool calls happen before final
+transaction locks. Preserve frozen browser intents, clinical authority and cited
+claim requirements. This dated extension does not claim implementation or advance
+the KBD runtime. Historical checks and completed tasks keep their original meaning.
+
+- Collect authorized sources and current revisions through host ports; use Liter-LLM candidate claims and pinned clinical-docs assembly instead of the SQL placeholder composer.
+- Add atomic final persistence for exact Markdown, assembly digest metadata, rendered claims, seven QA results, audit and task result; preserve historical hashes and revalidate authority/revisions after remote work.
+- Prove missing/unrelated citation refusal, blocking QA, rollback and uncertain-command reconciliation with deterministic recorded model responses.

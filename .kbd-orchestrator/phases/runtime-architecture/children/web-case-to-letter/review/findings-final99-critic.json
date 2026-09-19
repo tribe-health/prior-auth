@@ -1,0 +1,66 @@
+{
+  "artifact": "web-03-administering-entity-resolution",
+  "review_scope": "frozen artifact and persisted dist snapshots only",
+  "manifest": {
+    "path": "dist/source-manifest.sha256",
+    "sha256": "63a807e96de9c6baa78ed50fc942ccbf3264a94e6bdb8718dc48aaaca23174a1",
+    "expected_sha256": "63a807e96de9c6baa78ed50fc942ccbf3264a94e6bdb8718dc48aaaca23174a1",
+    "digest_verified": true,
+    "entries": 99,
+    "current_sources_verified": 99,
+    "current_source_failures": 0,
+    "frozen_snapshots_verified": 99,
+    "frozen_snapshot_failures": 0
+  },
+  "verdict": "BLOCK",
+  "counts": {
+    "critical": 0,
+    "major": 2,
+    "minor": 0,
+    "total": 2
+  },
+  "findings": [
+    {
+      "id": "F99-01",
+      "severity": "major",
+      "dimensions": [
+        "validity semantics",
+        "UI behavior",
+        "evidence truthfulness"
+      ],
+      "title": "The panel renders an exclusive validity end as an inclusive date",
+      "locations": [
+        "dist/migrations/server/2026090619_administering_entity_resolution_commands.sql:542",
+        "dist/migrations/server/2026090619_administering_entity_resolution_commands.sql:604",
+        "dist/web/src/features/administering-entity/components/administering-entity-panel.tsx:131"
+      ],
+      "evidence": "The resolver treats every valid_to as exclusive by requiring date_of_service < valid_to and returns that boundary unchanged. The panel labels the returned value 'Effective through', which conventionally includes the displayed date.",
+      "impact": "For a path with valid_to 2026-10-01, the resolver rejects service on 2026-10-01 while the review UI says the path is effective through 2026-10-01. The required reviewable validity interval is therefore materially misstated at its boundary.",
+      "required_fix": "Render the half-open interval explicitly, for example 'Effective until (exclusive)', or convert the stored exclusive boundary to the last included date before labeling it 'Effective through'. Add a boundary-date UI assertion tied to the SQL convention."
+    },
+    {
+      "id": "F99-02",
+      "severity": "major",
+      "dimensions": [
+        "correctness",
+        "validity semantics",
+        "UI behavior"
+      ],
+      "title": "The expired blocker falsely attributes every ended coverage path to the delegation rule",
+      "locations": [
+        "dist/migrations/server/2026090619_administering_entity_resolution_commands.sql:551",
+        "dist/migrations/server/2026090619_administering_entity_resolution_commands.sql:645",
+        "dist/web/src/features/administering-entity/model/administering-entity.ts:83"
+      ],
+      "evidence": "historical_count classifies the three-way plan, enrollment, and rule intersection as expired when the earliest of their valid_to values is on or before the service date. The UI nevertheless labels the outcome 'Matching rule expired' and states that the rule is not effective. A plan or enrollment can be the ended component while the rule remains effective.",
+      "impact": "The named blocker can direct staff to correct the delegation rule when the actual problem is an expired plan or member enrollment. This violates the requirement to name the parked condition truthfully and the product voice rule to state what the record shows.",
+      "required_fix": "Use composite coverage-path wording for the current state, or return and render the specific expired component. Add plan-ended and enrollment-ended cases that assert the displayed blocker does not claim the rule expired."
+    }
+  ],
+  "non_blocking_assessment": {
+    "security_authority": "Layered user-principal, capability, practice-target, AppServices, and restricted PostgreSQL function checks are present; no authority bypass was found in the frozen boundary.",
+    "concurrency": "The table-then-case locking and invalidation order covers the reviewed resolver-input races; no additional defect was found.",
+    "mounted_request_chain": "The case view mounts the hook and panel; the typed client targets the merged Axum router, which calls AppServices and the PostgreSQL repository implementation.",
+    "claim_boundaries": "The frozen evidence expressly limits completion to focused Tier 0/Tier 1 and leaves actual-browser and assembled workflow certification to Web-17."
+  }
+}

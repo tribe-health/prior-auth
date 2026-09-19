@@ -8,7 +8,9 @@
 
 ## SessionRecord
 
+* [Karpathy session 01e2e3872ec2](/karpathy-session-01e2e3872ec2ad2d.md)
 * [Karpathy session 076f0041ba0d](/karpathy-session-076f0041ba0db519.md)
+* [Karpathy session 10831c31962a](/karpathy-session-10831c31962aab78.md)
 * [Karpathy session 17151b799fd2](/karpathy-session-17151b799fd23eb6.md)
 * [Karpathy session 172ecc7ae3d3](/karpathy-session-172ecc7ae3d38371.md)
 * [Karpathy session 19accb7aa154](/karpathy-session-19accb7aa1544dd3.md)

@@ -1,0 +1,18 @@
+[package]
+name = "clinical-docs"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Document assembly engine: typed kinds, claims-only clinical text, schema-shaped QA findings, deterministic content hash. No I/O, no clock, no domain names."
+publish = false
+
+# This crate names no product, no shell and no database. It is the engine the
+# document-assembly agent calls, and it is the same engine a desktop or mobile
+# host can link in-process when the local lane forbids a network hop.
+[dependencies]
+minijinja.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+sha2.workspace = true
+thiserror.workspace = true

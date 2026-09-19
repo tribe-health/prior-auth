@@ -32,6 +32,58 @@ pub struct GenerateLetterCommand {
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct RecordDeterminationCommand {
+    pub command_id: Uuid,
+    pub document_id: Uuid,
+    pub decided_on: NaiveDate,
+    pub reason_code: Option<String>,
+    pub reason_text: String,
+    pub appeal_deadline: Option<NaiveDate>,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum DenialResponseMode {
+    CorrectedResubmission,
+    ClinicalAppeal,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct ConfirmResponseModeCommand {
+    pub command_id: Uuid,
+    pub expected_determination_id: Uuid,
+    pub mode: DenialResponseMode,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct DeterminationResponseModeResult {
+    pub command_id: Uuid,
+    pub case_id: Uuid,
+    pub determination_id: Uuid,
+    pub mode: DenialResponseMode,
+    pub committed_at: DateTime<Utc>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct DeterminationSnapshot {
+    pub id: Uuid,
+    pub case_id: Uuid,
+    pub outcome: String,
+    pub decided_on: NaiveDate,
+    pub reason_code: Option<String>,
+    pub reason_text: String,
+    pub appeal_deadline: Option<NaiveDate>,
+    pub document_id: Uuid,
+    pub document_name: String,
+    pub response_mode: Option<DenialResponseMode>,
+    pub created_at: DateTime<Utc>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct ReviewLetterCommand {
     pub command_id: Uuid,
     pub expected_letter_version: i32,
@@ -142,14 +194,69 @@ impl AppServices {
         command: &GenerateLetterCommand,
     ) -> Result<LetterCommandResult, LetterWorkflowError> {
         self.check_letter_context(context, capabilities, "letter_generate")?;
-        if case_id.is_nil()
-            || command.command_id.is_nil()
-            || command.purpose != LetterPurpose::PriorAuthorizationRequest
-        {
+        if case_id.is_nil() || command.command_id.is_nil() {
             return Err(LetterWorkflowError::Invalid);
         }
         self.letters
             .generate_letter(context, case_id, command)
+            .await
+    }
+    pub async fn record_determination(
+        &self,
+        context: &ClinicalContext,
+        capabilities: &[String],
+        case_id: Uuid,
+        command: &RecordDeterminationCommand,
+    ) -> Result<DeterminationSnapshot, LetterWorkflowError> {
+        self.check_letter_context(context, capabilities, "determination_record")?;
+        if case_id.is_nil()
+            || command.command_id.is_nil()
+            || command.document_id.is_nil()
+            || command.reason_text.trim().is_empty()
+        {
+            return Err(LetterWorkflowError::Invalid);
+        }
+        self.letters
+            .record_determination(context, case_id, command)
+            .await
+    }
+    pub async fn confirm_response_mode(
+        &self,
+        context: &ClinicalContext,
+        capabilities: &[String],
+        case_id: Uuid,
+        command: &ConfirmResponseModeCommand,
+    ) -> Result<DeterminationResponseModeResult, LetterWorkflowError> {
+        self.check_letter_context(context, capabilities, "determination_record")?;
+        if case_id.is_nil()
+            || command.command_id.is_nil()
+            || command.expected_determination_id.is_nil()
+        {
+            return Err(LetterWorkflowError::Invalid);
+        }
+        self.letters
+            .confirm_response_mode(context, case_id, command)
+            .await
+    }
+    pub async fn read_latest_determination(
+        &self,
+        context: &ClinicalContext,
+        capabilities: &[String],
+        case_id: Uuid,
+    ) -> Result<DeterminationSnapshot, LetterWorkflowError> {
+        if context.expires_at <= self.clock.now() || context.principal != Principal::User {
+            return Err(LetterWorkflowError::Unauthenticated);
+        }
+        if !capabilities.iter().any(|value| {
+            matches!(
+                value.as_str(),
+                "case:read" | "determination_record" | "letter_generate" | "letter_review"
+            )
+        }) {
+            return Err(LetterWorkflowError::Denied);
+        }
+        self.letters
+            .read_latest_determination(context, case_id)
             .await
     }
     pub async fn read_letter(

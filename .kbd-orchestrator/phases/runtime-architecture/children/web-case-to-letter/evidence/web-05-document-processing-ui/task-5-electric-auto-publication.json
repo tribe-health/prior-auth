@@ -1,0 +1,27 @@
+{
+  "result": "Failed",
+  "verification_tier": 1,
+  "scope": "Electric 1.8 automatic publication registration for the approved document_statuses shape",
+  "observed_at": "2026-09-18T15:24:24.487597+00:00",
+  "checks": {
+    "electric_container_started": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "approved_shape_request": {
+      "result": "Failed",
+      "http_status": null
+    }
+  },
+  "cleanup": {
+    "electric_container_removed": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "disposable_database_deleted": {
+      "result": "Passed",
+      "return_code": 0
+    }
+  },
+  "completed_at": "2026-09-18T15:26:50.616677+00:00"
+}

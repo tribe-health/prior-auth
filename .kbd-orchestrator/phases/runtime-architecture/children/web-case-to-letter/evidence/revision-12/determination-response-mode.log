@@ -1,0 +1,23 @@
+BEGIN
+DO
+SET
+SET
+NOTICE:  Passed: exact response mode allowlist
+NOTICE:  Passed: stale determination refused
+NOTICE:  Passed: foreign practice refused
+NOTICE:  Passed: exact mode receipt is idempotent
+NOTICE:  Passed: reused command conflict refused
+NOTICE:  Passed: confirmed mode is immutable
+NOTICE:  Passed: determination reload includes confirmed mode
+NOTICE:  Passed: corrected resubmission retains existing affirmation prerequisites
+NOTICE:  Passed: generation refuses mismatched confirmed mode
+DO
+RESET
+DO
+SET
+DO
+NOTICE:  Passed: clinical appeal requires fresh surgeon affirmation
+RESET
+NOTICE:  Passed: response mode confirmation preserves all surgeon gate records
+DO
+ROLLBACK

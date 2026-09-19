@@ -1,0 +1,23 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "crates/aso-server-axum/src/routes/gate.rs",
+      "line": 425,
+      "claim": "The gate authorization path for GET /api/cases/{case}/administering-entity authorizes by reading an existing resolution instead of authorizing the case target, so unresolved but readable cases are refused by the gate before the route can handle them.",
+      "evidence": "In the PolicyTarget::Resolution read branch, the diff calls `state.services.read_administering_entity(&context, &capabilities, case_id).await.map_err(resolution_policy_error)?;`; acceptance/task evidence for 1.4 requires the gate callback to recognize all three routes and `checks case:read or resolve_administering_entity and authorizes the case target before forwarding`, not require a resolution row to already exist.",
+      "suggested_fix": "For `PolicyTarget::Resolution { write: false }`, authorize the underlying case target with `read_case` or a dedicated read-target authorization method instead of `read_administering_entity`; leave the route handler responsible for returning unresolved/not-found resolution state."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

@@ -29,7 +29,7 @@
         "id": "UUID",
         "practice_id": "UUID",
         "case_id": "UUID",
-        "policy_criterion_id": "UUID",
+        "criterion_id": "UUID",
         "state": "TEXT",
         "assessed_at": "TIMESTAMPTZ",
         "created_at": "TIMESTAMPTZ",

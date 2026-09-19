@@ -17,6 +17,7 @@ import {
   PGLITE_ANNOTATION_TYPES_SQL,
   PGLITE_CASE_SUMMARY_SQL,
   PGLITE_DOCUMENT_STATUS_SQL,
+  PGLITE_DOCUMENT_TASK_STATUS_SQL,
   PGLITE_SCHEMA_SQL,
   PGLITE_SOURCE_HASH_SQL,
   type PGliteTable,
@@ -100,6 +101,7 @@ const EXPECTED_COUNTS: Readonly<Record<PGliteTable, number>> = {
   cases: 360,
   case_evidence: 4_320,
   document_statuses: 2_880,
+  document_task_statuses: 0,
   evidence_citations: 8_640,
   evidence_states: 3,
 };
@@ -150,7 +152,7 @@ function trackHeap() {
 async function schemaPlan(): Promise<ReplicaSchemaPlan> {
   const schemaSql = `${PGLITE_SCHEMA_SQL}\n${CHECKPOINT_SCHEMA_SQL}`;
   return {
-    logicalVersion: 7,
+    logicalVersion: 8,
     generation: 5,
     migrations: [
       {
@@ -183,6 +185,12 @@ async function schemaPlan(): Promise<ReplicaSchemaPlan> {
         sql: PGLITE_DOCUMENT_STATUS_SQL,
         checksum: await migrationChecksum(PGLITE_DOCUMENT_STATUS_SQL),
         logicalVersion: 7,
+      },
+      {
+        id: "006-document-task-status-projection",
+        sql: PGLITE_DOCUMENT_TASK_STATUS_SQL,
+        checksum: await migrationChecksum(PGLITE_DOCUMENT_TASK_STATUS_SQL),
+        logicalVersion: 8,
       },
     ],
   };

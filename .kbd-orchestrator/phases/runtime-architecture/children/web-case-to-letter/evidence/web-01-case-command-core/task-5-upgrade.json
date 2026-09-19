@@ -1,0 +1,263 @@
+{
+  "result": "Passed",
+  "verification_tier": 1,
+  "install_mode": "upgrade",
+  "observed_at": "2026-09-17T05:38:57.060491+00:00",
+  "scope": "Additive web-01 migration, least-privilege case functions, idempotency, revisions, tenant refusal, and direct-write refusal against disposable PostgreSQL",
+  "prerequisites": [
+    "Existing Docker Compose db service with schema extensions available",
+    "Configured PostgreSQL admin password from container environment",
+    "Pinned Rust toolchain and idle workspace Cargo build directory",
+    "No concurrent database fixtures; a local exclusive lock covers this runner"
+  ],
+  "commands": [
+    "python3 scripts/test-web01-case-migration.py --install-mode upgrade",
+    "cargo run -p aso-web-server -- --migrate-server"
+  ],
+  "environment_contract": {
+    "migration": [
+      "ASO_MIGRATION_DATABASE_URL"
+    ],
+    "test": [
+      "ASO_TEST_DATABASE_URL",
+      "ASO_TEST_ADMIN_DATABASE_URL",
+      "ASO_TEST_OWNER_ROLE",
+      "ASO_TEST_GATE_CONTEXTS",
+      "ASO_TEST_GATE_CASE_ID",
+      "ASO_TEST_FOREIGN_CASE_ID"
+    ],
+    "credentials": "Disposable passwords supplied only through environment or captured SQL stdin"
+  },
+  "checks": {
+    "postgres_port_discovery": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "configured_admin_password_available": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "populated_upgrade_fixture_created": {
+      "result": "Passed"
+    },
+    "legacy_stale_and_valid_summary_fixtures_created": {
+      "result": "Passed"
+    },
+    "initial_server_migration": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "original_case_ids_and_contents_survive_upgrade": {
+      "result": "Passed"
+    },
+    "upgrade_clears_stale_empty_gate_summary": {
+      "result": "Passed"
+    },
+    "upgrade_recomputes_stale_complete_gate_summary": {
+      "result": "Passed"
+    },
+    "upgrade_preserves_correct_complete_case_including_updated_at": {
+      "result": "Passed"
+    },
+    "upgrade_preserves_legacy_affirmation_records": {
+      "result": "Passed"
+    },
+    "unchanged_migration_rerun": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "migration_ledger_and_populated_cases_unchanged": {
+      "result": "Passed"
+    },
+    "unchanged_rerun_preserves_repaired_and_valid_upgrade_cases": {
+      "result": "Passed"
+    },
+    "durable_gate_migration_recorded": {
+      "result": "Passed"
+    },
+    "checksum_mismatch_refused": {
+      "result": "Passed",
+      "return_code": 1,
+      "checksum_mismatch_reported": true
+    },
+    "checksum_refusal_preserves_populated_cases": {
+      "result": "Passed"
+    },
+    "restored_checksum_rerun": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "checksum_restoration_preserves_ledger_and_cases": {
+      "result": "Passed"
+    },
+    "checksum_probe_preserves_upgrade_cases_and_affirmations": {
+      "result": "Passed"
+    },
+    "synthetic_case_fixture_seeded": {
+      "result": "Passed"
+    },
+    "create_commits_one_intake_case_with_revisions": {
+      "result": "Passed"
+    },
+    "lost_create_response_reconciles_exact_result": {
+      "result": "Passed"
+    },
+    "same_command_different_payload_is_explicit_conflict": {
+      "result": "Passed",
+      "expected_sqlstate": "23505"
+    },
+    "update_advances_case_and_input_revisions": {
+      "result": "Passed"
+    },
+    "stale_case_revision_is_refused": {
+      "result": "Passed",
+      "expected_sqlstate": "40001"
+    },
+    "valid_transition_advances_status_and_row_revisions": {
+      "result": "Passed"
+    },
+    "invalid_transition_is_refused": {
+      "result": "Passed",
+      "expected_sqlstate": "23514"
+    },
+    "foreign_practice_case_is_refused": {
+      "result": "Passed",
+      "expected_sqlstate": "42501"
+    },
+    "executor_direct_case_insert_is_refused": {
+      "result": "Passed",
+      "expected_sqlstate": "42501"
+    },
+    "executor_direct_case_update_is_refused": {
+      "result": "Passed",
+      "expected_sqlstate": "42501"
+    },
+    "executor_cannot_read_local_command_ledger": {
+      "result": "Passed",
+      "expected_sqlstate": "42501"
+    },
+    "known_anchor_lookups_reconcile_all_committed_results": {
+      "result": "Passed"
+    },
+    "least_privilege_and_atomic_audit_contract": {
+      "result": "Passed",
+      "observed": {
+        "audits": 3,
+        "commands": 3,
+        "ownerMembers": 0,
+        "executorCaseWrite": false,
+        "executorLedgerRead": false
+      }
+    },
+    "migration_recorded_and_existing_case_defaults_preserved": {
+      "result": "Passed"
+    }
+  },
+  "processes": [
+    {
+      "label": "initial_server_migration",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 0,
+      "actual_result_output": []
+    },
+    {
+      "label": "unchanged_server_migration_rerun",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 0,
+      "actual_result_output": []
+    },
+    {
+      "label": "checksum_mismatch_refusal",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 1,
+      "actual_result_output": [],
+      "checksum_mismatch_reported": true
+    },
+    {
+      "label": "restored_checksum_migration_rerun",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 0,
+      "actual_result_output": []
+    }
+  ],
+  "cleanup": {
+    "disposable_database_deleted": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "aso_session_reader": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_gate_executor": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_gate_owner": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_case_executor": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    },
+    "aso_case_owner": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    },
+    "aso_authority_event_reader": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    }
+  },
+  "unverified": [
+    "Rust AppServices, mounted HTTP routes, React UI, browser flow, Tauri, and mobile are outside web-01 task 1.2."
+  ],
+  "source_sha256": {
+    "migrations/server/2026090601_durable_gate.sql": "b3da2e91629534c011c6186eeb658fc2286896d2d491ca94dcda03a2f009a899",
+    "crates/aso-web-server/src/adapters/gate.rs": "748445b0d701c6e1fab52cad04efe30afdb7fb03de149e35ea6437330110b001",
+    "crates/aso-web-server/src/adapters/gate/transaction_tests.rs": "9690fe42a3cda9fc797b1bd6cfbd844155581d64227f75fc8ecd5a65e4196695",
+    "crates/aso-host/src/affirmation.rs": "adc28699815e2e24016b99742820eb3731a3ee31d2c0750721866b2a5fe679bb",
+    "crates/aso-host/src/lib.rs": "6b61392b318adcfbe026099a8f983243b28e3a975ead2f6a0fbe285014ab3cf7",
+    "docs/design/schema/schema.sql": "0659af835b02cd91b697f5c29f5ad6ff1e34ecad92dcf7a7d41eb14391ea9679",
+    "docker/bootstrap/25-session-authority.sql": "fae999acbbaf98ca6b3ae107670ea25511426a233fa4ced5e72556c3fbc8c21b",
+    "scripts/test-gate-transaction.py": "11a7ae2e1f7d1dfbfb4e9bc7fae1eef4331e7f8f5644cadde0e6ff08387b7c53",
+    "migrations/server/2026090617_durable_case_commands.sql": "4889de7d0162d6781e9c63589b5fcb36b436a5d87e2e349ae5d885820b2ad085",
+    "crates/aso-host/src/case_management.rs": "bad0aa3a217bdb7adcecd45bc0b4a63787d5b5b896c286c001af768e4fd1a038",
+    "crates/aso-host/src/ports/mod.rs": "4646959ee0e71d6eb42027839a7994d6bb522a54f2d6a6e7d53e1c71caadd5d4",
+    "crates/aso-web-server/src/adapters/gate/case_transaction_tests.rs": "bbafd23b9e1d8cb27a1648de9ac6e05f928dc19202ab8a0ba695e25f67d01b20",
+    "crates/aso-web-server/src/migrations.rs": "6d347f60ed0190eb54e9f52ad25c2586c845deb7968250f5631668f8ae792630",
+    "scripts/test-web01-case-migration.py": "9019455ad2d4d3425a94a3afeecd2db5a30e63657679b99684fc881217d165f4"
+  },
+  "completed_at": "2026-09-17T05:39:28.059276+00:00"
+}

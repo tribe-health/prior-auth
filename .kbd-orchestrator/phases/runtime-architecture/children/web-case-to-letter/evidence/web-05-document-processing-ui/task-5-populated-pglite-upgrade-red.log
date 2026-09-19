@@ -1,0 +1,38 @@
+(node:7345) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+ RUN  v3.2.7 /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web
+
+ ❯ src/shared/sync/pglite-schema.test.ts (7 tests | 1 failed) 1636ms
+   ✓ PGlite schema is a deliberate subset > creates exactly the seven declared tables 7ms
+   ✓ PGlite schema is a deliberate subset > carries no undeclared patient, source-text, or embedding table 2ms
+   ✓ PGlite schema is a deliberate subset > omits every column recorded in OMITTED_COLUMNS 19ms
+   ✓ PGlite schema is a deliberate subset > every omission carries a stated reason 0ms
+   ✓ PGlite schema is a deliberate subset > never stores verbatim chart text — the two columns that would 0ms
+   ✓ PGlite schema is a deliberate subset > keeps the three evidence states as a foreign key, not a free string 0ms
+   × PGlite schema upgrades > cuts a populated revision-5 replica over before adding required case columns 651ms
+     → column "case_number" of relation "cases" contains null values
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/shared/sync/pglite-schema.test.ts > PGlite schema upgrades > cuts a populated revision-5 replica over before adding required case columns
+error: column "case_number" of relation "cases" contains null values
+ ❯ pe.Ue node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pg-protocol/src/parser.ts:442:11
+ ❯ pe.tt node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pg-protocol/src/parser.ts:220:16
+ ❯ pe.parse node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pg-protocol/src/parser.ts:104:21
+ ❯ N.qe node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/src/pglite.ts:753:26
+ ❯ node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/src/pglite.ts:706:14
+ ❯ null.<anonymous> wasm:/wasm/0267bb86:1:5922000
+ ❯ null.<anonymous> wasm:/wasm/0267bb86:1:2616044
+ ❯ null.<anonymous> wasm:/wasm/0267bb86:1:2648530
+ ❯ null.<anonymous> wasm:/wasm/0267bb86:1:2649134
+ ❯ null.<anonymous> wasm:/wasm/0267bb86:1:5569870
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 6 passed (7)
+   Start at  10:32:31
+   Duration  2.47s (transform 40ms, setup 0ms, collect 53ms, tests 1.64s, environment 571ms, prepare 51ms)
+

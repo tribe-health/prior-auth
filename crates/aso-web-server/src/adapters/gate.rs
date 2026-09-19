@@ -45,6 +45,10 @@ use aso_host::{
     },
     signing::{SignLetterCommand, SignLetterResult, SigningError, SigningTarget},
     source::{DocumentSource, DocumentSourceError, DocumentSourceRequest},
+    submission_workflow::{
+        RecordAcknowledgementCommand, SubmissionPacketSnapshot, SubmissionReceiptView,
+        SubmissionWorkflowError, SubmitPacketCommand,
+    },
 };
 use async_trait::async_trait;
 use chrono::{DateTime, Utc};
@@ -58,10 +62,14 @@ use uuid::Uuid;
 use super::document_store::UnavailableDocumentStore;
 use super::{document_processor::BoundedDocumentProcessor, document_store::DocumentStore};
 
+mod document_generation;
+
+#[derive(Clone)]
 pub struct PgGateRepository {
     pool: PgPool,
     document_store: Arc<dyn DocumentStore>,
     document_processor: Arc<dyn DocumentProcessor>,
+    document_generation: Option<Arc<document_generation::Runtime>>,
 }
 
 #[derive(Deserialize)]
@@ -107,6 +115,14 @@ struct DocumentProcessingClaim {
     storage_key: Option<String>,
     media_type: Option<DocumentMediaType>,
     content_sha256: Option<String>,
+}
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct QueuedDocumentJob {
+    case_id: Uuid,
+    document_id: Uuid,
+    document_set_revision: i64,
 }
 
 // Check effective ownership and writes as well as role flags: a non-superuser
@@ -303,6 +319,38 @@ fn letter_workflow_failure(error: sqlx::Error) -> LetterWorkflowError {
         Some("23505") => LetterWorkflowError::CommandConflict,
         Some("22023" | "22P02" | "23514") => LetterWorkflowError::Invalid,
         _ => LetterWorkflowError::Unavailable,
+    }
+}
+
+fn submission_workflow_failure(error: sqlx::Error) -> SubmissionWorkflowError {
+    match error
+        .as_database_error()
+        .and_then(|value| value.code())
+        .as_deref()
+    {
+        Some("42501") => SubmissionWorkflowError::Denied,
+        Some("P0002") => SubmissionWorkflowError::NotFound,
+        Some("P0007" | "23514") => SubmissionWorkflowError::NotReady,
+        Some("40001") => SubmissionWorkflowError::RevisionConflict,
+        Some("23505") => SubmissionWorkflowError::CommandConflict,
+        Some("22023" | "22P02") => SubmissionWorkflowError::Invalid,
+        _ => SubmissionWorkflowError::Unavailable,
+    }
+}
+
+fn letter_to_submission(error: LetterWorkflowError) -> SubmissionWorkflowError {
+    match error {
+        LetterWorkflowError::Unauthenticated => SubmissionWorkflowError::Unauthenticated,
+        LetterWorkflowError::Denied => SubmissionWorkflowError::Denied,
+        LetterWorkflowError::NotFound => SubmissionWorkflowError::NotFound,
+        LetterWorkflowError::RevisionConflict => SubmissionWorkflowError::RevisionConflict,
+        LetterWorkflowError::CommandConflict => SubmissionWorkflowError::CommandConflict,
+        LetterWorkflowError::GateIncomplete
+        | LetterWorkflowError::EvidenceIncomplete
+        | LetterWorkflowError::QaIncomplete
+        | LetterWorkflowError::CitationIncomplete => SubmissionWorkflowError::NotReady,
+        LetterWorkflowError::Invalid => SubmissionWorkflowError::Invalid,
+        LetterWorkflowError::Unavailable => SubmissionWorkflowError::Unavailable,
     }
 }
 
@@ -651,6 +699,7 @@ impl PgGateRepository {
             pool,
             document_store,
             document_processor: Arc::new(BoundedDocumentProcessor),
+            document_generation: None,
         };
         repository
             .reconcile_expired_document_uploads()
@@ -844,6 +893,24 @@ impl PgGateRepository {
         self.begin_case(context)
             .await
             .map_err(case_to_document_processing)
+    }
+
+    pub(crate) async fn next_queued_document_job(
+        &self,
+        context: &ClinicalContext,
+    ) -> Result<Option<(Uuid, Uuid, i64)>, DocumentProcessingError> {
+        let mut tx = self.begin_document_processing(context).await?;
+        let value: Option<serde_json::Value> =
+            sqlx::query_scalar("SELECT aso.next_document_processing_job()")
+                .fetch_one(&mut *tx)
+                .await
+                .map_err(document_processing_failure)?;
+        tx.commit().await.map_err(document_processing_failure)?;
+        value
+            .map(serde_json::from_value::<QueuedDocumentJob>)
+            .transpose()
+            .map(|job| job.map(|job| (job.case_id, job.document_id, job.document_set_revision)))
+            .map_err(|_| DocumentProcessingError::Unavailable)
     }
 
     async fn fail_document_processing(
@@ -2218,36 +2285,178 @@ impl CriteriaRepository for PgGateRepository {
 
 #[async_trait]
 impl LetterRepository for PgGateRepository {
-    async fn generate_letter(
+    fn document_tasks(&self) -> Option<&dyn aso_host::document_generation::DurableDocumentTasks> {
+        Some(self)
+    }
+
+    async fn read_submission_packet(
         &self,
         context: &ClinicalContext,
         case_id: Uuid,
-        command: &GenerateLetterCommand,
-    ) -> Result<LetterCommandResult, LetterWorkflowError> {
-        let mut tx = self.begin_letter_workflow(context).await?;
-        let purpose = match command.purpose {
-            aso_host::letter_workflow::LetterPurpose::PriorAuthorizationRequest => {
-                "prior_authorization_request"
-            }
-            aso_host::letter_workflow::LetterPurpose::CorrectedResubmission => {
-                "corrected_resubmission"
-            }
-            aso_host::letter_workflow::LetterPurpose::ClinicalAppeal => "clinical_appeal",
-        };
+    ) -> Result<SubmissionPacketSnapshot, SubmissionWorkflowError> {
+        let mut tx = self
+            .begin_letter_workflow(context)
+            .await
+            .map_err(letter_to_submission)?;
+        let value: serde_json::Value = sqlx::query_scalar("SELECT aso.read_submission_packet($1)")
+            .bind(case_id)
+            .fetch_one(&mut *tx)
+            .await
+            .map_err(submission_workflow_failure)?;
+        let result =
+            serde_json::from_value(value).map_err(|_| SubmissionWorkflowError::Unavailable)?;
+        tx.commit().await.map_err(submission_workflow_failure)?;
+        Ok(result)
+    }
+
+    async fn submit_packet(
+        &self,
+        context: &ClinicalContext,
+        case_id: Uuid,
+        command: &SubmitPacketCommand,
+    ) -> Result<SubmissionPacketSnapshot, SubmissionWorkflowError> {
+        let mut tx = self
+            .begin_letter_workflow(context)
+            .await
+            .map_err(letter_to_submission)?;
         let value: serde_json::Value =
-            sqlx::query_scalar("SELECT aso.generate_prior_letter($1,$2,$3,$4,$5,$6)")
+            sqlx::query_scalar("SELECT aso.submit_case_packet($1,$2,$3)")
                 .bind(command.command_id)
                 .bind(case_id)
-                .bind(&command.expected_revisions.resolution_revision)
-                .bind(&command.expected_revisions.criteria_selection_revision)
-                .bind(&command.expected_revisions.evidence_revision)
-                .bind(purpose)
+                .bind(command.expected_letter_revision)
+                .fetch_one(&mut *tx)
+                .await
+                .map_err(submission_workflow_failure)?;
+        let result =
+            serde_json::from_value(value).map_err(|_| SubmissionWorkflowError::Unavailable)?;
+        tx.commit().await.map_err(submission_workflow_failure)?;
+        Ok(result)
+    }
+
+    async fn read_submission_receipt(
+        &self,
+        context: &ClinicalContext,
+        case_id: Uuid,
+    ) -> Result<SubmissionReceiptView, SubmissionWorkflowError> {
+        let mut tx = self
+            .begin_letter_workflow(context)
+            .await
+            .map_err(letter_to_submission)?;
+        let value: serde_json::Value = sqlx::query_scalar("SELECT aso.read_submission_receipt($1)")
+            .bind(case_id)
+            .fetch_one(&mut *tx)
+            .await
+            .map_err(submission_workflow_failure)?;
+        let result =
+            serde_json::from_value(value).map_err(|_| SubmissionWorkflowError::Unavailable)?;
+        tx.commit().await.map_err(submission_workflow_failure)?;
+        Ok(result)
+    }
+
+    async fn record_submission_acknowledgement(
+        &self,
+        context: &ClinicalContext,
+        case_id: Uuid,
+        command: &RecordAcknowledgementCommand,
+    ) -> Result<SubmissionReceiptView, SubmissionWorkflowError> {
+        let mut tx = self
+            .begin_letter_workflow(context)
+            .await
+            .map_err(letter_to_submission)?;
+        let value: serde_json::Value =
+            sqlx::query_scalar("SELECT aso.acknowledge_case_submission($1,$2,$3,$4,$5,$6)")
+                .bind(command.command_id)
+                .bind(case_id)
+                .bind(command.submission_id)
+                .bind(command.payer_reference.trim())
+                .bind(command.acknowledged_at)
+                .bind(command.page_count)
+                .fetch_one(&mut *tx)
+                .await
+                .map_err(submission_workflow_failure)?;
+        let result =
+            serde_json::from_value(value).map_err(|_| SubmissionWorkflowError::Unavailable)?;
+        tx.commit().await.map_err(submission_workflow_failure)?;
+        Ok(result)
+    }
+
+    async fn record_determination(
+        &self,
+        context: &ClinicalContext,
+        case_id: Uuid,
+        command: &aso_host::letter_workflow::RecordDeterminationCommand,
+    ) -> Result<aso_host::letter_workflow::DeterminationSnapshot, LetterWorkflowError> {
+        let mut tx = self.begin_letter_workflow(context).await?;
+        let value: serde_json::Value =
+            sqlx::query_scalar("SELECT aso.record_denied_determination($1,$2,$3,$4,$5,$6,$7)")
+                .bind(command.command_id)
+                .bind(case_id)
+                .bind(command.document_id)
+                .bind(command.decided_on)
+                .bind(&command.reason_code)
+                .bind(command.reason_text.trim())
+                .bind(command.appeal_deadline)
                 .fetch_one(&mut *tx)
                 .await
                 .map_err(letter_workflow_failure)?;
         let result = serde_json::from_value(value).map_err(|_| LetterWorkflowError::Unavailable)?;
         tx.commit().await.map_err(letter_workflow_failure)?;
         Ok(result)
+    }
+
+    async fn confirm_response_mode(
+        &self,
+        context: &ClinicalContext,
+        case_id: Uuid,
+        command: &aso_host::letter_workflow::ConfirmResponseModeCommand,
+    ) -> Result<aso_host::letter_workflow::DeterminationResponseModeResult, LetterWorkflowError>
+    {
+        let mut tx = self.begin_letter_workflow(context).await?;
+        let mode = match command.mode {
+            aso_host::letter_workflow::DenialResponseMode::CorrectedResubmission => {
+                "corrected_resubmission"
+            }
+            aso_host::letter_workflow::DenialResponseMode::ClinicalAppeal => "clinical_appeal",
+        };
+        let value: serde_json::Value =
+            sqlx::query_scalar("SELECT aso.confirm_determination_response_mode($1,$2,$3,$4)")
+                .bind(case_id)
+                .bind(command.command_id)
+                .bind(command.expected_determination_id)
+                .bind(mode)
+                .fetch_one(&mut *tx)
+                .await
+                .map_err(letter_workflow_failure)?;
+        let result = serde_json::from_value(value).map_err(|_| LetterWorkflowError::Unavailable)?;
+        tx.commit().await.map_err(letter_workflow_failure)?;
+        Ok(result)
+    }
+
+    async fn read_latest_determination(
+        &self,
+        context: &ClinicalContext,
+        case_id: Uuid,
+    ) -> Result<aso_host::letter_workflow::DeterminationSnapshot, LetterWorkflowError> {
+        let mut tx = self.begin_letter_workflow(context).await?;
+        let value: serde_json::Value =
+            sqlx::query_scalar("SELECT aso.read_latest_denied_determination($1)")
+                .bind(case_id)
+                .fetch_one(&mut *tx)
+                .await
+                .map_err(letter_workflow_failure)?;
+        let result = serde_json::from_value(value).map_err(|_| LetterWorkflowError::Unavailable)?;
+        tx.commit().await.map_err(letter_workflow_failure)?;
+        Ok(result)
+    }
+
+    async fn generate_letter(
+        &self,
+        _context: &ClinicalContext,
+        _case_id: Uuid,
+        _command: &GenerateLetterCommand,
+    ) -> Result<LetterCommandResult, LetterWorkflowError> {
+        // Generation requires the durable task's live session authorization.
+        Err(LetterWorkflowError::Unavailable)
     }
 
     async fn read_letter(

@@ -1,0 +1,31 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "crates/aso-web-server/src/adapters/gate.rs",
+      "line": 249,
+      "claim": "The existing production `PgGateRepository::connect` constructor is made test-only without any shown production caller migration, risking a non-test build break.",
+      "evidence": "The hunk changes `impl PgGateRepository { pub async fn connect(url: &str) -> Result<Self, GateError> { ... } }` to `#[cfg(test)] pub async fn connect(...)`, and no diff updates production call sites to use the new `connect_with_document_store`; blocking constraint `build-passes` requires `cargo build --workspace` to compile.",
+      "suggested_fix": "Keep a production `connect(url)` constructor that supplies the default document store, or update all non-test callers in the same diff to call `connect_with_document_store` with a concrete store."
+    },
+    {
+      "severity": "WARNING",
+      "file": "crates/aso-server-axum/src/routes/cases.rs",
+      "line": 33,
+      "claim": "The case router removes the existing evidence-count endpoint that serialized `met`, `gap`, and `void` distinctly.",
+      "evidence": "The deleted hunk removes `.route(\"/api/cases/{case_id}/evidence\", get(evidence_counts))` and `EvidenceCountsDto { met, gap, void }`; blocking constraint `three-evidence-states` says evidence state must preserve met, gap, and void as distinct values.",
+      "suggested_fix": "Retain this route or move an equivalent authenticated route in the same change that still returns distinct `met`, `gap`, and `void` fields."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

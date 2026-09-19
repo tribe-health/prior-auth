@@ -1,0 +1,22 @@
+{
+  "mode": "diff",
+  "verdict": "PASS",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [],
+  "checked_classes": [
+    "Spec violations \u2014 checked administering-entity resolver contract, five resolution states, untrusted-selection refusal, tenant/capability refusal, mounted HTTP route behavior, downstream blocking, and task-boundary note; no packet-backed violation found within the current task scope.",
+    "Correctness \u2014 checked Rust service/route validation, command idempotency shape, resolution-state serialization, SQL resolver state classification/invalidation, and web hook reconciliation flow; no concrete defect provable from the diff and supplied evidence.",
+    "Regressions \u2014 checked exposed host modules, route additions, migration ordering, and case-detail integration surfaces visible in the packet; no concrete dependency break proven from the provided tree/diff.",
+    "Security \u2014 checked caller-supplied resolver payload rejection, practice/capability checks, clinical-authority boundary, local command receipt handling, and hardcoded-secret pattern; no packet-backed breach found.",
+    "Constraint breaches \u2014 checked no console.log, no explicit ': any' in changed web TypeScript, no query-cache dependency, no generated theme edits, and shell-neutral aso-host; no breach found in the diff.",
+    "Silent failure \u2014 checked error-to-status mappings, no-store headers, command lookup/reconciliation paths, and parked-state blocking behavior; no concrete silent failure proven from the packet."
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

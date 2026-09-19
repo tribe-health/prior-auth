@@ -1,0 +1,11 @@
+Passed: 3 standalone positive fixture families and 4 isolated negative controls
+Passed: 96 command UUIDs are disjoint across positive fixtures
+Passed: every lifecycle transition has an owning command with actor, capability, lookup anchor, and named revision tokens
+Passed: every positive command has directly dispatchable relationships and continuous revision ownership
+Passed: initial and response submissions freeze attempt, ordered manifest, page count, and receipt custody evidence
+Passed: clinical appeal executes a post-classification four-part response gate
+Passed: every expected letter claim has exact span/version/date/hash provenance and human support review
+Passed: every negative control has disjoint loadable state and reset semantics
+Passed: administering-entity fixtures classify valid, missing, ambiguous, conflicting, and expired rules deterministically
+Passed: manifests contain explicit synthetic labels and reserved .invalid contacts
+Passed: manifest lock hashes match

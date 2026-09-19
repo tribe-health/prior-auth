@@ -1,0 +1,10 @@
+{
+  "target": "web-01-case-command-core task 3.1 completion artifact",
+  "reviewer": "artifact-critic",
+  "result": "PASS",
+  "findingCount": 0,
+  "manifestFileCount": 34,
+  "manifestSha256": "ab2fafca2320cbe5ac63ab7783f99a803615f780e0596cef4cb3d7f82ebd4454",
+  "validationOutputSha256": "c4977106354b2e7fdcfb3a3e30d092d08e0918f88cf05a7497dd84a7797b46a6",
+  "summary": "All 34 manifest hashes match the current workspace. The repaired contract, completion evidence, mounted production caller chain, minimal receipt boundary, tenant and capability checks, and remaining-work scope support marking task 3.1 complete."
+}

@@ -1,0 +1,9 @@
+
+running 1 test
+test adapters::document_store::tests::verified_write_is_idempotent_and_refuses_tampered_existing_object ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 28 filtered out; finished in 0.02s
+
+   Compiling aso-web-server v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 15.63s
+     Running unittests src/main.rs (/Volumes/my-passport/cargo-build/02/70d32e977a4fbf/debug/deps/aso_web_server-e7a6905ccf4c4021)

@@ -1,0 +1,10 @@
+
+ RUN  v3.2.7 /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web
+
+ ✓ src/features/administering-entity/hooks/use-administering-entity-resolution.test.tsx (12 tests) 1060ms
+
+ Test Files  1 passed (1)
+      Tests  12 passed (12)
+   Start at  09:59:48
+   Duration  2.57s (transform 112ms, setup 0ms, collect 215ms, tests 1.06s, environment 743ms, prepare 105ms)
+

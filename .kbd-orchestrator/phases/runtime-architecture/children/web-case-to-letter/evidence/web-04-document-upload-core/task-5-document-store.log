@@ -1,0 +1,11 @@
+
+running 4 tests
+test adapters::document_store::tests::refuses_object_over_delivery_limit ... ok
+test adapters::document_store::tests::reads_relative_object_and_refuses_path_escape ... ok
+test adapters::document_store::tests::verified_delete_removes_only_matching_object ... ok
+test adapters::document_store::tests::verified_write_is_idempotent_and_refuses_tampered_existing_object ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 25 filtered out; finished in 0.04s
+
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.30s
+     Running unittests src/main.rs (/Volumes/my-passport/cargo-build/02/70d32e977a4fbf/debug/deps/aso_web_server-e7a6905ccf4c4021)

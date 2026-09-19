@@ -155,6 +155,22 @@ async function exchange<T>(path: string, init?: RequestInit): Promise<HttpExchan
 }
 
 export const httpClient = {
+  stream: async (path: string, init: RequestInit): Promise<Response> => {
+    const response = await fetch(`${BASE}${path}`, {
+      ...init, credentials: 'include', cache: 'no-store',
+      headers: { 'content-type': 'application/json', accept: 'text/event-stream', ...init.headers },
+    });
+    if (!response.ok) {
+      const body = await response.json().catch(() => ({})) as { error?: string; code?: string };
+      const code = body.error ?? body.code ?? response.statusText;
+      observeAccessFailure(response.status, code);
+      throw new ApiError(response.status, code, code);
+    }
+    if (!response.headers.get('content-type')?.startsWith('text/event-stream') || !response.body) {
+      throw new ApiError(502, 'The document task stream is unavailable.', 'invalid_task_stream');
+    }
+    return response;
+  },
   get: <T>(path: string) => request<T>(path),
   getBlob: (path: string, init?: RequestInit) => requestBlob(path, init),
   post: <T>(path: string, body: unknown) =>

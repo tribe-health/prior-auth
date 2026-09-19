@@ -38,6 +38,93 @@ function transport(fetchImpl: typeof fetch) {
 }
 
 describe("createFrfShapeTransport", () => {
+  it("retries network and 502 failures with the same authorized cursor before publishing", async () => {
+    vi.useFakeTimers();
+    try {
+      const fetchImpl = vi.fn()
+        .mockResolvedValueOnce(new Response("private upstream detail", { status: 502 }))
+        .mockRejectedValueOnce(new TypeError("Failed to fetch"))
+        .mockResolvedValueOnce(shapeResponse([
+          { headers: { operation: "update" }, value: { id: "c1", status: "closed" } },
+        ]));
+      const pending = transport(fetchImpl).fetch({
+        generation: 1,
+        shapes: { cases: { handle: "existing-handle", offset: "4" } },
+      });
+      await vi.advanceTimersByTimeAsync(750);
+      expect((await pending)?.tables[0]?.rows).toEqual([{ id: "c1", status: "closed" }]);
+      expect(fetchImpl).toHaveBeenCalledTimes(3);
+      expect(new Set(fetchImpl.mock.calls.map(([url]) => url)).size).toBe(1);
+      for (const [url, init] of fetchImpl.mock.calls) {
+        expect(new URL(url).searchParams.get("offset")).toBe("4");
+        expect(init).toMatchObject({ method: "GET", credentials: "include" });
+        expect(init.headers).not.toHaveProperty("authorization");
+      }
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it.each(["network", "502"])("closes the pass after three %s failures", async (failure) => {
+    vi.useFakeTimers();
+    try {
+      const fetchImpl = vi.fn(async () => {
+        if (failure === "network") throw new TypeError("private upstream URL");
+        return new Response("private upstream detail", { status: 502 });
+      });
+      const rejected = expect(transport(fetchImpl).fetch(null)).rejects.toThrow(
+        failure === "network" ? "shape cases connection failed" : "shape cases failed: 502",
+      );
+      await vi.advanceTimersByTimeAsync(750);
+      await rejected;
+      expect(fetchImpl).toHaveBeenCalledTimes(3);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it("cancels a retry delay without sending another request", async () => {
+    vi.useFakeTimers();
+    try {
+      const controller = new AbortController();
+      const fetchImpl = vi.fn(async () => new Response(null, { status: 502 }));
+      const rejected = expect(transport(fetchImpl).fetch(null, controller.signal)).rejects.toMatchObject({
+        name: "AbortError",
+      });
+      await vi.advanceTimersByTimeAsync(0);
+      controller.abort();
+      await rejected;
+      await vi.advanceTimersByTimeAsync(1000);
+      expect(fetchImpl).toHaveBeenCalledTimes(1);
+      expect(vi.getTimerCount()).toBe(0);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it.each([204, 400, 401, 403, 500, 503, 504])("does not retry status %i", async (status) => {
+    const fetchImpl = vi.fn(async () => new Response(null, { status }));
+    await expect(transport(fetchImpl).fetch(null)).rejects.toBeInstanceOf(Error);
+    expect(fetchImpl).toHaveBeenCalledTimes(1);
+  });
+
+  it("stops immediately when a retry revalidates a revoked grant", async () => {
+    vi.useFakeTimers();
+    try {
+      const fetchImpl = vi.fn()
+        .mockResolvedValueOnce(new Response(null, { status: 502 }))
+        .mockResolvedValueOnce(new Response(null, { status: 403 }));
+      const rejected = expect(transport(fetchImpl).fetch(null)).rejects.toMatchObject({
+        name: "ShapeAuthorizationError", status: 403,
+      });
+      await vi.advanceTimersByTimeAsync(750);
+      await rejected;
+      expect(fetchImpl).toHaveBeenCalledTimes(2);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
   it("sends only the shape id on a cold start", async () => {
     // No table, no columns, no where. The catalog rejects all three.
     const fetchImpl = vi.fn(async () => shapeResponse([], upToDate));
@@ -296,6 +383,7 @@ describe("createFrfShapeTransport", () => {
     await expect(
       transport(fetchImpl as unknown as typeof fetch).fetch(null),
     ).rejects.toBeInstanceOf(SyntaxError);
+    expect(fetchImpl).toHaveBeenCalledTimes(1);
   });
 
   it("rejects successful non-array protocol payloads", async () => {

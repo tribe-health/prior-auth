@@ -1,0 +1,11 @@
+{
+  "result": "Passed",
+  "guard": "existing object SHA-256 mismatch refusal",
+  "sabotage": "removed digest comparison from verified_existing",
+  "red_return_code": 101,
+  "red_detected_expected_failure": true,
+  "restored_return_code": 0,
+  "original_sha256": "72b3740632bb948e46db4c709e6aae43476a3874d3c6d07236800448cada8533",
+  "restored_sha256": "72b3740632bb948e46db4c709e6aae43476a3874d3c6d07236800448cada8533",
+  "command": "cargo test -p aso-web-server adapters::document_store::tests::verified_write_is_idempotent_and_refuses_tampered_existing_object -- --exact --nocapture"
+}

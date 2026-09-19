@@ -1,0 +1,42 @@
+
+ RUN  v3.2.7 /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web
+
+ ❯ src/features/administering-entity/hooks/use-administering-entity-resolution.test.tsx (3 tests | 1 failed) 233ms
+   ✓ administering-entity resolution view model > reconstructs the durable resolution after a page remount 116ms
+   ✓ administering-entity resolution view model > reads the current case-input revision before resolving and publishes committed output 56ms
+   × administering-entity resolution view model > retains the committed command ID when the post-commit reload fails 60ms
+     → expected { status: 'error', …(3) } to match object { status: 'uncertain', …(1) }
+(2 matching properties omitted from actual)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/administering-entity/hooks/use-administering-entity-resolution.test.tsx > administering-entity resolution view model > retains the committed command ID when the post-commit reload fails
+AssertionError: expected { status: 'error', …(3) } to match object { status: 'uncertain', …(1) }
+(2 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "pendingCommandId": "command-1",
+-   "status": "uncertain",
++   "pendingCommandId": null,
++   "status": "error",
+  }
+
+ ❯ src/features/administering-entity/hooks/use-administering-entity-resolution.test.tsx:99:38
+     97|     await act(async () => { await hook.result.current.resolve(); });
+     98| 
+     99|     expect(hook.result.current.view).toMatchObject({
+       |                                      ^
+    100|       status: 'uncertain',
+    101|       pendingCommandId: 'command-1',
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 passed (3)
+   Start at  05:34:38
+   Duration  1.50s (transform 82ms, setup 0ms, collect 195ms, tests 233ms, environment 683ms, prepare 128ms)
+

@@ -1,0 +1,63 @@
+{
+  "review": "web-03-administering-entity-resolution-final102-independent-critic",
+  "artifact_path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/.refiner/artifacts/web-03-administering-entity-resolution",
+  "manifest_sha256_expected": "ef1dc50a56cd02e168de9625f607fcc4c8d9b31d421210bc811208c803a47359",
+  "manifest_sha256_observed": "ef1dc50a56cd02e168de9625f607fcc4c8d9b31d421210bc811208c803a47359",
+  "source_snapshot_verification": {
+    "entries": 102,
+    "current_source_hash_mismatches": 0,
+    "missing_snapshots": 0,
+    "snapshot_hash_mismatches": 0,
+    "artifact_manifest_files": 105,
+    "artifact_manifest_missing_entries": 0,
+    "artifact_manifest_unexpected_entries": 0
+  },
+  "verdict": "BLOCK",
+  "counts": {
+    "critical": 0,
+    "major": 1,
+    "minor": 0,
+    "total": 1
+  },
+  "findings": [
+    {
+      "id": "WEB03-FINAL102-001",
+      "severity": "major",
+      "title": "Mounted incomplete-input response violates the frozen HTTP and browser behavior contract",
+      "locations": [
+        {
+          "path": "dist/crates/aso-server-axum/src/routes/administering_entity.rs",
+          "line": 89
+        },
+        {
+          "path": "dist/crates/aso-server-axum/src/routes/cases/tests.rs",
+          "line": 745
+        },
+        {
+          "path": "dist/web/src/features/administering-entity/hooks/use-administering-entity-resolution.ts",
+          "line": 38
+        },
+        {
+          "path": "dist/docs/architecture/web-case-to-letter-contract.md",
+          "line": 360
+        }
+      ],
+      "observed": "The mounted resolution route maps ResolutionError::InputsIncomplete to HTTP 409, and its route and hook tests explicitly expect 409. The browser substitutes 'Add the member ID, plan, procedure, and service date before resolving coverage.' and only displays it as an alert.",
+      "required": "The frozen contract assigns case_inputs_incomplete to HTTP 422 with the browser copy 'Complete the member, plan, procedure, and service date before continuing.' and requires focusing the first missing field.",
+      "impact": "The product's typed HTTP behavior and recovery tests certify a response that contradicts the frozen cross-change contract. Clients that distinguish conflict from validation failure receive the wrong class, and the mounted browser does not perform the required corrective action. The retained focused evidence therefore cannot support the claimed contract parity until the route, tests, and browser behavior are aligned with the frozen row or the frozen contract is changed through its recorded decision process.",
+      "recommendation": "Return 422 for case_inputs_incomplete, assert 422 in the mounted route and hook tests, use the frozen message, and route or focus the user on the first missing intake field. If the intended behavior is 409 instead, update the frozen contract only through its required architecture-decision and dependent-change analysis process."
+    }
+  ],
+  "reviewed_dimensions": {
+    "correctness": "blocked by WEB03-FINAL102-001",
+    "authority": "no additional finding",
+    "concurrency": "no additional finding",
+    "half_open_validity": "no additional finding",
+    "future_disjoint_expired_semantics": "no additional finding",
+    "neutral_authoritative_and_ui_copy": "blocked by WEB03-FINAL102-001 for the frozen incomplete-input copy; expired-path copy is neutral",
+    "plan_and_enrollment_ended_proof": "retained fresh and upgrade evidence contains both plan-ended-first and enrollment-ended-first passing probes",
+    "mounted_request_chain": "present through CaseDetail, typed HTTP client, Axum router, AppServices, restricted PostgreSQL adapter, and durable command function; response contract mismatch remains",
+    "evidence_counts_and_truthfulness": "102 source entries and snapshots verified; 105 artifact manifest files reconcile as 102 snapshots plus review.md, source-manifest.sha256, and validate.py; retained focused command and test counts reconcile",
+    "web17_claim_boundary": "preserved; complete actual-browser and case-to-letter certification remains assigned to Web-17"
+  }
+}

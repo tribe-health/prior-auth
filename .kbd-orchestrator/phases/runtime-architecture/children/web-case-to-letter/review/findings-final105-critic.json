@@ -1,0 +1,79 @@
+{
+  "reviewer": "artifact-critic-final105",
+  "role": "fresh-context artifact critic",
+  "digest": "3a42dd3f4c9232393c1b31b39e87be10f88f2ee78d4a3841d56829986feb2c4d",
+  "verdict": "BLOCK",
+  "counts": {
+    "critical": 0,
+    "major": 1,
+    "minor": 0
+  },
+  "findings": [
+    {
+      "severity": "major",
+      "title": "The frozen artifact does not contain the production transport or materializer that enforces the case-summary boundary",
+      "evidence": [
+        "dist/source-manifest.sha256 entries 125-128 freeze the PGlite materialization test, Electric allowlist, transport boundary test, and replica wiring, but do not freeze web/src/shared/sync/frf-shape-transport.ts, web/src/shared/sync/chunk-writer.ts, or web/src/shared/sync/pglite-schema.ts. The two tests import those omitted production files.",
+        "dist/web/src/shared/sync/protected-replica-boundaries.integration.test.ts:63-87 sends member_id and local_embedding through the transport/writer path, but does not send procedure_code or plan_key.",
+        "dist/web/src/shared/sync/case-summary-materialization.test.ts:29-56 sends member_id and procedure_code to PGlite, but does not send plan_key.",
+        "dist/web/src/features/case-queue/hooks/use-case-projection.test.ts:25-27 and 82-89 does cover member_id, procedure_code, and plan_key at the PEM selector, and dist/web/src/shared/sync/electric-shapes.ts:72-76 omits all three from the declared case allowlist. Those sources establish the selector and declaration, but they do not establish that the omitted production transport and writer honor the allowlist.",
+        "dist/validate.py:154-155 marks the combined Electric/PGlite/PEM claim Passed by checking static strings and the retained 52-test log. It neither requires the production transport/writer/schema snapshots nor requires plan_key at PGlite or procedure_code and plan_key at transport."
+      ],
+      "impact": "The focused result claims that over-wide rows cannot carry member, procedure, or plan values through Electric transport or PGlite materialization. The exact frozen source set cannot reproduce or inspect that enforcement, and the canaries do not exercise all three fields at those two boundaries. A later change in an omitted implementation could leave this artifact and validator green while widening the protected case summary.",
+      "required_correction": "Freeze the production frf-shape-transport, chunk-writer, and PGlite schema sources in the manifest. Make the transport and PGlite over-wide-row controls inject member_id, procedure_code, and plan_key together and assert that none reaches the SQL statement, stored row, or PEM entity. Update validate.py to require those production snapshots and all three canaries before passing narrow-case-summary-boundary, then regenerate the exact manifest and independent review."
+    }
+  ],
+  "checks_performed": [
+    {
+      "check": "manifest digest",
+      "result": "Passed",
+      "detail": "sha256sum of dist/source-manifest.sha256 was exactly 3a42dd3f4c9232393c1b31b39e87be10f88f2ee78d4a3841d56829986feb2c4d."
+    },
+    {
+      "check": "manifest entries",
+      "result": "Passed",
+      "detail": "The manifest contained exactly 133 well-formed entries and sha256sum -c reported every frozen snapshot OK."
+    },
+    {
+      "check": "validator execution",
+      "result": "Passed with an unsound focused predicate",
+      "detail": "dist/validate.py executed against the frozen artifact with its output write suppressed and returned Passed for all 17 checks. The narrow-case-summary-boundary predicate is insufficient for the major finding above."
+    },
+    {
+      "check": "production browser route composition and recovery",
+      "result": "Passed",
+      "detail": "The frozen app route table maps /cases/:caseId to case-detail-route and /cases/:caseId/intake to intake-checklist-route. CaseDetail sends the exact focus and notice query. Intake preserves the exact guidance, invokes the full-record useCaseDetail path, derives the first missing input from detail.draft, and the routed test focuses Plan from that full record."
+    },
+    {
+      "check": "verified-practice full-record read and mounted Axum refusals",
+      "result": "Passed",
+      "detail": "The frozen useCaseDetail hook passes the captured verified practice to caseApi.read. The mounted Axum test directly returns 403 for missing case:read, a foreign practice query, and an authorized-practice request whose repository target returns Denied."
+    },
+    {
+      "check": "server-authoritative selection and temporal states",
+      "result": "Passed",
+      "detail": "The frozen mutation DTO accepts only commandId and expectedCaseInputRevision, denies unknown fields, and the resolver sources entity, path, validity, and versions from server data. The five states, non-empty validity intersection, future and disjoint historical classification, and neutral expired-path copy are supported by frozen SQL, service probes, and retained red/restore evidence."
+    },
+    {
+      "check": "reconciliation and invalidation",
+      "result": "Passed",
+      "detail": "The frozen hook persists command identity and expected revision, performs exact lookup before current-state acceptance, retries the same command after a racing 404, clears terminal absence, and treats a post-receipt current-row 404 as authoritative invalidation. Frozen SQL invalidates selected paths for authoritative entity, plan, enrollment, rule, and source changes."
+    },
+    {
+      "check": "tenant and capability controls",
+      "result": "Passed",
+      "detail": "Frozen Axum, AppServices, adapter, SQL, and mounted tests support verified practice, capability, principal, expiry, and target refusal across the reviewed administering-entity boundary."
+    },
+    {
+      "check": "no query cache and browser-only scope",
+      "result": "Passed",
+      "detail": "The reviewed feature uses scoped Zustand state and contains no TanStack Query, SWR, or Apollo client import. No manifest path enters desktop or mobile."
+    },
+    {
+      "check": "Web-17 claim boundary",
+      "result": "Passed",
+      "detail": "The frozen design, evidence, review, and result consistently defer complete actual-browser and full case-to-letter certification to Web-17."
+    }
+  ],
+  "rationale": "The repaired route-composition and authorized full-record recovery claims are supported by the exact frozen sources, and the mounted refusal test covers the requested negative cases. The artifact remains blocked because its other emphasized claim depends on production transport and PGlite materialization implementations that are absent from the 133-file frozen set, while the retained canaries and validator do not cover all three prohibited fields at those boundaries. Logs from a prior run cannot make an omitted implementation inspectable or immutable."
+}

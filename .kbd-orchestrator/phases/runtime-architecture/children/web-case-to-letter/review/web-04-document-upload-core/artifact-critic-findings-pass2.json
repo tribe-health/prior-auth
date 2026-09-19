@@ -1,0 +1,63 @@
+{
+  "verdict": "PASS",
+  "counts": {
+    "critical": 0,
+    "major": 0,
+    "minor": 0
+  },
+  "reviewed_digest": {
+    "algorithm": "sha256",
+    "source_map": "1ad6dd3b8f8d9da46fc9280ca0ada910934659cc0a9663c7f0c5e3f56740ed6f",
+    "entries": 66,
+    "current_mismatches": 0,
+    "snapshot_mismatches": 0
+  },
+  "checks": [
+    {
+      "id": "manifest-and-hash-closure",
+      "result": "Passed",
+      "detail": "The manifest, frozen dist tree, and source hash map contain the same 66 paths. Every current source and every frozen snapshot independently matches source_sha256.json."
+    },
+    {
+      "id": "isolated-validator-rerun",
+      "result": "Passed",
+      "detail": "validate.py main() was rerun against a temporary artifact copy, returned 0, and reported all 11 checks Passed without modifying the frozen artifact."
+    },
+    {
+      "id": "post-publication-cleanup-and-reconciliation",
+      "result": "Passed",
+      "detail": "The final database transaction is acquired before object publication; write and finalize failures roll back and remove the exact digest-matching object and reservation; uncertain commits perform receipt lookup before cleanup; expired reservations use bounded claim/delete/acknowledge reconciliation at repository startup and before uploads. Fresh and populated-upgrade service receipts exercise cleanup, retry, and expired-object reconciliation."
+    },
+    {
+      "id": "authoritative-media-types",
+      "result": "Passed",
+      "detail": "The source grant now returns documents.media_type, and DocumentSource uses it for extensionless Web-04 objects while retaining suffix inference only for legacy null media types. Integration evidence reopens uploaded PDF and UTF-8 text as application/pdf and text/plain."
+    },
+    {
+      "id": "tenant-authority-and-least-privilege",
+      "result": "Passed",
+      "detail": "Upload, read, lookup, and Gate paths require verified current user context, operation-specific capabilities, case scope, and PostgreSQL practice checks. Runtime roles retain execute-only access to the bounded security-definer functions, staging and command relations remain local and RLS-enabled, and human roles receive no processing capability."
+    },
+    {
+      "id": "bounded-input-and-error-contract",
+      "result": "Passed",
+      "detail": "The frozen implementation enforces byte, page, PDF parse/encryption, UTF-8, NUL, empty-text, declared media type, multipart field, and digest constraints, with the specified stable HTTP refusal codes and no-store response policy."
+    },
+    {
+      "id": "idempotency-integrity-and-phi-boundary",
+      "result": "Passed",
+      "detail": "Exact retries return the stored receipt and verify or restore the content-addressed object; changed command payloads and tampered objects are refused; mutation and metadata responses omit bytes and storage identity; retained process output contains no uploaded source content."
+    },
+    {
+      "id": "validator-truthfulness",
+      "result": "Passed",
+      "detail": "The validator hashes both current and frozen files, enforces matching artifact types, describes rollback reservation state accurately, and requires the fresh and upgrade service markers that cover post-write cleanup, startup reconciliation, retry, and authoritative media types."
+    },
+    {
+      "id": "scope-boundary",
+      "result": "Passed",
+      "detail": "The artifact limits its completion claim to Web-04 ingestion. Canonical page materialization and processing remain Web-05, and actual-browser case-to-letter certification remains Web-17."
+    }
+  ],
+  "findings": []
+}

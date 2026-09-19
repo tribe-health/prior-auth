@@ -1,0 +1,39 @@
+   Compiling aso-server-axum v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-server-axum)
+warning: field `case_id` is never read
+   --> crates/aso-server-axum/src/routes/gate.rs:237:24
+    |
+237 |         CaseResource { case_id: Uuid, write: bool },
+    |         ------------   ^^^^^^^
+    |         |
+    |         field in this variant
+    |
+    = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `aso-server-axum` (lib test) generated 1 warning
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 17.00s
+     Running unittests src/lib.rs (/Volumes/my-passport/cargo-build/02/70d32e977a4fbf/debug/deps/aso_server_axum-c321e2718d73414b)
+
+running 1 test
+test routes::cases::tests::gate_policy_requires_case_capabilities_and_never_mutates ... FAILED
+
+failures:
+
+---- routes::cases::tests::gate_policy_requires_case_capabilities_and_never_mutates stdout ----
+
+thread 'routes::cases::tests::gate_policy_requires_case_capabilities_and_never_mutates' (55765332) panicked at crates/aso-server-axum/src/routes/cases/tests.rs:712:5:
+assertion `left == right` failed
+  left: 204
+ right: 403
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    routes::cases::tests::gate_policy_requires_case_capabilities_and_never_mutates
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 40 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p aso-server-axum --lib`
+
+CONTROL_RESULT=EXPECTED_FAILURE
+EXIT_CODE=101
+RESTORED_SOURCE_SHA256=979b97e605ee4e41bd0cffd9f5d253ec93965d4fe1ac9ba9cbd31701a48366ce

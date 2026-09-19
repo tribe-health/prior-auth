@@ -1,0 +1,31 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "crates/aso-server-axum/src/routes/gate.rs",
+      "line": 354,
+      "claim": "The authorization code uses `target` inside a `match target` arm after the enum value has been moved, so the server will not compile.",
+      "evidence": "In the added arm `match target { PolicyTarget::CaseRoot { write } | PolicyTarget::CaseResource { write, .. } => { ... if let PolicyTarget::CaseResource { case_id, .. } = target { ... } } ... }`, the scrutinee `target` is consumed by the `match` and then referenced again inside the arm.",
+      "suggested_fix": "Match by reference (`match &target`) or split `CaseRoot` and `CaseResource` into separate arms that bind `case_id` directly without reusing `target`."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "crates/aso-server-axum/src/routes/cases.rs",
+      "line": 35,
+      "claim": "The change removes the existing `/api/cases/{case_id}/evidence` route that returned distinct `met`, `gap`, and `void` counts, violating the requirement to preserve three evidence states.",
+      "evidence": "The hunk replaces `Router::new().route(\"/api/cases/{case_id}/evidence\", get(evidence_counts))` and deletes `EvidenceCountsDto { met, gap, void }`; the constraints require `three-evidence-states: Evidence state must preserve met, gap, and void as distinct values` and the acceptance criteria say to preserve three evidence states.",
+      "suggested_fix": "Keep the evidence counts route or provide an equivalent mounted route that returns `met`, `gap`, and `void` distinctly."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

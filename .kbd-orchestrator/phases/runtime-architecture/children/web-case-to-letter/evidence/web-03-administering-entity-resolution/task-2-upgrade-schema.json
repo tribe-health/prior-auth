@@ -1,0 +1,307 @@
+{
+  "result": "Passed",
+  "verification_tier": 1,
+  "install_mode": "upgrade",
+  "observed_at": "2026-09-17T09:02:12.561126+00:00",
+  "scope": "Web-03 additive plan/delegation schema, deterministic valid, missing, ambiguous, conflicting, and expired records, tenant source integrity, publication exclusion, and direct-write refusal",
+  "prerequisites": [
+    "Existing Docker Compose db service with schema extensions available",
+    "Configured PostgreSQL admin password from container environment",
+    "Pinned Rust toolchain and idle workspace Cargo build directory",
+    "No concurrent database fixtures; a local exclusive lock covers this runner"
+  ],
+  "commands": [
+    "python3 scripts/test-web03-resolution-schema.py --install-mode upgrade --output .kbd-orchestrator/phases/runtime-architecture/children/web-case-to-letter/evidence/web-03-administering-entity-resolution/task-2-upgrade-schema.json",
+    "cargo run -p aso-web-server -- --migrate-server"
+  ],
+  "environment_contract": {
+    "migration": [
+      "ASO_MIGRATION_DATABASE_URL"
+    ],
+    "test": [
+      "ASO_TEST_DATABASE_URL",
+      "ASO_TEST_ADMIN_DATABASE_URL",
+      "ASO_TEST_OWNER_ROLE",
+      "ASO_TEST_GATE_CONTEXTS",
+      "ASO_TEST_GATE_CASE_ID",
+      "ASO_TEST_FOREIGN_CASE_ID"
+    ],
+    "credentials": "Disposable passwords supplied only through environment or captured SQL stdin"
+  },
+  "checks": {
+    "postgres_port_discovery": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "configured_admin_password_available": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "populated_upgrade_fixture_created": {
+      "result": "Passed"
+    },
+    "legacy_stale_and_valid_summary_fixtures_created": {
+      "result": "Passed"
+    },
+    "initial_server_migration": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "original_case_ids_and_contents_survive_upgrade": {
+      "result": "Passed"
+    },
+    "upgrade_clears_stale_empty_gate_summary": {
+      "result": "Passed"
+    },
+    "upgrade_recomputes_stale_complete_gate_summary": {
+      "result": "Passed"
+    },
+    "upgrade_preserves_correct_complete_case_including_updated_at": {
+      "result": "Passed"
+    },
+    "upgrade_preserves_legacy_affirmation_records": {
+      "result": "Passed"
+    },
+    "unchanged_migration_rerun": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "migration_ledger_and_populated_cases_unchanged": {
+      "result": "Passed"
+    },
+    "unchanged_rerun_preserves_repaired_and_valid_upgrade_cases": {
+      "result": "Passed"
+    },
+    "durable_gate_migration_recorded": {
+      "result": "Passed"
+    },
+    "checksum_mismatch_refused": {
+      "result": "Passed",
+      "return_code": 1,
+      "checksum_mismatch_reported": true
+    },
+    "checksum_refusal_preserves_populated_cases": {
+      "result": "Passed"
+    },
+    "restored_checksum_rerun": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "checksum_restoration_preserves_ledger_and_cases": {
+      "result": "Passed"
+    },
+    "checksum_probe_preserves_upgrade_cases_and_affirmations": {
+      "result": "Passed"
+    },
+    "resolution_source_document_seeded": {
+      "result": "Passed",
+      "database_error": []
+    },
+    "fixture_valid_classifies_deterministically": {
+      "result": "Passed",
+      "observed": {
+        "state": "resolved",
+        "candidate_count": 1,
+        "historical_candidate_count": 1,
+        "downstream_blocked": false
+      }
+    },
+    "valid_fixture_has_one_exact_resolution": {
+      "result": "Passed",
+      "observed": {
+        "matched_rule_id": "23000000-0000-4000-8000-000000000301",
+        "entity_id": "21000000-0000-4000-8000-000000000301",
+        "criteria_set_key": "synthetic-lumbar-fusion-2026",
+        "submission_channel_key": "manual_synthetic",
+        "appeal_path_key": "synthetic-standard-appeal",
+        "source_document_id": "50000000-0000-4000-8000-000000000301",
+        "valid_from": "2026-01-01",
+        "valid_to": null
+      }
+    },
+    "fixture_missing_classifies_deterministically": {
+      "result": "Passed",
+      "observed": {
+        "state": "missing",
+        "candidate_count": 0,
+        "historical_candidate_count": 0,
+        "downstream_blocked": true
+      }
+    },
+    "fixture_ambiguous_classifies_deterministically": {
+      "result": "Passed",
+      "observed": {
+        "state": "ambiguous",
+        "candidate_count": 2,
+        "historical_candidate_count": 2,
+        "downstream_blocked": true
+      }
+    },
+    "fixture_conflicting_classifies_deterministically": {
+      "result": "Passed",
+      "observed": {
+        "state": "conflicting",
+        "candidate_count": 2,
+        "historical_candidate_count": 2,
+        "downstream_blocked": true
+      }
+    },
+    "fixture_expired_classifies_deterministically": {
+      "result": "Passed",
+      "observed": {
+        "state": "expired",
+        "candidate_count": 0,
+        "historical_candidate_count": 1,
+        "downstream_blocked": true
+      }
+    },
+    "durable_resolution_rows_preserve_all_named_states": {
+      "result": "Passed",
+      "observed": {
+        "SYN-RESOLUTION-VALID": "resolved",
+        "SYN-RESOLUTION-EXPIRED": "expired",
+        "SYN-RESOLUTION-MISSING": "missing",
+        "SYN-RESOLUTION-AMBIGUOUS": "ambiguous",
+        "SYN-RESOLUTION-CONFLICTING": "conflicting"
+      }
+    },
+    "foreign_practice_rule_source_is_refused": {
+      "result": "Passed",
+      "expected_sqlstate": "23514"
+    },
+    "resolved_state_requires_complete_output": {
+      "result": "Passed",
+      "expected_sqlstate": "23514"
+    },
+    "rls_direct_write_publication_and_migration_contract": {
+      "result": "Passed",
+      "observed": {
+        "planRls": true,
+        "ruleRls": true,
+        "entityRls": true,
+        "resolutionRls": true,
+        "executorRuleRead": false,
+        "executorRuleWrite": false,
+        "migrationRecorded": true,
+        "publishedLocalInputs": false,
+        "executorResolutionWrite": false
+      }
+    }
+  },
+  "processes": [
+    {
+      "label": "initial_server_migration",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 0,
+      "actual_result_output": []
+    },
+    {
+      "label": "unchanged_server_migration_rerun",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 0,
+      "actual_result_output": []
+    },
+    {
+      "label": "checksum_mismatch_refusal",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 1,
+      "actual_result_output": [],
+      "checksum_mismatch_reported": true
+    },
+    {
+      "label": "restored_checksum_migration_rerun",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 0,
+      "actual_result_output": []
+    }
+  ],
+  "cleanup": {
+    "disposable_database_deleted": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "aso_session_reader": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_gate_executor": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_gate_owner": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_case_executor": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    },
+    "aso_case_owner": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    },
+    "aso_authority_event_reader": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    }
+  },
+  "unverified": [
+    "Resolver AppServices, mounted HTTP, React UI, actual browser, Tauri, and mobile are outside Web-03 task 1.2."
+  ],
+  "source_sha256": {
+    "migrations/server/2026090601_durable_gate.sql": "b3da2e91629534c011c6186eeb658fc2286896d2d491ca94dcda03a2f009a899",
+    "crates/aso-web-server/src/adapters/gate.rs": "748445b0d701c6e1fab52cad04efe30afdb7fb03de149e35ea6437330110b001",
+    "crates/aso-web-server/src/adapters/gate/transaction_tests.rs": "9690fe42a3cda9fc797b1bd6cfbd844155581d64227f75fc8ecd5a65e4196695",
+    "crates/aso-host/src/affirmation.rs": "adc28699815e2e24016b99742820eb3731a3ee31d2c0750721866b2a5fe679bb",
+    "crates/aso-host/src/lib.rs": "6b61392b318adcfbe026099a8f983243b28e3a975ead2f6a0fbe285014ab3cf7",
+    "docs/design/schema/schema.sql": "0659af835b02cd91b697f5c29f5ad6ff1e34ecad92dcf7a7d41eb14391ea9679",
+    "docker/bootstrap/25-session-authority.sql": "fae999acbbaf98ca6b3ae107670ea25511426a233fa4ced5e72556c3fbc8c21b",
+    "scripts/test-gate-transaction.py": "11a7ae2e1f7d1dfbfb4e9bc7fae1eef4331e7f8f5644cadde0e6ff08387b7c53",
+    "migrations/server/2026090618_administering_entity_resolution_schema.sql": "869518436510c3a91b205bde6de0be42ded7688478d3755c08d0674636c338fd",
+    "crates/aso-web-server/src/migrations.rs": "ae1d7b650bf643383a45398ed038be1c708ab8268f7999a977f5b7fd2e62d94d",
+    "docs/design/schema/schema-web-case-to-letter.sql": "40ee896eed59a560a7a6a62912a507c7aa248638ff8fc2099f2e9387ed5135be",
+    "docs/architecture/fixtures/web-case-to-letter/fixture-manifest.json": "9629b952e6d33e87e7ab084330392cc8bd7a028b7975a95b9c4974915cb9f587",
+    "docs/architecture/fixtures/web-case-to-letter/expected-output-manifest.json": "18915303065922e099465ed04385403af6e294f2a798980daa2ea99d1cd3f0d0",
+    "docs/architecture/fixtures/web-case-to-letter/manifest-lock.json": "ca59f6e8d2d3449661b5a90b18e995d2e77ebc0075332f79d0cdebcf1e1de1fc",
+    "docs/architecture/fixtures/web-case-to-letter/verify.py": "04695071faff673e2ee3f4f05439b6471cb41af71c66fe2cfb374500dcea8990",
+    "scripts/test-web03-resolution-schema.py": "beecf438d31be61f6ba1cbd332ba1be89767cbc93f6fcbf9c59528202be37b28"
+  },
+  "completed_at": "2026-09-17T09:02:25.448094+00:00",
+  "evidence_metadata_correction": {
+    "corrected_at": "2026-09-17T09:58:23.334707+00:00",
+    "field": "commands[0]",
+    "reason": "The probe requires --output and wrote this receipt at that path; its report formatter omitted the argument from the recorded command string.",
+    "behavioral_result_changed": false,
+    "source_receipt_preserved": true
+  }
+}

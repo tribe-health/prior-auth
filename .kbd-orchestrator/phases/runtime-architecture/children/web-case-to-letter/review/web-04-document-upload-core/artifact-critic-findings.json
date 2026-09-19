@@ -1,0 +1,104 @@
+{
+  "verdict": "fail",
+  "counts": {
+    "critical": 0,
+    "major": 3,
+    "minor": 2
+  },
+  "reviewed_digest": {
+    "algorithm": "sha256",
+    "source_map": "e466c9bf9144380f8a881a0e3b8344a25a8df299228281713fb5bf69af9ffb66",
+    "entries": 59,
+    "current_mismatches": 0,
+    "snapshot_mismatches": 0
+  },
+  "checks": [
+    {
+      "id": "manifest-completeness",
+      "result": "passed",
+      "detail": "The manifest, dist tree, and source hash map contain the same 59 paths with no missing or unlisted file."
+    },
+    {
+      "id": "current-and-snapshot-hashes",
+      "result": "passed",
+      "detail": "All 59 current worktree files and all 59 frozen dist snapshots independently match source_sha256.json."
+    },
+    {
+      "id": "validate-py-rerun",
+      "result": "passed",
+      "detail": "validate.py main() returned 0 when rerun against a temporary artifact copy, preserving the frozen artifact. Its reported result was Passed with 11 Passed checks."
+    },
+    {
+      "id": "security-tenant-authority-and-error-contract",
+      "result": "passed_with_findings",
+      "detail": "The inspected HTTP, AppServices, Gate, and PostgreSQL paths enforce verified user context, named capabilities, case scope, bounded types and sizes, digest validation, stable error codes, no-store responses, and minimized upload receipts. Major lifecycle and downstream-source defects remain below."
+    },
+    {
+      "id": "atomicity-idempotency-and-readiness",
+      "result": "failed",
+      "detail": "The byte publication and database commit protocol has uncovered exit paths that retain staging state and the final object, and the validator's cleanup check does not exercise or detect them."
+    }
+  ],
+  "findings": [
+    {
+      "id": "WEB04-CRITIC-001",
+      "severity": "major",
+      "title": "A failure before opening the final commit transaction leaves PHI bytes and staging state indefinitely",
+      "evidence": [
+        "dist/crates/aso-web-server/src/adapters/gate.rs:1120-1134 writes the final content-addressed object and cleans up only when write_verified itself fails.",
+        "dist/crates/aso-web-server/src/adapters/gate.rs:1136 obtains the final database transaction with begin_document_upload(context).await?; session expiry, pool acquisition failure, or role/context setup failure returns immediately without abandon_document_upload_staging or delete_if_matches.",
+        "dist/crates/aso-web-server/src/adapters/gate.rs:606-623 makes cleanup best-effort and silently ignores both staging-abandon and object-delete failures.",
+        "dist/migrations/server/2026090620_document_upload_schema.sql:135-138 records an expiry, but the frozen artifact has no sweeper or restart reconciliation that removes expired staging rows and matching final objects."
+      ],
+      "impact": "The blocking atomic-commit-cleanup constraint is not met. A normal expiry or availability failure after object publication can leave a PHI-bearing final object and a staging row with no committed receipt, and a process crash at the same point has the same result.",
+      "required_fix": "Cover every exit after successful object publication with durable reconciliation. On startup and periodically, reconcile staged rows by command receipt and expiry, deleting only digest-matching uncommitted objects; add a local integration test that forces failure before final transaction acquisition and proves both database staging and final object cleanup or recoverable reconciliation."
+    },
+    {
+      "id": "WEB04-CRITIC-002",
+      "severity": "major",
+      "title": "Uploaded PDF and text sources are reopened as application/octet-stream",
+      "evidence": [
+        "dist/migrations/server/2026090620_document_upload_schema.sql:319-320 derives extensionless keys of the form documents/{practice}/{document}/{sha256}.",
+        "dist/crates/aso-web-server/src/adapters/gate.rs:380-390 derives source media type only from .pdf, .png, .jpg, or .jpeg suffixes and otherwise returns application/octet-stream.",
+        "dist/crates/aso-web-server/src/adapters/gate.rs:47-53 omits media_type from DocumentSourceGrant, and lines 1250-1259 populate DocumentSource.media_type from the extensionless storage key instead of the authoritative documents.media_type column."
+      ],
+      "impact": "Every document accepted by Web-04 loses its declared PDF/text type at the existing source port once it becomes readable. Downstream processing cannot reliably select the PDF or UTF-8 text path, so the accepted durable object is not usable through the shell-neutral source contract.",
+      "required_fix": "Return the authoritative media_type in the document source grant and populate DocumentSource.media_type from that typed value. Add an integration assertion that committed PDF and text uploads reopen with application/pdf and text/plain respectively."
+    },
+    {
+      "id": "WEB04-CRITIC-003",
+      "severity": "major",
+      "title": "The validator reports atomic cleanup without testing the claimed state",
+      "evidence": [
+        "validate.py:88-96 marks atomic-rollback-and-cleanup Passed from two receipt labels and then states that no staging residue remains.",
+        "dist/scripts/test-web04-document-upload-schema.py:214-218 marks rolled_back_commit_leaves_no_partial_ready_metadata Passed only when stagingCount is 1, so this evidence explicitly retains staging state.",
+        "dist/scripts/test-web04-document-upload-service.py checks only for temporary .upload-* files; it does not force a post-write database failure or check for an orphaned final content-addressed object.",
+        "The mounted HTTP lifecycle exercises success, retry, conflict, integrity, anonymous, and foreign-tenant paths, but no final-commit setup failure."
+      ],
+      "impact": "The artifact can reach a Passed validation result while the blocking atomic-commit-cleanup condition is unproved and currently false on uncovered paths. This is a false-readiness defect in the review evidence, independent of the product defect in WEB04-CRITIC-001.",
+      "required_fix": "Replace the label-based check with assertions over database staging rows, committed receipts, temporary files, and final objects after injected failures at each boundary: reserve commit, object publication, final transaction acquisition, final SQL execution, and uncertain commit response."
+    },
+    {
+      "id": "WEB04-CRITIC-004",
+      "severity": "minor",
+      "title": "validate.py does not hash the persisted snapshots it claims to validate",
+      "evidence": [
+        "validate.py:39-47 hashes only ROOT/name and checks only existence for ARTIFACT/dist/name.",
+        "validate.py:73-75 labels this source-snapshots and says current inputs match persisted snapshots even though snapshot bytes are never compared."
+      ],
+      "impact": "A modified dist snapshot would still pass validate.py as long as the corresponding current worktree file matched source_sha256.json. The present snapshots do match because the critic checked them independently, but the validator does not enforce that property.",
+      "required_fix": "Hash both ROOT/name and ARTIFACT/dist/name against each expected digest and report current and snapshot mismatches separately."
+    },
+    {
+      "id": "WEB04-CRITIC-005",
+      "severity": "minor",
+      "title": "Artifact type metadata disagrees between the manifest and constraints",
+      "evidence": [
+        "artifact_manifest.json declares artifact_type code.",
+        "constraints.json declares artifact_type content for the same Rust, SQL, and Python artifact."
+      ],
+      "impact": "Schema validation permits the mismatch, but consumers that select checks by artifact type can apply the wrong review profile.",
+      "required_fix": "Declare the same code artifact type in both metadata files and add a cross-file consistency assertion to validate.py."
+    }
+  ]
+}

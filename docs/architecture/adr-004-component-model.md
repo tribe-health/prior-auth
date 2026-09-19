@@ -75,3 +75,18 @@ application core remains shell-independent.
 See [ADR-008](adr-008-shared-runtime-state-and-sessions.md) and
 [ADR-010](adr-010-native-session-credentials.md). The boundary is a target
 requirement; existing audit checks cover only their stated patterns.
+
+## 2026-09-19 extension — reusable A2UI and MCP App views
+
+The accepted [revision-12 agent addendum](../handoff/web-case-to-letter-revision-12-agent-integration.md)
+uses the existing three layers for document preview, claims, QA and halt-memo
+surfaces. Share presentation and view models between the web A2UI renderer and
+MCP Apps; keep transport, CSP and host-action handling in their adapters. Promote
+shared domain presentation when both consumers use it. Do not add product logic
+to vendored shadcn primitives or subscriptions to feature components.
+
+Only allowlisted surface descriptors are renderable. Agent output cannot describe
+an affirmation, signing or submission control. The app channel owner and feature
+hooks expose provisional versus committed state, accessible progress and scoped
+cancellation. This is an accepted extension awaiting implementation evidence;
+reusing components alone does not prove protocol isolation or safe rendering.

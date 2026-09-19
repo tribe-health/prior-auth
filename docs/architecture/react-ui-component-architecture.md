@@ -1,6 +1,6 @@
 # React UI architecture: prototype, components and runtime
 
-**Status:** Target design; implementation and device behavior are not certified.  
+**Status:** Accepted architecture; the responsive web case-to-letter candidate is implemented, with final browser certification still open.
 **Date:** 2026-09-06.  
 **Authority:** Elaborates [ADR-004](adr-004-component-model.md), [ADR-005](adr-005-navigation-and-gating.md), [ADR-008](adr-008-shared-runtime-state-and-sessions.md), [ADR-009](adr-009-authorized-replicas-and-updates.md) and the [runtime architecture](application-runtime-architecture.md). It does not replace their ownership or authorization decisions.
 
@@ -21,11 +21,11 @@ The uncomfortable failure is a visually faithful UI that loses a draft when a de
 | `web/package.json`, `web/components.json` | React 19.2.0, Zustand 5.0.8, React Router 7.9.1, Vite; shadcn `base-nova`, RSC disabled | Remain a shared client application; no Next.js migration or dependency changes in this design |
 | `web/src/components/ui/button.tsx`, `dialog.tsx` | Base UI-backed primitives; other imported components must be inspected individually | Compose using the installed primitive API; do not assume every shadcn example uses Radix |
 | `web/src/app/routes/app-routes.tsx` | Thirteen lazy product route entries, all under AppShell | Public authentication outside protected graph; explicit protected route requirements |
-| `web/src/app/providers/graph-provider.tsx` | In-memory PGlite, snapshot persistence startup, no retained/drained runtime lifecycle | Runtime coordinator owns SQL replication, hydration and scoped graph lifetime |
-| `web/src/features/evidence-timeline/hooks/use-evidence-timeline.ts` | Reads SQL into a React `entries` array | Subscribe to coherent PEM graph projections; no per-hook clinical record copy |
-| `web/src/shared/store/interaction-store.ts` | Module singleton; comments still cite superseded ADR-006 | View-instance store factory; identity/practice/case isolation under ADR-008 |
-| `web/src/shared/ui/citation-chip.tsx` | Accepts a source string; missing source maps to `void` | Structured citation provenance; missing citation does not reclassify an evidence record |
-| `web/src/app/shell/app-shell.tsx` | Gate affirmation hook is a false placeholder; responsive nav switches at `md` | Read committed gate state; use token-defined navigation breakpoint and accessible mobile navigation |
+| `web/src/app/providers/graph-provider.tsx` | Owns migration-led PGlite startup, exclusive replica ownership, authorized FRF materialization, coherent graph projection and epoch teardown | Keep release storage policy and performance certification separate from the implemented memory-only Compose candidate |
+| `web/src/features/evidence-timeline/hooks/use-evidence-timeline-projection.ts` | Reads coherent evidence/citation/document entities through graph selectors | Preserve the entity graph as clinical read owner; no per-hook record cache |
+| `web/src/features/document-generation/hooks/use-document-generation.ts` | Owns one scoped AG-UI task channel and joins a sanitized FRF task-status projection from the graph | Keep provisional stream buffers separate from committed task/artifact state |
+| `web/src/features/document-generation/components/document-blocks.tsx` | Shared shadcn draft, QA, claims and halt-memo blocks consumed by A2UI and MCP App renderers | Keep clinical signing, affirmation and submission controls outside protocol surfaces |
+| `web/src/app/shell/app-shell.tsx` | Uses committed route/gate state, full-viewport overflow ownership and adaptive desktop/mobile navigation | Preserve route state, keyboard access, reduced motion and form identity during resize |
 
 Existing code is a starting slice, not the template to duplicate unchanged. All new component and hook names below are **proposed application contracts**, except where explicitly identified as existing. Do not assume they are exports from PEM or shadcn. No new package API is established by an illustrative name.
 
@@ -404,3 +404,26 @@ Local evidence includes all 19 prototype HTML files (home plus 18 screens), shel
 Implementation decisions still requiring evidence: exact expanded/container threshold fit; accessible generated-document preview and targeted-correction control if basic fields are insufficient; supported phone/browser/webview matrix; performance budgets measured on practice-sized synthetic data; and the runtime's remaining session/materialization/revocation work. These do not justify a second component framework or data cache.
 
 Finalization requires an isolated adversarial critic, an independent judge, resolution or explicit disposition of findings, and deterministic document checks. The accompanying review receipt records the actual outcome; this paragraph does not assert those checks have already passed.
+
+## 2026-09-19 accepted extension — streamed document surfaces
+
+The [revision-12 implementation addendum](../handoff/web-case-to-letter-revision-12-agent-integration.md)
+adds required live document-task progress to the implemented responsive web
+candidate. Reuse the four shared
+`DraftPreviewBlock`, `QaFindingsBlock`, `ClaimsManifestBlock`, and conditional
+`HaltMemoBlock` views across web A2UI rendering and sandboxed MCP Apps. Their
+transport adapters are distinct; sharing a React view does not make the wire
+protocols interchangeable.
+
+The application channel owner manages authorization, reconnect, cancellation and
+subscription lifetimes. `useDocumentGeneration` exposes the scoped channel and
+joins `useDocumentTaskStatus`, whose projection revision 6 row is hydrated by
+PGlite into the PEM Zustand graph. Zustand holds only scoped transient stream/form
+state, while committed data comes from the entity graph or authorized artifact
+reads. Mark streamed content provisional
+until persisted. Close and clear buffers on logout, revocation or account change.
+Signing, affirmation and submission remain application-owned controls. Preserve
+viewport adaptation, source access, keyboard operation and reduced motion in both
+renderers. The uncomfortable limit is that polished streamed prose can appear
+final before provenance and clinical review have completed; the UI must show the
+actual durable and review state.

@@ -278,7 +278,7 @@ class SourcePreviewProbe(ra14.BrowserTimelineProbe):
               '{{"modality":"MRI","body_region":"spine","impression":"synthetic"}}'::jsonb
             );
             INSERT INTO aso.case_evidence(
-              id, case_id, policy_criterion_id, state, assessed_by, assessed_at
+              id, case_id, criterion_id, state, assessed_by, assessed_at
             ) VALUES (
               '{f['evidence']}', '{f['case_a']}', '{criterion}', 'met',
               '{f['user_a']}', TIMESTAMPTZ '2026-03-15T12:00:00Z'

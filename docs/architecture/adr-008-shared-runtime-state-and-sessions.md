@@ -1,8 +1,11 @@
 # ADR-008 · Shared application runtime, entity state and sessions
 
-**Status** Accepted target design · **Date** 2026-09-06  
+**Status** Accepted; browser runtime slice implemented · **Date** 2026-09-06
 **Supersedes** [ADR-006](adr-006-entity-graph-binding.md).  
-**Implementation** Not certified; acceptance of this decision is not a runtime test result.
+**Implementation** The web runtime, verified Kratos scope, authorized
+FRF/Electric/PGlite materializer, entity graph, scoped command owners, and live
+document-task Zustand channel have local Compose and browser evidence. Native
+storage parity and cross-platform release qualification remain later work.
 
 ## Context
 
@@ -32,6 +35,7 @@ detection selects capabilities and transports; it never grants authority.
 | Selection, expansion and filter input | Per-view interaction Zustand store | Ephemeral and independent across views |
 | Credentials, migration/checkpoint metadata and logout-pending marker | Trusted platform/storage services | Control data with explicit retention; not additional business entity stores |
 | Session denials, logout retry state and membership authority events | ASO PostgreSQL | Server-authoritative, deployment/session or deployment/incarnation/revision scoped; never persisted in Zustand |
+| Document-generation task UI | Session/practice/case/purpose-scoped Zustand vanilla channel | Durable identity and terminal result remain in Postgres; only opaque recovery pointers enter session storage, and provisional prose is memory-only |
 
 “Views must agree” is a useful question for business records, not a universal
 test that turns runtime metadata into entities. Additional Zustand stores may
@@ -96,6 +100,19 @@ and a separate policy decision; this ADR enables none. Signing and affirmation
 remain online-only. Unsent drafts can be recovered only by their original
 authorized identity, and recovery never executes a clinical command.
 
+### Implemented browser task channel
+
+The document-generation channel owns one durable task subscription for each
+verified session, practice, case, and purpose. It resumes from the persisted
+event sequence, rejects skipped or foreign frames, and keeps streamed Markdown
+and A2UI descriptors visibly provisional. After the host transaction commits,
+the channel discards the transient stream and reads the persisted letter,
+claims, and seven QA findings. Same-scope session revalidation may retain the
+opaque command/task pointer; logout, revocation, failed verification, or any
+identity, practice, authorization, or session change purges it and clears the
+memory buffer. Components observe this store through hooks and own no parallel
+task state.
+
 ### Native state bridges
 
 The Tauri Zustand plugin is optional for non-sensitive shell coordination.
@@ -129,5 +146,7 @@ Apply the runtime architecture section 14 acceptance matrix, including cold and
 warm startup, account/practice switching during hydration, logout across reloads,
 foreground/resume revalidation, materializer authority failure, final server-frame
 cancellation, offline lock, draft recovery and atomic subscriber observations.
-Existing structural audits do not prove these lifecycle guarantees. No
-implementation or test result is implied by this accepted design.
+Existing structural audits alone do not prove these lifecycle guarantees. The
+2026-09-19 web candidate adds focused store/channel tests, local Compose restart
+and reconnect evidence, and a browser generation-through-acknowledgement run.
+Native multi-window and cross-platform claims still require their own campaign.

@@ -1,0 +1,29 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "openspec/changes/web-05-document-processing-ui/tasks.md",
+      "claim": "The change is not marked as having completed focused verification even though acceptance criterion 2.1 requires it.",
+      "evidence": "Acceptance criteria section 2 lists `- [ ] 2.1 Run focused T0/T1 plus forbidden-source-column sabotage-and-restore, artifact-refiner, and adversarial review.` and the current tasks.md contains the same unchecked item.",
+      "suggested_fix": "Complete the required verification and mark task 2.1 checked only after all required evidence, including adversarial review, is recorded."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "openspec/changes/web-05-document-processing-ui/tasks.md",
+      "claim": "The change is not marked as having recorded completion evidence even though acceptance criterion 3.1 requires it.",
+      "evidence": "Acceptance criteria section 3 lists `- [ ] 3.1 Record actual commands and observed outputs, confirm real mounted callers at this change boundary, update documentation/spec deltas, and mark only satisfied work complete.` and the current tasks.md contains the same unchecked item.",
+      "suggested_fix": "Record the completion evidence required by 3.1 and mark it checked only after the actual commands, outputs, mounted caller confirmation, and documentation/spec deltas are complete."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

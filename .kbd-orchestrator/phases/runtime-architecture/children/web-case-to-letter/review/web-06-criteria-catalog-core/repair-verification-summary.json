@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 2,
+  "receipts": {
+    "task-5-repair-fresh.json": {
+      "result": "Passed",
+      "installMode": "fresh",
+      "completedAt": "2026-09-18T20:26:01.727496+00:00",
+      "criteriaLifecycle": {
+        "result": "Passed",
+        "return_code": 0,
+        "markers": [
+          "criteria_transaction_check: published_import_exact_retry_and_conflict",
+          "criteria_transaction_check: published_visibility_and_obtained_tenant_scope",
+          "criteria_transaction_check: grade_tenant_namespaces_and_foreign_supersession_refusal",
+          "criteria_transaction_check: source_effective_date_is_bound_to_policy",
+          "criteria_transaction_check: stale_grade_laundering_and_foreign_source_refusal",
+          "criteria_transaction_check: immutable_correction_by_supersession",
+          "criteria_transaction_check: mounted_http_service_parity",
+          "criteria_transaction_check: mounted_http_tenant_scope_and_conflicting_retry",
+          "criteria_transaction_check: mounted_http_overlap_and_grade_non_promotion",
+          "criteria_transaction_check: audited_imports_and_immutable_command_ledger"
+        ]
+      }
+    },
+    "task-5-repair-upgrade.json": {
+      "result": "Passed",
+      "installMode": "upgrade",
+      "completedAt": "2026-09-18T20:27:03.224823+00:00",
+      "criteriaLifecycle": {
+        "result": "Passed",
+        "return_code": 0,
+        "markers": [
+          "criteria_transaction_check: published_import_exact_retry_and_conflict",
+          "criteria_transaction_check: published_visibility_and_obtained_tenant_scope",
+          "criteria_transaction_check: grade_tenant_namespaces_and_foreign_supersession_refusal",
+          "criteria_transaction_check: source_effective_date_is_bound_to_policy",
+          "criteria_transaction_check: stale_grade_laundering_and_foreign_source_refusal",
+          "criteria_transaction_check: immutable_correction_by_supersession",
+          "criteria_transaction_check: mounted_http_service_parity",
+          "criteria_transaction_check: mounted_http_tenant_scope_and_conflicting_retry",
+          "criteria_transaction_check: mounted_http_overlap_and_grade_non_promotion",
+          "criteria_transaction_check: audited_imports_and_immutable_command_ledger"
+        ]
+      }
+    },
+    "task-5-forward-repair-upgrade.json": {
+      "result": "Passed",
+      "installMode": "frozen-web06-upgrade",
+      "completedAt": "2026-09-18T20:25:03.612625+00:00",
+      "criteriaLifecycle": {
+        "result": "Passed",
+        "return_code": 0,
+        "markers": [
+          "criteria_transaction_check: published_import_exact_retry_and_conflict",
+          "criteria_transaction_check: published_visibility_and_obtained_tenant_scope",
+          "criteria_transaction_check: grade_tenant_namespaces_and_foreign_supersession_refusal",
+          "criteria_transaction_check: source_effective_date_is_bound_to_policy",
+          "criteria_transaction_check: stale_grade_laundering_and_foreign_source_refusal",
+          "criteria_transaction_check: immutable_correction_by_supersession",
+          "criteria_transaction_check: mounted_http_service_parity",
+          "criteria_transaction_check: mounted_http_tenant_scope_and_conflicting_retry",
+          "criteria_transaction_check: mounted_http_overlap_and_grade_non_promotion",
+          "criteria_transaction_check: audited_imports_and_immutable_command_ledger"
+        ]
+      },
+      "frozenMigrationsRecordedByteForByte": {
+        "result": "Passed",
+        "recorded": "2026090624:2c5a441a0dc21afcffae6beef70999efecc1b10d9a2ac716fe46145df58cd27af6bffe964022ea8254d6e6e9f0468343,2026090625:b89cd1a4023284c8385d268d50bb1eb832123913d75e4773409a3324170826861aff578d8b402c720e91bb2fa0c169a0"
+      },
+      "historicalLedgerUnchanged": {
+        "result": "Passed"
+      },
+      "repairConstraintsActive": {
+        "result": "Passed",
+        "observed": {
+          "catalogCount": 2,
+          "repairRecorded": true,
+          "scopeConstraint": true,
+          "tokenDefinition": "CHECK ((revision_token = ('catalog:criteriaCatalogRevision:r'::text || (revision)::text)))",
+          "overlapDefinition": "EXCLUDE USING gist (payer_id WITH =, evidence_grade WITH =, COALESCE(practice_id, '00000000-0000-0000-0000-000000000000'::uuid) WITH =, label WITH =, validity WITH &&)"
+        }
+      },
+      "unchangedRepairRerun": {
+        "result": "Passed",
+        "return_code": 0
+      }
+    }
+  },
+  "focusedHostBoundaryTest": {
+    "command": "cargo test -p aso-host criteria_catalog::tests::invalid_revision_namespaces_never_reach_the_repository -- --exact",
+    "result": "Passed",
+    "observed": "1 passed; 0 failed; 37 filtered out; invalid classes include empty, sign, whitespace, nondigit, leading zero, i64::MAX + 1, and larger overflow; import_calls asserted zero after every case",
+    "contract": "invalid revision namespaces return Invalid and repository import_calls remains 0"
+  },
+  "staticChecks": {
+    "cargo fmt --all -- --check": "Passed",
+    "python3 -m py_compile scripts/test-web06-criteria-migration.py scripts/test-web06-criteria-service.py scripts/test-web06-criteria-repair-upgrade.py": "Passed",
+    "git diff --check": "Passed",
+    "cargo check -p aso-host -p aso-server-axum -p aso-web-server": "Passed",
+    "cargo clippy -p aso-host -p aso-web-server --no-deps -- -D warnings": "Failed only at pre-existing Web04-owned crates/aso-host/src/document_upload.rs:77 chunks_exact_to_as_chunks",
+    "cargo clippy -p aso-host -p aso-web-server --no-deps -- -A clippy::chunks_exact_to_as_chunks -D warnings": "Passed"
+  },
+  "sourceSha256": {
+    "migrations/server/2026090626_criteria_catalog_repair.sql": "dd673ef548e6b42cb992e2e005b31841d4a175b8284e101cb3cdbe343f69da5e",
+    "crates/aso-web-server/src/migrations.rs": "b71ee589c0c04bd1320e2f571984491b8aacf83710591aa64ab91d691519450b",
+    "crates/aso-host/src/criteria_catalog.rs": "b35a35f420b9d60b8adc0ebc597a397f6ee22071508739379c2fcd056dc13f6a",
+    "crates/aso-web-server/src/adapters/gate/criteria_transaction_tests.rs": "5f02fdba4692de414b12c6da0e1233632b99659324f1cb3045a94f5d2861ec04",
+    "scripts/test-web06-criteria-service.py": "678373f1695acdc932150bf4d089d225b390e80cc1f43e96938fb799cdca6c85",
+    "scripts/test-web06-criteria-repair-upgrade.py": "98f33a539d527ace3b6143d79c50fa2b44a21f27304d63477e44499a47d2b8ec"
+  }
+}

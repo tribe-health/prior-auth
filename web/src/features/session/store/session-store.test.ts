@@ -7,6 +7,7 @@ import {
   claimRuntimeCommand,
   getRuntimeCommand,
   resetRuntimeCommandRegistryForTests,
+  subscribeRuntimeCommandSessionClear,
   type RuntimeCommandScope,
 } from '@/shared/runtime-command-registry';
 import { createSessionStore } from './session-store';
@@ -312,4 +313,67 @@ describe('session revocation fence', () => {
       .toBe('Synthetic correction.');
     expect(store.getState().draftNotice).toBeNull();
   });
+});
+
+
+describe('quarantined command terminal session fence', () => {
+  const subscriptions: (() => void)[] = [];
+  afterEach(() => { for (const stop of subscriptions.splice(0)) stop(); });
+  const setup = () => {
+    const clear = vi.fn();
+    subscriptions.push(subscribeRuntimeCommandSessionClear(clear));
+    const control = durableControl().control;
+    const store = createSessionStore(SESSION, { logout: vi.fn() }, 'authenticated', control);
+    const attempt = store.getState().beginRevalidation()!;
+    expect(clear).toHaveBeenCalledWith(SESSION.sessionId, 'revalidation');
+    clear.mockClear();
+    return { store, attempt, clear, control };
+  };
+  it('preserves recovery after successful verification of the same scope', () => {
+    const { store, attempt, clear } = setup();
+    expect(store.getState().completeRevalidation(attempt, { status: 'authenticated', session: { ...SESSION } })).toBe(true);
+    expect(clear).not.toHaveBeenCalled();
+  });
+  it.each(['none', 'unreachable', 'logout-pending', 'logout-storage-unavailable'] as const)(
+    'purges quarantined commands when verification returns %s', (status) => {
+      const { store, attempt, clear } = setup();
+      store.getState().completeRevalidation(attempt, { status, session: null });
+      expect(clear).toHaveBeenCalledWith(SESSION.sessionId, 'purge');
+    },
+  );
+  it('purges on terminal failure and refuses a late success for that attempt', () => {
+    const { store, attempt, clear } = setup();
+    store.getState().failRevalidation(attempt, 'Runtime could not close.');
+    expect(clear).toHaveBeenCalledWith(SESSION.sessionId, 'purge');
+    expect(store.getState().completeRevalidation(attempt, { status: 'authenticated', session: SESSION })).toBe(false);
+    expect(store.getState().session).toBeNull();
+  });
+  it.each([
+    { sessionId: 'session-2' }, { identityId: 'identity-2' },
+    { practiceId: 'practice-2' }, { authorizationRevision: 'test:2' },
+  ])('purges the old session before installing changed scope %j', (changed) => {
+    const { store, attempt, clear } = setup();
+    store.getState().completeRevalidation(attempt, { status: 'authenticated', session: { ...SESSION, ...changed } });
+    expect(clear).toHaveBeenCalledWith(SESSION.sessionId, 'purge');
+  });
+  it('purges if a pending logout blocks revalidation completion', () => {
+    const { store, attempt, clear, control } = setup();
+    control.ensurePending();
+    store.getState().completeRevalidation(attempt, { status: 'authenticated', session: SESSION });
+    expect(clear).toHaveBeenCalledWith(SESSION.sessionId, 'purge');
+    expect(store.getState().session).toBeNull();
+  });
+  it.each(['startup', 'verified', 'signed-out', 'revocation', 'logout'] as const)(
+    'purges an interrupted revalidation through %s', async (operation) => {
+      const { store, attempt, clear } = setup();
+      const other = { ...SESSION, identityId: 'identity-2' };
+      if (operation === 'startup') store.getState().installStartupSession({ status: 'authenticated', session: other });
+      if (operation === 'verified') store.getState().installVerifiedSession(other);
+      if (operation === 'signed-out') store.getState().installVerifiedSession(null);
+      if (operation === 'revocation') store.getState().observeRevocation('Revoked.');
+      if (operation === 'logout') await store.getState().logout();
+      expect(clear).toHaveBeenCalledWith(SESSION.sessionId, 'purge');
+      expect(store.getState().completeRevalidation(attempt, { status: 'authenticated', session: SESSION })).toBe(false);
+    },
+  );
 });

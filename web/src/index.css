@@ -2,7 +2,9 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "@fontsource-variable/geist";
+@import "@fontsource-variable/mulish";
+@import "@fontsource-variable/playfair-display";
+@import "@fontsource-variable/jetbrains-mono";
 @import "tw-shimmer";
 
 /* Brand design tokens, generated from assets/templates/design-tokens/tokens.toml.
@@ -16,8 +18,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-    --font-heading: var(--font-sans);
-    --font-sans: 'Geist Variable', sans-serif;
+    --font-heading: var(--font-display);
+    --font-sans: var(--font-body);
     --color-sidebar-ring: var(--sidebar-ring);
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -157,11 +159,23 @@
 }
 
 @layer base {
+  html,
+  body,
+  #root {
+    width: 100%;
+    min-width: 0;
+    min-height: 100%;
+  }
+
+  #root {
+    isolation: isolate;
+  }
+
   * {
     @apply border-border outline-ring/50;
     }
   body {
-    @apply overflow-x-clip bg-background text-foreground;
+    @apply overflow-x-clip bg-canvas font-body text-text;
     }
   html {
     @apply overflow-x-clip font-sans;
@@ -196,8 +210,106 @@
 }
 
 @layer components {
+  .app-shell-grid {
+    display: grid;
+    grid-template-columns: 0 minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+    height: 100dvh;
+    overflow: hidden;
+    transition: grid-template-columns 240ms var(--ease-out-brand);
+  }
+
+  .app-shell-body {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+
+  .case-shell {
+    display: grid;
+    grid-template-rows: var(--size-topbar) minmax(0, 1fr);
+    height: 100%;
+    overflow: hidden;
+    transition: grid-template-rows 240ms var(--ease-out-brand);
+  }
+
+  .case-workspace-grid {
+    display: grid;
+    grid-template-columns: 0 minmax(0, 1fr);
+    overflow: hidden;
+    transition: grid-template-columns 240ms var(--ease-out-brand);
+  }
+
+  .case-context-rail {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-0.75rem);
+    transition:
+      opacity var(--duration-exit) ease,
+      transform 240ms var(--ease-out-brand),
+      visibility 0s linear var(--duration-exit);
+  }
+
+  .workbench-topbar {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity var(--duration-exit) ease,
+      transform 240ms var(--ease-out-brand),
+      visibility 0s;
+  }
+
+  .workbench-scroll {
+    container: workbench / inline-size;
+    scrollbar-gutter: stable;
+  }
+
+  @media (min-width: 800px) {
+    .app-shell-grid {
+      grid-template-columns: var(--size-nav-rail) minmax(0, 1fr);
+    }
+
+    .app-shell-body {
+      grid-column: 2;
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .case-shell {
+      grid-template-rows: 0 minmax(0, 1fr);
+    }
+
+    .case-workspace-grid {
+      grid-template-columns: var(--size-context-panel) minmax(0, 1fr);
+    }
+
+    .case-context-rail {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+      transition-delay: 60ms, 0s, 0s;
+    }
+
+    .workbench-topbar {
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-0.5rem);
+      transition-delay: 0s, 0s, var(--duration-exit);
+    }
+  }
+
   .workflow-surface {
     animation: workflow-reveal 240ms ease-out both;
+  }
+
+  .landing-sweep {
+    transform-box: fill-box;
+    transform-origin: left center;
+    animation: landing-sweep-reveal 900ms var(--ease-out-brand) both;
+  }
+
+  .landing-sweep-secondary {
+    animation-delay: 110ms;
   }
 
   .workflow-card {
@@ -259,13 +371,48 @@
   }
 }
 
+@keyframes landing-sweep-reveal {
+  from {
+    opacity: 0;
+    transform: translateX(-8%) scaleX(0.72);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scaleX(1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+
+  .app-shell-grid,
+  .case-shell,
+  .case-workspace-grid,
+  .case-context-rail,
+  .workbench-topbar {
+    transition-duration: 0.01ms;
+    transition-delay: 0s;
+  }
+
   .workflow-surface {
     animation: workflow-reveal-reduced 120ms linear both;
   }
 
   .workflow-card {
     transition-duration: 0.01ms;
+  }
+
+  .landing-sweep {
+    animation: workflow-reveal-reduced 120ms linear both;
   }
 }
 

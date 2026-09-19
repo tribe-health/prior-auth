@@ -125,7 +125,7 @@ describe("PGlite schema upgrades", () => {
           'intake', NULL, now(), now()
         );
         INSERT INTO case_evidence (
-          id, practice_id, case_id, policy_criterion_id, state, assessed_at,
+          id, practice_id, case_id, criterion_id, state, assessed_at,
           created_at, updated_at
         ) VALUES (
           '00000000-0000-0000-0000-000000000003',

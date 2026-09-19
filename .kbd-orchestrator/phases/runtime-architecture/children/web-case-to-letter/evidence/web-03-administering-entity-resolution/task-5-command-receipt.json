@@ -1,0 +1,211 @@
+{
+  "result": "Passed",
+  "tier": "focused T0/T1",
+  "commands": [
+    {
+      "command": "pnpm --dir web exec vitest run src/features/session/model/session-parse.test.ts src/features/administering-entity/api/administering-entity-api.test.ts src/features/administering-entity/hooks/use-administering-entity-resolution.test.tsx src/features/administering-entity/components/administering-entity-panel.test.tsx src/features/case-queue/components/case-detail.test.tsx",
+      "result": "Passed",
+      "observation": "5 files passed; 28 tests passed"
+    },
+    {
+      "command": "pnpm --dir web typecheck",
+      "result": "Passed",
+      "observation": "tsc --noEmit exited 0"
+    },
+    {
+      "command": "pnpm --dir web lint",
+      "result": "Passed",
+      "observation": "oxlint exited 0"
+    },
+    {
+      "command": "RUSTUP_TOOLCHAIN=1.97.1 cargo test -p aso-server-axum administering_entity_http -- --nocapture",
+      "result": "Passed",
+      "observation": "3 tests passed"
+    },
+    {
+      "command": "RUSTUP_TOOLCHAIN=1.97.1 cargo test -p aso-server-axum gate_policy_requires_case_capabilities_and_never_mutates -- --nocapture",
+      "result": "Passed",
+      "observation": "1 test passed"
+    },
+    {
+      "command": "RUSTUP_TOOLCHAIN=1.97.1 cargo check -p aso-host -p aso-server-axum -p aso-web-server",
+      "result": "Passed",
+      "observation": "aso-host, aso-server-axum, and aso-web-server dev profiles finished after the authorization repair"
+    },
+    {
+      "command": "RUSTUP_TOOLCHAIN=1.97.1 cargo fmt --all -- --check",
+      "result": "Passed",
+      "observation": "exited 0"
+    },
+    {
+      "command": "openspec validate web-03-administering-entity-resolution --strict",
+      "result": "Passed",
+      "observation": "Change 'web-03-administering-entity-resolution' is valid"
+    }
+  ],
+  "discarded": [
+    {
+      "command": "cargo test ... -- --exact",
+      "reason": "ran 0 tests; not counted as evidence"
+    },
+    {
+      "command": "RUSTUP_TOOLCHAIN=1.97.1 cargo fmt --all -- --check 2>&1 | tee <log>",
+      "reason": "tee masked the initial formatting failure; the line was formatted and the command was rerun with pipefail before counting it as Passed."
+    },
+    {
+      "command": "RUSTUP_TOOLCHAIN=1.97.1 cargo test -p aso-server-axum gate_policy_requires_case_capabilities_and_never_mutates -- --exact --nocapture",
+      "reason": "ran 0 tests because the Rust test name was not module-qualified; not counted as evidence"
+    }
+  ],
+  "database_probes": [
+    {
+      "command": "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-web03-resolution-service.py --install-mode fresh --output .kbd-orchestrator/phases/runtime-architecture/children/web-case-to-letter/evidence/web-03-administering-entity-resolution/task-5-fresh-review.json",
+      "result": "Passed",
+      "observation": "Fresh install passed actual AppServices/PostgreSQL resolution lifecycle with five states, member-plan enrollment, versioned path receipts, four authoritative invalidations, three-way validity intersection, restricted executor, durable receipts and audits, command lookup, tenant refusal, SQLSTATE 42501 retry refusal, and cleanup. Re-resolution after entity deactivation returned missing rather than expired."
+    },
+    {
+      "command": "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-web03-resolution-service.py --install-mode upgrade --output .kbd-orchestrator/phases/runtime-architecture/children/web-case-to-letter/evidence/web-03-administering-entity-resolution/task-5-upgrade-review.json",
+      "result": "Passed",
+      "observation": "Populated upgrade preserved cases and affirmations, repaired legacy summaries, refused checksum mismatch without data loss, and passed the same authoritative lifecycle, source-version invalidation, enrollment-bounded validity, invalidation, receipt provenance, and SQLSTATE 42501 retry checks. Re-resolution after entity deactivation returned missing rather than expired."
+    }
+  ],
+  "restored_route_sha256": "38706facc089cd57e58eb31460479f3815b30fcd5009f5823f4aa0915cc89ecf",
+  "review_repairs": [
+    {
+      "finding": "Resolver-only callers were incorrectly routed through case_write target authorization.",
+      "red_command": "RUSTUP_TOOLCHAIN=1.97.1 cargo test -p aso-server-axum gate_policy_requires_case_capabilities_and_never_mutates -- --nocapture",
+      "red_observation": "Failed with HTTP 403 where resolver-only authorization required 204; exit 101.",
+      "repair": "Added resolver-specific AppServices and CaseRepository target authorization, backed by aso.authorize_administering_entity_target(target_case), which requires resolve_administering_entity instead of case_write. Resolution POST and command lookup use this path.",
+      "restored_observation": "The same mounted test passed 1/1 and retained the no-mutation assertion. Fresh and populated-upgrade PostgreSQL probes passed through the restricted executor."
+    },
+    {
+      "finding": "An unresolved case's GET resolution gate used read_administering_entity and returned 404 before the route could represent the unresolved state.",
+      "red_command": "RUSTUP_TOOLCHAIN=1.97.1 cargo test -p aso-server-axum gate_policy_requires_case_capabilities_and_never_mutates -- --nocapture",
+      "red_observation": "The mounted unresolved-read assertion failed with HTTP 404 where gate forwarding required 204; exit 101.",
+      "repair": "The read branch now authorizes the underlying case with AppServices::read_case; the resolution route remains responsible for representing missing resolution state.",
+      "restored_observation": "The same mounted test passed 1/1 and confirmed gate authorization performed no repository write."
+    },
+    {
+      "finding": "A successful resolution command lost its durable command ID when the post-commit reload failed.",
+      "red_command": "pnpm --dir web exec vitest run src/features/administering-entity/hooks/use-administering-entity-resolution.test.tsx",
+      "red_observation": "The hook published error with a null pendingCommandId after a successful receipt and failed reload; 1 of 3 tests failed.",
+      "repair": "The post-commit reload has its own failure path that publishes uncertain and retains receipt.value.commandId for exact lookup reconciliation.",
+      "restored_observation": "The hook test passed 3/3; the full five-file focused browser set passed 20/20."
+    },
+    {
+      "finding": "An idempotent SQL retry returned its stored receipt before reauthorizing the target case.",
+      "red_command": "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-web03-resolution-service.py --install-mode fresh --output <red-receipt>",
+      "red_observation": "With the old ordering temporarily restored, the target case was moved out of scope inside a rollback-only synthetic transaction and the command returned successfully; the required 42501 check failed.",
+      "repair": "aso.resolve_administering_entity_command now calls aso.require_case(target_case, 'resolve_administering_entity') before reading or returning an existing command receipt.",
+      "restored_observation": "Fresh and populated-upgrade PostgreSQL probes both passed; the same out-of-scope retry was refused with SQLSTATE 42501, and fixture cleanup passed."
+    },
+    {
+      "finding": "The resolver treated member_id as presence-only and did not verify authoritative plan enrollment.",
+      "red_command": "Temporarily removed the three member/enrollment predicates, then ran the disposable PostgreSQL service lifecycle.",
+      "red_observation": "The changed-member case incorrectly resolved; the lifecycle failed because Resolved was returned where Missing was required.",
+      "repair": "Added effective-dated payer_plan_enrollments and joined member, plan, practice, and service-date validity into current and historical candidate evaluation.",
+      "restored_observation": "Fresh and populated-upgrade probes return Missing for an unenrolled member and pass the complete lifecycle."
+    },
+    {
+      "finding": "Changes to an entity, plan, enrollment, or delegation rule could leave a stale resolved row usable.",
+      "red_command": "Temporarily disabled entity resolution invalidation and ran the rollback-only authoritative-change probe.",
+      "red_observation": "Entity deactivation did not remove the current resolution; return codes were [3, 0, 0].",
+      "repair": "Added targeted invalidation triggers that advance resolution_revision and delete affected current resolutions for entity, plan, enrollment, and rule mutations.",
+      "restored_observation": "Fresh and populated-upgrade probes pass entity deactivation, appeal-path edit, and conflicting-rule insertion with return codes [0, 0, 0]."
+    },
+    {
+      "finding": "A transport-uncertain command ID was scoped to one mounted view and could not be reconciled after remount.",
+      "red_command": "Temporarily removed pre-dispatch retention and ran the hook remount test.",
+      "red_observation": "The remounted hook had a null pendingCommandId and could not perform exact lookup.",
+      "repair": "Added a session/practice/authorization-revision/epoch/case-scoped vanilla Zustand store backed by tab sessionStorage, retained before dispatch and cleared only on terminal reconciliation.",
+      "restored_observation": "The remount regression passes; the focused browser set passes 21/21."
+    },
+    {
+      "finding": "Durable history did not identify the exact authoritative path versions used for a committed result.",
+      "repair": "Added monotonic revisions to resolver inputs and stored entity, path, validity, source, and entity/plan/enrollment/rule/source-document versions in immutable command receipts and audits.",
+      "restored_observation": "Mounted HTTP requires the complete receipt allowlist; disposable PostgreSQL lifecycle requires revision 1 for all authoritative inputs and source document version 1."
+    },
+    {
+      "finding": "The versioned receipt initially failed under the restricted executor because its security-definer owner could not read document_version.",
+      "red_command": "Fresh disposable PostgreSQL service probe.",
+      "red_observation": "Actual lifecycle failed with SQLSTATE 42501 permission denied for table documents; cleanup passed.",
+      "repair": "Granted only id and document_version SELECT to the non-login aso_case_owner role and added its trusted owner policy; aso_case_executor retains execute-only access.",
+      "restored_observation": "Fresh and populated-upgrade probes pass, while direct executor writes remain refused."
+    },
+    {
+      "finding": "A remount could accept an older committed row before reconciling an uncertain re-resolution.",
+      "repair": "Load performs exact command lookup before reading current resolution whenever a scoped pending command exists.",
+      "restored_observation": "Focused hook tests cover committed and absent uncertain outcomes with lookup ordered before current-state read; 6/6 hook tests pass."
+    },
+    {
+      "finding": "Selected source changes could leave a stale current resolution.",
+      "repair": "Document content/version changes invalidate resolutions whose selected rule or effective enrollment uses that source.",
+      "restored_observation": "Fresh and populated-upgrade probes pass source_document_version invalidation; all four invalidation return codes are zero."
+    },
+    {
+      "finding": "Resolved validity omitted the member-enrollment interval.",
+      "repair": "Validity is the intersection of plan, enrollment, and delegation-rule windows.",
+      "restored_observation": "The synthetic valid enrollment is narrower and both AppServices/PostgreSQL probes assert 2026-02-01 through 2026-12-31."
+    },
+    {
+      "finding": "The panel displayed only a source UUID.",
+      "repair": "Resolution reads and receipts carry source name, effective date, and version, and the panel renders those fields.",
+      "restored_observation": "Focused component tests and mounted receipt checks pass with human-readable source metadata."
+    },
+    {
+      "finding": "The first exact-command lookup 404 could race the still-running original command transaction and make an older committed row appear final.",
+      "repair": "The pending store retains command ID plus expected case-input revision. Recovery reissues the same command idempotently after lookup 404 and reads current state only after the durable receipt returns.",
+      "restored_observation": "The focused hook test orders exact lookup before same-ID resolve retry before current-state read; the five-file browser set passes 23/23."
+    },
+    {
+      "finding": "A case-detail read failed before POST dispatch but the generated command was already persisted and could become unrecoverably uncertain.",
+      "repair": "The hook now loads the case revision first and persists command ID plus retry payload only immediately before POST dispatch.",
+      "restored_observation": "The pre-dispatch 5xx regression leaves no pending command, performs no resolve POST or lookup, and a remounted view can issue a fresh successful command."
+    },
+    {
+      "finding": "Lookup 404 followed by a same-ID stale_revision retry conclusively proved absence but left the view permanently uncertain.",
+      "repair": "Terminal pending-command errors clear the stored command and reload current state; the ordinary resolve action is then available for a new command ID and revision.",
+      "restored_observation": "The regression reaches unresolved with no pending ID, then commits a fresh command at case-input revision 4; the hook suite passes 8/8."
+    },
+    {
+      "finding": "A currently effective delegation rule pointing to an inactive entity was reported as expired.",
+      "repair": "The SQL resolver separately counts current inactive-entity matches and returns missing; UI copy names the absence of an active matching path.",
+      "restored_observation": "Fresh and populated-upgrade PostgreSQL probes re-resolve after deactivation as missing, and the component test rejects expired copy."
+    },
+    {
+      "finding": "Lookup 404 followed by a serialized case_inputs_incomplete retry conclusively proved absence but left the view permanently uncertain.",
+      "repair": "case_inputs_incomplete is now a terminal pending-command result alongside stale_revision; the hook clears the command, reloads committed state, and retains the specific missing-input guidance.",
+      "restored_observation": "The focused regression reaches unresolved with no pending ID and the exact missing-input message; the hook suite passes 9/9 and the five-file set passes 27/27."
+    },
+    {
+      "finding": "The visible Check saved command path cleared case_inputs_incomplete but dropped the specific guidance after reloading current state.",
+      "repair": "After terminal manual reconciliation, the hook reapplies the terminal guidance only when reload ends in ready or unresolved, preserving any independent reload error.",
+      "restored_observation": "The direct reconcile regression ends unresolved with no pending ID and the exact missing-input guidance; the hook suite passes 10/10 and the five-file set passes 28/28."
+    }
+  ],
+  "artifact_refiner": {
+    "result": "Passed",
+    "checks": 14,
+    "blocking_constraints": 13,
+    "source_snapshots": 79
+  },
+  "adversarial_review": {
+    "result": "Passed",
+    "verdict": "PASS",
+    "findings_file": ".kbd-orchestrator/phases/runtime-architecture/children/web-case-to-letter/review/web-03-administering-entity-resolution/findings-pass16.json",
+    "judge_model": "gpt-5.5",
+    "producer_model": "gpt-6-astra",
+    "isolation_mode": "harness-native",
+    "cross_model_check": "verified-distinct",
+    "critical": 0,
+    "warning": 0,
+    "suggestion": 0,
+    "anti_sycophancy": "Passed: strict score 0.0"
+  },
+  "claim_boundary": "Focused T0/T1 only. Web-17 owns local Tier 2 actual-browser case-to-letter certification; Tauri and mobile remain deferred.",
+  "independent_artifact_critic": {
+    "result": "Passed",
+    "manifest_hashes": 79,
+    "findings_file": ".refiner/artifacts/web-03-administering-entity-resolution/critic-findings.md"
+  }
+}

@@ -1,0 +1,34 @@
+[package]
+name = "aso-document-assembly"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+description = "Document Assembler agent: a self-contained Axum service that renders typed medical documents from cited claims over AG-UI, emitting A2UI surface descriptors. It proposes; it never writes."
+publish = false
+
+[[bin]]
+name = "aso-document-assembly"
+path = "src/main.rs"
+
+# Capability inversion: this crate depends on the engine and on the shell it
+# serves through. It does NOT depend on aso-host, aso-runtime or any store —
+# an agent kernel has no write path, and the dependency graph is where that
+# is enforced.
+[dependencies]
+clinical-docs = { path = "../clinical-docs" }
+axum.workspace = true
+tokio.workspace = true
+tokio-stream.workspace = true
+reqwest.workspace = true
+rmcp.workspace = true
+tower-http.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+uuid.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+
+[dev-dependencies]
+tower.workspace = true

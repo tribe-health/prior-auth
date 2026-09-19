@@ -1,0 +1,21 @@
+BEGIN
+ALTER TABLE
+UPDATE 4
+ALTER TABLE
+UPDATE 1
+UPDATE 1
+DO
+SET
+SET
+NOTICE:  Passed: signed current letter and cited sources form a ready packet
+NOTICE:  Passed: stale letter revision refused
+NOTICE:  Passed: packet transmission is durable and idempotent
+NOTICE:  Passed: changed submission command refused
+NOTICE:  Passed: exact manifest and authorized custody projection persisted
+NOTICE:  Passed: sent remains distinct until payer acknowledgement is recorded
+NOTICE:  Passed: changed acknowledgement command refused
+DO
+RESET
+NOTICE:  Passed: custody hashes form an append-only chain
+DO
+ROLLBACK

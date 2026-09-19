@@ -1,0 +1,73 @@
+{
+  "review": "web-03-administering-entity-resolution-final102-independent-judge",
+  "phase": "runtime-architecture::web-case-to-letter",
+  "verificationTier": 1,
+  "verdict": "PASS",
+  "blocking": false,
+  "findingCount": 0,
+  "findings": [],
+  "seal": {
+    "manifest": ".refiner/artifacts/web-03-administering-entity-resolution/dist/source-manifest.sha256",
+    "expectedSha256": "ef1dc50a56cd02e168de9625f607fcc4c8d9b31d421210bc811208c803a47359",
+    "observedSha256": "ef1dc50a56cd02e168de9625f607fcc4c8d9b31d421210bc811208c803a47359",
+    "digestMatches": true,
+    "snapshotCount": 102,
+    "snapshotsVerified": 102,
+    "snapshotFailures": 0,
+    "persistedCopiesMatch": 102
+  },
+  "counts": {
+    "artifactChecksPassed": 14,
+    "artifactChecksFailed": 0,
+    "focusedCommandsPassed": 10,
+    "focusedCommandsFailed": 0,
+    "focusedBrowserTestFilesPassed": 5,
+    "focusedBrowserTestsPassed": 33,
+    "mountedHttpTestsPassed": 3,
+    "gatePolicyTestsPassed": 1,
+    "freshDatabaseReceipts": 6,
+    "freshCurrentResolutions": 5,
+    "freshAuditEvents": 6,
+    "upgradeDatabaseReceipts": 6,
+    "upgradeCurrentResolutions": 5,
+    "upgradeAuditEvents": 6,
+    "redRestoreControls": 6
+  },
+  "claims": {
+    "authoritativeNeutralExpiredCatalog": "PROVEN",
+    "exclusiveValidToCopy": "PROVEN",
+    "planEndedClassification": "PROVEN",
+    "enrollmentEndedClassification": "PROVEN",
+    "futureEffectiveSemantics": "PROVEN",
+    "disjointHistoricalSemantics": "PROVEN",
+    "concurrencySerialization": "PROVEN",
+    "tenantAndCapabilityAuthority": "PROVEN",
+    "mountedRequestChain": "PROVEN",
+    "browserRecovery": "PROVEN",
+    "exactEvidenceCounts": "PROVEN",
+    "web17ClaimBoundary": "PROVEN"
+  },
+  "scopeBoundary": {
+    "focusedTier1Web03": "Passed",
+    "completeActualBrowserCertification": "Reserved for Web-17",
+    "fullCaseToLetterCertification": "Reserved for Web-17"
+  },
+  "verification": [
+    {
+      "command": "shasum -a 256 .refiner/artifacts/web-03-administering-entity-resolution/dist/source-manifest.sha256",
+      "observed": "ef1dc50a56cd02e168de9625f607fcc4c8d9b31d421210bc811208c803a47359"
+    },
+    {
+      "command": "shasum -a 256 -c .refiner/artifacts/web-03-administering-entity-resolution/dist/source-manifest.sha256",
+      "observed": "102 OK; 0 failures"
+    },
+    {
+      "command": "python3 .refiner/artifacts/web-03-administering-entity-resolution/dist/validate.py",
+      "observed": "Passed; 14 checks passed; 0 checks failed"
+    }
+  ],
+  "unverifiedByDesign": [
+    "Complete actual-browser certification",
+    "Full case-to-letter workflow certification"
+  ]
+}

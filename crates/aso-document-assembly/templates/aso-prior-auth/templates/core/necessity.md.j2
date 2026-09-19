@@ -1,0 +1,18 @@
+{% set necessity = claims_for("necessity") -%}
+{% set alt = claims_for("alternatives") -%}
+{% set cons = claims_for("consequences") -%}
+{% if necessity or alt or cons -%}
+## 4. Medical Necessity
+
+{% for line in necessity -%}
+{{ line }}
+
+{% endfor -%}
+{% if alt -%}
+**Alternatives considered.** {% for line in alt %}{{ line }} {% endfor %}
+
+{% endif -%}
+{% if cons -%}
+**Consequences of delay or denial.** {% for line in cons %}{{ line }} {% endfor %}
+{% endif %}
+{% endif %}

@@ -1,5 +1,8 @@
 # Update Log
 
+## 2026-09-19
+* **Ingest**: [Karpathy session 01e2e3872ec2](/karpathy-session-01e2e3872ec2ad2d.md)
+
 ## 2026-09-14
 * **Creation**: [Empty Source Document](/empty-source-document.md)
 

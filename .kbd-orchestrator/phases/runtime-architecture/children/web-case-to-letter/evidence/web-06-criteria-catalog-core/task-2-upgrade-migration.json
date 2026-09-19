@@ -1,0 +1,287 @@
+{
+  "result": "Passed",
+  "verification_tier": 1,
+  "install_mode": "upgrade",
+  "observed_at": "2026-09-18T16:27:53.547857+00:00",
+  "scope": "Web-06 fresh and populated-upgrade criteria cutover, stable lineage, deterministic hashes and effective ranges, read-only legacy compatibility, immutable provenance, overlap refusal, and exact trusted catalog projection",
+  "prerequisites": [
+    "Existing Docker Compose db service with schema extensions available",
+    "Configured PostgreSQL admin password from container environment",
+    "Pinned Rust toolchain and idle workspace Cargo build directory",
+    "No concurrent database fixtures; a local exclusive lock covers this runner"
+  ],
+  "commands": [
+    "python3 scripts/test-web06-criteria-migration.py --install-mode upgrade --output .kbd-orchestrator/phases/runtime-architecture/children/web-case-to-letter/evidence/web-06-criteria-catalog-core/task-2-upgrade-migration.json",
+    "cargo run -p aso-web-server -- --migrate-server"
+  ],
+  "environment_contract": {
+    "migration": [
+      "ASO_MIGRATION_DATABASE_URL"
+    ],
+    "test": [
+      "ASO_TEST_DATABASE_URL",
+      "ASO_TEST_ADMIN_DATABASE_URL",
+      "ASO_TEST_OWNER_ROLE",
+      "ASO_TEST_GATE_CONTEXTS",
+      "ASO_TEST_GATE_CASE_ID",
+      "ASO_TEST_FOREIGN_CASE_ID"
+    ],
+    "credentials": "Disposable passwords supplied only through environment or captured SQL stdin"
+  },
+  "checks": {
+    "postgres_port_discovery": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "configured_admin_password_available": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "populated_upgrade_fixture_created": {
+      "result": "Passed"
+    },
+    "legacy_stale_and_valid_summary_fixtures_created": {
+      "result": "Passed"
+    },
+    "initial_server_migration": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "original_case_ids_and_contents_survive_upgrade": {
+      "result": "Passed"
+    },
+    "upgrade_clears_stale_empty_gate_summary": {
+      "result": "Passed"
+    },
+    "upgrade_recomputes_stale_complete_gate_summary": {
+      "result": "Passed"
+    },
+    "upgrade_preserves_correct_complete_case_including_updated_at": {
+      "result": "Passed"
+    },
+    "upgrade_preserves_legacy_affirmation_records": {
+      "result": "Passed"
+    },
+    "unchanged_migration_rerun": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "migration_ledger_and_populated_cases_unchanged": {
+      "result": "Passed"
+    },
+    "unchanged_rerun_preserves_repaired_and_valid_upgrade_cases": {
+      "result": "Passed"
+    },
+    "durable_gate_migration_recorded": {
+      "result": "Passed"
+    },
+    "checksum_mismatch_refused": {
+      "result": "Passed",
+      "return_code": 1,
+      "checksum_mismatch_reported": true
+    },
+    "checksum_refusal_preserves_populated_cases": {
+      "result": "Passed"
+    },
+    "restored_checksum_rerun": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "checksum_restoration_preserves_ledger_and_cases": {
+      "result": "Passed"
+    },
+    "checksum_probe_preserves_upgrade_cases_and_affirmations": {
+      "result": "Passed"
+    },
+    "canonical_relations_compatibility_and_projection_exist": {
+      "result": "Passed",
+      "observed": {
+        "catalogRls": true,
+        "legacyKind": "r",
+        "catalogCount": 2,
+        "legacyColumn": false,
+        "canonicalCount": 2,
+        "criterionColumn": true,
+        "compatibilityKind": "v",
+        "migrationRecorded": true,
+        "compatibilityCount": 2,
+        "publicCatalogPrivilege": false
+      }
+    },
+    "catalog_projection_has_exact_frozen_columns": {
+      "result": "Passed",
+      "observed": [
+        "id",
+        "payer_id",
+        "practice_id",
+        "evidence_grade",
+        "policy_id",
+        "section",
+        "ordinal",
+        "document_id",
+        "source_page_number",
+        "label",
+        "requirement",
+        "content_sha256_text",
+        "procedure_family",
+        "is_mandatory",
+        "validity",
+        "superseded_by"
+      ]
+    },
+    "stable_lineage_hash_effective_range_and_projection_match": {
+      "result": "Passed",
+      "observed": {
+        "id": "bf90ea47-89e6-4971-8af6-d003d54f7001",
+        "hash": "4a56a107a53a941fc8d8888b727df017f5446e4e0130cee7e3a20957e799c982",
+        "grade": "published",
+        "label": "Synthetic supervised therapy",
+        "ordinal": 1,
+        "payerId": "7d5ee40f-b08b-4da1-b418-5c9a2e164a43",
+        "section": "3.2",
+        "policyId": "5f5586e7-c588-42df-a40b-becada1c5817",
+        "validity": "[2026-01-01,2027-01-01)",
+        "documentId": null,
+        "practiceId": null,
+        "catalogHash": "4a56a107a53a941fc8d8888b727df017f5446e4e0130cee7e3a20957e799c982",
+        "requirement": "Six weeks of supervised therapy are documented.",
+        "expectedHash": "4a56a107a53a941fc8d8888b727df017f5446e4e0130cee7e3a20957e799c982",
+        "lastConfirmedAt": "2026-01-03T09:10:00+00:00",
+        "sourcePageNumber": null
+      }
+    },
+    "populated_upgrade_preserves_legacy_rows_evidence_ids_and_user_data": {
+      "result": "Passed"
+    },
+    "migrated_confirmation_timestamp_is_deterministic": {
+      "result": "Passed",
+      "observed": "2026-01-03T09:10:00+00:00"
+    },
+    "legacy_table_insert_is_refused": {
+      "result": "Passed",
+      "expected_sqlstate": "25006"
+    },
+    "compatibility_view_update_is_refused": {
+      "result": "Passed",
+      "expected_sqlstate": "25006"
+    },
+    "canonical_requirement_mutation_is_refused": {
+      "result": "Passed",
+      "expected_sqlstate": "23514"
+    },
+    "canonical_hash_mutation_is_refused": {
+      "result": "Passed",
+      "expected_sqlstate": "23514"
+    },
+    "overlapping_effective_version_is_refused": {
+      "result": "Passed",
+      "expected_sqlstate": "23P01"
+    }
+  },
+  "processes": [
+    {
+      "label": "initial_server_migration",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 0,
+      "actual_result_output": []
+    },
+    {
+      "label": "unchanged_server_migration_rerun",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 0,
+      "actual_result_output": []
+    },
+    {
+      "label": "checksum_mismatch_refusal",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 1,
+      "actual_result_output": [],
+      "checksum_mismatch_reported": true
+    },
+    {
+      "label": "restored_checksum_migration_rerun",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 0,
+      "actual_result_output": []
+    }
+  ],
+  "cleanup": {
+    "disposable_database_deleted": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "aso_session_reader": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_gate_executor": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_gate_owner": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_case_executor": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_case_owner": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_authority_event_reader": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    }
+  },
+  "unverified": [
+    "Criteria import/list/read AppServices and mounted HTTP are Web-06 tasks 1.3 and 1.4.",
+    "React criteria selection and actual-browser certification are Web-07 and Web-17.",
+    "Tauri and mobile remain deferred until Web-17 passes."
+  ],
+  "source_sha256": {
+    "migrations/server/2026090601_durable_gate.sql": "b3da2e91629534c011c6186eeb658fc2286896d2d491ca94dcda03a2f009a899",
+    "crates/aso-web-server/src/adapters/gate.rs": "b994ba20dcdf58212a3142d3fcefeef3c37ee1edadc3f8c764012d5acb640441",
+    "crates/aso-web-server/src/adapters/gate/transaction_tests.rs": "9690fe42a3cda9fc797b1bd6cfbd844155581d64227f75fc8ecd5a65e4196695",
+    "crates/aso-host/src/affirmation.rs": "adc28699815e2e24016b99742820eb3731a3ee31d2c0750721866b2a5fe679bb",
+    "crates/aso-host/src/lib.rs": "a5f92ee49173f932eee27b9d8ecddbecc730c8c7192ebd629ab7abaf17e15346",
+    "docs/design/schema/schema.sql": "0659af835b02cd91b697f5c29f5ad6ff1e34ecad92dcf7a7d41eb14391ea9679",
+    "docker/bootstrap/25-session-authority.sql": "fae999acbbaf98ca6b3ae107670ea25511426a233fa4ced5e72556c3fbc8c21b",
+    "scripts/test-gate-transaction.py": "7d96318b843f93455f9d30462f56e63c36f618d4569ccbd3d1a15704566a0787",
+    "migrations/server/2026090624_criteria_catalog.sql": "c61dd823c5456aa62cd58230f682eb72fe79952c6d2663459bdf4023f7ebe007",
+    "crates/aso-web-server/src/migrations.rs": "e3438f06294317b70b7a5e33d90cddd0cb7f511a0a537bdeaad187c081a122be",
+    "docs/design/schema/schema-web-case-to-letter.sql": "35cd668d991dd4b06b2a21a642c1370476a9b4052500b27dd9637fa43a8dec3e",
+    "docs/architecture/web-case-to-letter-contract.md": "8a86a7037f4f0db20e59d932bb84e3d90962f51fb60e33c1d8fa4f0b4ace5225",
+    "scripts/test-web06-criteria-migration.py": "05246dd092cbc99d940c0dddb873f0da293b5cf0a392e7b6cf03db2397f13b29"
+  },
+  "completed_at": "2026-09-18T16:36:21.376358+00:00"
+}

@@ -1,0 +1,81 @@
+
+ RUN  v3.2.7 /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web
+
+ ❯ src/features/administering-entity/hooks/use-administering-entity-resolution.test.tsx (12 tests | 2 failed) 1057ms
+   ✓ administering-entity resolution view model > reconstructs the durable resolution after a page remount 116ms
+   ✓ administering-entity resolution view model > reads the current case-input revision before resolving and publishes committed output 57ms
+   ✓ administering-entity resolution view model > retains the committed command ID when the post-commit reload fails 54ms
+   × administering-entity resolution view model > clears a committed command when its current row was invalidated before reload 59ms
+     → expected { status: 'uncertain', …(3) } to match object { status: 'unresolved', …(2) }
+(1 matching property omitted from actual)
+   × administering-entity resolution view model > clears a reconciled command when its current row was invalidated 55ms
+     → expected { status: 'uncertain', …(3) } to match object { status: 'unresolved', …(2) }
+(21 matching properties omitted from actual)
+   ✓ administering-entity resolution view model > recovers an uncertain command ID after the view remounts 128ms
+   ✓ administering-entity resolution view model > checks an uncertain re-resolution before accepting an older committed row 106ms
+   ✓ administering-entity resolution view model > reissues the same command when lookup races a late commit 105ms
+   ✓ administering-entity resolution view model > does not retain a command when the case read fails before dispatch 108ms
+   ✓ administering-entity resolution view model > clears a stale absent command and permits a fresh resolution 108ms
+   ✓ administering-entity resolution view model > clears an absent command when the serialized retry finds incomplete inputs 106ms
+   ✓ administering-entity resolution view model > preserves incomplete-input guidance after checking a saved command 55ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/administering-entity/hooks/use-administering-entity-resolution.test.tsx > administering-entity resolution view model > clears a committed command when its current row was invalidated before reload
+AssertionError: expected { status: 'uncertain', …(3) } to match object { status: 'unresolved', …(2) }
+(1 matching property omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "message": "The saved coverage path was invalidated. Resolve it again.",
+-   "pendingCommandId": null,
+-   "status": "unresolved",
++   "message": "The resolution was saved, but the committed state could not be reloaded.",
++   "pendingCommandId": "a4dd00d7-c4c9-4cc4-838b-138ab42a4f90",
++   "status": "uncertain",
+  }
+
+ ❯ src/features/administering-entity/hooks/use-administering-entity-resolution.test.tsx:120:38
+    118|     await act(async () => { await hook.result.current.resolve(); });
+    119| 
+    120|     expect(hook.result.current.view).toMatchObject({
+       |                                      ^
+    121|       status: 'unresolved',
+    122|       pendingCommandId: null,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  src/features/administering-entity/hooks/use-administering-entity-resolution.test.tsx > administering-entity resolution view model > clears a reconciled command when its current row was invalidated
+AssertionError: expected { status: 'uncertain', …(3) } to match object { status: 'unresolved', …(2) }
+(21 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "message": "The saved coverage path was invalidated. Resolve it again.",
+-   "pendingCommandId": null,
+-   "status": "unresolved",
++   "message": "The resolution was saved, but the committed state could not be reloaded.",
++   "pendingCommandId": "9970ca1a-e041-45c1-94da-ecf75d1a6a4a",
++   "status": "uncertain",
+  }
+
+ ❯ src/features/administering-entity/hooks/use-administering-entity-resolution.test.tsx:141:38
+    139|     await act(async () => { await hook.result.current.reconcile(); });
+    140| 
+    141|     expect(hook.result.current.view).toMatchObject({
+       |                                      ^
+    142|       status: 'unresolved',
+    143|       pendingCommandId: null,
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 10 passed (12)
+   Start at  09:59:39
+   Duration  2.38s (transform 81ms, setup 0ms, collect 180ms, tests 1.06s, environment 626ms, prepare 80ms)
+

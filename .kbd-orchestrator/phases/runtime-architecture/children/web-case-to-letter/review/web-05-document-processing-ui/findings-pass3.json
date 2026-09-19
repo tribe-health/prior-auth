@@ -1,0 +1,22 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "web/src/shared/sync/pglite-schema.ts",
+      "claim": "The replica cutover clears synchronized rows and checkpoints but does not actually start a new local generation in the migration SQL, contrary to the claimed controlled generation cutover and leaving generation-based stale-resume fencing dependent on the unchanged schema plan value.",
+      "evidence": "CURRENT web/src/shared/sync/pglite-schema.ts defines PGLITE_CASE_SUMMARY_SQL with TRUNCATE of synchronized tables and optional TRUNCATE of _replica_checkpoints, but it contains no update to _replica_meta.generation; CURRENT .refiner/artifacts/.../decisions.md claims \"Revision 6 performs a controlled local-replica cutover\" and \"clears all synchronized rows and any checkpoint before the required columns are added; the next authorized pass refetches the complete graph.\"",
+      "suggested_fix": "In the same migration transaction, update the replica metadata generation (when _replica_meta exists) before/with checkpoint clearing, or otherwise make the migration-ledger plan assign a strictly new generation for this cutover and test that currentGeneration changes across the populated upgrade."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

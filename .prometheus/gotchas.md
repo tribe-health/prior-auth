@@ -850,3 +850,45 @@ The Postgres image applies `docker/bootstrap` before the API SQLx migrator. Fres
 ## 2026-09-19 — Authorized shape identifiers and revisions are cross-repository contracts
 
 The API emitted projection revision 5 with `document_statuses`, while Flint Gate still validated revision 4 and the retired `documents` identifier. The callback first failed as unavailable during deserialization, then failed closed as denied on the revision check. A projection advance must update the ASO registry, Flint Gate validator/minter, FRF validator/catalog, and browser materializer together before the composed route can pass.
+
+## 2026-09-19 — Security-definer functions still invoke owner-context triggers
+
+The letter workflow reached its bounded command functions but failed at runtime because table triggers executed as the function owner and read helper tables that owner could not select. `generate_prior_letter` needed `evidence_grades` plus an explicit claim attribution; signing needed read access to `retrieval_log`, `criteria`, and `evidence_grades`. For every security-definer mutation, replay the real command through the executor role and include trigger dependency grants in the same forward migration.
+
+## 2026-09-19 — A complete signing demo needs a versioned signature fixture
+
+A surgeon with `sign_letter` authority still receives `signatureVersion: null` when `aso.signatures` has no current row. Demo initialization now creates one synthetic, versioned signature object. A login and capability fixture alone cannot demonstrate the final clinical act.
+
+## 2026-09-19 — PostgreSQL CURRENT_CATALOG shadows a local revision variable
+
+The real policy-selection UI rejected matching resolution/catalog tokens. A PL/pgSQL local named current_catalog resolved to PostgreSQL CURRENT_CATALOG (database name) in SQL expressions. Forward migration 0637 renames both affected function locals; a local executor regression now rejects stale tokens and accepts matching tokens/current snapshots. Avoid SQL value-expression keywords for revision variables.
+
+## 2026-09-19 — Assembly package digests are loaded at service startup
+
+After changing a template and its frozen manifest digest, a running API process still used the package digest loaded at startup and correctly refused the request as `auth-required` or `invalid_assembly`. Recreate the API service after an authorized package-manifest change before running live generation. Do not weaken digest validation or silently update the expected digest.
+
+## 2026-09-19 — final web case-to-letter browser certification
+
+### A signed denial response cannot repair a missing determination transition
+The live corrected-resubmission browser run generated, reviewed, approved, and
+signed the response, but packet submission remained blocked because the case
+was still `submitted`. The signed-letter helper was intentionally bounded to
+`response_drafting -> response_ready`; widening it would let a signature invent
+an adverse payer event. The repair belongs at the actual events: a recorded
+denial advances through `denied` to `denial_review`, and confirmed response mode
+advances to `response_drafting`. Migration 2026090647 adds those transitions and
+reconciles already-confirmed synthetic demo rows before the existing signing
+helper performs its final edge.
+
+### Node 24 experimental Web Storage can replace jsdom storage in Vitest 3
+The full web suite produced 58 cascading session failures with
+`localStorage` undefined and an AbortSignal realm mismatch under Node 24.16.0.
+Running Node 22 repaired storage but broke the binary `Blob.stream()` contract.
+Node 24 with `--no-experimental-webstorage` passed both boundaries. The web test
+script now supplies that flag and keeps the existing 4096 MiB worker limit.
+
+### VP8 WebM cannot be stream-copied into this FFmpeg MP4 container
+The bdd-video-proof skill documents `ffmpeg -c copy` for Playwright WebM to MP4.
+Measured with FFmpeg 9.0.1, the command fails because the MP4 muxer rejects VP8.
+Customer-playable evidence must transcode the video to H.264 (or retain WebM)
+instead of claiming a lossless MP4 remux.

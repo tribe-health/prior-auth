@@ -107,7 +107,7 @@ export function projectEvidenceTimeline(
       return {
         id,
         caseId: requiredString(row, 'case_id', 'case evidence'),
-        policyCriterionId: requiredString(row, 'policy_criterion_id', 'case evidence'),
+        policyCriterionId: requiredString(row, 'criterion_id', 'case evidence'),
         criterionLabel: null,
         // State is authoritative data. Citation presence is orthogonal and
         // must never turn a gap or a met assertion into a void.

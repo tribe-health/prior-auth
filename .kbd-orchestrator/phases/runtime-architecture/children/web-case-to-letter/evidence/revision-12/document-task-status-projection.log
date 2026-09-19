@@ -1,0 +1,7 @@
+BEGIN
+NOTICE:  Passed: task insert materialized the sanitized status row
+NOTICE:  Passed: task update refreshed the status and sequence
+NOTICE:  Passed: protected task fields are structurally absent
+NOTICE:  Passed: task deletion removed the status projection
+DO
+ROLLBACK

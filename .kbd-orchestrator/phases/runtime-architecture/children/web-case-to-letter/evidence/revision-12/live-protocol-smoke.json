@@ -1,0 +1,43 @@
+{
+  "a2a": {
+    "agentCardStatus": 200,
+    "protocolVersion": "0.3.0",
+    "skills": [
+      "initial_request",
+      "corrected_resubmission",
+      "clinical_appeal"
+    ],
+    "streaming": true,
+    "taskGet": {
+      "state": "completed",
+      "status": 200,
+      "taskId": "41cbfe58-a4ef-47b5-b9c8-dab18aab29f4"
+    }
+  },
+  "mcp": {
+    "initializeStatus": 200,
+    "mcpApp": {
+      "csp": {
+        "baseUriDomains": [],
+        "connectDomains": [],
+        "frameDomains": [],
+        "resourceDomains": []
+      },
+      "htmlBytes": 1323118,
+      "mimeType": "text/html;profile=mcp-app",
+      "readStatus": 200
+    },
+    "protocolVersion": "2025-11-25",
+    "resources": [
+      "ui://aso/document-workspace"
+    ],
+    "server": "aso-document-assembly",
+    "tools": [
+      "start_draft",
+      "get_task",
+      "cancel_task",
+      "artifacts"
+    ]
+  },
+  "transport": "same-origin browser session through the web proxy"
+}

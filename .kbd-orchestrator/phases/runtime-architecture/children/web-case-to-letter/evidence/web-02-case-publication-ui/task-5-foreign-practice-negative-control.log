@@ -1,0 +1,34 @@
+
+ RUN  v3.2.7 /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web
+
+ ❯ src/features/case-queue/hooks/use-case-projection.test.ts (5 tests | 1 failed) 6ms
+   ✓ committed case projections > preserves ordered list membership and normalizes exact identifier-only rows 1ms
+   ✓ committed case projections > returns pending until the committed list exists 0ms
+   × committed case projections > refuses a listed case from another practice instead of filtering it silently 4ms
+     → expected 'ready' to be 'error' // Object.is equality
+   ✓ committed case projections > returns unavailable for detail or intake when the id is outside the committed list 0ms
+   ✓ committed case projections > refuses missing rows and unknown lifecycle states 0ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/case-queue/hooks/use-case-projection.test.ts > committed case projections > refuses a listed case from another practice instead of filtering it silently
+AssertionError: expected 'ready' to be 'error' // Object.is equality
+
+Expected: "error"
+Received: "ready"
+
+ ❯ src/features/case-queue/hooks/use-case-projection.test.ts:81:31
+     79|   it('refuses a listed case from another practice instead of filtering…
+     80|     const projection = projectCaseQueue(slice('practice-2'), 'practice…
+     81|     expect(projection.status).toBe('error');
+       |                               ^
+     82|     expect(projection.error).toMatch(/outside the verified practice/i);
+     83|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  02:59:33
+   Duration  952ms (transform 85ms, setup 0ms, collect 232ms, tests 6ms, environment 525ms, prepare 52ms)

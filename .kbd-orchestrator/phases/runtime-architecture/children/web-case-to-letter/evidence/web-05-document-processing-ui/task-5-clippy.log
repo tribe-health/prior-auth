@@ -1,0 +1,82 @@
+    Blocking waiting for file lock on build directory
+    Checking aso-host v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host)
+    Checking aso-server-axum v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-server-axum)
+error: the `Err`-variant returned from this function is very large
+  --> crates/aso-server-axum/src/routes/administering_entity.rs:76:67
+   |
+76 | fn require_capability(capabilities: &[String], required: &str) -> Result<(), Response> {
+   |                                                                   ^^^^^^^^^^^^^^^^^^^^ the `Err`-variant is at least 128 bytes
+   |
+   = help: try reducing the size of `axum::http::Response<axum::body::Body>`, for example by boxing large elements or replacing it with `Box<axum::http::Response<axum::body::Body>>`
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#result_large_err
+   = note: `-D clippy::result-large-err` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::result_large_err)]`
+
+error: the `Err`-variant returned from this function is very large
+  --> crates/aso-server-axum/src/routes/cases.rs:90:67
+   |
+90 | fn require_capability(capabilities: &[String], required: &str) -> Result<(), Response> {
+   |                                                                   ^^^^^^^^^^^^^^^^^^^^ the `Err`-variant is at least 128 bytes
+   |
+   = help: try reducing the size of `axum::http::Response<axum::body::Body>`, for example by boxing large elements or replacing it with `Box<axum::http::Response<axum::body::Body>>`
+   = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#result_large_err
+
+error: the `Err`-variant returned from this function is very large
+   --> crates/aso-server-axum/src/routes/documents.rs:111:67
+    |
+111 | fn require_capability(capabilities: &[String], required: &str) -> Result<(), Response> {
+    |                                                                   ^^^^^^^^^^^^^^^^^^^^ the `Err`-variant is at least 128 bytes
+    |
+    = help: try reducing the size of `axum::http::Response<axum::body::Body>`, for example by boxing large elements or replacing it with `Box<axum::http::Response<axum::body::Body>>`
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#result_large_err
+
+error: the `Err`-variant returned from this function is very large
+   --> crates/aso-server-axum/src/routes/documents.rs:202:51
+    |
+202 | fn set_once<T>(slot: &mut Option<T>, value: T) -> Result<(), Response> {
+    |                                                   ^^^^^^^^^^^^^^^^^^^^ the `Err`-variant is at least 128 bytes
+    |
+    = help: try reducing the size of `axum::http::Response<axum::body::Body>`, for example by boxing large elements or replacing it with `Box<axum::http::Response<axum::body::Body>>`
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#result_large_err
+
+error: the `Err`-variant returned from this closure is very large
+   --> crates/aso-server-axum/src/routes/documents.rs:280:14
+    |
+280 |         .map(|value| serde_json::from_str::<Value>(&value).map_err(|_| invalid()))
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the `Err`-variant is at least 128 bytes
+    |
+    = help: try reducing the size of `axum::http::Response<axum::body::Body>`, for example by boxing large elements or replacing it with `Box<axum::http::Response<axum::body::Body>>`
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#result_large_err
+
+error: could not compile `aso-server-axum` (lib) due to 5 previous errors
+warning: build failed, waiting for other jobs to finish...
+error: this `MutexGuard` is held across an await point
+   --> crates/aso-server-axum/src/routes/letters/tests.rs:279:9
+    |
+279 |     let commands = fixture.signing.commands.lock().unwrap();
+    |         ^^^^^^^^
+    |
+    = help: consider using an async-aware `Mutex` type or ensuring the `MutexGuard` is dropped before calling `await`
+note: these are all the await points this lock is held through
+   --> crates/aso-server-axum/src/routes/letters/tests.rs:294:49
+    |
+294 |     let response = fixture.request(&uri, stale).await;
+    |                                                 ^^^^^
+295 |     assert_eq!(response.status(), StatusCode::CONFLICT);
+296 |     assert_eq!(error_code(response).await, "revision_conflict");
+    |                                     ^^^^^
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#await_holding_lock
+    = note: `-D clippy::await-holding-lock` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::await_holding_lock)]`
+
+error: using `clone` on type `Result<LogoutResult, SessionError>` which implements the `Copy` trait
+   --> crates/aso-server-axum/src/session.rs:517:13
+    |
+517 |             self.0.clone()
+    |             ^^^^^^^^^^^^^^ help: try removing the `clone` call: `self.0`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#clone_on_copy
+    = note: `-D clippy::clone-on-copy` implied by `-D warnings`
+    = help: to override `-D warnings` add `#[allow(clippy::clone_on_copy)]`
+
+error: could not compile `aso-server-axum` (lib test) due to 7 previous errors

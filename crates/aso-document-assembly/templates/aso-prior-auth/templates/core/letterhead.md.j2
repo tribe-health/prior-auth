@@ -1,0 +1,17 @@
+**{{ ctx.practice.name }}**  
+{% if ctx.practice.address %}{{ ctx.practice.address }}  
+{% endif %}
+{% if ctx.practice.phone %}Phone {{ ctx.practice.phone }}  
+{% endif %}
+{% if ctx.practice.fax %}Fax {{ ctx.practice.fax }}  
+{% endif %}
+{% if ctx.practice.npi %}NPI {{ ctx.practice.npi }}
+{% endif %}
+
+{{ ctx.letter_date }}
+
+To: {{ ctx.payer.name }}{% if ctx.payer.unit %} — {{ ctx.payer.unit }}{% endif %}  
+{% if ctx.payer.address %}{{ ctx.payer.address }}  
+{% endif %}
+{% if ctx.payer.fax %}Fax {{ ctx.payer.fax }}
+{% endif %}

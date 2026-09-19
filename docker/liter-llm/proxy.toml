@@ -1,0 +1,35 @@
+# Synthetic data only. Production inference requires a separate qualified
+# provider deployment; it must never fall back to this model.
+[server]
+host = "0.0.0.0"
+port = 4000
+request_timeout_secs = 180
+body_limit_bytes = 2097152
+cors_origins = []
+
+[general]
+default_timeout_secs = 120
+max_retries = 0
+enable_cost_tracking = false
+enable_tracing = false
+
+[security]
+outbound_policy = "allowlist"
+outbound_allowlist = ["https://token-plan.ap-southeast-1.maas.aliyuncs.com"]
+
+[[models]]
+name = "qwen3.8-max"
+provider_model = "openai/qwen3.8-max"
+base_url = "${QWEN_TOKEN_PLAN_OPENAI_URL}"
+api_key = "${QWEN_TOKEN_PLAN_API_KEY}"
+timeout_secs = 120
+fallbacks = []
+
+[[keys]]
+key = "${ASO_LITER_SYNTHETIC_KEY}"
+description = "ASO synthetic document generation"
+tenant_id = "aso-synthetic-demo"
+models = ["qwen3.8-max"]
+rpm = 30
+
+# Deliberately no cache, aliases, master key, production model, or fallback.

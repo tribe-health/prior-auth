@@ -1,0 +1,17 @@
+{
+  "result": "Passed",
+  "guard": "commit removes staging and leaves one ready document plus one immutable receipt",
+  "sabotage": "removed staged-row deletion from commit_document_upload_command",
+  "red_return_code": 1,
+  "red_receipt_result": "Failed",
+  "red_failed_check": {
+    "stage": "web04_document_upload_schema_and_functions",
+    "type": "AssertionError"
+  },
+  "restored_return_code": 0,
+  "restored_receipt_result": "Passed",
+  "original_sha256": "5b6ff35b0d64ed48436506d95059ccb211eea32cae76bc83b57e17ba5b743a3c",
+  "restored_sha256": "5b6ff35b0d64ed48436506d95059ccb211eea32cae76bc83b57e17ba5b743a3c",
+  "red_command": "python3 scripts/test-web04-document-upload-schema.py --install-mode fresh --output /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/.kbd-orchestrator/phases/runtime-architecture/children/web-case-to-letter/evidence/web-04-document-upload-core/task-5-partial-commit-red.json",
+  "restored_command": "python3 scripts/test-web04-document-upload-schema.py --install-mode fresh --output /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/.kbd-orchestrator/phases/runtime-architecture/children/web-case-to-letter/evidence/web-04-document-upload-core/task-5-fresh-focused.json"
+}

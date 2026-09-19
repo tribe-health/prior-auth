@@ -1,0 +1,9 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.10s
+     Running unittests src/lib.rs (/Volumes/my-passport/cargo-build/02/70d32e977a4fbf/debug/deps/aso_host-dd1c39f6b1762bd5)
+
+running 2 tests
+test case_management::tests::invalid_or_unverified_commands_never_reach_the_repository ... ok
+test case_management::tests::commands_reconcile_and_advance_distinct_revisions ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 35 filtered out; finished in 0.00s
+

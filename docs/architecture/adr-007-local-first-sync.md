@@ -6,7 +6,8 @@
 
 This record is retained as decision history. Its original decision, rationale
 and consequences below are superseded, not parallel implementation instructions.
-The successor is an accepted target design; implementation is not certified.
+The successor is accepted and its memory-only browser Compose path is locally
+integrated. Persistent browser storage and native parity remain uncertified.
 
 Current design requires authorized FRF-mediated Electric access and a desktop
 storage branch. The historical claims that projections cannot contain PHI and
@@ -42,7 +43,8 @@ bypassed the API would bypass the second of ADR-002's three layers.
 Only the approved evidence and attributed-opinion path reaches the browser:
 
 `annotation_types` · `annotations` · `cases` · `case_evidence` ·
-`evidence_states` · `evidence_citations` · `document_statuses`
+`evidence_states` · `evidence_citations` · `document_statuses` ·
+`document_task_statuses`
 
 Not "the tables we happened to need." A table is absent unless it was decided
 to be present.
@@ -66,8 +68,9 @@ PGlite schema** — not filtered at query time. Absent.
 not a control.** If PGlite gained pgvector tomorrow, nothing in the runtime
 would stop a vector table syncing. The control is the explicit schema subset and
 the test that fails when an undeclared table appears — not the absence of an
-extension. Projection revision 5 contains attributed annotations, the
-approved annotation-type catalog, and the exact document status row. The
+extension. Projection revision 6 contains attributed annotations, the
+approved annotation-type catalog, the exact document status row, and a sanitized
+document-task status row. The
 status row is maintained in a WAL-producing base table from case-bound
 documents; extracted page text, object locations, parser output, and embeddings
 have no columns in that relation or the PGlite target. An opinion body, author, disposition,
@@ -75,7 +78,10 @@ revision, and source target are available to the authorized memory-only
 runtime. The catalog exposes only `id`, `key`, `name`, and `description`, so
 the UI can create the first annotation from a server-owned type identity while
 type-specific JSON Schema and annotation `data` remain server-side. The opinion
-is labeled as surgeon provenance and cannot be presented as chart text.
+is labeled as surgeon provenance and cannot be presented as chart text. The task
+status projection contains only task/case identity, purpose, state, stage,
+sequence and update time; protected inputs, results, errors and actor data have
+no columns in that relation or its PGlite target.
 
 ## Why ElectricSQL and not prometheus-entity-sync
 
@@ -131,7 +137,7 @@ column list, or narrowing parameter that broadens this registry.
 
 `scripts/audit.sh` check 2 (no query cache). Tests assert that the PGlite
 schema, server projection registry, FRF catalog, requested columns, and graph
-bindings contain exactly the seven approved projection revision 5 tables and
+bindings contain exactly the eight approved projection revision 6 tables and
 fail when an undeclared table or column appears.
 
 The PHI exclusion has **no runtime enforcement** — it is a build-time schema

@@ -1,0 +1,13 @@
+{
+  "result": "Passed",
+  "guard": "ResolveMutation deny_unknown_fields",
+  "sabotage": "Removed deny_unknown_fields so caller-selected entity/path fields were ignored.",
+  "red_exit_code": 101,
+  "red_observation": "The mounted HTTP refusal test failed because the sabotaged endpoint returned 200 instead of 400.",
+  "restored_sha256": "38706facc089cd57e58eb31460479f3815b30fcd5009f5823f4aa0915cc89ecf",
+  "restored_observation": "The exact mounted HTTP refusal test passed after byte-for-byte restoration.",
+  "logs": [
+    ".kbd-orchestrator/phases/runtime-architecture/children/web-case-to-letter/evidence/web-03-administering-entity-resolution/task-5-untrusted-selection-red.log",
+    ".kbd-orchestrator/phases/runtime-architecture/children/web-case-to-letter/evidence/web-03-administering-entity-resolution/task-5-untrusted-selection-restored.log"
+  ]
+}

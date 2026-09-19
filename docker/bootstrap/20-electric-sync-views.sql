@@ -63,7 +63,7 @@ SELECT
   ce.id,
   c.practice_id,
   ce.case_id,
-  ce.policy_criterion_id,
+  ce.criterion_id,
   ce.state,
   ce.assessed_at,
   ce.created_at,

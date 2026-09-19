@@ -1,0 +1,133 @@
+Total messages: 3 (Errors: 1, Warnings: 0)
+Returning 130 messages for level "error"
+
+[ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://127.0.0.1:5173/api/cases/10000000-0000-4000-8000-000000000005/determinations/latest?practiceId=10000000-0000-4000-8000-000000000001:0
+[ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://127.0.0.1:5173/api/cases/10000000-0000-4000-8000-000000000005/determinations/latest?practiceId=10000000-0000-4000-8000-000000000001:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=evidence_states&handle=115465560-1789816012418769&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://127.0.0.1:5173/api/session:0
+[ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://127.0.0.1:5173/api/session:0
+[ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://127.0.0.1:5173/api/session:0
+[ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://127.0.0.1:5173/api/session:0
+[ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://127.0.0.1:5173/api/session:0
+[ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://127.0.0.1:5173/api/session:0
+[ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://127.0.0.1:5173/api/session:0
+[ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://127.0.0.1:5173/api/session:0
+[ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://127.0.0.1:5173/api/cases/10000000-0000-4000-8000-000000000005/determinations/latest?practiceId=10000000-0000-4000-8000-000000000001:0
+[ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://127.0.0.1:5173/api/cases/10000000-0000-4000-8000-000000000005/determinations/latest?practiceId=10000000-0000-4000-8000-000000000001:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/api/cases/10000000-0000-4000-8000-000000000005/letters?practiceId=10000000-0000-4000-8000-000000000001:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=annotations&handle=25976750-1789816170302837&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=annotation_types&handle=33300854-1789816012420983&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://127.0.0.1:5173/api/session:0
+[ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://127.0.0.1:5173/api/session:0
+[ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://127.0.0.1:5173/api/session:0
+[ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://127.0.0.1:5173/api/session:0
+[ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://127.0.0.1:5173/api/session:0
+[ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://127.0.0.1:5173/api/session:0
+[ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://127.0.0.1:5173/api/session:0
+[ERROR] Failed to load resource: the server responded with a status of 401 (Unauthorized) @ http://127.0.0.1:5173/api/session:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=case_evidence&handle=16105943-1789816170260051&offset=59409440_0:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/api/cases/10000000-0000-4000-8000-000000000005/letters?practiceId=10000000-0000-4000-8000-000000000001:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=evidence_states&handle=115465560-1789816012418769&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=evidence_citations&handle=58204961-1789816012422957&offset=59409440_2:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=document_statuses&handle=6450111-1789816012477566&offset=61296240_0:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=evidence_citations&handle=58204961-1789816012422957&offset=59409440_2:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=cases&handle=5426252-1789809350224434&offset=61431872_0:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=annotation_types&handle=33300854-1789816012420983&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=evidence_states&handle=115465560-1789816012418769&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=case_evidence&handle=16105943-1789816170260051&offset=59409440_0:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=annotations&handle=25976750-1789816170302837&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=cases&handle=5426252-1789809350224434&offset=61431872_0:0
+[ERROR] Failed to load resource: the server responded with a status of 403 (Forbidden) @ http://127.0.0.1:5173/v1/shape?shape=evidence_citations&handle=58204961-1789816012422957&offset=59409440_2:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=document_statuses&handle=6450111-1789816012477566&offset=61296240_0:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=case_evidence&handle=16105943-1789816170260051&offset=59409440_0:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/api/cases/10000000-0000-4000-8000-000000000005/criteria-selection?practiceId=10000000-0000-4000-8000-000000000001:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/api/cases/10000000-0000-4000-8000-000000000005/criteria-selection?practiceId=10000000-0000-4000-8000-000000000001:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=evidence_citations&handle=58204961-1789816012422957&offset=59409440_2:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=annotation_types&handle=33300854-1789816012420983&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=document_statuses&handle=6450111-1789816012477566&offset=61296240_0:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=annotations&handle=25976750-1789816170302837&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=case_evidence&handle=16105943-1789816170260051&offset=61726968_4:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=document_statuses&handle=6450111-1789816012477566&offset=61296240_0:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=document_statuses&handle=6450111-1789816012477566&offset=61296240_0:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=case_evidence&handle=16105943-1789816170260051&offset=61726968_4:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=evidence_states&handle=115465560-1789816012418769&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=evidence_states&handle=115465560-1789816012418769&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=document_statuses&handle=6450111-1789816012477566&offset=61296240_0:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=evidence_states&handle=115465560-1789816012418769&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=evidence_citations&handle=58204961-1789816012422957&offset=61726968_6:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=cases&handle=5426252-1789809350224434&offset=61726968_8:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=annotation_types&handle=33300854-1789816012420983&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=case_evidence&handle=16105943-1789816170260051&offset=61726968_4:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=annotation_types&handle=33300854-1789816012420983&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=document_statuses&handle=6450111-1789816012477566&offset=61296240_0:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=cases&handle=5426252-1789809350224434&offset=61726968_8:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=document_statuses&handle=6450111-1789816012477566&offset=61296240_0:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=annotation_types&handle=33300854-1789816012420983&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=evidence_states&handle=115465560-1789816012418769&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=document_statuses&handle=6450111-1789816012477566&offset=61296240_0:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=cases&handle=5426252-1789809350224434&offset=61726968_8:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=document_statuses&handle=6450111-1789816012477566&offset=61296240_0:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=annotation_types&handle=33300854-1789816012420983&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=annotation_types&handle=33300854-1789816012420983&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=case_evidence&handle=16105943-1789816170260051&offset=61726968_4:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=evidence_citations&handle=58204961-1789816012422957&offset=61726968_6:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=cases&handle=5426252-1789809350224434&offset=61726968_8:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=document_statuses&handle=6450111-1789816012477566&offset=61296240_0:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=evidence_states&handle=115465560-1789816012418769&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=annotations&handle=25976750-1789816170302837&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=annotation_types&handle=33300854-1789816012420983&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=evidence_citations&handle=58204961-1789816012422957&offset=61726968_6:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=annotation_types&handle=33300854-1789816012420983&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=evidence_states&handle=115465560-1789816012418769&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=evidence_states&handle=115465560-1789816012418769&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=cases&handle=5426252-1789809350224434&offset=61726968_8:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=evidence_citations&handle=58204961-1789816012422957&offset=61726968_6:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=cases&handle=5426252-1789809350224434&offset=61726968_8:0
+[ERROR] Failed to load resource: the server responded with a status of 403 (Forbidden) @ http://127.0.0.1:5173/v1/shape?shape=annotation_types&handle=33300854-1789816012420983&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=evidence_citations&handle=58204961-1789816012422957&offset=61726968_6:0
+[ERROR] Failed to load resource: the server responded with a status of 403 (Forbidden) @ http://127.0.0.1:5173/v1/shape?shape=document_statuses&handle=6450111-1789816012477566&offset=61296240_0:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=evidence_states&handle=115465560-1789816012418769&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=evidence_citations&handle=58204961-1789816012422957&offset=61726968_6:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=case_evidence&handle=16105943-1789816170260051&offset=61726968_4:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=cases&handle=5426252-1789809350224434&offset=65569664_0:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=annotation_types&handle=33300854-1789816012420983&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 403 (Forbidden) @ http://127.0.0.1:5173/v1/shape?shape=annotations&handle=25976750-1789816170302837&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=evidence_states&handle=115465560-1789816012418769&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=case_evidence&handle=16105943-1789816170260051&offset=61726968_4:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=cases&handle=5426252-1789809350224434&offset=65569664_0:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=document_statuses&handle=6450111-1789816012477566&offset=61296240_0:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=document_task_statuses&handle=37757317-1789837077221587&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=annotation_types&handle=33300854-1789816012420983&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=evidence_citations&handle=58204961-1789816012422957&offset=61726968_6:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=annotations&handle=25976750-1789816170302837&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=document_statuses&handle=6450111-1789816012477566&offset=61296240_0:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=evidence_states&handle=115465560-1789816012418769&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=document_task_statuses&handle=37757317-1789837077221587&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=document_statuses&handle=6450111-1789816012477566&offset=61296240_0:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=annotations&handle=25976750-1789816170302837&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=case_evidence&handle=16105943-1789816170260051&offset=61726968_4:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=document_statuses&handle=6450111-1789816012477566&offset=61296240_0:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=case_evidence&handle=16105943-1789816170260051&offset=61726968_4:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=cases&handle=5426252-1789809350224434&offset=65569664_0:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=document_task_statuses&handle=37757317-1789837077221587&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=annotation_types&handle=33300854-1789816012420983&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=evidence_states&handle=115465560-1789816012418769&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=evidence_citations&handle=58204961-1789816012422957&offset=61726968_6:0
+[ERROR] Failed to load resource: the server responded with a status of 409 (Conflict) @ http://127.0.0.1:5173/v1/shape?shape=annotations&handle=25976750-1789816170302837&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=document_task_statuses&handle=37757317-1789837077221587&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=cases&handle=5426252-1789809350224434&offset=65569664_0:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=document_task_statuses&handle=37757317-1789837077221587&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=document_task_statuses&handle=37757317-1789837077221587&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=document_statuses&handle=6450111-1789816012477566&offset=61296240_0:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=evidence_states&handle=115465560-1789816012418769&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=cases&handle=5426252-1789809350224434&offset=65569664_0:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=annotations&handle=25976750-1789816170302837&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=document_task_statuses&handle=37757317-1789837077221587&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=document_statuses&handle=6450111-1789816012477566&offset=61296240_0:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=document_task_statuses&handle=37757317-1789837077221587&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=evidence_states&handle=115465560-1789816012418769&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=document_statuses&handle=6450111-1789816012477566&offset=61296240_0:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=annotation_types&handle=33300854-1789816012420983&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=evidence_states&handle=115465560-1789816012418769&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://127.0.0.1:5173/v1/shape?shape=annotation_types&handle=33300854-1789816012420983&offset=0_inf:0
+[ERROR] Failed to load resource: the server responded with a status of 502 (Bad Gateway) @ http://127.0.0.1:5173/v1/shape?shape=case_evidence&handle=16105943-1789840957891819&offset=0_inf:0

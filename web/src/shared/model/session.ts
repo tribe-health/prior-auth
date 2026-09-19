@@ -26,6 +26,8 @@ export const CAPABILITIES = {
   resolve_administering_entity: { clinical: false },
   /** Upload bounded case documents for server-owned processing. */
   document_upload: { clinical: false },
+  /** Record a denied payer determination against its processed source. */
+  determination_record: { clinical: false },
   /** Select the controlling, versioned criteria snapshot for a resolved case. */
   criteria_select: { clinical: false },
   evidence_assemble: { clinical: false },

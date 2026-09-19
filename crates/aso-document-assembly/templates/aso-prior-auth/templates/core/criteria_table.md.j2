@@ -1,0 +1,9 @@
+## 3. Criterion-by-Criterion Documentation
+
+Policy reference: {{ ctx.policy.title }} ({{ ctx.policy.id }}, {{ ctx.policy.version }}).
+
+| Criterion reference | Source-cited statements |
+| :-- | :-- |
+{% for c in ctx.criteria -%}
+| {{ c.id }} | {% for line in claims_for(c.id) %}{{ line }} {% endfor %} |
+{% endfor %}

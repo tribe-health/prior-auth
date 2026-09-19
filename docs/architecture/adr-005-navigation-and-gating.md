@@ -6,8 +6,10 @@
 
 ## Decision
 
-The case pipeline is **ten ordered steps**, and steps **07–10 are unreachable
-until the surgeon gate is affirmed**.
+The case pipeline is **eleven ordered steps**. Steps **07–10 require the
+initial surgeon gate**. Step **11** remains visible after a payer decision and
+applies its own committed determination, response-mode, and fresh-affirmation
+requirements before a clinical appeal can be generated.
 
 | # | Step | Gated |
 |---|---|---|
@@ -21,14 +23,18 @@ until the surgeon gate is affirmed**.
 | 08 | Submission packet | **yes** |
 | 09 | Receipt & custody | **yes** |
 | 10 | Peer-to-peer | **yes** |
+| 11 | Denial response | determination and response-mode checks |
 
-Source: `docs/design/prototype/assets/shell.js:377-390`, where those four
-entries carry `gated: true`. Global navigation is separately role-gated — the
-admin console carries `requires: 'configure'`.
+Source: `web/src/app/navigation/pipeline.ts`, reconciled with the prototype
+screens. Global navigation is separately role-gated; the admin console requires
+`configure`.
 
 **Navigation requires a verified identity/practice scope, permission to read the
-step, a ready coherent graph, and the committed case gate state.** Steps 07–10
-require an affirmed case gate. Action capabilities are checked separately: a
+step, a ready coherent graph, and the committed case state.** Steps 07–10
+require an affirmed initial gate. Step 11 does not infer a denial or response
+path from navigation; its commands require the persisted determination and
+confirmed response mode, and a clinical appeal requires a new four-part
+affirmation after that determination. Action capabilities are checked separately: a
 coordinator permitted to prepare a packet after a surgeon affirms does not need
 the surgeon's affirmation capability.
 
@@ -72,7 +78,7 @@ See [ADR-008](adr-008-shared-runtime-state-and-sessions.md) and
   reverse.
 - Adding a step to the pipeline means deciding whether it is gated. There is no
   default, and a step added without that decision is a bug.
-- The prototype's step numbers (`01`…`10`) are part of the contract, not
+- The workflow step numbers (`01`…`11`) are part of the contract, not
   decoration. Coordinators refer to cases by where they are in the pipeline.
 
 ## Enforcement

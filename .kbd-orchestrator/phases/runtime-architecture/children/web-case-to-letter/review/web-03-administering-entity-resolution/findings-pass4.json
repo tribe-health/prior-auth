@@ -1,0 +1,31 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": ".kbd-orchestrator/phases/runtime-architecture/children/web-case-to-letter/evidence/web-03-administering-entity-resolution/task-3-fresh-service.json",
+      "line": 14,
+      "claim": "The retained service evidence records a non-runnable probe command because it omits the required --output argument.",
+      "evidence": "The receipt records `python3 scripts/test-web03-resolution-schema.py --install-mode fresh`, while `scripts/test-web03-resolution-schema.py` defines `parser.add_argument(\"--output\", type=Path, required=True)` and task 2.1 requires focused verification evidence.",
+      "suggested_fix": "Replace the recorded command with the exact runnable command including `--output .kbd-orchestrator/.../task-3-fresh-service.json`, or add a metadata-correction record as done for the task-2 receipts."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": ".kbd-orchestrator/phases/runtime-architecture/children/web-case-to-letter/evidence/web-03-administering-entity-resolution/task-5-command-receipt.json",
+      "line": 6,
+      "claim": "The focused web test receipt does not record the exact runnable command, using a placeholder instead of the five file paths.",
+      "evidence": "The receipt records `pnpm --dir web exec vitest run <five Web-03 files>` while task 2.1 requires retained focused T0/T1 verification evidence.",
+      "suggested_fix": "Replace the placeholder with the actual `pnpm --dir web exec vitest run ...` command listing all five test files."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

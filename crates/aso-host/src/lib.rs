@@ -16,6 +16,7 @@ pub mod annotation;
 pub mod case_management;
 pub mod criteria_catalog;
 pub mod criteria_selection;
+pub mod document_generation;
 pub mod document_processing;
 pub mod document_upload;
 pub mod domain;
@@ -28,6 +29,7 @@ pub mod reassessment;
 pub mod session;
 pub mod signing;
 pub mod source;
+pub mod submission_workflow;
 
 use std::sync::Arc;
 

@@ -1,0 +1,64 @@
+
+ RUN  v3.2.7 /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web
+
+ ❯ src/features/administering-entity/hooks/use-administering-entity-resolution.test.tsx (4 tests | 1 failed) 1301ms
+   ✓ administering-entity resolution view model > reconstructs the durable resolution after a page remount 118ms
+   ✓ administering-entity resolution view model > reads the current case-input revision before resolving and publishes committed output 56ms
+   ✓ administering-entity resolution view model > retains the committed command ID when the post-commit reload fails 55ms
+   × administering-entity resolution view model > recovers an uncertain command ID after the view remounts 1071ms
+     → expected { status: 'unresolved', …(3) } to match object { status: 'uncertain', …(1) }
+(2 matching properties omitted from actual)
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div />[39m
+    [36m<div />[39m
+  [36m</body>[39m
+[36m</html>[39m
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/administering-entity/hooks/use-administering-entity-resolution.test.tsx > administering-entity resolution view model > recovers an uncertain command ID after the view remounts
+AssertionError: expected { status: 'unresolved', …(3) } to match object { status: 'uncertain', …(1) }
+(2 matching properties omitted from actual)
+
+Ignored nodes: comments, script, style
+[36m<html>[39m
+  [36m<head />[39m
+  [36m<body>[39m
+    [36m<div />[39m
+    [36m<div />[39m
+  [36m</body>[39m
+[36m</html>[39m
+
+- Expected
++ Received
+
+  {
+-   "pendingCommandId": "6e907661-065c-483f-8a2a-25fbb033a17d",
+-   "status": "uncertain",
++   "pendingCommandId": null,
++   "status": "unresolved",
+  }
+
+ ❯ src/features/administering-entity/hooks/use-administering-entity-resolution.test.tsx:121:60
+    119| 
+    120|     const second = renderHook(() => useAdministeringEntityResolution('…
+    121|     await waitFor(() => expect(second.result.current.view).toMatchObje…
+       |                                                            ^
+    122|       status: 'uncertain', pendingCommandId: commandId,
+    123|     }));
+ ❯ runWithExpensiveErrorDiagnosticsDisabled node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/config.js:47:12
+ ❯ checkCallback node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/wait-for.js:124:77
+ ❯ Timeout.checkRealTimersCallback node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/wait-for.js:118:16
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 3 passed (4)
+   Start at  06:45:45
+   Duration  2.60s (transform 96ms, setup 0ms, collect 201ms, tests 1.30s, environment 664ms, prepare 85ms)
+

@@ -1,0 +1,31 @@
+{
+  "kinds": [
+    {
+      "class": "clinical_correspondence",
+      "key": "pa.denial_response",
+      "root": "kinds/denial_response.md.j2",
+      "templateDigest": "sha256:746c04ebbe3548ec638ac30c28ed03133b0096f389c7f1cf5c022d72b0ce55c4",
+      "templatePackage": "aso-prior-auth",
+      "version": 1
+    },
+    {
+      "class": "internal_work_product",
+      "key": "pa.halt_memo",
+      "root": "kinds/halt_memo.md.j2",
+      "templateDigest": "sha256:746c04ebbe3548ec638ac30c28ed03133b0096f389c7f1cf5c022d72b0ce55c4",
+      "templatePackage": "aso-prior-auth",
+      "version": 1
+    },
+    {
+      "class": "clinical_correspondence",
+      "key": "pa.initial_request",
+      "root": "kinds/initial_request.md.j2",
+      "templateDigest": "sha256:746c04ebbe3548ec638ac30c28ed03133b0096f389c7f1cf5c022d72b0ce55c4",
+      "templatePackage": "aso-prior-auth",
+      "version": 1
+    }
+  ],
+  "package": "aso-prior-auth",
+  "schemaVersion": 1,
+  "templateDigest": "sha256:746c04ebbe3548ec638ac30c28ed03133b0096f389c7f1cf5c022d72b0ce55c4"
+}

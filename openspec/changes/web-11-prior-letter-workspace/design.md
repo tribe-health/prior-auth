@@ -25,3 +25,19 @@ This is ordered change `web-11-prior-letter-workspace` in the reviewed `runtime-
 ## Migration Plan
 
 Apply additive schema and contract changes before enabling their callers. Preserve existing reads until the focused migration is verified. Roll back callers first; never delete historical clinical or audit records as rollback.
+
+## 2026-09-19 approved revision-12 target — Shared initial-request surfaces
+
+The [implementation addendum](../../../docs/handoff/web-case-to-letter-revision-12-agent-integration.md) supplies the current
+agent scope and dependencies after responsive web UI acceptance. Its synthetic
+Liter-LLM inference, live AG-UI and interoperable task interfaces supersede older
+no-external-inference/templates-only/optional-stream wording above. Production PHI
+inference remains disabled pending qualification; Tauri and Flutter remain deferred.
+The rendering kernel stays store-free, and model/tool calls happen before final
+transaction locks. Preserve frozen browser intents, clinical authority and cited
+claim requirements. This dated extension does not claim implementation or advance
+the KBD runtime. Historical checks and completed tasks keep their original meaning.
+
+- Mount shared draft/QA/claim/halt-memo views through typed hooks and the application-owned live channel; keep streamed content provisional until persisted.
+- Preserve source review, human approval/signing and acknowledgement controls; clear scoped buffers on logout/revocation/account change.
+- Prove keyboard access, resize/form continuity and reduced-motion behavior for the integrated initial-request surface.

@@ -1,0 +1,66 @@
+{
+  "result": "Failed",
+  "verification_tier": 1,
+  "install_mode": "fresh",
+  "observed_at": "2026-09-18T08:34:55.894109+00:00",
+  "scope": "Actual AppServices, restricted PostgreSQL functions, and local DocumentStore upload, restart, idempotency, conflict, byte/page bounds, type, digest, tenant, capability, and session behavior",
+  "prerequisites": [
+    "Existing Docker Compose db service with schema extensions available",
+    "Configured PostgreSQL admin password from container environment",
+    "Pinned Rust toolchain and idle workspace Cargo build directory",
+    "No concurrent database fixtures; a local exclusive lock covers this runner"
+  ],
+  "commands": [
+    "python3 scripts/test-web04-document-upload-service.py --install-mode fresh --output .kbd-orchestrator/phases/runtime-architecture/children/web-case-to-letter/evidence/web-04-document-upload-core/task-3-fresh-service.json",
+    "cargo run -p aso-web-server -- --migrate-server"
+  ],
+  "environment_contract": {
+    "migration": [
+      "ASO_MIGRATION_DATABASE_URL"
+    ],
+    "test": [
+      "ASO_TEST_DATABASE_URL",
+      "ASO_TEST_ADMIN_DATABASE_URL",
+      "ASO_TEST_OWNER_ROLE",
+      "ASO_TEST_GATE_CONTEXTS",
+      "ASO_TEST_GATE_CASE_ID",
+      "ASO_TEST_FOREIGN_CASE_ID"
+    ],
+    "credentials": "Disposable passwords supplied only through environment or captured SQL stdin"
+  },
+  "checks": {},
+  "processes": [],
+  "cleanup": {},
+  "unverified": [
+    "Multipart HTTP, React upload/status UI, document extraction, actual browser, Tauri, and mobile are outside Web-04 task 1.3."
+  ],
+  "source_sha256": {
+    "migrations/server/2026090601_durable_gate.sql": "b3da2e91629534c011c6186eeb658fc2286896d2d491ca94dcda03a2f009a899",
+    "crates/aso-web-server/src/adapters/gate.rs": "a716a806f0b87fa4221728bfd0ac89889ec1dda42ae5647d94e3272074864874",
+    "crates/aso-web-server/src/adapters/gate/transaction_tests.rs": "9690fe42a3cda9fc797b1bd6cfbd844155581d64227f75fc8ecd5a65e4196695",
+    "crates/aso-host/src/affirmation.rs": "adc28699815e2e24016b99742820eb3731a3ee31d2c0750721866b2a5fe679bb",
+    "crates/aso-host/src/lib.rs": "119d40b1688f90dfcbdcc9fcf5eaf5c0a0811290d135bcca36cdc1e0fca9ad7c",
+    "docs/design/schema/schema.sql": "0659af835b02cd91b697f5c29f5ad6ff1e34ecad92dcf7a7d41eb14391ea9679",
+    "docker/bootstrap/25-session-authority.sql": "fae999acbbaf98ca6b3ae107670ea25511426a233fa4ced5e72556c3fbc8c21b",
+    "scripts/test-gate-transaction.py": "7d96318b843f93455f9d30462f56e63c36f618d4569ccbd3d1a15704566a0787",
+    "migrations/server/2026090617_durable_case_commands.sql": "6ed504bdff3e4abe464179101d55c7fd23c4b6e9c1ef5e67e6e3854b010d3a86",
+    "migrations/server/2026090620_document_upload_schema.sql": "5b6ff35b0d64ed48436506d95059ccb211eea32cae76bc83b57e17ba5b743a3c",
+    "crates/aso-web-server/src/migrations.rs": "730cd713e6787412d5eef817018c6343dc0e82dc7ea5432d6133a34abcfb4d05",
+    "docs/design/schema/schema-web-case-to-letter.sql": "35cd668d991dd4b06b2a21a642c1370476a9b4052500b27dd9637fa43a8dec3e",
+    "scripts/test-web04-document-upload-schema.py": "ac5511e5b2c57b00cfdae323a11940edee8e308a8f291e37f1cff847c3ff043a",
+    "Cargo.toml": "506e389b6bdb9a48257f593bfc5065254d63e29f13b14e2c1c6414202307cad7",
+    "Cargo.lock": "7e9c3b8503a7b21c5a09065214b5f63a32ed4b5857842736a75b42ac5de78c4e",
+    "versions.toml": "64da73ef5dc9ff3e7e6d1eaec8e1fad3b3a677cb089d77c47bcc0e71d8084927",
+    "crates/aso-host/src/document_upload.rs": "61e9b6579a2a568703a9ead5ee90829d13706f3e8a03e2b63587f85e50d53042",
+    "crates/aso-host/src/ports/mod.rs": "572d2215febd2c48abeacc1a077838783884621e6d53c62621d13927831af6c2",
+    "crates/aso-web-server/Cargo.toml": "346ca19f9e81b77165d6b395dc8dac822d0979e6fbf3efc3106b500f18bd0768",
+    "crates/aso-web-server/src/adapters/document_store.rs": "57cf15d781d51a333a33ad909c32478eb0663c46010b4d54169e67d13acfa953",
+    "crates/aso-web-server/src/adapters/gate/upload_transaction_tests.rs": "0cc1bef276a89acc00a8947946a763344abce2a500b9a6761fedd72cd77f094f",
+    "scripts/test-web04-document-upload-service.py": "81565524aed788292788c08a6bbe2ab3155f7d9f5367d96ffaf9dedb234eba0e"
+  },
+  "failure": {
+    "stage": "disposable_database_and_fresh_fixture",
+    "type": "AttributeError"
+  },
+  "completed_at": "2026-09-18T08:34:55.897408+00:00"
+}

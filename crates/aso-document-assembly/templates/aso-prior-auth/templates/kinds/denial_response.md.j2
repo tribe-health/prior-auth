@@ -1,0 +1,35 @@
+{% include "core/letterhead.md.j2" %}
+
+
+{% set response_templates = {
+  "corrected_resubmission": "core/response_modes/corrected_resubmission.md.j2",
+  "clinical_appeal": "core/response_modes/clinical_appeal.md.j2"
+} %}
+{% include response_templates[ctx.response_mode] %}
+
+{% include "core/re_block.md.j2" %}
+
+
+Dear Utilization Management Reviewer,
+
+Please review the source-cited statements below for the request for {{ ctx.request.procedure }} for {{ ctx.member.name }}.
+
+{% include "core/determination.md.j2" %}
+
+
+{% include "core/clinical_summary.md.j2" %}
+
+
+{% include "core/criteria_table.md.j2" %}
+
+
+{% include "core/necessity.md.j2" %}
+
+
+{% include "routing/response/" ~ ctx.payer_type ~ ".md.j2" %}
+
+
+{% include "core/requested_action.md.j2" %}
+
+
+{% include "core/enclosures.md.j2" %}

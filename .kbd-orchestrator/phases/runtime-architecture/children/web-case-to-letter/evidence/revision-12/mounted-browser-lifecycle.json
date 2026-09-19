@@ -1,0 +1,828 @@
+{
+  "result": "Passed",
+  "runtime": {
+    "browser": "Google Chrome 153.0.8010.50",
+    "executable": "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    "page": "/ra11c-browser-memory.html"
+  },
+  "measurement": {
+    "rssMethod": "RSS growth of the isolated Chromium renderer with the greatest campaign-time growth, sampled from macOS ps",
+    "heapMethod": "Chromium performance.memory.usedJSHeapSize with --enable-precise-memory-info",
+    "baselineRssBytes": 1362968576,
+    "peakRssBytes": 1866760192,
+    "incrementalRssBytes": 514899968,
+    "aggregateIncrementalRssBytes": 503791616,
+    "incrementalHeapBytes": 163247016,
+    "rssLimitBytes": 536870912,
+    "heapLimitBytes": 268435456,
+    "rssWithinBudget": true,
+    "targetRendererRssWithinBudget": true,
+    "aggregateRssWithinBudget": true,
+    "heapWithinBudget": true,
+    "peakStage": "complete",
+    "stagePeakRssBytes": {
+      "baseline": 1362968576,
+      "pglite-opening": 1365000192,
+      "live-body-interruption": 1784758272,
+      "cold-fold": 1796620288,
+      "complete": 1866760192
+    },
+    "baselineSamplesBytes": [
+      1359691776,
+      1357414400,
+      1352990720,
+      1358168064,
+      1362968576
+    ],
+    "baselineProcessTree": {
+      "processCount": 11,
+      "rssBytes": 1362968576,
+      "processes": [
+        {
+          "pid": 21033,
+          "parentPid": 21023,
+          "rssBytes": 239681536,
+          "kind": "browser"
+        },
+        {
+          "pid": 21040,
+          "parentPid": 21033,
+          "rssBytes": 145948672,
+          "kind": "gpu"
+        },
+        {
+          "pid": 21041,
+          "parentPid": 21033,
+          "rssBytes": 109084672,
+          "kind": "utility"
+        },
+        {
+          "pid": 21042,
+          "parentPid": 21033,
+          "rssBytes": 79216640,
+          "kind": "utility"
+        },
+        {
+          "pid": 21043,
+          "parentPid": 21033,
+          "rssBytes": 92160000,
+          "kind": "utility"
+        },
+        {
+          "pid": 21045,
+          "parentPid": 21033,
+          "rssBytes": 177258496,
+          "kind": "renderer"
+        },
+        {
+          "pid": 21047,
+          "parentPid": 21033,
+          "rssBytes": 168656896,
+          "kind": "renderer"
+        },
+        {
+          "pid": 21048,
+          "parentPid": 21033,
+          "rssBytes": 101957632,
+          "kind": "renderer"
+        },
+        {
+          "pid": 21049,
+          "parentPid": 21033,
+          "rssBytes": 125501440,
+          "kind": "renderer"
+        },
+        {
+          "pid": 21050,
+          "parentPid": 21033,
+          "rssBytes": 119799808,
+          "kind": "renderer"
+        },
+        {
+          "pid": 21074,
+          "parentPid": 21033,
+          "rssBytes": 3702784,
+          "kind": "browser"
+        }
+      ]
+    },
+    "peakProcessTree": {
+      "processCount": 10,
+      "rssBytes": 1866760192,
+      "processes": [
+        {
+          "pid": 21033,
+          "parentPid": 21023,
+          "rssBytes": 235782144,
+          "kind": "browser"
+        },
+        {
+          "pid": 21040,
+          "parentPid": 21033,
+          "rssBytes": 141688832,
+          "kind": "gpu"
+        },
+        {
+          "pid": 21041,
+          "parentPid": 21033,
+          "rssBytes": 110149632,
+          "kind": "utility"
+        },
+        {
+          "pid": 21042,
+          "parentPid": 21033,
+          "rssBytes": 79200256,
+          "kind": "utility"
+        },
+        {
+          "pid": 21043,
+          "parentPid": 21033,
+          "rssBytes": 91996160,
+          "kind": "utility"
+        },
+        {
+          "pid": 21045,
+          "parentPid": 21033,
+          "rssBytes": 177242112,
+          "kind": "renderer"
+        },
+        {
+          "pid": 21047,
+          "parentPid": 21033,
+          "rssBytes": 683556864,
+          "kind": "renderer"
+        },
+        {
+          "pid": 21048,
+          "parentPid": 21033,
+          "rssBytes": 101908480,
+          "kind": "renderer"
+        },
+        {
+          "pid": 21049,
+          "parentPid": 21033,
+          "rssBytes": 125485056,
+          "kind": "renderer"
+        },
+        {
+          "pid": 21050,
+          "parentPid": 21033,
+          "rssBytes": 119750656,
+          "kind": "renderer"
+        }
+      ]
+    },
+    "rendererDeltas": [
+      {
+        "pid": 21045,
+        "baselineRssBytes": 177258496,
+        "peakRssBytes": 177258496,
+        "incrementalRssBytes": 0
+      },
+      {
+        "pid": 21047,
+        "baselineRssBytes": 168656896,
+        "peakRssBytes": 683556864,
+        "incrementalRssBytes": 514899968
+      },
+      {
+        "pid": 21048,
+        "baselineRssBytes": 101957632,
+        "peakRssBytes": 101957632,
+        "incrementalRssBytes": 0
+      },
+      {
+        "pid": 21049,
+        "baselineRssBytes": 125501440,
+        "peakRssBytes": 125517824,
+        "incrementalRssBytes": 16384
+      },
+      {
+        "pid": 21050,
+        "baselineRssBytes": 119799808,
+        "peakRssBytes": 119799808,
+        "incrementalRssBytes": 0
+      }
+    ],
+    "targetRenderer": {
+      "pid": 21047,
+      "baselineRssBytes": 168656896,
+      "peakRssBytes": 683556864,
+      "incrementalRssBytes": 514899968
+    },
+    "targetRendererStageRssBytes": {
+      "baseline": 168656896,
+      "pglite-opening": 169082880,
+      "live-body-interruption": 598786048,
+      "cold-fold": 610713600,
+      "complete": 683556864
+    }
+  },
+  "networkBoundary": {
+    "directAccess": {
+      "electric": null,
+      "fabric": null
+    },
+    "directIsolationPassed": true,
+    "liveBodyInterruption": {
+      "bytes": 256,
+      "injected": true,
+      "upstreamStatus": 200
+    },
+    "liveBodyInterruptionPassed": true,
+    "genericWriterRequests": [],
+    "shapeRequestCount": 42,
+    "shapeRequests": [
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:3000/v1/shape?table=aso.cases&offset=-1"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=annotation_types"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=evidence_states"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=cases"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=document_statuses"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=document_task_statuses"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=case_evidence"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=evidence_citations"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=annotations"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=annotation_types"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=evidence_states"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=cases"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=document_statuses"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=document_task_statuses"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=case_evidence"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=evidence_citations"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=annotations"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=annotation_types&handle=33300854-1789840830710333&offset=0_0"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=evidence_states&handle=115465560-1789840830721468&offset=0_0"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=cases&handle=70669866-1789840830737373&offset=0_0"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=document_statuses&handle=77636828-1789840830709172&offset=0_0"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=document_task_statuses&handle=72105898-1789840830706715&offset=0_0"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=case_evidence&handle=98135664-1789840830750848&offset=0_0"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=evidence_citations&handle=72310488-1789840830817044&offset=0_0"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=annotations&handle=111269508-1789840831032474&offset=0_0"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=annotation_types"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=evidence_states"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=cases"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=document_statuses"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=document_task_statuses"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=case_evidence"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=evidence_citations"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=annotations"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=annotation_types&handle=33300854-1789840830710333&offset=0_0"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=evidence_states&handle=115465560-1789840830721468&offset=0_0"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=cases&handle=70669866-1789840830737373&offset=0_0"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=document_statuses&handle=77636828-1789840830709172&offset=0_0"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=document_task_statuses&handle=72105898-1789840830706715&offset=0_0"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=case_evidence&handle=98135664-1789840830750848&offset=0_0"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=evidence_citations&handle=72310488-1789840830817044&offset=0_0"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=annotations&handle=111269508-1789840831032474&offset=0_0"
+      },
+      {
+        "method": "GET",
+        "resourceType": "fetch",
+        "url": "http://127.0.0.1:58426/v1/shape?shape=cases"
+      }
+    ],
+    "soleShapeWriterPassed": true
+  },
+  "browserCampaign": {
+    "result": "Passed",
+    "counts": {
+      "annotation_types": 4,
+      "evidence_states": 3,
+      "cases": 360,
+      "document_statuses": 2880,
+      "document_task_statuses": 0,
+      "case_evidence": 4320,
+      "evidence_citations": 8640,
+      "annotations": 0
+    },
+    "graphCounts": {
+      "annotation_types": 4,
+      "evidence_states": 3,
+      "cases": 360,
+      "document_statuses": 2880,
+      "document_task_statuses": 0,
+      "case_evidence": 4320,
+      "evidence_citations": 8640,
+      "annotations": 0
+    },
+    "checkpointShapes": [
+      "annotation_types",
+      "annotations",
+      "case_evidence",
+      "cases",
+      "document_statuses",
+      "document_task_statuses",
+      "evidence_citations",
+      "evidence_states"
+    ],
+    "generation": 5,
+    "liveBodyInterruption": {
+      "bytes": 256,
+      "injected": true,
+      "upstreamStatus": 200
+    },
+    "runtime": {
+      "crossOriginIsolated": false,
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36"
+    },
+    "heap": {
+      "baseline": {
+        "totalBytes": 9388674,
+        "usedBytes": 7478226
+      },
+      "peak": {
+        "totalBytes": 182639266,
+        "usedBytes": 170725242
+      },
+      "deltaBytes": 163247016,
+      "peakStage": "cold-fold",
+      "stages": {
+        "baseline": {
+          "totalBytes": 9388674,
+          "usedBytes": 7478226
+        },
+        "pglite-opening": {
+          "totalBytes": 24401821,
+          "usedBytes": 19934133
+        },
+        "pglite-open": {
+          "totalBytes": 156744387,
+          "usedBytes": 146677147
+        },
+        "schema-ready": {
+          "totalBytes": 159758964,
+          "usedBytes": 150245620
+        },
+        "graph-ready": {
+          "totalBytes": 159777389,
+          "usedBytes": 150578941
+        },
+        "projector-ready": {
+          "totalBytes": 159778380,
+          "usedBytes": 150712332
+        },
+        "live-body-interruption": {
+          "totalBytes": 162296899,
+          "usedBytes": 153484191
+        },
+        "cold-fold": {
+          "totalBytes": 174402196,
+          "usedBytes": 154549836
+        },
+        "cold-fold-complete": {
+          "totalBytes": 174402290,
+          "usedBytes": 154553434
+        },
+        "sql-checkpoint-graph": {
+          "totalBytes": 174402290,
+          "usedBytes": 154553750
+        },
+        "revision-1": {
+          "totalBytes": 178456331,
+          "usedBytes": 143648267
+        },
+        "materialized": {
+          "totalBytes": 178456331,
+          "usedBytes": 143650119
+        },
+        "final": {
+          "totalBytes": 171503805,
+          "usedBytes": 136809357
+        }
+      }
+    },
+    "checks": {
+      "authorizedColdRetryCompleted": true,
+      "completeCheckpoint": true,
+      "graphParity": true,
+      "heapAvailable": true,
+      "heapWithinBudget": true,
+      "interruptedBodyLeftCheckpointEmpty": true,
+      "interruptedBodyLeftGraphEmpty": true,
+      "interruptedBodyLeftSqlEmpty": true,
+      "interruptedBodyRejected": true,
+      "sqlParity": true
+    },
+    "mountedLifecycle": {
+      "result": "Passed",
+      "checks": {
+        "logoutClosedImmediately": true,
+        "noPostLogoutShapePublication": true,
+        "noPostSwitchShapePublication": true,
+        "oldGraphAbsent": true,
+        "primaryGraphPopulated": true,
+        "realSessionRevoked": true,
+        "replacementGraphPopulated": true,
+        "replacementOpenedAfterFence": true,
+        "switchClosedImmediately": true
+      },
+      "primary": {
+        "counts": {
+          "annotation_types": 4,
+          "evidence_states": 3,
+          "cases": 360,
+          "document_statuses": 2880,
+          "document_task_statuses": 0,
+          "case_evidence": 4320,
+          "evidence_citations": 8640,
+          "annotations": 0
+        },
+        "key": "aso:local-unconfigured:g5:user:e963591a-7bd1-4c67-857a-d05da129dd09:575dcdd6-cf50-4c51-9a2c-984b7fafe2a2:0c573ec4-0ecb-4ad6-8f89-4d663074dff7:membership%3Ara05-composition"
+      },
+      "replacement": {
+        "counts": {
+          "annotation_types": 4,
+          "evidence_states": 3,
+          "cases": 360,
+          "document_statuses": 2880,
+          "document_task_statuses": 0,
+          "case_evidence": 4320,
+          "evidence_citations": 8640,
+          "annotations": 0
+        },
+        "key": "aso:local-unconfigured:g5:user:489302d5-765d-4f84-95e8-5ff2430e2b40:141fc98a-1e33-429b-8b85-8ff375a784a9:ffa215a5-cc55-4534-9c22-106ef916e2fe:membership%3Ara05-composition"
+      },
+      "timing": {
+        "primaryReady": 2658.699999988079,
+        "switchFenced": 2662,
+        "replacementReady": 2662.2999999821186,
+        "logoutFenced": 2663.0999999940395,
+        "logoutSettled": 2729.699999988079
+      },
+      "network": [
+        {
+          "label": "primary",
+          "phase": "started",
+          "time": 1622.5999999940395,
+          "url": "http://127.0.0.1:58426/v1/shape?shape=annotation_types"
+        },
+        {
+          "label": "primary",
+          "phase": "started",
+          "time": 1623.0999999940395,
+          "url": "http://127.0.0.1:58426/v1/shape?shape=evidence_states"
+        },
+        {
+          "label": "primary",
+          "phase": "started",
+          "time": 1623.199999988079,
+          "url": "http://127.0.0.1:58426/v1/shape?shape=cases"
+        },
+        {
+          "label": "primary",
+          "phase": "started",
+          "time": 1623.2999999821186,
+          "url": "http://127.0.0.1:58426/v1/shape?shape=document_statuses"
+        },
+        {
+          "label": "primary",
+          "phase": "started",
+          "time": 1623.2999999821186,
+          "url": "http://127.0.0.1:58426/v1/shape?shape=document_task_statuses"
+        },
+        {
+          "label": "primary",
+          "phase": "started",
+          "time": 1623.3999999761581,
+          "url": "http://127.0.0.1:58426/v1/shape?shape=case_evidence"
+        },
+        {
+          "label": "primary",
+          "phase": "started",
+          "time": 1623.5,
+          "url": "http://127.0.0.1:58426/v1/shape?shape=evidence_citations"
+        },
+        {
+          "label": "primary",
+          "phase": "started",
+          "time": 1623.5,
+          "url": "http://127.0.0.1:58426/v1/shape?shape=annotations"
+        },
+        {
+          "label": "primary",
+          "phase": "completed",
+          "status": 200,
+          "time": 1693.8999999761581,
+          "url": "http://127.0.0.1:58426/v1/shape?shape=evidence_states"
+        },
+        {
+          "label": "primary",
+          "phase": "completed",
+          "status": 200,
+          "time": 1694,
+          "url": "http://127.0.0.1:58426/v1/shape?shape=cases"
+        },
+        {
+          "label": "primary",
+          "phase": "completed",
+          "status": 200,
+          "time": 1711.0999999940395,
+          "url": "http://127.0.0.1:58426/v1/shape?shape=document_task_statuses"
+        },
+        {
+          "label": "primary",
+          "phase": "completed",
+          "status": 200,
+          "time": 1722.699999988079,
+          "url": "http://127.0.0.1:58426/v1/shape?shape=document_statuses"
+        },
+        {
+          "label": "primary",
+          "phase": "completed",
+          "status": 200,
+          "time": 1722.8999999761581,
+          "url": "http://127.0.0.1:58426/v1/shape?shape=case_evidence"
+        },
+        {
+          "label": "primary",
+          "phase": "completed",
+          "status": 200,
+          "time": 1743.5999999940395,
+          "url": "http://127.0.0.1:58426/v1/shape?shape=annotation_types"
+        },
+        {
+          "label": "primary",
+          "phase": "completed",
+          "status": 200,
+          "time": 1782.7999999821186,
+          "url": "http://127.0.0.1:58426/v1/shape?shape=annotations"
+        },
+        {
+          "label": "primary",
+          "phase": "completed",
+          "status": 200,
+          "time": 1805.699999988079,
+          "url": "http://127.0.0.1:58426/v1/shape?shape=evidence_citations"
+        },
+        {
+          "label": "primary",
+          "phase": "started",
+          "time": 1827.3999999761581,
+          "url": "http://127.0.0.1:58426/v1/shape?shape=annotation_types&handle=33300854-1789840830710333&offset=0_0"
+        },
+        {
+          "label": "primary",
+          "phase": "started",
+          "time": 1827.699999988079,
+          "url": "http://127.0.0.1:58426/v1/shape?shape=evidence_states&handle=115465560-1789840830721468&offset=0_0"
+        },
+        {
+          "label": "primary",
+          "phase": "started",
+          "time": 1827.699999988079,
+          "url": "http://127.0.0.1:58426/v1/shape?shape=cases&handle=70669866-1789840830737373&offset=0_0"
+        },
+        {
+          "label": "primary",
+          "phase": "started",
+          "time": 1827.8999999761581,
+          "url": "http://127.0.0.1:58426/v1/shape?shape=document_statuses&handle=77636828-1789840830709172&offset=0_0"
+        },
+        {
+          "label": "primary",
+          "phase": "started",
+          "time": 1827.8999999761581,
+          "url": "http://127.0.0.1:58426/v1/shape?shape=document_task_statuses&handle=72105898-1789840830706715&offset=0_0"
+        },
+        {
+          "label": "primary",
+          "phase": "started",
+          "time": 1828,
+          "url": "http://127.0.0.1:58426/v1/shape?shape=case_evidence&handle=98135664-1789840830750848&offset=0_0"
+        },
+        {
+          "label": "primary",
+          "phase": "started",
+          "time": 1828.0999999940395,
+          "url": "http://127.0.0.1:58426/v1/shape?shape=evidence_citations&handle=72310488-1789840830817044&offset=0_0"
+        },
+        {
+          "label": "primary",
+          "phase": "started",
+          "time": 1828.0999999940395,
+          "url": "http://127.0.0.1:58426/v1/shape?shape=annotations&handle=111269508-1789840831032474&offset=0_0"
+        },
+        {
+          "label": "primary",
+          "phase": "completed",
+          "status": 200,
+          "time": 1892.3999999761581,
+          "url": "http://127.0.0.1:58426/v1/shape?shape=document_task_statuses&handle=72105898-1789840830706715&offset=0_0"
+        },
+        {
+          "label": "primary",
+          "phase": "completed",
+          "status": 200,
+          "time": 1895.2999999821186,
+          "url": "http://127.0.0.1:58426/v1/shape?shape=evidence_states&handle=115465560-1789840830721468&offset=0_0"
+        },
+        {
+          "label": "primary",
+          "phase": "completed",
+          "status": 200,
+          "time": 1956.0999999940395,
+          "url": "http://127.0.0.1:58426/v1/shape?shape=case_evidence&handle=98135664-1789840830750848&offset=0_0"
+        },
+        {
+          "label": "primary",
+          "phase": "completed",
+          "status": 200,
+          "time": 1956.5,
+          "url": "http://127.0.0.1:58426/v1/shape?shape=evidence_citations&handle=72310488-1789840830817044&offset=0_0"
+        },
+        {
+          "label": "primary",
+          "phase": "completed",
+          "status": 200,
+          "time": 1956.8999999761581,
+          "url": "http://127.0.0.1:58426/v1/shape?shape=cases&handle=70669866-1789840830737373&offset=0_0"
+        },
+        {
+          "label": "primary",
+          "phase": "completed",
+          "status": 200,
+          "time": 1957.2999999821186,
+          "url": "http://127.0.0.1:58426/v1/shape?shape=document_statuses&handle=77636828-1789840830709172&offset=0_0"
+        },
+        {
+          "label": "primary",
+          "phase": "completed",
+          "status": 200,
+          "time": 1957.2999999821186,
+          "url": "http://127.0.0.1:58426/v1/shape?shape=annotation_types&handle=33300854-1789840830710333&offset=0_0"
+        },
+        {
+          "label": "primary",
+          "phase": "completed",
+          "status": 200,
+          "time": 2029.699999988079,
+          "url": "http://127.0.0.1:58426/v1/shape?shape=annotations&handle=111269508-1789840831032474&offset=0_0"
+        }
+      ],
+      "revokedProbeStatus": 401
+    }
+  }
+}

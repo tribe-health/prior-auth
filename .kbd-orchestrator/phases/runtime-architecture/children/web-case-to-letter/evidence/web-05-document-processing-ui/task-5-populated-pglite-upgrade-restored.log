@@ -1,0 +1,13 @@
+(node:8536) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+ RUN  v3.2.7 /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web
+
+ ✓ src/shared/sync/pglite-schema.test.ts (7 tests) 1607ms
+   ✓ PGlite schema upgrades > cuts a populated revision-5 replica over before adding required case columns  649ms
+
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  10:33:26
+   Duration  2.21s (transform 36ms, setup 0ms, collect 48ms, tests 1.61s, environment 366ms, prepare 44ms)
+

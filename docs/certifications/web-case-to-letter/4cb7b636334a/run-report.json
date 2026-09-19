@@ -1,0 +1,52 @@
+{
+  "result": "Passed",
+  "observed_at": "2026-09-19T19:58:04.057660+00:00",
+  "base_url": "http://127.0.0.1:5173",
+  "case_id": "10000000-0000-4000-8000-000000000005",
+  "scenarios": [
+    {
+      "slug": "01-initial-request",
+      "name": "Initial request through payer acknowledgement",
+      "status": "Passed",
+      "duration_seconds": 63.039,
+      "video": "videos/01-initial-request.webm",
+      "console_errors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 502 (Bad Gateway)",
+        "Failed to load resource: the server responded with a status of 502 (Bad Gateway)"
+      ],
+      "error": null
+    },
+    {
+      "slug": "02-corrected-resubmission",
+      "name": "Corrected resubmission through payer acknowledgement",
+      "status": "Passed",
+      "duration_seconds": 63.357,
+      "video": "videos/02-corrected-resubmission.webm",
+      "console_errors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+      ],
+      "error": null
+    },
+    {
+      "slug": "03-clinical-appeal",
+      "name": "Clinical appeal with fresh surgeon affirmation through payer acknowledgement",
+      "status": "Passed",
+      "duration_seconds": 75.356,
+      "video": "videos/03-clinical-appeal.webm",
+      "console_errors": [
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)",
+        "Failed to load resource: the server responded with a status of 401 (Unauthorized)"
+      ],
+      "error": null
+    }
+  ]
+}

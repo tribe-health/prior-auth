@@ -1,0 +1,16 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.07s
+     Running unittests src/lib.rs (/Volumes/my-passport/cargo-build/02/70d32e977a4fbf/debug/deps/aso_server_axum-9795b240c03b019a)
+
+running 9 tests
+test routes::cases::tests::administering_entity_http_refuses_untrusted_selection ... ok
+test routes::cases::tests::write_only_case_commands_return_receipts_without_protected_case_data ... ok
+test routes::cases::tests::case_detail_http_requires_verified_practice_and_read_capability ... ok
+test routes::cases::tests::administering_entity_http_refuses_scope_capability_and_typed_failures ... ok
+test routes::cases::tests::administering_entity_http_contract_resolves_reloads_and_reconciles ... ok
+test routes::cases::tests::malformed_authority_and_repository_errors_use_the_frozen_codes ... ok
+test routes::cases::tests::changed_payload_stale_revision_and_invalid_transition_are_stable_conflicts ... ok
+test routes::cases::tests::browser_contract_runs_case_lifecycle_and_reconciles_lost_responses ... ok
+test routes::cases::tests::gate_policy_requires_case_capabilities_and_never_mutates ... ok
+
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 43 filtered out; finished in 0.11s
+

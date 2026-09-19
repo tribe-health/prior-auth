@@ -1,0 +1,14 @@
+
+ RUN  v3.2.7 /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web
+
+ ✓ src/features/session/model/session-parse.test.ts (13 tests) 4ms
+ ✓ src/features/administering-entity/api/administering-entity-api.test.ts (1 test) 2ms
+ ✓ src/features/administering-entity/components/administering-entity-panel.test.tsx (3 tests) 100ms
+ ✓ src/features/case-queue/components/case-detail.test.tsx (1 test) 107ms
+ ✓ src/features/administering-entity/hooks/use-administering-entity-resolution.test.tsx (10 tests) 921ms
+
+ Test Files  5 passed (5)
+      Tests  28 passed (28)
+   Start at  09:31:26
+   Duration  2.47s (transform 464ms, setup 0ms, collect 1.41s, tests 1.13s, environment 4.03s, prepare 573ms)
+

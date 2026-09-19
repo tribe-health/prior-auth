@@ -9,6 +9,22 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     proxy: {
+      '/agent': {
+        target: process.env.ASO_AGENT_PROXY_TARGET ?? 'http://127.0.0.1:8091',
+        changeOrigin: true,
+      },
+      '/a2a': {
+        target: process.env.ASO_AGENT_PROXY_TARGET ?? 'http://127.0.0.1:8091',
+        changeOrigin: true,
+      },
+      '/mcp': {
+        target: process.env.ASO_AGENT_PROXY_TARGET ?? 'http://127.0.0.1:8091',
+        changeOrigin: true,
+      },
+      '/.well-known/agent-card.json': {
+        target: process.env.ASO_AGENT_PROXY_TARGET ?? 'http://127.0.0.1:8091',
+        changeOrigin: true,
+      },
       '/self-service': {
         target: process.env.ASO_KRATOS_PROXY_TARGET ?? 'http://127.0.0.1:4433',
         changeOrigin: true,
@@ -53,5 +69,9 @@ export default defineConfig({
     // confusing "document is not defined" rather than a clear failure.
     environment: 'jsdom',
     globals: false,
+    // Several sync tests boot an isolated PGlite WASM runtime. Parallel files
+    // exhausted the local worker budget and made cold starts exceed their
+    // timeout during the 2026-09-19 full campaign.
+    fileParallelism: false,
   },
 })

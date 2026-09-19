@@ -1,0 +1,18 @@
+{
+  "target": "web-03-administering-entity-resolution",
+  "manifest_digest": "2c095ed3fa255fd3034e9a91b66559d339945607caac3f5cebc1626613a9f021",
+  "verdict": "PASS",
+  "counts": {
+    "critical": 0,
+    "major": 0,
+    "minor": 0
+  },
+  "findings": [],
+  "verification": {
+    "summary": "The frozen artifact proves the focused mounted browser HTTP -> AppServices -> restricted PostgreSQL administering-entity resolution boundary. The evidence covers HTTP 422 and the exact incomplete-input guidance, intake-side first-missing-field focus through the authorized full detail read while retaining the existing case-summary projection, server-owned selection and refusal of caller-selected outputs, tenant and capability refusal at route/AppServices/PostgreSQL boundaries, durable idempotent command reconciliation, authoritative invalidation and both race orders, neutral effective-date semantics, and responsive scoped-Zustand UI behavior. Full upload-to-letter actual-browser certification is explicitly reserved for Web-17.",
+    "manifest": "sha256sum of dist/source-manifest.sha256 matched the expected digest; all 112 current-source hashes and all 112 persisted-snapshot hashes matched with zero mismatches.",
+    "validator": "python3 .refiner/artifacts/web-03-administering-entity-resolution/dist/validate.py exited 0 with all 15 checks Passed; validation-output.json remained byte-identical (SHA-256 59df6b0473025e345715f88250f299382075fddd2b515efa6c9288178b113afe).",
+    "scope": "Focused Web-03 Tier 0/Tier 1 evidence only; Web-17 remains responsible for the complete actual-browser case-to-letter certification."
+  },
+  "isolation_mode": "harness-native-fresh-context"
+}

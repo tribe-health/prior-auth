@@ -1,0 +1,9 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 22.81s
+     Running unittests src/main.rs (/Volumes/my-passport/cargo-build/02/70d32e977a4fbf/debug/deps/aso_web_server-e7a6905ccf4c4021)
+
+running 2 tests
+test adapters::document_processor::tests::invalid_or_empty_text_is_refused ... ok
+test adapters::document_processor::tests::text_pages_are_sequential_and_normalized ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 30 filtered out; finished in 0.29s
+

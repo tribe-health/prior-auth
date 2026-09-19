@@ -1,0 +1,49 @@
+{
+  "capturedRevision": 1687,
+  "activePath": {
+    "phasePath": [
+      "runtime-architecture",
+      "runtime-architecture::web-case-to-letter"
+    ],
+    "phaseId": "runtime-architecture::web-case-to-letter",
+    "stageId": null,
+    "changeId": null,
+    "taskId": null,
+    "commit": "d95242542060d1e19a6efe9143f57c015d6162f4"
+  },
+  "change": {
+    "id": "web-06-criteria-catalog-core",
+    "status": "in_progress",
+    "implementationStatus": "in_progress",
+    "tasks": {
+      "1": {
+        "status": "complete",
+        "title": "1.1 Confirm dependency completion, assigned file ownership, frozen web-00 contracts, and applicable decision gates before edits; verify canonical KBD/OpenSpec state and retain the result."
+      },
+      "2": {
+        "status": "complete",
+        "title": "1.2 Implement the policy_criteria-to-criteria migration and read-only compatibility surface; verify lineage, hashes, effective ranges, and legacy-write refusal."
+      },
+      "3": {
+        "status": "pending",
+        "title": "1.3 Wire production CriteriaRepository and catalog load/read commands reusing document ingestion; verify published/obtained provenance and immutable correction-by-supersession."
+      },
+      "4": {
+        "status": "pending",
+        "title": "1.4 Mount HTTP/native catalog contracts; verify parity, overlap refusal, grade non-promotion, tenant scope, and conflicting retry."
+      },
+      "5": {
+        "status": "pending",
+        "title": "2.1 Run focused T0/T1 plus provenance-laundering sabotage-and-restore, artifact-refiner, and adversarial review."
+      },
+      "6": {
+        "status": "pending",
+        "title": "3.1 Record actual commands and observed outputs, confirm real mounted callers at this change boundary, update documentation/spec deltas, and mark only satisfied work complete."
+      },
+      "web06-eligibility": {
+        "status": "complete",
+        "title": "web06-eligibility \u2014 freeze criteria catalog dependencies, ownership, contracts, and decision gates"
+      }
+    }
+  }
+}

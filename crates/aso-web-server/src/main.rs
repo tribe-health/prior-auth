@@ -9,10 +9,20 @@
 
 use std::{net::SocketAddr, str::FromStr, sync::Arc};
 
-use aso_host::{AppServices, ports};
+use aso_host::{
+    AppServices,
+    affirmation::ClinicalContext,
+    document_processing::{AUTHORIZED_DOCUMENT_JOB_GRANT, ProcessCaseDocumentCommand},
+    domain::{ActorId, PracticeId},
+    ports,
+    session::Principal,
+};
 use aso_server_axum::{ServerState, api_router};
+use chrono::{Duration as ChronoDuration, Utc};
 use sqlx::postgres::PgConnectOptions;
+use tokio::time::{Duration, sleep};
 use tower_http::{services::ServeDir, trace::TraceLayer};
+use uuid::Uuid;
 
 mod adapters;
 mod migrations;
@@ -26,6 +36,84 @@ fn configured_document_store(
         )?)),
         None => Ok(Arc::new(adapters::document_store::UnavailableDocumentStore)),
     }
+}
+
+/// Only the synthetic inference route is currently qualified for deployment.
+/// Production patient-data inference remains disabled without a separate provider.
+fn configured_generation(
+    repository: adapters::gate::PgGateRepository,
+) -> Result<adapters::gate::PgGateRepository, Box<dyn std::error::Error>> {
+    use aso_host::document_generation::{GenerationPolicy, InferenceRoute, ProviderQualification};
+    let Some(route) = std::env::var("ASO_GENERATION_ROUTE").ok() else {
+        return Ok(repository);
+    };
+    if route != "synthetic" {
+        return Err("production inference is disabled pending provider qualification".into());
+    }
+    let manifest_path = std::env::var("ASO_DA_PACKAGE_MANIFEST")
+        .map_err(|_| "ASO_DA_PACKAGE_MANIFEST is required for document generation")?;
+    let manifest: serde_json::Value = serde_json::from_slice(&std::fs::read(manifest_path)?)?;
+    let digest = manifest
+        .get("templateDigest")
+        .and_then(serde_json::Value::as_str)
+        .filter(|value| {
+            value.len() == 71
+                && value.starts_with("sha256:")
+                && value[7..].bytes().all(|byte| byte.is_ascii_hexdigit())
+        })
+        .ok_or("assembly manifest digest is invalid")?;
+    if manifest
+        .get("schemaVersion")
+        .and_then(serde_json::Value::as_u64)
+        != Some(1)
+        || manifest.get("package").and_then(serde_json::Value::as_str) != Some("aso-prior-auth")
+    {
+        return Err("assembly manifest schema or package is invalid".into());
+    }
+    let assembly_url =
+        std::env::var("ASO_ASSEMBLY_URL").map_err(|_| "ASO_ASSEMBLY_URL is required")?;
+    let assembly_secret = generation_secret("ASO_ASSEMBLY_TOKEN", "ASO_ASSEMBLY_TOKEN_FILE")?;
+    let liter_url = std::env::var("ASO_LITER_SYNTHETIC_URL")
+        .map_err(|_| "ASO_LITER_SYNTHETIC_URL is required")?;
+    let liter_secret =
+        generation_secret("ASO_LITER_SYNTHETIC_KEY", "ASO_LITER_SYNTHETIC_KEY_FILE")?;
+    let model = std::env::var("QWEN_TOKEN_PLAN_MODEL").unwrap_or_else(|_| "qwen3.8-max".into());
+    let inference = adapters::document_generation::LiterDocumentInference::new(
+        &liter_url,
+        &liter_secret,
+        &model,
+        digest,
+    )?;
+    let assembler =
+        adapters::document_generation::HttpDocumentAssembler::new(&assembly_url, &assembly_secret)?;
+    Ok(repository.with_document_generation(
+        Arc::new(inference),
+        Arc::new(assembler),
+        GenerationPolicy {
+            route: InferenceRoute::SyntheticDemo,
+            qualification: ProviderQualification::default(),
+            package_digest: digest.to_owned(),
+        },
+    ))
+}
+
+fn generation_secret(variable: &str, file_variable: &str) -> Result<String, &'static str> {
+    let secret = match (
+        std::env::var(variable).ok(),
+        std::env::var(file_variable).ok(),
+    ) {
+        (Some(secret), None) => secret,
+        (None, Some(path)) => std::fs::read_to_string(path)
+            .map_err(|_| "document generation secret file unavailable")?,
+        _ => {
+            return Err("configure exactly one source for each document generation service secret");
+        }
+    };
+    let secret = secret.trim_end_matches(['\r', '\n']).to_owned();
+    if secret.is_empty() || secret.bytes().any(|byte| byte.is_ascii_whitespace()) {
+        return Err("document generation service secret is invalid");
+    }
+    Ok(secret)
 }
 
 fn database_target(url: &str) -> Result<(String, u16, String), &'static str> {
@@ -70,6 +158,87 @@ fn require_same_database(session_url: &str, gate_url: &str) -> Result<(), &'stat
     Ok(())
 }
 
+#[derive(Clone, Copy)]
+struct DocumentProcessorIdentity {
+    identity_id: Uuid,
+    actor_id: Uuid,
+    practice_id: Uuid,
+}
+
+fn configured_document_processor() -> Result<Option<DocumentProcessorIdentity>, &'static str> {
+    let values = (
+        std::env::var("ASO_DOCUMENT_PROCESSOR_IDENTITY_ID").ok(),
+        std::env::var("ASO_DOCUMENT_PROCESSOR_ACTOR_ID").ok(),
+        std::env::var("ASO_DOCUMENT_PROCESSOR_PRACTICE_ID").ok(),
+    );
+    match values {
+        (None, None, None) => Ok(None),
+        (Some(identity), Some(actor), Some(practice)) => Ok(Some(DocumentProcessorIdentity {
+            identity_id: identity
+                .parse()
+                .map_err(|_| "document processor identity ID is invalid")?,
+            actor_id: actor
+                .parse()
+                .map_err(|_| "document processor actor ID is invalid")?,
+            practice_id: practice
+                .parse()
+                .map_err(|_| "document processor practice ID is invalid")?,
+        })),
+        _ => {
+            Err("document processor identity, actor, and practice IDs must be configured together")
+        }
+    }
+}
+
+async fn run_document_processor(
+    identity: DocumentProcessorIdentity,
+    repository: Arc<adapters::gate::PgGateRepository>,
+    services: Arc<AppServices>,
+) {
+    loop {
+        let context = ClinicalContext {
+            identity_id: identity.identity_id,
+            actor: ActorId(identity.actor_id),
+            practice: PracticeId(identity.practice_id),
+            principal: Principal::Service,
+            expires_at: Utc::now() + ChronoDuration::minutes(5),
+        };
+        match repository.next_queued_document_job(&context).await {
+            Ok(Some((case_id, document_id, document_set_revision))) => {
+                let command = ProcessCaseDocumentCommand {
+                    command_id: Uuid::new_v4(),
+                    case_id,
+                    document_id,
+                    expected_document_set_revision: document_set_revision,
+                };
+                let grants = [AUTHORIZED_DOCUMENT_JOB_GRANT.to_owned()];
+                match services
+                    .process_case_document(&context, &grants, &command)
+                    .await
+                {
+                    Ok(result) => tracing::info!(
+                        case_id = %case_id,
+                        document_id = %document_id,
+                        status = ?result.status,
+                        "case document processing completed"
+                    ),
+                    Err(error) => tracing::warn!(
+                        case_id = %case_id,
+                        document_id = %document_id,
+                        error = ?error,
+                        "case document processing failed"
+                    ),
+                }
+            }
+            Ok(None) => sleep(Duration::from_millis(500)).await,
+            Err(error) => {
+                tracing::warn!(error = ?error, "document processor queue unavailable");
+                sleep(Duration::from_secs(2)).await;
+            }
+        }
+    }
+}
+
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     tracing_subscriber::fmt()
@@ -107,6 +276,13 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         std::env::var("ASO_ALLOW_INSECURE_KRATOS").as_deref() == Ok("true"),
     )
     .await?;
+    // Optional external read-only tool servers are negotiated at startup and
+    // retained for the process lifetime. A missing registry keeps all model
+    // retrieval on the authoritative local snapshot.
+    let _generation_mcp = adapters::generation_mcp::ConfiguredMcpClients::load_optional(
+        std::env::var("ASO_GENERATION_MCP_SERVERS").ok(),
+    )
+    .await?;
 
     // Clinical writes use separate restricted credentials; they never borrow
     // migration credentials or silently widen the session-reader role. The
@@ -118,13 +294,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     } else {
         tracing::info!("document source store unavailable; source reads fail closed");
     }
-    let repository = Arc::new(
+    let repository = Arc::new(configured_generation(
         adapters::gate::PgGateRepository::connect_with_document_store(
             &gate_database_url,
             document_store,
         )
         .await?,
-    );
+    )?);
+    let processor_repository = repository.clone();
     let services = AppServices {
         cases: repository.clone(),
         evidence: repository.clone(),
@@ -135,8 +312,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         sessions: session_runtime.sessions,
     };
 
+    let services = Arc::new(services);
     let state = ServerState {
-        services: Arc::new(services),
+        services: services.clone(),
     };
     let mut app = api_router(state)
         .merge(kratos_proxy)
@@ -167,8 +345,19 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let recovery_task = session_runtime
         .logout_recovery
         .map(|coordinator| tokio::spawn(adapters::session::run_logout_recovery(coordinator)));
+    let document_processor_task = configured_document_processor()?.map(|identity| {
+        tracing::info!(practice_id = %identity.practice_id, "document processor enabled");
+        tokio::spawn(run_document_processor(
+            identity,
+            processor_repository,
+            services,
+        ))
+    });
     let result = axum::serve(listener, app).await;
     if let Some(task) = recovery_task {
+        task.abort();
+    }
+    if let Some(task) = document_processor_task {
         task.abort();
     }
     result?;

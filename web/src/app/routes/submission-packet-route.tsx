@@ -1,5 +1,7 @@
-import { RoutePlaceholder } from './route-placeholder';
+import { useParams } from 'react-router';
+import { SubmissionPacketWorkspace } from '@/features/submission-workflow/components/submission-workspace';
 
 export function Component() {
-  return <RoutePlaceholder title="Submission packet" description="Review the complete packet before submission." />;
+  const { caseId } = useParams();
+  return caseId ? <SubmissionPacketWorkspace caseId={caseId} /> : null;
 }

@@ -1,0 +1,380 @@
+{
+  "result": "Passed",
+  "verification_tier": 1,
+  "install_mode": "fresh",
+  "observed_at": "2026-09-18T07:03:20.250346+00:00",
+  "scope": "Actual mounted Axum HTTP, shell-neutral AppServices resolver, and restricted PostgreSQL adapter, including all named states, idempotency, reload, exact lookup, tenant refusal, invalidation, and durable audit",
+  "prerequisites": [
+    "Existing Docker Compose db service with schema extensions available",
+    "Configured PostgreSQL admin password from container environment",
+    "Pinned Rust toolchain and idle workspace Cargo build directory",
+    "No concurrent database fixtures; a local exclusive lock covers this runner"
+  ],
+  "commands": [
+    "python3 scripts/test-web03-resolution-service.py --install-mode fresh --output .kbd-orchestrator/phases/runtime-architecture/children/web-case-to-letter/evidence/web-03-administering-entity-resolution/task-6-fresh-review.json",
+    "cargo run -p aso-web-server -- --migrate-server"
+  ],
+  "environment_contract": {
+    "migration": [
+      "ASO_MIGRATION_DATABASE_URL"
+    ],
+    "test": [
+      "ASO_TEST_DATABASE_URL",
+      "ASO_TEST_ADMIN_DATABASE_URL",
+      "ASO_TEST_OWNER_ROLE",
+      "ASO_TEST_GATE_CONTEXTS",
+      "ASO_TEST_GATE_CASE_ID",
+      "ASO_TEST_FOREIGN_CASE_ID"
+    ],
+    "credentials": "Disposable passwords supplied only through environment or captured SQL stdin"
+  },
+  "checks": {
+    "postgres_port_discovery": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "configured_admin_password_available": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "fresh_schema_has_no_clinical_rows_before_migration": {
+      "result": "Passed",
+      "row_counts": {
+        "cases": 0,
+        "users": 0,
+        "letters": 0,
+        "patients": 0,
+        "receipts": 0,
+        "documents": 0,
+        "practices": 0,
+        "user_roles": 0,
+        "annotations": 0,
+        "submissions": 0,
+        "audit_events": 0,
+        "peer_reviews": 0,
+        "case_evidence": 0,
+        "case_pathways": 0,
+        "letter_claims": 0,
+        "receipt_items": 0,
+        "custody_events": 0,
+        "determinations": 0,
+        "gate_affirmations": 0,
+        "letter_qa_results": 0,
+        "evidence_citations": 0,
+        "patient_identities": 0,
+        "case_diagnosis_codes": 0,
+        "case_procedure_codes": 0,
+        "submission_attachments": 0
+      }
+    },
+    "initial_server_migration": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "fresh_migration_leaves_clinical_rows_empty": {
+      "result": "Passed",
+      "row_counts": {
+        "cases": 0,
+        "users": 0,
+        "letters": 0,
+        "patients": 0,
+        "receipts": 0,
+        "documents": 0,
+        "practices": 0,
+        "user_roles": 0,
+        "annotations": 0,
+        "submissions": 0,
+        "audit_events": 0,
+        "peer_reviews": 0,
+        "case_commands": 0,
+        "case_evidence": 0,
+        "case_pathways": 0,
+        "gate_commands": 0,
+        "letter_claims": 0,
+        "receipt_items": 0,
+        "custody_events": 0,
+        "determinations": 0,
+        "gate_affirmations": 0,
+        "letter_qa_results": 0,
+        "evidence_citations": 0,
+        "patient_identities": 0,
+        "case_diagnosis_codes": 0,
+        "case_procedure_codes": 0,
+        "submission_attachments": 0
+      }
+    },
+    "fresh_fixture_seeded_after_migration": {
+      "result": "Passed"
+    },
+    "unchanged_migration_rerun": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "migration_ledger_and_populated_cases_unchanged": {
+      "result": "Passed"
+    },
+    "durable_gate_migration_recorded": {
+      "result": "Passed"
+    },
+    "checksum_mismatch_refused": {
+      "result": "Passed",
+      "return_code": 1,
+      "checksum_mismatch_reported": true
+    },
+    "checksum_refusal_preserves_populated_cases": {
+      "result": "Passed"
+    },
+    "restored_checksum_rerun": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "checksum_restoration_preserves_ledger_and_cases": {
+      "result": "Passed"
+    },
+    "resolution_source_document_seeded": {
+      "result": "Passed",
+      "database_error": []
+    },
+    "resolution_runtime_login_is_restricted_executor": {
+      "result": "Passed"
+    },
+    "expired_resolution_state_label_is_neutral": {
+      "result": "Passed",
+      "observed_label": "Coverage path expired"
+    },
+    "actual_appservices_pg_resolution_lifecycle": {
+      "result": "Passed",
+      "return_code": 0,
+      "assertion_count": 4
+    },
+    "authoritative_resolver_changes_invalidate_current_resolution": {
+      "result": "Passed",
+      "scenarios": [
+        "entity_deactivation",
+        "path_edit",
+        "conflicting_rule_insert",
+        "source_document_version"
+      ],
+      "return_codes": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "database_errors": []
+    },
+    "future_effective_paths_are_missing_not_expired": {
+      "result": "Passed",
+      "scenarios": [
+        "future_plan",
+        "future_enrollment",
+        "future_rule"
+      ],
+      "return_codes": [
+        0,
+        0,
+        0
+      ],
+      "database_errors": []
+    },
+    "disjoint_historical_windows_are_missing_not_expired": {
+      "result": "Passed",
+      "return_code": 0,
+      "database_errors": []
+    },
+    "ended_plan_or_enrollment_is_expired_coverage_path": {
+      "result": "Passed",
+      "scenarios": [
+        "plan_ended_first",
+        "enrollment_ended_first"
+      ],
+      "return_codes": [
+        0,
+        0
+      ],
+      "database_errors": []
+    },
+    "idempotent_retry_reauthorizes_case_target": {
+      "result": "Passed",
+      "expected_sqlstate": "42501",
+      "return_code": 3,
+      "observed_sqlstates": [
+        "42501"
+      ],
+      "database_errors": [
+        "ERROR:  42501: case authority denied",
+        "CONTEXT:  PL/pgSQL function require_case(uuid,text) line 13 at RAISE"
+      ]
+    },
+    "durable_receipts_audits_and_least_privilege_boundary": {
+      "result": "Passed",
+      "observed": {
+        "audits": 6,
+        "receipts": 6,
+        "resolutions": 5,
+        "localPublished": false,
+        "migrationRecorded": true,
+        "executorDirectWrite": false,
+        "ownerMaintainsInputs": true,
+        "executorMaintainsInputs": false
+      }
+    },
+    "authoritative_input_races_serialize_through_case_lock": {
+      "result": "Passed",
+      "resolution_first_waited": true,
+      "resolution_first_reached_insert": true,
+      "mutation_first_waited": true,
+      "resolution_first_invalidated": true,
+      "mutation_first_path": "synthetic-race-before-resolution",
+      "safe_error_types": []
+    }
+  },
+  "processes": [
+    {
+      "label": "initial_server_migration",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 0,
+      "actual_result_output": []
+    },
+    {
+      "label": "unchanged_server_migration_rerun",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 0,
+      "actual_result_output": []
+    },
+    {
+      "label": "checksum_mismatch_refusal",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 1,
+      "actual_result_output": [],
+      "checksum_mismatch_reported": true
+    },
+    {
+      "label": "restored_checksum_migration_rerun",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 0,
+      "actual_result_output": []
+    },
+    {
+      "label": "actual_resolution_service_lifecycle",
+      "command": [
+        "cargo",
+        "test",
+        "-p",
+        "aso-web-server",
+        "adapters::gate::resolution_transaction_tests::administering_entity_resolution_service_lifecycle",
+        "--",
+        "--ignored",
+        "--exact",
+        "--nocapture"
+      ],
+      "return_code": 0,
+      "actual_result_output": [
+        "resolution_transaction_check: resolved_and_all_named_parked_states",
+        "resolution_transaction_check: retry_lookup_and_command_conflict",
+        "resolution_transaction_check: input_change_invalidates_and_advances_revision",
+        "resolution_transaction_check: mounted_http_reload_lookup_and_tenant_refusal",
+        "test adapters::gate::resolution_transaction_tests::administering_entity_resolution_service_lifecycle ... ok",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 22 filtered out; finished in 0.43s"
+      ]
+    }
+  ],
+  "cleanup": {
+    "disposable_database_deleted": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "disposable_login_deleted": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "aso_session_reader": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_gate_executor": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_gate_owner": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_case_executor": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_case_owner": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_authority_event_reader": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    }
+  },
+  "unverified": [
+    "The responsive React panel has focused component and scoped-Zustand tests; the complete actual-browser scenario remains Web-17.",
+    "Tauri and mobile remain deferred until Web-17 passes."
+  ],
+  "source_sha256": {
+    "migrations/server/2026090601_durable_gate.sql": "b3da2e91629534c011c6186eeb658fc2286896d2d491ca94dcda03a2f009a899",
+    "crates/aso-web-server/src/adapters/gate.rs": "f78ee42fe9f94ff2936fa7e9e1d36aa48ef8b67537b668bea16912c2a4721369",
+    "crates/aso-web-server/src/adapters/gate/transaction_tests.rs": "9690fe42a3cda9fc797b1bd6cfbd844155581d64227f75fc8ecd5a65e4196695",
+    "crates/aso-host/src/affirmation.rs": "adc28699815e2e24016b99742820eb3731a3ee31d2c0750721866b2a5fe679bb",
+    "crates/aso-host/src/lib.rs": "0088cb4804de85badf782f2e737eab9bc0a7e17ea5147d9a15036ba7496e7ab4",
+    "docs/design/schema/schema.sql": "0659af835b02cd91b697f5c29f5ad6ff1e34ecad92dcf7a7d41eb14391ea9679",
+    "docker/bootstrap/25-session-authority.sql": "fae999acbbaf98ca6b3ae107670ea25511426a233fa4ced5e72556c3fbc8c21b",
+    "scripts/test-gate-transaction.py": "7d96318b843f93455f9d30462f56e63c36f618d4569ccbd3d1a15704566a0787",
+    "migrations/server/2026090617_durable_case_commands.sql": "6ed504bdff3e4abe464179101d55c7fd23c4b6e9c1ef5e67e6e3854b010d3a86",
+    "migrations/server/2026090618_administering_entity_resolution_schema.sql": "8bf3d7be004629c4aaad3981f87124c8dea3c1bb71af87cec82f9841c31a7fe0",
+    "migrations/server/2026090619_administering_entity_resolution_commands.sql": "f4502d5657cc6a74611fbd655af0478a753d2ddb656d2587945cdefaff30bc1c",
+    "crates/aso-web-server/src/migrations.rs": "9c58166965df7d3938831c7d948848f4ed4719e02e65bd8570a2b8add4b5d127",
+    "docs/design/schema/schema-web-case-to-letter.sql": "c3f497d624005f2a210afbc894fbed3d6ef7e46b1c90901f3b808ae7b376d958",
+    "docs/architecture/fixtures/web-case-to-letter/fixture-manifest.json": "aafc14dcf205b211b652fc8896dbad07de3d9d738a0e3747eb67c81c4ef37a71",
+    "docs/architecture/fixtures/web-case-to-letter/expected-output-manifest.json": "f38fb62930f393f18f2458e42a1162fadb49e3a341e42c55e80ed231766dff63",
+    "docs/architecture/fixtures/web-case-to-letter/manifest-lock.json": "78748822fc44018c437d28b0f35a11a21c33248b88ebd686b99408fafb55c515",
+    "docs/architecture/fixtures/web-case-to-letter/verify.py": "ef0b52421cf63f0d30919cd1d1c8eec392790bef6a3787b5599442e866b9e0e8",
+    "scripts/test-web03-resolution-schema.py": "e2a915912be06342941f34632852919e1c69794d2c2390064098aa20e4792778",
+    "crates/aso-host/src/administering_entity.rs": "e6f45ae344bd9232980f0cda0b6af91a3ec3bc04f10318ed8442f8ef4c4b5750",
+    "crates/aso-host/src/ports/mod.rs": "d214d57ef454c6841f52f5b94f71944cf22a5b7eb1d8c0f1bda67dc5e835b910",
+    "crates/aso-web-server/src/adapters/gate/resolution_transaction_tests.rs": "217b264fab31936135ea9f36837e18992f0997000bfd03cfdac947a70af2b536",
+    "crates/aso-server-axum/src/routes/administering_entity.rs": "6eac371c210f224f49121051ad0a2298f6b52c15d8c728e2fd6b88cf570ed5b9",
+    "crates/aso-server-axum/src/routes/gate.rs": "a499d65d1df7e0d5b09f9f515878ffa54625e97a782dad40028a52f176daf744",
+    "crates/aso-server-axum/src/lib.rs": "963891e4c5a11e54153a4a3d6f99d4251191c383bb83e1e2226df033468f2a1b",
+    "web/src/features/administering-entity/api/administering-entity-api.ts": "1aaa97053516b13785fd28ae5958c5b24a03079ddb37f39bfb8bcf7644e990d7",
+    "web/src/features/administering-entity/hooks/use-administering-entity-resolution.ts": "b667e5c1ff924370fb51e47c6b0ce500d33385e0f7772c676d2bd923ecc5c48a",
+    "web/src/features/administering-entity/components/administering-entity-panel.tsx": "69e052f19605e4cc6ec52cfe406bdb29ed3b095d418586447504d35c8fe5f5fc",
+    "web/src/features/case-queue/components/case-detail.tsx": "8e35b98309f0e2188c9581093f40ab74c0217e0fc9e9663c4b93251cde040fd6",
+    "scripts/test-web03-resolution-service.py": "f1cb476a348801d081a9e3b2547e98a71572666b6a246e3ee4ba8d7bca2c737d"
+  },
+  "completed_at": "2026-09-18T07:05:45.526399+00:00"
+}

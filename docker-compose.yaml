@@ -164,6 +164,55 @@ services:
         condition: service_started
     restart: "no"
 
+  # Synthetic-only inference. No provider key reaches the browser or assembly service.
+  liter-llm:
+    image: ${ASO_LITER_IMAGE:-aso-prior-auth-liter:local}
+    build:
+      context: ${LITER_LLM_ROOT:-/Users/gqadonis/Projects/references/liter-llm}
+      dockerfile: ${ASO_PROJECT_ROOT:-/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth}/docker/liter-llm/Dockerfile
+      additional_contexts:
+        aso: .
+    environment:
+      ASO_LITER_DATA_CLASS: synthetic
+      QWEN_TOKEN_PLAN_OPENAI_URL: https://token-plan.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1
+      QWEN_TOKEN_PLAN_MODEL: qwen3.8-max
+    secrets:
+      - qwen_token_plan_api_key
+      - aso_liter_synthetic_key
+    expose:
+      - "4000"
+    restart: unless-stopped
+
+  document-assembly:
+    image: ${ASO_ASSEMBLY_IMAGE:-aso-prior-auth-assembly:local}
+    build:
+      context: .
+      dockerfile: Dockerfile.demo
+      target: assembly
+    environment:
+      ASO_DA_BIND: 0.0.0.0:8091
+      ASO_DA_PACKAGES_DIR: /etc/aso/templates
+      ASO_DA_PACKAGE_MANIFEST: /etc/aso/assembly-package-manifest.json
+      ASO_ASSEMBLY_TOKEN_FILE: /run/secrets/aso_assembly_token
+      ASO_MCP_APP_HTML: /etc/aso/mcp-app.html
+      ASO_TASK_HOST_URL: http://aso-api:8788
+      ASO_AGENT_PUBLIC_URL: http://document-assembly:8091
+      ASO_WEB_PUBLIC_URL: http://127.0.0.1:${ASO_WEB_PORT:-5173}
+      ASO_AGENT_ALLOWED_ORIGINS: http://127.0.0.1:${ASO_WEB_PORT:-5173},http://localhost:${ASO_WEB_PORT:-5173}
+      RUST_LOG: warn
+    volumes:
+      - ./docs/architecture/fixtures/web-case-to-letter/assembly-package-manifest.json:/etc/aso/assembly-package-manifest.json:ro
+    secrets:
+      - aso_assembly_token
+    expose:
+      - "8091"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "http://127.0.0.1:8091/readyz"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
   aso-api:
     image: ${ASO_API_IMAGE:-aso-prior-auth-api:local}
     build:
@@ -178,11 +227,26 @@ services:
       ASO_KRATOS_ADMIN_URL: http://kratos:4434
       ASO_ALLOW_INSECURE_KRATOS: "true"
       ASO_DOCUMENT_STORE_ROOT: /var/lib/aso/documents
+      ASO_DOCUMENT_PROCESSOR_IDENTITY_ID: 10000000-0000-4000-8000-000000000016
+      ASO_DOCUMENT_PROCESSOR_ACTOR_ID: 10000000-0000-4000-8000-000000000015
+      ASO_DOCUMENT_PROCESSOR_PRACTICE_ID: 10000000-0000-4000-8000-000000000001
       ASO_BIND_ADDRESS: 0.0.0.0
       ASO_PORT: 8788
+      ASO_GENERATION_ROUTE: synthetic
+      ASO_DA_PACKAGE_MANIFEST: /etc/aso/assembly-package-manifest.json
+      ASO_ASSEMBLY_URL: http://document-assembly:8091
+      ASO_ASSEMBLY_TOKEN_FILE: /run/secrets/aso_assembly_token
+      ASO_LITER_SYNTHETIC_URL: http://liter-llm:4000
+      ASO_LITER_SYNTHETIC_KEY_FILE: /run/secrets/aso_liter_synthetic_key
+      QWEN_TOKEN_PLAN_MODEL: qwen3.8-max
+      ASO_AGENT_ALLOWED_ORIGINS: http://127.0.0.1:${ASO_WEB_PORT:-5173},http://localhost:${ASO_WEB_PORT:-5173}
       RUST_LOG: ${RUST_LOG:-info,aso_web_server=debug}
     volumes:
       - demo_documents:/var/lib/aso/documents
+      - ./docs/architecture/fixtures/web-case-to-letter/assembly-package-manifest.json:/etc/aso/assembly-package-manifest.json:ro
+    secrets:
+      - aso_assembly_token
+      - aso_liter_synthetic_key
     ports:
       - "${ASO_API_PORT:-8788}:8788"
     healthcheck:
@@ -193,6 +257,10 @@ services:
     depends_on:
       aso-demo-init:
         condition: service_completed_successfully
+      document-assembly:
+        condition: service_healthy
+      liter-llm:
+        condition: service_healthy
     restart: unless-stopped
 
   web:
@@ -203,12 +271,13 @@ services:
       target: web
     environment:
       ASO_API_PROXY_TARGET: http://aso-api:8788
+      ASO_AGENT_PROXY_TARGET: http://document-assembly:8091
       ASO_CLINICAL_GATE_PROXY_TARGET: http://aso-api:8788
       ASO_KRATOS_PROXY_TARGET: http://kratos:4433
       ASO_GATE_PROXY_TARGET: http://flint-gate:4456
-      VITE_ASO_SHAPE_GATEWAY: /v1/shape
+      VITE_ASO_SHAPE_GATEWAY: /
       VITE_ASO_REPLICA_PERSISTENCE: memory
-      VITE_ASO_ENABLE_RA11C_MATERIALIZER: "true"
+      VITE_ASO_ENABLE_RA11C_MATERIALIZER: experimental
     ports:
       - "${ASO_WEB_PORT:-5173}:5173"
     healthcheck:
@@ -368,3 +437,13 @@ volumes:
   demo_documents:
   gate_keys:
   iggy_data:
+
+# Environment-backed Compose secrets are mounted only into the named services.
+# Supply values from the local ignored .env or the operator's secret manager.
+secrets:
+  qwen_token_plan_api_key:
+    environment: QWEN_TOKEN_PLAN_API_KEY
+  aso_liter_synthetic_key:
+    environment: ASO_LITER_SYNTHETIC_KEY
+  aso_assembly_token:
+    environment: ASO_ASSEMBLY_TOKEN

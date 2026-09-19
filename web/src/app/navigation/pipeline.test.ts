@@ -39,10 +39,10 @@ const administrator: VerifiedSession = {
 const agentForSurgeon: VerifiedSession = { ...surgeon, principal: "agent" };
 
 describe("the pipeline matches the prototype contract", () => {
-  it("has ten steps, numbered 01 through 10", () => {
-    expect(CASE_PIPELINE).toHaveLength(10);
+  it("has eleven steps, numbered 01 through 11", () => {
+    expect(CASE_PIPELINE).toHaveLength(11);
     expect(CASE_PIPELINE.map((s) => s.index)).toEqual([
-      "01", "02", "03", "04", "05", "06", "07", "08", "09", "10",
+      "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11",
     ]);
   });
 

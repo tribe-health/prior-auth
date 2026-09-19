@@ -1,0 +1,23 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": ".refiner/artifacts/web-03-administering-entity-resolution/artifact_manifest.json",
+      "line": 19,
+      "claim": "The artifact manifest references retained evidence files that are not added by this diff, so the artifact-refiner manifest is not self-consistent for task 2.1.",
+      "evidence": "The manifest lists `dist/.kbd-orchestrator/.../task-5-cargo-check.log`, `task-5-lint.log`, `task-5-openspec.log`, `task-5-rustfmt.log`, and `task-5-typecheck.log`, but the diff only adds `task-5-axum.log`, `task-5-command-receipt.json`, `task-5-focused-web.log`, `task-5-gate-policy.log`, and untrusted-selection logs under that evidence directory; acceptance criterion 2.1 requires artifact-refiner verification and `.refiner/artifacts/.../constraints.json` termination conditions require the manifest to validate.",
+      "suggested_fix": "Either add the missing task-5 log files to the diff or remove them from `artifact_manifest.json` and any validation assumptions that depend on them."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

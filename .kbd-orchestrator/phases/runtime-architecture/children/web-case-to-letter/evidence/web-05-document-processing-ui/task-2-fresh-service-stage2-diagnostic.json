@@ -1,0 +1,453 @@
+{
+  "result": "Failed",
+  "verification_tier": 1,
+  "install_mode": "fresh",
+  "observed_at": "2026-09-18T12:38:19.528086+00:00",
+  "scope": "Web-05 service-principal job grant, queued/processing/ready/failed transitions, bounded text extraction, deterministic page hashes, document-set revision, exact retry, conflict, tenant, and local-data boundary",
+  "prerequisites": [
+    "Existing Docker Compose db service with schema extensions available",
+    "Configured PostgreSQL admin password from container environment",
+    "Pinned Rust toolchain and idle workspace Cargo build directory",
+    "No concurrent database fixtures; a local exclusive lock covers this runner"
+  ],
+  "commands": [
+    "python3 scripts/test-web05-document-processing-service.py --install-mode fresh --output .kbd-orchestrator/phases/runtime-architecture/children/web-case-to-letter/evidence/web-05-document-processing-ui/task-2-fresh-service-stage2-diagnostic.json",
+    "cargo run -p aso-web-server -- --migrate-server"
+  ],
+  "environment_contract": {
+    "migration": [
+      "ASO_MIGRATION_DATABASE_URL"
+    ],
+    "test": [
+      "ASO_TEST_DATABASE_URL",
+      "ASO_TEST_ADMIN_DATABASE_URL",
+      "ASO_TEST_OWNER_ROLE",
+      "ASO_TEST_GATE_CONTEXTS",
+      "ASO_TEST_GATE_CASE_ID",
+      "ASO_TEST_FOREIGN_CASE_ID"
+    ],
+    "credentials": "Disposable passwords supplied only through environment or captured SQL stdin"
+  },
+  "checks": {
+    "postgres_port_discovery": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "configured_admin_password_available": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "fresh_schema_has_no_clinical_rows_before_migration": {
+      "result": "Passed",
+      "row_counts": {
+        "cases": 0,
+        "users": 0,
+        "letters": 0,
+        "patients": 0,
+        "receipts": 0,
+        "documents": 0,
+        "practices": 0,
+        "user_roles": 0,
+        "annotations": 0,
+        "submissions": 0,
+        "audit_events": 0,
+        "peer_reviews": 0,
+        "case_evidence": 0,
+        "case_pathways": 0,
+        "letter_claims": 0,
+        "receipt_items": 0,
+        "custody_events": 0,
+        "determinations": 0,
+        "gate_affirmations": 0,
+        "letter_qa_results": 0,
+        "evidence_citations": 0,
+        "patient_identities": 0,
+        "case_diagnosis_codes": 0,
+        "case_procedure_codes": 0,
+        "submission_attachments": 0
+      }
+    },
+    "initial_server_migration": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "fresh_migration_leaves_clinical_rows_empty": {
+      "result": "Passed",
+      "row_counts": {
+        "cases": 0,
+        "users": 0,
+        "letters": 0,
+        "patients": 0,
+        "receipts": 0,
+        "documents": 0,
+        "practices": 0,
+        "user_roles": 0,
+        "annotations": 0,
+        "submissions": 0,
+        "audit_events": 0,
+        "peer_reviews": 0,
+        "case_commands": 0,
+        "case_evidence": 0,
+        "case_pathways": 0,
+        "gate_commands": 0,
+        "letter_claims": 0,
+        "receipt_items": 0,
+        "custody_events": 0,
+        "determinations": 0,
+        "gate_affirmations": 0,
+        "letter_qa_results": 0,
+        "evidence_citations": 0,
+        "patient_identities": 0,
+        "case_diagnosis_codes": 0,
+        "case_procedure_codes": 0,
+        "submission_attachments": 0
+      }
+    },
+    "fresh_fixture_seeded_after_migration": {
+      "result": "Passed"
+    },
+    "unchanged_migration_rerun": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "migration_ledger_and_populated_cases_unchanged": {
+      "result": "Passed"
+    },
+    "durable_gate_migration_recorded": {
+      "result": "Passed"
+    },
+    "checksum_mismatch_refused": {
+      "result": "Passed",
+      "return_code": 1,
+      "checksum_mismatch_reported": true
+    },
+    "checksum_refusal_preserves_populated_cases": {
+      "result": "Passed"
+    },
+    "restored_checksum_rerun": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "checksum_restoration_preserves_ledger_and_cases": {
+      "result": "Passed"
+    },
+    "migration_adds_initial_document_revision_tokens": {
+      "result": "Passed",
+      "observed": {
+        "caseInputRevision": 1,
+        "documentSetRevision": 0
+      }
+    },
+    "authorized_reservation_binds_server_storage_identity": {
+      "result": "Passed",
+      "observed": {
+        "state": "staged",
+        "caseId": "90e7feb2-7dc0-438f-b138-5771fa38d67c",
+        "commandId": "2bf3afd6-bccc-471a-bd0a-2203d3021941",
+        "expiresAt": "2026-09-18T13:42:01.501489+00:00",
+        "stagingId": "2bf3afd6-bccc-471a-bd0a-2203d3021941",
+        "documentId": "8e9c1f31-84a6-4d65-ab6e-e33a5012168b",
+        "storageKey": "documents/6f327486-0971-4eda-b8e0-4b785367c77d/8e9c1f31-84a6-4d65-ab6e-e33a5012168b/abababababababababababababababababababababababababababababababab"
+      }
+    },
+    "reservation_retry_is_idempotent": {
+      "result": "Passed"
+    },
+    "same_command_different_hash_is_conflict": {
+      "result": "Passed",
+      "expected_sqlstate": "23505"
+    },
+    "oversized_upload_is_refused_before_staging": {
+      "result": "Passed",
+      "expected_sqlstate": "22023"
+    },
+    "foreign_practice_case_is_refused": {
+      "result": "Passed",
+      "expected_sqlstate": "42501"
+    },
+    "administrator_without_document_upload_is_refused": {
+      "result": "Passed",
+      "expected_sqlstate": "42501"
+    },
+    "rollback_control_executes": {
+      "result": "Passed",
+      "database_error": []
+    },
+    "rolled_back_commit_leaves_no_partial_ready_metadata": {
+      "result": "Passed",
+      "observed": {
+        "commandCount": 0,
+        "stagingCount": 1,
+        "documentCount": 0
+      }
+    },
+    "commit_atomically_persists_queued_metadata_and_receipt": {
+      "result": "Passed",
+      "receipt": {
+        "action": "upload",
+        "caseId": "90e7feb2-7dc0-438f-b138-5771fa38d67c",
+        "commandId": "2bf3afd6-bccc-471a-bd0a-2203d3021941",
+        "documentId": "8e9c1f31-84a6-4d65-ab6e-e33a5012168b",
+        "committedAt": "2026-09-18T12:42:02.356782+00:00"
+      },
+      "stored": {
+        "byteSize": 18,
+        "revision": 1,
+        "mediaType": "text/plain",
+        "pageCount": null,
+        "storageKey": "documents/6f327486-0971-4eda-b8e0-4b785367c77d/8e9c1f31-84a6-4d65-ab6e-e33a5012168b/abababababababababababababababababababababababababababababababab",
+        "contentSha256": "abababababababababababababababababababababababababababababababab",
+        "documentVersion": 1,
+        "processingStatus": "queued"
+      },
+      "post_commit": {
+        "commandCount": 1,
+        "stagingCount": 0,
+        "documentSetRevision": 0
+      }
+    },
+    "lost_commit_response_reconciles_exact_receipt": {
+      "result": "Passed"
+    },
+    "authorized_metadata_read_excludes_storage_key_and_bytes": {
+      "result": "Passed",
+      "keys": [
+        "byteSize",
+        "caseId",
+        "committedAt",
+        "contentSha256",
+        "documentTypeId",
+        "documentVersion",
+        "effectiveDate",
+        "id",
+        "mediaType",
+        "name",
+        "pageCount",
+        "processingErrorCode",
+        "processingStatus",
+        "revision"
+      ]
+    },
+    "abandon_returns_exact_storage_key_and_removes_pending_state": {
+      "result": "Passed",
+      "observed": {
+        "commandCount": 0,
+        "stagingCount": 0,
+        "documentCount": 0
+      }
+    },
+    "least_privilege_local_tables_and_processor_boundary": {
+      "result": "Passed",
+      "observed": {
+        "stagingRls": true,
+        "commandsRls": true,
+        "migrationRecorded": true,
+        "executorCommandRead": false,
+        "executorStagingWrite": false,
+        "humanProcessorGrants": 0,
+        "publishedLocalTables": false,
+        "executorDocumentInsert": false
+      }
+    },
+    "processor_fixture_grant_seeded": {
+      "result": "Passed",
+      "return_code": 0,
+      "database_error": []
+    },
+    "processor_claim_function_executes": {
+      "result": "Passed",
+      "return_code": 0,
+      "database_error": []
+    },
+    "claim_commits_observable_processing_state": {
+      "result": "Passed",
+      "observed": {
+        "commandState": "processing",
+        "documentStatus": "processing",
+        "documentSetRevision": 0
+      }
+    },
+    "processor_failure_function_executes": {
+      "result": "Passed",
+      "return_code": 0,
+      "database_error": []
+    },
+    "processing_failure_is_bounded_and_leaves_ready_set_unchanged": {
+      "result": "Passed",
+      "observed": {
+        "errorCode": "source_integrity_failed",
+        "pageCount": 0,
+        "commandState": "failed",
+        "documentStatus": "failed",
+        "documentSetRevision": 0
+      }
+    },
+    "human_session_is_denied_by_processing_function": {
+      "result": "Passed",
+      "expected_sqlstate": "42501"
+    },
+    "processing_local_tables_are_rls_and_structurally_unpublished": {
+      "result": "Passed",
+      "observed": {
+        "pagesRls": true,
+        "grantsRls": true,
+        "commandsRls": true,
+        "executorPagesRead": false,
+        "executorCommandsRead": false,
+        "publishedLocalTables": false
+      }
+    },
+    "actual_service_store_database_processing_lifecycle": {
+      "result": "Failed",
+      "return_code": 101,
+      "markers": []
+    }
+  },
+  "processes": [
+    {
+      "label": "initial_server_migration",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 0,
+      "actual_result_output": []
+    },
+    {
+      "label": "unchanged_server_migration_rerun",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 0,
+      "actual_result_output": []
+    },
+    {
+      "label": "checksum_mismatch_refusal",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 1,
+      "actual_result_output": [],
+      "checksum_mismatch_reported": true
+    },
+    {
+      "label": "restored_checksum_migration_rerun",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 0,
+      "actual_result_output": []
+    },
+    {
+      "label": "actual_document_processing_service_lifecycle",
+      "command": [
+        "cargo",
+        "test",
+        "-p",
+        "aso-web-server",
+        "adapters::gate::processing_transaction_tests::document_processing_service_lifecycle",
+        "--",
+        "--ignored",
+        "--exact",
+        "--nocapture"
+      ],
+      "return_code": 101,
+      "actual_result_output": [
+        "test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 31 filtered out; finished in 0.13s"
+      ],
+      "failure_diagnostics": [
+        "document_processing_adapter_stage: claim_parsed",
+        "document_processing_adapter_stage: digest_decoded",
+        "document_processing_adapter_stage: source_verified",
+        "document_processing_adapter_stage: pages_extracted",
+        "document_processing_adapter_stage: completion_started",
+        "document_processing_database_error: sqlstate=42883 message=function digest(bytea, unknown) does not exist",
+        "thread 'adapters::gate::processing_transaction_tests::document_processing_service_lifecycle' (2515007) panicked at crates/aso-web-server/src/adapters/gate/processing_transaction_tests.rs:158:13:",
+        "synthetic document processing failed: Unavailable; state=Some((\"processing\", Some(\"processing\"), None))"
+      ]
+    }
+  ],
+  "cleanup": {
+    "disposable_database_deleted": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "disposable_login_deleted": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "aso_session_reader": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_gate_executor": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_gate_owner": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_case_executor": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_case_owner": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_authority_event_reader": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    }
+  },
+  "unverified": [
+    "Document status publication, React upload/status UI, actual browser, Tauri, and mobile are outside Web-05 task 1.2."
+  ],
+  "source_sha256": {
+    "migrations/server/2026090601_durable_gate.sql": "b3da2e91629534c011c6186eeb658fc2286896d2d491ca94dcda03a2f009a899",
+    "crates/aso-web-server/src/adapters/gate.rs": "b994ba20dcdf58212a3142d3fcefeef3c37ee1edadc3f8c764012d5acb640441",
+    "crates/aso-web-server/src/adapters/gate/transaction_tests.rs": "9690fe42a3cda9fc797b1bd6cfbd844155581d64227f75fc8ecd5a65e4196695",
+    "crates/aso-host/src/affirmation.rs": "adc28699815e2e24016b99742820eb3731a3ee31d2c0750721866b2a5fe679bb",
+    "crates/aso-host/src/lib.rs": "a5f92ee49173f932eee27b9d8ecddbecc730c8c7192ebd629ab7abaf17e15346",
+    "docs/design/schema/schema.sql": "0659af835b02cd91b697f5c29f5ad6ff1e34ecad92dcf7a7d41eb14391ea9679",
+    "docker/bootstrap/25-session-authority.sql": "fae999acbbaf98ca6b3ae107670ea25511426a233fa4ced5e72556c3fbc8c21b",
+    "scripts/test-gate-transaction.py": "7d96318b843f93455f9d30462f56e63c36f618d4569ccbd3d1a15704566a0787",
+    "migrations/server/2026090617_durable_case_commands.sql": "6ed504bdff3e4abe464179101d55c7fd23c4b6e9c1ef5e67e6e3854b010d3a86",
+    "migrations/server/2026090620_document_upload_schema.sql": "294b0c2e74ff8ef0f65812860ed96742e8cf1e0cf657d084daf0f189133edbd9",
+    "crates/aso-web-server/src/migrations.rs": "7b33478727a9fc32b0d2193b37b9c894c2829e08bf3a133b2dc31e421e4eac93",
+    "docs/design/schema/schema-web-case-to-letter.sql": "35cd668d991dd4b06b2a21a642c1370476a9b4052500b27dd9637fa43a8dec3e",
+    "scripts/test-web04-document-upload-schema.py": "ac5511e5b2c57b00cfdae323a11940edee8e308a8f291e37f1cff847c3ff043a",
+    "migrations/server/2026090621_document_processing.sql": "e06e088ca22110ca3533c9c36fc08e36d22198612a6d8f2ec8dac10071447c11",
+    "crates/aso-host/src/document_processing.rs": "4fff7efeb623a2d1d7fc64b1f35d01e868999813851f959d85423749e62e58f8",
+    "crates/aso-host/src/ports/mod.rs": "61df4281a0b29d738cae5592083227a4360dfab74a2cde55c4d672fbbd36d20f",
+    "crates/aso-web-server/src/adapters/document_processor.rs": "9f210563c22787939e8de1da728ca98106625b089581253831f8115f35c85d7e",
+    "crates/aso-web-server/src/adapters/document_store.rs": "72b3740632bb948e46db4c709e6aae43476a3874d3c6d07236800448cada8533",
+    "crates/aso-web-server/src/adapters/gate/processing_transaction_tests.rs": "4174e294093ac77fd8a07b9d0a476ea6f4eede80a6c87663ae4b3010e6c20199",
+    "scripts/test-web05-document-processing-service.py": "b6d1172092b55b5c10eaf07696a37a2a909031d0af6c9745639331174d088c98"
+  },
+  "failure": {
+    "stage": "actual_document_processing_service_lifecycle",
+    "type": "AssertionError"
+  },
+  "completed_at": "2026-09-18T12:43:32.121380+00:00"
+}

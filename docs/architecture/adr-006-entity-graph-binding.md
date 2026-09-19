@@ -6,7 +6,8 @@
 
 This record is retained as decision history. Its original decision, rationale
 and consequences below are superseded, not parallel implementation instructions.
-The successor is an accepted target design; implementation is not certified.
+The successor is accepted and its browser runtime slice is implemented. Final
+release certification and native runtime parity remain separate.
 
 The graph is itself Zustand. Separate ephemeral verified-session, startup and
 update stores are valid; the historical disagreement test below is not a

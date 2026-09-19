@@ -1,0 +1,293 @@
+   Compiling aso-document-assembly v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-document-assembly)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 1m 14s
+     Running unittests src/lib.rs (/Volumes/my-passport/cargo-build/02/70d32e977a4fbf/debug/deps/aso_desktop_lib-6f5860aab1be58f5)
+
+running 18 tests
+test native_session::tests::native_kratos_keyring_transport_end_to_end ... ignored, requires live Kratos and an operating-system credential store
+test session_contract_tests::current_session_refuses_even_when_injected_port_can_return_authority ... ok
+test session_contract_tests::gate_commands_refuse_even_when_injected_ports_accept ... ok
+test replica_coordinator::tests::native_replica_release_fences_the_old_claim_before_re_election ... ok
+test replica_coordinator::tests::native_replica_elects_one_owner_and_relays_one_canonical_projection ... ok
+test session_contract_tests::injected_session_commands_match_the_shared_http_operation_contract ... ok
+test session_contract_tests::reassessment_refuses_even_when_injected_ports_accept ... ok
+test session_contract_tests::signing_refuses_even_when_injected_ports_accept ... ok
+test session_contract_tests::tauri_ipc_rejects_stale_epoch_unauthorized_window_and_actor_hint ... ok
+test session_contract_tests::document_source_uses_the_host_session_and_shared_service ... ok
+test session_contract_tests::native_replica_ipc_elects_one_window_and_relays_the_committed_graph ... ok
+test session_contract_tests::host_scope_logout_and_authentication_events_reach_two_windows_and_advance_epoch ... ok
+test session_contract_tests::constrained_tauri_ipc_invokes_the_complete_host_credential_inventory ... ok
+test session_contract_tests::every_tauri_command_preserves_policy_provider_and_uncertain_outcomes ... ok
+test native_session::tests::provider_action_with_unexpected_path_is_refused ... ok
+test native_session::tests::provider_action_cannot_redirect_password_to_another_origin ... ok
+test native_session::tests::native_login_stores_token_in_host_and_returns_sanitized_projection ... ok
+test native_commands::tests::mounted_gateway_transport_preserves_all_command_paths_and_host_credential ... ok
+
+test result: ok. 17 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.15s
+
+     Running unittests src/lib.rs (/Volumes/my-passport/cargo-build/02/70d32e977a4fbf/debug/deps/aso_document_assembly-dfa5705d5a33f8f6)
+
+running 23 tests
+test a2ui::tests::allowed_surfaces_describe_and_privileged_ones_are_refused_by_name ... ok
+test mcp::tests::app_source_review_url_targets_the_mounted_evidence_route ... ok
+test agui::tests::events_serialize_with_the_protocol_discriminator_and_camel_case_fields ... ok
+test agui::tests::run_input_accepts_the_standard_fields_and_defaults_the_rest ... ok
+test contract::tests::actor_identity_and_signature_fields_are_refused_in_a_body ... ok
+test contract::tests::a_minimal_request_deserializes_with_defaults ... ok
+test packages::tests::a_missing_root_is_a_load_error_not_a_render_error ... ok
+test packages::tests::the_seed_catalog_loads_with_its_kinds_and_roots_present ... ok
+test tests::a_body_carrying_an_actor_is_rejected_before_any_rendering ... ok
+test tests::internal_assembly_requires_its_service_credential ... ok
+test protocol_tests::cookie_writes_reject_missing_or_unapproved_origin ... ok
+test tests::readiness_reports_the_seed_catalog ... ok
+test tests::public_agui_refuses_arbitrary_assembly_claims ... ok
+test tests::an_unknown_kind_is_404_and_a_wrong_package_digest_is_409 ... ok
+test protocol_tests::a2a_uses_current_caller_for_task_get_and_cancel ... ok
+test tests::the_halt_memo_kind_prints_states_and_routes_and_a_letter_kind_cannot ... ok
+test tests::the_denial_response_fixture_renders_the_appeal_kind ... ok
+test tests::a_void_criterion_left_uncovered_halts_with_coordinator_routing ... ok
+test tests::the_initial_request_fixture_renders_a_cited_letter_over_rest ... ok
+test protocol_tests::bearer_is_forwarded_and_ambiguous_credentials_are_refused ... ok
+test protocol_tests::official_mcp_negotiation_and_each_invocation_uses_its_own_caller ... ok
+test protocol_tests::agui_start_forwards_only_typed_command_and_mcp_requires_valid_protocol_requests ... ok
+test protocol_tests::agui_streams_persisted_events_and_resumes_without_replaying_earlier_frames ... ok
+
+test result: ok. 23 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.48s
+
+     Running unittests src/main.rs (/Volumes/my-passport/cargo-build/02/70d32e977a4fbf/debug/deps/aso_document_assembly-ceba0ee0aae50c4b)
+
+running 2 tests
+test startup_tests::assembly_secret_configuration_refuses_ambiguity_and_whitespace ... ok
+test startup_tests::frozen_package_manifest_accepts_exact_catalog_and_refuses_drift ... ok
+
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/seed_package.rs (/Volumes/my-passport/cargo-build/02/70d32e977a4fbf/debug/deps/seed_package-9c44d291073bedc9)
+
+running 6 tests
+test package_manifest_matches_engine_catalog ... ok
+test host_uuid_criteria_render_without_narrative_group_tags ... ok
+test a_response_without_a_source_claim_or_known_mode_is_refused ... ok
+test canonical_correspondence_does_not_embed_mutable_workflow_status ... ok
+test determination_reason_is_a_rendered_source_claim_in_both_response_modes ... ok
+test template_boilerplate_never_asserts_clinical_or_regulatory_conclusions ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running unittests src/lib.rs (/Volumes/my-passport/cargo-build/02/70d32e977a4fbf/debug/deps/aso_host-ee5a5b55cd1a18cd)
+
+running 43 tests
+test document_generation::tests::production_cannot_fall_back_to_synthetic_or_partial_qualification ... ok
+test case_management::tests::invalid_or_unverified_commands_never_reach_the_repository ... ok
+test annotation::tests::gateway_target_check_is_read_only ... ok
+test annotation::tests::authorized_command_preserves_attribution_source_and_disposition ... ok
+test annotation::tests::nonhuman_and_changed_retry_never_write ... ok
+test criteria_catalog::tests::invalid_revision_namespaces_never_reach_the_repository ... ok
+test document_generation::tests::invented_sources_quotes_and_unrelated_criteria_are_refused ... ok
+test domain::tests::derived_grades_are_never_citable_as_policy ... ok
+test document_generation::tests::source_metadata_comes_from_the_host_and_missing_sources_are_excluded ... ok
+test domain::tests::admin_capabilities_are_never_clinical ... ok
+test domain::tests::gate_needs_all_four ... ok
+test document_generation::tests::terminal_tasks_do_not_restart_and_input_required_resumes ... ok
+test case_management::tests::commands_reconcile_and_advance_distinct_revisions ... ok
+test annotation::tests::transport_refuses_caller_selected_authorship ... ok
+test domain::tests::only_derived_knowledge_decays ... ok
+test document_generation::tests::engine_digest_and_rendered_manifest_survive_host_validation ... ok
+test projection::tests::case_summary_is_exact_and_excludes_unapproved_case_data ... ok
+test projection::tests::eight_table_registry_is_exact_and_practice_scoped ... ok
+test logout::tests::trusted_inactive_observation_persists_and_confirms_without_revocation ... ok
+test projection::tests::unapproved_metadata_and_deferred_criterion_labels_stay_protected ... ok
+test reassessment::tests::new_command_checks_revision_and_authority_before_write ... ok
+test logout::tests::completion_write_failure_recovers_after_idempotent_kratos_confirmation ... ok
+test logout::tests::lost_lease_and_existing_rows_never_report_false_confirmation ... ok
+test logout::tests::failed_revocation_leaves_a_retryable_denial ... ok
+test logout::tests::logout_commits_denial_before_revocation_and_confirms_under_the_lease ... ok
+test logout::tests::recovery_claims_without_a_credential_and_finishes_idempotently ... ok
+test logout::tests::failure_before_denial_commit_never_contacts_kratos_or_reports_success ... ok
+test logout::tests::coordinated_logout_forgets_continuity_after_a_durable_outcome ... ok
+test reassessment::tests::nonhuman_and_denied_contexts_never_reach_the_write ... ok
+test reassessment::tests::stored_result_resolves_without_repeating_the_clinical_write ... ok
+test reassessment::tests::transport_mutation_rejects_caller_selected_authority ... ok
+test session::tests::denial_committed_during_membership_resolution_blocks_the_result ... ok
+test session::tests::denied_session_is_refused_before_membership_resolution ... ok
+test session::tests::trusted_inactive_revalidation_records_the_prior_identity_before_refusal ... ok
+test signing::tests::a_repository_receipt_for_another_command_is_refused ... ok
+test signing::tests::stored_result_reconciles_before_mutable_target_reads ... ok
+test signing::tests::nonhuman_expired_and_denied_contexts_never_reach_the_write ... ok
+test signing::tests::transport_mutation_rejects_caller_selected_authority ... ok
+test signing::tests::verified_human_and_complete_current_revisions_are_required ... ok
+test source::tests::expired_agent_and_invalid_page_are_refused_before_repository_access ... ok
+test session::tests::mounted_resolve_revalidates_cached_identity_and_records_inactive ... ok
+test source::tests::repository_integrity_mismatch_is_not_delivered ... ok
+test source::tests::valid_human_context_returns_integrity_checked_bounded_bytes ... ok
+
+test result: ok. 43 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/lib.rs (/Volumes/my-passport/cargo-build/02/70d32e977a4fbf/debug/deps/aso_server_axum-14cc8faa010d10b7)
+
+running 53 tests
+test routes::document_tasks::tests::cookie_mutations_require_one_exact_configured_origin ... ok
+test routes::documents::tests::every_document_error_has_the_frozen_http_mapping ... ok
+test routes::cases::tests::write_only_case_commands_return_receipts_without_protected_case_data ... ok
+test routes::cases::tests::changed_payload_stale_revision_and_invalid_transition_are_stable_conflicts ... ok
+test routes::cases::tests::case_detail_http_requires_verified_practice_and_read_capability ... ok
+test routes::cases::tests::administering_entity_http_refuses_untrusted_selection ... ok
+test routes::cases::tests::administering_entity_http_refuses_scope_capability_and_typed_failures ... ok
+test routes::cases::tests::administering_entity_http_contract_resolves_reloads_and_reconciles ... ok
+test routes::cases::tests::gate_policy_requires_case_capabilities_and_never_mutates ... ok
+test routes::cases::tests::browser_contract_runs_case_lifecycle_and_reconciles_lost_responses ... ok
+test routes::cases::tests::malformed_authority_and_repository_errors_use_the_frozen_codes ... ok
+test routes::documents::tests::upload_refuses_anonymous_missing_capability_and_foreign_practice ... ok
+test routes::documents::tests::multipart_and_service_failures_use_frozen_error_codes ... ok
+test routes::evidence::tests::changed_payload_conflicts_and_caller_selected_identity_is_rejected ... ok
+test routes::evidence::tests::agent_is_refused_before_reassessment_ports ... ok
+test routes::documents::tests::independent_gate_policy_authorizes_document_targets_without_mutating ... ok
+test routes::evidence::tests::lost_response_is_reconciled_without_a_second_clinical_effect ... ok
+test routes::gate::tests::annotation_policy_fails_closed_on_target_denial ... ok
+test routes::documents::tests::multipart_upload_reads_metadata_and_reconciles_receipt ... ok
+test routes::gate::tests::annotation_policy_is_read_only_and_requires_fresh_capability ... ok
+test routes::gate::tests::each_command_resolves_fresh_context_and_ignores_identity_headers ... ok
+test routes::gate::tests::evidence_policy_preserves_target_read_outages ... ok
+test routes::gate::tests::letter_policy_preserves_target_read_outages ... ok
+test routes::gate::tests::lookup_does_not_return_a_command_from_a_different_case ... ok
+test routes::evidence::tests::gate_policy_requires_annotate_and_preserves_target_integrity_without_writing ... ok
+test routes::documents::tests::route_specific_body_limit_maps_to_document_too_large ... ok
+test routes::gate::tests::policy_checks_fresh_capability_without_calling_service_authority_or_commands ... ok
+test routes::gate::tests::raw_credentials_accept_each_single_source_and_reject_ambiguity ... ok
+test routes::gate::tests::expiry_and_nonhuman_principals_are_denied_with_accepting_downstream_ports ... ok
+test routes::gate::tests::service_authority_denies_after_independent_policy_allows ... ok
+test routes::gate::tests::mutation_requires_command_id_and_kind_and_rejects_injected_actor ... ok
+test routes::gate::tests::session_and_command_failures_have_only_sanitized_error_codes ... ok
+test routes::gate::tests::trusted_session_service_refuses_agent_before_membership_resolution ... ok
+test routes::gate::tests::policy_propagates_case_scope_denial_and_backend_unavailability ... ok
+test routes::gate::tests::malformed_path_query_and_json_are_sanitized_and_never_cached ... ok
+test routes::letters::tests::agent_is_refused_before_signing_ports_even_with_sign_capability ... ok
+test routes::letters::tests::verified_session_context_drives_signing_and_stale_revisions_conflict ... ok
+test routes::letters::tests::gate_policy_requires_sign_capability_and_preserves_target_integrity_without_signing ... ok
+test routes::sources::tests::forbidden_source_and_nonhuman_session_release_no_bytes ... ok
+test routes::sources::tests::invalid_page_is_rejected_without_source_delivery ... ok
+test routes::letters::tests::signing_target_returns_only_the_fresh_authoritative_projection ... ok
+test routes::letters::tests::lost_signing_response_is_reconciled_by_repeat_and_lookup ... ok
+test session::tests::an_agent_may_not_attempt_a_clinical_act ... ok
+test routes::sources::tests::authorized_source_returns_bounded_private_body_and_provenance_headers ... ok
+test session::tests::ambiguous_or_blank_credentials_are_rejected_before_resolution ... ok
+test session::tests::mounted_cached_identity_observes_direct_revocation_before_refusal ... ok
+test routes::letters::tests::request_body_actor_is_rejected_before_session_or_service_access ... ok
+test session::tests::mounted_registry_derives_two_practice_grants ... ok
+test session::tests::mounted_registry_rejects_client_projection_controls ... ok
+test session::tests::mounted_logout_returns_only_the_authoritative_result ... ok
+test session::tests::mounted_current_session_refuses_expired_or_nonhuman_port_results ... ok
+test session::tests::mounted_session_and_replica_grant_refuse_a_durable_denial ... ok
+test session::tests::mounted_registry_refuses_failed_or_expired_membership_resolution ... ok
+
+test result: ok. 53 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.02s
+
+     Running unittests src/main.rs (/Volumes/my-passport/cargo-build/02/70d32e977a4fbf/debug/deps/aso_web_server-f3b62805d42df349)
+
+running 44 tests
+test adapters::document_processor::tests::text_pages_are_sequential_and_normalized ... ok
+test adapters::document_processor::tests::invalid_or_empty_text_is_refused ... ok
+test adapters::gate::case_transaction_tests::case_command_service_lifecycle ... ignored, requires scripts/test-web01-case-migration.py disposable PostgreSQL fixture
+test adapters::gate::case_transaction_tests::case_write_target_authorization_without_read_capability ... ignored, requires scripts/test-web01-case-migration.py write-only PostgreSQL fixture
+test adapters::gate::criteria_transaction_tests::criteria_catalog_service_lifecycle ... ignored, requires scripts/test-web06-criteria-service.py disposable PostgreSQL fixture
+test adapters::gate::document_generation::tests::postgres_snapshot_decodes_host_contract ... ignored, requires migrated local synthetic demo and restricted runtime credentials
+test adapters::document_store::tests::refuses_object_over_delivery_limit ... ok
+test adapters::gate::processing_transaction_tests::document_processing_service_lifecycle ... ignored, requires the disposable Web-05 PostgreSQL and document-store fixture
+test adapters::gate::reassessment_transaction_tests::reassessment_gate_transaction_lifecycle ... ignored, requires the disposable PostgreSQL fixture
+test adapters::gate::resolution_transaction_tests::administering_entity_resolution_service_lifecycle ... ignored, requires scripts/test-web03-resolution-service.py disposable PostgreSQL fixture
+test adapters::gate::signing_transaction_tests::signing_gate_transaction_lifecycle ... ignored, requires the disposable PostgreSQL fixture
+test adapters::gate::source_transaction_tests::document_source_transaction_authorizes_hashes_and_audits ... ignored, requires the disposable RA16 PostgreSQL fixture
+test adapters::gate::transaction_tests::gate_transaction_lifecycle ... ignored, requires scripts/test-gate-transaction.py disposable PostgreSQL fixture
+test adapters::gate::upload_transaction_tests::document_upload_http_lifecycle ... ignored, requires scripts/test-web04-document-upload-http.py disposable PostgreSQL fixture
+test adapters::gate::upload_transaction_tests::document_upload_service_lifecycle ... ignored, requires scripts/test-web04-document-upload-service.py disposable PostgreSQL fixture
+test adapters::gate::workflow_transaction_tests::case_to_approved_letter_lifecycle ... ignored, requires scripts/test-web-case-to-letter.py disposable PostgreSQL fixture
+test adapters::gate::document_upload_inspection_tests::refuses_a_malformed_pdf_after_its_signature ... ok
+test adapters::document_store::tests::reads_relative_object_and_refuses_path_escape ... ok
+test adapters::document_store::tests::verified_write_is_idempotent_and_refuses_tampered_existing_object ... ok
+test adapters::document_store::tests::verified_delete_removes_only_matching_object ... ok
+test adapters::document_generation::tests::tools_reject_unrelated_sources_extra_arguments_and_unapproved_effects ... ok
+test adapters::gate::document_upload_inspection_tests::accepts_a_parseable_pdf_and_counts_its_pages ... ok
+test adapters::session::journal_tests::logout_journal_lease_lifecycle ... ignored, requires isolated fixture: RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-ra06c-logout-journal.py
+test adapters::generation_mcp::tests::omitted_config_has_no_client_and_unsafe_config_is_refused ... ok
+test adapters::session::logout::tests::revoker_refuses_a_claim_from_another_issuer ... ok
+test adapters::session::logout::tests::revoker_leaves_non_inactive_responses_for_retry ... ok
+test adapters::session::logout::tests::revoker_uses_the_verified_session_id_and_accepts_inactive_states ... ok
+test adapters::kratos_proxy::tests::preserves_browser_redirect_and_all_set_cookie_headers ... ok
+test adapters::session::tests::revalidation_reports_inactive_only_for_a_trusted_prior_issuer ... ok
+test adapters::session::tests::native_token_uses_the_kratos_session_header ... ok
+test adapters::session::tests::session_provider_connection_failure_is_unavailable ... ok
+test adapters::session::transaction_tests::session_transaction_context_lifecycle ... ignored, requires isolated fixture: RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-session-context.py
+test deployment_tests::configured_document_store_refuses_an_invalid_root ... ok
+test adapters::session::tests::session_provider_requires_explicit_plaintext_development_opt_in ... ok
+test deployment_tests::mounted_api_requires_every_authoritative_dependency ... ok
+test adapters::generation_mcp::tests::redirects_cannot_send_credentials_to_an_unconfigured_endpoint ... ok
+test adapters::session::tests::session_provider_refuses_invalid_or_unavailable_authority ... ok
+test adapters::document_generation::tests::response_modes_prompt_determination_retrieval_and_expose_document_link ... ok
+test adapters::document_generation::tests::streamed_tool_fragments_retrieve_authorized_source_before_candidate ... ok
+test adapters::generation_mcp::tests::configured_client_negotiates_and_injects_scope_but_refuses_unconfigured_effects ... ok
+test adapters::generation_mcp::tests::json_and_sse_responses_are_capped_before_artifact_decoding ... ok
+test deployment_tests::separate_restricted_credentials_must_name_one_database ... ok
+test adapters::document_generation::tests::continuous_stream_checks_cancellation_and_closes_provider_socket ... ok
+test adapters::generation_mcp::tests::host_cancellation_reaches_the_remote_tool ... ok
+
+test result: ok. 29 passed; 0 failed; 15 ignored; 0 measured; 0 filtered out; finished in 0.90s
+
+     Running unittests src/lib.rs (/Volumes/my-passport/cargo-build/02/70d32e977a4fbf/debug/deps/clinical_docs-9ef9b01f40aa51dd)
+
+running 24 tests
+test claim::tests::an_attributed_document_claim_carries_author_and_document_citation ... ok
+test claim::tests::document_claims_carry_title_page_and_date ... ok
+test claim::tests::annotation_claims_carry_the_author_inside_the_sentence ... ok
+test engine::tests::clinical_text_in_context_is_refused_at_the_door ... ok
+test engine::tests::package_and_root_mismatches_are_refused ... ok
+test claim::tests::a_claim_with_both_or_neither_source_is_unrepresentable_on_the_wire ... ok
+test engine::tests::a_template_cannot_invent_a_claim ... ok
+test engine::tests::a_template_that_strips_a_citation_fails_unsupported_claim ... ok
+test engine::tests::document_claims_render_with_page_and_date_and_annotations_with_attribution ... ok
+test engine::tests::a_signature_renders_only_from_a_receipt_bound_to_this_hash ... ok
+test engine::tests::required_criterion_left_out_fails_criterion_coverage ... ok
+test engine::tests::a_letter_cannot_print_an_evidence_state_but_a_work_product_can ... ok
+test engine::tests::non_constructive_checks_report_not_applicable_without_inputs_and_fail_on_conflict ... ok
+test engine::tests::an_annotation_without_a_document_is_refused_in_correspondence_and_allowed_in_work_product ... ok
+test evidence_state_tests::gap_routes_to_the_clinician_and_void_to_the_coordinator ... ok
+test engine::tests::same_inputs_same_hash_and_any_package_edit_changes_it ... ok
+test engine::tests::a_template_that_strips_attribution_fails_annotation_attribution ... ok
+test kind::tests::every_class_has_a_policy_and_a_transmission_answer ... ok
+test kind::tests::registering_a_key_twice_replaces_the_kind ... ok
+test engine::tests::the_engine_never_assigns_a_state_for_an_unknown_criterion ... ok
+test qa::tests::keys_match_the_schema_and_serialize_as_snake_case ... ok
+test package::tests::digest_is_order_independent_and_content_sensitive ... ok
+test evidence_state_tests::wire_values_are_lowercase_and_void_survives ... ok
+test qa::tests::only_a_failed_blocking_check_blocks ... ok
+
+test result: ok. 24 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+
+   Doc-tests aso_desktop_lib
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests aso_document_assembly
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests aso_host
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests aso_server_axum
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests clinical_docs
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

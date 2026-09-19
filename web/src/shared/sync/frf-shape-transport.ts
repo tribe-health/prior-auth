@@ -67,6 +67,21 @@ export interface FrfShapeTransportOptions {
   fetchImpl?: typeof fetch;
 }
 
+function waitForShapeRetry(delayMs: number, signal?: AbortSignal): Promise<void> {
+  signal?.throwIfAborted();
+  return new Promise((resolve, reject) => {
+    const onAbort = () => {
+      clearTimeout(timer);
+      reject(signal?.reason);
+    };
+    const timer = setTimeout(() => {
+      signal?.removeEventListener("abort", onAbort);
+      resolve();
+    }, delayMs);
+    signal?.addEventListener("abort", onAbort, { once: true });
+  });
+}
+
 /** Raised when the facade refuses the request outright. */
 export class ShapeAuthorizationError extends ReplicaAuthorityFailure {
   constructor(
@@ -113,6 +128,34 @@ export function createFrfShapeTransport(opts: FrfShapeTransportOptions): Replica
     passComplete = false;
   }
 
+  async function requestShape(url: string, shape: string, signal?: AbortSignal): Promise<Response> {
+    // Observed FRF→Electric connection failures return 502 and otherwise close
+    // the entire replica. Retry only this idempotent GET, at most twice. Every
+    // attempt crosses Gate again; authority refusals and body errors are final.
+    for (let attempt = 0; ; attempt += 1) {
+      signal?.throwIfAborted();
+      let response: Response;
+      try {
+        response = await doFetch(url, {
+          method: "GET",
+          credentials: "include",
+          headers: { accept: "application/json" },
+          signal,
+        });
+      } catch (cause) {
+        signal?.throwIfAborted();
+        if (!(cause instanceof TypeError)) throw cause;
+        if (attempt === 2) throw new Error(`shape ${shape} connection failed`);
+        await waitForShapeRetry(250 * (attempt + 1), signal);
+        continue;
+      }
+      if (response.status !== 502 || attempt === 2) return response;
+      // Discard the failed response without reading or logging upstream details.
+      await response.body?.cancel();
+      await waitForShapeRetry(250 * (attempt + 1), signal);
+    }
+  }
+
   async function fetchShape(shape: string, target: TableTarget, signal?: AbortSignal): Promise<{
     rows: ChunkRow[];
     handle?: string;
@@ -127,14 +170,7 @@ export function createFrfShapeTransport(opts: FrfShapeTransportOptions): Replica
     if (cursor.handle) params.set("handle", cursor.handle);
     if (cursor.offset) params.set("offset", cursor.offset);
 
-    const response = await doFetch(`${base}/v1/shape?${params.toString()}`, {
-      method: "GET",
-      // The Kratos cookie. Gate mints the downstream JWT; the browser never
-      // sees or stores it.
-      credentials: "include",
-      headers: { accept: "application/json" },
-      signal,
-    });
+    const response = await requestShape(`${base}/v1/shape?${params.toString()}`, shape, signal);
 
     if (response.status === 204) throw new ShapeAuthorizationError(204, shape);
     if (response.status === 401 || response.status === 403) {

@@ -321,6 +321,180 @@ impl MigrationSource<'static> for ServerMigrations {
                     include_str!("../../../migrations/server/2026090629_letter_workflow.sql").into(),
                     false,
                 ),
+                Migration::new(
+                    2026090630,
+                    "criteria catalog helper execution".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090630_criteria_catalog_helper_execution.sql"
+                    )
+                    .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090631,
+                    "queued document payload".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090631_queued_document_payload.sql"
+                    )
+                    .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090632,
+                    "document processor queue".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090632_document_processor_queue.sql"
+                    )
+                    .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090633,
+                    "gate policy helper execution".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090633_gate_policy_helper_execution.sql"
+                    )
+                    .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090634,
+                    "letter claim attribution".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090634_letter_claim_attribution.sql"
+                    )
+                    .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090635,
+                    "signing retrieval helper execution".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090635_signing_retrieval_helper_execution.sql"
+                    )
+                    .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090636,
+                    "denial appeal workflow".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                    "../../../migrations/server/2026090636_denial_appeal_workflow.sql"
+                    )
+                    .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090637,
+                    "criteria catalog revision variable".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090637_criteria_catalog_revision_variable.sql"
+                    )
+                    .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090638,
+                    "document generation tasks".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090638_document_generation_tasks.sql"
+                    )
+                    .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090639,
+                    "authorized letter assembly read".into(),
+                    MigrationType::Simple,
+                    include_str!("../../../migrations/server/2026090639_letter_assembly_read.sql").into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090640,
+                    "determination response mode confirmation".into(),
+                    MigrationType::Simple,
+                    include_str!("../../../migrations/server/2026090640_determination_response_mode.sql").into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090641,
+                    "submission packet workflow".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090641_submission_packet_workflow.sql"
+                    )
+                    .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090642,
+                    "signed letter case progress".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090642_signed_letter_case_progress.sql"
+                    )
+                    .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090643,
+                    "submission and case progress repairs".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090643_submission_and_case_progress_repairs.sql"
+                    )
+                    .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090644,
+                    "signing target owner".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090644_signing_target_owner.sql"
+                    )
+                    .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090645,
+                    "signing current letter columns".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090645_signing_current_letter_columns.sql"
+                    )
+                    .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090646,
+                    "document task status projection".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090646_document_task_status_projection.sql"
+                    )
+                    .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090647,
+                    "determination case progress".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090647_determination_case_progress.sql"
+                    )
+                    .into(),
+                    false,
+                ),
             ])
         })
     }
@@ -350,6 +524,11 @@ async fn reject_unsafe_local_publications(pool: &PgPool) -> Result<(), Box<dyn s
                     ,'document_processor_grants'
                     ,'document_pages'
                     ,'document_processing_commands'
+                    ,'determination_commands'
+                    ,'document_generation_tasks'
+                    ,'document_generation_events'
+                    ,'synthetic_generation_cases'
+                    ,'submission_commands'
                   )
                OR (
                  position('Privacy: local' in COALESCE(
@@ -373,6 +552,11 @@ async fn reject_unsafe_local_publications(pool: &PgPool) -> Result<(), Box<dyn s
                     ,'document_processor_grants'
                     ,'document_pages'
                     ,'document_processing_commands'
+                    ,'determination_commands'
+                    ,'document_generation_tasks'
+                    ,'document_generation_events'
+                    ,'synthetic_generation_cases'
+                    ,'submission_commands'
                   )
                OR (
                  position('Privacy: local' in COALESCE(

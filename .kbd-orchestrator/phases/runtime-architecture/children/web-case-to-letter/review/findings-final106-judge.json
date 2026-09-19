@@ -1,0 +1,60 @@
+{
+  "reviewer": "harness_judge_web03_final106",
+  "role": "independent final judge",
+  "digest": "03f9035e699cb17bf8fb2bbeba1840b67fd46a23dc80773ca6744bc9239e3084",
+  "verdict": "PASS",
+  "counts": {
+    "critical": 0,
+    "major": 0,
+    "minor": 0
+  },
+  "findings": [],
+  "checks_performed": [
+    {
+      "check": "manifest digest and entry integrity",
+      "result": "PASS",
+      "evidence": "SHA-256 of dist/source-manifest.sha256 exactly matched 03f9035e699cb17bf8fb2bbeba1840b67fd46a23dc80773ca6744bc9239e3084. The manifest has 136 unique, well-formed entries. Independent hashing confirmed every current source and every persisted dist snapshot matches its declared digest and each current/snapshot byte pair is identical."
+    },
+    {
+      "check": "artifact validator",
+      "result": "PASS",
+      "evidence": "dist/validate.py compiled successfully and was executed from an isolated artifact copy so the frozen artifact was not modified. It exited successfully with all 17 declared checks Passed, including 136 matching source snapshots."
+    },
+    {
+      "check": "frozen replica enforcement path",
+      "result": "PASS",
+      "evidence": "The 136-entry freeze includes frf-shape-transport.ts, chunk-writer.ts, pglite-schema.ts, electric-shapes.ts, replica-wiring.ts, the PGlite materialization test, protected transport integration test, and PEM case selector source/tests. The FRF transport accepts only a server catalog shape identifier plus protocol cursors, the chunk writer projects rows onto the declared target columns, the PGlite cases schema omits protected resolution inputs, and the Electric allowlist and PEM selector expose only the approved summary fields."
+    },
+    {
+      "check": "three-field narrow-summary canary",
+      "result": "PASS",
+      "evidence": "Member ID, procedure code, and plan key are injected together as an over-wide row at the FRF/chunk-writer boundary, at real PGlite materialization, and at the PEM selector. Frozen assertions reject all three from generated SQL, materialized PGlite columns, and the projected case object. The retained final boundary log records 13 files and 52 tests passing."
+    },
+    {
+      "check": "production route composition and recovery",
+      "result": "PASS",
+      "evidence": "Frozen app-routes.tsx registers /cases/:caseId and /cases/:caseId/intake through the real lazy route modules. The composed route test resolves those registered modules, triggers the CaseDetail incomplete-input callback, reaches /cases/case-1/intake?focus=resolution&notice=case_inputs_incomplete, preserves the exact required guidance, loads the authorized full record, derives planKey as the first missing resolution field, and focuses the Plan key control while the summary remains narrow."
+    },
+    {
+      "check": "mounted full-record authorization",
+      "result": "PASS",
+      "evidence": "The frozen hook calls the typed case API with case ID and verified practice ID, and the API requests GET /api/cases/:caseId?practiceId=... . The mounted Axum test returns the protected member, procedure, and plan fields only for an authorized case:read request and returns 403 for missing capability, foreign practice, and repository target denial. It also asserts no-store. The retained focused Rust log records the mounted test passing."
+    },
+    {
+      "check": "server authority and temporal states",
+      "result": "PASS",
+      "evidence": "The browser resolution mutation contains only commandId and expectedCaseInputRevision and rejects unknown output-selection fields. Frozen host, schema, and resolver sources model resolved, missing, ambiguous, conflicting, and expired. Fresh and populated-upgrade receipts cover deterministic selection, future-effective and disjoint-history missing states, ended plan or enrollment expiration, neutral expired copy, immutable controlling revisions, restricted execution, and least privilege."
+    },
+    {
+      "check": "authoritative invalidation and reconciliation",
+      "result": "PASS",
+      "evidence": "Frozen SQL invalidates current resolution after entity, plan, enrollment, delegation-rule, and selected source-document changes and serializes authoritative changes with case locking. Frozen browser reconciliation covers pre-dispatch failure, remount, lookup before accepting an older row, same-ID retry after a racing 404, terminal stale or incomplete-input absence, and post-receipt authoritative invalidation while preserving the specific recovery guidance. Retained red/restore controls and fresh/upgrade reviews report Passed."
+    },
+    {
+      "check": "state, cache, and platform scope",
+      "result": "PASS",
+      "evidence": "Resolution and full-record views use session-, epoch-, case-, and instance-scoped Zustand state. The reviewed feature has no TanStack Query, SWR, or Apollo cache import. No manifest path enters desktop/ or mobile/, and the frozen design, task evidence, result, and review consistently defer Tauri/mobile work, broad child integration, the complete actual-browser scenario, and full case-to-letter certification to Web-17."
+    }
+  ],
+  "rationale": "The frozen Web-03 artifact is complete for its focused claim. The expected manifest digest and all 136 current and persisted snapshot hashes verify. The isolated validator run passes all 17 checks. The repaired evidence now freezes and exercises the actual production route composition and full-record authorization path, while independently enforcing the narrow case summary through the FRF transport, chunk writer, Electric allowlist, PGlite schema/materializer, and PEM selector. All three protected resolution inputs are rejected together at every relevant summary boundary. Recovery reaches the registered intake route with the exact guidance and derives focus only after the authorized full record loads. Mounted HTTP evidence denies missing capability, foreign practice, and repository target refusal. Server-owned selection, temporal classification, invalidation, reconciliation, scoped Zustand state, and the no-query-cache boundary are supported by frozen source and retained passing plus red/restore evidence. The artifact limits its conclusion to focused Web-03 and accurately leaves broad actual-browser and end-to-end certification to Web-17."
+}

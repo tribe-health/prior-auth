@@ -1,0 +1,1 @@
+Prior run interrupted after the test binary remained in dyld before the harness; stack sample retained in task commentary.

@@ -1,0 +1,10 @@
+
+ RUN  v3.2.7 /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web
+
+ ✓ src/features/case-queue/components/case-intake.test.tsx (1 test) 44ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  02:02:47
+   Duration  950ms (transform 89ms, setup 0ms, collect 303ms, tests 44ms, environment 360ms, prepare 47ms)
+

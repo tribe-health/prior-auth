@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-09-19T20:17:34.296317+00:00",
+  "git_sha": "4cb7b636334aa0e3ff0e2a9d025e786c9c986786",
+  "module": "web-case-to-letter",
+  "module_fingerprint": "sha256:02397057aeb164423d6e281e438995ec9aac008d7e4dbac52f2eed13f16fb833",
+  "module_paths": [
+    "crates/aso-document-assembly",
+    "crates/aso-host",
+    "crates/aso-web-server",
+    "crates/clinical-docs",
+    "docker-compose.yaml",
+    "migrations/server",
+    "web/package.json",
+    "web/src"
+  ],
+  "result": "Passed",
+  "artifacts": [
+    {
+      "path": "cucumber-report.json",
+      "sha256": "316f1a53f9df4bb99561e163e104e29bae662b668ea1814f8be19ed0dd07c5ad",
+      "bytes": 1640
+    },
+    {
+      "path": "report.html",
+      "sha256": "7c68c6a909d458607e90c50a0a4b27f357a3d69a8819ba3bb768dbaea5bc4d90",
+      "bytes": 2691
+    },
+    {
+      "path": "run-report.json",
+      "sha256": "d36cc87e4163841d22cc6268cf5613af45460262e824601e3b3c692a0c4f5f01",
+      "bytes": 2368
+    },
+    {
+      "path": "screenshots/01-initial-request-complete.png",
+      "sha256": "63907265feafb27caf669e4f9f5dcd5288110fbd6e0edda73d9270ec27d091ea",
+      "bytes": 142060
+    },
+    {
+      "path": "screenshots/02-corrected-resubmission-complete.png",
+      "sha256": "7af6e7eddc1ffa6e827b5c0dc25ab3bf792d4caba93ab39179815d1a496d7642",
+      "bytes": 143375
+    },
+    {
+      "path": "screenshots/03-clinical-appeal-complete.png",
+      "sha256": "e4874d68d4ec0694500b3aac5a46e532cc1a814ecc67d6d5bf8b28887539cec4",
+      "bytes": 141779
+    },
+    {
+      "path": "videos/01-initial-request.mp4",
+      "sha256": "11211b14c2670dead0f4aa16c0173ed3bd8d2743f96d5031899c5397c986264a",
+      "bytes": 2274844
+    },
+    {
+      "path": "videos/02-corrected-resubmission.mp4",
+      "sha256": "8b1f20756aa28b0199ff7d07a3fa9820e41ff71cf5d00a0b34771cc29de2c8f8",
+      "bytes": 2458218
+    },
+    {
+      "path": "videos/03-clinical-appeal.mp4",
+      "sha256": "2e14c226c995fa43b172bf41ff05ebc73689eb22f677dd0cc7349352a421a535",
+      "bytes": 3250461
+    }
+  ],
+  "runtime": {
+    "playwright_version": "1.49.1",
+    "ffmpeg_version": "ffmpeg version 9.0.1 Copyright (c) 2000-2026 the FFmpeg developers",
+    "video_codec": "h264"
+  }
+}

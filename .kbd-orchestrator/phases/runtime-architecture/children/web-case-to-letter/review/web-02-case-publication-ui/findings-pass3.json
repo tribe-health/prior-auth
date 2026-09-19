@@ -1,0 +1,36 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": ".kbd-orchestrator/phases/runtime-architecture/children/web-case-to-letter/evidence/web-02-case-publication-ui/task-5-review-findings-resolution.md",
+      "claim": "Focused verification is incomplete because the recorded evidence does not include the required focused T0/T1, foreign-tenant publication sabotage-and-restore, artifact-refiner, or adversarial review runs.",
+      "evidence": "Acceptance criterion 2.1 requires: \"Run focused T0/T1 plus foreign-tenant publication sabotage-and-restore, artifact-refiner, and adversarial review.\" The evidence file records only `NODE_OPTIONS='--max_old_space_size=4096 --no-experimental-webstorage' npm test -- --run <16 Web-02 files>` plus TypeScript/lint.",
+      "suggested_fix": "Run and record the missing T0/T1, foreign-tenant sabotage-and-restore, artifact-refiner, and adversarial review commands with observed outputs."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": ".kbd-orchestrator/phases/runtime-architecture/children/web-case-to-letter/evidence/web-02-case-publication-ui/task-5-review-findings-resolution.md",
+      "claim": "Completion evidence is insufficient because it records a summarized placeholder command and omits the required actual command outputs and documentation/spec delta confirmation.",
+      "evidence": "Acceptance criterion 3.1 requires: \"Record actual commands and observed outputs, confirm real mounted callers at this change boundary, update documentation/spec deltas, and mark only satisfied work complete.\" The evidence says `npm test -- --run <16 Web-02 files>` and \"passed 16/16 files and 57/57 tests\" without listing the actual 16 files, command output, mounted caller confirmation details, or documentation/spec deltas.",
+      "suggested_fix": "Replace the summarized evidence with exact commands, full observed outputs or stable excerpts, mounted caller confirmation, and explicit documentation/spec delta status."
+    },
+    {
+      "severity": "WARNING",
+      "file": "web/src/app/routes/app-routes.tsx",
+      "claim": "The public-route boundary redirects every authenticated session away from `/login` before the public auth route can render authenticated-session recovery states such as logout-pending.",
+      "evidence": "The diff adds `if (session) return <Navigate to=\"/\" replace />;` in `PublicRouteBoundary`, while `web/src/app/routes/app-routes.test.tsx` adds a test that calls `renderRoute('/login', 'authenticated', SESSION)` with `aso:logout-pending:v1` set and expects `Server sign-out pending` to render without mounting the private runtime.",
+      "suggested_fix": "Let `PublicAuthRoute` handle authenticated-but-blocked startup states before redirecting, or make the boundary consult the same access/logout-pending state instead of redirecting solely on `useSession()`."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

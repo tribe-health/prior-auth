@@ -1,0 +1,22 @@
+
+running 15 tests
+test routes::gate::tests::annotation_policy_fails_closed_on_target_denial ... ok
+test routes::gate::tests::lookup_does_not_return_a_command_from_a_different_case ... ok
+test routes::gate::tests::annotation_policy_is_read_only_and_requires_fresh_capability ... ok
+test routes::gate::tests::policy_checks_fresh_capability_without_calling_service_authority_or_commands ... ok
+test routes::gate::tests::evidence_policy_preserves_target_read_outages ... ok
+test routes::gate::tests::mutation_requires_command_id_and_kind_and_rejects_injected_actor ... ok
+test routes::gate::tests::malformed_path_query_and_json_are_sanitized_and_never_cached ... ok
+test routes::gate::tests::trusted_session_service_refuses_agent_before_membership_resolution ... ok
+test routes::gate::tests::letter_policy_preserves_target_read_outages ... ok
+test routes::gate::tests::service_authority_denies_after_independent_policy_allows ... ok
+test routes::gate::tests::each_command_resolves_fresh_context_and_ignores_identity_headers ... ok
+test routes::gate::tests::raw_credentials_accept_each_single_source_and_reject_ambiguity ... ok
+test routes::gate::tests::session_and_command_failures_have_only_sanitized_error_codes ... ok
+test routes::gate::tests::policy_propagates_case_scope_denial_and_backend_unavailability ... ok
+test routes::gate::tests::expiry_and_nonhuman_principals_are_denied_with_accepting_downstream_ports ... ok
+
+test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 37 filtered out; finished in 0.00s
+
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 9.11s
+     Running unittests src/lib.rs (/Volumes/my-passport/cargo-build/02/70d32e977a4fbf/debug/deps/aso_server_axum-9795b240c03b019a)

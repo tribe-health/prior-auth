@@ -44,7 +44,7 @@ EXPECTED_COLUMNS = {
         "gate_affirmed_at", "updated_at", "revision",
     },
     "case_evidence": {
-        "id", "practice_id", "case_id", "policy_criterion_id", "state",
+        "id", "practice_id", "case_id", "criterion_id", "state",
         "assessed_at", "created_at", "updated_at",
     },
     "evidence_states": {"key", "label", "meaning"},
@@ -201,7 +201,7 @@ class BrowserTimelineProbe(transition.TransitionProbe):
               '{{"modality":"MRI","body_region":"spine","impression":"synthetic"}}'::jsonb
             );
             INSERT INTO aso.case_evidence(
-              id, case_id, policy_criterion_id, state, assessed_by, assessed_at
+              id, case_id, criterion_id, state, assessed_by, assessed_at
             ) VALUES (
               '{f['evidence']}', '{f['case_a']}', '{criterion}', 'met',
               '{f['user_a']}', TIMESTAMPTZ '2026-01-16T12:00:00Z'

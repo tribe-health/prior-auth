@@ -1,0 +1,26 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 8.21s
+     Running unittests src/lib.rs (/Volumes/my-passport/cargo-build/02/70d32e977a4fbf/debug/deps/aso_host-dd1c39f6b1762bd5)
+
+running 3 tests
+
+thread 'projection::tests::unapproved_metadata_and_deferred_criterion_labels_stay_protected' (3121540) panicked at crates/aso-host/src/projection.rs:376:13:
+assertion failed: !grant.projection(projection).unwrap().permits_column(column)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+thread 'projection::tests::seven_table_registry_is_exact_and_practice_scoped' (3121539) panicked at crates/aso-host/src/projection.rs:330:9:
+assertion `left == right` failed
+  left: ["id", "case_id", "document_type_id", "name", "effective_date", "content_sha256_text", "page_count", "processing_status", "processing_error_code", "updated_at", "revision", "storage_uri"]
+ right: ["id", "case_id", "document_type_id", "name", "effective_date", "content_sha256_text", "page_count", "processing_status", "processing_error_code", "updated_at", "revision"]
+test projection::tests::case_summary_is_exact_and_excludes_unapproved_case_data ... ok
+test projection::tests::unapproved_metadata_and_deferred_criterion_labels_stay_protected ... FAILED
+test projection::tests::seven_table_registry_is_exact_and_practice_scoped ... FAILED
+
+failures:
+
+failures:
+    projection::tests::seven_table_registry_is_exact_and_practice_scoped
+    projection::tests::unapproved_metadata_and_deferred_criterion_labels_stay_protected
+
+test result: FAILED. 1 passed; 2 failed; 0 ignored; 0 measured; 34 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p aso-host --lib`

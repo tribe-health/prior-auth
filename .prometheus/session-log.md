@@ -2742,3 +2742,36 @@ suite is invoked. Tauri and mobile remained deferred.
 - The exact `docker compose up --build --wait` command passed from the isolated `aso-prior-auth-demo` project. Public-path verification returned login 200, session 200, case `DEMO-CASE-001`, and protected `cases` shape 200 containing the seeded row.
 - PostgreSQL reported 30 successful SQLx migrations, one synthetic demo user, and one synthetic demo case. No real patient data was added.
 - Fresh startup exposed and repaired duplicate bootstrap/migration column additions, Gate key ownership, and Gate projection revision/name drift. Tauri and mobile were not part of this demo stack.
+
+## 2026-09-19 — Web case-to-letter demo completion
+
+The composed web stack now initializes a synthetic case, processes uploaded text through the bounded document worker, records cited evidence, completes four surgeon affirmations, generates and reviews a cited letter, approves it, and applies a versioned surgeon signature. The public landing, authentication frame, responsive application shell, major workflow views, and later packet/custody/peer-review previews use the ASO brand and prototype system. Local browser verification covered desktop and mobile; no real patient data was used.
+
+## 2026-09-19 — document-assembly agent landed beside the active child
+
+`da-01-document-assembly-agent` added crates/clinical-docs and crates/aso-document-assembly with the D-1 decision. The web-case-to-letter child (web-10/web-14 "deterministic composer") predates it. Course correction is in docs/handoff/codex-document-assembly-adjust.md; findings in docs/handoff/document-assembly/FINDINGS-2026-09-19.md. Not run on this machine: cargo test --workspace, audit.sh check 2 (no cargo/pnpm in the Cowork VM) — T2 Build-only until run here.
+
+## 2026-09-19 — Revision 12 implementation in progress
+
+Web layout repair passed desktop/mobile/full-viewport/form-preservation and independent artifact review. FRF transient502 recovery passed in the browser. Repeat demo initialization preserved revisions and identity. Migration0637 applied through checksum-verified migrator; SQL stale/matching regression passed; browser policy selection, evidence r2 and clinical-appeal draft generation returned200. KBD plan12 registered without reset; completed statuses preserved. Host document generation contracts/source validation/digest binding passed5 focused tests, with a failing source-quote mutation and restored green run. New inference/assembly adapters compile but are not yet wired into runtime. SQL task persistence, protocol adapters, shared UI integration, corrected response classification, Compose integration and final certification remain underway. No full agent certification claim.
+
+## 2026-09-19 — Web case-to-letter revision 12 complete
+
+- Phase: Execute; child `runtime-architecture / web-case-to-letter` is complete at 22/22 changes. Parent implementation is 57/61; the four remaining changes are the explicitly deferred native phases.
+- Commit `07208d1` freezes the browser-first implementation. A second ledger commit records the final certification transition.
+- Local evidence passed: full Rust workspace, 689 web tests with mounted suites run separately, six architecture checks, mounted replica/browser campaigns, deterministic task/persistence/submission scenarios, repeat initialization, A2A/MCP/MCP App smoke, and strict validation for all 19 active OpenSpec changes.
+- The fixture verifier passed three standalone positive families and four isolated negative controls. Actual browser evidence covered generation, review, approval, signing, submission acknowledgement, desktop/mobile overflow, and reduced motion.
+- The public demo remains synthetic. Production patient-data inference remains disabled pending provider qualification.
+
+## 2026-09-19 — web case-to-letter browser proof
+
+- Phase: Execute, `runtime-architecture > web-case-to-letter`, plan revision 12.
+- Browser evidence: initial request, corrected resubmission, and clinical appeal
+  with fresh four-part surgeon affirmation each reached full payer
+  acknowledgement against the local Compose stack.
+- Observed and repaired the missing denial/response-mode case progression with
+  additive migration 2026090647; the signing boundary remains narrow.
+- Added a reusable Playwright video runner using only synthetic demo data.
+- Verification: Rust workspace Passed; web 689 tests Passed with two existing
+  fixture-gated skips; SQL determination/response/signing regressions Passed;
+  architecture audit Passed 6/6.

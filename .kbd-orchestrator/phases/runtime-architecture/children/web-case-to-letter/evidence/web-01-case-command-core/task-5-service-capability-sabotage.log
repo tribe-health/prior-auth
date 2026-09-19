@@ -1,0 +1,43 @@
+
+running 1 test
+test case_management::tests::invalid_or_unverified_commands_never_reach_the_repository ... FAILED
+
+failures:
+
+---- case_management::tests::invalid_or_unverified_commands_never_reach_the_repository stdout ----
+
+thread 'case_management::tests::invalid_or_unverified_commands_never_reach_the_repository' (55880888) panicked at crates/aso-host/src/case_management.rs:780:9:
+assertion `left == right` failed
+  left: Ok(CaseCommandResult { command_id: 00000000-0000-0000-0000-000000000020, action: Create, previous_status: None, case: CaseRecord { id: 00000000-0000-0000-0000-000000000021, practice_id: 00000000-0000-0000-0000-000000000003, patient_id: 00000000-0000-0000-0000-00000000000a, surgeon_id: 00000000-0000-0000-0000-00000000000b, coordinator_id: Some(00000000-0000-0000-0000-00000000000c), facility_id: None, payer_id: 00000000-0000-0000-0000-00000000000d, case_number: "SYN-WEB01-UNIT", status: Intake, member_id: Some("SYN-MEMBER-001"), date_of_service: Some(2026-04-15), procedure_code: Some("SYN-LUMBAR-001"), plan_key: Some("synthetic-ppo"), data: Object {}, gate_affirmed_at: None, gate_affirmed_by: None, revision: 1, case_input_revision: 1, status_revision: 0, created_at: 2026-09-16T12:00:00Z, updated_at: None }, committed_at: 2026-09-16T12:00:00Z })
+ right: Err(Denied)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    case_management::tests::invalid_or_unverified_commands_never_reach_the_repository
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 36 filtered out; finished in 0.00s
+
+   Compiling aso-host v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host)
+warning: unused variable: `capabilities`
+   --> crates/aso-host/src/case_management.rs:174:9
+    |
+174 |         capabilities: &[String],
+    |         ^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_capabilities`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused variable: `required_capability`
+   --> crates/aso-host/src/case_management.rs:175:9
+    |
+175 |         required_capability: &str,
+    |         ^^^^^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_required_capability`
+
+warning: `aso-host` (lib test) generated 2 warnings (run `cargo fix --lib -p aso-host --tests` to apply 2 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 12.76s
+     Running unittests src/lib.rs (/Volumes/my-passport/cargo-build/02/70d32e977a4fbf/debug/deps/aso_host-fff5eb80950c4957)
+error: test failed, to rerun pass `-p aso-host --lib`
+
+CONTROL_RESULT=EXPECTED_FAILURE
+EXIT_CODE=101
+RESTORED_SOURCE_SHA256=bad0aa3a217bdb7adcecd45bc0b4a63787d5b5b896c286c001af768e4fd1a038

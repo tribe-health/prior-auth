@@ -2,16 +2,16 @@
   "schemaVersion": "2",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 1675,
-  "derivedRevision": 1675,
+  "sourceRevision": 2008,
+  "derivedRevision": 2008,
   "frontier": {
-    "e9a7936c-0a01-43d5-9004-b93a4e5fd031": 1675
+    "e9a7936c-0a01-43d5-9004-b93a4e5fd031": 2008
   },
   "conflictCount": 0,
   "phase": "web-ui-architecture",
   "phaseId": "web-ui-architecture",
   "parentPhase": null,
-  "last_updated": "2026-09-18T16:05:49.112883Z",
+  "last_updated": "2026-09-19T19:04:44.459590Z",
   "last_updated_by": "kbd-runtime",
   "changes_total": 8,
   "changes_completed": 8,
@@ -26,20 +26,18 @@
     },
     "evidence": {
       "status": "COMPLETE",
-      "summary": "Every change carries a result.md with observed command output. Six behavioural guards each sabotaged, observed failing, reverted. Live-stack evidence: 60 tables, 5/5 and 11/11 schema refusals, tenant isolation and PHI projection verified through Electric against real rows. NOT evidence of visual correctness — nothing has rendered in a browser.",
+      "summary": "Passed: revision-12 retains local Rust, web, SQL, mounted replica/browser, protocol, responsive, fixture, and negative-control outputs.",
       "blockers": []
     },
     "certification": {
       "status": "COMPLETE",
-      "summary": "Both gates ran. artifact-refiner: 11/11 blocking constraints pass across web, Rust and Flutter surfaces; one warning finding (empty [pins] in versions.toml, operator-owned). Adversarial review by a fresh-context critic: 2 CRITICAL, 3 HIGH, 3 MEDIUM, 1 LOW. Six fixed here (misleading compose comment, gate read failing open, worklist hiding a gap behind a void, tautological stub, unreachable type variant, false verification claim in a test comment, double-negative copy). Three carried to runtime-architecture with stated reasons: the sync layer has no callers, GraphProvider conflates three states, and two tests mirror the implementation. Gates after: 57/57 tests, typecheck 0, lint clean, build green, audit PASS 6/6.",
+      "summary": "Passed: frozen browser-first candidate passed full local integration, responsive/reduced-motion review, and independent critic/judge; no CI/native result substituted.",
       "blockers": []
     },
     "publication": {
-      "status": "BLOCKED",
-      "summary": "The web READ PATH is disconnected: createEvidenceSyncAdapter has no callers and nothing writes rows into PGlite, so every case renders 'No evidence has been recorded' regardless of the truth. Not publishable. Wiring it is the first work item of runtime-architecture.",
-      "blockers": [
-        "Read path disconnected — sync adapter never constructed; PGlite never populated"
-      ]
+      "status": "COMPLETE",
+      "summary": "Passed: FRF authorized shapes materialize through PGlite into PEM/Zustand, and the complete synthetic web workflow is demo-ready at the local Compose URL.",
+      "blockers": []
     }
   },
   "changes": [

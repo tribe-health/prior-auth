@@ -19,6 +19,8 @@ members = [
   "crates/aso-host",
   "crates/aso-server-axum",
   "crates/aso-web-server",
+  "crates/clinical-docs",
+  "crates/aso-document-assembly",
   "desktop/src-tauri",
 ]
 
@@ -47,6 +49,12 @@ chrono        = { version = "0.4.40", features = ["serde"] }
 sqlx          = { version = "=0.8.3", default-features = false, features = ["runtime-tokio", "tls-rustls", "postgres", "uuid", "chrono", "json", "migrate"] }
 reqwest       = { version = "=0.12.28", default-features = false, features = ["json", "rustls-tls"] }
 sha2          = "=0.10.9"
+# Document assembly (openspec/changes/da-01-document-assembly-agent). Exact per
+# D-7; versions.toml adoption recorded in operator-approved plan revision 12.
+minijinja     = { version = "=2.24.0", default-features = false, features = ["builtins", "macros", "multi_template", "adjacent_loop_items", "json", "serde", "loader"] }
+tokio-stream  = { version = "=0.1.19", features = ["sync"] }
+sse-stream    = "=0.2.4"
+rmcp          = { version = "=3.4.0", default-features = false, features = ["server", "client", "transport-streamable-http-server", "transport-streamable-http-client-reqwest"] }
 lopdf         = { version = "=0.45.0", default-features = false }
 keyring       = "=4.2.0"
 secrecy       = "=0.10.3"

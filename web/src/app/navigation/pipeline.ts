@@ -1,12 +1,13 @@
 /**
- * The ten-step case pipeline.
+ * The eleven-step case pipeline.
  *
  * Transcribed from `docs/design/prototype/assets/shell.js:377-390`, which is
  * the navigation contract — not a mockup. The step numbers are part of it:
  * coordinators refer to a case by where it sits in the pipeline, so `03` is
  * how "evidence timeline" is said out loud.
  *
- * Steps 07–10 carry `gated: true` in the prototype. The gate is the surgeon
+ * Steps 07–10 carry `gated: true` in the prototype. Step 11 is the denial
+ * response workspace added by the frozen web workflow. The gate is the surgeon
  * gate, and ADR-005 says what that means here: the shell evaluates it against
  * the **verified session's capabilities**, never a component flag.
  */
@@ -42,6 +43,7 @@ export const CASE_PIPELINE: readonly PipelineStep[] = [
   { id: "packet",    index: "08", label: "Submission packet",  path: "packet",         requires: "affirm_gate" },
   { id: "receipt",   index: "09", label: "Receipt & custody",  path: "receipt",        requires: "affirm_gate" },
   { id: "p2p",       index: "10", label: "Peer-to-peer",       path: "peer-to-peer",   requires: "affirm_gate" },
+  { id: "denial",    index: "11", label: "Denial response",    path: "denial-response",requires: null },
 ] as const;
 
 /**

@@ -7,6 +7,21 @@ services:
     networks: !override
       - ra05-backend
 
+  aso-migrate:
+    networks:
+      - default
+      - ra05-backend
+
+  aso-demo-init:
+    networks:
+      - default
+      - ra05-backend
+
+  aso-api:
+    networks:
+      - default
+      - ra05-backend
+
   electric:
     # The qualified browser runs on the host, so even a loopback publication
     # would bypass Gate's session, practice and projection enforcement.

@@ -6,11 +6,12 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:mcp-app": "vite build --config vite.mcp-app.config.ts",
     "preview": "vite preview",
     "lint": "oxlint",
     "typecheck": "tsc --noEmit",
     "audit:arch": "bash ../scripts/audit.sh",
-    "test": "vitest run"
+    "test": "NODE_OPTIONS='--no-experimental-webstorage --max-old-space-size=4096' vitest run"
   },
   "dependencies": {
     "@ai-sdk/openai": "^4.0.58",
@@ -18,7 +19,10 @@
     "@assistant-ui/react-markdown": "^0.14.14",
     "@base-ui/react": "^1.7.0",
     "@electric-sql/pglite": "^0.5.8",
-    "@fontsource-variable/geist": "^5.3.0",
+    "@fontsource-variable/jetbrains-mono": "5.3.0",
+    "@fontsource-variable/mulish": "5.3.0",
+    "@fontsource-variable/playfair-display": "5.3.0",
+    "@modelcontextprotocol/ext-apps": "2.0.0",
     "@prometheus-ags/entity-graph-core": "file:vendor/pem/prometheus-ags-entity-graph-core-4.0.3-ra11c.1.g071b9e5.sbb3dc7729aa7.tgz",
     "@prometheus-ags/entity-graph-react": "file:vendor/pem/prometheus-ags-entity-graph-react-4.0.3-ra11c.1.g071b9e5.sbb3dc7729aa7.tgz",
     "@shadcn/react": "^0.3.1",
@@ -59,6 +63,7 @@
     "tailwindcss": "4.1.13",
     "typescript": "7.0.2",
     "vite": "7.1.5",
+    "vite-plugin-singlefile": "2.3.3",
     "vitest": "^3.2.4"
   }
 }

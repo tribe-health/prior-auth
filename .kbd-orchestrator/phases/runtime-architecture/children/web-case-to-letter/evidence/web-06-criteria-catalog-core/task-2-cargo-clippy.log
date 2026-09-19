@@ -1,0 +1,11 @@
+warning: using `chunks_exact` with a constant chunk size
+   --> crates/aso-web-server/src/adapters/gate.rs:443:10
+    |
+443 |         .chunks_exact(2)
+    |          ^^^^^^^^^^^^^^^ help: consider using `as_chunks` instead: `as_chunks::<2>().0.iter()`
+    |
+    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.98.0/index.html#chunks_exact_to_as_chunks
+    = note: `#[warn(clippy::chunks_exact_to_as_chunks)]` on by default
+
+warning: `aso-web-server` (bin "aso-web-server") generated 1 warning (run `cargo clippy --fix --bin "aso-web-server" -p aso-web-server -- --no-deps` to apply 1 suggestion)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 26.30s

@@ -27,14 +27,16 @@ export function DocumentIntake({
   caseId,
   caseInputRevision,
   documentSetRevision,
+  initialDocumentTypeKey,
 }: {
   readonly caseId: string;
   readonly caseInputRevision: number;
   readonly documentSetRevision: number;
+  readonly initialDocumentTypeKey?: string;
 }) {
   const projection = useDocumentStatuses(caseId);
   const documents = projection.status === 'ready' ? projection.documents : [];
-  const upload = useDocumentUpload(caseId, caseInputRevision, documentSetRevision, documents);
+  const upload = useDocumentUpload(caseId, caseInputRevision, documentSetRevision, documents, initialDocumentTypeKey);
   const sourcePreview = useSourcePreview(caseId);
   const canUpload = useCan('document_upload');
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -217,7 +219,7 @@ function DocumentStatusList({
   return (
     <section aria-labelledby="document-status-heading" className="grid gap-3">
       <h3 id="document-status-heading" className="text-sm font-medium">Processing status</h3>
-      <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3" data-testid="document-status-grid">
+      <ul className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,17rem),1fr))] gap-3" data-testid="document-status-grid">
         {projection.documents.map((document) => (
           <li key={document.id} className="flex min-w-0 flex-col gap-3 rounded-lg border p-3">
             <div className="flex min-w-0 items-start gap-2">

@@ -1,0 +1,8 @@
+Command: npm test -- --run src/shared/sync/storage-policy.test.ts
+
+Observed result: Failed as intended before the boundary existed.
+
+Test Files  1 failed (1)
+Tests       2 failed | 8 passed (10)
+
+Both new tests reported that assertMaterializerStoragePolicy was not a function. This proved the persistent-plus-experimental refusal was absent before the repair.

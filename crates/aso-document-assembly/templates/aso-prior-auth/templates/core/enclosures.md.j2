@@ -1,0 +1,10 @@
+**Source document index**
+
+| Exhibit | Document | Date | Pages |
+| :-- | :-- | :-- | :-- |
+{% for e in ctx.exhibits -%}
+| {{ e.label }} | {{ e.title }} | {{ e.date }} | {{ e.pages }} |
+{% endfor %}
+{% if ctx.patient_cc -%}
+cc: {{ ctx.member.name }}
+{% endif %}

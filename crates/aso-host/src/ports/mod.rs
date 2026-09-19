@@ -448,6 +448,83 @@ pub struct Criterion {
 
 #[async_trait]
 pub trait LetterRepository: Send + Sync {
+    fn document_tasks(&self) -> Option<&dyn crate::document_generation::DurableDocumentTasks> {
+        None
+    }
+    async fn read_submission_packet(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+    ) -> Result<
+        crate::submission_workflow::SubmissionPacketSnapshot,
+        crate::submission_workflow::SubmissionWorkflowError,
+    > {
+        Err(crate::submission_workflow::SubmissionWorkflowError::Unavailable)
+    }
+    async fn submit_packet(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+        _: &crate::submission_workflow::SubmitPacketCommand,
+    ) -> Result<
+        crate::submission_workflow::SubmissionPacketSnapshot,
+        crate::submission_workflow::SubmissionWorkflowError,
+    > {
+        Err(crate::submission_workflow::SubmissionWorkflowError::Unavailable)
+    }
+    async fn read_submission_receipt(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+    ) -> Result<
+        crate::submission_workflow::SubmissionReceiptView,
+        crate::submission_workflow::SubmissionWorkflowError,
+    > {
+        Err(crate::submission_workflow::SubmissionWorkflowError::Unavailable)
+    }
+    async fn record_submission_acknowledgement(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+        _: &crate::submission_workflow::RecordAcknowledgementCommand,
+    ) -> Result<
+        crate::submission_workflow::SubmissionReceiptView,
+        crate::submission_workflow::SubmissionWorkflowError,
+    > {
+        Err(crate::submission_workflow::SubmissionWorkflowError::Unavailable)
+    }
+    async fn record_determination(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+        _: &crate::letter_workflow::RecordDeterminationCommand,
+    ) -> Result<
+        crate::letter_workflow::DeterminationSnapshot,
+        crate::letter_workflow::LetterWorkflowError,
+    > {
+        Err(crate::letter_workflow::LetterWorkflowError::Unavailable)
+    }
+    async fn read_latest_determination(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+    ) -> Result<
+        crate::letter_workflow::DeterminationSnapshot,
+        crate::letter_workflow::LetterWorkflowError,
+    > {
+        Err(crate::letter_workflow::LetterWorkflowError::Unavailable)
+    }
+    async fn confirm_response_mode(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+        _: &crate::letter_workflow::ConfirmResponseModeCommand,
+    ) -> Result<
+        crate::letter_workflow::DeterminationResponseModeResult,
+        crate::letter_workflow::LetterWorkflowError,
+    > {
+        Err(crate::letter_workflow::LetterWorkflowError::Unavailable)
+    }
     async fn generate_letter(
         &self,
         _: &crate::affirmation::ClinicalContext,

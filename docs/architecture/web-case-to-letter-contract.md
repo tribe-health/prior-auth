@@ -556,3 +556,25 @@ cannot mutate the other or reuse its command result.
 No downstream change may claim browser readiness from a schema row, fixture
 adapter, component test, build, typed Tauri wrapper, or historical run. The
 complete claim belongs only to web-17 after the actual browser campaign passes.
+
+## 2026-09-19 implementation extension — interoperable document generation
+
+The operator-approved [revision-12 addendum](../handoff/web-case-to-letter-revision-12-agent-integration.md)
+extends web-10/11/14/15/16/17 and da-01 after responsive web UI acceptance. It
+supersedes the child-wide external-inference deferral only for an isolated
+synthetic Liter-LLM route; production PHI inference requires separate qualification.
+Live AG-UI, A2A, MCP client/server and shared MCP App presentation are included
+in the implemented local candidate. Focused protocol tests and a mounted browser
+task-status projection pass do not replace the complete web-17 campaign.
+
+Frozen browser generation intents stay actor-free. The trusted host resolves
+claims, template digest, tools and provider configuration. Existing citation,
+tenant, gate, determination, original-request linkage and idempotency rules remain
+binding. Preserve the engine's exact canonical Markdown, assembly digest,
+rendered-claim correspondence and seven QA findings. New assembly metadata must
+coexist with historical signed letters without reinterpreting their hashes.
+Protocol tasks never substitute for human review or clinical authority. The FRF
+status shape contains only task id, case, purpose, state, stage, sequence and
+update time; protected generation inputs, outputs, errors and actor data remain
+outside the replica. Register new work through KBD after UI acceptance,
+preserving prior completion evidence.

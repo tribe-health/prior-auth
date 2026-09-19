@@ -25,3 +25,20 @@ This is ordered change `web-17-browser-scenario-certification` in the reviewed `
 ## Migration Plan
 
 Apply additive schema and contract changes before enabling their callers. Preserve existing reads until the focused migration is verified. Roll back callers first; never delete historical clinical or audit records as rollback.
+
+## 2026-09-19 approved revision-12 target — Integrated browser and protocol certification
+
+The [implementation addendum](../../../docs/handoff/web-case-to-letter-revision-12-agent-integration.md) supplies the current
+agent scope and dependencies after responsive web UI acceptance. Its synthetic
+Liter-LLM inference, live AG-UI and interoperable task interfaces supersede older
+no-external-inference/templates-only/optional-stream wording above. Production PHI
+inference remains disabled pending qualification; Tauri and Flutter remain deferred.
+The rendering kernel stays store-free, and model/tool calls happen before final
+transaction locks. Preserve frozen browser intents, clinical authority and cited
+claim requirements. This dated extension does not claim implementation or advance
+the KBD runtime. Historical checks and completed tasks keep their original meaning.
+
+- After all implementation packages finish, freeze one local candidate and run initial request through acknowledgement plus independent correction/appeal scenarios.
+- Certify AG-UI live/reconnect/cancel, A2A discovery/task states, MCP negotiation/server/client/resources and shared MCP App/A2UI views against durable task results.
+- Run citation, stale-revision, QA, package, restart/idempotency, tenant/revocation, tool-injection and production-routing negative controls; verify final responsive accessibility and independent artifact review.
+- Record actual local outputs and reconcile KBD through supported runtime commands; no CI/native result substitutes for browser certification.

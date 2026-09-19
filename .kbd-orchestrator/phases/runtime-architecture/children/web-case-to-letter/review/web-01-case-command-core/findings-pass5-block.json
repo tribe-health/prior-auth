@@ -1,0 +1,22 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "acceptance_criteria",
+      "claim": "The review packet shows required focused verification and completion evidence criteria are still unsatisfied.",
+      "evidence": "Acceptance criteria 2.1 is unchecked: \"Run focused T0/T1 plus authority/tenant sabotage-and-restore, artifact-refiner, and adversarial review\"; acceptance criteria 3.1 is unchecked: \"Record actual commands and observed outputs, confirm real mounted callers at this change boundary, update documentation/spec deltas, and mark only satisfied work complete.\"",
+      "suggested_fix": "Complete and record the required verification/evidence steps, or do not mark the change acceptable until criteria 2.1 and 3.1 are satisfied."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "crates/aso-server-axum/src/routes/gate.rs",
+      "line": 377,
+      "claim": "The internal gate denies write-only case callers even though the write routes themselves require only `case_write`.",
+      "evidence": "The case policy first accepts `CaseResource { write: true }` with `required = \"case_write\"`, but then unconditionally calls `state.services.read_case(&context, &capabilities, case_id)`, and `AppServices::read_case` in `crates/aso-host/src/case_management.rs` requires `\"case:read\"`; acceptance requires refusal only when the caller lacks the capability required by this operation.",
+      "suggested_fix": "For write case resources, validate case existence/scope through a repository/service path that requires `case_write`, or add a dedicated `require_case_access(context, capabilities, case_id, required_capability)` check instead of calling the read endpoint."
+    }
+  ]
+}
