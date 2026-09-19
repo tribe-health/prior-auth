@@ -1,0 +1,15 @@
+.git
+.kbd-orchestrator
+.prometheus
+.refiner
+target
+**/target
+node_modules
+**/node_modules
+web/dist
+mobile
+docs
+scripts
+openspec
+conformance
+*.log

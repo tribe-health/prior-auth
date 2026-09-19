@@ -39,8 +39,13 @@ export interface TableTarget {
   idColumn?: string;
 }
 
+/** Internal operation metadata; a symbol cannot collide with a replicated column. */
+export const CHUNK_ROW_OPERATION: unique symbol = Symbol("aso.chunk-row-operation");
+
 /** One row as delivered by the transport. */
-export type ChunkRow = Record<string, unknown>;
+export type ChunkRow = Record<string, unknown> & {
+  readonly [CHUNK_ROW_OPERATION]?: "insert" | "update";
+};
 
 export interface WriteResult {
   table: string;
@@ -104,55 +109,109 @@ export async function writeChunk(
   rows: readonly ChunkRow[],
 ): Promise<WriteResult> {
   validateTarget(target);
-  const idColumn = target.idColumn ?? "id";
   if (rows.length === 0) return { table: target.table, written: 0, ids: [] };
-
-  const ids: string[] = [];
   await client.exec("BEGIN");
   try {
-    for (const row of rows) {
-      // Projection AND presence: a declared column the row does not carry is
-      // omitted from the statement entirely, not written as NULL.
-      //
-      // Electric update frames carry only the columns that changed. Padding the
-      // row out to every declared column would write NULL over every column the
-      // frame did not mention — silently destroying data on the first update
-      // after a snapshot. Undeclared columns are still dropped, so the column
-      // list remains an enforced boundary.
-      const present = target.columns.filter((c) =>
-        Object.prototype.hasOwnProperty.call(row, c),
-      );
-      if (!present.includes(idColumn)) {
-        throw new Error(
-          `chunk row for ${target.table} has no ${idColumn}; cannot upsert without the conflict key`,
-        );
-      }
-
-      const values = present.map((c) => row[c] ?? null);
-      const placeholders = present.map((_, i) => `$${i + 1}`).join(", ");
-      const updates = present
-        .filter((c) => c !== idColumn)
-        .map((c) => `${c} = EXCLUDED.${c}`)
-        .join(", ");
-      // An id-only frame is a no-op rather than a conflict with nothing to set.
-      const onConflict = updates
-        ? `DO UPDATE SET ${updates}`
-        : "DO NOTHING";
-
-      await client.query(
-        `INSERT INTO ${target.table} (${present.join(", ")})
-         VALUES (${placeholders})
-         ON CONFLICT (${idColumn}) ${onConflict}`,
-        values,
-      );
-      ids.push(String(row[idColumn]));
-    }
+    const result = await writeChunkInTransaction(client, target, rows);
     await client.exec("COMMIT");
+    return result;
   } catch (cause) {
     // Roll back before rethrowing, or the connection is left in a failed
     // transaction and every later statement errors with a misleading message.
     await client.exec("ROLLBACK").catch(() => undefined);
     throw cause;
+  }
+}
+
+/**
+ * Apply a chunk through a transaction handle supplied by the caller.
+ *
+ * The owned materializer uses this form so every table and its per-shape
+ * checkpoint share one PGlite transaction. `writeChunk` remains the bounded
+ * convenience wrapper for callers that own only one table chunk.
+ */
+export async function writeChunkInTransaction(
+  client: WriterClient,
+  target: TableTarget,
+  rows: readonly ChunkRow[],
+): Promise<WriteResult> {
+  validateTarget(target);
+  const idColumn = target.idColumn ?? "id";
+  if (rows.length === 0) return { table: target.table, written: 0, ids: [] };
+
+  const ids: string[] = [];
+  const groups = new Map<
+    string,
+    { columns: string[]; operation?: "insert" | "update"; rows: unknown[][] }
+  >();
+  for (const row of rows) {
+    const present = target.columns.filter((column) =>
+      Object.prototype.hasOwnProperty.call(row, column),
+    );
+    if (!present.includes(idColumn)) {
+      throw new Error(
+        `chunk row for ${target.table} has no ${idColumn}; cannot upsert without the conflict key`,
+      );
+    }
+
+    const values = present.map((column) => row[column] ?? null);
+    const operation = row[CHUNK_ROW_OPERATION];
+    const key = `${operation ?? ""}\u0000${present.join("\u0000")}`;
+    const group = groups.get(key) ?? { columns: present, operation, rows: [] };
+    group.rows.push(values);
+    groups.set(key, group);
+    ids.push(String(row[idColumn]));
+  }
+
+  // Electric snapshots contain many rows with the same column set. Send them
+  // in bounded multi-value statements so startup does not pay one PGlite/WASM
+  // round trip per row. Partial update frames remain separated by column set.
+  // Keep each call small enough that PGlite's WASM allocator does not retain a
+  // several-thousand-parameter high-water mark across a durable reopen.
+  const maxRowsPerStatement = 100;
+  for (const { columns, operation, rows: groupedRows } of groups.values()) {
+    if (operation === "update" || (operation === undefined && columns.length !== target.columns.length)) {
+      const changed = columns.filter((column) => column !== idColumn);
+      if (changed.length === 0) continue;
+      const idIndex = columns.indexOf(idColumn);
+      for (const values of groupedRows) {
+        const updates = changed.map((column, index) => `${column} = $${index + 1}`).join(", ");
+        const params = [
+          ...changed.map((column) => values[columns.indexOf(column)]),
+          values[idIndex],
+        ];
+        const updated = await client.query(
+          `UPDATE ${target.table} SET ${updates} WHERE ${idColumn} = $${params.length}
+           RETURNING ${idColumn}`,
+          params,
+        );
+        if (updated.rows.length !== 1) {
+          throw new Error(
+            `partial update for ${target.table} matched no existing ${idColumn}`,
+          );
+        }
+      }
+      continue;
+    }
+    const updates = columns
+      .filter((column) => column !== idColumn)
+      .map((column) => `${column} = EXCLUDED.${column}`)
+      .join(", ");
+    const onConflict = updates ? `DO UPDATE SET ${updates}` : "DO NOTHING";
+    for (let start = 0; start < groupedRows.length; start += maxRowsPerStatement) {
+      const batch = groupedRows.slice(start, start + maxRowsPerStatement);
+      const values = batch.flat();
+      const tuples = batch.map((_, rowIndex) => {
+        const offset = rowIndex * columns.length;
+        return `(${columns.map((_column, columnIndex) => `$${offset + columnIndex + 1}`).join(", ")})`;
+      });
+      await client.query(
+        `INSERT INTO ${target.table} (${columns.join(", ")})
+         VALUES ${tuples.join(", ")}
+         ON CONFLICT (${idColumn}) ${onConflict}`,
+        values,
+      );
+    }
   }
 
   return { table: target.table, written: ids.length, ids };

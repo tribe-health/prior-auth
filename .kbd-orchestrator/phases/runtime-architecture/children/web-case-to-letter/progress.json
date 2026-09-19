@@ -1,0 +1,258 @@
+{
+  "schemaVersion": "2",
+  "generatedBy": "kbd-runtime",
+  "projectionContractVersion": 2,
+  "sourceRevision": 1715,
+  "derivedRevision": 1715,
+  "frontier": {
+    "e9a7936c-0a01-43d5-9004-b93a4e5fd031": 1715
+  },
+  "conflictCount": 0,
+  "phase": "web-case-to-letter",
+  "phaseId": "runtime-architecture::web-case-to-letter",
+  "parentPhase": "runtime-architecture",
+  "last_updated": "2026-09-19T00:09:18.904989Z",
+  "last_updated_by": "kbd-runtime",
+  "changes_total": 19,
+  "changes_completed": 7,
+  "implementation_total": 19,
+  "implementation_completed": 7,
+  "completion": {
+    "primaryCounter": "implementation",
+    "implementation": {
+      "completed": 7,
+      "total": 19,
+      "status": "IN_PROGRESS"
+    },
+    "evidence": {
+      "status": "COMPLETE",
+      "summary": "Every change carries a result.md with observed command output. Six behavioural guards each sabotaged, observed failing, reverted. Live-stack evidence: 60 tables, 5/5 and 11/11 schema refusals, tenant isolation and PHI projection verified through Electric against real rows. NOT evidence of visual correctness — nothing has rendered in a browser.",
+      "blockers": []
+    },
+    "certification": {
+      "status": "COMPLETE",
+      "summary": "Both gates ran. artifact-refiner: 11/11 blocking constraints pass across web, Rust and Flutter surfaces; one warning finding (empty [pins] in versions.toml, operator-owned). Adversarial review by a fresh-context critic: 2 CRITICAL, 3 HIGH, 3 MEDIUM, 1 LOW. Six fixed here (misleading compose comment, gate read failing open, worklist hiding a gap behind a void, tautological stub, unreachable type variant, false verification claim in a test comment, double-negative copy). Three carried to runtime-architecture with stated reasons: the sync layer has no callers, GraphProvider conflates three states, and two tests mirror the implementation. Gates after: 57/57 tests, typecheck 0, lint clean, build green, audit PASS 6/6.",
+      "blockers": []
+    },
+    "publication": {
+      "status": "BLOCKED",
+      "summary": "The web READ PATH is disconnected: createEvidenceSyncAdapter has no callers and nothing writes rows into PGlite, so every case renders 'No evidence has been recorded' regardless of the truth. Not publishable. Wiring it is the first work item of runtime-architecture.",
+      "blockers": [
+        "Read path disconnected — sync adapter never constructed; PGlite never populated"
+      ]
+    }
+  },
+  "changes": [
+    {
+      "id": "web-00-workflow-contract",
+      "title": "Freeze workflow contracts",
+      "status": "DONE",
+      "implementation_status": "COMPLETE",
+      "tasks_total": 6,
+      "tasks_done": 6,
+      "last_task_completed": "3.1 Record actual commands and observed outputs, confirm real mounted callers at this change boundary, update documentation/spec deltas, and mark only satisfied work complete.",
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "web-01-case-command-core",
+      "title": "Persist verified case commands",
+      "status": "DONE",
+      "implementation_status": "COMPLETE",
+      "tasks_total": 7,
+      "tasks_done": 7,
+      "last_task_completed": "3.1 Record actual commands and observed outputs, confirm real mounted callers at this change boundary, update documentation/spec deltas, and mark only satisfied work complete.",
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "web-02-case-publication-ui",
+      "title": "Publish case summaries and mount case UI",
+      "status": "DONE",
+      "implementation_status": "COMPLETE",
+      "tasks_total": 6,
+      "tasks_done": 6,
+      "last_task_completed": "3.1 Record actual commands and observed outputs, confirm real mounted callers at this change boundary, update documentation/spec deltas, and mark only satisfied work complete.",
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "web-03-administering-entity-resolution",
+      "title": "Resolve administering entity and paths",
+      "status": "DONE",
+      "implementation_status": "COMPLETE",
+      "tasks_total": 7,
+      "tasks_done": 7,
+      "last_task_completed": "3.1 Record actual commands and observed outputs, confirm real mounted callers at this change boundary, update documentation/spec deltas, and mark only satisfied work complete.",
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "web-04-document-upload-core",
+      "title": "Ingest bounded case documents",
+      "status": "DONE",
+      "implementation_status": "COMPLETE",
+      "tasks_total": 6,
+      "tasks_done": 6,
+      "last_task_completed": "3.1 Record actual commands and observed outputs, confirm real mounted callers at this change boundary, update documentation/spec deltas, and mark only satisfied work complete.",
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "web-05-document-processing-ui",
+      "title": "Process documents and mount status UI",
+      "status": "DONE",
+      "implementation_status": "COMPLETE",
+      "tasks_total": 7,
+      "tasks_done": 7,
+      "last_task_completed": "web05-final-review — record Web-05 completion evidence and mounted caller confirmation",
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "web-06-criteria-catalog-core",
+      "title": "Adopt provenance-aware criteria catalog",
+      "status": "DONE",
+      "implementation_status": "COMPLETE",
+      "tasks_total": 7,
+      "tasks_done": 7,
+      "last_task_completed": "3.1 Record actual commands and observed outputs, confirm real mounted callers at this change boundary, update documentation/spec deltas, and mark only satisfied work complete.",
+      "next_task_pending": null,
+      "blockers": []
+    },
+    {
+      "id": "web-07-criteria-selection-ui",
+      "title": "Select criteria and mount policy views",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 6,
+      "tasks_done": 1,
+      "last_task_completed": "1.1 Confirm dependency completion, assigned file ownership, frozen web-00 contracts, and applicable decision gates before edits; verify canonical KBD/OpenSpec state and retain the result.",
+      "next_task_pending": "1.2 Implement immutable case criteria selection and invalidation tokens; verify exact effective snapshot selection and blocker outcomes.",
+      "blockers": []
+    },
+    {
+      "id": "web-08-evidence-assembly-core",
+      "title": "Assemble sourced three-state evidence",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 6,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": "1.1 Confirm dependency completion, assigned file ownership, frozen web-00 contracts, and applicable decision gates before edits; verify canonical KBD/OpenSpec state and retain the result.",
+      "blockers": []
+    },
+    {
+      "id": "web-09-evidence-workspace",
+      "title": "Mount consistent evidence workspace",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 7,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": "1.1 Confirm dependency completion, assigned file ownership, frozen web-00 contracts, and applicable decision gates before edits; verify canonical KBD/OpenSpec state and retain the result.",
+      "blockers": []
+    },
+    {
+      "id": "web-10-prior-letter-command",
+      "title": "Generate cited prior-authorization draft",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 6,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": "1.1 Confirm dependency completion, assigned file ownership, frozen web-00 contracts, and applicable decision gates before edits; verify canonical KBD/OpenSpec state and retain the result.",
+      "blockers": []
+    },
+    {
+      "id": "web-11-prior-letter-workspace",
+      "title": "Review sign and acknowledge prior request",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 6,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": "1.1 Confirm dependency completion, assigned file ownership, frozen web-00 contracts, and applicable decision gates before edits; verify canonical KBD/OpenSpec state and retain the result.",
+      "blockers": []
+    },
+    {
+      "id": "web-12-determination-ingest-core",
+      "title": "Ingest sourced payer determination",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 6,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": "1.1 Confirm dependency completion, assigned file ownership, frozen web-00 contracts, and applicable decision gates before edits; verify canonical KBD/OpenSpec state and retain the result.",
+      "blockers": []
+    },
+    {
+      "id": "web-13-denial-classification-ui",
+      "title": "Confirm denial response path",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 6,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": "1.1 Confirm dependency completion, assigned file ownership, frozen web-00 contracts, and applicable decision gates before edits; verify canonical KBD/OpenSpec state and retain the result.",
+      "blockers": []
+    },
+    {
+      "id": "web-14-response-letter-command",
+      "title": "Generate cited denial-response drafts",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 6,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": "1.1 Confirm dependency completion, assigned file ownership, frozen web-00 contracts, and applicable decision gates before edits; verify canonical KBD/OpenSpec state and retain the result.",
+      "blockers": []
+    },
+    {
+      "id": "web-15-response-letter-workspace",
+      "title": "Review and sign denial responses",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 6,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": "1.1 Confirm dependency completion, assigned file ownership, frozen web-00 contracts, and applicable decision gates before edits; verify canonical KBD/OpenSpec state and retain the result.",
+      "blockers": []
+    },
+    {
+      "id": "web-15a-browser-hardening",
+      "title": "Harden browser behavior and review packets",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 6,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": "1.1 Inventory every proof deferred by Web-07 through Web-15, bind each source change and product digest, and fail if any deferred obligation lacks an owner.",
+      "blockers": []
+    },
+    {
+      "id": "web-16-web-flow-fixture",
+      "title": "Assemble deterministic browser fixtures",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 6,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": "1.1 Confirm dependency completion, assigned file ownership, frozen web-00 contracts, and applicable decision gates before edits; verify canonical KBD/OpenSpec state and retain the result.",
+      "blockers": []
+    },
+    {
+      "id": "web-17-browser-scenario-certification",
+      "title": "Certify the complete local web scenario",
+      "status": "PENDING",
+      "implementation_status": "PENDING",
+      "tasks_total": 7,
+      "tasks_done": 0,
+      "last_task_completed": null,
+      "next_task_pending": "1.1 Confirm dependency completion, assigned file ownership, frozen web-00 contracts, and applicable decision gates before edits; verify canonical KBD/OpenSpec state and retain the result.",
+      "blockers": []
+    }
+  ],
+  "children": {},
+  "migrationStatus": null
+}

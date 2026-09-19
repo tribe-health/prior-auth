@@ -6,9 +6,16 @@ import { resetRuntimeCommandRegistryForTests } from '../../../shared/runtime-com
 import type { GateCommandResult, GateSnapshot } from '../model/gate-state';
 import { useSurgeonGate } from './use-surgeon-gate';
 
+const { sessionEpoch } = vi.hoisted(() => ({ sessionEpoch: { value: 0 } }));
+
 vi.mock('../../../shared/api/http-client', async (importOriginal) => ({
   ...await importOriginal<typeof import('../../../shared/api/http-client')>(),
   httpClient: { get: vi.fn(), post: vi.fn() },
+}));
+
+vi.mock('../../../app/providers/session-provider', () => ({
+  useSession: () => null,
+  useSessionEpoch: () => sessionEpoch.value,
 }));
 
 const caseId = '11111111-1111-4111-8111-111111111111';
@@ -48,6 +55,7 @@ function deferred<T>() {
 }
 
 beforeEach(() => {
+  sessionEpoch.value = 0;
   resetRuntimeCommandRegistryForTests();
   vi.resetAllMocks();
   vi.mocked(httpClient.get).mockResolvedValue(snapshot);
@@ -345,6 +353,30 @@ describe('the surgeon gate uses authenticated command DTOs', () => {
     rerender({ selectedPractice: 'next-practice' });
     expect(result.current).toMatchObject({ state: null, error: null, loading: true });
     await act(async () => nextRead.resolve(snapshot));
+  });
+
+  it('clears prior authority state and fences a late read when the session epoch advances', async () => {
+    const oldRead = deferred<GateSnapshot>();
+    const currentSnapshot = receipt('synthetic', 'remove').gate;
+    vi.mocked(httpClient.get)
+      .mockReturnValueOnce(oldRead.promise)
+      .mockResolvedValueOnce(currentSnapshot);
+    const { result, rerender } = renderHook(
+      ({ render }) => {
+        void render;
+        return useSurgeonGate(caseId, { practiceId });
+      },
+      { initialProps: { render: 0 } },
+    );
+
+    sessionEpoch.value = 1;
+    rerender({ render: 1 });
+    expect(result.current).toMatchObject({ state: null, loading: true, error: null });
+    await waitFor(() => expect(result.current.loading).toBe(false));
+    expect(result.current.state).toEqual({ affirmed: false, outstanding: ['plan'] });
+
+    await act(async () => oldRead.resolve(snapshot));
+    expect(result.current.state).toEqual({ affirmed: false, outstanding: ['plan'] });
   });
 
   it('refuses a duplicate gate mutation while the first command is pending', async () => {

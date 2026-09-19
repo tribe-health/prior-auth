@@ -1,0 +1,12 @@
+{
+  "stage": "plan",
+  "completedAt": "2026-09-16T23:35:52Z",
+  "outputs": [
+    "plan.md",
+    "review/plan/findings.json"
+  ],
+  "nextStage": "execute",
+  "summaryForNext": "Eighteen ordered OpenSpec changes split contract, command, publication, mounted UI, fixture, and final browser-certification boundaries. All strict validations pass; web-00 is first and all native runtime work remains deferred.",
+  "skipped": false,
+  "skipReason": null
+}

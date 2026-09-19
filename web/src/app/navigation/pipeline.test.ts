@@ -13,11 +13,14 @@ import { CLINICAL_CAPABILITIES, can, type VerifiedSession } from "@/shared/model
 
 const surgeon: VerifiedSession = {
   identityId: "11111111-1111-1111-1111-111111111111",
+  sessionId: "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
   userId: "22222222-2222-2222-2222-222222222222",
   practiceId: "33333333-3333-3333-3333-333333333333",
   displayName: "Dr. Rivera",
-  capabilities: ["affirm_gate", "sign_letter", "annotate", "submit", "view_audit"],
+  capabilities: ["affirm_gate", "sign_letter", "letter_approve", "annotate", "submit", "view_audit"],
   principal: "user",
+  expiresAt: "2099-01-01T00:00:00Z",
+  authorizationRevision: "test:1",
 };
 
 const coordinator: VerifiedSession = {
@@ -52,25 +55,25 @@ describe("the pipeline matches the prototype contract", () => {
 describe("steps 07-10 are unreachable until the gate is affirmed", () => {
   it("locks every gated step when the gate is not affirmed", () => {
     for (const step of CASE_PIPELINE.filter((s) => s.requires === "affirm_gate")) {
-      const result = isStepReachable(step, { gateAffirmed: false });
+      const result = isStepReachable(step, { gateStatus: 'not-affirmed' });
       expect(result.kind, `step ${step.index} should be locked`).toBe("awaiting-gate");
     }
   });
 
   it("leaves steps 01-06 reachable regardless", () => {
     for (const step of CASE_PIPELINE.filter((s) => s.requires === null)) {
-      expect(isStepReachable(step, { gateAffirmed: false }).kind).toBe("reachable");
+      expect(isStepReachable(step, { gateStatus: 'not-affirmed' }).kind).toBe("reachable");
     }
   });
 
   it("opens 07-10 once the gate is affirmed", () => {
     for (const step of CASE_PIPELINE) {
-      expect(isStepReachable(step, { gateAffirmed: true }).kind).toBe("reachable");
+      expect(isStepReachable(step, { gateStatus: 'affirmed' }).kind).toBe("reachable");
     }
   });
 
   it("states a reason a human can read", () => {
-    const locked = isStepReachable(CASE_PIPELINE[6], { gateAffirmed: false });
+    const locked = isStepReachable(CASE_PIPELINE[6], { gateStatus: 'not-affirmed' });
     expect(locked.kind).toBe("awaiting-gate");
     if (locked.kind === "awaiting-gate") {
       // Brand voice: specific about consequence, no hedging.
@@ -84,7 +87,7 @@ describe("steps 07-10 are unreachable until the gate is affirmed", () => {
     // on an affirmed case — they do the drafting. Conflating "can affirm" with
     // "may view" would hide the screen from the person who needs it.
     const letter = CASE_PIPELINE.find((s) => s.index === "07")!;
-    expect(isStepReachable(letter, { gateAffirmed: true }).kind).toBe("reachable");
+    expect(isStepReachable(letter, { gateStatus: 'affirmed' }).kind).toBe("reachable");
     expect(can(coordinator, "affirm_gate")).toBe(false);
   });
 });
@@ -138,7 +141,7 @@ describe("a blocked step explains itself to assistive technology", () => {
     // review/a2-screen-reader.md, not here. Claiming otherwise in a test
     // comment would be a verification claim the test does not support.
     for (const step of CASE_PIPELINE.filter((s) => s.requires === "affirm_gate")) {
-      const blocked = isStepReachable(step, { gateAffirmed: false });
+      const blocked = isStepReachable(step, { gateStatus: 'not-affirmed' });
       expect(blocked.kind).toBe("awaiting-gate");
       if (blocked.kind === "awaiting-gate") {
         // A reason a coordinator can act on names WHAT is missing and WHERE.

@@ -69,7 +69,7 @@ describe('a gap row asks for the opposite', () => {
 describe('an unsourced assertion is visible', () => {
   it('flags a met entry with no citation', () => {
     render(<TimelineEntryRow entry={entry({ state: 'met', citations: [] })} />);
-    expect(screen.getByText(/no citation on file/i)).toBeTruthy();
+    expect(screen.getByText('This assertion has no source document. It will not be included.')).toBeTruthy();
   });
 
   it('does not flag a met entry that has one', () => {
@@ -91,8 +91,14 @@ describe('an unsourced assertion is visible', () => {
       />,
     );
 
-    expect(screen.queryByText(/no citation on file/i)).toBeNull();
+    expect(screen.queryByText(/no source document/i)).toBeNull();
     expect(screen.getByText(/PT Discharge Summary · 2026-02-10 · p.3/)).toBeTruthy();
+  });
+
+  it.each(['gap', 'void'] as const)('shows the missing-source consequence for %s independently of state', (state) => {
+    render(<TimelineEntryRow entry={entry({ state, citations: [] })} />);
+    expect(screen.getByText('This assertion has no source document. It will not be included.')).toBeTruthy();
+    expect(document.querySelector(`[data-evidence-state='${state}']`)).toBeTruthy();
   });
 
   it('says so when the criterion text is not synced', () => {

@@ -19,10 +19,11 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 
-import { describe, expect, it } from "vitest";
+import { PGlite } from "@electric-sql/pglite";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
 import { SYNC_COLUMNS } from "./electric-shapes";
-import { PGLITE_SCHEMA_SQL, PGLITE_TABLES } from "./pglite-schema";
+import { PGLITE_CURRENT_SCHEMA_SQL, PGLITE_TABLES } from "./pglite-schema";
 
 interface CatalogShape {
   table: string;
@@ -45,19 +46,28 @@ function loadCatalog(): Record<string, CatalogShape> {
   return shapes as Record<string, CatalogShape>;
 }
 
-/** Columns declared for a table in the local DDL, in declaration order. */
-function ddlColumns(table: string): string[] {
-  const match = new RegExp(
-    `CREATE TABLE IF NOT EXISTS ${table}\\s*\\(([\\s\\S]*?)\\n\\);`,
-    "i",
-  ).exec(PGLITE_SCHEMA_SQL);
-  if (!match) return [];
-  return match[1]!
-    .split("\n")
-    .map((line) => line.trim())
-    .filter((line) => line.length > 0 && !line.startsWith("--"))
-    .map((line) => line.split(/\s+/)[0]!)
-    .filter((name) => !/^(PRIMARY|FOREIGN|UNIQUE|CHECK|CONSTRAINT)$/i.test(name));
+let database: PGlite;
+
+beforeAll(async () => {
+  database = new PGlite();
+  await database.waitReady;
+  await database.exec(PGLITE_CURRENT_SCHEMA_SQL);
+});
+
+afterAll(async () => {
+  await database.close();
+});
+
+/** Columns present after every current migration, in ordinal order. */
+async function schemaColumns(table: string): Promise<string[]> {
+  const result = await database.query<{ column_name: string }>(
+    `SELECT column_name
+       FROM information_schema.columns
+      WHERE table_schema = 'public' AND table_name = $1
+      ORDER BY ordinal_position`,
+    [table],
+  );
+  return result.rows.map(({ column_name }) => column_name);
 }
 
 describe("FRF catalog conformance", () => {
@@ -70,12 +80,12 @@ describe("FRF catalog conformance", () => {
     expect([...catalogTables].sort()).toEqual([...PGLITE_TABLES].sort());
   });
 
-  it("grants exactly the columns the local schema can hold", () => {
+  it("grants exactly the columns the migrated local schema can hold", async () => {
     // The drift that matters. A granted column with nowhere to land is dropped
     // silently by the writer's projection — no error, just missing data.
     for (const [id, shape] of Object.entries(catalog)) {
       const table = shape.table.replace(/^aso\./, "");
-      const local = ddlColumns(table);
+      const local = await schemaColumns(table);
       expect(
         [...shape.columns].sort(),
         `catalog shape "${id}" and local table "${table}" disagree`,

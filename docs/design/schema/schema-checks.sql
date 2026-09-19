@@ -32,6 +32,14 @@ INSERT INTO user_roles (user_id, role_id, practice_id)
   SELECT 'a0000000-0000-0000-0000-000000000002', id, '11111111-1111-1111-1111-111111111111'
     FROM roles WHERE key = 'admin';
 
+SELECT set_config(
+  'aso.kratos_identity_id',
+  (SELECT kratos_identity_id::text FROM users
+    WHERE id = 'a0000000-0000-0000-0000-000000000002'),
+  true
+);
+SELECT set_config('aso.selected_practice_id','11111111-1111-1111-1111-111111111111',true);
+
 INSERT INTO patients (id, practice_id, family_name, given_name, birth_date)
   VALUES ('b0000000-0000-0000-0000-000000000001',
           '11111111-1111-1111-1111-111111111111', 'Kaminski', 'Ruth', '1958-04-02');
@@ -52,6 +60,12 @@ INSERT INTO gate_affirmations (case_id, kind, affirmed_by)
 ROLLBACK TO s1;
 
 \echo '=== T2  surgeon affirms all four       -> expect gate_affirmed=true'
+SELECT set_config(
+  'aso.kratos_identity_id',
+  (SELECT kratos_identity_id::text FROM users
+    WHERE id = 'a0000000-0000-0000-0000-000000000001'),
+  true
+);
 INSERT INTO gate_affirmations (case_id, kind, affirmed_by)
   SELECT 'd0000000-0000-0000-0000-000000000001', key,
          'a0000000-0000-0000-0000-000000000001'
@@ -68,12 +82,25 @@ SELECT 'RESULT gate_cleared=' || (gate_affirmed_at IS NULL)::text
 ROLLBACK TO s3;
 
 \echo '=== T4  administrator annotates        -> expect ERROR'
+SELECT set_config(
+  'aso.kratos_identity_id',
+  (SELECT kratos_identity_id::text FROM users
+    WHERE id = 'a0000000-0000-0000-0000-000000000002'),
+  true
+);
 SAVEPOINT s4;
 INSERT INTO annotations (annotation_type_id, case_id, name, body, author_id)
   SELECT id, 'd0000000-0000-0000-0000-000000000001', 'x', 'y',
          'a0000000-0000-0000-0000-000000000002'
     FROM annotation_types LIMIT 1;
 ROLLBACK TO s4;
+
+SELECT set_config(
+  'aso.kratos_identity_id',
+  (SELECT kratos_identity_id::text FROM users
+    WHERE id = 'a0000000-0000-0000-0000-000000000001'),
+  true
+);
 
 \echo '=== T5  lab payload missing required   -> expect ERROR'
 SAVEPOINT s5;

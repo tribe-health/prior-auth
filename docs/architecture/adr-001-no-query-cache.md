@@ -7,8 +7,9 @@
 ## Decision
 
 The web and desktop clients use **no query cache** — no TanStack Query, no SWR,
-no Apollo cache. `scripts/audit.sh` fails the build if one is declared in
-`web/package.json`.
+no Apollo cache. `scripts/audit.sh` checks both `web/package.json` and the
+complete resolved pnpm lock graph through `scripts/check-query-cache-dependencies.py`.
+Direct declarations and transitive dependency paths fail the check.
 
 ## Why
 

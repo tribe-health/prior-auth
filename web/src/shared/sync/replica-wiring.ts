@@ -13,8 +13,11 @@
 import { ENTITY_TYPES, SYNC_COLUMNS } from "./electric-shapes";
 import { PGLITE_TABLES, type PGliteTable } from "./pglite-schema";
 import type { TableTarget } from "./chunk-writer";
-import type { CheckpointStore } from "./replica-runtime";
-import type { ReplicaCheckpoint } from "@prometheus-ags/entity-graph-core";
+import type { CheckpointStore, ReplicaCheckpointSet } from "./replica-runtime";
+import type {
+  ReplicaListBinding,
+  ReplicaTableBinding,
+} from "@prometheus-ags/entity-graph-core";
 
 /** The write target for each synced table, columns taken from the boundary. */
 export const REPLICA_TARGETS: readonly TableTarget[] = PGLITE_TABLES.map((table) => ({
@@ -33,6 +36,21 @@ export const REPLICA_TARGETS: readonly TableTarget[] = PGLITE_TABLES.map((table)
  */
 export const REPLICA_SHAPES: ReadonlyArray<{ shape: string; target: TableTarget }> =
   REPLICA_TARGETS.map((target) => ({ shape: target.table, target }));
+
+/** Explicit SQL table → graph type/key bindings consumed by PEM. */
+export const REPLICA_TABLE_BINDINGS: readonly ReplicaTableBinding[] =
+  REPLICA_TARGETS.map((target) => ({
+    table: target.table,
+    type: entityTypeFor(target.table),
+    primaryKey: target.idColumn ?? "id",
+  }));
+
+/** Stable ordered memberships; lists contain identifiers only. */
+export const REPLICA_LIST_BINDINGS: readonly ReplicaListBinding[] =
+  REPLICA_TARGETS.map((target) => ({
+    key: `replica:${target.table}`,
+    table: target.table,
+  }));
 
 /** Graph entity type for a table. */
 export function entityTypeFor(table: string): string {
@@ -61,17 +79,15 @@ export function createPGliteCheckpointStore(client: {
       if (!row) return { value: null, checkpoint: null };
       return {
         value: row.value,
-        checkpoint: row.checkpoint
-          ? (JSON.parse(row.checkpoint) as ReplicaCheckpoint)
-          : null,
+        checkpoint: parseCheckpoint(row.checkpoint),
       };
     },
 
-    async write(key, value, checkpoint) {
+    async write(transactionClient, key, value, checkpoint) {
       // One statement, so the value and the checkpoint describing it commit
       // together. Two statements could be interrupted between them, leaving a
       // checkpoint that does not match what is stored.
-      await client.query(
+      await transactionClient.query(
         `INSERT INTO _replica_checkpoints (key, value, checkpoint)
          VALUES ($1, $2, $3)
          ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value, checkpoint = EXCLUDED.checkpoint`,
@@ -79,6 +95,28 @@ export function createPGliteCheckpointStore(client: {
       );
     },
   };
+}
+
+function parseCheckpoint(serialized: string | null): ReplicaCheckpointSet | null {
+  if (!serialized) return null;
+  try {
+    const parsed: unknown = JSON.parse(serialized);
+    if (parsed === null || typeof parsed !== "object") return null;
+    const candidate = parsed as { generation?: unknown; shapes?: unknown };
+    if (!Number.isSafeInteger(candidate.generation)) return null;
+    if (candidate.shapes === null || typeof candidate.shapes !== "object") return null;
+    const validShapes = Object.values(candidate.shapes).every((value) => {
+      if (value === null || typeof value !== "object") return false;
+      const cursor = value as { handle?: unknown; offset?: unknown };
+      return typeof cursor.handle === "string"
+        && cursor.handle.length > 0
+        && typeof cursor.offset === "string"
+        && cursor.offset.length > 0;
+    });
+    return validShapes ? parsed as ReplicaCheckpointSet : null;
+  } catch {
+    return null;
+  }
 }
 
 /** DDL for the checkpoint table. Applied alongside the replica schema. */

@@ -2,23 +2,24 @@
   "schemaVersion": "1",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 304,
-  "derivedRevision": 304,
+  "sourceRevision": 1716,
+  "derivedRevision": 1716,
   "frontier": {
-    "e9a7936c-0a01-43d5-9004-b93a4e5fd031": 304
+    "e9a7936c-0a01-43d5-9004-b93a4e5fd031": 1716
   },
   "conflictCount": 0,
-  "updatedAt": "2026-09-08T15:33:46.673347Z",
+  "updatedAt": "2026-09-19T00:10:06.374916Z",
   "cursor": [
-    "runtime-architecture"
+    "runtime-architecture",
+    "web-case-to-letter"
   ],
   "root": {
     "type": "phase",
     "id": "0e0821e7-baa6-41b2-9b15-beaa40e0f40b",
     "status": "ready",
     "progress": {
-      "done": 12,
-      "total": 32
+      "done": 42,
+      "total": 58
     },
     "children": [
       {
@@ -27,10 +28,283 @@
         "canonicalId": "runtime-architecture",
         "status": "IN_PROGRESS",
         "progress": {
-          "done": 4,
+          "done": 20,
           "total": 24
         },
         "children": [
+          {
+            "type": "phase",
+            "id": "ra06-final-review-cycle-repair",
+            "canonicalId": "runtime-architecture::ra06-final-review-cycle-repair",
+            "status": "COMPLETE",
+            "progress": {
+              "done": 3,
+              "total": 3
+            },
+            "children": [
+              {
+                "type": "change",
+                "id": "ra06d-01-repair-completion-ownership",
+                "status": "COMPLETE",
+                "progress": {
+                  "done": 5,
+                  "total": 5
+                }
+              },
+              {
+                "type": "change",
+                "id": "ra06d-02-refreeze-and-replay",
+                "status": "COMPLETE",
+                "progress": {
+                  "done": 5,
+                  "total": 5
+                }
+              },
+              {
+                "type": "change",
+                "id": "ra06d-03-parent-recertification",
+                "status": "COMPLETE",
+                "progress": {
+                  "done": 5,
+                  "total": 5
+                }
+              }
+            ],
+            "annotations": []
+          },
+          {
+            "type": "phase",
+            "id": "ra06-revocation-contract-repair",
+            "canonicalId": "runtime-architecture::ra06-revocation-contract-repair",
+            "status": "COMPLETE",
+            "progress": {
+              "done": 4,
+              "total": 4
+            },
+            "children": [
+              {
+                "type": "change",
+                "id": "ra06c-01-durable-authority-events",
+                "status": "COMPLETE",
+                "progress": {
+                  "done": 8,
+                  "total": 8
+                }
+              },
+              {
+                "type": "change",
+                "id": "ra06c-02-distributed-gate-fence",
+                "status": "COMPLETE",
+                "progress": {
+                  "done": 12,
+                  "total": 12
+                }
+              },
+              {
+                "type": "change",
+                "id": "ra06c-03-final-frame-lease",
+                "status": "COMPLETE",
+                "progress": {
+                  "done": 6,
+                  "total": 6
+                }
+              },
+              {
+                "type": "change",
+                "id": "ra06c-04-bound-revocation-candidate",
+                "status": "COMPLETE",
+                "progress": {
+                  "done": 7,
+                  "total": 7
+                }
+              }
+            ],
+            "annotations": []
+          },
+          {
+            "type": "phase",
+            "id": "web-case-to-letter",
+            "canonicalId": "runtime-architecture::web-case-to-letter",
+            "status": "IN_PROGRESS",
+            "progress": {
+              "done": 7,
+              "total": 19
+            },
+            "children": [
+              {
+                "type": "change",
+                "id": "web-00-workflow-contract",
+                "status": "COMPLETE",
+                "progress": {
+                  "done": 6,
+                  "total": 6
+                }
+              },
+              {
+                "type": "change",
+                "id": "web-01-case-command-core",
+                "status": "COMPLETE",
+                "progress": {
+                  "done": 7,
+                  "total": 7
+                }
+              },
+              {
+                "type": "change",
+                "id": "web-02-case-publication-ui",
+                "status": "COMPLETE",
+                "progress": {
+                  "done": 6,
+                  "total": 6
+                }
+              },
+              {
+                "type": "change",
+                "id": "web-03-administering-entity-resolution",
+                "status": "COMPLETE",
+                "progress": {
+                  "done": 7,
+                  "total": 7
+                }
+              },
+              {
+                "type": "change",
+                "id": "web-04-document-upload-core",
+                "status": "COMPLETE",
+                "progress": {
+                  "done": 6,
+                  "total": 6
+                }
+              },
+              {
+                "type": "change",
+                "id": "web-05-document-processing-ui",
+                "status": "COMPLETE",
+                "progress": {
+                  "done": 7,
+                  "total": 7
+                }
+              },
+              {
+                "type": "change",
+                "id": "web-06-criteria-catalog-core",
+                "status": "COMPLETE",
+                "progress": {
+                  "done": 7,
+                  "total": 7
+                }
+              },
+              {
+                "type": "change",
+                "id": "web-07-criteria-selection-ui",
+                "status": "PENDING",
+                "progress": {
+                  "done": 1,
+                  "total": 6
+                }
+              },
+              {
+                "type": "change",
+                "id": "web-08-evidence-assembly-core",
+                "status": "PENDING",
+                "progress": {
+                  "done": 0,
+                  "total": 6
+                }
+              },
+              {
+                "type": "change",
+                "id": "web-09-evidence-workspace",
+                "status": "PENDING",
+                "progress": {
+                  "done": 0,
+                  "total": 7
+                }
+              },
+              {
+                "type": "change",
+                "id": "web-10-prior-letter-command",
+                "status": "PENDING",
+                "progress": {
+                  "done": 0,
+                  "total": 6
+                }
+              },
+              {
+                "type": "change",
+                "id": "web-11-prior-letter-workspace",
+                "status": "PENDING",
+                "progress": {
+                  "done": 0,
+                  "total": 6
+                }
+              },
+              {
+                "type": "change",
+                "id": "web-12-determination-ingest-core",
+                "status": "PENDING",
+                "progress": {
+                  "done": 0,
+                  "total": 6
+                }
+              },
+              {
+                "type": "change",
+                "id": "web-13-denial-classification-ui",
+                "status": "PENDING",
+                "progress": {
+                  "done": 0,
+                  "total": 6
+                }
+              },
+              {
+                "type": "change",
+                "id": "web-14-response-letter-command",
+                "status": "PENDING",
+                "progress": {
+                  "done": 0,
+                  "total": 6
+                }
+              },
+              {
+                "type": "change",
+                "id": "web-15-response-letter-workspace",
+                "status": "PENDING",
+                "progress": {
+                  "done": 0,
+                  "total": 6
+                }
+              },
+              {
+                "type": "change",
+                "id": "web-15a-browser-hardening",
+                "status": "PENDING",
+                "progress": {
+                  "done": 0,
+                  "total": 6
+                }
+              },
+              {
+                "type": "change",
+                "id": "web-16-web-flow-fixture",
+                "status": "PENDING",
+                "progress": {
+                  "done": 0,
+                  "total": 6
+                }
+              },
+              {
+                "type": "change",
+                "id": "web-17-browser-scenario-certification",
+                "status": "PENDING",
+                "progress": {
+                  "done": 0,
+                  "total": 7
+                }
+              }
+            ],
+            "annotations": []
+          },
           {
             "type": "change",
             "id": "ra-01-verified-session",
@@ -70,145 +344,145 @@
           {
             "type": "change",
             "id": "ra-05-authorized-shape-facade",
-            "status": "PENDING",
+            "status": "COMPLETE",
             "progress": {
-              "done": 0,
-              "total": 0
+              "done": 9,
+              "total": 9
             }
           },
           {
             "type": "change",
             "id": "ra-06-bounded-revocation",
-            "status": "PENDING",
+            "status": "COMPLETE",
             "progress": {
-              "done": 0,
-              "total": 0
+              "done": 9,
+              "total": 9
             }
           },
           {
             "type": "change",
             "id": "ra-07-scoped-pem-runtime",
-            "status": "PENDING",
+            "status": "COMPLETE",
             "progress": {
-              "done": 0,
-              "total": 0
+              "done": 9,
+              "total": 9
             }
           },
           {
             "type": "change",
             "id": "ra-08-committed-graph-projection",
-            "status": "PENDING",
+            "status": "COMPLETE",
             "progress": {
-              "done": 0,
-              "total": 0
+              "done": 8,
+              "total": 8
             }
           },
           {
             "type": "change",
             "id": "ra-09-pem-delivery-gate",
-            "status": "PENDING",
+            "status": "COMPLETE",
             "progress": {
-              "done": 0,
-              "total": 0
+              "done": 8,
+              "total": 8
             }
           },
           {
             "type": "change",
             "id": "ra-10-remove-transitive-query-cache",
-            "status": "PENDING",
+            "status": "COMPLETE",
             "progress": {
-              "done": 0,
-              "total": 0
+              "done": 9,
+              "total": 9
             }
           },
           {
             "type": "change",
             "id": "ra-11a-sync-conformance",
-            "status": "PENDING",
+            "status": "COMPLETE",
             "progress": {
-              "done": 0,
-              "total": 0
+              "done": 9,
+              "total": 9
             }
           },
           {
             "type": "change",
             "id": "ra-11b-worker-ownership",
-            "status": "PENDING",
+            "status": "COMPLETE",
             "progress": {
-              "done": 0,
-              "total": 0
+              "done": 8,
+              "total": 8
             }
           },
           {
             "type": "change",
             "id": "ra-11c-sql-materialization",
-            "status": "PENDING",
+            "status": "COMPLETE",
             "progress": {
-              "done": 0,
-              "total": 0
+              "done": 14,
+              "total": 14
             }
           },
           {
             "type": "change",
             "id": "ra-12-public-auth-startup",
-            "status": "PENDING",
+            "status": "COMPLETE",
             "progress": {
-              "done": 0,
-              "total": 0
+              "done": 9,
+              "total": 9
             }
           },
           {
             "type": "change",
             "id": "ra-13-epoch-logout-and-drafts",
-            "status": "PENDING",
+            "status": "COMPLETE",
             "progress": {
-              "done": 0,
-              "total": 0
+              "done": 11,
+              "total": 11
             }
           },
           {
             "type": "change",
             "id": "ra-14-live-evidence-timeline",
-            "status": "PENDING",
+            "status": "COMPLETE",
             "progress": {
-              "done": 0,
-              "total": 0
+              "done": 8,
+              "total": 9
             }
           },
           {
             "type": "change",
             "id": "ra-15-attributed-annotations",
-            "status": "PENDING",
+            "status": "COMPLETE",
             "progress": {
-              "done": 0,
-              "total": 0
+              "done": 8,
+              "total": 9
             }
           },
           {
             "type": "change",
             "id": "ra-16-authorized-source-preview",
-            "status": "PENDING",
+            "status": "COMPLETE",
             "progress": {
-              "done": 0,
-              "total": 0
+              "done": 10,
+              "total": 10
             }
           },
           {
             "type": "change",
             "id": "ra-17-native-session-transport",
-            "status": "PENDING",
+            "status": "COMPLETE",
             "progress": {
-              "done": 0,
-              "total": 0
+              "done": 9,
+              "total": 9
             }
           },
           {
             "type": "change",
             "id": "ra-18-tauri-pglite-baseline",
-            "status": "PENDING",
+            "status": "COMPLETE",
             "progress": {
-              "done": 0,
-              "total": 0
+              "done": 9,
+              "total": 9
             }
           },
           {

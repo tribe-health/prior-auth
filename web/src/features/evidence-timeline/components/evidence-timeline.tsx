@@ -5,8 +5,15 @@
  * intent, the hook orchestrates, the api module talks to the store and the
  * server. No `fetch` or `invoke` appears here — `audit.sh` check 3 enforces it.
  */
+import { useRef, useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 
+import { useCan } from '@/app/providers/session-provider';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Button } from '@/components/ui/button';
+import { AnnotationSection } from '@/features/annotations/components/annotation-section';
+import { SourcePreview } from '@/features/source-preview/components/source-preview';
+import { useSourcePreview } from '@/features/source-preview/hooks/use-source-preview';
 import { EvidenceCountsSummary, EvidenceStateChip } from '../../../shared/ui';
 import type { EvidenceCounts, EvidenceState, EvidenceTally } from '../../../shared/model/evidence-state';
 import { EVIDENCE_STATES, evidenceLabel, loadedTally, pendingTally } from '../../../shared/model/evidence-state';
@@ -14,13 +21,39 @@ import { useInteractionStore } from '../../../shared/store/interaction-store';
 import { useEvidenceTimeline } from '../hooks/use-evidence-timeline';
 import type { TimelineEntry } from '../model/timeline-entry';
 import { TimelineEntryRow } from './timeline-entry-row';
+import { EvidenceReassessmentDialog } from './evidence-reassessment-dialog';
 
 export interface EvidenceTimelineProps {
   caseId: string;
 }
 
 export function EvidenceTimeline({ caseId }: EvidenceTimelineProps) {
-  const { entries, loading, unavailable, error } = useEvidenceTimeline(caseId);
+  const {
+    entries,
+    loading,
+    unavailable,
+    error,
+    refusal,
+    lastCommandId,
+    lastCommandEntryId,
+    commandOutcome,
+    commandMessage,
+    awaitingProjection,
+    submitting,
+    reassess,
+    lookupCommand,
+  } = useEvidenceTimeline(caseId);
+  const sourcePreview = useSourcePreview(caseId);
+  const canReassess = useCan('annotate');
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const sourceTriggerRef = useRef<HTMLButtonElement | null>(null);
+
+  const closeSourcePreview = () => {
+    sourcePreview.close();
+    const trigger = sourceTriggerRef.current;
+    sourceTriggerRef.current = null;
+    queueMicrotask(() => trigger?.focus());
+  };
 
   // Transient interaction state (ADR-006). useShallow so a component
   // subscribing to two fields re-renders on either, not on every store write.
@@ -35,6 +68,9 @@ export function EvidenceTimeline({ caseId }: EvidenceTimelineProps) {
   // not read the evidence" are opposite claims, and an empty list that means
   // the second is how a case looks clean when it is unknown.
   const visible = filterEntries(entries, filter);
+  const selected = selectedId === null
+    ? null
+    : entries.find((entry) => entry.id === selectedId) ?? null;
 
   if (unavailable) {
     return <Notice>Local store is not open. Evidence cannot be shown.</Notice>;
@@ -67,6 +103,46 @@ export function EvidenceTimeline({ caseId }: EvidenceTimelineProps) {
         <StateFilter value={filter} onChange={setFilter} />
       </header>
 
+      {refusal ? (
+        <Alert variant="destructive">
+          <AlertTitle>{commandOutcome === 'conflict' ? 'Assessment changed' : 'Assessment refused'}</AlertTitle>
+          <AlertDescription>{refusal}</AlertDescription>
+        </Alert>
+      ) : null}
+      {lastCommandId && lastCommandEntryId && commandOutcome === 'uncertain' ? (
+        <Alert>
+          <AlertTitle>Assessment result unknown</AlertTitle>
+          <AlertDescription className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <span>Check the prior command before submitting another assessment.</span>
+            <Button
+              type="button"
+              variant="outline"
+              className="min-h-11 w-full sm:w-auto"
+              onClick={() => void lookupCommand(lastCommandEntryId, lastCommandId).catch(() => undefined)}
+            >
+              Check result
+            </Button>
+          </AlertDescription>
+        </Alert>
+      ) : null}
+      {lastCommandId && lastCommandEntryId && awaitingProjection ? (
+        <Alert>
+          <AlertTitle>Assessment accepted</AlertTitle>
+          <AlertDescription className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <span>Waiting for the evidence record to show the accepted assessment.</span>
+            <Button
+              type="button"
+              variant="outline"
+              className="min-h-11 w-full sm:w-auto"
+              onClick={() => void lookupCommand(lastCommandEntryId, lastCommandId).catch(() => undefined)}
+            >
+              Check evidence record
+            </Button>
+          </AlertDescription>
+        </Alert>
+      ) : null}
+      {commandMessage ? <p role="status" aria-live="polite" className="text-sm">{commandMessage}</p> : null}
+
       {entries.length === 0 ? (
         <Notice>No evidence has been recorded for this case.</Notice>
       ) : visible.length === 0 ? (
@@ -83,10 +159,35 @@ export function EvidenceTimeline({ caseId }: EvidenceTimelineProps) {
       ) : (
         <ul className="flex flex-col">
           {visible.map((entry) => (
-            <TimelineEntryRow key={entry.id} entry={entry} />
+            <TimelineEntryRow
+              key={entry.id}
+              entry={entry}
+              canReassess={canReassess}
+              disabled={submitting || lastCommandId !== null}
+              onReassess={(entry) => setSelectedId(entry.id)}
+              onOpenSource={(target, trigger) => {
+                sourceTriggerRef.current = trigger;
+                void sourcePreview.open(target);
+              }}
+            />
           ))}
         </ul>
       )}
+      {selected ? (
+        <EvidenceReassessmentDialog
+          key={selected.id}
+          entry={selected}
+          submitting={submitting}
+          onClose={() => setSelectedId(null)}
+          onSubmit={(state) => reassess(selected.id, state)}
+        />
+      ) : null}
+      <SourcePreview
+        state={sourcePreview.state}
+        onClose={closeSourcePreview}
+        onPageChange={(page) => { void sourcePreview.goToPage(page); }}
+      />
+      <AnnotationSection caseId={caseId} />
     </section>
   );
 }

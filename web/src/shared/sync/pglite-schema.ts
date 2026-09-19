@@ -22,16 +22,18 @@
  *
  * PGlite has no pgvector, so an embedding table could not sync even by
  * accident. **That coincidence is not a control.** The control is this file
- * and the test that fails when a sixth table appears.
+ * and the test that fails when an undeclared table appears.
  */
 
-/** The five tables the evidence-timeline slice reads. Nothing else syncs. */
+/** The seven tables the evidence and annotation slice reads. Nothing else syncs. */
 export const PGLITE_TABLES = [
-  "cases",
-  "case_evidence",
+  "annotation_types",
   "evidence_states",
+  "cases",
+  "document_statuses",
+  "case_evidence",
   "evidence_citations",
-  "documents",
+  "annotations",
 ] as const;
 
 export type PGliteTable = (typeof PGLITE_TABLES)[number];
@@ -44,6 +46,67 @@ export type PGliteTable = (typeof PGLITE_TABLES)[number];
  * a cleanup.
  */
 export const OMITTED_COLUMNS: Record<string, { column: string; reason: string }[]> = {
+  cases: [
+    {
+      column: "member_id",
+      reason:
+        "Direct insurance member identifier. Intake editing reads it through the verified case API and never publishes it in the summary replica.",
+    },
+    {
+      column: "facility_id",
+      reason:
+        "Facility identity is outside the frozen case-summary publication row and remains server-side until separately approved.",
+    },
+    {
+      column: "procedure_code",
+      reason:
+        "The procedure can reveal clinical treatment and is excluded from the frozen case-summary projection.",
+    },
+    {
+      column: "plan_key",
+      reason:
+        "Plan selection is a controlling intake input and is not part of the approved summary publication row.",
+    },
+    {
+      column: "data",
+      reason:
+        "Untyped case JSON may contain arbitrary clinical or administrative PHI and cannot cross the replica boundary.",
+    },
+    {
+      column: "gate_affirmed_by",
+      reason:
+        "The queue needs committed gate status, not the clinician identity behind the affirmation.",
+    },
+    {
+      column: "case_input_revision",
+      reason:
+        "The command-specific optimistic token is obtained from an authorized case read and is not a summary field.",
+    },
+    {
+      column: "status_revision",
+      reason:
+        "The command-specific lifecycle token is obtained from an authorized case read and is not a summary field.",
+    },
+    {
+      column: "created_at",
+      reason:
+        "The frozen case-summary contract exposes updated time only; creation time has no approved queue behavior.",
+    },
+  ],
+  annotation_types: [
+    {
+      column: "schema",
+      reason:
+        "The first-annotation control needs only the approved type identity and label; server-side JSON Schema validation remains authoritative.",
+    },
+  ],
+  annotations: [
+    {
+      column: "data",
+      reason:
+        "Type-specific JSON may contain clinical details beyond the attributed opinion rendered by this slice, so it remains server-side.",
+    },
+  ],
   case_evidence: [
     {
       column: "rationale",
@@ -58,7 +121,12 @@ export const OMITTED_COLUMNS: Record<string, { column: string; reason: string }[
         "Verbatim excerpt from a chart document. PHI in the plainest form. The timeline shows that a citation exists with its page and date; reading the quote is a server-side, audited act.",
     },
   ],
-  documents: [
+  document_statuses: [
+    {
+      column: "practice_id",
+      reason:
+        "The verified-practice predicate is enforced by FRF against the server projection and is not part of the frozen browser row.",
+    },
     {
       column: "patient_id",
       reason:
@@ -81,6 +149,26 @@ export const OMITTED_COLUMNS: Record<string, { column: string; reason: string }[
       column: "data",
       reason:
         "Untyped jsonb whose contents vary by document type. Cannot be shown to be PHI-free, so it is excluded.",
+    },
+    {
+      column: "text",
+      reason:
+        "Extracted chart text remains in the local document_pages relation and never enters an authorized replica.",
+    },
+    {
+      column: "text_sha256",
+      reason:
+        "Page-level hashes are processing provenance for local source text and are not part of the reviewed document status row.",
+    },
+    {
+      column: "embedding",
+      reason:
+        "An embedding of clinical text is PHI and remains structurally outside the browser replica.",
+    },
+    {
+      column: "vector",
+      reason:
+        "Vector representations of clinical text are PHI regardless of the storage type used by the server.",
     },
   ],
 };
@@ -157,3 +245,127 @@ CREATE INDEX IF NOT EXISTS case_evidence_case_ix   ON case_evidence(case_id);
 CREATE INDEX IF NOT EXISTS citations_evidence_ix   ON evidence_citations(case_evidence_id);
 CREATE INDEX IF NOT EXISTS documents_case_ix       ON documents(case_id);
 `;
+
+/** Revision-4 additive migration. The revision-3 base SQL above is immutable. */
+export const PGLITE_ANNOTATION_TYPES_SQL = /* sql */ `
+CREATE TABLE annotation_types (
+  id          UUID PRIMARY KEY,
+  key         TEXT NOT NULL UNIQUE,
+  name        TEXT NOT NULL,
+  description TEXT
+);
+
+-- This is clinician-authored opinion, identified as such by provenance and
+-- attribution. It is never presented as chart text. Type-specific data stays
+-- server-side. This table exists in either storage mode, but startup refuses
+-- to run the only row materializer with persistent storage. The body can
+-- therefore be populated only inside the authorized memory-only client
+-- runtime until G-DATA approves durable client persistence.
+CREATE TABLE annotations (
+  id                 UUID PRIMARY KEY,
+  practice_id        UUID NOT NULL,
+  case_id            UUID NOT NULL,
+  annotation_type_id UUID NOT NULL,
+  name               TEXT NOT NULL,
+  body               TEXT NOT NULL,
+  author_id          UUID NOT NULL,
+  author_label       TEXT NOT NULL,
+  provenance         TEXT NOT NULL,
+  is_included        BOOLEAN NOT NULL,
+  included_at        TIMESTAMPTZ,
+  target_evidence_id UUID,
+  target_document_id UUID,
+  revision           BIGINT NOT NULL,
+  created_at         TIMESTAMPTZ,
+  updated_at         TIMESTAMPTZ
+);
+
+CREATE INDEX annotations_case_ix ON annotations(case_id);
+`;
+
+/**
+ * Revision-5 compatibility migration.
+ *
+ * Electric serializes PostgreSQL BYTEA as a `\\x…` hex string. PGlite's BYTEA
+ * parameter serializer accepts byte arrays, not that wire representation, so
+ * the first non-null document digest would abort the whole committed batch.
+ * The browser only compares and projects this immutable digest; keeping the
+ * exact wire-safe hexadecimal value as text avoids a lossy client conversion.
+ */
+export const PGLITE_SOURCE_HASH_SQL = /* sql */ `
+ALTER TABLE documents
+  ALTER COLUMN content_sha256 TYPE TEXT
+  USING CASE
+    WHEN content_sha256 IS NULL THEN NULL
+    ELSE '\\x' || encode(content_sha256, 'hex')
+  END;
+`;
+
+/** Revision-6 case-summary publication migration. */
+export const PGLITE_CASE_SUMMARY_SQL = /* sql */ `
+-- Revision 3 did not carry the identifiers required by the approved case
+-- summary. They cannot be reconstructed from the local replica. Discard the
+-- old generation and its cursor before making those columns required; the
+-- authorized shape transport will then repopulate every table from a cold
+-- snapshot. Keeping any child row or checkpoint would mix revisions.
+TRUNCATE TABLE
+  annotations,
+  annotation_types,
+  evidence_citations,
+  case_evidence,
+  evidence_states,
+  documents,
+  cases;
+
+-- Boundary tests assemble only the synchronized tables, while the runtime
+-- creates the checkpoint ledger beside them. Clear it when present without
+-- making that bookkeeping table part of the replica schema contract.
+DO $cutover$
+BEGIN
+  IF to_regclass('public._replica_checkpoints') IS NOT NULL THEN
+    EXECUTE 'TRUNCATE TABLE _replica_checkpoints';
+  END IF;
+END
+$cutover$;
+
+ALTER TABLE cases
+  ADD COLUMN case_number TEXT NOT NULL,
+  ADD COLUMN patient_id UUID NOT NULL,
+  ADD COLUMN surgeon_id UUID NOT NULL,
+  ADD COLUMN coordinator_id UUID,
+  ADD COLUMN payer_id UUID NOT NULL,
+  ADD COLUMN date_of_service DATE,
+  ADD COLUMN revision BIGINT NOT NULL,
+  ALTER COLUMN status SET NOT NULL,
+  DROP COLUMN created_at;
+`;
+
+/** Revision-7 document-status projection cutover. */
+export const PGLITE_DOCUMENT_STATUS_SQL = /* sql */ `
+DROP TABLE documents;
+
+CREATE TABLE document_statuses (
+  id                    UUID PRIMARY KEY,
+  case_id               UUID NOT NULL,
+  document_type_id      UUID NOT NULL,
+  name                  TEXT NOT NULL,
+  effective_date        DATE NOT NULL,
+  content_sha256_text   TEXT NOT NULL,
+  page_count            INTEGER,
+  processing_status     TEXT NOT NULL,
+  processing_error_code TEXT,
+  updated_at            TIMESTAMPTZ NOT NULL,
+  revision              BIGINT NOT NULL
+);
+
+CREATE INDEX document_statuses_case_ix ON document_statuses(case_id);
+`;
+
+/** Complete current schema used by boundary tests and disposable fixtures. */
+export const PGLITE_CURRENT_SCHEMA_SQL = [
+  PGLITE_SCHEMA_SQL,
+  PGLITE_ANNOTATION_TYPES_SQL,
+  PGLITE_SOURCE_HASH_SQL,
+  PGLITE_CASE_SUMMARY_SQL,
+  PGLITE_DOCUMENT_STATUS_SQL,
+].join("\n");

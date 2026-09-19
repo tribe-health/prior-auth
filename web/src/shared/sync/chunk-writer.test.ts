@@ -9,6 +9,7 @@
 import { describe, expect, it } from "vitest";
 
 import {
+  CHUNK_ROW_OPERATION,
   truncateTarget,
   validateTarget,
   writeChunk,
@@ -22,12 +23,18 @@ interface Call {
   params?: unknown[];
 }
 
-function mockClient(failOnInsert = false): { client: WriterClient; calls: Call[] } {
+function mockClient(
+  failOnInsert = false,
+  updateMatches = true,
+): { client: WriterClient; calls: Call[] } {
   const calls: Call[] = [];
   const client: WriterClient = {
-    async query(sql, params) {
+    async query<T = Record<string, unknown>>(sql: string, params?: unknown[]) {
       calls.push({ kind: "query", sql, params });
       if (failOnInsert && /INSERT INTO/.test(sql)) throw new Error("write failed");
+      if (sql.startsWith("UPDATE")) {
+        return { rows: updateMatches ? [{ id: params?.at(-1) } as T] : [] };
+      }
       return { rows: [] };
     },
     async exec(sql) {
@@ -78,7 +85,7 @@ describe("validateTarget", () => {
 });
 
 describe("writeChunk", () => {
-  it("upserts each row inside one transaction", async () => {
+  it("upserts rows in one bounded statement inside one transaction", async () => {
     const { client, calls } = mockClient();
     await writeChunk(client, widgets, [
       { id: "w1", label: "One", size: 1 },
@@ -87,7 +94,10 @@ describe("writeChunk", () => {
 
     expect(calls[0]).toMatchObject({ kind: "exec", sql: "BEGIN" });
     expect(calls.at(-1)).toMatchObject({ kind: "exec", sql: "COMMIT" });
-    expect(calls.filter((c) => /INSERT INTO/.test(c.sql))).toHaveLength(2);
+    expect(calls.filter((c) => /INSERT INTO/.test(c.sql))).toHaveLength(1);
+    expect(calls.find((c) => /INSERT INTO/.test(c.sql))?.params).toEqual([
+      "w1", "One", 1, "w2", "Two", 2,
+    ]);
   });
 
   it("projects rows onto the declared columns and drops the rest", async () => {
@@ -112,9 +122,20 @@ describe("writeChunk", () => {
     // snapshot. The column must not appear in the statement at all.
     const { client, calls } = mockClient();
     await writeChunk(client, widgets, [{ id: "w1", label: "One" }]);
-    const insert = calls.find((c) => /INSERT INTO/.test(c.sql));
+    const update = calls.find((c) => c.sql.startsWith("UPDATE"));
+    expect(update?.params).toEqual(["One", "w1"]);
+    expect(update?.sql).not.toMatch(/\bsize\b/);
+  });
+
+  it("inserts a partial cold-snapshot row when its operation says insert", async () => {
+    const { client, calls } = mockClient();
+    await writeChunk(client, widgets, [
+      { id: "w1", label: "One", [CHUNK_ROW_OPERATION]: "insert" },
+    ]);
+
+    const insert = calls.find((call) => call.sql.startsWith("INSERT INTO"));
     expect(insert?.params).toEqual(["w1", "One"]);
-    expect(insert?.sql).not.toMatch(/\bsize\b/);
+    expect(calls.some((call) => call.sql.startsWith("UPDATE"))).toBe(false);
   });
 
   it("still writes an explicit null the frame actually sent", async () => {
@@ -130,17 +151,26 @@ describe("writeChunk", () => {
   it("updates only the columns a partial frame carries", async () => {
     const { client, calls } = mockClient();
     await writeChunk(client, widgets, [{ id: "w1", size: 7 }]);
-    const insert = calls.find((c) => /INSERT INTO/.test(c.sql));
-    expect(insert?.params).toEqual(["w1", 7]);
-    expect(insert?.sql).toMatch(/size = EXCLUDED\.size/);
-    expect(insert?.sql).not.toMatch(/label = EXCLUDED\.label/);
+    const update = calls.find((c) => c.sql.startsWith("UPDATE"));
+    expect(update?.params).toEqual([7, "w1"]);
+    expect(update?.sql).toMatch(/SET size = \$1/);
+    expect(update?.sql).not.toMatch(/\blabel\b/);
+  });
+
+  it("rolls back a partial frame when its base row is absent", async () => {
+    const { client, calls } = mockClient(false, false);
+
+    await expect(writeChunk(client, widgets, [{ id: "missing", size: 7 }])).rejects.toThrow(
+      /matched no existing id/,
+    );
+    expect(calls.some((call) => call.sql === "ROLLBACK")).toBe(true);
+    expect(calls.some((call) => call.sql === "COMMIT")).toBe(false);
   });
 
   it("makes an id-only frame a no-op instead of a conflicting empty update", async () => {
     const { client, calls } = mockClient();
     await writeChunk(client, widgets, [{ id: "w1" }]);
-    const insert = calls.find((c) => /INSERT INTO/.test(c.sql));
-    expect(insert?.sql).toMatch(/DO NOTHING/);
+    expect(calls.some((c) => /INSERT INTO|^UPDATE/.test(c.sql))).toBe(false);
   });
 
   it("refuses a row with no id — there is no conflict key to upsert on", async () => {

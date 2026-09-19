@@ -1,35 +1,35 @@
 ## Context
 
-This change implements runtime order 7 from the reviewed [phase plan](../../../.kbd-orchestrator/phases/runtime-architecture/plan.md). Source inspection found reusable primitives but no proof that the composed target path works. Read the assessment and its review supplement before editing.
+This change implements browser runtime order 7 from the reviewed [phase plan](../../../.kbd-orchestrator/phases/runtime-architecture/plan.md). `web-17` proves the complete browser product scenario before `ra-20` adds update safety. RA22 then freezes those artifacts and certifies the assembled browser deployment. Source inspection and earlier slice evidence cannot replace this composed run.
 
 ## Goals / Non-Goals
 
-**Goals:** Run the 19 runtime scenarios and relevant UI gates against the actual adopted artifacts, with per-surface evidence. Recheck all four invariants, document performance thresholds before measurement, and keep first-row closure separate from full publication certification.
+**Goals:** Run the complete browser startup, case-to-letter, denial-response, safe-update and security scenarios with observed service and actual-browser evidence. Recheck the standing invariants, including mandatory document/page/date provenance for every included generated assertion.
 
-**Non-Goals:** No unrelated placeholder views, general dependency refresh, clinical automatic replay or additional graph/query-cache owner. Do not claim native or release evidence from a fixture.
+**Non-Goals:** Native SQLite parity, Tauri window qualification, native updater certification, mobile certification, unrelated placeholder views, a general dependency refresh, automatic clinical replay or another graph/query-cache owner.
 
 ## Decisions
 
-Ownership: ASO: explicit cross-repository acceptance runner/evidence and phase reflection; all companion owners supply prerequisite services/artifacts and their gate results.
+Ownership: ASO owns the local acceptance runner, evidence and phase reflection. Companion repositories provide the pinned services and artifacts already required by the browser composition.
 
-Dependencies: ra-14-live-evidence-timeline, ra-15-attributed-annotations, ra-16-authorized-source-preview, ra-19-native-sqlite-parity, ra-20-safe-browser-updates, ra-21-safe-native-updates. Confirm their implementation evidence before applying this change. This root OpenSpec artifact coordinates the user-named five-repository workspace; companion implementation must run under its own repository rules and only within the explicitly assigned modules.
+Dependencies: `web-case-to-letter/web-17-browser-scenario-certification` and `ra-20-safe-browser-updates`. Confirm their implementation evidence before applying this change. The root OpenSpec artifact coordinates the user-named repository workspace; companion implementation runs under each repository's rules and within explicitly assigned modules.
 
-- Assemble explicit non-skipping service/fixture checks and run the complete scenario/UI mapping after relevant T0/T1 gates.
-- At phase completion run required T2 gates sequentially for Rust; only then perform appropriate release/device T3 certification.
-- Run artifact-refiner followed by isolated adversarial review, record warning disposition and evidence, then reflect and update only genuinely satisfied completion dimensions.
+- Freeze one browser candidate and one synthetic scenario corpus.
+- Run non-skipping service checks before the actual-browser campaign.
+- Exercise case creation, upload and processing, administering-entity resolution, criteria selection, met/gap/void evidence, prior request generation/review/signing, local submission acknowledgement, denial classification, and corrected resubmission plus clinical appeal response generation/review/signing.
+- Exercise startup, account/practice switching, revocation, safe browser updates and recovery against the same candidate.
+- Run artifact-refiner followed by isolated adversarial review, then update only genuinely satisfied completion dimensions.
 
-Keep the phase's G-PIN, G-REV, G-DATA, G-SYNC, G-NATIVE and G-MEASURE checkpoints. A missing decision blocks its dependent implementation; it does not authorize a default or silent pin override. All new modules and operation contracts described here are proposed until implemented.
+Keep G-PIN, G-REV, G-DATA, G-SYNC and browser portions of G-MEASURE. G-NATIVE remains visible and deferred; it does not block a browser-only Passed result. A missing browser prerequisite blocks certification and never authorizes a default or silent pin override.
 
 ## Risks / Trade-offs
 
-The first row is necessary and insufficient. Unsatisfied native/policy/pin gates remain visible rather than being removed from the matrix.
+The first projected row and individual feature tests are necessary and insufficient. A browser Passed result says nothing about a Tauri window, native storage engine, native updater or physical mobile device.
 
-Use synthetic data only. Preserve three evidence states, independently enforced clinical authority, generated tokens and no query cache. Reopen cited source before writing; no file-presence or helper-only test can prove an assembled runtime.
+Use synthetic data only. Preserve three evidence states, independently enforced clinical authority, generated tokens and no query cache. Every included generated assertion must resolve a source document, page and date. Annotation and criterion links are auxiliary attribution and cannot replace that provenance.
 
 ## Validation and rollback
 
-Run per-stack T0 after edits and targeted T1 behavior checks when the unit is complete. Test each scenario in spec.md at the actual boundary, including named denial/race/failure cases. Demonstrate sensitive guards fail under controlled sabotage and restore the code. Run artifact-refiner then isolated adversarial review before completion/archive.
+Run per-stack T0 after edits and targeted T1 checks when each unit completes. Freeze the candidate before the child and RA22 assembled campaigns. At browser phase completion, run sequential Rust workspace checks, the web production build, architecture audit, local stack and supported actual-browser scenarios. CI is not test evidence. Do not run or claim native/mobile gates in this change.
 
-Phase T2 includes Rust workspace test/build, web build, Flutter analyze/test and architecture audit; Rust builds are sequential. Broader T3 is restricted to a reached milestone. Never claim a silently skipped prerequisite passed.
-
-Keep additive schema and compatibility steps reversible where possible; preserve current authorized generation until coherent handover. A failed prerequisite or conformance check leaves this change Blocked and dependent work unstarted.
+Demonstrate sensitive guards fail under controlled sabotage and restore them. Run artifact-refiner and isolated adversarial review before completion/archive. A failed prerequisite leaves this change Blocked and preserves the previous authorized browser generation.

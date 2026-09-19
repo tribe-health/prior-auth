@@ -1,0 +1,12 @@
+{
+  "stage": "execute",
+  "completedAt": "2026-09-16T23:40:26Z",
+  "outputs": [
+    "execution.md",
+    "progress.json"
+  ],
+  "nextStage": "reflect",
+  "summaryForNext": "OpenSpec is the execution backend. Eighteen serial changes and 109 tasks are registered; web-00-workflow-contract is first. Focused T0/T1 runs per change, and web-17 alone owns child Tier 2 actual-browser certification.",
+  "skipped": false,
+  "skipReason": null
+}

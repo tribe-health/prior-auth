@@ -1,5 +1,8 @@
 //! Verified-context evidence reassessment and explicit command reconciliation.
 
+use aso_host::evidence_assembly::{
+    AssembleEvidenceCommand, EvidenceAssemblyError, EvidenceCommandResult, EvidenceSnapshot,
+};
 use aso_host::reassessment::{
     ReassessEvidenceCommand, ReassessEvidenceMutation, ReassessEvidenceResult, ReassessmentError,
 };
@@ -25,6 +28,12 @@ use crate::{
 
 pub fn router() -> Router<ServerState> {
     Router::new()
+        .route("/api/cases/{case_id}/evidence", get(read_assembled))
+        .route("/api/cases/{case_id}/evidence/assemble", post(assemble))
+        .route(
+            "/api/cases/{case_id}/evidence-commands/{command_id}",
+            get(lookup_assembly),
+        )
         .route(
             "/api/cases/{case_id}/evidence/{evidence_id}/state",
             post(reassess),
@@ -60,6 +69,105 @@ fn error(status: StatusCode, code: &str) -> Response {
 
 fn invalid() -> Response {
     error(StatusCode::BAD_REQUEST, "invalid_reassessment_request")
+}
+
+fn assembly_error(value: EvidenceAssemblyError) -> Response {
+    let (status, code) = match value {
+        EvidenceAssemblyError::Unauthenticated => (StatusCode::UNAUTHORIZED, "session_required"),
+        EvidenceAssemblyError::Denied => (StatusCode::FORBIDDEN, "action_forbidden"),
+        EvidenceAssemblyError::NotFound => (StatusCode::NOT_FOUND, "resource_not_found"),
+        EvidenceAssemblyError::RevisionConflict => (StatusCode::CONFLICT, "stale_revision"),
+        EvidenceAssemblyError::CommandConflict => (StatusCode::CONFLICT, "command_conflict"),
+        EvidenceAssemblyError::CriteriaUnresolved => (StatusCode::CONFLICT, "criteria_unresolved"),
+        EvidenceAssemblyError::CitationIncomplete => {
+            (StatusCode::UNPROCESSABLE_ENTITY, "citation_incomplete")
+        }
+        EvidenceAssemblyError::InvalidEvidence => {
+            (StatusCode::UNPROCESSABLE_ENTITY, "evidence_invalid")
+        }
+        EvidenceAssemblyError::Invalid => (StatusCode::BAD_REQUEST, "invalid_request"),
+        EvidenceAssemblyError::Unavailable => {
+            (StatusCode::SERVICE_UNAVAILABLE, "service_unavailable")
+        }
+    };
+    error(status, code)
+}
+
+fn assembly_context_error(value: ClinicalContextError) -> Response {
+    match value {
+        ClinicalContextError::Session(aso_host::session::SessionError::Unauthenticated) => {
+            assembly_error(EvidenceAssemblyError::Unauthenticated)
+        }
+        ClinicalContextError::Session(
+            aso_host::session::SessionError::Unavailable
+            | aso_host::session::SessionError::NativeAuthenticationUnavailable,
+        ) => assembly_error(EvidenceAssemblyError::Unavailable),
+        ClinicalContextError::Session(
+            aso_host::session::SessionError::ReauthenticationRequired
+            | aso_host::session::SessionError::PracticeDenied,
+        )
+        | ClinicalContextError::NonHuman => assembly_error(EvidenceAssemblyError::Denied),
+    }
+}
+
+async fn read_assembled(
+    State(state): State<ServerState>,
+    headers: HeaderMap,
+    path: Result<Path<Uuid>, PathRejection>,
+    query: Result<Query<EvidenceQuery>, QueryRejection>,
+) -> Result<Json<EvidenceSnapshot>, Response> {
+    let Path(case_id) = path.map_err(|_| invalid())?;
+    let Query(query) = query.map_err(|_| invalid())?;
+    let (context, capabilities) = clinical_context(&state, &headers, query.practice_id)
+        .await
+        .map_err(assembly_context_error)?;
+    state
+        .services
+        .read_case_evidence(&context, &capabilities, case_id)
+        .await
+        .map(Json)
+        .map_err(assembly_error)
+}
+
+async fn assemble(
+    State(state): State<ServerState>,
+    headers: HeaderMap,
+    path: Result<Path<Uuid>, PathRejection>,
+    query: Result<Query<EvidenceQuery>, QueryRejection>,
+    body: Result<Json<AssembleEvidenceCommand>, JsonRejection>,
+) -> Result<Json<EvidenceCommandResult>, Response> {
+    let Path(case_id) = path.map_err(|_| invalid())?;
+    let Query(query) = query.map_err(|_| invalid())?;
+    let Json(command) = body.map_err(|_| invalid())?;
+    let (context, capabilities) = clinical_context(&state, &headers, query.practice_id)
+        .await
+        .map_err(assembly_context_error)?;
+    state
+        .services
+        .assemble_case_evidence(&context, &capabilities, case_id, &command)
+        .await
+        .map(Json)
+        .map_err(assembly_error)
+}
+
+async fn lookup_assembly(
+    State(state): State<ServerState>,
+    headers: HeaderMap,
+    path: Result<Path<(Uuid, Uuid)>, PathRejection>,
+    query: Result<Query<EvidenceQuery>, QueryRejection>,
+) -> Result<Json<EvidenceCommandResult>, Response> {
+    let Path((case_id, command_id)) = path.map_err(|_| invalid())?;
+    let Query(query) = query.map_err(|_| invalid())?;
+    let (context, capabilities) = clinical_context(&state, &headers, query.practice_id)
+        .await
+        .map_err(assembly_context_error)?;
+    state
+        .services
+        .lookup_evidence_assembly_command(&context, &capabilities, case_id, command_id)
+        .await
+        .map_err(assembly_error)?
+        .map(Json)
+        .ok_or_else(|| assembly_error(EvidenceAssemblyError::NotFound))
 }
 
 fn reassessment_error(value: ReassessmentError) -> Response {

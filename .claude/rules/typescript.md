@@ -33,7 +33,8 @@ real type gate, and `build` runs `tsc -b && vite build`.
 ## No query cache
 
 **Do not add TanStack Query, SWR, or Apollo cache.** `scripts/audit.sh` check 2
-greps `web/package.json` and fails the build if one is declared.
+uses `scripts/check-query-cache-dependencies.py` to reject direct declarations
+in `web/package.json` and transitive paths in the resolved pnpm lock graph.
 
 A query cache models *requests* — "is this response stale?" This application
 models *data*, and the entity graph already owns freshness. A cache on top

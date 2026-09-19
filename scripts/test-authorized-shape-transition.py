@@ -30,6 +30,7 @@ APPROVED_CASE_COLUMNS = {
     "created_at",
     "updated_at",
 }
+BASH_TOOL = os.environ.get("RA06_TOOL_BASH", "bash")
 
 
 def load_composition_probe():
@@ -107,7 +108,7 @@ class TransitionProbe(composition.Probe):
     def sql(self, statement):
         process = subprocess.run(
             [
-                "bash",
+                BASH_TOOL,
                 str(ROOT / "scripts/ra05-stack.sh"),
                 "exec",
                 "-T",
@@ -183,6 +184,9 @@ class TransitionProbe(composition.Probe):
                 "ASO_PORT": str(self.args.aso_port),
             }
         )
+        document_store_root = os.environ.get("ASO_DOCUMENT_STORE_ROOT")
+        if document_store_root:
+            env["ASO_DOCUMENT_STORE_ROOT"] = document_store_root
         log_path = ROOT / ".runtime/ra05-aso-server.log"
         log_path.parent.mkdir(parents=True, exist_ok=True)
         self.server_log = log_path.open("w")

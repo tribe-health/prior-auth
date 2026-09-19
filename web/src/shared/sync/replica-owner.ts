@@ -38,6 +38,30 @@ export interface StoredLease {
   expiresAt: number;
 }
 
+/** Per-context lease storage for replicas that are already isolated in memory. */
+export function createMemoryLeaseStore(): LeaseStore {
+  let stored: StoredLease | null = null;
+  return {
+    async read() {
+      return stored;
+    },
+    async write(next, expected) {
+      const matches =
+        (stored === null && expected === null) ||
+        (stored !== null &&
+          expected !== null &&
+          stored.holder === expected.holder &&
+          stored.expiresAt === expected.expiresAt);
+      if (!matches) return false;
+      stored = next;
+      return true;
+    },
+    async clear(heldBy) {
+      if (stored?.holder === heldBy) stored = null;
+    },
+  };
+}
+
 export interface ReplicaLeaseOptions {
   store: LeaseStore;
   /** This context's id. Must be unique per tab/worker. */
@@ -68,6 +92,7 @@ export class ReplicaLease {
   readonly #ttlMs: number;
   readonly #now: () => number;
   #held = false;
+  #renewalTimer: ReturnType<typeof setInterval> | null = null;
 
   constructor(options: ReplicaLeaseOptions) {
     this.#store = options.store;
@@ -105,6 +130,10 @@ export class ReplicaLease {
     const won = await this.#store.write(next, current);
     if (!won) {
       const latest = await this.#store.read();
+      if (latest?.holder === this.#holder && latest.expiresAt > now) {
+        this.#held = true;
+        return { granted: true };
+      }
       return latest && latest.holder !== this.#holder
         ? { granted: false, heldBy: latest.holder, until: latest.expiresAt }
         : { granted: false, heldBy: "unknown", until: now };
@@ -134,10 +163,37 @@ export class ReplicaLease {
     return won;
   }
 
+  /** Renew while a caller retains ownership; loss permanently fences this lease. */
+  startRenewal(onLost: (error?: unknown) => void): () => void {
+    if (!this.#held) throw new Error("Cannot renew a lease that is not held");
+    this.#stopRenewal();
+    const timer = setInterval(() => {
+      void this.renew().then((retained) => {
+        if (retained) return;
+        this.#stopRenewal();
+        onLost();
+      }).catch((error: unknown) => {
+        this.#held = false;
+        this.#stopRenewal();
+        onLost(error);
+      });
+    }, Math.max(1, Math.floor(this.#ttlMs / 3)));
+    this.#renewalTimer = timer;
+    return () => {
+      if (this.#renewalTimer === timer) this.#stopRenewal();
+    };
+  }
+
   /** Give up the lease. Safe to call when not held. */
   async release(): Promise<void> {
+    this.#stopRenewal();
     if (!this.#held) return;
     this.#held = false;
     await this.#store.clear(this.#holder);
+  }
+
+  #stopRenewal(): void {
+    if (this.#renewalTimer !== null) clearInterval(this.#renewalTimer);
+    this.#renewalTimer = null;
   }
 }

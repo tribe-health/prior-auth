@@ -4,6 +4,7 @@ pub use aso_host::session::{Principal, VerifiedSession};
 use aso_host::{
     affirmation::ClinicalContext,
     domain::{ActorId, PracticeId},
+    logout::LogoutResult,
     projection::ReplicaGrant,
     session::{SessionCredential, SessionError},
 };
@@ -55,6 +56,39 @@ pub(crate) async fn clinical_context(
     ))
 }
 
+/// Resolves the narrow internal service identity used by background jobs.
+/// Human and delegated-agent credentials are refused before a job reaches
+/// AppServices; the database independently verifies the exact job grant.
+pub(crate) async fn service_context(
+    state: &ServerState,
+    headers: &HeaderMap,
+    practice: Option<Uuid>,
+) -> Result<(ClinicalContext, Vec<String>), ClinicalContextError> {
+    let raw = credential(headers).map_err(ClinicalContextError::Session)?;
+    let session = state
+        .services
+        .sessions
+        .resolve(&raw, practice)
+        .await
+        .map_err(ClinicalContextError::Session)?;
+    if session.expires_at <= state.services.clock.now() {
+        return Err(ClinicalContextError::Session(SessionError::Unauthenticated));
+    }
+    if session.principal != Principal::Service {
+        return Err(ClinicalContextError::NonHuman);
+    }
+    Ok((
+        ClinicalContext {
+            identity_id: session.identity_id,
+            actor: ActorId(session.user_id),
+            practice: PracticeId(session.practice_id),
+            principal: session.principal,
+            expires_at: session.expires_at,
+        },
+        session.capabilities,
+    ))
+}
+
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 struct SessionQuery {
@@ -69,8 +103,24 @@ struct ReplicaGrantQuery {
 
 pub fn router() -> Router<ServerState> {
     Router::new()
-        .route("/api/session", get(current_session))
+        .route("/api/session", get(current_session).delete(logout))
         .route("/api/session/replica-grant", get(replica_grant))
+}
+
+async fn logout(State(state): State<ServerState>, headers: HeaderMap) -> Response {
+    let response = match credential(&headers) {
+        Err(error) => session_error(error),
+        Ok(credential) => match state.services.sessions.logout(&credential).await {
+            Ok(LogoutResult::Confirmed) => StatusCode::NO_CONTENT.into_response(),
+            Ok(LogoutResult::DeniedPending) => (
+                StatusCode::SERVICE_UNAVAILABLE,
+                Json(json!({"error": "logout_incomplete"})),
+            )
+                .into_response(),
+            Err(error) => session_error(error),
+        },
+    };
+    private_response_headers(response)
 }
 
 pub(crate) fn credential(headers: &HeaderMap) -> Result<SessionCredential, SessionError> {
@@ -225,7 +275,11 @@ mod tests {
         AppServices,
         domain::*,
         ports::*,
-        session::{SessionPort, SessionSummary},
+        session::{
+            AuthenticatedIdentity, IdentityProvider, IdentityRevalidation, InactiveSessionObserver,
+            Membership, MembershipRepository, SessionContinuity, SessionCredential,
+            SessionDenialRepository, SessionError, SessionPort, SessionService, SessionSummary,
+        },
     };
     use async_trait::async_trait;
     use axum::{
@@ -235,7 +289,7 @@ mod tests {
     use chrono::{DateTime, Duration, Utc};
     use std::sync::{
         Arc,
-        atomic::{AtomicUsize, Ordering},
+        atomic::{AtomicBool, AtomicUsize, Ordering},
     };
     use tower::ServiceExt;
 
@@ -285,6 +339,129 @@ mod tests {
         calls: AtomicUsize,
     }
 
+    struct ActiveIdentity;
+
+    #[async_trait]
+    impl IdentityProvider for ActiveIdentity {
+        async fn authenticate(
+            &self,
+            _: &SessionCredential,
+        ) -> Result<AuthenticatedIdentity, SessionError> {
+            Ok(AuthenticatedIdentity {
+                identity_id: Uuid::from_u128(1),
+                session_id: Uuid::from_u128(3),
+                issuer: "https://identity.example.test/".into(),
+                principal: Principal::User,
+                expires_at: now() + Duration::hours(1),
+            })
+        }
+    }
+
+    struct RevokedAfterFirstValidation;
+
+    #[async_trait]
+    impl IdentityProvider for RevokedAfterFirstValidation {
+        async fn authenticate(
+            &self,
+            _: &SessionCredential,
+        ) -> Result<AuthenticatedIdentity, SessionError> {
+            ActiveIdentity
+                .authenticate(&SessionCredential::NativeToken(String::new()))
+                .await
+        }
+
+        async fn revalidate(
+            &self,
+            _: &SessionCredential,
+            _: &AuthenticatedIdentity,
+        ) -> Result<IdentityRevalidation, SessionError> {
+            Ok(IdentityRevalidation::Inactive)
+        }
+    }
+
+    struct AllowedMemberships {
+        calls: AtomicUsize,
+    }
+
+    #[async_trait]
+    impl MembershipRepository for AllowedMemberships {
+        async fn resolve(
+            &self,
+            _: &AuthenticatedIdentity,
+            practice: Option<Uuid>,
+        ) -> Result<Membership, SessionError> {
+            self.calls.fetch_add(1, Ordering::SeqCst);
+            Ok(Membership {
+                user_id: Uuid::from_u128(2),
+                practice_id: practice.ok_or(SessionError::PracticeDenied)?,
+                display_name: "Synthetic Revocation User".into(),
+                capabilities: vec![],
+                authorization_revision: "synthetic:1".into(),
+            })
+        }
+    }
+
+    struct ObservedDenial {
+        denied: AtomicBool,
+        observations: AtomicUsize,
+    }
+
+    #[async_trait]
+    impl SessionDenialRepository for ObservedDenial {
+        async fn is_denied(
+            &self,
+            _: &AuthenticatedIdentity,
+            _: DateTime<Utc>,
+        ) -> Result<bool, SessionError> {
+            Ok(self.denied.load(Ordering::SeqCst))
+        }
+    }
+
+    #[async_trait]
+    impl InactiveSessionObserver for ObservedDenial {
+        async fn observe_inactive(&self, _: &AuthenticatedIdentity) -> Result<(), SessionError> {
+            self.observations.fetch_add(1, Ordering::SeqCst);
+            self.denied.store(true, Ordering::SeqCst);
+            Ok(())
+        }
+    }
+
+    struct CountingMemberships {
+        calls: AtomicUsize,
+    }
+
+    #[async_trait]
+    impl MembershipRepository for CountingMemberships {
+        async fn resolve(
+            &self,
+            _: &AuthenticatedIdentity,
+            _: Option<Uuid>,
+        ) -> Result<Membership, SessionError> {
+            self.calls.fetch_add(1, Ordering::SeqCst);
+            Err(SessionError::PracticeDenied)
+        }
+    }
+
+    struct DeniedSession;
+
+    #[async_trait]
+    impl SessionDenialRepository for DeniedSession {
+        async fn is_denied(
+            &self,
+            _: &AuthenticatedIdentity,
+            _: DateTime<Utc>,
+        ) -> Result<bool, SessionError> {
+            Ok(true)
+        }
+    }
+
+    #[async_trait]
+    impl InactiveSessionObserver for DeniedSession {
+        async fn observe_inactive(&self, _: &AuthenticatedIdentity) -> Result<(), SessionError> {
+            Ok(())
+        }
+    }
+
     #[async_trait]
     impl SessionPort for GrantSessions {
         async fn resolve(
@@ -320,6 +497,23 @@ mod tests {
             _: &SessionCredential,
             _: Option<Uuid>,
         ) -> Result<SessionSummary, SessionError> {
+            self.0.clone()
+        }
+    }
+
+    struct LogoutSessions(Result<LogoutResult, SessionError>);
+
+    #[async_trait]
+    impl SessionPort for LogoutSessions {
+        async fn resolve(
+            &self,
+            _: &SessionCredential,
+            _: Option<Uuid>,
+        ) -> Result<SessionSummary, SessionError> {
+            Err(SessionError::Unavailable)
+        }
+
+        async fn logout(&self, _: &SessionCredential) -> Result<LogoutResult, SessionError> {
             self.0.clone()
         }
     }
@@ -419,6 +613,39 @@ mod tests {
     }
 
     #[tokio::test]
+    async fn mounted_logout_returns_only_the_authoritative_result() {
+        for (result, expected) in [
+            (Ok(LogoutResult::Confirmed), StatusCode::NO_CONTENT),
+            (
+                Ok(LogoutResult::DeniedPending),
+                StatusCode::SERVICE_UNAVAILABLE,
+            ),
+            (
+                Err(SessionError::Unavailable),
+                StatusCode::SERVICE_UNAVAILABLE,
+            ),
+        ] {
+            let response = grant_app(Arc::new(LogoutSessions(result)))
+                .oneshot(
+                    Request::builder()
+                        .method("DELETE")
+                        .uri("/api/session")
+                        .header(header::COOKIE, "ory_kratos_session=synthetic")
+                        .body(Body::empty())
+                        .unwrap(),
+                )
+                .await
+                .unwrap();
+
+            assert_eq!(response.status(), expected);
+            assert_eq!(
+                response.headers().get(header::CACHE_CONTROL).unwrap(),
+                "no-store"
+            );
+        }
+    }
+
+    #[tokio::test]
     async fn mounted_registry_derives_two_practice_grants() {
         let sessions = Arc::new(GrantSessions {
             calls: AtomicUsize::new(0),
@@ -443,13 +670,113 @@ mod tests {
                 grant["projectionRevision"],
                 aso_host::projection::PROJECTION_REVISION
             );
-            assert_eq!(grant["projections"].as_array().unwrap().len(), 5);
+            let projections = grant["projections"].as_array().unwrap();
+            assert_eq!(projections.len(), 7);
+            let states = projections
+                .iter()
+                .find(|projection| projection["id"] == "evidence_states")
+                .unwrap();
+            assert_eq!(states["primaryKey"], "key");
+            let cases = projections
+                .iter()
+                .find(|projection| projection["id"] == "cases")
+                .unwrap();
             assert_eq!(
-                grant["projections"][2]["primaryKey"],
-                serde_json::Value::String("key".into())
+                cases["scope"],
+                json!({
+                    "kind": "practice",
+                    "column": "practice_id",
+                    "value": practice_id,
+                })
+            );
+            assert_eq!(
+                cases["columns"],
+                json!([
+                    "id",
+                    "practice_id",
+                    "case_number",
+                    "patient_id",
+                    "surgeon_id",
+                    "coordinator_id",
+                    "payer_id",
+                    "status",
+                    "date_of_service",
+                    "gate_affirmed_at",
+                    "updated_at",
+                    "revision",
+                ])
+            );
+            assert!(
+                projections
+                    .iter()
+                    .any(|projection| projection["id"] == "annotation_types")
+            );
+            assert!(
+                projections
+                    .iter()
+                    .any(|projection| projection["id"] == "annotations")
             );
         }
         assert_eq!(sessions.calls.load(Ordering::SeqCst), 2);
+    }
+
+    #[tokio::test]
+    async fn mounted_session_and_replica_grant_refuse_a_durable_denial() {
+        let memberships = Arc::new(CountingMemberships {
+            calls: AtomicUsize::new(0),
+        });
+        for path in ["/api/session", "/api/session/replica-grant"] {
+            let service = SessionService {
+                identities: Arc::new(ActiveIdentity),
+                memberships: memberships.clone(),
+                denials: Arc::new(DeniedSession),
+                inactive_observer: Arc::new(DeniedSession),
+                clock: Arc::new(Unused),
+                continuity: Arc::new(SessionContinuity::default()),
+            };
+            let response = grant_request(
+                grant_app(Arc::new(service)),
+                &format!("{path}?practiceId={}", Uuid::from_u128(10)),
+            )
+            .await;
+
+            assert_eq!(response.status(), StatusCode::UNAUTHORIZED);
+            let body = to_bytes(response.into_body(), usize::MAX).await.unwrap();
+            assert_eq!(
+                serde_json::from_slice::<serde_json::Value>(&body).unwrap(),
+                json!({"error": "unauthenticated"})
+            );
+        }
+        assert_eq!(memberships.calls.load(Ordering::SeqCst), 0);
+    }
+
+    #[tokio::test]
+    async fn mounted_cached_identity_observes_direct_revocation_before_refusal() {
+        let memberships = Arc::new(AllowedMemberships {
+            calls: AtomicUsize::new(0),
+        });
+        let denial = Arc::new(ObservedDenial {
+            denied: AtomicBool::new(false),
+            observations: AtomicUsize::new(0),
+        });
+        let service = SessionService {
+            identities: Arc::new(RevokedAfterFirstValidation),
+            memberships: memberships.clone(),
+            denials: denial.clone(),
+            inactive_observer: denial.clone(),
+            clock: Arc::new(Unused),
+            continuity: Arc::new(SessionContinuity::default()),
+        };
+        let app = grant_app(Arc::new(service));
+        let uri = format!("/api/session?practiceId={}", Uuid::from_u128(10));
+
+        let first = grant_request(app.clone(), &uri).await;
+        assert_eq!(first.status(), StatusCode::OK);
+        let revoked = grant_request(app, &uri).await;
+        assert_eq!(revoked.status(), StatusCode::UNAUTHORIZED);
+        assert!(denial.denied.load(Ordering::SeqCst));
+        assert_eq!(denial.observations.load(Ordering::SeqCst), 1);
+        assert_eq!(memberships.calls.load(Ordering::SeqCst), 1);
     }
 
     #[tokio::test]

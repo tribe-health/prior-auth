@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "rules": [
+    {
+      "repository": "prior-auth",
+      "pattern": ".kbd-orchestrator/**",
+      "reason": "KBD position, review packets, and campaign evidence remain mutable after the candidate is frozen."
+    },
+    {
+      "repository": "prior-auth",
+      "pattern": ".refiner/**",
+      "reason": "Artifact-refiner checkpoints and archives are derived review evidence."
+    },
+    {
+      "repository": "prior-auth",
+      "pattern": ".prometheus/session-log.md",
+      "reason": "The append-only operator session log records work performed after candidate capture."
+    },
+    {
+      "repository": "prior-auth",
+      "pattern": "openspec/changes/ra06c-04-bound-revocation-candidate/**",
+      "reason": "The active change checklist advances while the frozen candidate remains unchanged."
+    },
+    {
+      "repository": "prior-auth",
+      "pattern": "openspec/changes/archive/*-ra06c-04-bound-revocation-candidate/**",
+      "reason": "Archiving moves the same workflow metadata after candidate verification."
+    },
+    {
+      "repository": "*",
+      "pattern": ".claude/worktrees/**",
+      "reason": "Nested agent worktrees are separate checkouts and cannot be part of this checkout candidate."
+    },
+    {
+      "repository": "*",
+      "pattern": "**/__pycache__/**",
+      "reason": "Python bytecode is a derived local cache."
+    },
+    {
+      "repository": "*",
+      "pattern": "**/*.pyc",
+      "reason": "Python bytecode is a derived local cache."
+    },
+    {
+      "repository": "*",
+      "pattern": ".DS_Store",
+      "reason": "Finder metadata is host-local and not executable source."
+    },
+    {
+      "repository": "*",
+      "pattern": "**/.DS_Store",
+      "reason": "Finder metadata is host-local and not executable source."
+    }
+  ]
+}

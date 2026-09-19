@@ -1,12 +1,14 @@
 use super::*;
 use aso_host::{
     AppServices,
+    annotation::{AnnotationCommand, AnnotationError, AnnotationResult},
     domain::*,
     ports::*,
     reassessment::{EvidenceReassessmentTarget, ReassessmentError},
     session::{
-        AuthenticatedIdentity, IdentityProvider, Membership, MembershipRepository,
-        SessionCredential, SessionError, SessionPort, SessionService, SessionSummary,
+        AuthenticatedIdentity, IdentityProvider, InactiveSessionObserver, Membership,
+        MembershipRepository, SessionContinuity, SessionCredential, SessionDenialRepository,
+        SessionError, SessionPort, SessionService, SessionSummary,
     },
     signing::{SigningError, SigningTarget},
 };
@@ -77,6 +79,7 @@ impl IdentityProvider for AgentIdentity {
         Ok(AuthenticatedIdentity {
             identity_id: id(1),
             session_id: id(9),
+            issuer: "https://identity.example.test/".into(),
             principal: Principal::Agent,
             expires_at: now() + Duration::hours(1),
         })
@@ -85,6 +88,26 @@ impl IdentityProvider for AgentIdentity {
 
 struct AcceptingMemberships {
     calls: AtomicUsize,
+}
+
+struct NoSessionDenial;
+
+#[async_trait]
+impl SessionDenialRepository for NoSessionDenial {
+    async fn is_denied(
+        &self,
+        _: &AuthenticatedIdentity,
+        _: DateTime<Utc>,
+    ) -> Result<bool, SessionError> {
+        Ok(false)
+    }
+}
+
+#[async_trait]
+impl InactiveSessionObserver for NoSessionDenial {
+    async fn observe_inactive(&self, _: &AuthenticatedIdentity) -> Result<(), SessionError> {
+        Ok(())
+    }
 }
 #[async_trait]
 impl MembershipRepository for AcceptingMemberships {
@@ -248,11 +271,34 @@ impl LetterRepository for Unused {
 }
 
 struct PolicyTargets {
+    annotation_error: Mutex<Option<AnnotationError>>,
+    annotation_reads: AtomicUsize,
+    annotation_writes: AtomicUsize,
     signing_error: Mutex<Option<SigningError>>,
     reassessment_error: Mutex<Option<ReassessmentError>>,
 }
 #[async_trait]
 impl EvidenceRepository for PolicyTargets {
+    async fn read_annotation_target(
+        &self,
+        _: &ClinicalContext,
+        _: Uuid,
+        _: Uuid,
+    ) -> Result<(), AnnotationError> {
+        self.annotation_reads.fetch_add(1, Ordering::SeqCst);
+        if let Some(error) = *self.annotation_error.lock().unwrap() {
+            return Err(error);
+        }
+        Ok(())
+    }
+    async fn execute_annotation(
+        &self,
+        _: &ClinicalContext,
+        _: &AnnotationCommand,
+    ) -> Result<AnnotationResult, AnnotationError> {
+        self.annotation_writes.fetch_add(1, Ordering::SeqCst);
+        Err(AnnotationError::Unavailable)
+    }
     async fn read_reassessment_target(
         &self,
         _: &ClinicalContext,
@@ -321,6 +367,9 @@ impl Fixture {
             calls: AtomicUsize::new(0),
         });
         let policy_targets = Arc::new(PolicyTargets {
+            annotation_error: Mutex::new(None),
+            annotation_reads: AtomicUsize::new(0),
+            annotation_writes: AtomicUsize::new(0),
             signing_error: Mutex::new(None),
             reassessment_error: Mutex::new(None),
         });
@@ -669,6 +718,86 @@ async fn evidence_policy_preserves_target_read_outages() {
 }
 
 #[tokio::test]
+async fn annotation_policy_is_read_only_and_requires_fresh_capability() {
+    let fixture = Fixture::new();
+    let save_uri = format!("/api/cases/{}/annotations/{}", id(6), id(8));
+
+    expect_error(
+        fixture.policy("POST", &save_uri).await,
+        StatusCode::FORBIDDEN,
+        "gate_denied",
+    )
+    .await;
+    assert_eq!(
+        fixture
+            .policy_targets
+            .annotation_reads
+            .load(Ordering::SeqCst),
+        0
+    );
+
+    let mut session = summary();
+    session.capabilities = vec!["annotate".into()];
+    *fixture.sessions.response.lock().unwrap() = Ok(session);
+    assert_eq!(
+        fixture.policy("POST", &save_uri).await.status(),
+        StatusCode::NO_CONTENT
+    );
+    let lookup_uri = format!("{save_uri}/commands/{}", id(9));
+    assert_eq!(
+        fixture.policy("GET", &lookup_uri).await.status(),
+        StatusCode::NO_CONTENT
+    );
+    assert_eq!(
+        fixture
+            .policy_targets
+            .annotation_reads
+            .load(Ordering::SeqCst),
+        2
+    );
+    assert_eq!(
+        fixture
+            .policy_targets
+            .annotation_writes
+            .load(Ordering::SeqCst),
+        0
+    );
+    fixture.no_commands();
+}
+
+#[tokio::test]
+async fn annotation_policy_fails_closed_on_target_denial() {
+    let fixture = Fixture::new();
+    let mut session = summary();
+    session.capabilities = vec!["annotate".into()];
+    *fixture.sessions.response.lock().unwrap() = Ok(session);
+    *fixture.policy_targets.annotation_error.lock().unwrap() = Some(AnnotationError::Denied);
+
+    let uri = format!("/api/cases/{}/annotations/{}", id(6), id(8));
+    expect_error(
+        fixture.policy("POST", &uri).await,
+        StatusCode::FORBIDDEN,
+        "gate_denied",
+    )
+    .await;
+    assert_eq!(
+        fixture
+            .policy_targets
+            .annotation_reads
+            .load(Ordering::SeqCst),
+        1
+    );
+    assert_eq!(
+        fixture
+            .policy_targets
+            .annotation_writes
+            .load(Ordering::SeqCst),
+        0
+    );
+    fixture.no_commands();
+}
+
+#[tokio::test]
 async fn mutation_requires_command_id_and_kind_and_rejects_injected_actor() {
     let fixture = Fixture::new();
     for body in [
@@ -947,7 +1076,10 @@ async fn trusted_session_service_refuses_agent_before_membership_resolution() {
     let service = SessionService {
         identities: Arc::new(AgentIdentity),
         memberships: memberships.clone(),
+        denials: Arc::new(NoSessionDenial),
+        inactive_observer: Arc::new(NoSessionDenial),
         clock: Arc::new(Unused),
+        continuity: Arc::new(SessionContinuity::default()),
     };
     assert_eq!(
         service

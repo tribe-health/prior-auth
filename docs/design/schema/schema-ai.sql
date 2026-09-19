@@ -184,6 +184,8 @@ CREATE TABLE criteria (
 
   label              text NOT NULL,
   requirement        text NOT NULL,
+  ordinal            integer NOT NULL DEFAULT 1 CHECK (ordinal > 0),
+  source_page_number integer CHECK (source_page_number > 0),
   -- [K3-6] The text is immutable once observations attach to it. A trigger
   -- below refuses UPDATE of requirement; a correction supersedes instead.
   content_sha256     bytea NOT NULL,
@@ -707,17 +709,13 @@ CREATE INDEX retrieval_log_letter_ix ON retrieval_log(letter_id);
 CREATE INDEX retrieval_log_open_ix ON retrieval_log(letter_id)
   WHERE resolution = 'unresolved';
 
--- letter_claims gains a criterion source. Without this a criterion-backed
--- claim has no legal slot in the XOR and must masquerade as a document or
--- an annotation — which is precisely the laundering this file prevents.
+-- letter_claims gains optional criterion attribution. The source document and
+-- page remain mandatory in schema.sql; neither a criterion nor an annotation
+-- can replace that chart provenance.
 ALTER TABLE letter_claims
   ADD COLUMN criterion_id uuid REFERENCES criteria(id) ON DELETE RESTRICT,
   ADD COLUMN attribution  text
     CHECK (attribution IN ('published_policy','practice_experience','peer_reported','payer_stated'));
-
-ALTER TABLE letter_claims DROP CONSTRAINT letter_claims_one_source;
-ALTER TABLE letter_claims ADD CONSTRAINT letter_claims_one_source CHECK (
-  num_nonnulls(document_id, annotation_id, criterion_id) = 1);
 
 -- A claim sourced from a criterion must be introduced the way that
 -- criterion's grade permits. This is the sentence-level guarantee: a

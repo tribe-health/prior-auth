@@ -1,0 +1,18 @@
+## 1. Eligibility and bounded implementation
+
+- [x] 1.1 Confirm dependency completion (ra-11b-worker-ownership), the assigned file ownership and applicable phase decision gates before code changes; verify canonical dependency status and retain the gate decision/evidence artifact.
+- [x] 1.2 Implement the selected bounded internal FRF-to-PGlite materializer within ra-11b ownership, remove the unused aggregate/synthetic-offset seam from active use, and make this real caller publish replica authority failure into the shared RA06 session-revocation event seam. Verification: Authorized rows and per-shape opaque checkpoints commit in one local SQL transaction; a grant revalidation failure, authority timeout or changed session/grant tuple synchronously locks the shared access boundary and fences later SQL/checkpoint/graph publication from the captured generation.
+- [x] 1.3 Implement committed SQL-to-graph publication with explicit primary keys, replacement generations and catch-up status. Verification: A crash, refetch or authorization narrowing interrupts the assembled runtime must produce this observed outcome: Resume cannot skip data, replacement removes stale rows and no partial relationship batch is published.
+- [x] 1.4 Run real Postgres→Gate/FRF→SQL→graph acceptance with update/delete/crash/refetch; use isolated durable synthetic storage for restart cases and memory-only browser baseline until persistence policy is approved. Record Passed or Blocked for every gate; completing a failed measurement completes this task but prohibits candidate adoption. Verification: The owner is revoked or disposed while materialization is in flight must produce this observed outcome: Old-scope work drains or is fenced and cannot publish/write through the next runtime.
+
+## 2. Behavioral acceptance
+
+- [x] 2.1 Prove: when The real authorized stream inserts, updates or deletes related records, then SQL rows/checkpoints and graph entities/lists agree before readiness, including gate-summary updates and met/gap/void reference identities. Record the actual command, prerequisite availability and observed result.
+- [x] 2.2 Prove: when A crash, refetch or authorization narrowing interrupts the assembled runtime, then Resume cannot skip data, replacement removes stale rows and no partial relationship batch is published. Record the actual command, prerequisite availability and observed result.
+- [x] 2.3 Prove: when The owner is revoked or disposed or the real materializer observes a replica authority failure while materialization is in flight, then The RA06 session event is published and old-scope work drains or is fenced before it can publish/write through the next runtime. Record the actual command, prerequisite availability and observed result.
+
+## 3. Completion evidence
+
+- [x] 8 ra11c-final-review — 3.1 Complete applicable T0/T1 and the phase-prescribed artifact-refiner then adversarial review; preserve synthetic evidence, confirm real callers, and close the implementation work as Passed or Blocked without claiming adoption. Do not run broad phase/release tiers early.
+- [x] ra11c-current-source-mounted-replay — Run the real Postgres→Gate/FRF→SQL→graph acceptance against the logged-table, restart-reconciliation, and live session-authority source. Preserve the fixed browser memory failure, and require current-source update/delete/crash/refetch, restart, owner-fence, checkpoint, graph-parity, and cleanup evidence before RA11c can close.
+- [x] ra11c-cold-fold-order-repair — Preserve Electric message order while folding cold snapshots, prove delete-then-reinsert and update-then-delete behavior, rerun current-source mounted acceptance, rebuild the frozen artifact, and pass isolated adversarial review before closure.

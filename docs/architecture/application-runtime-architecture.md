@@ -1,16 +1,18 @@
 # Application runtime architecture: browser and Tauri
 
 **Status:** Accepted target architecture; implementation is not certified.
-**ADR reconciliation:** 2026-09-06; see the [complete ADR index](README.md).  
+**ADR reconciliation:** 2026-09-09; see the [complete ADR index](README.md).
 **Date:** 2026-09-06.  
 **Scope:** Prior Authorization Workbench, Flint Forge, Flint Gate, Flint Realtime Fabric, Prometheus entity management, and self-hosted Ory Kratos.  
-**Phase:** Accepted design from `web-ui-architecture`; implementation proceeds through `runtime-architecture`. RA-01 through RA-03 updates below describe bounded delivery, not certification of the full target.
+**Phase:** Accepted design from `web-ui-architecture`; implementation proceeds through `runtime-architecture`. Canonical position and completion remain in `.kbd-orchestrator/current-waypoint.json`; this design does not duplicate mutable task status.
+
+**Web-first execution overlay (2026-09-16):** The normative [Web Case-to-Letter Workflow Contract](web-case-to-letter-contract.md) governs the current child. Complete and certify the browser workflow through `web-17`, then complete safe browser updates in `ra-20` and browser runtime certification in `ra-22`. Tauri SQLite parity and native updater certification resume only after the browser result is Passed. Existing desktop wrappers remain required command-contract parity, but native runtime evidence cannot block or substitute for browser evidence.
 
 ## 1. Decision and the difficult tradeoff
 
 Use one React application in `web/`, one normalized Prometheus entity graph, and one explicit session/runtime lifecycle. Select platform adapters at application startup. Browser storage uses PGlite in a worker. The preferred production desktop target uses host-owned SQLite with typed Tauri commands. Keep PGlite-in-Tauri as the initial parity baseline until native replication and query adapters pass the same contracts.
 
-Realtime relational data follows **Postgres → ElectricSQL → Flint Realtime Fabric's proposed authorized shape facade → local database → Prometheus entity graph → React**. The graph is already a Zustand vanilla store. Additional Zustand stores expose session, startup, update, and per-view interaction state; they do not duplicate clinical records.
+Realtime relational data follows **Postgres → ElectricSQL → Flint Realtime Fabric's authorized shape facade → local database → Prometheus entity graph → React**. The graph is already a Zustand vanilla store. Additional Zustand stores expose session, startup, update, and per-view interaction state; they do not duplicate clinical records.
 
 **The uncomfortable thing:** choosing native SQLite improves desktop ownership and persistence integration, but adds a second SQL dialect and a replication adapter that does not yet exist as a complete solution in these repositories. A shared Zustand API cannot conceal missing transaction, hydration, migration, or authorization semantics. If native parity is not demonstrated, ship the worker PGlite path first rather than claiming SQLite is a drop-in replacement.
 
@@ -18,22 +20,31 @@ This design preserves clinical authority in gateway policy, `AppServices`, and P
 
 ## 2. Workspace and evidence baseline
 
-The table records the original architecture assessment. Later implementation updates are recorded in RA-01 through RA-03; these supersede the corresponding session, gate-transport and signing observations without certifying the remaining target architecture.
+The table records the original architecture assessment. Later implementation
+updates through RA-10 supersede the corresponding session, gate-transport,
+signing, shape-facade, revocation, scoped graph, committed projection and query
+cache observations without certifying the remaining target architecture.
 
 Open [prior-auth.code-workspace](../../prior-auth.code-workspace) to work across all five folders. The four companion folders are references to existing repositories, not copied source, Git submodules, or package-manager dependencies. The file does not alter Codex sidebar/project settings. Relative paths assume the current sibling layout beneath `Projects/`.
 
 | Repository | Responsibility in this design | Observed source and limitation |
 |---|---|---|
-| `prior-auth` | Shared UI, application startup, domain services, clinical policy integration, deployment composition | The mounted server requires Kratos plus restricted session and clinical PostgreSQL logins against one database; it has no production memory clinical fallback. The legacy actor-less evidence-count route is unmounted until verified-context conversion. `web/src/main.tsx` still supplies a development-only stand-in session and a null production session pending browser Kratos integration; `graph-provider.tsx` opens in-memory PGlite and does not await or retain the local-first runtime. `desktop/src-tauri` contains pure service wrappers, without the Tauri runtime dependency. |
+| `prior-auth` | Shared UI, application startup, domain services, clinical policy integration, deployment composition | The mounted server requires Kratos plus restricted session and clinical PostgreSQL logins against one database; it has no production memory clinical fallback. The legacy actor-less evidence-count route is unmounted until verified-context conversion. `web/src/main.tsx` still supplies a development-only stand-in session and a null production session pending browser Kratos integration. `graph-provider.tsx` owns PGlite and the scoped graph lifecycle; its RA11c realtime materializer is disabled by default after failing the browser RSS gate and is available only to exact experimental qualification builds. `desktop/src-tauri` now mounts the pinned Tauri core command surface in the mock runtime; a production Wry window remains unqualified. |
 | `flint-forge` | Practice Postgres substrate; database access, RLS and Cedar capabilities where Forge services are used | `crates/fdb-gateway/src/bootstrap.rs`, `authz_mode.rs`, and `crates/fdb-postgres`. ASO currently composes Forge's Postgres image; this does not prove every Forge API is on the ASO request path. |
-| `flint-gate` | Public entry point, Kratos session validation, policy, downstream identity projection | `crates/flint-gate-core/src/auth/kratos.rs` forwards cookies and Authorization to Kratos; `auth/jwt_mint.rs` supplies JWT minting. Route-specific integration and revocation behavior still need proof. |
-| `flint-realtime-fabric` | Authorized realtime facade; relational shape routing plus separate event/CRDT lanes | Its router and TS `RealtimeAdapter` expose event services; the inspected code contains no Electric shape proxy or PGlite table materializer. `main.rs` composes an in-memory entity read store. An Electric facade is proposed work. |
+| `flint-gate` | Public entry point, Kratos session validation, policy, downstream identity projection | The RA05 local stack proved the Gate→FRF authorized facade path. RA06 and its repair children now use fresh ASO authority decisions and a durable shared fence across Gate replicas; final phase certification remains separate. |
+| `flint-realtime-fabric` | Authorized realtime facade; relational shape routing plus separate event/CRDT lanes | The Electric shape proxy and RA06 final-frame lease have bounded local evidence. Local SQL materialization remains ASO RA11c work; full assembled phase certification remains separate. |
 | `prometheus-entity-management` | Framework-neutral entity graph, React hooks/components, persistence and realtime adapters | Core `graph.ts` uses `zustand/vanilla`. PGlite and Tauri SQL adapters store serialized graph snapshots. They are not database replication engines. |
 | Self-hosted Kratos | Identity, authentication flows, session lifecycle | Compose names a Kratos image; no live deployment/version capability test was performed. Ory Network-only features are not assumed available. |
 
 Source reading takes precedence over comments that claim a completed integration. In particular, PEM's `adapters/electricsql.ts` forwards shape changes to graph subscribers and listens for SQL notifications; its inspected implementation does **not** insert the shape rows into PGlite. Its header diagram alone is insufficient evidence of database hydration.
 
-The installed app declares React 19.2.0, Zustand 5.0.8, PGlite `^0.5.8`, Electric client `^1.5.27`, and entity-graph React `^4.0.0`. These are observations from `web/package.json`, not newly selected pins. `versions.toml` remains unchanged. A future implementation must verify and pin the selected compatible set, including any new sync or Tauri packages.
+The installed app declares React 19.2.0, Zustand 5.0.8, PGlite `^0.5.8`, and
+Electric client `^1.5.27`. Operator decision `G-PIN-RA09-APPROVED` makes
+`versions.toml` authoritative for the reviewed PEM core/react candidate
+`4.0.3-ra09.0.g071b9e5.s8179d23348ab`; `web/package.json` consumes its exact
+repository-vendored tarballs. The adoption verifier confirms one installed core
+singleton and 107 shared public export identities. New sync or Tauri packages
+still require their own verified compatible pins.
 
 ## 3. Deployment topology and trust boundaries
 
@@ -59,7 +70,7 @@ flowchart LR
     ASO[ASO AppServices]
     Forge[Flint Forge Postgres]
     Electric[ElectricSQL]
-    Fabric[FRF authorized shape facade - proposed]
+    Fabric[FRF authorized shape facade]
     Events[FRF event and CRDT services]
     Gate -->|validate session| Kratos
     Gate -->|clinical commands| ASO
@@ -190,6 +201,14 @@ Offline access defaults to **no protected rendering once authorization cannot be
 8. Enable a screen when its required data set is coherent. “Database opened,” “graph hydrated,” and “server caught up” are different states. Clinical actions always require current server validation.
 9. Start optional event/presence subscriptions after the core read path is ready. Their failure should not masquerade as relational data loss.
 
+RA11c owns the real materializer caller that turns replica grant revalidation failure, authority timeout or a changed session/grant tuple into the shared RA06 session-revocation event. That caller fences its captured generation before committing SQL, advancing a checkpoint or publishing a PEM batch. RA06 owns the immediate Zustand access fence. RA13 owns foreground/resume revalidation and draft recovery; it does not duplicate the materializer or server denial journal.
+
+That RA11c caller remains an implementation and qualification path. The normal
+GraphProvider does not start it; only
+`VITE_ASO_ENABLE_RA11C_MATERIALIZER=experimental` opts a local build into the
+blocked candidate. Production browser adoption requires a later decision that
+passes or replaces the fixed PGlite RSS gate.
+
 ```mermaid
 sequenceDiagram
   participant UI as Shared React app
@@ -234,7 +253,7 @@ All relational sync uses the commit-first projection path. For initial multi-tab
 
 SQL atomicity must extend to graph publication. Prepare the full entity additions/updates/deletions and affected ordered lists for one coherent database revision, then publish them with one atomic PEM store update. Subscribers must see either the previous complete projection or the next one, never a partially updated relationship. React batching alone is insufficient because imperative subscribers also observe Zustand. If PEM lacks this batch surface, add it as a core contract before wiring replication; verify it with subscriber traces as well as rendered screens.
 
-On resume, the persisted rows and checkpoint must describe the same commit boundary. If the Electric handle expires or the server requests refetch, rebuild the affected replica generation and swap the projection after completion; remove stale rows rather than merging a new snapshot into old data indefinitely. Bound snapshot sizes by authorized working sets. Measure initial-sync memory before increasing them.
+On shape resume, the persisted rows and checkpoint must describe the same commit boundary. If the Electric handle expires or the server requests refetch, rebuild the affected replica generation and swap the projection after completion; remove stale rows rather than merging a new snapshot into old data indefinitely. On application foreground/resume, RA13 keeps protected content locked until an authoritative session/practice/revision check succeeds. Bound snapshot sizes by authorized working sets. Measure initial-sync memory before increasing them.
 
 ```mermaid
 sequenceDiagram
@@ -268,8 +287,10 @@ Approval also freezes the claim set and every cited document version through
 database triggers and shared transaction locks. Approval is terminal except for
 the transition to signed; a QA row cannot be moved away from an approved letter.
 Approval takes relation locks that conflict with QA and claim truncation, then
-revalidates the complete QA set, requires document-backed claims, and rechecks
-their cited document provenance before binding its revision. Corrected source
+revalidates the complete QA set, requires every included claim to resolve a
+source document, positive page number and source date, and rechecks that
+provenance before binding its revision. Annotation and criterion links remain
+auxiliary attribution and cannot replace the source. Corrected source
 content is a new document row and a new letter revision, so signing cannot
 accept changed document content under an old approval. Before
 any separately committed server migration runs, and again afterward, the
@@ -286,14 +307,19 @@ path.
 
 Evidence reassessment follows the same command boundary. The timeline submits `commandId`, the selected `met`/`gap`/`void` state and its observed `assessedAt` timestamp to `POST /api/cases/{caseId}/evidence/{evidenceId}/state`, including the selected practice on both mutation and lookup. Gate requires `annotate`; `AppServices` and PostgreSQL independently enforce the verified human, practice, resource and current-revision checks. The database commits the new state, surgeon attribution, audit event and immutable result together. Explicit lookup reconciles an uncertain response. A runtime command registry keys ownership by feature, verified identity, selected practice and case. It survives route navigation and hook unmount/remount, hides another scope's feedback, and continues to refuse mutation in the original scope until the matching command reaches a definitive result or successful lookup. It waits for the authorized relational projection to change rendered entities, writes neither PEM nor local SQL, and enqueues no PEM replay action. The registry is memory-only; process restart recovery remains outside this task and cannot be claimed as implemented.
 
+Attributed annotations use `POST /api/cases/{caseId}/annotations/{annotationId}` and the matching command lookup route, with one-for-one desktop wrappers. The request carries a stable command and annotation ID, clinical content, a projected server-owned annotation-type ID, one optional evidence or document target, include/hold disposition, and expected revision. It carries no actor or practice authority. The verified session supplies attribution; Gate policy, `AppServices`, and PostgreSQL independently require a current human membership with `annotate`. One transaction writes the current annotation, an immutable revision, an immutable command result, and an audit event. Projection revision 3 introduced the attributed opinion fields and the approved `annotation_types` reference catalog containing only `id`, `key`, `name`, and `description`; current projection revision 5 retains them and adds the exact case-scoped document status projection. Type-specific JSON Schema, annotation `data`, source text, embeddings, and all ledgers remain server-side. The client applies no optimistic clinical row change and reconciles uncertain outcomes by command lookup before waiting for the graph projection.
+
 Gate policy keeps target-reader outages distinct from clinical denial: typed
 unavailable and native-authentication-unavailable results return `503`, while
 typed denial or hidden-not-found results return `403`.
 
 The web-server composition fails startup unless `ASO_DATABASE_URL`,
-`ASO_GATE_DATABASE_URL` and `ASO_KRATOS_PUBLIC_URL` are all configured, and the
-two database URLs must identify the same host, port and database. The restricted
-PostgreSQL repository supplies every mounted clinical command port. Its memory
+`ASO_GATE_DATABASE_URL`, `ASO_SESSION_AUTHORITY_DATABASE_URL`,
+`ASO_KRATOS_PUBLIC_URL` and `ASO_KRATOS_ADMIN_URL` are all configured. The three
+database URLs must identify the same host, port and database. Session reads,
+clinical writes and logout-journal transitions use separate restricted credentials.
+Only the server process receives the Kratos administrative endpoint; the browser
+and desktop renderer never receive it. The restricted PostgreSQL repository supplies every mounted clinical command port. Its memory
 adapters compile only for tests; criteria has an explicit stateless unavailable
 port until its authoritative read adapter is scheduled. Fresh and upgrade
 fixtures force the final signing and reassessment receipt inserts to fail and
@@ -316,25 +342,49 @@ Expose only the Kratos public surface. Administrative identity APIs stay server-
 
 ### Tauri
 
-The trusted host performs native flow requests, validates the resulting opaque session token, and stores it using an OS-protected credential facility. Render the same flow UI contract in the shared frontend while keeping the session credential out of Zustand. `/self-service/login/api` starts native login, `/sessions/whoami` validates the token, and `DELETE /self-service/logout/api` revokes it. Choose an OS credential implementation during the desktop security work; ordinary SQLite or a JSON store is insufficient. [Ory session model](https://www.ory.com/docs/kratos/session-management/overview)
+The trusted Rust host performs native flow requests and owns the resulting
+opaque session token. The selected facility is `keyring` 4.2.0, backed by
+macOS Keychain, Windows Credential Manager or freedesktop Secret Service;
+`secrecy` 0.10.3 protects the transient host value. There is no plaintext
+fallback. Ordinary SQLite, JSON, Stronghold's renderer-callable command surface,
+PEM and Zustand are not credential stores. `/self-service/login/api` starts a
+Kratos 26.2.0 native flow and `/sessions/whoami` validates the token before it
+is stored. The renderer receives session ID, identity ID, expiry and assurance
+only. The macOS password-flow path has synthetic local evidence. Closed Tauri
+commands now check the calling window and access epoch, obtain the credential
+inside the host, and forward all eleven clinical operations to Gate. A
+sanitized host event advances the access epoch and locks every renderer on
+logout, verified scope replacement or authentication failure; two mock-runtime
+windows receive the same event. A production Wry window, production
+multi-window behavior and other operating systems remain RA17 work. See
+[ADR-010](adr-010-native-session-credentials.md) and
+[Ory's session model](https://www.ory.com/docs/kratos/session-management/overview).
 
-For SSO methods requiring a browser, use the system browser and an Ory-supported native completion/exchange flow verified against the pinned self-hosted server. That capability and its callback binding are an implementation gate; do not invent an OAuth issuer or pass a long-lived session token in a deep link. A Tauri webview does not automatically share the system browser's cookies.
+For SSO, use the system browser through Tauri opener 2.5.5 and return through
+deep-link 2.4.10 with single-instance 2.4.4. The host validates the callback
+scheme, path, state and active ceremony before a one-time Kratos exchange. A
+long-lived session token never travels in the URL, and the webview is not
+assumed to share system-browser cookies. The current self-hosted configuration
+does not enable an OIDC provider or callback, so this selected mechanism is not
+an activation claim.
 
-Gate’s general Kratos authenticator forwards Cookie and Authorization and does not explicitly forward `X-Session-Token`. RA-02 gate routes instead use passthrough authentication and the mandatory `aso_clinical_authorize` hook, which forwards exactly one original Cookie, Authorization or X-Session-Token credential to ASO for fresh validation. This route-specific transport does not establish the native credential owner or certify other Gate routes. Native gate wrappers remain unavailable until RA-17.
+Gate’s general Kratos authenticator forwards Cookie and Authorization and does not explicitly forward `X-Session-Token`. RA-02 gate routes instead use passthrough authentication and the mandatory `aso_clinical_authorize` hook, which forwards exactly one original Cookie, Authorization or X-Session-Token credential to ASO for fresh validation. RA17's typed desktop transport now reaches those routes with a host-owned `X-Session-Token`; its local evidence covers command dispatch and transport parity, while deployed Gate and physical-window qualification remain open.
 
 ### Fabric credential bridge
 
 FRF's verifier checks JWT signature/JWKS, audience and configured issuer, and requires a tenant claim. An opaque Kratos token cannot be decoded as that JWT. Use Gate's existing minting capability after Kratos validation, deriving membership server-side and signing an audience-bound, short-lived downstream token. Keep this token server-side when proxying the fabric. Strip untrusted inbound identity headers before constructing downstream claims.
 
-The credential bridge must bind subject, practice, human/agent principal kind, assurance, scopes, expiry and the originating Kratos session to revocation. FRF currently derives its session identifier from `jti`; a token ID is not automatically the Kratos session ID. Define the mapping and stream invalidation contract explicitly. Existing Gate token-exchange code rejecting Kratos as an OAuth subject provider is not a reason to treat an opaque session as an OAuth access token.
+The credential bridge must bind deployment, Kratos issuer, verified Kratos session ID, subject, practice, human/agent principal kind, assurance, scopes, ASO authority incarnation/revision and expiry. A downstream token `jti` is not the Kratos session ID. Session caches use a one-way credential fingerprint and retain the verified session ID; replica grants remain tenant-qualified. Existing Gate token-exchange code rejecting Kratos as an OAuth subject provider is not a reason to treat an opaque session as an OAuth access token.
 
-Self-hosting has no automatic entitlement to Ory Network's global session cache. Use one deduplicated frontend session check at startup and on revalidation triggers. Gate already has a session cache; bound its lifetime by session expiry and policy, invalidate it on logout/revocation, and require fresh checks for clinical acts. Define and test a maximum stream revocation delay; short JWT expiry alone is not immediate logout.
+Self-hosting has no automatic entitlement to Ory Network's global session cache. Use one deduplicated frontend session check at startup and on revalidation triggers. Gate may cache identity validation through session expiry, but every protected authorization performs a fresh ASO authority-fence decision for the verified session and selected practice. Redis is a shared coherency fence rather than authority. A restarted Gate bootstraps the current ASO incarnation/revision and all unexpired denials from one repeatable-read snapshot, then replays the durable outbox past its high-water mark before enabling L1/L2 use. A running Gate probes that high-water mark at least every 250 ms and disables caches on lag, Redis loss or regression. Short JWT expiry alone is not immediate logout.
+
+ASO stores two durable authority identities. Session denial uses deployment ID, Kratos issuer and verified session ID and remains through the original expiry plus skew. Membership/capability authority uses deployment ID, ASO incarnation and monotonic global authorization revision; the revision and event commit together. Within one incarnation only a greater revision advances state. A changed incarnation requires a fresh ASO bootstrap and invalidates the old cache namespace. Delayed or duplicate events cannot lower the fence.
 
 ### Session state and transitions
 
 The session store contains a discriminated state: `checking`, `anonymous`, `authenticated`, `reauthRequired`, `switching`, `unavailable`, or `loggingOut`. Only `authenticated` carries a current verified scope. A network failure is not proof that the user logged out. A stale stored session summary is not proof that they are logged in.
 
-Revalidate on foreground/resume, reconnect, expiry approach, completion of login/settings/reauthentication, an authenticated request rejection, and cross-tab session notifications. Coalesce concurrent checks. Do not treat every HTTP 403 as logout: it may mean insufficient assurance or a denied domain action. Route password recovery, verification and settings through Kratos flow contracts; re-read the session afterward. Session extension may require reauthentication rather than an invented refresh token. [Ory session refresh](https://www.ory.com/docs/kratos/session-management/refresh-extend-sessions)
+RA13 owns authoritative revalidation on foreground/resume, reconnect, expiry approach, completion of login/settings/reauthentication, an authenticated request rejection, and cross-tab session notifications. Coalesce concurrent checks and keep protected content locked while a foreground/resume result is unresolved. Do not treat every HTTP 403 as logout: it may mean insufficient assurance or a denied domain action. Route password recovery, verification and settings through Kratos flow contracts; re-read the session afterward. Session extension may require reauthentication rather than an invented refresh token. [Ory session refresh](https://www.ory.com/docs/kratos/session-management/refresh-extend-sessions)
 
 ```mermaid
 sequenceDiagram
@@ -342,31 +392,46 @@ sequenceDiagram
   participant R as Runtime coordinator
   participant Views as Tabs or windows
   participant Sync as Sync and persistence owners
-  participant Auth as Gate and Kratos
+  participant Gate as Flint Gate
+  participant ASO as ASO session coordinator
+  participant K as Kratos
   participant DB as Local storage
   User->>R: Logout or switch account
+  R->>R: Persist noncredential logoutPending marker
   R->>R: Increment epoch and hide protected views
   R-->>Views: Invalidate session generation
   R->>Sync: Abort requests and stop subscriptions
   Sync-->>R: Drained or fenced old callbacks and writes
-  R->>Auth: Revoke old credential and downstream streams
-  Auth-->>R: Revoked or revocation unavailable
+  R->>Gate: Request logout with verified credential context
+  Gate->>ASO: Verified session logout operation
+  ASO->>ASO: Commit session denial and retry intent
+  ASO->>K: Revoke session and confirm inactive
+  K-->>ASO: Inactive or confirmation unavailable
+  ASO-->>Gate: Confirmed or durable denial still recovering
+  Gate-->>R: Complete or incomplete logout result
   R->>DB: Close and clear or quarantine old namespace
   R->>Views: Destroy graph, selections, forms and object URLs
-  alt revocation unavailable
+  alt confirmation incomplete
     R-->>User: Locally locked - server logout incomplete
   else logout complete
     R-->>User: Anonymous shell
     opt sign in as another identity
-      User->>Auth: New login flow
-      Auth-->>R: New verified session
+      User->>K: New login flow
+      K-->>Gate: New credential
+      Gate-->>R: New verified session and ASO scope
       R->>DB: Open a new authorized namespace
       R-->>Views: Mount fresh graph after hydration
     end
   end
 ```
 
-Browser logout must execute Kratos's session-bound logout flow, not merely clear React state. Local locking happens immediately even if server revocation fails. Before attempting revocation, persist an origin-scoped, noncredential `logoutPending` marker with a generation and notify other tabs. Check it before automatic session restoration on every reload/new tab. It carries no token, identity or clinical content and is separate from graph and Zustand persistence. Clear it only after confirmed revocation or an explicit fresh login ceremony that resolves the old session; a successful passive `whoami` must never clear it. If storing the marker fails, report that cross-reload local locking cannot be guaranteed and require online logout before claiming completion. Native host storage maintains the equivalent marker. Retain any credential needed for retry only in its existing protected cookie/host facility. This prevents an ordinary reload from silently restoring the surviving cookie after offline logout. [Ory logout flow](https://www.ory.com/blog/login-spa-react-nextjs-authentication-example-api-open-source)
+Browser logout must invoke the shell-neutral server logout coordinator, not merely clear React state or call Kratos directly. Local locking happens immediately. Before the request, RA13 persists an origin-scoped, noncredential `logoutPending` marker with a generation and notifies other tabs. The server coordinator resolves the verified session, commits ASO denial and retry intent, then asks Kratos to revoke and confirms inactive state under a bounded lease. Retry and confirmation writes require the matching lease to remain live when the worker observes its result. A crash before the denial commit produces no success. A crash after commit leaves the session denied and retryable. A crash after Kratos succeeds repeats confirmation idempotently. HTTP and the injected Tauri operation report success only after confirmation is marked complete; an incomplete result keeps the client locked while the ASO recovery runner continues. All membership and session-denial outbox allocations serialize on the authority singleton through commit, preventing a replay cursor from skipping an uncommitted lower sequence.
+
+Check `logoutPending` before automatic session restoration on every reload/new tab. It carries no token, identity or clinical content and is separate from graph and Zustand persistence. Clear it only after confirmed revocation or an explicit fresh login ceremony that resolves the old session; a successful passive `whoami` must never clear it. If storing the marker fails, report that cross-reload local locking cannot be guaranteed and require online logout before claiming completion. Native host storage maintains the equivalent marker. ADR-010 selects the production native credential facility; RA17 still owns its mounted logout and command parity. Credentials stay in their protected cookie/host facility. [Ory logout flow](https://www.ory.com/blog/login-spa-react-nextjs-authentication-example-api-open-source)
+
+The revocation measurement starts at the authoritative ASO membership commit, durable session-denial commit or verified expiry instant and ends at the final protected body frame produced by FRF or cancellation that prevents the next frame, followed by denial of a subsequent protected request. The ceiling is 5,000 ms. FRF revalidates at most every 750 ms, bounds the authority RPC at 750 ms and propagates cancellation within 250 ms. The claim excludes kernel/proxy buffering, network transit and client receipt. For a revocation initiated directly in Kratos, the application clock begins at the first mounted server observation because it cannot observe the earlier external action; that trusted observation commits the same ASO denial before reuse.
+
+The React/Zustand boundary has a stricter local ordering rule: logout, membership loss, expiry or the RA11c materializer's replica-failure event synchronously advances the access epoch and removes protected content before exit motion or another command. Wide and compact layouts reuse the same command owner during resize. This local fence does not replace the server authority decision.
 
 An identity change within the same practice still destroys the old graph. A practice change within the same identity also tears down the replica scope. Browser cookies are shared across tabs on the same origin: default to one active identity/practice context and broadcast invalidation hints, followed by authoritative checks. Hints contain no credentials or records. Tauri uses one host session owner and native invalidation events across windows. Suspended tabs must check the current epoch/session before resuming protected rendering.
 
@@ -424,21 +489,24 @@ Server changes use expand/migrate/contract: deploy additive schema/API support, 
 - Keep replica diagnostics to counts, durations, schema versions, anonymized correlation and error classes. Do not log rows, tokens, chart content or generated clinical text. Disable sensitive graph/devtool snapshots in deployed clinical sessions.
 - Operate FRF's actual dependencies explicitly: broker, identity/JWKS, Keto where used, stores and CDC resources. If its CDC and Electric both consume Postgres, size and monitor replication slots, retained WAL and replay lag. Do not start duplicate consumers without a stated data lane.
 
-These controls trace to real boundaries and named scenarios in this design: cross-account disclosure, widened shape requests, stale stream authorization, duplicate clinical commands, partial migration, stale snapshot replay and interrupted updates. This document itself implements no control; RA-01 through RA-03 provide bounded source and test evidence for session, gate and signing paths only.
+These controls trace to real boundaries and named scenarios in this design: cross-account disclosure, widened shape requests, stale stream authorization, duplicate clinical commands, partial migration, stale snapshot replay and interrupted updates. This document itself implements no control. RA-01 through RA-10 now provide bounded evidence for the completed slices identified above; they do not certify the remaining assembled runtime.
 
 ## 13. Coordinated implementation sequence
 
 | Order | Owner | Concrete refinement and exit condition |
 |---|---|---|
 | 1 | ASO + Gate + Forge | Define verified session/membership contract, privacy-approved replica schema and clinical command transport. Prove unauthorized users cannot broaden a shape or clinical action. |
-| 2 | Gate + FRF | Wire Kratos-to-downstream identity minting, authorization, revocation and Electric HTTP facade. Prove cookie and native-token paths, reconnect authorization and preserved Electric headers/checkpoints. |
+| 2 | ASO + Gate + FRF | Persist session denials and membership authority events, enforce a fresh distributed authority fence, and hold authority through FRF body production. Prove cookie and injected native-token operation paths, reconnect authorization, final-frame cancellation and preserved Electric headers/checkpoints. |
 | 3 | PEM | Scope pending actions, status and listeners to runtime; add cancellable hydration and drainable persistence. Define committed replica projection contract and snapshot/checkpoint validation. |
 | 4 | ASO browser + PEM | Implement worker DB ownership, migration ledger, real table materialization, startup stages and coherent graph hydration. Keep public authentication routes usable. |
-| 5 | ASO desktop + PEM | Establish PGlite baseline, then native SQLite materializer and typed repositories. Prove identical entity/list results and multi-window lifecycle before selecting SQLite for release. |
-| 6 | ASO + deployment services | Add code/data compatibility manifest, coordinated web/native updates, account switching and failure recovery. |
-| 7 | All | Run the cross-repository acceptance matrix below and certify each claimed deployment separately. |
+| 5 | ASO browser | Implement and certify the complete case-to-letter workflow and both denial-response paths under the frozen web contract. Every included generated assertion resolves document/page/date provenance. |
+| 6 | ASO browser + deployment services | Add code/data compatibility metadata, safe browser updates, account switching and recovery; then certify the assembled browser runtime in RA22. |
+| 7, deferred until browser Passed | ASO desktop + PEM | Resume Tauri session work, PGlite baseline, native SQLite materializer, typed repositories and native updater qualification. Certify each claimed native platform separately. |
 
-The sequence is a plan, not permission to start application edits in this documentation task. ADRs 008 and 009 record the accepted target decisions; superseded records retain their history. Dependency pins are unchanged.
+The sequence is the implementation order. ADRs 008 and 009 record the accepted
+target decisions; superseded records retain their history. Operator decision
+`G-PIN-RA09-APPROVED` authorizes the current PEM pin change and exact vendored
+candidate. Other dependency pins remain unchanged.
 
 ## 14. Acceptance matrix and measurements
 
@@ -450,29 +518,42 @@ The sequence is a plan, not permission to start application edits in this docume
 | Account or practice switch during hydration | No old callback, write, pending action, attachment or entity appears in the new runtime |
 | Logout with network failure, reload or new tab | Durable noncredential marker blocks passive restoration; explicit incomplete revocation; no silent cookie-based reentry |
 | Offline grant absent or expired | Protected rendering locks; a saved session summary cannot extend access |
-| Revocation while stream is open | All windows stop protected updates within the specified revocation bound |
+| Revocation while a nonempty stream is open | From ASO authority commit or verified expiry, FRF records the final server-produced protected frame or cancellation within 5,000 ms and the next request denies; client receipt is outside the claim |
+| Replica authority fails in the real materializer | RA11c publishes the shared session-revocation event, Zustand locks synchronously, and the captured generation cannot commit SQL/checkpoint/graph output |
 | Two browser tabs, leader closes | Exactly one replacement DB/sync owner; no missing or duplicated committed changes |
 | Two desktop windows | One native DB owner; shared records agree, independent selection remains independent |
 | Old tab versus new schema | Incompatible writer is fenced or upgrade waits; no partial in-place schema mutation |
 | Crash between data and checkpoint | Resume does not skip records; replay is idempotent |
 | Related entity/list projection batch | SQL and graph publication boundaries agree; no subscriber observes a partial relationship |
+| Complete request workflow | Case creation, upload/processing, administering-entity resolution, criteria selection, met/gap/void evidence, request generation/review/signing and local submission acknowledgement succeed through the mounted browser path |
+| Denial response workflows | Denial classification selects corrected resubmission or clinical appeal response; each resulting letter is generated, reviewed and signed through the mounted browser path |
+| Generated assertion provenance | Every included assertion resolves a source document, positive page number and source date; incomplete assertions are excluded with the required message |
 | Replica rebuild with unsent draft | Authorized original user can recover a separately retained draft; another identity cannot load or replay it |
 | Expired Electric handle/refetch | Obsolete rows removed; snapshot becomes visible only at a coherent boundary |
-| Native SQLite parity | Same normalized entities, null/date/ID semantics, list ordering and deletes as PGlite |
+| Native SQLite parity (deferred) | After browser Passed, prove the same normalized entities, null/date/ID semantics, list ordering and deletes as PGlite before claiming native parity |
 | Lost command response | Idempotency reconciliation prevents duplicate clinical operation |
 | Update with dirty user work | No forced reload or loss; after safe relaunch session and data are revalidated |
 | Admin or agent attempts signing | Gateway, services and database enforce their independent controls |
-| Browser quota/eviction or native migration failure | Explicit recovery state; rebuildable replica distinguished from unsent work |
+| Browser quota/eviction | Explicit recovery state; rebuildable replica distinguished from unsent work |
+| Native migration failure (deferred) | After browser Passed, native certification must prove explicit recovery without inferring it from browser evidence |
 
-Measure cold/warm database-open time, migration duration, first coherent screen, initial shape catch-up, rows/sec, memory peak, UI responsiveness, stream lag, persisted bytes, user-switch teardown, and multi-window contention on representative practice datasets. Define pass thresholds before the implementation spike; no benchmark result is asserted here. Test macOS/Windows/Linux webviews separately for claimed desktop support, plus the supported browser set.
+For the current milestone, measure cold/warm browser database-open time, migration duration, first coherent screen, initial shape catch-up, rows/sec, memory peak, UI responsiveness, stream lag, persisted bytes, user-switch teardown and multi-tab contention on representative synthetic practice datasets. Define pass thresholds before the certification run. Test the supported browser set with actual browsers. macOS/Windows/Linux webviews and native multi-window contention are measured later before any desktop support claim.
 
-Application T0/T1/T2 gates belong to implementation changes. This document receives structural/link/diagram checks and independent artifact review. No application build, live Kratos/FRF test, or native device run is claimed by this task.
+Application T0/T1/T2 gates belong to implementation changes. This document
+receives structural/link/diagram checks and independent artifact review. Later
+implementation changes retain their own evidence: RA17 task 1.2 records a
+synthetic Kratos 26.2.0 and macOS Keychain run for the native credential
+facility. Task 1.3 records typed Tauri dispatcher and mounted local Gate
+transport parity for all eleven clinical operations. Task 1.4 records complete
+typed refusal classification and two-window host invalidation in Tauri's mock
+runtime. These results do not certify a production Wry window, OIDC, production
+multi-window behavior, Windows or Linux.
 
 ## 15. Source map and remaining decisions
 
 Local source roots are the folders named in the workspace. These are the principal inspected files for follow-up work:
 
-- ASO: `web/src/main.tsx`, `web/src/app/providers/graph-provider.tsx`, `web/src/shared/store/interaction-store.ts`, `web/src/shared/sync/electric-shapes.ts`, `web/src/features/evidence-timeline/api/timeline-api.ts`, `desktop/src-tauri/Cargo.toml`, `docker-compose.yaml`, ADRs 001–009 (006 and 007 are superseded history).
+- ASO: `web/src/main.tsx`, `web/src/app/providers/graph-provider.tsx`, `web/src/shared/store/interaction-store.ts`, `web/src/shared/sync/electric-shapes.ts`, `web/src/features/evidence-timeline/api/timeline-api.ts`, `desktop/src-tauri/Cargo.toml`, `desktop/src-tauri/src/native_session.rs`, `docker-compose.yaml`, ADRs 001–010 (006 and 007 are superseded history).
 - PEM: `packages/entity-graph-core/src/graph.ts`, `local-first-runtime.ts`, `adapters/electricsql.ts`, `adapters/pglite-persistence.ts`, `adapters/tauri-sql-persistence.ts`, `packages/entity-graph-react/src/graph-store.ts`, and `packages/entity-graph-tauri/rust-plugin/src/state.rs`.
 - FRF: `sdks/entity-management/src/adapter.ts`, `crates/frf-gateway/src/lib.rs`, `main.rs`, `crates/frf-identity-ory/src/verifier.rs`, `claims.rs`, and `crates/frf-postgres-cdc`.
 - Gate: `crates/flint-gate-core/src/auth/kratos.rs`, `jwt_mint.rs`, `token_exchange.rs`, and `cache/mod.rs`.
@@ -480,7 +561,15 @@ Local source roots are the folders named in the workspace. These are the princip
 
 Maintainer documentation was consulted through Context7 and directly on 2026-09-06; links accompany the relevant design sections. Library documentation establishes available mechanisms, not proof that this application has integrated them. Repository comments mentioning other products or prescribing unrelated work are source context, not new requirements for ASO.
 
-Remaining release decisions: approved persistent browser data set and managed-device policy; native credential/encryption implementation; selected Electric/PGlite sync versions; FRF facade and revocation contract; desktop SSO completion method; compatibility support window; performance thresholds. These do not prevent producing this architecture, but they prevent declaring the target runtime implemented or certified.
+Remaining release decisions: approved persistent browser data set and
+managed-device policy; selected Electric/PGlite sync versions; production OIDC
+provider and allowed callback configuration; compatibility support window;
+performance thresholds. Windows/Linux credential qualification, production
+native-window qualification and native relational parity remain implementation
+gates for later desktop claims, not for browser certification.
+Distributed revocation, the PEM candidate and the macOS credential facility
+have bounded local evidence. Final assembled browser certification depends on
+the web child and `ra-20`; native platform certification remains deferred.
 
 ## 16. ADR scope and navigation reconciliation
 

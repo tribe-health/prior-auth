@@ -1,13 +1,23 @@
 # Architecture decision index
 
-Reconciled 2026-09-06 across all five project directories.
+Reconciled 2026-09-16 across all five project directories.
 
 The [application runtime architecture](application-runtime-architecture.md) is
 the accepted ASO target design. This index maps every current ADR to that design.
 Accepted describes a decision, not implemented behavior or a passing runtime
 test. Historical superseded text is evidence of earlier choices, not an
 alternative current instruction. Dependency pins remain governed by each
-repository's version contract; this reconciliation changes no pins.
+repository's version contract; ADR-010 uses the exact native-session pins in
+`versions.toml`.
+
+The [Web Case-to-Letter Workflow Contract](web-case-to-letter-contract.md) is
+the normative execution contract for the current web-first child. It freezes
+the lifecycle, criteria migration, citation, command parity, privacy,
+invalidation, error and fixture matrices for the complete browser request and
+denial-response workflows. Browser certification through `web-17`, `ra-20`
+and browser-scoped `ra-22` precedes Tauri SQLite and native updater
+certification. Native evidence cannot block or substitute for the browser
+result.
 
 ## UI implementation architecture
 
@@ -18,6 +28,11 @@ on resize and accessible motion. It elaborates existing ADRs; it is not evidence
 that these runtime or UI contracts are implemented. See the
 [critic/judge review receipt](react-ui-component-architecture-review.md) for
 findings, dispositions and verification limits.
+
+The [Tauri PGlite baseline](tauri-pglite-baseline.md) records the actual macOS
+WKWebView cold, catch-up, persistence-reopen and teardown measurements plus the
+managed-device persistence policy. It is a measured baseline, not approval to
+persist clinical data on every desktop.
 
 ## ASO decisions
 
@@ -32,10 +47,13 @@ findings, dispositions and verification limits.
 | [ASO ADR-007](adr-007-local-first-sync.md) | Superseded by ASO 009 | Historical browser-only sync and projection claims; not current privacy proof |
 | [ASO ADR-008](adr-008-shared-runtime-state-and-sessions.md) | Accepted target | Shared runtime, Zustand-backed PEM, scoped sessions and identity teardown |
 | [ASO ADR-009](adr-009-authorized-replicas-and-updates.md) | Accepted target | Authorized SQL replication, browser/native storage, migration and update lifecycle |
+| [ASO ADR-010](adr-010-native-session-credentials.md) | Accepted; facility and typed IPC slices implemented | Host-owned native Kratos credential storage, sanitized renderer projection, constrained clinical commands, cross-window invalidation and selected system-browser SSO completion |
 
 ADRs 001–005 retain their original decisions with dated runtime alignment;
 006–007 retain the original decision bodies under explicit historical headings.
-008–009 are the focused successors. Changes are documentation only.
+008–009 are the focused successors. ADR-010 records the implemented credential
+facility and typed IPC slices, including mock-runtime two-window invalidation,
+without claiming production-window, OIDC or multi-platform certification.
 
 ## Companion fabric decisions
 
@@ -75,14 +93,20 @@ measurements before choosing production thresholds.
 
 ## Audit boundary and unresolved implementation
 
-Inventory includes 18 numbered ADRs (9 ASO, 9 FRF) plus the PEM unnumbered
+Inventory includes 19 numbered ADRs (10 ASO, 9 FRF) plus the PEM unnumbered
 decision. Searches covered maintained files in all five roots; dependency,
 build, vendored skill/example and archived session artifacts are not active
 application decisions. Append-only memory and superseded specs retain history.
 
 The uncomfortable limitation is that consistent documents cannot prove the
-runtime. FRF's Electric facade, native SQLite materializer, scoped PEM lifecycle,
-Kratos session integration, bounded stream revocation and update coordination
-still require implementation and the runtime architecture's acceptance matrix.
+runtime. The authorized facade, bounded revocation, scoped PEM lifecycle,
+committed projection, public Kratos startup, macOS native credential facility
+and mock-runtime native command parity now have local change evidence, and the
+reviewed PEM candidate is adopted. The browser materializer remains disabled
+after exceeding its memory gate. An actual macOS two-window lifecycle and
+synthetic PGlite IndexedDB round trip are now measured; production shape
+materialization, native SQLite parity, update coordination, OIDC activation and
+Windows/Linux qualification still require implementation and the runtime
+architecture's final acceptance matrix.
 The existing media crate packaging also remains a documented source/rule
 discrepancy; no code or standing rule was changed to conceal it.

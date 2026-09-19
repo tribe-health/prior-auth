@@ -17,8 +17,18 @@ uuid.workspace = true
 tokio.workspace = true
 async-trait.workspace = true
 chrono.workspace = true
+reqwest.workspace = true
+thiserror.workspace = true
+keyring.workspace = true
+secrecy.workspace = true
+tauri.workspace = true
 
-# Tauri itself is added when the shell is scaffolded (`pnpm tauri init`).
-# Left out here so a clean checkout compiles the shared core without pulling
-# the full desktop toolchain — the commands below are pure functions over
-# AppServices and are unit-testable with no window.
+[dev-dependencies]
+axum.workspace = true
+
+[build-dependencies]
+tauri-build.workspace = true
+
+# Production packaging remains a later task. The pinned Tauri core supplies
+# both the mock runtime for focused IPC tests and Wry for the RA18 native-window
+# lifecycle fixture.

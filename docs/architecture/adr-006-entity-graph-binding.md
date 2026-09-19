@@ -12,6 +12,13 @@ The graph is itself Zustand. Separate ephemeral verified-session, startup and
 update stores are valid; the historical disagreement test below is not a
 universal state-ownership rule.
 
+The historical `4.0.0` references below describe the package inspected when
+this superseded record was written. Current package authority is
+`versions.toml`: operator decision `G-PIN-RA09-APPROVED` adopts the reviewed
+core/react candidate `4.0.3-ra09.0.g071b9e5.s8179d23348ab` from repository
+vendored tarballs. That version adds the scoped runtime and committed projection
+APIs required by ADR-008; later application wiring remains separately verified.
+
 ## Historical record — original text follows
 
 ## Decision

@@ -1,0 +1,27 @@
+{
+  "allowedWritePaths": [
+    ".kbd-orchestrator/phases/runtime-architecture/children/web-case-to-letter/**",
+    ".prometheus/**",
+    ".refiner/artifacts/web-*/**",
+    "openspec/changes/web-*/**",
+    "openspec/specs/web-*/**",
+    "docs/architecture/**",
+    "docs/plan/**",
+    "docs/design/schema/**",
+    "versions.toml",
+    "migrations/server/**",
+    "crates/aso-host/**",
+    "crates/aso-server-axum/**",
+    "crates/aso-web-server/**",
+    "web/**",
+    "docker/**",
+    "scripts/**",
+    "conformance/**"
+  ],
+  "deniedPaths": [
+    "mobile/**",
+    "desktop/**"
+  ],
+  "inheritsConstraints": true,
+  "__note": "Plan revision 10 denies all desktop and mobile writes until web-17 certifies the browser workflow. Edit allowedWritePaths only through a later operator-authorized plan revision. .kbd-orchestrator/** and SCRATCHPAD.md are always allowed. Enforced advisorily by check-child-scope.sh."
+}

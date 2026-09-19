@@ -51,10 +51,12 @@ validation and must not replay automatically after reconnection.
 An administrator cannot affirm or sign. An agent never inherits its human
 principal's clinical authority. Generated assertions require document, page and
 date citations; local optimistic state cannot invent a committed clinical act.
-The server signing path now implements these invariants. Mounted deployment and
-native credential transport remain separate certification work.
+The server signing path now implements these invariants. ADR-010's macOS
+credential facility and typed native command transport have local evidence;
+production-window and multi-platform certification remain separate work.
 See [ADR-008](adr-008-shared-runtime-state-and-sessions.md) and
-[ADR-009](adr-009-authorized-replicas-and-updates.md).
+[ADR-009](adr-009-authorized-replicas-and-updates.md), with native credential
+ownership in [ADR-010](adr-010-native-session-credentials.md).
 
 ### RA-02 gate transport implementation
 
@@ -80,8 +82,9 @@ database transaction and independent affirmation trigger. PostgreSQL repeats
 the scoped conflict check before its own target-case authority check. Reads and
 explicit command-result lookup still require fresh authorization and the
 requested case. Affirm and remove bodies contain only `commandId` and `kind`;
-identity and actor cannot be supplied. Native wrappers remain explicitly
-unavailable until the RA-17 trusted credential owner exists.
+identity and actor cannot be supplied. The RA17 desktop wrappers now obtain the
+trusted host credential after their window and epoch checks, then call these
+same mounted Gate routes.
 
 The uncomfortable deployment constraint: these routes require a Gate binary
 containing the new hook and a configured restricted ASO gate repository. An
@@ -137,8 +140,10 @@ Statement-level database triggers also refuse `TRUNCATE` of QA results or
 claim mappings while they support an approved or signed letter. Row-level
 immutability alone does not cover that operation. Approval holds relation locks
 that conflict with both truncations. Under those locks it revalidates every
-required QA result, requires at least one document-backed claim, and rechecks
-each cited document's provenance and page bounds. If truncation commits first,
+required QA result, requires every included claim to resolve a case/patient
+document with a positive page number and source date, and rechecks each cited
+document's provenance and page bounds. Annotation and criterion links are
+auxiliary attribution and cannot replace that source. If truncation commits first,
 approval is refused as incomplete; if approval wins, truncation waits and is
 refused. A correction still requires new source and letter revisions.
 
@@ -158,12 +163,15 @@ as `503`. Only typed denial or hidden-not-found results become the `403` policy
 denial. An unavailable authority store is not evidence that the clinician lacks
 authority.
 
-The shared Tauri signing, signing-lookup, reassessment and reassessment-lookup
-commands have the same actor-free input contracts and currently return typed
-native-authentication-unavailable refusals. RA-17 must add the trusted native
-credential owner before desktop clinical commands can reach Gate. The
-uncomfortable operational limit is that source-level Gate policy tests do not
-certify a deployed Gate image or a physical desktop runtime.
+The shared Tauri gate, signing, reassessment and annotation commands and their
+lookups have actor-free, closed input contracts. RA17 mounts them through the
+host credential owner and forwards them to Gate with the selected practice as
+request context. Local Tauri dispatcher and mounted HTTP tests prove the
+transport and typed denial path. Every operation preserves policy denial,
+host-credential failure and unavailable/uncertain transport as distinct error
+classes, while mutation lookups remain the reconciliation path. The
+uncomfortable operational limit is that these tests do not certify a deployed
+Gate image or a physical desktop runtime.
 
 The restricted signing and reassessment functions order their clinical update,
 audit insert and immutable receipt insert in one PostgreSQL transaction. Fresh

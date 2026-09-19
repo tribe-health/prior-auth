@@ -255,13 +255,8 @@ async fn reassessment_gate_transaction_lifecycle() {
         )
     );
     assert_eq!(
-        app.lookup_reassessment_command(
-            &surgeon,
-            case_id,
-            evidence_id,
-            command.command_id,
-        )
-        .await,
+        app.lookup_reassessment_command(&surgeon, case_id, evidence_id, command.command_id,)
+            .await,
         Ok(None)
     );
     sqlx::query(

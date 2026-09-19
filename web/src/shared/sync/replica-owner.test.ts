@@ -4,9 +4,14 @@
  * Two tabs both hold a handle to the same `idb://` database and will both apply
  * migrations. These assert that only one of them believes it may.
  */
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
-import { ReplicaLease, type LeaseStore, type StoredLease } from "./replica-owner";
+import {
+  ReplicaLease,
+  createMemoryLeaseStore,
+  type LeaseStore,
+  type StoredLease,
+} from "./replica-owner";
 
 /** In-memory store with real compare-and-set, so races are modelled honestly. */
 function memoryStore(initial: StoredLease | null = null) {
@@ -32,6 +37,16 @@ function memoryStore(initial: StoredLease | null = null) {
 }
 
 describe("ReplicaLease", () => {
+  it("gives each memory-only replica an independent ownership store", async () => {
+    const a = new ReplicaLease({ store: createMemoryLeaseStore(), holder: "tab-a" });
+    const b = new ReplicaLease({ store: createMemoryLeaseStore(), holder: "tab-b" });
+
+    await expect(Promise.all([a.acquire(), b.acquire()])).resolves.toEqual([
+      { granted: true },
+      { granted: true },
+    ]);
+  });
+
   it("grants a free lease", async () => {
     const { store } = memoryStore();
     const lease = new ReplicaLease({ store, holder: "tab-a", now: () => 1000 });
@@ -64,6 +79,28 @@ describe("ReplicaLease", () => {
     await expect(lease.acquire()).resolves.toEqual({ granted: true });
   });
 
+  it("retains ownership when its reacquire races with its own renewal", async () => {
+    let stored: StoredLease | null = { holder: "tab-a", expiresAt: 2000 };
+    let firstWrite = true;
+    const store: LeaseStore = {
+      async read() { return stored; },
+      async write(next) {
+        if (firstWrite) {
+          firstWrite = false;
+          stored = { holder: "tab-a", expiresAt: 4000 };
+          return false;
+        }
+        stored = next;
+        return true;
+      },
+      async clear() { stored = null; },
+    };
+    const lease = new ReplicaLease({ store, holder: "tab-a", now: () => 1000 });
+
+    await expect(lease.acquire()).resolves.toEqual({ granted: true });
+    expect(lease.held).toBe(true);
+  });
+
   it("only one of two racing contexts wins", async () => {
     // Compare-and-set is what makes this true: the loser's write fails against
     // the winner's value rather than overwriting it.
@@ -86,6 +123,24 @@ describe("ReplicaLease", () => {
     now = 1050;
     await expect(lease.renew()).resolves.toBe(true);
     expect(peek()?.expiresAt).toBe(1150);
+  });
+
+  it("reports loss while renewing a caller-retained lease", async () => {
+    vi.useFakeTimers();
+    try {
+      const { store } = memoryStore();
+      const lease = new ReplicaLease({ store, holder: "tab-a", ttlMs: 30, now: () => 1000 });
+      await lease.acquire();
+      const lost = vi.fn();
+      lease.startRenewal(lost);
+      await store.write({ holder: "tab-b", expiresAt: 9000 }, await store.read());
+
+      await vi.advanceTimersByTimeAsync(10);
+      expect(lost).toHaveBeenCalledOnce();
+      expect(lease.held).toBe(false);
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it("fails renewal after being displaced, and stops claiming to hold it", async () => {

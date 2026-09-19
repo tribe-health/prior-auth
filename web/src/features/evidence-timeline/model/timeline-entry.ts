@@ -27,9 +27,11 @@ export interface TimelineCitation {
 /**
  * One row of the timeline: a policy criterion and where its evidence stands.
  *
- * The state is the whole point of the row. `met` carries citations; `gap` and
- * `void` carry none — and for opposite reasons, which is why they are separate
- * members and not a nullable boolean (ADR-003).
+ * The state is the whole point of the row. Citation presence is independent:
+ * a citation can support what the chart says for `met` or `gap`, while a
+ * missing citation warns about source support and never manufactures `void`.
+ * The three states remain separate members rather than a nullable boolean
+ * (ADR-003).
  */
 export interface TimelineEntry {
   id: string;
@@ -62,15 +64,4 @@ export interface ReassessEvidenceResult {
   state: EvidenceState;
   expectedAssessedAt: string;
   assessedAt: string;
-}
-
-/**
- * Is this entry adequately supported?
- *
- * `met` with no citation is NOT met — it is an unsourced assertion, and
- * `aso.css:368` calls that a rendering bug. Naming the condition here keeps
- * every caller from re-deriving it slightly differently.
- */
-export function isUnsupported(entry: TimelineEntry): boolean {
-  return entry.state === 'met' && entry.citations.length === 0;
 }

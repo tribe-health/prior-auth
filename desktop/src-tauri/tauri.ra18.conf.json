@@ -1,0 +1,24 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "RA18 Native Lifecycle Fixture",
+  "version": "0.1.0",
+  "identifier": "com.tribehealth.prior-auth.ra18-fixture",
+  "build": {
+    "frontendDist": "fixtures/ra18"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "bootstrap",
+        "title": "RA18 bootstrap",
+        "visible": false
+      }
+    ],
+    "security": {
+      "capabilities": ["main-clinical-commands"]
+    }
+  },
+  "bundle": {
+    "active": false
+  }
+}

@@ -18,6 +18,21 @@
  * that asymmetry is the whole point of the role model.
  */
 export const CAPABILITIES = {
+  /** Read cases and their approved projections in the selected practice. */
+  'case:read': { clinical: false },
+  /** Create, edit, and advance nonclinical case intake state. */
+  case_write: { clinical: false },
+  /** Resolve the controlling entity, criteria set, and payer communication paths. */
+  resolve_administering_entity: { clinical: false },
+  /** Upload bounded case documents for server-owned processing. */
+  document_upload: { clinical: false },
+  /** Select the controlling, versioned criteria snapshot for a resolved case. */
+  criteria_select: { clinical: false },
+  evidence_assemble: { clinical: false },
+  evidence_obtain: { clinical: false },
+  letter_generate: { clinical: false },
+  letter_review: { clinical: false },
+  letter_approve: { clinical: true },
   /** EMR connections, users, role assignment, retention policy. */
   configure: { clinical: false },
   /** Confirm controlling policy, criterion section, pathway, operative plan. */
@@ -55,6 +70,8 @@ export type PrincipalKind = "user" | "agent";
 export interface VerifiedSession {
   /** Kratos identity id. The authority on who this is. */
   readonly identityId: string;
+  /** Kratos session id. Commands and replica ownership are fenced to it. */
+  readonly sessionId: string;
   /** `aso.users.id` — practice membership, NPI, job title live here. */
   readonly userId: string;
   /** The practice boundary this session operates inside. */
@@ -63,6 +80,10 @@ export interface VerifiedSession {
   /** What the gateway says this session may do. Never widened client-side. */
   readonly capabilities: readonly Capability[];
   readonly principal: PrincipalKind;
+  /** Absolute authority expiry returned by the server session boundary. */
+  readonly expiresAt: string;
+  /** Current ASO membership incarnation and revision. */
+  readonly authorizationRevision: string;
 }
 
 /**

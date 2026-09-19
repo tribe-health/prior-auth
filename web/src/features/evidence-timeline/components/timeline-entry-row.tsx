@@ -7,14 +7,27 @@
  * look the distinction up somewhere else.
  */
 import { CitationChip, EvidenceStateChip } from '../../../shared/ui';
+import { Button } from '@/components/ui/button';
+import { CitationAction } from '@/features/source-preview/components/citation-action';
+import type { SourcePreviewTarget } from '@/features/source-preview/model/source-preview';
 import { evidenceAction } from '../../../shared/model/evidence-state';
-import { isUnsupported, type TimelineEntry } from '../model/timeline-entry';
+import type { TimelineEntry } from '../model/timeline-entry';
 
 export interface TimelineEntryRowProps {
   entry: TimelineEntry;
+  canReassess?: boolean;
+  disabled?: boolean;
+  onReassess?: (entry: TimelineEntry) => void;
+  onOpenSource?: (target: SourcePreviewTarget, trigger: HTMLButtonElement) => void;
 }
 
-export function TimelineEntryRow({ entry }: TimelineEntryRowProps) {
+export function TimelineEntryRow({
+  entry,
+  canReassess,
+  disabled,
+  onReassess,
+  onOpenSource,
+}: TimelineEntryRowProps) {
   return (
     <li className="flex flex-col gap-2 border-b py-3 last:border-b-0">
       <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
@@ -37,22 +50,34 @@ export function TimelineEntryRow({ entry }: TimelineEntryRowProps) {
         <ul className="flex flex-wrap gap-1.5 pl-1">
           {entry.citations.map((citation) => (
             <li key={citation.id}>
-              <CitationChip
-                source={`${citation.documentName} · ${citation.effectiveDate}${
-                  citation.pageNumber === null ? '' : ` · p.${citation.pageNumber}`
-                }`}
-              />
+              {onOpenSource ? (
+                <CitationAction caseId={entry.caseId} citation={citation} onOpen={onOpenSource} />
+              ) : (
+                <CitationChip
+                  source={`${citation.documentName} · ${citation.effectiveDate}${
+                    citation.pageNumber === null ? '' : ` · p.${citation.pageNumber}`
+                  }`}
+                />
+              )}
             </li>
           ))}
         </ul>
-      ) : null}
+      ) : (
+        <div className="pl-1">
+          <CitationChip source={null} />
+        </div>
+      )}
 
-      {isUnsupported(entry) ? (
-        // `met` with nothing behind it. An unsourced assertion is the one
-        // failure a reviewer cannot see by reading the row, so it is stated.
-        <p className="pl-1 text-xs text-destructive">
-          Marked met with no citation on file.
-        </p>
+      {canReassess && onReassess ? (
+        <Button
+          type="button"
+          variant="outline"
+          className="min-h-11 w-full motion-reduce:transition-none sm:w-auto sm:self-end"
+          disabled={disabled || entry.assessedAt === null}
+          onClick={() => onReassess(entry)}
+        >
+          Reassess evidence
+        </Button>
       ) : null}
     </li>
   );

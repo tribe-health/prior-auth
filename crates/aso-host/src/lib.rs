@@ -10,13 +10,24 @@
 //! trigger, the type system mirrors it, so a violation is a compile error on
 //! the way to being a runtime refusal.
 
+pub mod administering_entity;
 pub mod affirmation;
+pub mod annotation;
+pub mod case_management;
+pub mod criteria_catalog;
+pub mod criteria_selection;
+pub mod document_processing;
+pub mod document_upload;
 pub mod domain;
+pub mod evidence_assembly;
+pub mod letter_workflow;
+pub mod logout;
 pub mod ports;
 pub mod projection;
 pub mod reassessment;
 pub mod session;
 pub mod signing;
+pub mod source;
 
 use std::sync::Arc;
 

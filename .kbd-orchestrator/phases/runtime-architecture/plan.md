@@ -11,7 +11,7 @@ Deliver an authorized persisted synthetic clinical-domain row through Forge Post
 
 Inputs are [goals](goals.md), [assessment](assessment.md), its mandatory [review supplement](review/assess/review.md), and the current [decision index](../../../docs/architecture/README.md), [runtime architecture](../../../docs/architecture/application-runtime-architecture.md) and [React UI architecture](../../../docs/architecture/react-ui-component-architecture.md). ADRs 008/009 supersede 006/007. Source observations are not acceptance results. No implementation, dependency, schema or standing rule changes are authorized by this planning turn.
 
-Keep the twelve other product routes as placeholders. Add only required runtime/authentication surfaces and the timeline's specified annotation/source-preview slice. Do not implement other clinical/settings screens, protected agent/media streams, a new query cache, or a Tauri Zustand clinical mirror. Forge remains the Postgres substrate; this plan does not migrate ASO to Forge's generic HTTP gateway or inject ASO schema details into it.
+The operator's 2026-09-16 web-first direction supersedes the earlier placeholder-only sequencing for subsequent work. The `web-case-to-letter` child now owns the complete browser case-to-letter and denial-response workflow through actual-browser certification. After that child passes, run `ra-20-safe-browser-updates` and then the browser-scoped `ra-22-runtime-certification`. Defer `ra-19-native-sqlite-parity` and `ra-21-safe-native-updates` until the web application is certified. Completed native foundations remain historical evidence, but no native result substitutes for browser evidence. Do not implement unrelated settings screens, protected agent/media streams, a new query cache, or a Tauri Zustand clinical mirror. Forge remains the Postgres substrate; this plan does not migrate ASO to Forge's generic HTTP gateway or inject ASO schema details into it.
 
 The root OpenSpec directory exists even though its specs are empty; previous native-backend metadata is stale. Use root OpenSpec spec-driven changes, with KBD as canonical ordering/status. No evolver plan or library-candidates file exists. Existing researched architecture supplies the skipped Analyze/Spec inputs; each change still receives an OpenSpec delta specification.
 
@@ -38,7 +38,7 @@ Every added HTTP operation has its corresponding typed desktop wrapper and refus
 
 Safety tests use synthetic records and named failure scenarios from each change's criteria. For clinical, privacy, tenant, three-state and state-ownership guards, prove the guard fails under deliberate controlled sabotage, then restore the code. Test the mounted boundary that can fail, not a helper that mirrors implementation. Test prerequisites must error visibly; a silently skipped database test is not Passed. Recheck callers of every exported adapter in the assembled application.
 
-T0: touched Rust crate check/clippy; web typecheck/lint; documentation structure/link/schema checks. T1: targeted behavioral tests for each completed implementation unit, including the explicit assembled integration fixture for that unit. T2: at phase completion, run cargo test --workspace, cargo build --workspace, pnpm --dir web build, flutter analyze mobile, flutter test mobile and bash scripts/audit.sh, plus the required affected companion gates. Flutter analyze/test are always included in the phase blocking constraints even when mobile source was untouched; they are not physical-device certification. Rust builds run sequentially, one owner per build directory. T3: only the explicitly reached delivery/release milestone, after relevant lower-tier prerequisites. The first browser delivery is a narrow milestone; it does not authorize a broad release campaign.
+T0: touched Rust crate check/clippy; web typecheck/lint; documentation structure/link/schema checks. T1: targeted behavioral tests for each completed implementation unit, including the explicit assembled integration fixture for that unit. The web child's T2 runs the Rust workspace gates, web production build, architecture audit, local service stack and actual-browser campaign specified by `web-17`; Flutter and native-device gates are outside that child and cannot block its browser result. Browser-scoped RA22 repeats the applicable assembled browser gates after `ra-20`. Native/mobile successors run their own platform gates later. Rust builds run sequentially, one owner per build directory. T3: only the explicitly reached delivery/release milestone, after relevant lower-tier prerequisites. The first browser delivery is a narrow milestone; it does not authorize a broad release campaign. CI is never test evidence.
 
 Every implementation change runs artifact-refiner then isolated adversarial review before its completion/archive, and records observed results. ra-22 repeats the appropriate assembled certification review. Plan validation is structural/OpenSpec plus critic/judge review, not an application build claim. Results use Passed / Build-only / Blocked / Failed.
 
@@ -277,14 +277,14 @@ Risk / limit: This change owns database lifecycle only; no Ready or live-materia
 - Ownership: ASO: replica worker materialization service, shared sync projection/key mapping and explicit live integration runner; PEM: adopted committed projection API.
 - Recommended agent: Codex. Est. complexity: L. Complexity score: High. Model class: frontier. Customer value: HIGH.
 
-Wire the proven materializer into the owned worker and the approved projection revision, including the cases gate field. Apply SQL rows plus real checkpoints transactionally, then publish coherent graph entities/lists, preserving all three reference keys and generation/refetch behavior.
+Implement the bounded internal FRF-to-PGlite materializer selected after the ra-11a published candidate failed the authorized-facade check. Run it inside the owned worker and apply the approved projection revision, including the cases gate field. Commit SQL rows plus per-shape opaque checkpoints in one transaction, then publish coherent graph entities/lists, preserving all three reference keys and generation/refetch behavior.
 
 Acceptance:
 1. When the real authorized stream inserts, updates or deletes related records, SQL rows/checkpoints and graph entities/lists agree before readiness, including gate-summary updates and met/gap/void reference identities.
 2. When a crash, refetch or authorization narrowing interrupts the assembled runtime, resume cannot skip data, replacement removes stale rows and no partial relationship batch is published.
 3. When the owner is revoked or disposed while materialization is in flight, old-scope work drains or is fenced and cannot publish/write through the next runtime.
 
-Bounded tasks: 1) Connect the ra-11a materializer within ra-11b ownership and remove the unused/synthetic-offset read-path seam from active use. 2) Implement committed SQL-to-graph publication with explicit primary keys, replacement generations and catch-up status. 3) Run real Postgres→Gate/FRF→SQL→graph acceptance with update/delete/crash/refetch; use isolated durable synthetic storage for restart cases and memory-only browser baseline until persistence policy is approved.
+Bounded tasks: 1) Implement the selected internal adapter within ra-11b ownership and remove the unused aggregate/synthetic-offset read-path seam from active use; do not add or adopt the blocked `@electric-sql/pglite-sync` candidate. 2) Implement committed SQL-to-graph publication with explicit primary keys, replacement generations and catch-up status. 3) Run real Postgres→Gate/FRF→SQL→graph acceptance with update/delete/crash/refetch; use isolated durable synthetic storage for restart cases and memory-only browser baseline until persistence policy is approved.
 
 Risk / limit: No duplicated graph writer and no shadow graph-snapshot table pretending to materialize clinical rows.
 
@@ -356,7 +356,7 @@ Acceptance:
 2. When the editor crosses desktop/mobile widths or opens another view of the same case, draft text, caret/IME state and independent selection are preserved without remounting or global interaction leakage.
 3. When the session changes or a stale annotation revision is submitted, old autosave/submission is fenced, another user cannot recover the draft, and conflicts/refusals are explicit.
 
-Bounded tasks: 1) Add the annotation domain/revision/audit and projection contract plus HTTP/desktop command parity. 2) Implement scoped draft/command hooks and shadcn annotation parts/cards within the evidence feature. 3) Verify live save/refusal/projection, include/hold semantics, resize editor continuity and recovery isolation.
+Bounded tasks: 1) Add the annotation domain/revision/audit and projection contract, authenticated HTTP routes and fail-closed desktop wrappers; ra-17 owns executable desktop parity. 2) Implement scoped draft/command hooks and shadcn annotation parts/cards within the evidence feature. 3) Verify live save/refusal/projection, include/hold semantics, resize editor continuity and recovery isolation.
 
 Risk / limit: No annotation becomes a generated clinical assertion without document/page/date provenance and the separate generation/QA contract.
 
@@ -435,7 +435,7 @@ Risk / limit: This is an explicit candidate evaluation, not a mandate to ship SQ
 ### 22. ra-20-safe-browser-updates — Coordinate compatible web code, schema and draft updates
 
 - Scope / runtime order: 6.
-- Depends on: ra-16-authorized-source-preview.
+- Depends on: web-case-to-letter/web-17-browser-scenario-certification.
 - Ownership: ASO: runtime update coordinator, compatibility service/manifest and browser deployment assets; server migration deployment job; scoped draft and replica services.
 - Recommended agent: Codex. Est. complexity: L. Complexity score: High. Model class: frontier. Customer value: MEDIUM.
 
@@ -468,23 +468,23 @@ Bounded tasks: 1) Implement signed paired-version compatibility and updater stag
 
 Risk / limit: Signing keys, distribution and real-device certification are release prerequisites, not artifacts this planning turn provisions.
 
-### 24. ra-22-runtime-certification — Certify the assembled runtime against the full acceptance matrix
+### 24. ra-22-runtime-certification — Certify the assembled browser runtime
 
 - Scope / runtime order: 7.
-- Depends on: ra-14-live-evidence-timeline, ra-15-attributed-annotations, ra-16-authorized-source-preview, ra-19-native-sqlite-parity, ra-20-safe-browser-updates, ra-21-safe-native-updates.
+- Depends on: web-case-to-letter/web-17-browser-scenario-certification, ra-20-safe-browser-updates.
 - Ownership: ASO: explicit cross-repository acceptance runner/evidence and phase reflection; all companion owners supply prerequisite services/artifacts and their gate results.
 - Recommended agent: Codex. Est. complexity: L. Complexity score: High. Model class: frontier. Customer value: MEDIUM.
 
-Run the 19 runtime scenarios and relevant UI gates against the actual adopted artifacts, with per-surface evidence. Recheck all four invariants, document performance thresholds before measurement, and keep first-row closure separate from full publication certification.
+Run the complete browser runtime and product-workflow scenarios against the actual adopted artifacts after the web child and safe browser updates pass. Recheck the four standing invariants, document browser performance thresholds before measurement, and keep first-row closure separate from complete browser workflow certification. Native and mobile publication remain separate later milestones.
 
 Acceptance:
-1. When the full configured deployment is certified, every required scenario has observed command/service/browser evidence, artifact versions and a Passed/Build-only/Blocked/Failed result; no prerequisite silently skips.
-2. When a claimed native OS/browser or hard pin/policy gate lacks evidence, that surface and publication remain Blocked; successful browser/fixture tests do not substitute.
+1. When the configured browser deployment is certified, every required browser startup, case workflow, denial-response, update and security scenario has observed command/service/actual-browser evidence, artifact versions and a Passed/Build-only/Blocked/Failed result; no prerequisite silently skips.
+2. When a claimed browser, hard pin or policy gate lacks evidence, browser publication remains Blocked; fixture, native or mobile results do not substitute.
 3. When a new guard is relied on or a new runtime adapter is exported, its failure mode is demonstrated at the real integration boundary and caller tracing shows the intended runtime path is actually mounted.
 
-Bounded tasks: 1) Assemble explicit non-skipping service/fixture checks and run the complete scenario/UI mapping after relevant T0/T1 gates. 2) At phase completion run required T2 gates sequentially for Rust; only then perform appropriate release/device T3 certification. 3) Run artifact-refiner followed by isolated adversarial review, record warning disposition and evidence, then reflect and update only genuinely satisfied completion dimensions.
+Bounded tasks: 1) Confirm `web-17` and `ra-20` evidence, then assemble explicit non-skipping service and actual-browser checks for the complete browser scenario/UI mapping. 2) Run the browser-scoped T2 gates with sequential Rust builds and the local stack; do not require or claim native/mobile certification. 3) Run artifact-refiner followed by isolated adversarial review, record warning disposition and evidence, then reflect and update only genuinely satisfied completion dimensions.
 
-Risk / limit: The first row is necessary and insufficient. Unsatisfied native/policy/pin gates remain visible rather than being removed from the matrix.
+Risk / limit: The first row is necessary and insufficient. This change can certify the browser application only; native and mobile remain explicitly deferred rather than silently inferred.
 
 ## EXECUTION ROUND ORDER
 
@@ -509,11 +509,10 @@ The list is a dependency graph, not authorization to launch all agents. Shared o
 | 15 | ra-14 | First-row milestone; requires ra-10 invariant cleanup plus the runtime chain |
 | 16 | ra-15 | Attributed annotations |
 | 17 | ra-16 | Authorized preview and adaptive UI stage-3 acceptance |
-| 18 | ra-17, ra-20 | Sequence these by default because both may edit runtime composition/contracts; parallelize only after explicit file partition |
-| 19 | ra-18 | Native session owner precedes actual PGlite window baseline |
-| 20 | ra-19 | SQLite candidate compared with observed PGlite baseline |
-| 21 | ra-21 | Native update follows engine disposition and shared compatibility contract |
-| 22 | ra-22 | Full acceptance/publication decision; no green status inferred from earlier milestones |
+| 18 | web-case-to-letter web-00 through web-17 | Serial child execution implements and certifies the complete browser case-to-letter and denial-response workflow |
+| 19 | ra-20 | Browser update safety follows the certified product workflow |
+| 20 | ra-22 | Browser runtime acceptance/publication decision; no green status inferred from fixtures or native foundations |
+| Deferred | ra-17 through ra-19, then ra-21 | Resume native session, PGlite/SQLite and updater certification only after browser Passed; completed portions remain evidence and are not repeated |
 
 ## Acceptance traceability
 
@@ -529,19 +528,21 @@ Each acceptance row names the primary owner and where integrated proof is collec
 | Offline grant absent/expired | ra-12, ra-13 | ra-14, ra-22 |
 | Revocation during open stream | ra-06, ra-13 | ra-14, ra-22 |
 | Browser leader closes | ra-11b, ra-11c | ra-14, ra-22 |
-| Two desktop windows | ra-17, ra-18 | ra-22 |
+| Complete browser request workflow | web-00 through web-11 | web-17, ra-22 |
+| Browser denial-response workflows | web-12 through web-15 | web-17, ra-22 |
+| Generated assertion provenance | web-00, web-08 through web-15 | web-17, ra-22 |
 | Old tab versus new schema | ra-11b, ra-11c, ra-20 | ra-22 |
 | Crash between row/checkpoint | ra-11b, ra-11c | ra-14, ra-22 |
 | Entity/list projection batch | ra-08, ra-11c | ra-14, ra-22 |
 | Rebuild with unsent draft | ra-13, ra-15, ra-20 | ra-22 |
 | Expired Electric handle/refetch | ra-05, ra-11c | ra-14, ra-22 |
-| SQLite parity | ra-19 | ra-22, with explicit engine disposition |
 | Lost command response | ra-02, ra-03, ra-20 | ra-22 |
-| Update with dirty work | ra-20, ra-21 | ra-22 |
+| Browser update with dirty work | ra-20 | ra-22 |
 | Administrator/agent signing | ra-03 | ra-22 |
-| Quota/eviction/native migration failure | ra-11b, ra-11c, ra-19, ra-20, ra-21 | ra-22 |
+| Browser quota/eviction recovery | ra-11b, ra-11c, ra-20 | ra-22 |
+| Two desktop windows, SQLite parity, native update/migration | ra-17 through ra-19, ra-21 | Deferred native certification after browser Passed |
 
-UI stage 2 live authentication is ra-12 after runtime 1–4 prerequisites. UI stage 3 is ra-14 through ra-16, including annotations and authorized sources; a native claim also requires ra-17/18. UI stages 4–5's other product views stay placeholders. UI stage 6's relevant release gates live in ra-16/20/21/22: desktop/mobile resize with stable editor identity, keyboard/focus, safe areas, 44px touch targets, live reduced-motion changes, interrupted animation and no protected document snapshots.
+UI stage 2 live authentication is ra-12 after runtime 1–4 prerequisites. UI stage 3 is ra-14 through ra-16, including annotations and authorized sources. The web child now implements UI stages 4–5 for the complete request and denial-response workflows. Browser stage-6 behavior is certified by web-17 and ra-22 after ra-20; native and physical-mobile claims retain separate later gates.
 
 All four invariants are explicit: three-state identities/rendering ra-08/14; independent clinical checks ra-02/03; single generated token source ra-16 and certification equality checks; no query-cache dependency/ownership ra-10/14. D1 is resolved only by ra-11c/14, D2 by ra-07/13, and D3 by ra-12. The assessment's SWR and key/id findings are required work, not dismissed warnings.
 

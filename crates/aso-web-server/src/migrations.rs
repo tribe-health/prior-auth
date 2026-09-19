@@ -171,6 +171,156 @@ impl MigrationSource<'static> for ServerMigrations {
                     .into(),
                     false,
                 ),
+                Migration::new(
+                    2026090614,
+                    "durable attributed annotations".into(),
+                    MigrationType::Simple,
+                    include_str!("../../../migrations/server/2026090614_durable_annotations.sql")
+                        .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090615,
+                    "annotation gateway policy".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090615_annotation_gateway_policy.sql"
+                    )
+                    .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090616,
+                    "authorized document source".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090616_authorized_document_source.sql"
+                    )
+                    .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090617,
+                    "durable case commands".into(),
+                    MigrationType::Simple,
+                    include_str!("../../../migrations/server/2026090617_durable_case_commands.sql")
+                        .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090618,
+                    "administering entity resolution schema".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090618_administering_entity_resolution_schema.sql"
+                    )
+                    .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090619,
+                    "administering entity resolution commands".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090619_administering_entity_resolution_commands.sql"
+                    )
+                    .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090620,
+                    "document upload schema".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090620_document_upload_schema.sql"
+                    )
+                    .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090621,
+                    "document processing".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090621_document_processing.sql"
+                    )
+                    .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090622,
+                    "document status projection".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090622_document_status_projection.sql"
+                    )
+                    .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090623,
+                    "case document revision read".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090623_case_document_revision_read.sql"
+                    )
+                    .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090624,
+                    "criteria catalog".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090624_criteria_catalog.sql"
+                    )
+                    .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090625,
+                    "criteria catalog commands".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090625_criteria_catalog_commands.sql"
+                    )
+                    .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090626,
+                    "criteria catalog repair".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090626_criteria_catalog_repair.sql"
+                    )
+                    .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090627,
+                    "criteria selection".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090627_criteria_selection.sql"
+                    )
+                    .into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090628,
+                    "evidence assembly".into(),
+                    MigrationType::Simple,
+                    include_str!("../../../migrations/server/2026090628_evidence_assembly.sql").into(),
+                    false,
+                ),
+                Migration::new(
+                    2026090629,
+                    "letter workflow".into(),
+                    MigrationType::Simple,
+                    include_str!("../../../migrations/server/2026090629_letter_workflow.sql").into(),
+                    false,
+                ),
             ])
         })
     }
@@ -192,6 +342,14 @@ async fn reject_unsafe_local_publications(pool: &PgPool) -> Result<(), Box<dyn s
                     'gate_commands',
                     'letter_sign_commands',
                     'evidence_reassessment_commands'
+                    ,'annotation_commands'
+                    ,'annotation_revisions'
+                    ,'case_commands'
+                    ,'document_upload_staging'
+                    ,'document_upload_commands'
+                    ,'document_processor_grants'
+                    ,'document_pages'
+                    ,'document_processing_commands'
                   )
                OR (
                  position('Privacy: local' in COALESCE(
@@ -207,6 +365,14 @@ async fn reject_unsafe_local_publications(pool: &PgPool) -> Result<(), Box<dyn s
                     'gate_commands',
                     'letter_sign_commands',
                     'evidence_reassessment_commands'
+                    ,'annotation_commands'
+                    ,'annotation_revisions'
+                    ,'case_commands'
+                    ,'document_upload_staging'
+                    ,'document_upload_commands'
+                    ,'document_processor_grants'
+                    ,'document_pages'
+                    ,'document_processing_commands'
                   )
                OR (
                  position('Privacy: local' in COALESCE(

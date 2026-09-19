@@ -65,6 +65,23 @@ export function resolveStoragePolicy(configured: string | undefined | null): Sto
 }
 
 /**
+ * Refuse the only configuration that could durably materialize the current
+ * clinical projection. The experimental materializer is qualified for the
+ * in-memory browser runtime only; persistent clinical data remains blocked
+ * until the G-DATA decision approves its durable projection.
+ */
+export function assertMaterializerStoragePolicy(
+  policy: StoragePolicy,
+  materializerEnabled: boolean,
+): void {
+  if (materializerEnabled && policy.mode === PERSISTENT) {
+    throw new Error(
+      "The experimental clinical materializer is approved only for memory-only qualification.",
+    );
+  }
+}
+
+/**
  * The PGlite data directory for a policy.
  *
  * `undefined` means in-memory — PGlite's own default when constructed with no
