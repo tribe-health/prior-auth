@@ -59,7 +59,7 @@
       "id",
       "practice_id",
       "case_id",
-      "policy_criterion_id",
+      "criterion_id",
       "state",
       "assessed_at",
       "created_at",
@@ -108,6 +108,22 @@
       "processing_error_code",
       "updated_at",
       "revision"
+    ],
+    "allowed_params": [],
+    "relation": "view",
+    "object_namespace": "practice",
+    "scope_column": "practice_id"
+  },
+  "document_task_statuses": {
+    "table": "aso.document_task_statuses",
+    "columns": [
+      "id",
+      "case_id",
+      "purpose",
+      "state",
+      "stage",
+      "last_sequence",
+      "updated_at"
     ],
     "allowed_params": [],
     "relation": "view",

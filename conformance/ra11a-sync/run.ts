@@ -491,7 +491,7 @@ async function insertObsoleteRows(pg: SyncDatabase): Promise<void> {
       '00000000-0000-4000-8000-000000000011', 'obsolete', '2000-01-01'
     );
     INSERT INTO case_evidence(
-      id, practice_id, case_id, policy_criterion_id, state
+      id, practice_id, case_id, criterion_id, state
     ) VALUES (
       '00000000-0000-4000-8000-000000000015',
       '00000000-0000-4000-8000-000000000012',

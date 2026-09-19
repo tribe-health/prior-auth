@@ -1,0 +1,22 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "web/src/features/administering-entity/hooks/use-administering-entity-resolution.ts",
+      "claim": "A successfully committed resolution can lose its command ID and become unreconcilable if the post-commit reload fails.",
+      "evidence": "In `resolve`, after `administeringEntityApi.resolve(...)` returns a current receipt, the hook calls `await refreshCommitted();`; any error from that read is caught by the generic catch block, which publishes `status: 'error'` and `pendingCommandId: null`. Acceptance requires reload and durable command reconciliation, and `.refiner/artifacts/web-03-administering-entity-resolution/constraints.json` lists `durable-command-reconciliation` as blocking.",
+      "suggested_fix": "Separate the commit call from the reload call: once the receipt is returned, retain `commandId` until the committed state is successfully read; if reload fails, publish an uncertain/reconcileable state with `pendingCommandId: receipt.value.commandId` instead of clearing it."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

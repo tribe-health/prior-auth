@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Document Assembly Specification — Advanced Spine &amp; Orthopedics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Mulish:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Advanced Spine & Orthopedics — brand guide v1.0 tokens. Flat 2.0: no border-* properties. */
+:root{
+  --ember:#DF7C35; --ember-deep:#A85417; --ember-tint:#FBEFE6;
+  --slate:#A7C5D6; --slate-tint:#EDF3F7; --navy:#1F4E79;
+  --graphite:#6E6F71; --ink:#231F20; --bone:#F1EFEC;
+  --bg:#FFFFFF; --s1:#F7F6F4; --s2:#F1EFEC; --s3:#E7E4E0; --s-zebra:#FAF9F7;
+  --fg:#231F20; --fg-2:#55565A; --fg-3:#6E6F71;
+  --accent:#A85417; --accent-vivid:#DF7C35; --cool:#1F4E79;
+  --cool-surface:#EDF3F7; --warm-surface:#FBEFE6;
+  --ok:#1E6F4E; --ok-surface:#E7F3EC; --gap:#A85417; --gap-surface:#FBEFE6; --void:#5B5F66; --void-surface:#EFEFF1;
+  --code-tag:#A85417; --code-expr:#1F4E79; --code-com:#6E6F71; --code-str:#1E6F4E;
+  /* diagram tokens: fill / text-on-fill / tint */
+  --d-core:#1F4E79; --d-on-core:#FFFFFF; --d-core-t:#EDF3F7;
+  --d-routing:#A7C5D6; --d-on-routing:#231F20; --d-routing-t:#EDF3F7;
+  --d-procedure:#A85417; --d-on-procedure:#FFFFFF; --d-procedure-t:#FBEFE6;
+  --d-kind:#DF7C35; --d-on-kind:#231F20; --d-kind-t:#FBEFE6;
+  --d-clinical:#6E6F71; --d-on-clinical:#FFFFFF; --d-clinical-t:#F1EFEC;
+  --d-pattern:#231F20; --d-on-pattern:#FFFFFF; --d-pattern-t:#E7E4E0;
+  --d-gate:#55565A; --d-on-gate:#FFFFFF; --d-gate-t:#EFEFF1;
+  --d-rust:#231F20; --d-on-rust:#FFFFFF; --d-rust-t:#E7E4E0;
+  --d-ok:#1E6F4E; --d-on-ok:#FFFFFF; --d-ok-t:#E7F3EC;
+  --d-notmet:#A85417; --d-on-notmet:#FFFFFF; --d-notmet-t:#FBEFE6;
+  --d-undoc:#5B5F66; --d-on-undoc:#FFFFFF; --d-undoc-t:#EFEFF1;
+  --d-chev:#C9C3BC;
+  --serif:'Playfair Display',Georgia,'Times New Roman',serif;
+  --sans:'Mulish','Nunito Sans','Segoe UI',system-ui,-apple-system,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace;
+  --r:5px; --measure:74ch;
+}
+html.dark{
+  --ember:#F0955A; --ember-deep:#F0955A; --ember-tint:#2E2119;
+  --slate:#8FB9D0; --slate-tint:#182430; --navy:#8FB9D0;
+  --graphite:#98A2AA; --ink:#EDF0F2; --bone:#1C2126;
+  --bg:#14181C; --s1:#1C2126; --s2:#252B31; --s3:#2E353C; --s-zebra:#191E23;
+  --fg:#EDF0F2; --fg-2:#B4BFC7; --fg-3:#93A0A9;
+  --accent:#F0955A; --accent-vivid:#F0955A; --cool:#8FB9D0;
+  --cool-surface:#182430; --warm-surface:#2E2119;
+  --ok:#6FD1A0; --ok-surface:#152620; --gap:#F0955A; --gap-surface:#2E2119; --void:#A9B3BB; --void-surface:#232830;
+  --code-tag:#F0955A; --code-expr:#8FB9D0; --code-com:#93A0A9; --code-str:#6FD1A0;
+  --d-core:#8FB9D0; --d-on-core:#14181C; --d-core-t:#182430;
+  --d-routing:#2C4A61; --d-on-routing:#EDF0F2; --d-routing-t:#182430;
+  --d-procedure:#E5A477; --d-on-procedure:#14181C; --d-procedure-t:#2E2119;
+  --d-kind:#F0955A; --d-on-kind:#14181C; --d-kind-t:#2E2119;
+  --d-clinical:#98A2AA; --d-on-clinical:#14181C; --d-clinical-t:#252B31;
+  --d-pattern:#EDF0F2; --d-on-pattern:#14181C; --d-pattern-t:#2E353C;
+  --d-gate:#A9B3BB; --d-on-gate:#14181C; --d-gate-t:#232830;
+  --d-rust:#2E353C; --d-on-rust:#EDF0F2; --d-rust-t:#2E353C;
+  --d-ok:#6FD1A0; --d-on-ok:#14181C; --d-ok-t:#152620;
+  --d-notmet:#F0955A; --d-on-notmet:#14181C; --d-notmet-t:#2E2119;
+  --d-undoc:#A9B3BB; --d-on-undoc:#14181C; --d-undoc-t:#232830;
+  --d-chev:#4A535B;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:1rem}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-underline-offset:2px}
+a:focus-visible,summary:focus-visible,[role=tab]:focus-visible,[role=button]:focus-visible{outline:3px solid var(--accent-vivid);outline-offset:2px;border-radius:3px}
+code{font-family:var(--mono);font-size:.82em;background:var(--s2);color:var(--accent);padding:.12em .4em;border-radius:3px;overflow-wrap:anywhere}
+strong{color:var(--fg);font-weight:700}
+.skip{position:absolute;left:-999px;top:0;background:var(--ink);color:var(--bg);padding:.5rem 1rem;z-index:99}
+.skip:focus{left:1rem}
+
+.shell{display:grid;grid-template-columns:250px minmax(0,1fr);max-width:1480px;margin:0 auto}
+/* ── Sidebar ── */
+.side{background:var(--s1);padding:2.2rem 1.4rem;position:sticky;top:0;height:100vh;overflow-y:auto}
+.side-brand{display:flex;align-items:center;gap:.7rem;margin-bottom:1.6rem}
+.side-brand .ic{width:34px;height:34px;flex-shrink:0}
+.side-brand .ic svg,.mark-inline svg{width:100%;height:100%;display:block}
+.side-mark{flex:1;min-width:0}
+.side-mark svg{width:100%;max-width:150px;height:auto;display:block}
+.side h4{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;color:var(--fg-3);text-transform:uppercase;margin:1.4rem 0 .5rem;font-weight:400}
+.side a{display:block;color:var(--fg-2);text-decoration:none;font-size:.83rem;padding:.32rem .55rem;border-radius:3px}
+.side a:hover{background:var(--s2);color:var(--accent)}
+.side a.sub{padding-left:1.2rem;font-size:.78rem}
+/* ── Main ── */
+main{padding:3rem 3.2rem 5rem;min-width:0}
+.mark-inline{display:none;align-items:center;gap:.65rem;margin-bottom:1.4rem}
+.mark-inline .mi-ic{width:30px;height:30px}
+.mark-inline .mi-t{font-size:.9rem;font-weight:700;color:var(--fg);line-height:1.3}
+.topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap;margin-bottom:1.8rem}
+.ctrl{display:flex;gap:.5rem;flex-wrap:wrap}
+.toggle,.tocbtn{font-family:var(--mono);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;background:var(--s2);color:var(--fg-2);
+  padding:.55rem .9rem;border-radius:3px;cursor:pointer;text-decoration:none;display:inline-block}
+.toggle:hover,.tocbtn:hover{background:var(--s3);color:var(--accent)}
+.tocbtn{display:none}
+.eyebrow{font-family:var(--mono);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--fg-3);margin-bottom:.7rem}
+h1{font-family:var(--serif);font-size:2.9rem;line-height:1.1;font-weight:600;letter-spacing:-.015em;margin-bottom:.8rem;max-width:20ch}
+h2{font-family:var(--serif);font-size:1.85rem;font-weight:600;letter-spacing:-.01em;margin:3.4rem 0 1rem;padding-top:1.6rem;
+  background:linear-gradient(var(--s3),var(--s3)) top left / 60px 2px no-repeat}
+h3{font-size:1.05rem;font-weight:700;margin:2.1rem 0 .6rem}
+h4{font-size:.92rem;font-weight:700;margin:1.2rem 0 .4rem;color:var(--fg)}
+p{color:var(--fg-2);margin-bottom:1rem;max-width:var(--measure)}
+.lead{font-size:1.1rem;color:var(--fg-2);max-width:68ch}
+section{scroll-margin-top:1rem}
+/* ── Meta strip ── */
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:2px;background:var(--bg);border-radius:var(--r);overflow:hidden;margin:1.6rem 0 1rem}
+.meta div{padding:.9rem 1.1rem;background:var(--s1)}
+.meta .k{font-family:var(--mono);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;color:var(--fg-3);margin-bottom:.25rem}
+.meta .v{font-size:.88rem;color:var(--fg);font-weight:700}
+/* ── Surfaces ── */
+.panel{background:var(--s1);border-radius:var(--r);padding:1.4rem 1.6rem;margin:1.3rem 0}
+.callout{border-radius:var(--r);padding:1.1rem 1.35rem;margin:1.2rem 0;background:var(--warm-surface);max-width:var(--measure)}
+.callout.cool{background:var(--cool-surface)} .callout.neutral{background:var(--void-surface)}
+.callout .lbl{font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:.4rem}
+.callout.cool .lbl{color:var(--cool)} .callout.neutral .lbl{color:var(--void)}
+.callout p{margin:0;color:var(--fg-2)}
+.figure{background:var(--s1);border-radius:var(--r);padding:1.3rem;margin:1.3rem 0;overflow-x:auto}
+.figure .diagram{display:block;width:100%;height:auto;min-width:760px}
+.figure .diagram.wide{min-width:980px}
+.figure .diagram.spines{max-width:880px;min-width:660px}
+.figcap{font-size:.85rem;color:var(--fg-3);margin:.8rem 0 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:.9rem;margin:1.3rem 0}
+.card{background:var(--s1);border-radius:var(--r);padding:1.15rem 1.3rem}
+.card .ct{font-size:.95rem;font-weight:700;color:var(--fg);margin-bottom:.4rem}
+.card p{font-size:.87rem;margin:0}
+.card ol{padding-left:1.1rem;color:var(--fg-2);font-size:.87rem} .card li{margin:.3rem 0}
+/* ── Tables ── */
+.tw{overflow-x:auto;margin:1.2rem 0;border-radius:var(--r)}
+table{width:100%;border-collapse:collapse;font-size:.87rem}
+thead th{background:var(--s3);text-align:left;padding:.7rem .9rem;font-family:var(--mono);font-size:.63rem;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--fg-2);font-weight:500;white-space:nowrap}
+tbody td{padding:.62rem .9rem;color:var(--fg-2);vertical-align:top}
+tbody tr:nth-child(odd){background:var(--s-zebra)} tbody tr:nth-child(even){background:var(--s1)}
+td code{white-space:nowrap} td.wrap code{white-space:normal}
+.chip{display:inline-block;font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;padding:.22em .6em;border-radius:3px;white-space:nowrap}
+.c-ok{background:var(--ok-surface);color:var(--ok)} .c-notmet{background:var(--gap-surface);color:var(--gap)} .c-undoc{background:var(--void-surface);color:var(--void)}
+.c-cool{background:var(--cool-surface);color:var(--cool)} .c-warm{background:var(--warm-surface);color:var(--accent)} .c-neutral{background:var(--s2);color:var(--fg-2)}
+.cite{font-family:var(--mono);font-size:.74rem;color:var(--fg-3);background:var(--s2);padding:.2em .5em;border-radius:3px}
+/* ── Code ── */
+pre.code{background:var(--s1);color:var(--fg);font-family:var(--mono);font-size:.78rem;line-height:1.6;padding:1rem 1.15rem;border-radius:var(--r);overflow-x:auto;margin:.8rem 0;tab-size:2}
+pre.code .c{color:var(--code-com);font-style:italic} pre.code .t,pre.code .k{color:var(--code-tag)} pre.code .e{color:var(--code-expr)} pre.code .s{color:var(--code-str)}
+/* ── Inventory ── */
+.tpl{background:var(--s1);border-radius:var(--r);padding:1rem 1.2rem;margin:.65rem 0}
+.tpl-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:.45rem .8rem}
+.tpl-head code{font-size:.9rem;background:transparent;color:var(--fg);padding:0;font-weight:500}
+.tpl p.hdr{white-space:pre-line;font-size:.9rem;margin:.5rem 0}
+.tpl .mt{font-size:.8rem;color:var(--fg-3)}
+.tpl pre.code{background:var(--bg)}
+details{margin:.35rem 0}
+summary{cursor:pointer;font-size:.84rem;font-weight:700;color:var(--accent);padding:.15rem 0}
+.chips{display:flex;flex-wrap:wrap;gap:.3rem;margin:.5rem 0}
+.chips code{font-size:.74rem;background:var(--bg);color:var(--fg-2)}
+/* ── Examples ── */
+.tabs{display:flex;flex-wrap:wrap;gap:.3rem;margin:1rem 0 0}
+.tabs [role=tab]{background:var(--s2);color:var(--fg-2);padding:.45rem .7rem;border-radius:3px 3px 0 0;font-size:.8rem;font-weight:700;cursor:pointer;text-decoration:none}
+.tabs [role=tab][aria-selected=true]{background:var(--s1);color:var(--accent)}
+.tabpanel{background:var(--s1);border-radius:0 var(--r) var(--r) var(--r);padding:1.4rem 1.5rem}
+.tabpanel[hidden]{display:none}
+.fx-meta{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;margin-bottom:1rem;font-size:.82rem;color:var(--fg-3)}
+.letter{background:#FFFFFF;color:#231F20;border-radius:3px;padding:2rem 2.3rem;max-width:860px;font-size:.92rem}
+.letter p,.letter li,.letter td{color:#231F20} .letter strong{color:#231F20}
+.letter h1{font-family:var(--serif);font-size:1.4rem;color:#231F20;margin:0 0 .8rem}
+.letter h2{font-family:var(--sans);font-size:1.02rem;font-weight:700;margin:1.6rem 0 .5rem;padding:0;background:none;color:#231F20}
+.letter h3{font-size:.95rem;margin:1.1rem 0 .4rem;color:#231F20}
+.letter .lh-logo{width:220px;margin-bottom:1rem}.letter .lh-logo svg{width:100%;height:auto;display:block}
+.letter blockquote{margin:.8rem 0;padding:.6rem 1rem;background:#F1EFEC;border-radius:3px}
+.letter blockquote p{margin:.2rem 0}
+.letter ul{padding-left:1.2rem;margin:.5rem 0}
+.letter code{background:#F1EFEC;color:#A85417}
+.letter thead th{background:#E7E4E0;color:#55565A} .letter tbody tr:nth-child(odd){background:#FAF9F7} .letter tbody tr:nth-child(even){background:#F7F6F4}
+.letter tbody td{color:#231F20}
+footer{margin-top:4.5rem;padding-top:1.6rem;background:linear-gradient(var(--s3),var(--s3)) top left / 100% 1px no-repeat;font-family:var(--mono);
+  font-size:.66rem;color:var(--fg-3);letter-spacing:.05em;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+/* ── Responsive ── */
+@media (max-width:860px){
+  .shell{grid-template-columns:1fr}
+  .side{position:static;height:auto;display:none;padding:1.4rem}
+  .side.open{display:block}
+  .tocbtn{display:inline-block}
+  .mark-inline{display:flex}
+  main{padding:1.8rem 1.4rem 4rem}
+  h1{font-size:2.1rem}
+  .letter{padding:1.2rem}
+}
+@media (max-width:540px){
+  body{font-size:15px}
+  h1{font-size:1.75rem} h2{font-size:1.4rem} .lead{font-size:1rem}
+  main{padding:1.4rem 1rem 3rem}
+  .panel,.callout,.card,.tpl{padding:1rem}
+  thead th,tbody td{padding:.5rem .6rem;font-size:.8rem}
+  .tabpanel{padding:1rem}
+}
+@media print{.side,.ctrl{display:none}.shell{grid-template-columns:1fr}main{padding:0}}
+</style></head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><g id="mk-adaptive"><g transform="rotate(-13 256 256) translate(0 18)"><path d="M80 250C172 186 300 154 432 162C306 126 176 148 80 208C64 218 64 240 80 250Z" fill="var(--graphite)"/><path d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z" fill="var(--ember)"/></g></g></defs></svg>
+<div class="shell">
+<aside class="side" id="toc" aria-label="Contents">
+  <div class="side-brand"><div class="ic"><svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#mk-adaptive"/></svg></div><div class="side-mark"><svg viewBox="0 0 430 128" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Advanced Spine and Orthopedics"><text x="12" y="70" font-family="Mulish, sans-serif" font-size="58" font-weight="600" letter-spacing="2" textLength="404" lengthAdjust="spacing" fill="var(--graphite)">ADVANCED</text><path d="M10 74 C 76 34, 192 24, 288 36 C 348 44, 390 55, 420 65 C 388 51, 346 37, 286 29 C 190 17, 72 33, 10 66 Z" fill="var(--ember)"/><text x="14" y="112" font-family="Mulish, sans-serif" font-size="33" font-weight="400" textLength="400" lengthAdjust="spacing" fill="var(--ink)">Spine &amp; Orthopedics</text></svg></div></div>
+  <h4>Position</h4><a href="#position">Not integration-ready</a><a href="#survives">What survives</a>
+  <h4>Contract</h4><a href="#classes">Any medical document</a><a href="#texts">Three kinds of text</a><a href="#prototype">Prototype evidence</a>
+  <h4>Architecture</h4><a href="#flow">Where it sits</a><a href="#kinds">Kind registry</a><a href="#hash">Determinism and hashes</a>
+  <h4>Plan</h4><a href="#decisions">Open decisions</a><a href="#plan">Build plan</a><a href="#risks">The uncomfortable part</a><a href="#notes">Outside this scope</a>
+</aside>
+<main id="main">
+<div class="mark-inline"><div class="mi-ic"><svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><use href="#mk-adaptive"/></svg></div><div class="mi-t">Advanced Spine &amp; Orthopedics</div></div>
+<div class="topbar"><div>
+  <div class="eyebrow">Specification · Prior Authorization Workbench · Proposed</div>
+  <h1>Document assembly: the generation and QA contract</h1>
+  <p class="lead">Every document the system produces passes through one contract before it leaves the practice: a typed kind, clinical text only as cited claims, QA results the database can hold, and a hash the surgeon affirms. The prior authorization letter is the first of several kinds.</p>
+  </div><div class="ctrl"><a class="tocbtn" role="button" href="#toc">Contents</a><a class="toggle" role="button" href="#" id="theme">Dark</a></div></div>
+<div class="meta">
+  <div><div class="k">Document</div><div class="v">ASO-DA-SPEC-001</div></div>
+  <div><div class="k">Task loop</div><div class="v">Spec · no implementation authorized</div></div>
+  <div><div class="k">Status</div><div class="v">Proposed · 8 decisions open</div></div>
+  <div><div class="k">Waypoint</div><div class="v">ra06 · 14 of 36</div></div>
+  <div><div class="k">Revised</div><div class="v">2026-09-10</div></div>
+</div>
+
+<section id="position">
+<h2>The template system is not integration-ready</h2>
+<p>The template package built earlier in this session works on its own terms: 12 cases, 17 tests, two letter kinds. Measured against this codebase it breaks two of the four rules the Workbench will not bend (evidence states and clinical authority) and the citation rule in its PHI and compliance section. The worst is first because it sends people to the wrong work.</p>
+<div class="tw"><table><thead><tr><th>#</th><th>Defect</th><th>Rule</th><th>What it does</th><th>Correction</th></tr></thead><tbody><tr><td>1</td><td>Evidence states reversed</td><td>ADR-003</td><td>My <code>GAP</code> meant “not documented” and my <code>VOID</code> meant “cannot be met”. Here <code>gap</code> is a chart that says no and <code>void</code> is a silent chart. The halt memo sends argue-work to coordinators and obtain-work to surgeons.</td><td>Read states from <code>case_evidence</code>. Route <code>gap</code> items to the surgeon and <code>void</code> items to the coordinator.</td></tr><tr><td>2</td><td>Enrichment assigns evidence states</td><td>ADR-003, ADR-002 reassessment path</td><td>Threshold checks in <code>enrich.rs</code> decide a criterion is unmet. That is a second, unaudited writer of evidence state beside the reassessment command.</td><td>Thresholds become QA findings that read state. State changes only through <code>POST …/evidence/{id}/state</code>.</td></tr><tr><td>3</td><td>Signature driven by caller data</td><td>ADR-002</td><td><code>affirmation.affirmed: true</code> in the case payload renders a signature block. Authority here lives in Gate, AppServices and Postgres, never in a payload.</td><td>Render a signature only from a signing receipt whose content hash equals the assembly hash.</td></tr><tr><td>4</td><td>Free-text clinical fields</td><td>Citation rule; <code>letter_claims</code> XOR; ra-15</td><td>Symptom summary, functional impact, necessity rationale and denial responses are strings with no document, page or date.</td><td>Clinical text enters only as a claim with provenance. The prototype enforces this.</td></tr><tr><td>5</td><td>A parallel gate system</td><td><code>qa_check_types</code></td><td>Eighteen Rust gates duplicate and diverge from the seven QA checks the schema already defines, with their own severities.</td><td>Checks emit <code>letter_qa_results</code> rows against the schema's check types; new checks become new type rows.</td></tr><tr><td>6</td><td>Non-deterministic PDF</td><td>Affirmation Gate binds the rendered hash</td><td>Chromium embeds timestamps and object IDs, so re-rendering the same letter changes the PDF hash.</td><td>Affirm the canonical content hash; produce PDFs deterministically or record their hash at render (D-5).</td></tr></tbody></table></div>
+<div class="callout"><div class="lbl">Correction to an earlier document</div><p>The template reference delivered earlier states that a VOID is “not met” and an open GAP is “not documented.” That reverses <code>evidence_states</code> in the schema. Treat that section as wrong until DA-1 lands.</p></div>
+<h3 id="survives">What survives</h3>
+<p>The composition model carries over intact: letter kinds, routing modules with a shared macro interface, procedure modules composed from shared evidence partials, the code catalog with family precedence and payer void rules, and the fixture discipline. After DA-1 it becomes the first template package the engine loads, named <code>aso-prior-auth</code>.</p>
+</section>
+
+<section id="classes">
+<h2>What “any medical document” means here</h2>
+<p>The agent roster in ASO-MVP-001 and the authorization mechanism already name the documents. They fall into six classes, and the class decides the rules a template must follow. Adding a document means adding a kind to a class; adding a class is a design change.</p>
+<div class="tw"><table><thead><tr><th>Class</th><th>Documents named in the spec</th><th>Clinical text</th><th>Finalized by</th><th>Leaves the practice</th></tr></thead><tbody><tr><td>Clinical correspondence</td><td>Letter of medical necessity, appeal, resubmission, RFI response, external review request, post-service authorization, radiology re-read request</td><td>Claims only</td><td><code>sign_letter</code></td><td>Yes</td></tr><tr><td>Procedural correspondence</td><td>Reviewer-identity request, TDI utilization-review complaint, records request</td><td>Process facts, cited to determinations and receipts</td><td>Open (D-8)</td><td>Yes</td></tr><tr><td>Internal work product</td><td>Peer-to-peer briefing, halt memo, request-versus-operative-report reconciliation, gap worklist</td><td>Claims and evidence states</td><td>None</td><td>No</td></tr><tr><td>Patient-facing</td><td>Task instructions by SMS or portal</td><td>Task facts only; minimum necessary</td><td>None</td><td>To the patient</td></tr><tr><td>Structured transaction</td><td>X12 278, Da Vinci PAS bundle</td><td>Same content model, serialized; no prose</td><td>Inherits from its letter</td><td>Yes</td></tr><tr><td>Source-documentation assist</td><td>The pre-signature note check Dr. James asked for</td><td>Never generates findings; renders required elements and surgeon-entered values</td><td>Surgeon, in the EHR</td><td>Only after the surgeon signs it in AdvancedMD</td></tr></tbody></table></div>
+<div class="callout"><div class="lbl">The class that can convict the practice</div><p>A generated clinic note becomes a source document, and later letters would cite it. The system would then be citing its own writing as chart evidence. Source-documentation assist can check a note and prompt for required elements; it cannot author findings. That boundary is D-6.</p></div>
+</section>
+
+<section id="texts">
+<h2>Three kinds of text</h2>
+<p>A rendered document contains exactly three kinds of text. This is the contract ra-15 defers to when it says no annotation becomes a generated assertion without “the separate generation/QA contract.”</p>
+<div class="figure"><svg class="diagram" viewBox="0 0 900 296" role="img" aria-labelledby="st6 sd6" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin meet"><title id="st6">Three kinds of text</title><desc id="sd6">Every rendered clinical document contains only template prose, document claims, and annotation claims.</desc><rect x="0" y="10" width="200" height="64" rx="5" fill="var(--d-routing)"/><text x="16" y="48" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="15" font-weight="700" fill="var(--d-on-routing)">Template prose</text><rect x="206" y="10" width="470" height="64" rx="5" fill="var(--d-routing-t)"/><text x="220" y="37" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="12.5" fill="var(--fg)">Versioned boilerplate: salutations, rights language, regulatory notices.</text><text x="220" y="57" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="10.5" fill="var(--fg-2)">Reviewed and published; never a clinical assertion.</text><polygon points="684,30 691.2,30 700,42.0 691.2,54 684,54 692.8,42.0" fill="var(--d-chev)"/><rect x="0" y="88" width="200" height="64" rx="5" fill="var(--d-core)"/><text x="16" y="126" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="15" font-weight="700" fill="var(--d-on-core)">Document claim</text><rect x="206" y="88" width="470" height="64" rx="5" fill="var(--d-core-t)"/><text x="220" y="115" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="12.5" fill="var(--fg)">A statement backed by a source document, page and effective date.</text><text x="220" y="135" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="10.5" fill="var(--fg-2)">letter_claims.document_id + page_number</text><polygon points="684,108 691.2,108 700,120.0 691.2,132 684,132 692.8,120.0" fill="var(--d-chev)"/><rect x="0" y="166" width="200" height="64" rx="5" fill="var(--d-kind)"/><text x="16" y="204" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="15" font-weight="700" fill="var(--d-on-kind)">Annotation claim</text><rect x="206" y="166" width="470" height="64" rx="5" fill="var(--d-kind-t)"/><text x="220" y="193" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="12.5" fill="var(--fg)">A surgeon&#x27;s opinion, rendered with attribution in the sentence.</text><text x="220" y="213" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="10.5" fill="var(--fg-2)">letter_claims.annotation_id</text><polygon points="684,186 691.2,186 700,198.0 691.2,210 684,210 692.8,198.0" fill="var(--d-chev)"/><rect x="708" y="10" width="190" height="220" rx="6" fill="var(--d-pattern)"/><text x="803" y="100" text-anchor="middle" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="15" font-weight="700" fill="var(--d-on-pattern)">Rendered</text><text x="803" y="120" text-anchor="middle" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="15" font-weight="700" fill="var(--d-on-pattern)">document</text><text x="803" y="146" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="10.5" fill="var(--d-on-pattern)">+ claims manifest</text><text x="803" y="162" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="10.5" fill="var(--d-on-pattern)">+ QA findings</text><text x="803" y="178" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="10.5" fill="var(--d-on-pattern)">+ content hash</text><rect x="0" y="246" width="898" height="44" rx="5" fill="var(--d-notmet-t)"/><rect x="0" y="246" width="8" height="44" rx="3" fill="var(--d-notmet)"/><text x="22" y="273" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="12.5" fill="var(--fg)">Refused: clinical text from any other channel. A template that asks for a claim that does not exist fails to render; an uncited claim cannot be constructed.</text></svg><p class="figcap">Maps directly onto <code>letter_claims</code>: one source per claim, document or annotation, never both.</p></div>
+<div class="callout neutral"><div class="lbl">Where the guarantee stops</div><p>Construction guarantees that every claim carries provenance. It does not stop a template author from typing a clinical fact into boilerplate. Only review closes that channel, which is why template publishing is a governed act (D-4) and why a template used by an approved letter becomes immutable.</p></div>
+</section>
+
+<section id="prototype">
+<h2>Prototype evidence</h2>
+<p>The core mechanism was built and tested in isolation before writing this, against MiniJinja <code>=2.24.0</code> and <code>sha2 =0.10.9</code>, the pin this workspace already uses.</p>
+<div class="tw"><table><thead><tr><th>Test</th><th>Proves</th><th>Result</th></tr></thead><tbody><tr><td><code>document_claims_render_with_page_and_date_and_annotations_with_attribution</code></td><td>Document claims carry title, page and date; annotation claims carry the author in the sentence.</td><td><span class="chip c-ok">Passed</span></td></tr><tr><td><code>required_claim_left_out_fails_criterion_coverage</code></td><td>Coverage is a set difference over rendered claims.</td><td><span class="chip c-ok">Passed</span></td></tr><tr><td><code>a_template_cannot_invent_a_claim</code></td><td>A template asking for a claim that does not exist fails to render.</td><td><span class="chip c-ok">Passed</span></td></tr><tr><td><code>same_inputs_same_hash_and_template_edits_change_it</code></td><td>Identical inputs give identical hashes; any template package change alters the affirmed hash.</td><td><span class="chip c-ok">Passed</span></td></tr><tr><td>Sabotage run</td><td>Forcing coverage to always pass turns the coverage test red; restoring the code turns it green.</td><td><span class="chip c-ok">Guard fails when broken</span></td></tr></tbody></table></div>
+<pre class="code"><span class="k">pub</span> <span class="k">fn</span> assemble(input: &amp;AssemblyInput) -&gt; Result&lt;Assembly, Error&gt; {
+    <span class="k">let</span> by_ordinal: Arc&lt;BTreeMap&lt;u32, Claim&gt;&gt; =
+        Arc::new(input.claims.iter().map(|c| (c.ordinal, c.clone())).collect());
+    <span class="k">let</span> used: Arc&lt;Mutex&lt;Vec&lt;u32&gt;&gt;&gt; = Arc::new(Mutex::new(Vec::new()));
+
+    <span class="k">let</span> <span class="k">mut</span> env = Environment::new();
+    env.set_undefined_behavior(UndefinedBehavior::SemiStrict);
+    env.set_trim_blocks(true);
+    env.set_lstrip_blocks(true);
+    <span class="k">let</span> templates = input.templates.clone();
+    env.set_loader(<span class="k">move</span> |name| <span class="k">Ok</span>(templates.get(name).cloned()));
+
+    <span class="k">let</span> (claims_fn, used_fn) = (Arc::clone(&amp;by_ordinal), Arc::clone(&amp;used));
+    env.add_function(<span class="s">"claim"</span>, <span class="k">move</span> |ordinal: u32| -&gt; Result&lt;Value, Error&gt; {
+        <span class="k">let</span> c = claims_fn.get(&amp;ordinal).ok_or_else(|| {
+            Error::new(ErrorKind::InvalidOperation, format!(<span class="s">"claim {ordinal} does not exist; clinical text must come from a claim"</span>))
+        })?;
+        <span class="k">let</span> <span class="k">mut</span> u = used_fn.lock().expect(<span class="s">"claim usage lock"</span>);
+        <span class="k">if</span> !u.contains(&amp;ordinal) { u.push(ordinal); }
+        <span class="k">Ok</span>(Value::from(render_claim(c)))
+    });
+
+    <span class="k">let</span> body = env.get_template(input.root)?.render(context! { ctx =&gt; input.context })?;
+    <span class="k">let</span> rendered_claims = used.lock().expect(<span class="s">"claim usage lock"</span>).clone();
+
+    <span class="k">let</span> rendered: BTreeSet&lt;u32&gt; = rendered_claims.iter().copied().collect();
+    <span class="k">let</span> uncovered: Vec&lt;u32&gt; = input.required_ordinals.difference(&amp;rendered).copied().collect();
+    <span class="k">let</span> qa = vec![
+        QaFinding { check_key: <span class="s">"unsupported_claim"</span>, outcome: QaOutcome::Pass,
+                    detail: <span class="s">"Clinical text entered only through claim(); every rendered claim carries provenance."</span>.into() },
+        QaFinding { check_key: <span class="s">"criterion_coverage"</span>,
+                    outcome: <span class="k">if</span> uncovered.is_empty() { QaOutcome::Pass } <span class="k">else</span> { QaOutcome::Fail },
+                    detail: <span class="k">if</span> uncovered.is_empty() { <span class="s">"All required claims rendered."</span>.into() } <span class="k">else</span> { format!(<span class="s">"Required claims not rendered: {uncovered:?}"</span>) } },
+    ];
+
+    <span class="k">let</span> <span class="k">mut</span> digest_input = String::new();
+    <span class="k">for</span> (name, src) <span class="k">in</span> input.templates { digest_input.push_str(name); digest_input.push('\0'); digest_input.push_str(src); digest_input.push('\0'); }
+    <span class="k">let</span> template_digest = hex(&amp;Sha256::digest(digest_input.as_bytes()));
+    <span class="k">let</span> <span class="k">mut</span> h = Sha256::new();
+    h.update(format!(<span class="s">"{}\0{}\0{}\0"</span>, input.kind_key, input.kind_version, template_digest).as_bytes());
+    h.update(body.as_bytes());
+
+    <span class="k">Ok</span>(Assembly { canonical_markdown: body, rendered_claims, qa, content_sha256: hex(&amp;h.finalize()) })
+}</pre>
+<p>Verification tier: T1 on an isolated prototype crate. It has not touched this repository, any database, or any runtime surface.</p>
+</section>
+
+<section id="flow">
+<h2>Where document assembly sits</h2>
+<div class="figure"><svg class="diagram wide" viewBox="0 0 1090 200" role="img" aria-labelledby="st7 sd7" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMin meet"><title id="st7">Where document assembly sits</title><desc id="sd7">Agents propose; the host command writes; the engine renders; Postgres holds authority; export is last.</desc><rect x="6" y="10" width="158" height="116" rx="6" fill="var(--d-clinical)"/><text x="18" y="36" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="13" font-weight="700" fill="var(--d-on-clinical)">Composer agents</text><text x="18" y="60" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="11.5" fill="var(--d-on-clinical)">LMN · Appeal · P2P</text><text x="18" y="77" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="11.5" fill="var(--d-on-clinical)">Patient Action</text><text x="18" y="94" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="11.5" fill="var(--d-on-clinical)">propose a plan only</text><polygon points="170,56 176.3,56 184,68.0 176.3,80 170,80 177.7,68.0" fill="var(--d-chev)"/><rect x="190" y="10" width="158" height="116" rx="6" fill="var(--d-core)"/><text x="202" y="36" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="13" font-weight="700" fill="var(--d-on-core)">AppServices command</text><text x="202" y="60" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="11.5" fill="var(--d-on-core)">draft_document</text><text x="202" y="77" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="11.5" fill="var(--d-on-core)">capability checked</text><text x="202" y="94" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="11.5" fill="var(--d-on-core)">the only writer</text><polygon points="354,56 360.3,56 368,68.0 360.3,80 354,80 361.7,68.0" fill="var(--d-chev)"/><rect x="374" y="10" width="158" height="116" rx="6" fill="var(--d-procedure)"/><text x="386" y="36" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="13" font-weight="700" fill="var(--d-on-procedure)">clinical-docs engine</text><text x="386" y="60" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="11.5" fill="var(--d-on-procedure)">kind · templates · claims</text><text x="386" y="77" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="11.5" fill="var(--d-on-procedure)">QA findings · hash</text><text x="386" y="94" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="11.5" fill="var(--d-on-procedure)">no I/O, no clock</text><polygon points="538,56 544.3,56 552,68.0 544.3,80 538,80 545.7,68.0" fill="var(--d-chev)"/><rect x="558" y="10" width="158" height="116" rx="6" fill="var(--d-rust)"/><text x="570" y="36" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="13" font-weight="700" fill="var(--d-on-rust)">Postgres transaction</text><text x="570" y="60" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="11.5" fill="var(--d-on-rust)">letters · letter_claims</text><text x="570" y="77" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="11.5" fill="var(--d-on-rust)">letter_qa_results</text><text x="570" y="94" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="11.5" fill="var(--d-on-rust)">audit_events</text><polygon points="722,56 728.3,56 736,68.0 728.3,80 722,80 729.7,68.0" fill="var(--d-chev)"/><rect x="742" y="10" width="158" height="116" rx="6" fill="var(--d-kind)"/><text x="754" y="36" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="13" font-weight="700" fill="var(--d-on-kind)">Approve · affirm · sign</text><text x="754" y="60" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="11.5" fill="var(--d-on-kind)">affirmation binds hash</text><text x="754" y="77" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="11.5" fill="var(--d-on-kind)">sign_letter receipt</text><text x="754" y="94" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="11.5" fill="var(--d-on-kind)">three-layer authority</text><polygon points="906,56 912.3,56 920,68.0 912.3,80 906,80 913.7,68.0" fill="var(--d-chev)"/><rect x="926" y="10" width="158" height="116" rx="6" fill="var(--d-core)"/><text x="938" y="36" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="13" font-weight="700" fill="var(--d-on-core)">Export and submit</text><text x="938" y="60" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="11.5" fill="var(--d-on-core)">PDF · DOCX · X12 · FHIR</text><text x="938" y="77" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="11.5" fill="var(--d-on-core)">submission_attachments</text><text x="938" y="94" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="11.5" fill="var(--d-on-core)">sha256 + page count</text><rect x="6" y="140" width="342" height="52" rx="5" fill="var(--d-gate-t)"/><text x="20" y="162" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="12" font-weight="700" fill="var(--fg)">Capability inversion</text><text x="20" y="180" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="11.5" fill="var(--fg-2)">Agents never write a letter row. The host does.</text><rect x="374" y="140" width="158" height="52" rx="5" fill="var(--d-procedure-t)"/><text x="386" y="162" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="12" font-weight="700" fill="var(--fg)">Pure function</text><text x="386" y="180" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="11.5" fill="var(--fg-2)">Same inputs, same bytes.</text><rect x="742" y="140" width="342" height="52" rx="5" fill="var(--d-kind-t)"/><text x="756" y="162" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="12" font-weight="700" fill="var(--fg)">The surgeon affirms the hash that ships</text><text x="756" y="180" font-family="Mulish, 'Nunito Sans', system-ui, sans-serif" font-size="11.5" fill="var(--fg-2)">A template or claim change means a new letter revision.</text></svg><p class="figcap">Composer agents stop at a plan. The host command is the only writer, and the engine is a pure function it calls.</p></div>
+<div class="tw"><table><thead><tr><th>Unit</th><th>Responsibility</th><th>Must not</th></tr></thead><tbody><tr><td><code>clinical-docs</code></td><td>Kind registry, claim resolution, QA trait and the seven schema checks, canonical Markdown, content hash</td><td>Name ASO, open a file or socket, read a clock, assign an evidence state</td></tr><tr><td><code>clinical-docs-typst</code></td><td>Deterministic PDF from canonical content (D-5)</td><td>Re-render a signed document</td></tr><tr><td>Template packages</td><td>Versioned templates as data, identified by digest</td><td>Carry clinical facts in prose</td></tr><tr><td><code>aso-host</code> documents port</td><td><code>draft_document</code>, capability checks, one transaction for letter, claims, QA and audit</td><td>Name a shell (audit check 4)</td></tr><tr><td><code>aso-server-axum</code> and Tauri</td><td>Routes and commands, mirrored one to one</td><td>Accept actor, identity or signature in a body</td></tr></tbody></table></div>
+</section>
+
+<section id="kinds">
+<h2>Kind registry</h2>
+<p>Kinds follow the idiom every typed table here already uses: a key, a JSON Schema for the payload, and <code>validate_typed_payload</code> enforcing it. The migration is additive; existing letters keep their rows and receive the initial-request kind by backfill.</p>
+<pre class="code"># Proposed shape of one document kind. Mirrors the *_types idiom:
+# a key, a JSON Schema for the payload, enforced by validate_typed_payload.
+key             = &quot;pa.initial_request&quot;
+version         = 1
+class           = &quot;clinical_correspondence&quot;
+finalize        = &quot;sign_letter&quot;            # capability checked in all three layers
+citation_policy = &quot;claims_only&quot;            # clinical text only through claim()
+template_package = { name = &quot;aso-prior-auth&quot;, digest = &quot;sha256:…&quot; }
+qa_checks       = [&quot;unsupported_claim&quot;, &quot;annotation_attribution&quot;, &quot;criterion_coverage&quot;,
+                   &quot;policy_version_currency&quot;, &quot;code_consistency&quot;, &quot;date_consistency&quot;, &quot;readability&quot;]
+outputs         = [&quot;canonical_markdown&quot;, &quot;pdf&quot;, &quot;x12_278&quot;]
+input_schema    = &quot;schemas/pa.initial_request.v1.json&quot;</pre>
+<div class="callout cool"><div class="lbl">Build-order Phase 1 applies</div><p>Letter bodies and claims are protected health information. Their lane and privacy class are assigned before the migration exists, under G-DATA. This spec does not assign them.</p></div>
+</section>
+
+<section id="hash">
+<h2>Determinism and hashes</h2>
+<p>The Affirmation Gate binds a rendered hash, and every submission attachment records a hash and page count at transmission. Both only mean something if rendering is deterministic.</p>
+<div class="tw"><table><thead><tr><th>Hash</th><th>Covers</th><th>Changes when</th></tr></thead><tbody><tr><td>Content hash</td><td>Kind key and version, template package digest, canonical Markdown</td><td>Any claim, template or kind change: a new letter revision, as ADR-002 already requires for source corrections</td></tr><tr><td>Artifact hash</td><td>The exact PDF, DOCX or X12 bytes transmitted</td><td>Never re-computed after signing; recorded on <code>submission_attachments</code></td></tr></tbody></table></div>
+</section>
+
+<section id="decisions">
+<h2>Open decisions</h2>
+<p>Each has a recommendation. None is resolved here. Your CLAUDE.md asks that open decisions be settled in one sitting before any build lane starts; DA-0 is that sitting.</p>
+<div class="tw"><table><thead><tr><th>#</th><th>Decision</th><th>Options</th><th>Recommendation</th></tr></thead><tbody><tr><td class=wrap>D-1</td><td class=wrap>Where the engine lives</td><td class=wrap>A crate in this workspace · extend DocuMind · a standalone Prometheus crate both consume</td><td class=wrap>Standalone, domain-agnostic crate (DocuMind naming rules), linked in-process by <code>aso-host</code>. PHI and letter authority stay in Postgres; DocuMind can adopt the engine later without owning ASO letters.</td></tr><tr><td class=wrap>D-2</td><td class=wrap>Who writes connective prose</td><td class=wrap>Templates only · model narrative · hybrid</td><td class=wrap>Hybrid. Model text may reference clinical facts only through claim markers the engine resolves; a clinical sentence without a marker fails Unsupported Claim at sentence level. <code>letters.model_name</code> shows the schema already expects model drafting.</td></tr><tr><td class=wrap>D-3</td><td class=wrap>What gets persisted</td><td class=wrap>Generalize <code>letters</code> with a kind column · new table for every class</td><td class=wrap><code>letters</code> gains a kind reference for signable correspondence. Internal work products render on demand from committed state and are not stored as letters.</td></tr><tr><td class=wrap>D-4</td><td class=wrap>Who publishes templates</td><td class=wrap>Administrator · administrator plus compliance · two-person with clinical review</td><td class=wrap>A new <code>publish_template</code> capability with two-person approval for correspondence classes. Template prose carries regulatory claims, so it is reviewed like one. A template used by an approved letter becomes immutable.</td></tr><tr><td class=wrap>D-5</td><td class=wrap>PDF backend</td><td class=wrap>Typst (Rust, deterministic) · Gotenberg/Chromium (DocuMind parity)</td><td class=wrap>Typst, conditional on a reproducibility test: render twice, compare sha256, across two machines. If that fails, Chromium with the PDF hash recorded at render and never re-rendered.</td></tr><tr><td class=wrap>D-6</td><td class=wrap>Source-documentation assist in scope</td><td class=wrap>In scope as a checklist · deferred · excluded</td><td class=wrap>In scope only as a checklist and scaffold. It never writes a finding, and nothing it renders can be cited until the surgeon signs the note in the EHR and it returns as a document.</td></tr><tr><td class=wrap>D-7</td><td class=wrap>Template engine pin</td><td class=wrap><code>=2.24.0</code> stable · <code>3.0.0-alpha.0</code></td><td class=wrap><code>=2.24.0</code> with the <code>serde</code> feature, which 3.0 will require. Revisit at 3.0 stable. Needs a hand edit to <code>versions.toml</code> under G-PIN.</td></tr><tr><td class=wrap>D-8</td><td class=wrap>Who signs procedural correspondence</td><td class=wrap>Surgeon · a new administrative signing capability</td><td class=wrap>Open. ADR-002 forbids an administrator signing a letter. A TDI complaint signed by the practice needs either a distinct capability or the surgeon's signature. This is a policy question for the practice.</td></tr></tbody></table></div>
+</section>
+
+<section id="plan">
+<h2>Build plan</h2>
+<p>A new phase, <code>document-assembly</code>, after runtime-architecture or in parallel for the engine only. DA-2 touches no ASO module, so it can proceed while ra06 is active; DA-4 cannot start until ra-15 and ra-16 have implementation evidence.</p>
+<div class="tw"><table><thead><tr><th>Unit</th><th>Scope</th><th>Depends on</th><th>Human baseline</th><th>Agent implementation</th><th>Elapsed</th></tr></thead><tbody><tr><td>DA-0</td><td>Resolve D-1 to D-8 in one sitting</td><td>—</td><td>Human</td><td>—</td><td>1 sitting</td></tr><tr><td>DA-1</td><td>Conform the template package: ADR-003 states, no state computation, claims-only fields, receipt-bound signature</td><td>DA-0</td><td>5 d</td><td>0.5 d</td><td>1–2 d</td></tr><tr><td>DA-2</td><td>Engine crate: kind registry, claim resolution, the seven schema QA checks, markers if D-2 is hybrid, hash</td><td>DA-0</td><td>12 d</td><td>1 d</td><td>2–3 d</td></tr><tr><td>DA-3</td><td>Additive migration: <code>document_kinds</code>, template packages, <code>letters</code> kind reference, with lane and privacy class assigned first</td><td>G-DATA</td><td>4 d</td><td>0.5 d</td><td>Gated</td></tr><tr><td>DA-4</td><td>Host port and <code>draft_document</code> command; HTTP and Tauri parity; one transaction for letter, claims, QA and audit</td><td>DA-2, DA-3, ra-15, ra-16</td><td>15 d</td><td>1.5 d</td><td>After ra-16</td></tr><tr><td>DA-5</td><td>Export backend per D-5; reproducibility test; submission attachment hash and page count</td><td>DA-4, G-MEASURE</td><td>8 d</td><td>1 d</td><td>2 d</td></tr><tr><td>DA-6</td><td>Second and third classes to prove extensibility: peer-to-peer briefing and patient task</td><td>DA-4</td><td>8 d</td><td>1 d</td><td>2 d</td></tr><tr><td>DA-7</td><td>Template governance: <code>publish_template</code>, two-person approval, immutability after use</td><td>D-4, DA-3</td><td>8 d</td><td>1 d</td><td>2 d</td></tr></tbody></table></div>
+<p>Agent figures use the validated 11.3× compression, conservatively rounded up. They cover implementation only. Human gates are not compressed: the decision sitting, counsel review of the regulatory boilerplate (CFR, CMS-0057-F and TDI paragraphs), Dr. James confirming the level-to-root matrix rows marked “confirm” in the mechanism document, and the G-DATA and G-PIN checkpoints. Counsel review is likely the longest wait.</p>
+</section>
+
+<section id="risks">
+<h2>The uncomfortable part</h2>
+<div class="callout"><div class="lbl">Formatting confers authority it has not earned</div><p>The engine makes a claim look exactly as trustworthy as a correct one. If the Chart Extractor attributes a finding to the wrong page, the letter cites the wrong page in perfect form, and no QA check here can see it. The control is ra-16 source preview in front of the approving surgeon.</p></div>
+<div class="callout"><div class="lbl">The letter must describe what happens in the operating room</div><p>The mechanism document warns that a letter asserting a wide decompression the operative report does not document is discoverable and reads as a false statement. The request-versus-operative-report reconciliation is an internal work product in this model. If it is deferred, the system can produce exactly the letter that document warns against.</p></div>
+<div class="callout neutral"><div class="lbl">Model prose is the widest channel</div><p>If D-2 lands on hybrid, model-written sentences sit between cited claims. Sentence-level marker checks catch an uncited clinical sentence only if “clinical” is detected reliably. That detector is a measurement problem (G-MEASURE), and until it is measured the safe default is templates only.</p></div>
+</section>
+
+<section id="notes">
+<h2>Outside this scope</h2>
+<p>Nothing was written to this repository. The waypoint shows <code>ra06-revocation-contract-repair</code> active, and this spec proposes a phase rather than inserting work into it.</p>
+<div class="tw"><table><thead><tr><th>Observation</th><th>Where</th></tr></thead><tbody><tr><td><code>Cargo.toml</code> cites <code>docs/architecture/dependency-pins.md</code> for per-pin rationale; that file does not exist in <code>docs/architecture/</code>.</td><td><code>Cargo.toml</code></td></tr><tr><td>The “Testing Policy — Local Integration Only” section appears twice, verbatim.</td><td><code>CLAUDE.md</code></td></tr><tr><td>DocuMind pins <code>jsonschema 0.29</code>; the current release is 0.56. It matters only if D-1 shares code between the two.</td><td><code>documind/Cargo.toml</code></td></tr></tbody></table></div>
+</section>
+<footer><span>Advanced Spine &amp; Orthopedics · Document assembly specification</span><span>ASO-DA-SPEC-001 · proposed · synthetic data only</span></footer>
+</main></div>
+<script>
+(function(){var r=document.documentElement,t=document.getElementById('theme');t.addEventListener('click',function(ev){ev.preventDefault();t.textContent=r.classList.toggle('dark')?'Light':'Dark';});
+var b=document.querySelector('.tocbtn'),n=document.getElementById('toc');b.addEventListener('click',function(ev){ev.preventDefault();n.classList.toggle('open');if(n.classList.contains('open'))n.scrollIntoView();});
+n.addEventListener('click',function(ev){if(ev.target.tagName==='A'&&window.innerWidth<=860)n.classList.remove('open');});})();
+</script></body></html>

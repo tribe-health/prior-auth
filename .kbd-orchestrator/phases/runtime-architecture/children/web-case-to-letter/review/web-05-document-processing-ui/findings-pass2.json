@@ -1,0 +1,22 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "web/src/shared/sync/pglite-schema.ts",
+      "claim": "The local replica migration cannot upgrade an existing non-empty revision-3 `cases` table because it adds multiple `NOT NULL` columns without defaults.",
+      "evidence": "`PGLITE_SCHEMA_SQL` creates `cases` without `case_number`, `patient_id`, `surgeon_id`, `payer_id`, or `revision`, while `PGLITE_CASE_SUMMARY_SQL` later runs `ALTER TABLE cases ADD COLUMN case_number TEXT NOT NULL, ADD COLUMN patient_id UUID NOT NULL, ADD COLUMN surgeon_id UUID NOT NULL, ADD COLUMN payer_id UUID NOT NULL, ADD COLUMN revision BIGINT NOT NULL...`; PostgreSQL/PGlite rejects adding a non-null column with no default when existing rows are present. The added runtime plans in `replica-mounted-runtime.ts` and `replica-browser-memory.ts` require `migrateReplicaSchema(...).status` to be `ready` before constructing the projector/runtime, so a user with persisted pre-revision-6 case rows would fail startup rather than migrate.",
+      "suggested_fix": "Make the case-summary migration upgrade-safe: add columns nullable, backfill or rebuild from an authorized cold refetch, then enforce NOT NULL only after the table is empty/backfilled; alternatively detect this migration as requiring a controlled replica rebuild instead of expecting `ready`."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

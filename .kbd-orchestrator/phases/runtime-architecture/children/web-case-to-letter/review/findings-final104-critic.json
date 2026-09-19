@@ -1,0 +1,38 @@
+{
+  "reviewer": "gpt-6-astra",
+  "role": "fresh-context artifact critic",
+  "digest": "57a23c177f126be71e20b7306fe1eee7999af237d67931b1cc26fe6cd97fe55a",
+  "verdict": "BLOCK",
+  "counts": {
+    "critical": 0,
+    "major": 2,
+    "minor": 0
+  },
+  "findings": [
+    {
+      "severity": "major",
+      "title": "The frozen packet does not prove that the case-summary publication boundary stayed narrow",
+      "evidence": "dist/validate.py declares incomplete-input recovery Passed and says it occurs without widening the case projection, but its predicate only searches the detail, intake, form, route, and test text. The 114-entry source manifest does not include the production case projection selector, entity publication definition, or column allowlist. The routed intake test mocks useCaseIntakeProjection and useCaseDetail, while the CaseDetail test's mocked projection object even carries memberId, procedureCode, and planKey. Those tests establish recovery behavior after supplied mock values; they cannot establish which protected columns production publishes.",
+      "impact": "The required privacy claim could remain green after a production projection change publishes member, plan, or procedure values, so the artifact cannot independently certify that recovery avoided widening the summary boundary.",
+      "required_resolution": "Freeze the production projection/publication sources that determine the case-summary columns and add a deterministic assertion against the actual published shape that rejects member, plan, and procedure fields. Make the validator consume that evidence before claiming this boundary Passed."
+    },
+    {
+      "severity": "major",
+      "title": "The exact production browser caller that mounts CaseDetail is outside the frozen review surface",
+      "evidence": "The completion evidence calls web/src/features/case-queue/components/case-detail.tsx the mounted production caller, and the architecture contract says an app-routes composition mounts CaseDetail. The source manifest includes CaseDetail and the intake route, but no browser route-composition source that maps the case-detail URL to CaseDetail. The CaseDetail test renders the component directly in MemoryRouter, and the intake test starts directly at the destination URL; neither verifies the production route composition or a navigation through it.",
+      "impact": "The component and destination behavior can pass while the production case-detail route mounts a different caller, omits the component, or fails to preserve the recovery query. The requested exact mounted-caller claim is therefore unsupported by the frozen artifact.",
+      "required_resolution": "Freeze the actual production route-composition source and retain one focused router test that enters the production case-detail route, triggers incomplete-input navigation, and observes the exact guidance and derived focus at the production intake route."
+    }
+  ],
+  "checks performed": [
+    "Verified source-manifest.sha256 itself equals 57a23c177f126be71e20b7306fe1eee7999af237d67931b1cc26fe6cd97fe55a.",
+    "Verified source-manifest.sha256 contains 114 entries and sha256sum -c reported OK for all 114.",
+    "Ran python3 dist/validate.py; it exited 0 and reported Passed for all 15 deterministic checks.",
+    "Inspected the OpenSpec requirement, design, task state, result, artifact review, completion evidence, final command receipt, fresh and upgrade receipts, and retained focused logs.",
+    "Inspected the shell-neutral AppServices resolver types and capability checks, mounted Axum routes and error mapping, PostgreSQL adapter calls, resolver schema and command migrations, invalidation and transaction ordering, immutable receipts, five-state classification, and least-privilege grants.",
+    "Inspected the typed browser API, pending-command session storage, scoped Zustand hook, panel, CaseDetail, intake route, CaseIntake, CaseForm, and their focused tests.",
+    "Confirmed incomplete inputs map to HTTP 422; the exact guidance literal is preserved; focus order is member, plan, procedure, service date and is derived from the loaded detail draft; caller-selected resolution fields are denied; lookup precedes retry/read reconciliation; authoritative invalidation returns the view to unresolved; all four parked states block evidence; validTo is labeled exclusive; and complete actual-browser/full-workflow certification remains explicitly assigned to Web-17.",
+    "Confirmed the reviewed source manifest contains no desktop or mobile path and the artifact makes no Tauri or mobile implementation claim."
+  ],
+  "concise rationale": "The frozen implementation is strong on the resolver, HTTP contract, authority, reconciliation, validity semantics, and scoped UI behavior. The verdict is BLOCK because two claims singled out for this review depend on production sources that are not frozen and are replaced by mocks in the retained tests: the case-summary publication boundary and the exact browser route that mounts CaseDetail."
+}

@@ -1,0 +1,11 @@
+   Compiling aso-server-axum v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-server-axum)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 42.01s
+     Running unittests src/lib.rs (/Volumes/my-passport/cargo-build/02/70d32e977a4fbf/debug/deps/aso_server_axum-8a863bb18a71d473)
+
+running 3 tests
+test routes::cases::tests::administering_entity_http_refuses_untrusted_selection ... ok
+test routes::cases::tests::administering_entity_http_refuses_scope_capability_and_typed_failures ... ok
+test routes::cases::tests::administering_entity_http_contract_resolves_reloads_and_reconciles ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 42 filtered out; finished in 0.00s
+

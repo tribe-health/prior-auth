@@ -162,7 +162,7 @@ class Probe:
                      'Synthetic source','2026-01-01',
                      '{{"modality":"MRI","body_region":"spine","impression":"synthetic"}}'::jsonb
                 FROM document_types WHERE key='mri-report';
-            INSERT INTO case_evidence(id,case_id,policy_criterion_id,state)
+            INSERT INTO case_evidence(id,case_id,criterion_id,state)
               VALUES ('{values['evidence_primary']}','{values['case']}',
                       '{values['criterion_primary']}','met');
             INSERT INTO evidence_citations(id,case_evidence_id,document_id,page_number)
@@ -231,7 +231,7 @@ class Probe:
         self.check(checks, "migration_or_fresh_seed_has_derived_baseline", backfill == "1", backfill)
 
         self.writer_sql(database, values["identity"], f"""
-            INSERT INTO case_evidence(id,case_id,policy_criterion_id,state)
+            INSERT INTO case_evidence(id,case_id,criterion_id,state)
               VALUES ('{values['evidence_derived']}','{values['case']}',
                       '{values['criterion_derived']}','gap');
         """)
@@ -239,7 +239,7 @@ class Probe:
         self.check(checks, "T1_insert_without_practice_is_derived", observed == values["practice_a"], "practice_a")
 
         self.writer_sql(database, values["identity"], f"""
-            INSERT INTO case_evidence(id,case_id,policy_criterion_id,state,practice_id)
+            INSERT INTO case_evidence(id,case_id,criterion_id,state,practice_id)
               VALUES ('{values['evidence_false']}','{values['case']}',
                       '{values['criterion_false']}','void','{values['practice_b']}');
         """)

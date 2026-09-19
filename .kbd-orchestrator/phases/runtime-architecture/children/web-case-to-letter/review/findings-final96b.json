@@ -1,0 +1,125 @@
+{
+  "artifact": "web-03-administering-entity-resolution",
+  "phase": "Reflect",
+  "reviewed_path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/.refiner/artifacts/web-03-administering-entity-resolution/dist",
+  "verdict": "PASS",
+  "critical": 0,
+  "major": 0,
+  "minor": 0,
+  "findings": [],
+  "manifest": {
+    "source_manifest_sha256": "8c3fccffe20eba8bc68161b98866bf43b63fa8e768512633e9891f47ded215b0",
+    "expected_source_manifest_sha256": "8c3fccffe20eba8bc68161b98866bf43b63fa8e768512633e9891f47ded215b0",
+    "line_count": 96,
+    "current_workspace_digest_check": "Passed",
+    "snapshot_byte_identity_check": "Passed"
+  },
+  "checks": [
+    {
+      "id": "source_manifest_digest_and_96_snapshots",
+      "result": "Passed",
+      "evidence": [
+        "shasum -a 256 .refiner/artifacts/web-03-administering-entity-resolution/dist/source-manifest.sha256 -> 8c3fccffe20eba8bc68161b98866bf43b63fa8e768512633e9891f47ded215b0",
+        "wc -l .refiner/artifacts/web-03-administering-entity-resolution/dist/source-manifest.sha256 -> 96",
+        "shasum -a 256 -c .refiner/artifacts/web-03-administering-entity-resolution/dist/source-manifest.sha256 -> every listed current workspace source OK",
+        "read-only current-vs-dist byte check -> {'line_count': 96, 'error_count': 0}"
+      ]
+    },
+    {
+      "id": "product_correctness_and_focused_boundary",
+      "result": "Passed",
+      "evidence": [
+        "OpenSpec requires one versioned resolved path or named blockers: missing, ambiguous, conflicting, expired.",
+        "The host model and TypeScript model both carry resolved, missing, ambiguous, conflicting, and expired states.",
+        "The focused boundary excludes Tauri, mobile, payer transport, production deployment, and the full actual-browser case-to-letter certification; docs assign that later certification to Web-17."
+      ]
+    },
+    {
+      "id": "security_boundaries",
+      "result": "Passed",
+      "evidence": [
+        "HTTP resolve accepts only commandId and expectedCaseInputRevision with deny_unknown_fields; server-selected entity/path fields are not accepted from the caller.",
+        "AppServices independently requires a live User principal and the named capability before calling the port.",
+        "PostgreSQL functions call require_case under the selected practice, use security-definer functions with revoked public access, and the focused probe reports executorDirectWrite=false and localPublished=false.",
+        "The retained untrusted-selection sabotage receipt went red when deny_unknown_fields was removed and restored to source hash 38706facc089cd57e58eb31460479f3815b30fcd5009f5823f4aa0915cc89ecf."
+      ]
+    },
+    {
+      "id": "mounted_caller_chain",
+      "result": "Passed",
+      "evidence": [
+        "Router mounts /api/cases/{case_id}/administering-entity for read/resolve and /commands/{command_id} for exact lookup.",
+        "The route calls clinical_context, checks route-level capability, then calls AppServices, which checks capability again before the PostgreSQL adapter.",
+        "The focused AppServices/PostgreSQL probe reports mounted_http_reload_lookup_and_tenant_refusal and actual_appservices_pg_resolution_lifecycle Passed for fresh and upgrade installs."
+      ]
+    },
+    {
+      "id": "durable_command_reconciliation",
+      "result": "Passed",
+      "evidence": [
+        "administering_entity_resolution_commands is immutable and keyed by identity, practice, and command ID.",
+        "Exact retry returns the stored receipt; changed payload with the same command ID returns command_conflict.",
+        "The hook persists uncertain command ID plus expected case-input revision in session-scoped storage, performs lookup before current-row read, reissues the same command on lookup 404, and clears only after committed or terminal absent outcomes.",
+        "Post-receipt invalidation is represented as unresolved with 'The saved coverage path was invalidated. Resolve it again.' instead of accepting an obsolete receipt as current."
+      ]
+    },
+    {
+      "id": "authority_revision_persistence_and_display",
+      "result": "Passed",
+      "evidence": [
+        "Durable receipts and current resolution rows include entityRevision, planRevision, enrollmentRevision, ruleRevision, and sourceDocumentVersion.",
+        "read_administering_entity_resolution returns the same reviewable version fields after reload.",
+        "The panel displays source name, source effective date, source version, and the four authoritative input revisions for resolved paths.",
+        "The final command receipt records a red/restore control for hiding an authority revision from the panel."
+      ]
+    },
+    {
+      "id": "evidence_truthfulness",
+      "result": "Passed",
+      "evidence": [
+        "The final focused command receipt records 30 browser tests, typecheck, lint, rustfmt, cargo check, mounted Axum tests, gate policy test, fresh and upgrade AppServices/PostgreSQL probes, and strict OpenSpec validation as Passed.",
+        "Fresh and upgrade review JSON files report authoritative invalidation scenarios entity_deactivation, path_edit, conflicting_rule_insert, and source_document_version all Passed with return codes [0, 0, 0, 0].",
+        "Retained red receipts show the important guards failed when sabotaged and cleaned up disposable databases/logins before restoration."
+      ]
+    }
+  ],
+  "commands_observed": [
+    {
+      "command": "sed -n '1,220p' .kbd-orchestrator/current-waypoint.json",
+      "observed": "activePhaseId runtime-architecture::web-case-to-letter; status ready"
+    },
+    {
+      "command": "sed -n '1,220p' versions.toml",
+      "observed": "pinned architecture decisions read before review"
+    },
+    {
+      "command": "find .refiner/artifacts/web-03-administering-entity-resolution/dist -type f | sort",
+      "observed": "frozen artifact files enumerated"
+    },
+    {
+      "command": "shasum -a 256 .refiner/artifacts/web-03-administering-entity-resolution/dist/source-manifest.sha256",
+      "observed": "8c3fccffe20eba8bc68161b98866bf43b63fa8e768512633e9891f47ded215b0"
+    },
+    {
+      "command": "wc -l .refiner/artifacts/web-03-administering-entity-resolution/dist/source-manifest.sha256",
+      "observed": "96"
+    },
+    {
+      "command": "shasum -a 256 -c .refiner/artifacts/web-03-administering-entity-resolution/dist/source-manifest.sha256",
+      "observed": "All 96 current workspace sources OK"
+    },
+    {
+      "command": "read-only Python current/snapshot byte identity check",
+      "observed": "{'line_count': 96, 'error_count': 0}"
+    }
+  ],
+  "scope_notes": [
+    "No prior reviews or generation history were inspected.",
+    "The artifact validator script was read but not executed because it writes validation-output.json into the frozen artifact.",
+    "Product/source files were not modified.",
+    "Only this findings JSON was added."
+  ],
+  "unverified": [
+    "No new local integration test run was performed by this judge; the judgment reviewed frozen source, manifests, focused evidence, retained red/restore evidence, and read-only digest checks."
+  ]
+}

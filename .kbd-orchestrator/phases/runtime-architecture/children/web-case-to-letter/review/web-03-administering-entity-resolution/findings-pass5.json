@@ -1,0 +1,22 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "crates/aso-server-axum/src/routes/gate.rs",
+      "claim": "The gate authorization callback can reject administering-entity resolve and command-lookup routes for callers that have `resolve_administering_entity` but not case-write authority, violating the route capability contract.",
+      "evidence": "Acceptance 1.4 says the authorization callback checks `case:read` or `resolve_administering_entity`; in the `PolicyTarget::Resolution { case_id, write }` branch the code first sets `required` to `resolve_administering_entity` for writes, but then for every write route calls `state.services.authorize_case_write_target(&context, &capabilities, case_id)` before allowing the request, tying resolve/lookup authorization to the case-write target path rather than the resolver capability.",
+      "suggested_fix": "Add/use a case-target authorization method that verifies tenant visibility of the case under the already-selected resolver/read capability without requiring case-write authority, and use it for `administering-entity` POST and command lookup."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

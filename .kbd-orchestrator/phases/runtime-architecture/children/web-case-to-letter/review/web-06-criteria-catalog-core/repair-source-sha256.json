@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "sourceSha256": {
+    "migrations/server/2026090626_criteria_catalog_repair.sql": "dd673ef548e6b42cb992e2e005b31841d4a175b8284e101cb3cdbe343f69da5e",
+    "crates/aso-web-server/src/migrations.rs": "b71ee589c0c04bd1320e2f571984491b8aacf83710591aa64ab91d691519450b",
+    "crates/aso-host/src/criteria_catalog.rs": "b35a35f420b9d60b8adc0ebc597a397f6ee22071508739379c2fcd056dc13f6a",
+    "crates/aso-web-server/src/adapters/gate/criteria_transaction_tests.rs": "5f02fdba4692de414b12c6da0e1233632b99659324f1cb3045a94f5d2861ec04",
+    "scripts/test-web06-criteria-service.py": "678373f1695acdc932150bf4d089d225b390e80cc1f43e96938fb799cdca6c85",
+    "scripts/test-web06-criteria-repair-upgrade.py": "98f33a539d527ace3b6143d79c50fa2b44a21f27304d63477e44499a47d2b8ec"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "artifact": "web-03-administering-entity-resolution",
+  "artifactPath": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/.refiner/artifacts/web-03-administering-entity-resolution/dist",
+  "phase": "runtime-architecture::web-case-to-letter",
+  "verdict": "PASS",
+  "counts": {
+    "critical": 0,
+    "major": 0,
+    "minor": 0
+  },
+  "findings": [],
+  "manifest": {
+    "sourceManifestSha256": "e5d47ce251d44f62aa4e13e7a5b7129603355c126a80f3ad792f2d3e41351004",
+    "expectedSourceManifestSha256": "e5d47ce251d44f62aa4e13e7a5b7129603355c126a80f3ad792f2d3e41351004",
+    "snapshotCount": 98,
+    "snapshotVerification": "Passed"
+  },
+  "checks": [
+    {
+      "id": "product-correctness",
+      "result": "Passed",
+      "evidence": "Five resolution states are modeled; parked states block downstream evidence; resolved path includes entity, criteria, submission channel, appeal path, validity, source, and controlling revisions."
+    },
+    {
+      "id": "security-boundaries",
+      "result": "Passed",
+      "evidence": "Browser mutation accepts only commandId and expectedCaseInputRevision with deny_unknown_fields; AppServices and Axum require verified session capabilities; PostgreSQL functions reauthorize target case and refuse direct executor writes."
+    },
+    {
+      "id": "mounted-caller-chain",
+      "result": "Passed",
+      "evidence": "The administering-entity router is mounted in the API router and delegates through shell-neutral AppServices into the PostgreSQL adapter."
+    },
+    {
+      "id": "concurrency-both-orders",
+      "result": "Passed",
+      "evidence": "Resolver and authoritative-input mutations acquire table then case locks; retained race evidence covers resolution-first invalidation and mutation-first resolution from new inputs."
+    },
+    {
+      "id": "future-effective-classification",
+      "result": "Passed",
+      "evidence": "Future-effective plan, enrollment, and rule paths report missing; expired is reserved for compatible paths whose intersected validity ended on or before service date."
+    },
+    {
+      "id": "durable-command-reconciliation",
+      "result": "Passed",
+      "evidence": "Pending commands are retained only after pre-dispatch case revision load, exact lookup precedes current-row acceptance, 404 lookup retries the same command ID, and terminal stale or incomplete results clear pending state with guidance."
+    },
+    {
+      "id": "authority-revision-display",
+      "result": "Passed",
+      "evidence": "Receipts, current resolution reads, and the mounted panel preserve and display entity, plan, enrollment, rule, and source-document versions."
+    },
+    {
+      "id": "evidence-truthfulness",
+      "result": "Passed",
+      "evidence": "The artifact stays inside administering-entity resolution and does not claim letter generation or unsupported assertion inclusion; full actual-browser case-to-letter certification remains assigned to Web-17."
+    },
+    {
+      "id": "focused-web-03-boundary",
+      "result": "Passed",
+      "evidence": "No reviewed path enters desktop or mobile surfaces, and the design/result documents explicitly exclude broad child integration, Tauri runtime certification, native SQLite selection, Flutter/mobile work, real payer transport, external inference, production deployment, and Web-17 certification."
+    }
+  ],
+  "commandsRun": [
+    {
+      "command": "sha256sum .refiner/artifacts/web-03-administering-entity-resolution/dist/source-manifest.sha256",
+      "observed": "e5d47ce251d44f62aa4e13e7a5b7129603355c126a80f3ad792f2d3e41351004"
+    },
+    {
+      "command": "python3 .refiner/artifacts/web-03-administering-entity-resolution/dist/validate.py",
+      "observed": "Passed; 98 current inputs match their persisted snapshots"
+    }
+  ],
+  "unverified": []
+}

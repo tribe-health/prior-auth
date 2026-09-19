@@ -1,0 +1,18 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "crates/aso-host/src/case_management.rs",
+      "line": 226,
+      "claim": "The write-target authorization path still depends on the repository read-case path, so the PostgreSQL implementation requires `case:read` for write-only case operations.",
+      "evidence": "`authorize_case_write_target` checks `case_write` and then calls `self.cases.read_case(context, case_id)`, while `PgGateRepository::read_case` executes `SELECT aso.read_case($1)` and the migration defines `aso.read_case` as `PERFORM aso.require_case(target_case, 'case:read')`; this contradicts the spec scenario requiring refusal only when the caller lacks the capability required by the operation and the accepted resolution that write resources use `case_write` without also requiring `case:read`.",
+      "suggested_fix": "Add a repository method/SQL function that verifies case existence and tenant scope with `case_write` (for example `aso.require_case(target_case, 'case_write')`) and have `authorize_case_write_target` call that instead of `read_case`."
+    }
+  ]
+}

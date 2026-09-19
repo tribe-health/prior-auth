@@ -1,0 +1,374 @@
+{
+  "result": "Passed",
+  "verification_tier": 1,
+  "install_mode": "upgrade",
+  "observed_at": "2026-09-18T09:13:58.768407+00:00",
+  "scope": "Actual AppServices, restricted PostgreSQL functions, and local DocumentStore upload, restart, idempotency, conflict, byte/page bounds, type, digest, tenant, capability, and session behavior",
+  "prerequisites": [
+    "Existing Docker Compose db service with schema extensions available",
+    "Configured PostgreSQL admin password from container environment",
+    "Pinned Rust toolchain and idle workspace Cargo build directory",
+    "No concurrent database fixtures; a local exclusive lock covers this runner"
+  ],
+  "commands": [
+    "python3 scripts/test-web04-document-upload-service.py --install-mode upgrade --output .kbd-orchestrator/phases/runtime-architecture/children/web-case-to-letter/evidence/web-04-document-upload-core/task-3-upgrade-service.json",
+    "cargo run -p aso-web-server -- --migrate-server"
+  ],
+  "environment_contract": {
+    "migration": [
+      "ASO_MIGRATION_DATABASE_URL"
+    ],
+    "test": [
+      "ASO_TEST_DATABASE_URL",
+      "ASO_TEST_ADMIN_DATABASE_URL",
+      "ASO_TEST_OWNER_ROLE",
+      "ASO_TEST_GATE_CONTEXTS",
+      "ASO_TEST_GATE_CASE_ID",
+      "ASO_TEST_FOREIGN_CASE_ID"
+    ],
+    "credentials": "Disposable passwords supplied only through environment or captured SQL stdin"
+  },
+  "checks": {
+    "postgres_port_discovery": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "configured_admin_password_available": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "populated_upgrade_fixture_created": {
+      "result": "Passed"
+    },
+    "legacy_stale_and_valid_summary_fixtures_created": {
+      "result": "Passed"
+    },
+    "initial_server_migration": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "original_case_ids_and_contents_survive_upgrade": {
+      "result": "Passed"
+    },
+    "upgrade_clears_stale_empty_gate_summary": {
+      "result": "Passed"
+    },
+    "upgrade_recomputes_stale_complete_gate_summary": {
+      "result": "Passed"
+    },
+    "upgrade_preserves_correct_complete_case_including_updated_at": {
+      "result": "Passed"
+    },
+    "upgrade_preserves_legacy_affirmation_records": {
+      "result": "Passed"
+    },
+    "unchanged_migration_rerun": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "migration_ledger_and_populated_cases_unchanged": {
+      "result": "Passed"
+    },
+    "unchanged_rerun_preserves_repaired_and_valid_upgrade_cases": {
+      "result": "Passed"
+    },
+    "durable_gate_migration_recorded": {
+      "result": "Passed"
+    },
+    "checksum_mismatch_refused": {
+      "result": "Passed",
+      "return_code": 1,
+      "checksum_mismatch_reported": true
+    },
+    "checksum_refusal_preserves_populated_cases": {
+      "result": "Passed"
+    },
+    "restored_checksum_rerun": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "checksum_restoration_preserves_ledger_and_cases": {
+      "result": "Passed"
+    },
+    "checksum_probe_preserves_upgrade_cases_and_affirmations": {
+      "result": "Passed"
+    },
+    "migration_adds_initial_document_revision_tokens": {
+      "result": "Passed",
+      "observed": {
+        "caseInputRevision": 1,
+        "documentSetRevision": 0
+      }
+    },
+    "authorized_reservation_binds_server_storage_identity": {
+      "result": "Passed",
+      "observed": {
+        "state": "staged",
+        "caseId": "e265d87d-d784-4592-97d3-f80fca6101ee",
+        "commandId": "3a108d28-7ee3-496a-b209-ea72b9dab457",
+        "expiresAt": "2026-09-18T10:14:07.402275+00:00",
+        "stagingId": "3a108d28-7ee3-496a-b209-ea72b9dab457",
+        "documentId": "c3b6a407-9ba9-400f-8fba-49167e3e4352",
+        "storageKey": "documents/28c737f6-808b-491c-9b3b-6dc6c3194461/c3b6a407-9ba9-400f-8fba-49167e3e4352/abababababababababababababababababababababababababababababababab"
+      }
+    },
+    "reservation_retry_is_idempotent": {
+      "result": "Passed"
+    },
+    "same_command_different_hash_is_conflict": {
+      "result": "Passed",
+      "expected_sqlstate": "23505"
+    },
+    "oversized_upload_is_refused_before_staging": {
+      "result": "Passed",
+      "expected_sqlstate": "22023"
+    },
+    "foreign_practice_case_is_refused": {
+      "result": "Passed",
+      "expected_sqlstate": "42501"
+    },
+    "administrator_without_document_upload_is_refused": {
+      "result": "Passed",
+      "expected_sqlstate": "42501"
+    },
+    "rollback_control_executes": {
+      "result": "Passed",
+      "database_error": []
+    },
+    "rolled_back_commit_leaves_no_partial_ready_metadata": {
+      "result": "Passed",
+      "observed": {
+        "commandCount": 0,
+        "stagingCount": 1,
+        "documentCount": 0
+      }
+    },
+    "commit_atomically_persists_queued_metadata_and_receipt": {
+      "result": "Passed",
+      "receipt": {
+        "action": "upload",
+        "caseId": "e265d87d-d784-4592-97d3-f80fca6101ee",
+        "commandId": "3a108d28-7ee3-496a-b209-ea72b9dab457",
+        "documentId": "c3b6a407-9ba9-400f-8fba-49167e3e4352",
+        "committedAt": "2026-09-18T09:14:08.225568+00:00"
+      },
+      "stored": {
+        "byteSize": 18,
+        "revision": 1,
+        "mediaType": "text/plain",
+        "pageCount": null,
+        "storageKey": "documents/28c737f6-808b-491c-9b3b-6dc6c3194461/c3b6a407-9ba9-400f-8fba-49167e3e4352/abababababababababababababababababababababababababababababababab",
+        "contentSha256": "abababababababababababababababababababababababababababababababab",
+        "documentVersion": 1,
+        "processingStatus": "queued"
+      },
+      "post_commit": {
+        "commandCount": 1,
+        "stagingCount": 0,
+        "documentSetRevision": 0
+      }
+    },
+    "lost_commit_response_reconciles_exact_receipt": {
+      "result": "Passed"
+    },
+    "authorized_metadata_read_excludes_storage_key_and_bytes": {
+      "result": "Passed",
+      "keys": [
+        "byteSize",
+        "caseId",
+        "committedAt",
+        "contentSha256",
+        "documentTypeId",
+        "documentVersion",
+        "effectiveDate",
+        "id",
+        "mediaType",
+        "name",
+        "pageCount",
+        "processingErrorCode",
+        "processingStatus",
+        "revision"
+      ]
+    },
+    "abandon_returns_exact_storage_key_and_removes_pending_state": {
+      "result": "Passed",
+      "observed": {
+        "commandCount": 0,
+        "stagingCount": 0,
+        "documentCount": 0
+      }
+    },
+    "least_privilege_local_tables_and_processor_boundary": {
+      "result": "Passed",
+      "observed": {
+        "stagingRls": true,
+        "commandsRls": true,
+        "migrationRecorded": true,
+        "executorCommandRead": false,
+        "executorStagingWrite": false,
+        "humanProcessorGrants": 0,
+        "publishedLocalTables": false,
+        "executorDocumentInsert": false
+      }
+    },
+    "upload_runtime_login_is_restricted_executor": {
+      "result": "Passed"
+    },
+    "actual_service_store_database_lifecycle": {
+      "result": "Passed",
+      "return_code": 0,
+      "markers": [
+        "document_upload_transaction_check: durable_bytes_and_queued_metadata_commit",
+        "document_upload_transaction_check: restart_retry_and_command_lookup_reconcile",
+        "document_upload_transaction_check: conflict_size_page_type_and_digest_refusals",
+        "document_upload_transaction_check: tenant_capability_and_session_refusals"
+      ]
+    },
+    "service_output_contains_no_uploaded_content": {
+      "result": "Passed"
+    },
+    "store_leaves_no_temporary_objects": {
+      "result": "Passed",
+      "temporary_files": []
+    }
+  },
+  "processes": [
+    {
+      "label": "initial_server_migration",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 0,
+      "actual_result_output": []
+    },
+    {
+      "label": "unchanged_server_migration_rerun",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 0,
+      "actual_result_output": []
+    },
+    {
+      "label": "checksum_mismatch_refusal",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 1,
+      "actual_result_output": [],
+      "checksum_mismatch_reported": true
+    },
+    {
+      "label": "restored_checksum_migration_rerun",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 0,
+      "actual_result_output": []
+    },
+    {
+      "label": "actual_document_upload_service_lifecycle",
+      "command": [
+        "cargo",
+        "test",
+        "-p",
+        "aso-web-server",
+        "adapters::gate::upload_transaction_tests::document_upload_service_lifecycle",
+        "--",
+        "--ignored",
+        "--exact",
+        "--nocapture"
+      ],
+      "return_code": 0,
+      "actual_result_output": [
+        "document_upload_transaction_check: durable_bytes_and_queued_metadata_commit",
+        "document_upload_transaction_check: restart_retry_and_command_lookup_reconcile",
+        "document_upload_transaction_check: conflict_size_page_type_and_digest_refusals",
+        "document_upload_transaction_check: tenant_capability_and_session_refusals",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 27 filtered out; finished in 0.18s"
+      ]
+    }
+  ],
+  "cleanup": {
+    "disposable_database_deleted": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "disposable_login_deleted": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "aso_session_reader": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_gate_executor": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_gate_owner": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_case_executor": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_case_owner": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_authority_event_reader": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    }
+  },
+  "unverified": [
+    "Multipart HTTP, React upload/status UI, document extraction, actual browser, Tauri, and mobile are outside Web-04 task 1.3."
+  ],
+  "source_sha256": {
+    "migrations/server/2026090601_durable_gate.sql": "b3da2e91629534c011c6186eeb658fc2286896d2d491ca94dcda03a2f009a899",
+    "crates/aso-web-server/src/adapters/gate.rs": "dd85c3a465dfc242a0395c3193e308e53064b1a4d8667ec33b9ca39aa274dc5d",
+    "crates/aso-web-server/src/adapters/gate/transaction_tests.rs": "9690fe42a3cda9fc797b1bd6cfbd844155581d64227f75fc8ecd5a65e4196695",
+    "crates/aso-host/src/affirmation.rs": "adc28699815e2e24016b99742820eb3731a3ee31d2c0750721866b2a5fe679bb",
+    "crates/aso-host/src/lib.rs": "119d40b1688f90dfcbdcc9fcf5eaf5c0a0811290d135bcca36cdc1e0fca9ad7c",
+    "docs/design/schema/schema.sql": "0659af835b02cd91b697f5c29f5ad6ff1e34ecad92dcf7a7d41eb14391ea9679",
+    "docker/bootstrap/25-session-authority.sql": "fae999acbbaf98ca6b3ae107670ea25511426a233fa4ced5e72556c3fbc8c21b",
+    "scripts/test-gate-transaction.py": "7d96318b843f93455f9d30462f56e63c36f618d4569ccbd3d1a15704566a0787",
+    "migrations/server/2026090617_durable_case_commands.sql": "6ed504bdff3e4abe464179101d55c7fd23c4b6e9c1ef5e67e6e3854b010d3a86",
+    "migrations/server/2026090620_document_upload_schema.sql": "5b6ff35b0d64ed48436506d95059ccb211eea32cae76bc83b57e17ba5b743a3c",
+    "crates/aso-web-server/src/migrations.rs": "730cd713e6787412d5eef817018c6343dc0e82dc7ea5432d6133a34abcfb4d05",
+    "docs/design/schema/schema-web-case-to-letter.sql": "35cd668d991dd4b06b2a21a642c1370476a9b4052500b27dd9637fa43a8dec3e",
+    "scripts/test-web04-document-upload-schema.py": "ac5511e5b2c57b00cfdae323a11940edee8e308a8f291e37f1cff847c3ff043a",
+    "Cargo.toml": "506e389b6bdb9a48257f593bfc5065254d63e29f13b14e2c1c6414202307cad7",
+    "Cargo.lock": "7e9c3b8503a7b21c5a09065214b5f63a32ed4b5857842736a75b42ac5de78c4e",
+    "versions.toml": "64da73ef5dc9ff3e7e6d1eaec8e1fad3b3a677cb089d77c47bcc0e71d8084927",
+    "crates/aso-host/src/document_upload.rs": "065a7e3d1c725b608dbc8b42bea27a312e18e8b4b74c2a1308bc4866843b7972",
+    "crates/aso-host/src/ports/mod.rs": "572d2215febd2c48abeacc1a077838783884621e6d53c62621d13927831af6c2",
+    "crates/aso-web-server/Cargo.toml": "346ca19f9e81b77165d6b395dc8dac822d0979e6fbf3efc3106b500f18bd0768",
+    "crates/aso-web-server/src/adapters/document_store.rs": "72b3740632bb948e46db4c709e6aae43476a3874d3c6d07236800448cada8533",
+    "crates/aso-web-server/src/adapters/gate/upload_transaction_tests.rs": "622b759e4c57a71a73628f15feba5ff9f3d0f71bc725824815eb10183beac17f",
+    "scripts/test-web04-document-upload-service.py": "9c32a3a499541d3fc7702922b7242ffbe066798cecc8b6d5c93b69abcd4f3179"
+  },
+  "completed_at": "2026-09-18T09:14:10.175972+00:00"
+}

@@ -1,0 +1,36 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "migrations/server/2026090622_document_status_projection.sql",
+      "claim": "The document status table is materialized but never made publishable/readable by the replication boundary, so processing status is not actually published to the browser replica.",
+      "evidence": "Acceptance criterion 1.3 requires \"Register document status lane/privacy/columns/tenant/revocation and extend projection/materialization\" and the proposal requires \"publish processing status\"; this migration creates `aso.document_statuses`, enables RLS, and `REVOKE ALL ON aso.document_statuses FROM PUBLIC`, but contains no `ALTER PUBLICATION ... ADD TABLE`, no SELECT grant to a replication/shape role, and no read policy for the status projection.",
+      "suggested_fix": "Add the document status relation to the approved explicit-table publication path and grant/policy the exact replication role needed for the approved columns and practice predicate, or call the repository's existing publication registration mechanism in this migration."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "web/src/shared/sync/pglite-schema.ts",
+      "claim": "The fresh local schema creates `cases` without the columns that the current case projection sync requests, causing the current browser replica to reject or drop case rows on a fresh client.",
+      "evidence": "`web/src/shared/sync/electric-shapes.ts` requests case columns `case_number`, `patient_id`, `surgeon_id`, `coordinator_id`, `payer_id`, `date_of_service`, and `revision`, but `PGLITE_SCHEMA_SQL` in `web/src/shared/sync/pglite-schema.ts` creates `cases` with only `id`, `practice_id`, `status`, `gate_affirmed_at`, `created_at`, and `updated_at`; those requested columns are only added later in `PGLITE_CASE_SUMMARY_SQL`, which is labeled an additive migration rather than the base fresh schema.",
+      "suggested_fix": "Update the base current schema used for fresh PGlite initialization to create `cases` with the same columns as `SYNC_COLUMNS`, or ensure the local migration runner always applies `PGLITE_CASE_SUMMARY_SQL` before any shape materialization on a fresh store."
+    },
+    {
+      "severity": "WARNING",
+      "file": "openspec/changes/web-05-document-processing-ui/tasks.md",
+      "claim": "The change leaves its own verification and completion tasks unchecked even though the acceptance packet requires them to be recorded and marked when satisfied.",
+      "evidence": "Acceptance criteria include 2.1 \"Run focused T0/T1 plus forbidden-source-column sabotage-and-restore, artifact-refiner, and adversarial review\" and 3.1 \"Record actual commands and observed outputs ... and mark only satisfied work complete\"; `tasks.md` still has `- [ ] 2.1` and `- [ ] 3.1` while the evidence summary claims those checks were run.",
+      "suggested_fix": "Update `tasks.md` to mark completed verification/completion items consistently with retained evidence, or remove the claimed completion evidence if those tasks are not actually complete."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

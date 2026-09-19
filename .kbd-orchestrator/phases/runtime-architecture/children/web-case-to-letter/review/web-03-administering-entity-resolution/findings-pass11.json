@@ -1,0 +1,34 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "docs/architecture/fixtures/web-case-to-letter/verify.py",
+      "line": 19,
+      "claim": "The fixture verifier cannot run because it requires manifest-lock.json, but the diff does not add that file.",
+      "evidence": "verify.py defines `LOCK_PATH = ROOT / \"manifest-lock.json\"` and later executes `lock = load(LOCK_PATH)`; `openspec/changes/web-03-administering-entity-resolution/files.txt` lists `docs/architecture/fixtures/web-case-to-letter/manifest-lock.json`, but the diff adds README.md, expected-output-manifest.json, fixture-manifest.json, and verify.py only, with no manifest-lock.json.",
+      "suggested_fix": "Add docs/architecture/fixtures/web-case-to-letter/manifest-lock.json with hashes matching the fixture and expected manifests, or remove the verifier's hard dependency if a lock is not part of this change."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "migrations/server/2026090617_durable_case_commands.sql",
+      "line": 46,
+      "claim": "The migration can fail on PostgreSQL versions before 17 because it unconditionally checks the MAINTAIN table privilege.",
+      "evidence": "The role safety check calls `pg_catalog.has_table_privilege(role_id, c.oid, 'SELECT, INSERT, UPDATE, DELETE, TRUNCATE, REFERENCES, TRIGGER, MAINTAIN')`; the adapter's runtime role checks in `crates/aso-web-server/src/adapters/gate.rs` were changed to guard MAINTAIN with `current_setting('server_version_num')::integer >= 170000`, showing this privilege is version-dependent.",
+      "suggested_fix": "Mirror the guarded MAINTAIN check used in the Rust role-check SQL, or omit MAINTAIN on PostgreSQL versions where it is not supported."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "openspec/changes/web-03-administering-entity-resolution/tasks.md",
+      "line": 10,
+      "claim": "The change does not satisfy the packet's focused verification and completion-evidence acceptance criteria.",
+      "evidence": "The acceptance criteria include `2.1 Run focused T0/T1 plus untrusted-selection sabotage-and-restore, artifact-refiner, and adversarial review` and `3.1 Record actual commands and observed outputs...`, but tasks.md leaves both as unchecked: `- [ ] 2.1 ...` and `- [ ] 3.1 ...`.",
+      "suggested_fix": "Run and record the required verification/evidence work, then mark only the completed tasks checked with the observed command outputs."
+    }
+  ]
+}

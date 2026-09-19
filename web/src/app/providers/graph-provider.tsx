@@ -31,6 +31,7 @@ import {
   PGLITE_ANNOTATION_TYPES_SQL,
   PGLITE_CASE_SUMMARY_SQL,
   PGLITE_DOCUMENT_STATUS_SQL,
+  PGLITE_DOCUMENT_TASK_STATUS_SQL,
   PGLITE_SCHEMA_SQL,
   PGLITE_SOURCE_HASH_SQL,
 } from "@/shared/sync/pglite-schema";
@@ -96,7 +97,7 @@ interface GraphRuntime {
 
 /** Bumped when the local schema changes shape; old namespaces are then dead. */
 const REPLICA_GENERATION = 5;
-const REPLICA_SCHEMA_VERSION = 7;
+const REPLICA_SCHEMA_VERSION = 8;
 
 /**
  * The persisted namespace for a session's graph.
@@ -348,6 +349,12 @@ const sessionManager = new GraphSessionManager<GraphSessionContext>({
                   id: "005-document-status-projection",
                   sql: PGLITE_DOCUMENT_STATUS_SQL,
                   checksum: await migrationChecksum(PGLITE_DOCUMENT_STATUS_SQL),
+                  logicalVersion: 7,
+                },
+                {
+                  id: "006-document-task-status-projection",
+                  sql: PGLITE_DOCUMENT_TASK_STATUS_SQL,
+                  checksum: await migrationChecksum(PGLITE_DOCUMENT_TASK_STATUS_SQL),
                   logicalVersion: REPLICA_SCHEMA_VERSION,
                 },
               ],

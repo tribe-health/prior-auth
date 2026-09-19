@@ -1,0 +1,31 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "openspec/changes/web-03-administering-entity-resolution/tasks.md",
+      "line": 10,
+      "claim": "Focused verification and completion evidence are still marked incomplete even though they are acceptance criteria for this target.",
+      "evidence": "Acceptance criteria include `- [ ] 2.1 Run focused T0/T1 plus untrusted-selection sabotage-and-restore, artifact-refiner, and adversarial review.` and `- [ ] 3.1 Record actual commands and observed outputs...`; the added tasks.md preserves both as unchecked under sections 2 and 3.",
+      "suggested_fix": "Do not archive this change until 2.1 and 3.1 are actually completed and the tasks are updated consistently with retained evidence."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "scripts/test-web03-resolution-schema.py",
+      "line": 436,
+      "claim": "The retained evidence records a schema test command that cannot run because the script requires a missing `--output` argument.",
+      "evidence": "The script defines `parser.add_argument(\"--output\", type=Path, required=True)`, while task evidence records commands such as `python3 scripts/test-web03-resolution-schema.py --install-mode fresh` without `--output` in task-2-fresh-schema.json and task-2-upgrade-schema.json, violating acceptance criterion 3.1 to record actual commands and observed outputs.",
+      "suggested_fix": "Update the evidence to the exact runnable command including `--output`, or make the script provide a default output path and rerun the retained evidence."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

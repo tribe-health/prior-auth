@@ -1,0 +1,4 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.33s
+     Running unittests src/main.rs (/Volumes/my-passport/cargo-build/02/70d32e977a4fbf/debug/deps/aso_web_server-e7a6905ccf4c4021)
+error: Unrecognized option: 'no-fail-fast'
+error: test failed, to rerun pass `-p aso-web-server --bin aso-web-server`

@@ -671,7 +671,7 @@ mod tests {
                 aso_host::projection::PROJECTION_REVISION
             );
             let projections = grant["projections"].as_array().unwrap();
-            assert_eq!(projections.len(), 7);
+            assert_eq!(projections.len(), 8);
             let states = projections
                 .iter()
                 .find(|projection| projection["id"] == "evidence_states")

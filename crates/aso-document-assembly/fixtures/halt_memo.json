@@ -1,0 +1,50 @@
+{
+  "kind": "pa.halt_memo",
+  "claims": [
+    {
+      "ordinal": 1,
+      "text": "the nicotine test was ordered 2026-09-12 and has not resulted.",
+      "criterionId": "halt_notes",
+      "provenance": {
+        "kind": "annotation",
+        "annotationId": "ann-9",
+        "author": "Adaeze Okafor, MD",
+        "authoredOn": "2026-09-15"
+      }
+    }
+  ],
+  "requiredCriteria": [],
+  "evidence": {
+    "C1": "met",
+    "C2": "gap",
+    "C3": "met",
+    "C4": "void",
+    "C5": "met"
+  },
+  "context": {
+    "case_number": "ASO-2026-0142",
+    "criteria": [
+      {
+        "id": "C1",
+        "text": "Spondylolisthesis with documented instability on flexion-extension imaging"
+      },
+      {
+        "id": "C2",
+        "text": "At least 12 weeks of conservative care including physical therapy and medication"
+      },
+      {
+        "id": "C3",
+        "text": "Neurological deficit or neurogenic claudication concordant with imaging"
+      },
+      {
+        "id": "C4",
+        "text": "Verified nicotine abstinence for at least 6 weeks before surgery"
+      },
+      {
+        "id": "C5",
+        "text": "BMI and glycemic control within surgical safety thresholds"
+      }
+    ]
+  },
+  "checks": {}
+}

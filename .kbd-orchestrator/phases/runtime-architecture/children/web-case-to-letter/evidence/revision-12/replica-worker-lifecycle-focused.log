@@ -1,0 +1,17 @@
+
+> aso-web@0.1.0 test
+> vitest run --run src/shared/sync/replica-worker-lifecycle.test.ts
+
+
+ RUN  v3.2.7 /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web
+
+ ✓ src/shared/sync/replica-worker-lifecycle.test.ts (3 tests) 9366ms
+   ✓ durable replica worker lifecycle > fences an old tab after owner close and gives exactly one follower the durable replica  3232ms
+   ✓ durable replica worker lifecycle > quarantines a failed migration without partially changing durable data  1620ms
+   ✓ durable replica worker lifecycle > invalidates an old identity during opening and never exposes its data to the new identity  4512ms
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  13:32:03
+   Duration  10.31s (transform 130ms, setup 0ms, collect 164ms, tests 9.37s, environment 530ms, prepare 52ms)
+

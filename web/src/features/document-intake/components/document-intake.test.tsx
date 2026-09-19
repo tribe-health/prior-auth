@@ -56,7 +56,7 @@ describe('DocumentIntake', () => {
       'application/pdf,text/plain,.pdf,.txt',
     );
     expect(screen.getByText(DOCUMENT_PROCESSING_FAILED_MESSAGE)).toBeTruthy();
-    expect(screen.getByTestId('document-status-grid').className).toContain('sm:grid-cols-2');
+    expect(screen.getByTestId('document-status-grid').className).toContain('grid-cols-[repeat(auto-fit');
     const open = screen.getByRole('button', { name: 'Open source' });
     expect(open.tabIndex).toBe(0);
     fireEvent.click(open);

@@ -1,0 +1,31 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "web/src/features/case-queue/hooks/use-case-command.ts",
+      "line": 43,
+      "claim": "Case update success can be marked confirmed without verifying several editable intake fields actually committed.",
+      "evidence": "Acceptance criterion 1.4 requires committed updates; `CaseForm` edits `memberId`, `facilityId`, `procedureCode`, and `planKey` (web/src/features/case-queue/components/case-form.tsx lines 77-153), but `inputFingerprint` only includes `caseId`, `caseNumber`, `patientId`, `surgeonId`, `coordinatorId`, `payerId`, and `dateOfService`, and `projectionFingerprint` checks the same summary-only subset before publishing `confirmed`.",
+      "suggested_fix": "For fields outside the summary projection, delay confirmation until `caseApi.read` returns the updated detail record/caseInputRevision, or remove those fields from the editable form until they can be verified through an authorized committed read."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "web/src/features/case-queue/hooks/use-case-command.ts",
+      "line": 235,
+      "claim": "Reconciliation loses the original expected update/transition outcome and can wait for or confirm the wrong projection.",
+      "evidence": "`reconcile` reconstructs the expected revision as `current.action === 'create' ? 1 : (projectedCase?.revision ?? 0) + 1` and the expected state as `current.action === 'create' ? 'intake' : projectedCase?.status`, but the runtime command stored by `claim` contains only `{ id, action, targetId, status }`, so the original expected revision, target status, and fingerprint from the submitted mutation are not retained.",
+      "suggested_fix": "Persist the submitted command's expected projection metadata when moving to `uncertain`, and use that stored revision/state/fingerprint during reconciliation instead of deriving it from the current projection."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

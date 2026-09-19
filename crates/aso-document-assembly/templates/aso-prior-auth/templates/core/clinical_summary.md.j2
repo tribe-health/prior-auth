@@ -1,0 +1,15 @@
+{% set summary = claims_for("summary") -%}
+{% set fi = claims_for("functional_impact") -%}
+{% if summary or fi -%}
+## 2. Clinical Summary
+
+{% for line in summary -%}
+{{ line }}
+
+{% endfor -%}
+{% if fi -%}
+**Functional impact.** {% for line in fi %}{{ line }} {% endfor %}
+
+
+{% endif %}
+{% endif %}

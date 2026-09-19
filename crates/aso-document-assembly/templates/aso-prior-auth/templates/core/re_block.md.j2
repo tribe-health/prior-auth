@@ -1,0 +1,21 @@
+| Field | Value |
+| :-- | :-- |
+| Member | {{ ctx.member.name }} |
+| Date of birth | {{ ctx.member.dob }} |
+| Member ID | {{ ctx.member.member_id }} |
+| Requested service | {{ ctx.request.procedure }} |
+| Codes | {% for c in ctx.request.codes %}{{ c.code }}{% if not loop.last %}, {% endif %}{% endfor %} |
+{% if ctx.request.icd10 -%}
+| Submitted diagnosis codes | {% for d in ctx.request.icd10 %}{{ d.code }}{% if not loop.last %}, {% endif %}{% endfor %} |
+{% endif -%}
+{% if ctx.request.levels -%}
+| Levels | {{ ctx.request.levels }} |
+{% endif -%}
+{% if ctx.request.site_of_service -%}
+| Site of service | {{ ctx.request.site_of_service }} |
+{% endif -%}
+| Requesting physician | {{ ctx.requesting_physician.name }} · NPI {{ ctx.requesting_physician.npi }} |
+{% if ctx.request.facility.name -%}
+| Facility | {{ ctx.request.facility.name }}{% if ctx.request.facility.npi %} · NPI {{ ctx.request.facility.npi }}{% endif %} |
+{% endif -%}
+| Anticipated date of service | {{ ctx.request.date_of_service }} |

@@ -1,0 +1,13 @@
+{
+  "source": "crates/aso-host/src/projection.rs",
+  "backup": "/tmp/prior-auth-web05-projection.rs",
+  "original_sha256": "d0a6be7e53420e5acccee5e20997e9d16deab8f9564dd85ceb6b24d711faee37",
+  "sabotaged_sha256": "236b75d431428cc7f03297e27a7cffccc8c5aa1c15764e4161d6aae731796c5b",
+  "mutation": "added storage_uri to production DocumentStatuses granted projection columns",
+  "diagnostic_first_attempt": "A test-expectation mutation failed the exact-column assertion and was restored before this production-boundary mutation.",
+  "red_return_code": 101,
+  "restored_sha256": "d0a6be7e53420e5acccee5e20997e9d16deab8f9564dd85ceb6b24d711faee37",
+  "restored_matches_original": true,
+  "restored_return_code": 0,
+  "result": "Passed"
+}

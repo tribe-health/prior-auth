@@ -1,0 +1,57 @@
+$ tsc -b && vite build
+vite v7.1.5 building for production...
+(node:10838) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+transforming...
+node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/dist/fs/nodefs.js (1:227): "resolve" is not exported by "__vite-browser-external", imported by "node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/dist/fs/nodefs.js".
+node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/dist/fs/nodefs.js (1:240): "existsSync" is not exported by "__vite-browser-external", imported by "node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/dist/fs/nodefs.js".
+node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/dist/fs/nodefs.js (1:253): "join" is not exported by "__vite-browser-external", imported by "node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/dist/fs/nodefs.js".
+node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/dist/fs/nodefs.js (1:276): "mkdirSync" is not exported by "__vite-browser-external", imported by "node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/dist/fs/nodefs.js".
+✓ 2370 modules transformed.
+node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/dist/chunk-DDJLRBDX.js (1:26769): Use of eval in "node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/dist/chunk-DDJLRBDX.js" is strongly discouraged as it poses security risks and may cause issues with minification.
+node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/dist/chunk-DDJLRBDX.js (1:27247): Use of eval in "node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/dist/chunk-DDJLRBDX.js" is strongly discouraged as it poses security risks and may cause issues with minification.
+node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/dist/index.js (1:89303): Use of eval in "node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/dist/index.js" is strongly discouraged as it poses security risks and may cause issues with minification.
+node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/dist/index.js (1:89781): Use of eval in "node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/dist/index.js" is strongly discouraged as it poses security risks and may cause issues with minification.
+rendering chunks...
+computing gzip size...
+dist/index.html                                                 0.46 kB │ gzip:     0.29 kB
+dist/assets/geist-cyrillic-ext-wght-normal-DjL33-gN.woff2       7.42 kB
+dist/assets/geist-vietnamese-wght-normal-6IgcOCM7.woff2         8.00 kB
+dist/assets/geist-cyrillic-wght-normal-BEAKL7Jp.woff2          15.08 kB
+dist/assets/geist-latin-ext-wght-normal-DC-KSUi6.woff2         16.51 kB
+dist/assets/geist-latin-wght-normal-BgDaEnEv.woff2             29.40 kB
+dist/assets/initdb-DwLcS450.wasm                              395.24 kB │ gzip:   147.20 kB
+dist/assets/pglite-n8RDJ3Sw.data                            6,295.32 kB
+dist/assets/pglite-DgipwPsY.wasm                           10,088.16 kB │ gzip: 3,443.92 kB
+dist/assets/index-BxAGevtW.css                                253.84 kB │ gzip:    37.56 kB
+dist/assets/__vite-browser-external-BIHI7g3E.js                 0.03 kB │ gzip:     0.05 kB
+dist/assets/settings-profile-route-DQ3005n9.js                  0.21 kB │ gzip:     0.18 kB
+dist/assets/case-queue-route-DpoXDrWg.js                        0.21 kB │ gzip:     0.18 kB
+dist/assets/settings-integrations-route-7LkEhB7B.js             0.22 kB │ gzip:     0.20 kB
+dist/assets/surgeon-gate-route-d_S6Tkz_.js                      0.23 kB │ gzip:     0.19 kB
+dist/assets/peer-to-peer-route-DFlDHzZp.js                      0.23 kB │ gzip:     0.19 kB
+dist/assets/admin-console-route-eS3N22wZ.js                     0.23 kB │ gzip:     0.20 kB
+dist/assets/policy-panel-route-CjSJaUaV.js                      0.23 kB │ gzip:     0.20 kB
+dist/assets/submission-packet-route-2IWAqxVl.js                 0.23 kB │ gzip:     0.19 kB
+dist/assets/pathway-comparison-route-D9VMIFqR.js                0.23 kB │ gzip:     0.20 kB
+dist/assets/receipt-verification-route-Bzvl07Uo.js              0.24 kB │ gzip:     0.20 kB
+dist/assets/nodefs-CjIzLFL6.js                                  0.42 kB │ gzip:     0.29 kB
+dist/assets/route-placeholder-BDICwEGL.js                       0.51 kB │ gzip:     0.32 kB
+dist/assets/textarea-BSLjlJmC.js                                0.70 kB │ gzip:     0.38 kB
+dist/assets/refresh-cw-DshswaFX.js                              1.00 kB │ gzip:     0.47 kB
+dist/assets/use-scoped-view-store-DCDXXooQ.js                   1.40 kB │ gzip:     0.70 kB
+dist/assets/badge-DbNPdr-_.js                                   1.43 kB │ gzip:     0.66 kB
+dist/assets/letter-composer-route-C_bJw2Zu.js                   9.72 kB │ gzip:     3.43 kB
+dist/assets/opfs-ahp-DZBC4MmD.js                               10.02 kB │ gzip:     3.06 kB
+dist/assets/case-detail-route-B96GoZ83.js                      18.15 kB │ gzip:     5.28 kB
+dist/assets/case-queue-ItV4B24K.js                             21.23 kB │ gzip:     6.63 kB
+dist/assets/intake-checklist-route-Dal9PKe5.js                 22.52 kB │ gzip:     7.63 kB
+dist/assets/evidence-timeline-route-BS5tW0rD.js                46.82 kB │ gzip:    15.14 kB
+dist/assets/use-source-preview-kOCmt_44.js                     59.59 kB │ gzip:    20.12 kB
+dist/assets/index-DDvcZsW_.js                               1,064.49 kB │ gzip:   292.04 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 3.04s

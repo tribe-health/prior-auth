@@ -1,0 +1,22 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "docker-compose.yaml",
+      "claim": "The default Compose stack exposes an insecure direct Electric endpoint that bypasses the verified tenant/projection boundary.",
+      "evidence": "The added `electric` service sets `ELECTRIC_INSECURE: \"true\"` and publishes `\"${ELECTRIC_PORT:-3000}:3000\"`; the file's own comment states that with this port published, callers can request \"a base-table shape with no projection and no where-clause.\" This conflicts with the acceptance requirement to \"Preserve verified tenant scope\" and criterion 1.3 requiring approved document metadata projection with source text and embeddings structurally absent.",
+      "suggested_fix": "Do not publish Electric directly in the default stack; keep it on an internal network and require access through the authorized Gate/FRF shape facade, or move the direct port exposure behind an explicit unsafe development-only profile that is not the default."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

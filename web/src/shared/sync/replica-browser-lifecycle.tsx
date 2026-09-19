@@ -65,6 +65,7 @@ const EXPECTED_COUNTS: Readonly<Record<PGliteTable, number>> = {
   cases: 360,
   case_evidence: 4_320,
   document_statuses: 2_880,
+  document_task_statuses: 0,
   evidence_citations: 8_640,
   evidence_states: 3,
 };

@@ -2,10 +2,10 @@
   "schemaVersion": "5",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 1716,
-  "derivedRevision": 1716,
+  "sourceRevision": 1981,
+  "derivedRevision": 1981,
   "frontier": {
-    "e9a7936c-0a01-43d5-9004-b93a4e5fd031": 1716
+    "e9a7936c-0a01-43d5-9004-b93a4e5fd031": 1981
   },
   "conflictCount": 0,
   "projectId": "0e0821e7-baa6-41b2-9b15-beaa40e0f40b",
@@ -19,16 +19,20 @@
     "runtime-architecture::web-case-to-letter"
   ],
   "activePhaseId": "runtime-architecture::web-case-to-letter",
+  "activePhase": "web-case-to-letter",
   "phase": "runtime-architecture",
+  "parentPhase": "runtime-architecture",
   "childPointer": "web-case-to-letter",
-  "change": null,
-  "currentTask": null,
+  "change": "web-15a-browser-hardening",
+  "currentTask": "6",
   "status": "ready",
   "completionMetric": "implementation",
-  "implementationCompleted": 42,
-  "implementationTotal": 58,
-  "planRevision": 11,
-  "revision": 1716,
-  "exactNextCommand": "/kbd-apply web-07-criteria-selection-ui",
-  "updatedAt": "2026-09-19T00:10:06.374916Z"
+  "implementationCompleted": 55,
+  "implementationTotal": 61,
+  "planRevision": 12,
+  "revision": 1981,
+  "exactNextCommand": "/kbd-apply da-01-document-assembly-agent",
+  "nextChange": "web-15a-browser-hardening",
+  "nextTask": "6",
+  "updatedAt": "2026-09-19T18:56:39.432938Z"
 }

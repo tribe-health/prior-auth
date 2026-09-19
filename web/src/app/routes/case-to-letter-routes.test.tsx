@@ -54,6 +54,18 @@ const GATE_CONTEXT = {
   plan: { value: 'Procedure 22840', source: 'Case input revision 1' },
 } as const;
 
+function idleDocumentGeneration() {
+  return {
+    generation: {
+      state: { connection: 'idle', task: null, command: null, stage: '', sequence: 0,
+        provisionalText: '', surfaces: [], artifacts: null, message: null, startRefused: false },
+      reconnect: vi.fn(), cancel: vi.fn(), resume: vi.fn(),
+    },
+    savedArtifacts: null,
+    newRequest: vi.fn(),
+  };
+}
+
 function route(path: string, element: React.ReactNode) {
   return render(
     <MemoryRouter initialEntries={[path]}>
@@ -176,6 +188,7 @@ describe('mounted case-to-letter web routes', () => {
   it('generates only when the committed prerequisites and gate are ready', () => {
     const generate = vi.fn();
     letterWorkflow.mockReturnValue({
+      ...idleDocumentGeneration(),
       view: {
         phase: 'ready', letter: null, message: null,
         prerequisites: {
@@ -195,6 +208,7 @@ describe('mounted case-to-letter web routes', () => {
 
   it('does not generate when any committed prerequisite is missing', () => {
     letterWorkflow.mockReturnValue({
+      ...idleDocumentGeneration(),
       view: {
         phase: 'ready', letter: null, message: null,
         prerequisites: {
@@ -217,6 +231,7 @@ describe('mounted case-to-letter web routes', () => {
     const review = vi.fn();
     const approve = vi.fn();
     letterWorkflow.mockReturnValue({
+      ...idleDocumentGeneration(),
       view: {
         phase: 'ready', prerequisites: null, message: null,
         letter: {
@@ -246,6 +261,7 @@ describe('mounted case-to-letter web routes', () => {
   it('keeps approval hidden when the session lacks clinical approval authority', () => {
     capabilities.delete('letter_approve');
     letterWorkflow.mockReturnValue({
+      ...idleDocumentGeneration(),
       view: {
         phase: 'ready', prerequisites: null, message: null,
         letter: {

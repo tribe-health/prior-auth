@@ -12,7 +12,8 @@ import {
   useSession,
 } from '@/app/providers/session-provider';
 import { AppShell, ShellErrorBoundary, ShellLoading } from '@/app/shell/app-shell';
-import { AccessStateNotice } from '@/features/session/components/access-state-notice';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PrivateRuntimeOutlet } from './private-runtime-outlet';
 import { PublicAuthRoute } from './public-auth-route';
 
@@ -40,12 +41,12 @@ function ProtectedRouteBoundary() {
   }
 
   return (
-    <SessionAccessBoundary fallback={<Navigate to="/login" replace />}>
+    <SessionAccessBoundary fallback={<Navigate to="/welcome" replace />}>
       {(session, epoch) => (
         <GraphProvider
           key={`${session.sessionId}:${session.authorizationRevision}:${epoch}`}
           fallback={<ShellLoading />}
-          onError={() => <AccessStateNotice />}
+          onError={() => <GraphUnavailableNotice />}
         >
           <PrivateRuntimeOutlet />
         </GraphProvider>
@@ -54,21 +55,38 @@ function ProtectedRouteBoundary() {
   );
 }
 
+function GraphUnavailableNotice() {
+  return (
+    <main className="grid min-h-dvh place-items-center bg-raised p-4 sm:p-8">
+      <Card className="w-full max-w-lg">
+        <CardHeader><CardTitle className="font-display text-2xl">Case data paused</CardTitle></CardHeader>
+        <CardContent className="grid gap-4">
+          <p className="text-sm leading-6 text-muted">The real-time case view lost its connection. No clinical action was applied while the view was unavailable.</p>
+          <Button className="min-h-11 w-full sm:w-auto sm:justify-self-start" onClick={() => window.location.reload()}>Reconnect case data</Button>
+        </CardContent>
+      </Card>
+    </main>
+  );
+}
+
 function StartupRedirect() {
   const session = useSession();
-  return <Navigate to={session ? '/' : '/login'} replace />;
+  return <Navigate to={session ? '/' : '/welcome'} replace />;
 }
 
 export const appRouteObjects: RouteObject[] = [
   {
     element: <PublicRouteBoundary />,
+    hydrateFallbackElement: <ShellLoading />,
     children: [
+      { path: '/welcome', lazy: () => import('./landing-route') },
       { path: '/login', element: <PublicAuthRoute mode="login" /> },
       { path: '/recovery', element: <PublicAuthRoute mode="recovery" /> },
     ],
   },
   {
     element: <ProtectedRouteBoundary />,
+    hydrateFallbackElement: <ShellLoading />,
     children: [
       {
         element: <AppShell />,
@@ -85,6 +103,7 @@ export const appRouteObjects: RouteObject[] = [
           { path: '/cases/:caseId/packet', lazy: () => import('./submission-packet-route') },
           { path: '/cases/:caseId/receipt', lazy: () => import('./receipt-verification-route') },
           { path: '/cases/:caseId/peer-to-peer', lazy: () => import('./peer-to-peer-route') },
+          { path: '/cases/:caseId/denial-response', lazy: () => import('./denial-response-route') },
           { path: '/settings/integrations', lazy: () => import('./settings-integrations-route') },
           { path: '/settings/profile', lazy: () => import('./settings-profile-route') },
           { path: '/admin', lazy: () => import('./admin-console-route') },

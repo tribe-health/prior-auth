@@ -31,6 +31,7 @@ PROJECTIONS = [
     "evidence_states",
     "evidence_citations",
     "document_statuses",
+    "document_task_statuses",
 ]
 
 
@@ -187,7 +188,7 @@ class Probe:
                         "originatingSessionId": session["id"],
                         "practiceId": practice_id,
                         "authorizationRevision": "membership:ra05-composition",
-                        "projectionRevision": 5,
+                        "projectionRevision": 6,
                         "expiresAt": expires_at.isoformat(),
                         "projections": [{"id": value} for value in PROJECTIONS],
                     },

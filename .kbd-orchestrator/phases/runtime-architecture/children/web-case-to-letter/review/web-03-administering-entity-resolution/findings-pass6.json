@@ -1,0 +1,23 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "crates/aso-host/src/administering_entity.rs",
+      "line": 134,
+      "claim": "Resolver-only target authorization is still coupled to the case-write target path instead of an independent administering-entity target check.",
+      "evidence": "The retained repair claim says resolver-only callers were fixed by adding `AppServices::authorize_administering_entity_target`, but that method checks `resolve_administering_entity` and then calls `self.cases.authorize_case_write_target(context, case_id)`, while the PostgreSQL implementation in `crates/aso-web-server/src/adapters/gate.rs` executes `SELECT aso.authorize_case_write_target($1)`.",
+      "suggested_fix": "Add a resolver-specific repository target method/SQL function that verifies case scope without requiring or invoking the case-write target, and use it from `authorize_administering_entity_target`."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

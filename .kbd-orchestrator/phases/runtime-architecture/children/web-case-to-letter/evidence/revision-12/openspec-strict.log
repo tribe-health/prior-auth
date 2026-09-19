@@ -1,0 +1,20 @@
+✓ change/da-01-document-assembly-agent
+✓ change/da-02-a2a-mcp-task-adapters
+✓ change/da-03-mcp-app-document-surfaces
+✓ change/ra-18-tauri-pglite-baseline
+✓ change/ra-19-native-sqlite-parity
+✓ change/ra-20-safe-browser-updates
+✓ change/ra-21-safe-native-updates
+✓ change/ra-22-runtime-certification
+✓ change/web-07-criteria-selection-ui
+✓ change/web-08-evidence-assembly-core
+✓ change/web-09-evidence-workspace
+✓ change/web-10-prior-letter-command
+✓ change/web-11-prior-letter-workspace
+✓ change/web-12-determination-ingest-core
+✓ change/web-13-denial-classification-ui
+✓ change/web-14-response-letter-command
+✓ change/web-15-response-letter-workspace
+✓ change/web-16-web-flow-fixture
+✓ change/web-17-browser-scenario-certification
+Totals: 19 passed, 0 failed (19 items)

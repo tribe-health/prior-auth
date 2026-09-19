@@ -1,0 +1,23 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "migrations/server/2026090619_administering_entity_resolution_commands.sql",
+      "line": 173,
+      "claim": "Idempotent resolve-command retries return the stored receipt before re-authorizing access to the target case.",
+      "evidence": "In `aso.resolve_administering_entity_command`, the existing-command branch selects from `aso.administering_entity_resolution_commands` and `RETURN original.result;` before the later `PERFORM aso.require_case(target_case, 'resolve_administering_entity');`; the acceptance criteria require scope/authority refusal when a caller is foreign, stale, or lacks capability without publishing protected data.",
+      "suggested_fix": "Call `aso.require_case(target_case, 'resolve_administering_entity')` before returning any existing command result, and keep the command-conflict comparison after the target-case authorization succeeds."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

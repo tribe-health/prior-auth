@@ -1,0 +1,20 @@
+Passed: bootstrap uses appRoutes
+Passed: protected boundary mounts GraphProvider
+Passed: root route loads queue route
+Passed: case route loads dashboard
+Passed: intake route loads intake
+Passed: queue route mounts CaseQueue
+Passed: detail route mounts CaseDetail
+Passed: intake route mounts CaseIntake
+Passed: queue uses committed projection
+Passed: queue sends create through command hook
+Passed: intake sends update through command hook
+Passed: intake sends transition through command hook
+Passed: client uses verified case collection route
+Passed: client uses authorized detail route
+Passed: server merges case router
+Passed: server mounts case collection
+Passed: server mounts case detail
+Passed: server mounts status transition
+Passed: server mounts command lookup
+Passed: 19/19 mounted caller checks

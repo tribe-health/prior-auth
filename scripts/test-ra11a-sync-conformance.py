@@ -403,13 +403,20 @@ class SyncConformanceProbe(composition.Probe):
               md5('{tag}:payer')::uuid, 'Synthetic RA11a Policy',
               '{tag}', '1', '2000-01-01'
             );
-            INSERT INTO policy_criteria(
-              id, policy_id, section, ordinal, label, requirement
+            INSERT INTO criteria(
+              id, payer_id, evidence_grade, policy_id, section, ordinal,
+              label, requirement, content_sha256, validity
             )
             SELECT md5('{tag}:criterion:' || ordinal)::uuid,
+                   md5('{tag}:payer')::uuid, 'published',
                    md5('{tag}:policy')::uuid, 'ra11a', ordinal,
                    'Synthetic criterion ' || ordinal,
-                   'Synthetic requirement ' || ordinal
+                   'Synthetic requirement ' || ordinal,
+                   digest(
+                     convert_to('Synthetic requirement ' || ordinal, 'UTF8'),
+                     'sha256'
+                   ),
+                   daterange('2000-01-01', NULL, '[)')
             FROM generate_series(1, 12) ordinal;
             INSERT INTO document_types(id, name, key)
             VALUES (
@@ -433,18 +440,23 @@ class SyncConformanceProbe(composition.Probe):
             FROM generate_series(1, 360) n;
             INSERT INTO documents(
               id, document_type_id, patient_id, case_id, name,
-              effective_date, page_count
+              effective_date, content_sha256, page_count, processing_status
             )
             SELECT md5('{tag}:document:' || c || ':' || d)::uuid,
                    md5('{tag}:document-type')::uuid,
                    md5('{tag}:patient:' || c)::uuid,
                    md5('{tag}:case:' || c)::uuid,
                    'Synthetic document ' || c || '-' || d,
-                   '2000-01-01', 2
+                   '2000-01-01',
+                   digest(
+                     convert_to('Synthetic document ' || c || '-' || d, 'UTF8'),
+                     'sha256'
+                   ),
+                   2, 'ready'
             FROM generate_series(1, 360) c
             CROSS JOIN generate_series(1, 8) d;
             INSERT INTO case_evidence(
-              id, case_id, policy_criterion_id, state
+              id, case_id, criterion_id, state
             )
             SELECT md5('{tag}:evidence:' || c || ':' || criterion)::uuid,
                    md5('{tag}:case:' || c)::uuid,
@@ -453,7 +465,8 @@ class SyncConformanceProbe(composition.Probe):
             FROM generate_series(1, 360) c
             CROSS JOIN generate_series(1, 12) criterion;
             INSERT INTO evidence_citations(
-              id, case_evidence_id, document_id, page_number, relevance
+              id, case_evidence_id, document_id, page_number, quote, relevance,
+              document_effective_date, content_sha256_text
             )
             SELECT md5(
                      '{tag}:citation:' || c || ':' || criterion || ':' || citation
@@ -463,7 +476,21 @@ class SyncConformanceProbe(composition.Probe):
                      '{tag}:document:' || c || ':' ||
                      (((criterion + citation - 2) % 8) + 1)
                    )::uuid,
-                   citation, 'supports'
+                   citation,
+                   'Synthetic cited source fragment ' || c || '-' ||
+                     criterion || '-' || citation,
+                   'supports', '2000-01-01',
+                   encode(
+                     digest(
+                       convert_to(
+                         'Synthetic document ' || c || '-' ||
+                         (((criterion + citation - 2) % 8) + 1),
+                         'UTF8'
+                       ),
+                       'sha256'
+                     ),
+                     'hex'
+                   )
             FROM generate_series(1, 360) c
             CROSS JOIN generate_series(1, 12) criterion
             CROSS JOIN generate_series(1, 2) citation;
@@ -559,7 +586,7 @@ class SyncConformanceProbe(composition.Probe):
             DELETE FROM documents WHERE practice_id='{practice}';
             DELETE FROM cases WHERE practice_id='{practice}';
             DELETE FROM patients WHERE practice_id='{practice}';
-            DELETE FROM policy_criteria WHERE policy_id=md5('{tag}:policy')::uuid;
+            DELETE FROM criteria WHERE policy_id=md5('{tag}:policy')::uuid;
             DELETE FROM policies WHERE id=md5('{tag}:policy')::uuid;
             DELETE FROM policy_types WHERE id=md5('{tag}:policy-type')::uuid;
             DELETE FROM document_types WHERE id=md5('{tag}:document-type')::uuid;
@@ -800,7 +827,7 @@ class SyncConformanceProbe(composition.Probe):
 
 def parser() -> argparse.ArgumentParser:
     root = argparse.ArgumentParser(description=__doc__)
-    root.add_argument("--callback-port", type=int, default=8788)
+    root.add_argument("--callback-port", type=int, default=18788)
     root.add_argument("--campaign-secrets", type=Path, default=DEFAULT_SECRETS)
     root.add_argument("--data-dir", type=Path, default=DEFAULT_DATA_DIR)
     root.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)

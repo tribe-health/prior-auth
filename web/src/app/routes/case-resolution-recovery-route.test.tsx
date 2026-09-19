@@ -46,6 +46,9 @@ vi.mock('@/features/case-queue/hooks/use-case-projection', () => ({
 }));
 vi.mock('@/features/case-queue/hooks/use-case-detail', () => ({ useCaseDetail: caseDetail }));
 vi.mock('@/features/case-queue/hooks/use-case-command', () => ({ useCaseCommand: caseCommand }));
+vi.mock('@/features/document-intake/components/document-intake', () => ({
+  DocumentIntake: () => <div data-testid="document-intake" />,
+}));
 
 import { appRouteObjects } from './app-routes';
 

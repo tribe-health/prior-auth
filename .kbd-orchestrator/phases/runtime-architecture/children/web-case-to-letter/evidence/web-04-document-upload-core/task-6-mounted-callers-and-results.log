@@ -1,0 +1,17 @@
+mounted-router
+38:        .merge(routes::documents::router())
+mounted-routes
+61:            "/api/cases/{case_id}/documents",
+64:        .route("/api/cases/{case_id}/documents/{document_id}", get(read))
+66:            "/api/cases/{case_id}/document-commands/{command_id}",
+react-upload-callers
+web/src/features/source-preview/api/source-preview-api.ts:99:      `/api/cases/${encodeURIComponent(target.caseId)}/documents/${encodeURIComponent(target.documentId)}/source?${query}`,
+web/src/features/source-preview/api/source-preview-api.test.ts:62:      '/api/cases/case-1/documents/document-1/source?page=2&practiceId=practice-1',
+retained-results
+task-5-fresh-service-final.json: result=Passed return_code=0 markers=7
+task-5-upgrade-service-final.json: result=Passed return_code=0 markers=7
+task-5-fresh-http-pass2.json: result=Passed return_code=0 markers=3
+task-5-upgrade-http-pass2.json: result=Passed return_code=0 markers=3
+task-5-focused-checks-final.json: Passed [('rustfmt', 0), ('cargo-check', 0), ('clippy', 0), ('document-store', 0), ('document-routes', 0), ('gate-policy', 0), ('openspec', 0), ('python-compile', 0), ('diff-check', 0)]
+artifact-critic-findings-pass2.json PASS {'critical': 0, 'major': 0, 'minor': 0} 0
+findings-pass2.json PASS {} 0

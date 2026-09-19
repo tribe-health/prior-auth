@@ -155,7 +155,7 @@ async fn reassessment_gate_transaction_lifecycle() {
     .expect("criterion setup failed");
     let evidence_id: Uuid = sqlx::query_scalar(
         "INSERT INTO aso.case_evidence
-          (case_id,policy_criterion_id,state,rationale,assessed_by,assessed_at)
+          (case_id,criterion_id,state,rationale,assessed_by,assessed_at)
          VALUES ($1,$2,'void','Synthetic initial assessment',$3,clock_timestamp()) RETURNING id",
     )
     .bind(case_id)

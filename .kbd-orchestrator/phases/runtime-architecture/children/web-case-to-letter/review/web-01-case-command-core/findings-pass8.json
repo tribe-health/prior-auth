@@ -1,0 +1,22 @@
+{
+  "mode": "diff",
+  "verdict": "PASS",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [],
+  "checked_classes": [
+    "spec violations \u2014 checked acceptance criteria 1.2, 1.3, 1.4 and task-boundary note; packet evidence covers focused PostgreSQL fresh/upgrade/sabotage runs and route tests, and active 2.1 / future 3.1 are explicitly not defects",
+    "correctness \u2014 checked modified case routes, gate authorization additions, PostgreSQL adapter methods, and document-source flow in the diff; no packet-visible logic error was established without contradicting provided verification evidence",
+    "regressions \u2014 checked preservation of independent evidence router mounting via lib.rs merge order and cases router changes; no packet-visible removal of the three-state evidence endpoint was established",
+    "security \u2014 checked tenant/capability boundaries shown in routes and adapter role checks, including write-only case command receipt context; no concrete bypass was provable from the packet",
+    "constraint breaches \u2014 checked blocking constraints called out in the packet, including host shell neutrality, no query cache, generated-theme read-only, no console.log, no explicit any, and no hardcoded secrets; no diff evidence violates them",
+    "silent failure \u2014 checked newly introduced default trait methods and error mappings for swallowed success paths; defaults fail closed with Unavailable/false and no packet-visible silent success was established"
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

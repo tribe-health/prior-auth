@@ -8,6 +8,7 @@ const state = vi.hoisted(() => ({
   result: null as { signedAt: string } | null,
   sign: vi.fn(),
   reconcile: vi.fn(),
+  targetStatus: 'approved',
 }));
 
 vi.mock('@/app/providers/session-provider', () => ({ useCan: () => true }));
@@ -20,7 +21,7 @@ vi.mock('../hooks/use-letter-signing', () => ({
   useLetterSigning: () => ({
     target: {
       letterId: 'letter-1', caseId: 'case-1', letterVersion: 3, qaRevision: 4,
-      signatureVersion: 2, status: 'approved', approvedByActor: true,
+      signatureVersion: 2, status: state.targetStatus, approvedByActor: true,
       isCurrent: true, gateAffirmed: true, qaComplete: true, sourcesComplete: true,
     },
     result: state.result,
@@ -43,6 +44,7 @@ afterEach(() => {
   state.awaitingProjection = false;
   state.outcome = 'idle';
   state.result = null;
+  state.targetStatus = 'approved';
   vi.clearAllMocks();
 });
 
@@ -81,5 +83,13 @@ describe('letter signing command state', () => {
     state.outcome = 'confirmed';
     render(<LetterSigningCard letterId="letter-1" caseId="case-1" />);
     expect((screen.getByRole('button', { name: 'Signed' }) as HTMLButtonElement).disabled).toBe(true);
+  });
+
+  it('restores the signed state from the authoritative target after reload', () => {
+    state.targetStatus = 'signed';
+    render(<LetterSigningCard letterId="letter-1" caseId="case-1" />);
+    expect(screen.getByText('Signed revision confirmed.')).toBeTruthy();
+    expect((screen.getByRole('button', { name: 'Signed' }) as HTMLButtonElement).disabled).toBe(true);
+    expect(screen.queryByText('Signature requirements')).toBeNull();
   });
 });

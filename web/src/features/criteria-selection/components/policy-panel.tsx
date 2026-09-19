@@ -30,7 +30,7 @@ export function PolicyPanel({ caseId }: { readonly caseId: string }) {
   if (view.status === 'loading') return <PolicyPanelSkeleton />;
   if (view.status === 'error') {
     return (
-      <main className="mx-auto w-full max-w-6xl p-4 sm:p-6">
+      <section className="mx-auto w-full max-w-6xl p-4 sm:p-6">
         <Alert variant="destructive">
           <ShieldAlert aria-hidden="true" />
           <AlertTitle>Policy criteria unavailable</AlertTitle>
@@ -39,7 +39,7 @@ export function PolicyPanel({ caseId }: { readonly caseId: string }) {
         <Button className="mt-4 min-h-11" variant="outline" onClick={() => void reload()}>
           <RefreshCw aria-hidden="true" /> Reload policy criteria
         </Button>
-      </main>
+      </section>
     );
   }
 
@@ -52,7 +52,7 @@ export function PolicyPanel({ caseId }: { readonly caseId: string }) {
   const blocked = view.resolution.state !== 'resolved' || effectivePolicies.length === 0;
 
   return (
-    <main className="mx-auto grid w-full max-w-6xl gap-6 p-4 sm:p-6" aria-labelledby="policy-title">
+    <section className="workflow-surface mx-auto grid w-full max-w-6xl gap-6 p-4 sm:p-6" aria-labelledby="policy-title">
       <header className="grid gap-4 border-b pb-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
         <div className="max-w-3xl">
           <h1 id="policy-title" className="font-heading text-3xl font-medium tracking-tight text-balance sm:text-4xl">
@@ -171,18 +171,18 @@ export function PolicyPanel({ caseId }: { readonly caseId: string }) {
           ) : null}
         </div>
       )}
-    </main>
+    </section>
   );
 }
 
 function PolicyPanelSkeleton() {
   return (
-    <main className="mx-auto grid w-full max-w-6xl gap-5 p-4 sm:p-6" aria-label="Loading policy criteria">
+    <section className="mx-auto grid w-full max-w-6xl gap-5 p-4 sm:p-6" aria-label="Loading policy criteria">
       <Skeleton className="h-24" />
       <div className="grid gap-5 lg:grid-cols-[18rem_minmax(0,1fr)]">
         <Skeleton className="h-48" />
         <Skeleton className="h-96" />
       </div>
-    </main>
+    </section>
   );
 }

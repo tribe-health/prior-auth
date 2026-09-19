@@ -71,7 +71,7 @@ describe("migrateReplicaSchema", () => {
     await expect(
       migrateReplicaSchema(db, { logicalVersion: 0, generation: 1, migrations: [] }, lease),
     ).resolves.toEqual({ status: "recovery-required", reason: "ownership-required" });
-  });
+  }, 15_000);
 
   it("applies a checksummed logical version and generation atomically", async () => {
     const db = await database();

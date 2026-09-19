@@ -1,0 +1,184 @@
+{
+  "result": "Passed",
+  "verification_tier": 1,
+  "scope": "Web-05 focused document processing, exact minimized publication, mounted browser document intake, and reversible forbidden-column guard.",
+  "observed_at": "2026-09-18T15:15:51.018141+00:00",
+  "checks": [
+    {
+      "label": "web-focused-tests",
+      "return_code": 0,
+      "observed": "45 tests passed across document intake, source preview, case intake, HTTP client, and session parsing."
+    },
+    {
+      "label": "web-typecheck",
+      "return_code": 0,
+      "observed": "tsc --noEmit passed."
+    },
+    {
+      "label": "web-lint",
+      "return_code": 0,
+      "observed": "oxlint passed."
+    },
+    {
+      "label": "web-production-build",
+      "return_code": 0,
+      "observed": "Vite production build passed with existing PGlite browser-external, eval, and chunk-size warnings."
+    },
+    {
+      "label": "host-projection-tests",
+      "return_code": 0,
+      "observed": "3 projection tests passed after restoration."
+    },
+    {
+      "label": "host-case-management-tests",
+      "return_code": 0,
+      "observed": "2 case-management tests passed."
+    },
+    {
+      "label": "axum-case-routes",
+      "return_code": 0,
+      "observed": "9 case-route tests passed."
+    },
+    {
+      "label": "axum-document-routes",
+      "return_code": 0,
+      "observed": "6 document-route tests passed."
+    },
+    {
+      "label": "web-server-document-processor",
+      "return_code": 0,
+      "observed": "2 document-processor tests passed."
+    },
+    {
+      "label": "cargo-fmt",
+      "return_code": 0,
+      "observed": "cargo fmt --all -- --check passed."
+    },
+    {
+      "label": "cargo-check",
+      "return_code": 0,
+      "observed": "cargo check passed for aso-host, aso-server-axum, and aso-web-server."
+    },
+    {
+      "label": "clippy-aso-host",
+      "return_code": 0,
+      "observed": "Prescribed crate-scoped --no-deps check passed."
+    },
+    {
+      "label": "clippy-aso-server-axum",
+      "return_code": 0,
+      "observed": "Prescribed crate-scoped --no-deps check passed with five existing large-Response warnings."
+    },
+    {
+      "label": "clippy-aso-web-server",
+      "return_code": 0,
+      "observed": "Prescribed crate-scoped --no-deps check passed."
+    },
+    {
+      "label": "openspec-strict",
+      "return_code": 0,
+      "observed": "Change 'web-05-document-processing-ui' is valid."
+    },
+    {
+      "label": "fresh-integration",
+      "return_code": 0,
+      "observed": "Fresh disposable database result Passed at Tier 1."
+    },
+    {
+      "label": "upgrade-integration",
+      "return_code": 0,
+      "observed": "Populated-upgrade disposable database result Passed at Tier 1."
+    },
+    {
+      "label": "forbidden-source-column-negative-control",
+      "return_code": 0,
+      "observed": "Production storage_uri publication mutation returned 101; byte-identical restoration returned 0."
+    },
+    {
+      "label": "electric-auto-publication-live",
+      "return_code": 0,
+      "observed": "Electric 1.8 accepted a projected shape, added the empty synthetic relation to electric_publication_default, and removed the entry after table cleanup."
+    },
+    {
+      "label": "populated-pglite-upgrade-negative-control",
+      "return_code": 0,
+      "observed": "The new upgrade scenario failed before repair with case_number null values; the retained red log records Vitest exit 1."
+    },
+    {
+      "label": "pglite-upgrade-focused",
+      "return_code": 0,
+      "observed": "18 tests passed across schema upgrade, migration ledger, case summary materialization, and document status materialization."
+    },
+    {
+      "label": "post-review-typecheck",
+      "return_code": 0,
+      "observed": "tsc --noEmit passed after the populated-upgrade repair."
+    },
+    {
+      "label": "post-review-lint",
+      "return_code": 0,
+      "observed": "oxlint passed after the populated-upgrade repair."
+    },
+    {
+      "label": "post-review-build",
+      "return_code": 0,
+      "observed": "Vite production build passed after the populated-upgrade repair with the existing PGlite and chunk-size warnings."
+    },
+    {
+      "label": "generation-cutover-negative-control",
+      "return_code": 0,
+      "observed": "The cutover test failed before repair because generation remained 9 instead of advancing to 10."
+    },
+    {
+      "label": "generation-cutover-focused",
+      "return_code": 0,
+      "observed": "19 tests passed across migration ledger, populated schema upgrade, and minimized materialization; cutover generation advanced strictly."
+    },
+    {
+      "label": "generation-cutover-typecheck",
+      "return_code": 0,
+      "observed": "tsc --noEmit passed after generation fencing was added."
+    },
+    {
+      "label": "generation-cutover-lint",
+      "return_code": 0,
+      "observed": "oxlint passed after generation fencing was added."
+    },
+    {
+      "label": "generation-cutover-build",
+      "return_code": 0,
+      "observed": "Vite production build passed after generation fencing with existing PGlite and chunk-size warnings."
+    },
+    {
+      "label": "electric-host-port-negative-control",
+      "return_code": 0,
+      "observed": "Default Compose inspection failed before repair because raw Electric published host port 3000."
+    },
+    {
+      "label": "electric-internal-only",
+      "return_code": 0,
+      "observed": "Default Compose config passed with no Electric host port and container-only exposure on 3000."
+    }
+  ],
+  "retained_nonqualifying_diagnostics": [
+    {
+      "label": "all-targets-deny-warnings-clippy",
+      "result": "Failed",
+      "reason": "Command exceeded the project T0 contract and surfaced pre-existing unrelated warnings; prescribed crate-scoped --no-deps checks passed."
+    },
+    {
+      "label": "first-sabotage-attempt",
+      "result": "Failed as expected but not qualifying",
+      "reason": "It mutated the test expectation rather than the production projection. Source was restored before the qualifying production-boundary mutation."
+    },
+    {
+      "label": "fresh-integration-timeout",
+      "result": "Failed",
+      "reason": "The first fresh run exceeded its migration command timeout while waiting on shared Cargo target contention; the same unchanged run later passed and the failed receipt remains retained."
+    }
+  ],
+  "unverified": [
+    "Actual-browser end-to-end case-to-letter behavior remains Web-17."
+  ],
+  "result_vocabulary": "Passed"
+}

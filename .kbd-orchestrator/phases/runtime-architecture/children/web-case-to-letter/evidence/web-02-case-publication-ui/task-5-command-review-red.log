@@ -1,0 +1,14 @@
+Command: NODE_OPTIONS='--max_old_space_size=4096 --no-experimental-webstorage' npm test -- --run src/features/case-queue/hooks/use-case-command.test.tsx
+
+Observed result before repair:
+
+Test Files  1 failed (1)
+Tests       2 failed | 3 passed (5)
+
+- stale protected intake detail: expected conflict, received confirmed
+- uncertain submitted transition target: expected confirmed, received awaiting-projection
+
+Observed result after repair:
+
+Test Files  1 passed (1)
+Tests       5 passed (5)

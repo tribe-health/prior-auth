@@ -1,0 +1,22 @@
+BEGIN
+NOTICE:  Passed: synthetic inference requires trusted fixture registry
+DO
+SET
+SET
+NOTICE:  Passed: executor cannot read task table directly
+NOTICE:  Passed: duplicate start returns same durable task
+NOTICE:  Passed: reused command with changed payload refused
+NOTICE:  Passed: foreign practice task input refused
+NOTICE:  Passed: missing digest fields refused
+NOTICE:  Passed: wrong engine digest refused
+NOTICE:  Passed: source metadata mismatch refused
+NOTICE:  Passed: exact assembly body digest and idempotent result persisted
+NOTICE:  Passed: authorized letter assembly recovery preserves artifact
+NOTICE:  Passed: review preserves blocking QA and draft status
+NOTICE:  Passed: completed result wins cancellation race
+NOTICE:  Passed: durable run events contain start and committed finish
+DO
+RESET
+NOTICE:  Passed: seven findings retained and protected tables excluded
+DO
+ROLLBACK

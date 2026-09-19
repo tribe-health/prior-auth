@@ -1,0 +1,36 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": ".kbd-orchestrator/phases/runtime-architecture/children/web-case-to-letter/evidence/web-03-administering-entity-resolution/task-5-command-receipt.json",
+      "claim": "The retained verification does not satisfy the blocking build-passes constraint because it omits the required workspace build, web build, and Flutter analyze command.",
+      "evidence": "Constraint `build-passes` requires `cargo build --workspace && pnpm --dir web build && flutter analyze mobile`, but `task-5-command-receipt.json` records only focused vitest, web typecheck/lint, package-scoped cargo tests/check, rustfmt, and OpenSpec validation.",
+      "suggested_fix": "Run and retain evidence for `cargo build --workspace && pnpm --dir web build && flutter analyze mobile`."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": ".kbd-orchestrator/phases/runtime-architecture/children/web-case-to-letter/evidence/web-03-administering-entity-resolution/task-5-command-receipt.json",
+      "claim": "The retained verification does not satisfy the blocking invariant-tests-pass constraint because it omits the required workspace Rust tests and Flutter tests.",
+      "evidence": "Constraint `invariant-tests-pass` requires `cargo test --workspace && flutter test mobile`, but `task-5-command-receipt.json` records only focused `cargo test -p aso-server-axum ...` commands and no `cargo test --workspace` or `flutter test mobile` run.",
+      "suggested_fix": "Run and retain evidence for `cargo test --workspace && flutter test mobile`."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": ".kbd-orchestrator/phases/runtime-architecture/children/web-case-to-letter/evidence/web-03-administering-entity-resolution/task-5-command-receipt.json",
+      "claim": "The retained verification does not satisfy the blocking architecture-audit-passes constraint because no architecture audit run is recorded.",
+      "evidence": "Constraint `architecture-audit-passes` requires `bash scripts/audit.sh`; `task-5-command-receipt.json` lists vitest, web typecheck/lint, package-scoped cargo tests/check, rustfmt, and OpenSpec validation, but no `bash scripts/audit.sh` command.",
+      "suggested_fix": "Run and retain evidence for `bash scripts/audit.sh`."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { ArrowRight, Plus, Search } from 'lucide-react';
+import { ArrowRight, Clock3, FolderKanban, Plus, Search, ShieldCheck } from 'lucide-react';
 import { Link, useNavigate } from 'react-router';
 
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -15,6 +15,7 @@ import { useCaseQueueProjection } from '../hooks/use-case-projection';
 import { useCaseQueueView, type CaseStatusFilter } from '../hooks/use-case-queue-view';
 import { EMPTY_CASE_INPUT, type CaseInput } from '../model/case-command';
 import { CASE_STATUSES, type CaseRecord } from '../model/case-record';
+import { cn } from '@/lib/utils';
 import { CaseCommandStatus } from './case-command-status';
 import { CaseForm } from './case-form';
 
@@ -24,29 +25,30 @@ export function statusLabel(status: string): string {
 
 function CaseQueueCard({ record, onSelect }: { record: CaseRecord; onSelect: () => void }) {
   return (
-    <Card className="transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-sm motion-reduce:transform-none motion-reduce:transition-none">
-      <CardHeader>
+    <Card className="workflow-card overflow-hidden border-chrome bg-canvas shadow-none">
+      <div className="h-1 bg-accent-vivid" aria-hidden="true" />
+      <CardHeader className="pb-3">
         <div className="flex flex-wrap items-start justify-between gap-2">
           <div>
-            <CardTitle>{record.caseNumber}</CardTitle>
-            <CardDescription>Patient {record.patientId}</CardDescription>
+            <CardTitle className="font-display text-xl">{record.caseNumber}</CardTitle>
+            <CardDescription className="mt-1 font-mono text-[0.68rem] uppercase tracking-[0.08em]">Patient {record.patientId}</CardDescription>
           </div>
           <Badge variant="outline">{statusLabel(record.status)}</Badge>
         </div>
       </CardHeader>
       <CardContent className="grid gap-3">
-        <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+        <dl className="grid grid-cols-2 gap-x-4 gap-y-3 border-y border-chrome py-4 text-sm">
           <div>
             <dt className="text-ui-muted-foreground">Payer</dt>
-            <dd className="break-all font-medium">{record.payerId}</dd>
+            <dd className="mt-1 break-all font-semibold">{record.payerId}</dd>
           </div>
           <div>
             <dt className="text-ui-muted-foreground">Service date</dt>
-            <dd className="font-medium">{record.dateOfService ?? 'Not entered'}</dd>
+            <dd className="mt-1 font-semibold">{record.dateOfService ?? 'Not entered'}</dd>
           </div>
           <div className="col-span-2">
             <dt className="text-ui-muted-foreground">Surgeon</dt>
-            <dd className="break-all font-medium">{record.surgeonId}</dd>
+            <dd className="mt-1 break-all font-semibold">{record.surgeonId}</dd>
           </div>
         </dl>
         <Link
@@ -93,6 +95,8 @@ export function CaseQueue() {
       return matchesStatus && matchesSearch;
     });
   }, [projection.cases, view.state.search, view.state.statusFilter]);
+  const awaitingGate = projection.cases.filter((record) => !record.gateAffirmedAt).length;
+  const gateCleared = projection.cases.length - awaitingGate;
 
   const beginCreate = () => {
     setDraftCaseId(crypto.randomUUID());
@@ -101,12 +105,12 @@ export function CaseQueue() {
   };
 
   return (
-    <section className="mx-auto grid w-full max-w-7xl gap-5 p-4 sm:p-6" aria-labelledby="case-queue-title">
-      <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+    <section className="workflow-surface mx-auto grid w-full max-w-[88rem] gap-6 p-4 sm:p-7 lg:p-10" aria-labelledby="case-queue-title">
+      <header className="flex flex-col gap-5 border-b border-chrome pb-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-xs font-medium tracking-[0.16em] text-ui-muted-foreground uppercase">Authorization workbench</p>
-          <h1 id="case-queue-title" className="font-heading text-2xl font-medium tracking-tight">Cases</h1>
-          <p className="mt-1 text-sm text-ui-muted-foreground">Create a case or continue work from committed practice data.</p>
+          <p className="font-mono text-eyebrow font-semibold tracking-[0.18em] text-accent uppercase">Authorization workbench</p>
+          <h1 id="case-queue-title" className="mt-2 font-display text-[clamp(2.5rem,5vw,4.75rem)] font-semibold leading-none tracking-[-0.04em]">Cases</h1>
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-muted">Open a committed case and continue from the exact point where the evidence, policy, or clinical decision needs work.</p>
         </div>
         {canWrite && !creating ? (
           <Button type="button" className="min-h-11 w-full sm:w-auto" onClick={beginCreate}>
@@ -115,6 +119,12 @@ export function CaseQueue() {
           </Button>
         ) : null}
       </header>
+
+      <div className="grid gap-px overflow-hidden rounded-lg bg-chrome sm:grid-cols-3" aria-label="Case queue summary">
+        <QueueMetric icon={FolderKanban} label="Committed cases" value={projection.cases.length} />
+        <QueueMetric icon={Clock3} label="Awaiting affirmation" value={awaitingGate} tone="gap" />
+        <QueueMetric icon={ShieldCheck} label="Gate cleared" value={gateCleared} tone="met" />
+      </div>
 
       {creating ? (
         <Card className="animate-in fade-in-0 slide-in-from-top-2 duration-200 motion-reduce:animate-none">
@@ -141,7 +151,7 @@ export function CaseQueue() {
         </Card>
       ) : null}
 
-      <Card size="sm">
+      <Card size="sm" className="border-chrome bg-surface shadow-none">
         <CardContent className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_12rem] sm:items-end">
           <div className="grid gap-1.5">
             <Label htmlFor="case-search">Search cases</Label>
@@ -184,12 +194,22 @@ export function CaseQueue() {
           </div>
         </div>
       ) : (
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3" aria-label="Case results">
+        <div className="grid gap-4 md:grid-cols-2 2xl:grid-cols-3" aria-label="Case results">
           {visibleCases.map((record) => (
             <CaseQueueCard key={record.id} record={record} onSelect={() => view.selectCase(record.id)} />
           ))}
         </div>
       )}
     </section>
+  );
+}
+
+function QueueMetric({ icon: Icon, label, value, tone = 'neutral' }: { icon: typeof FolderKanban; label: string; value: number; tone?: 'neutral' | 'gap' | 'met' }) {
+  const toneClass = tone === 'gap' ? 'text-status-gap' : tone === 'met' ? 'text-status-met' : 'text-cool';
+  return (
+    <div className="flex items-center justify-between gap-4 bg-surface px-5 py-4">
+      <div className="flex items-center gap-3 text-sm text-muted"><Icon className={cn('size-4', toneClass)} aria-hidden="true" />{label}</div>
+      <span className="font-display text-2xl font-semibold tabular-nums text-text">{value}</span>
+    </div>
   );
 }

@@ -1,0 +1,23 @@
+## 6. Requested Action
+
+Please authorize the following services:
+
+| Code | Modifiers | Description | Units |
+| :-- | :-- | :-- | :-- |
+{% for c in ctx.request.codes -%}
+| {{ c.code }} | {{ c.modifiers | default("—") }} | {{ c.description }} | {{ c.units }} |
+{% endfor %}
+{% if ctx.request.site_of_service %}Requested site of service: {{ ctx.request.site_of_service }}.
+{% endif %}
+{% if ctx.request.facility.name %}Requested facility: {{ ctx.request.facility.name }}.
+{% endif %}
+Anticipated date of service: {{ ctx.request.date_of_service }}.
+
+{% if ctx.contacts.p2p_phone %}Peer-to-peer contact: {{ ctx.contacts.p2p_phone }}{% if ctx.contacts.p2p_hours %} ({{ ctx.contacts.p2p_hours }}){% endif %}.
+{% endif %}
+{% if ctx.contacts.coordinator_phone or ctx.contacts.coordinator_email %}Prior authorization coordinator: {% if ctx.contacts.coordinator_phone %}{{ ctx.contacts.coordinator_phone }}{% endif %}{% if ctx.contacts.coordinator_phone and ctx.contacts.coordinator_email %} · {% endif %}{% if ctx.contacts.coordinator_email %}{{ ctx.contacts.coordinator_email }}{% endif %}.
+{% endif %}
+
+Thank you for your prompt review.
+
+Sincerely,

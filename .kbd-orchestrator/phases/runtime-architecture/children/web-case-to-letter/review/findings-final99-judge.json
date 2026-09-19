@@ -1,0 +1,72 @@
+{
+  "review": "web-03-final99-independent-technical-judge",
+  "artifact": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/.refiner/artifacts/web-03-administering-entity-resolution",
+  "phase": "Reflect",
+  "scope": "Focused Tier 1 Web-03 administering-entity resolution",
+  "verdict": "PASS",
+  "result": "Passed",
+  "manifest": {
+    "path": "dist/source-manifest.sha256",
+    "required_sha256": "63a807e96de9c6baa78ed50fc942ccbf3264a94e6bdb8718dc48aaaca23174a1",
+    "observed_sha256": "63a807e96de9c6baa78ed50fc942ccbf3264a94e6bdb8718dc48aaaca23174a1",
+    "entries": 99,
+    "persisted_snapshots_verified": 99,
+    "digest_failures": 0
+  },
+  "finding_counts": {
+    "blocker": 0,
+    "substantive": 0,
+    "total": 0
+  },
+  "findings": [],
+  "checks": [
+    {
+      "id": "historical-validity-intersection",
+      "result": "Passed",
+      "basis": "The resolver counts an expired path only when max(plan, enrollment, rule valid_from) precedes the minimum non-null valid_to and that non-empty interval ended by the case service date. The retained sabotage probe fails when this intersection predicate is removed, while both final fresh and populated-upgrade probes pass after restoration."
+    },
+    {
+      "id": "future-and-disjoint-missing-semantics",
+      "result": "Passed",
+      "basis": "Final fresh and upgrade PostgreSQL probes cover future plan, enrollment, and rule windows plus disjoint historical windows, all as missing. The disjoint-window red control reports the expected expired misclassification before restoration."
+    },
+    {
+      "id": "transaction-ordering",
+      "result": "Passed",
+      "basis": "Resolution acquires SHARE locks on all authoritative input tables before locking the case row; input mutations acquire their table lock before trigger-driven case locking. Retained PostgreSQL evidence exercises resolution-first and mutation-first interleavings. Removing the input-table lock produces a deadlock and leaves the resolution-first row uninvalidated; restoration passes both orders."
+    },
+    {
+      "id": "authority-boundaries",
+      "result": "Passed",
+      "basis": "The mounted route checks verified session scope and operation capability, AppServices independently rejects expired, non-user, or under-capable contexts, and SQL reauthorizes the case target. Final evidence also shows the restricted executor cannot maintain authoritative inputs or write durable tables directly, and an idempotent retry is refused after authority is removed."
+    },
+    {
+      "id": "mounted-production-chain",
+      "result": "Passed",
+      "basis": "The frozen source and retained ignored integration test establish the mounted chain from the Axum router through AppServices and PgGateRepository into the security-definer SQL resolver. Fresh and populated-upgrade disposable PostgreSQL runs execute this actual chain, including HTTP resolve, read, exact lookup, and foreign-practice refusal."
+    },
+    {
+      "id": "browser-reconciliation",
+      "result": "Passed",
+      "basis": "The scoped browser hook reads an exact saved-command receipt before current state, reissues the same command ID and expected case-input revision after a racing lookup 404, retains uncertain dispatched commands across remount, clears terminal stale or incomplete absence, and treats a post-receipt current-row 404 as authoritative invalidation. Twelve focused hook tests pass, with retained red/restore evidence for remount, post-commit reload, and invalidation reconciliation."
+    },
+    {
+      "id": "ui-blocking-and-reviewability",
+      "result": "Passed",
+      "basis": "Only an exact ready/resolved state exposes evidence navigation. Missing, ambiguous, conflicting, and expired states remain named and blocked. The panel renders entity and source identity plus entity, plan, enrollment, rule, and source-document versions; focused panel and case-detail tests pass, with a retained red/restore control for version visibility."
+    },
+    {
+      "id": "red-restore-evidence",
+      "result": "Passed",
+      "basis": "The frozen evidence contains meaningful failing controls and restored passing runs for caller-selected output refusal, resolver-only and read authority, retry reauthorization, member-plan binding, authoritative invalidation, uncertain-command recovery, transaction ordering, non-empty validity intersection, post-invalidation reconciliation, and version visibility."
+    },
+    {
+      "id": "web-17-claim-boundary",
+      "result": "Passed",
+      "basis": "The artifact consistently limits its claim to focused Tier 0/Tier 1 Web-03 behavior and explicitly assigns complete actual-browser and assembled case-to-letter certification to Web-17. It does not claim document upload, criteria selection, evidence assembly, letter generation, Tauri, or mobile completion."
+    }
+  ],
+  "limitations": [
+    "Complete actual-browser and assembled case-to-letter certification remains Web-17 by design."
+  ]
+}

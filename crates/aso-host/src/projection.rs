@@ -11,7 +11,7 @@ use uuid::Uuid;
 
 use crate::session::SessionSummary;
 
-pub const PROJECTION_REVISION: u32 = 5;
+pub const PROJECTION_REVISION: u32 = 6;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
 #[serde(rename_all = "snake_case")]
@@ -23,6 +23,7 @@ pub enum ProjectionId {
     EvidenceStates,
     EvidenceCitations,
     DocumentStatuses,
+    DocumentTaskStatuses,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize)]
@@ -139,7 +140,7 @@ const DEFINITIONS: &[ProjectionDefinition] = &[
             "id",
             "practice_id",
             "case_id",
-            "policy_criterion_id",
+            "criterion_id",
             "state",
             "assessed_at",
             "created_at",
@@ -188,6 +189,21 @@ const DEFINITIONS: &[ProjectionDefinition] = &[
             "processing_error_code",
             "updated_at",
             "revision",
+        ],
+        scope: DefinitionScope::Practice("practice_id"),
+    },
+    ProjectionDefinition {
+        id: ProjectionId::DocumentTaskStatuses,
+        relation: "aso.document_task_statuses",
+        primary_key: "id",
+        columns: &[
+            "id",
+            "case_id",
+            "purpose",
+            "state",
+            "stage",
+            "last_sequence",
+            "updated_at",
         ],
         scope: DefinitionScope::Practice("practice_id"),
     },
@@ -261,12 +277,12 @@ mod tests {
     }
 
     #[test]
-    fn seven_table_registry_is_exact_and_practice_scoped() {
+    fn eight_table_registry_is_exact_and_practice_scoped() {
         let first = ReplicaGrant::for_session(&session(id(1), "1"));
         let second = ReplicaGrant::for_session(&session(id(2), "2"));
 
-        assert_eq!(first.projections.len(), 7);
-        assert_eq!(second.projections.len(), 7);
+        assert_eq!(first.projections.len(), 8);
+        assert_eq!(second.projections.len(), 8);
         assert_eq!(first.projection_revision, PROJECTION_REVISION);
         assert_eq!(second.projection_revision, PROJECTION_REVISION);
         assert_eq!(first.identity_id, id(100));
@@ -282,6 +298,7 @@ mod tests {
             ProjectionId::CaseEvidence,
             ProjectionId::EvidenceCitations,
             ProjectionId::DocumentStatuses,
+            ProjectionId::DocumentTaskStatuses,
         ] {
             assert_eq!(
                 first.projection(projection_id).unwrap().scope,
@@ -342,6 +359,23 @@ mod tests {
                 "revision",
             ]
         );
+
+        let task_statuses = first
+            .projection(ProjectionId::DocumentTaskStatuses)
+            .unwrap();
+        assert_eq!(task_statuses.relation, "aso.document_task_statuses");
+        assert_eq!(
+            task_statuses.columns,
+            [
+                "id",
+                "case_id",
+                "purpose",
+                "state",
+                "stage",
+                "last_sequence",
+                "updated_at",
+            ]
+        );
     }
 
     #[test]
@@ -371,6 +405,14 @@ mod tests {
             (ProjectionId::DocumentStatuses, "data"),
             (ProjectionId::DocumentStatuses, "text"),
             (ProjectionId::DocumentStatuses, "embedding"),
+            (ProjectionId::DocumentTaskStatuses, "practice_id"),
+            (ProjectionId::DocumentTaskStatuses, "kratos_identity_id"),
+            (ProjectionId::DocumentTaskStatuses, "actor_id"),
+            (ProjectionId::DocumentTaskStatuses, "command_id"),
+            (ProjectionId::DocumentTaskStatuses, "request_payload"),
+            (ProjectionId::DocumentTaskStatuses, "input_snapshot"),
+            (ProjectionId::DocumentTaskStatuses, "result"),
+            (ProjectionId::DocumentTaskStatuses, "error_code"),
         ] {
             assert!(!grant.projection(projection).unwrap().permits_column(column));
         }

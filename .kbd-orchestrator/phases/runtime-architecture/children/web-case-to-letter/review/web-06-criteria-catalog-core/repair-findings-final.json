@@ -1,0 +1,9 @@
+{
+  "verdict": "PASS",
+  "counts": {
+    "critical": 0,
+    "warning": 0,
+    "suggestion": 0
+  },
+  "findings": []
+}

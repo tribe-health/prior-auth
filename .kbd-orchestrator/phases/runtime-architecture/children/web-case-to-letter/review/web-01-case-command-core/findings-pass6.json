@@ -1,0 +1,23 @@
+{
+  "mode": "diff",
+  "verdict": "PASS",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "WARNING",
+      "file": "crates/aso-server-axum/src/routes/cases.rs",
+      "line": 38,
+      "claim": "The change removes the existing evidence-count endpoint that returned distinct `met`, `gap`, and `void` values without showing an equivalent replacement.",
+      "evidence": "The deleted hunk removes `.route(\"/api/cases/{case_id}/evidence\", get(evidence_counts))` and `EvidenceCountsDto { met, gap, void }`, while the blocking constraint `three-evidence-states` says evidence state must preserve met, gap, and void as distinct values.",
+      "suggested_fix": "Retain the existing evidence-count route or include the equivalent mounted replacement that still serializes `met`, `gap`, and `void` distinctly."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

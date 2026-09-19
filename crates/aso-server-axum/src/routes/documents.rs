@@ -335,7 +335,15 @@ async fn upload(
         .upload_case_document(&context, &capabilities, &command, bytes)
         .await
         .map(Json)
-        .map_err(document_error)
+        .map_err(|upload_error| {
+            tracing::warn!(
+                error = ?upload_error,
+                case_id = %case_id,
+                command_id = %command.command_id,
+                "case document upload rejected"
+            );
+            document_error(upload_error)
+        })
 }
 
 async fn read(

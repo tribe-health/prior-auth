@@ -21,5 +21,9 @@ serde.workspace = true
 serde_json.workspace = true
 sqlx.workspace = true
 reqwest.workspace = true
+sse-stream.workspace = true
+tokio-stream.workspace = true
 sha2.workspace = true
 lopdf.workspace = true
+
+rmcp.workspace = true

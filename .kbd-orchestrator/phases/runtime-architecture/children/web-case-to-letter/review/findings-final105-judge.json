@@ -1,0 +1,70 @@
+{
+  "reviewer": "harness_judge_web03_final105",
+  "role": "independent final judge",
+  "digest": "3a42dd3f4c9232393c1b31b39e87be10f88f2ee78d4a3841d56829986feb2c4d",
+  "verdict": "PASS",
+  "counts": {
+    "critical": 0,
+    "major": 0,
+    "minor": 0
+  },
+  "findings": [],
+  "checks_performed": [
+    {
+      "check": "manifest digest",
+      "result": "PASS",
+      "evidence": "sha256sum of dist/source-manifest.sha256 exactly matched 3a42dd3f4c9232393c1b31b39e87be10f88f2ee78d4a3841d56829986feb2c4d."
+    },
+    {
+      "check": "manifest entry integrity",
+      "result": "PASS",
+      "evidence": "The manifest contains exactly 133 entries and sha256sum -c reported OK for every entry."
+    },
+    {
+      "check": "artifact validator",
+      "result": "PASS",
+      "evidence": "python3 dist/validate.py exited successfully and reported Passed for all 17 checks, including 133 current inputs matching persisted snapshots."
+    },
+    {
+      "check": "production route composition and routed recovery",
+      "result": "PASS",
+      "evidence": "Frozen app-routes.tsx registers /cases/:caseId and /cases/:caseId/intake through the frozen production route modules. The frozen routed test resolves those exact lazy route objects, invokes the incomplete-input callback from CaseDetail, observes the exact intake URL and guidance, and focuses Plan key."
+    },
+    {
+      "check": "narrow case-summary publication boundary",
+      "result": "PASS",
+      "evidence": "Frozen electric-shapes.ts, replica-wiring.ts, case-summary-materialization.test.ts, protected-replica-boundaries.integration.test.ts, and use-case-projection source/tests directly exercise the transport allowlist, PGlite materialization, identifier-only graph binding, and PEM selector. Member ID, procedure code, plan key, local data, gate actor, and creation data are refused from the summary even when supplied by an over-wide row. The retained focused receipt records all 52 tests passing."
+    },
+    {
+      "check": "authorized full-record HTTP access",
+      "result": "PASS",
+      "evidence": "The frozen case API and full-record hook issue GET /api/cases/:caseId with the verified practice selection. The frozen mounted api_router test and retained passing receipt show protected member, procedure, and plan fields returned only with case:read and the verified practice; missing case:read and foreign practice are refused with 403 before repository access, and an unauthorized repository target is also refused with 403. The response is no-store."
+    },
+    {
+      "check": "exact recovery guidance and post-load focus",
+      "result": "PASS",
+      "evidence": "The frozen shared message is exactly 'Complete the member, plan, procedure, and service date before continuing.' The notice survives navigation, CaseIntake waits for the authorized detail read, derives the first missing field from the full detail draft, and passes that field to the form autofocus. Frozen route, intake, form, API, and hook tests cover the composed behavior and the four possible resolution fields."
+    },
+    {
+      "check": "server-authoritative resolution and five temporal states",
+      "result": "PASS",
+      "evidence": "The browser resolve mutation contains only commandId and expectedCaseInputRevision with unknown fields denied. Frozen host and SQL sources model resolved, missing, ambiguous, conflicting, and expired; retained fresh and populated-upgrade lifecycle receipts pass deterministic classification, including future, disjoint-history, ended-plan, and ended-enrollment cases."
+    },
+    {
+      "check": "invalidation and reconciliation",
+      "result": "PASS",
+      "evidence": "Frozen SQL invalidates current resolution for entity, plan, enrollment, delegation-rule, and selected source-document changes and serializes resolution/input mutations. Frozen hook/store tests cover pre-dispatch failure, remount, lookup-before-read, same-ID retry after racing 404, terminal stale or incomplete absence, post-receipt invalidation, and preservation of specific guidance. Retained red/restore controls and fresh/upgrade receipts pass."
+    },
+    {
+      "check": "tenant and capability refusal",
+      "result": "PASS",
+      "evidence": "Frozen mounted route tests cover verified-practice refusal, operation-specific capability refusal, unauthorized case targets, resolver-only authorization, and retry reauthorization. Fresh and upgrade PostgreSQL/AppServices receipts retain restricted-executor and least-privilege observations."
+    },
+    {
+      "check": "scope and claim boundary",
+      "result": "PASS",
+      "evidence": "No manifest path enters desktop/ or mobile/. The feature uses scoped Zustand view state and contains no TanStack Query, SWR, or Apollo cache import. The design, evidence, review, and result consistently defer Tauri/mobile work, broad child integration, complete actual-browser proof, and the full case-to-letter workflow to Web-17."
+    }
+  ],
+  "rationale": "The repaired frozen artifact supports the focused Web-03 claim. The previously missing production browser route composition and narrow case-summary publication sources are now frozen and directly exercised. The mounted full-record HTTP evidence demonstrates verified-practice, case:read, foreign-practice, and unauthorized-target behavior. Recovery retains the exact required guidance and focuses the first missing field only after the authorized full record is available. Server-owned selection, all five states, authoritative invalidation, durable reconciliation, tenant and capability refusal, scoped Zustand state, and the absence of query-cache, Tauri, and mobile work are supported by frozen source plus retained passing and red/restore evidence. The artifact accurately limits its conclusion to focused Web-03 and leaves complete actual-browser and case-to-letter certification to Web-17. No unsupported claim was identified."
+}

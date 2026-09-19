@@ -1,0 +1,25 @@
+
+ RUN  v3.2.7 /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web
+
+ ✓ src/shared/sync/source-hash-materialization.test.ts (1 test) 4244ms
+   ✓ document status materialization > stores the exact approved status row and structurally drops local source data  4243ms
+ ✓ src/shared/sync/case-summary-materialization.test.ts (1 test) 4447ms
+   ✓ case summary materialization > projects an over-wide transport row onto the approved PEM case summary  4446ms
+ ✓ src/shared/sync/pglite-schema.test.ts (7 tests) 4661ms
+   ✓ PGlite schema upgrades > cuts a populated revision-5 replica over before adding required case columns  1270ms
+ ✓ src/shared/sync/migration-ledger.test.ts (10 tests) 10048ms
+   ✓ migrateReplicaSchema > requires a held ownership lease before migration  4355ms
+   ✓ migrateReplicaSchema > applies a checksummed logical version and generation atomically  978ms
+   ✓ migrateReplicaSchema > starts a strictly newer generation before a cutover migration  751ms
+   ✓ migrateReplicaSchema > returns recovery-required on checksum drift without mutating the generation  642ms
+   ✓ migrateReplicaSchema > fences an older logical schema and preserves a generation advanced by refetch  667ms
+   ✓ migrateReplicaSchema > rejects a changed migration set without a logical version bump  651ms
+   ✓ migrateReplicaSchema > rejects duplicate migration identifiers before applying schema changes  627ms
+   ✓ migrateReplicaSchema > rolls back the whole generation when a migration fails  639ms
+   ✓ migrateReplicaSchema > fences a recorded migration history that is not the plan prefix  737ms
+
+ Test Files  4 passed (4)
+      Tests  19 passed (19)
+   Start at  10:40:31
+   Duration  11.26s (transform 147ms, setup 0ms, collect 432ms, tests 23.40s, environment 2.95s, prepare 406ms)
+

@@ -19,6 +19,12 @@ and browser-scoped `ra-22` precedes Tauri SQLite and native updater
 certification. Native evidence cannot block or substitute for the browser
 result.
 
+The [revision-12 document-agent addendum](../handoff/web-case-to-letter-revision-12-agent-integration.md)
+records the approved next extension after responsive web UI acceptance: Liter-LLM,
+Flint-backed durable tasks, live AG-UI, A2A, MCP and shared A2UI/MCP App views.
+Its pending work is not implemented or certified merely by acceptance of the
+architecture. KBD registration follows UI acceptance and preserves earlier evidence.
+
 ## UI implementation architecture
 
 [React UI and component architecture](react-ui-component-architecture.md) maps

@@ -1,0 +1,9 @@
+
+ RUN  v3.2.7 /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web
+
+ ✓ src/features/case-queue/hooks/use-case-projection.test.ts (5 tests) 2ms
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  02:59:35
+   Duration  706ms (transform 77ms, setup 0ms, collect 196ms, tests 2ms, environment 352ms, prepare 39ms)

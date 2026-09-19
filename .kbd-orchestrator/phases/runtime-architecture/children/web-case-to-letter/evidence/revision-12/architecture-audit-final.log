@@ -1,0 +1,15 @@
+── 1. React filenames are kebab-case ──────────────────────────────────
+  ✓ all filenames kebab-case
+── 2. No query cache ──────────────────────────────────────────────────
+query-cache audit: Passed (manifest and transitive pnpm lock graph)
+  ✓ no direct or transitive query cache dependency
+── 3. Components do not call the network directly ─────────────────────
+  ✓ no direct network calls in components
+── 4. The host crate names no shell ───────────────────────────────────
+  ✓ aso-host is host-neutral
+── 5. Generated theme files are not hand-edited ───────────────────────
+  ✓ generated files carry their banner
+── 6. Three evidence states, never two ────────────────────────────────
+  ✓ the void state survives on both surfaces
+
+audit: PASS

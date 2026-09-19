@@ -1,0 +1,8 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 15.22s
+     Running unittests src/lib.rs (/Volumes/my-passport/cargo-build/02/70d32e977a4fbf/debug/deps/aso_server_axum-8a863bb18a71d473)
+
+running 1 test
+test routes::cases::tests::case_detail_http_requires_verified_practice_and_read_capability ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 45 filtered out; finished in 0.12s
+

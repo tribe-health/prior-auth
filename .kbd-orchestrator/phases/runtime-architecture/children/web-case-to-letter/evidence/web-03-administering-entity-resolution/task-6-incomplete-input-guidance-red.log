@@ -1,0 +1,223 @@
+
+ RUN  v3.2.7 /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web
+
+ ❯ src/features/case-queue/components/case-intake.test.tsx (1 test | 1 failed) 47ms
+   × CaseIntake resolution input recovery > renders the routed guidance and focuses the first missing input after loading case detail 46ms
+     → Unable to find an element with the text: Complete the member, plan, procedure, and service date before continuing.. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<section[39m
+      [33maria-labelledby[39m=[32m"case-intake-title"[39m
+      [33mclass[39m=[32m"mx-auto grid w-full max-w-5xl gap-5 p-4 sm:p-6"[39m
+    [36m>[39m
+      [36m<header[39m
+        [33mclass[39m=[32m"flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between"[39m
+      [36m>[39m
+        [36m<div>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"text-xs font-medium tracking-[0.16em] text-ui-muted-foreground uppercase"[39m
+          [36m>[39m
+            [0mIntake checklist[0m
+          [36m</p>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"font-heading text-2xl font-medium tracking-tight"[39m
+            [33mid[39m=[32m"case-intake-title"[39m
+          [36m>[39m
+            [0mSYNTHETIC-001[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"mt-1 text-sm text-ui-muted-foreground"[39m
+          [36m>[39m
+            [0mConfirm the case identifiers before evidence collection begins.[0m
+          [36m</p>[39m
+        [36m</div>[39m
+        [36m<span[39m
+          [33mclass[39m=[32m"group/badge inline-flex h-5 w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-4xl border px-2 py-0.5 text-xs font-medium whitespace-nowrap transition-all focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none [&>svg]:size-3! border-border text-foreground [a]:hover:bg-ui-muted [a]:hover:text-ui-muted-foreground self-start"[39m
+          [33mdata-slot[39m=[32m"badge"[39m
+          [33mdata-variant[39m=[32m"outline"[39m
+        [36m>[39m
+          [0mIntake[0m
+        [36m</span>[39m
+      [36m</header>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-xl bg-card py-(--card-spacing) text-sm text-card-foreground ring-1 ring-foreground/10 [--card-spacing:--spacing(4)] has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:--spacing(3)] data-[size=sm]:has-data-[slot=card-footer]:pb-0 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl"[39m
+        [33mdata-size[39m=[32m"default"[39m
+        [33mdata-slot[39m=[32m"card"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"group/card-header @container/card-header grid auto-rows-min items-start gap-1 rounded-t-xl px-(--card-spacing) has-data-[slot=card-action]:grid-cols-[1fr_auto] has-data-[slot=card-description]:grid-rows-[auto_auto] [.border-b]:pb-(--card-spacing)"[39m
+          [33mdata-slot[39m=[32m"card-header"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"font-heading text-base leading-snug font-medium group-data-[size=sm]/card:text-sm"[39m
+            [33mdata-slot[39m=[32m"card-title"[39m
+          [36m>[39m
+            [0mCase information[0m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"text-sm text-ui-muted-foreground"[39m
+            [33mdata-slot[39m=[32m"card-description"[39m
+          [36m>[39m
+            [0mChanges are shown as saved only after the committed case returns through the authorized projection.[0m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"px-(--card-spacing)"[39m
+          [33mdata-slot[39m=[32m"card-content"[39m
+        [36m>[39m
+          [36m<form[39m
+            [33maria-label[39m=[32m"Case intake form"[39m
+            [33mclass[39m=[32m"grid gap-5"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"group/field-group @container/field-group w-full flex-col data-[slot=checkbox-group]:gap-3 *:data-[slot=field-group]:gap-4 grid gap-4 sm:grid-cols-2"[39m
+              [33mdata-slot[39m=[32m"field-group"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"group/field flex w-full gap-2 data-[invalid=true]:text-destructive flex-col *:w-full [&>.sr-only]:w-auto"[39m
+                [33mdata-orientation[39m=[32m"vertical"[39m
+                [33mdata-slot[39m=[32m"field"[39m
+                [33mrole[39m=[32m"group"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"items-center text-sm font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 group/field-label peer/field-label flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:opacity-50 has-data-checked:border-primary/30 has-data-checked:bg-primary/5 has-[>[data-slot=field]]:rounded-lg has-[>[data-slot=field]]:border has-[>[data-slot=field]]:not-has-[:disabled,[data-disabled]]:hover:bg-ui-muted/50 has-[>[data-slot=field]]:has-[:focus-visible]:border-ring has-[>[data-slot=field]]:has-[:focus-visible]:ring-3 has-[>[data-slot=field]]:has-[:focus-visible]:ring-ring/50 *:data-[slot=field]:p-2.5 dark:has-data-checked:border-primary/20 dark:has-data-checked:bg-primary/10 has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col"[39m
+                  [33mdata-slot[39m=[32m"field-label"[39m
+                  [33mfor[39m=[32m"_r_0_-case-number"[39m
+                [36m>[39m
+                  [0mCase number[0m
+                [36m</label>[39m
+                [36m<input[39m
+                  [33mautocomplete[39m=[32m"off"[39m
+                  [33mclass[39m=[32m"h-8 w-full min-w-0 rounded-lg border border-input bg-transparent px-2.5 py-1 text-base transition-colors outline-none file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-ui-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-input/50 disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 md:text-sm dark:bg-input/30 dark:disabled:bg-input/80 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 min-h-11"[39m
+                  [33mdata-slot[39m=[32m"input"[39m
+                  [33mid[39m=[32m"_r_0_-case-number"[39m
+                  [33mrequired[39m=[32m""[39m
+                  [33mvalue[39m=[32m"SYNTHETIC-001"[39m
+                [36m/>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"group/field flex w-full gap-2 data-[invalid=true]:text-destructive flex-col *:w-full [&>.sr-only]:w-auto"[39m
+                [33mdata-orientation[39m=[32m"vertica...
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/features/case-queue/components/case-intake.test.tsx > CaseIntake resolution input recovery > renders the routed guidance and focuses the first missing input after loading case detail
+TestingLibraryElementError: Unable to find an element with the text: Complete the member, plan, procedure, and service date before continuing.. This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+[36m<body>[39m
+  [36m<div>[39m
+    [36m<section[39m
+      [33maria-labelledby[39m=[32m"case-intake-title"[39m
+      [33mclass[39m=[32m"mx-auto grid w-full max-w-5xl gap-5 p-4 sm:p-6"[39m
+    [36m>[39m
+      [36m<header[39m
+        [33mclass[39m=[32m"flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between"[39m
+      [36m>[39m
+        [36m<div>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"text-xs font-medium tracking-[0.16em] text-ui-muted-foreground uppercase"[39m
+          [36m>[39m
+            [0mIntake checklist[0m
+          [36m</p>[39m
+          [36m<h1[39m
+            [33mclass[39m=[32m"font-heading text-2xl font-medium tracking-tight"[39m
+            [33mid[39m=[32m"case-intake-title"[39m
+          [36m>[39m
+            [0mSYNTHETIC-001[0m
+          [36m</h1>[39m
+          [36m<p[39m
+            [33mclass[39m=[32m"mt-1 text-sm text-ui-muted-foreground"[39m
+          [36m>[39m
+            [0mConfirm the case identifiers before evidence collection begins.[0m
+          [36m</p>[39m
+        [36m</div>[39m
+        [36m<span[39m
+          [33mclass[39m=[32m"group/badge inline-flex h-5 w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-4xl border px-2 py-0.5 text-xs font-medium whitespace-nowrap transition-all focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none [&>svg]:size-3! border-border text-foreground [a]:hover:bg-ui-muted [a]:hover:text-ui-muted-foreground self-start"[39m
+          [33mdata-slot[39m=[32m"badge"[39m
+          [33mdata-variant[39m=[32m"outline"[39m
+        [36m>[39m
+          [0mIntake[0m
+        [36m</span>[39m
+      [36m</header>[39m
+      [36m<div[39m
+        [33mclass[39m=[32m"group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-xl bg-card py-(--card-spacing) text-sm text-card-foreground ring-1 ring-foreground/10 [--card-spacing:--spacing(4)] has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:--spacing(3)] data-[size=sm]:has-data-[slot=card-footer]:pb-0 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl"[39m
+        [33mdata-size[39m=[32m"default"[39m
+        [33mdata-slot[39m=[32m"card"[39m
+      [36m>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"group/card-header @container/card-header grid auto-rows-min items-start gap-1 rounded-t-xl px-(--card-spacing) has-data-[slot=card-action]:grid-cols-[1fr_auto] has-data-[slot=card-description]:grid-rows-[auto_auto] [.border-b]:pb-(--card-spacing)"[39m
+          [33mdata-slot[39m=[32m"card-header"[39m
+        [36m>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"font-heading text-base leading-snug font-medium group-data-[size=sm]/card:text-sm"[39m
+            [33mdata-slot[39m=[32m"card-title"[39m
+          [36m>[39m
+            [0mCase information[0m
+          [36m</div>[39m
+          [36m<div[39m
+            [33mclass[39m=[32m"text-sm text-ui-muted-foreground"[39m
+            [33mdata-slot[39m=[32m"card-description"[39m
+          [36m>[39m
+            [0mChanges are shown as saved only after the committed case returns through the authorized projection.[0m
+          [36m</div>[39m
+        [36m</div>[39m
+        [36m<div[39m
+          [33mclass[39m=[32m"px-(--card-spacing)"[39m
+          [33mdata-slot[39m=[32m"card-content"[39m
+        [36m>[39m
+          [36m<form[39m
+            [33maria-label[39m=[32m"Case intake form"[39m
+            [33mclass[39m=[32m"grid gap-5"[39m
+          [36m>[39m
+            [36m<div[39m
+              [33mclass[39m=[32m"group/field-group @container/field-group w-full flex-col data-[slot=checkbox-group]:gap-3 *:data-[slot=field-group]:gap-4 grid gap-4 sm:grid-cols-2"[39m
+              [33mdata-slot[39m=[32m"field-group"[39m
+            [36m>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"group/field flex w-full gap-2 data-[invalid=true]:text-destructive flex-col *:w-full [&>.sr-only]:w-auto"[39m
+                [33mdata-orientation[39m=[32m"vertical"[39m
+                [33mdata-slot[39m=[32m"field"[39m
+                [33mrole[39m=[32m"group"[39m
+              [36m>[39m
+                [36m<label[39m
+                  [33mclass[39m=[32m"items-center text-sm font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50 group/field-label peer/field-label flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:opacity-50 has-data-checked:border-primary/30 has-data-checked:bg-primary/5 has-[>[data-slot=field]]:rounded-lg has-[>[data-slot=field]]:border has-[>[data-slot=field]]:not-has-[:disabled,[data-disabled]]:hover:bg-ui-muted/50 has-[>[data-slot=field]]:has-[:focus-visible]:border-ring has-[>[data-slot=field]]:has-[:focus-visible]:ring-3 has-[>[data-slot=field]]:has-[:focus-visible]:ring-ring/50 *:data-[slot=field]:p-2.5 dark:has-data-checked:border-primary/20 dark:has-data-checked:bg-primary/10 has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col"[39m
+                  [33mdata-slot[39m=[32m"field-label"[39m
+                  [33mfor[39m=[32m"_r_0_-case-number"[39m
+                [36m>[39m
+                  [0mCase number[0m
+                [36m</label>[39m
+                [36m<input[39m
+                  [33mautocomplete[39m=[32m"off"[39m
+                  [33mclass[39m=[32m"h-8 w-full min-w-0 rounded-lg border border-input bg-transparent px-2.5 py-1 text-base transition-colors outline-none file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-ui-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-input/50 disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 md:text-sm dark:bg-input/30 dark:disabled:bg-input/80 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 min-h-11"[39m
+                  [33mdata-slot[39m=[32m"input"[39m
+                  [33mid[39m=[32m"_r_0_-case-number"[39m
+                  [33mrequired[39m=[32m""[39m
+                  [33mvalue[39m=[32m"SYNTHETIC-001"[39m
+                [36m/>[39m
+              [36m</div>[39m
+              [36m<div[39m
+                [33mclass[39m=[32m"group/field flex w-full gap-2 data-[invalid=true]:text-destructive flex-col *:w-full [&>.sr-only]:w-auto"[39m
+                [33mdata-orientation[39m=[32m"vertica...
+ ❯ Object.getElementError node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/config.js:37:19
+ ❯ node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ ❯ node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ ❯ node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ ❯ src/features/case-queue/components/case-intake.test.tsx:60:19
+     58|     );
+     59| 
+     60|     expect(screen.getByText(
+       |                   ^
+     61|       'Complete the member, plan, procedure, and service date before c…
+     62|     )).toBeTruthy();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed (1)
+   Start at  02:02:45
+   Duration  984ms (transform 97ms, setup 0ms, collect 289ms, tests 47ms, environment 408ms, prepare 67ms)
+

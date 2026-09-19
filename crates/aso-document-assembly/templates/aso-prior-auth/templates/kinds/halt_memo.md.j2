@@ -1,0 +1,19 @@
+# Halt memo — {{ ctx.case_number }}
+
+Internal work product. Not for transmission. Drafting is halted until every item below is resolved through the reassessment command; this memo assigns the work, it does not change a state.
+
+| Criterion reference | Evidence state | Routed to | Action |
+| :-- | :-- | :-- | :-- |
+{% for c in ctx.criteria -%}
+{% set s = evidence_state(c.id) -%}
+| {{ c.id }} | {{ s.state }} | {{ s.routes_to }} | {% if s.state == "gap" %}Argue: the record contradicts or falls short of the criterion.{% elif s.state == "void" %}Obtain: nothing in the record addresses the criterion.{% else %}No unresolved evidence work.{% endif %} |
+{% endfor %}
+
+{% set notes = claims_for("halt_notes") -%}
+{% if notes -%}
+**Clinician notes**
+
+{% for line in notes -%}
+- {{ line }}
+{% endfor %}
+{% endif %}

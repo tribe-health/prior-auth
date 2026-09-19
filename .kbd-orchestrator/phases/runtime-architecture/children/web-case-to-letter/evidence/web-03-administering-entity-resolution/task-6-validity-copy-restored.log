@@ -1,0 +1,10 @@
+
+ RUN  v3.2.7 /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web
+
+ ✓ src/features/administering-entity/components/administering-entity-panel.test.tsx (6 tests) 141ms
+
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+   Start at  00:36:47
+   Duration  1.00s (transform 70ms, setup 0ms, collect 206ms, tests 141ms, environment 376ms, prepare 79ms)
+

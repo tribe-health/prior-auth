@@ -2,24 +2,26 @@
   "schemaVersion": "1",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 1716,
-  "derivedRevision": 1716,
+  "sourceRevision": 1981,
+  "derivedRevision": 1981,
   "frontier": {
-    "e9a7936c-0a01-43d5-9004-b93a4e5fd031": 1716
+    "e9a7936c-0a01-43d5-9004-b93a4e5fd031": 1981
   },
   "conflictCount": 0,
-  "updatedAt": "2026-09-19T00:10:06.374916Z",
+  "updatedAt": "2026-09-19T18:56:39.432938Z",
   "cursor": [
     "runtime-architecture",
-    "web-case-to-letter"
+    "web-case-to-letter",
+    "web-15a-browser-hardening",
+    "6"
   ],
   "root": {
     "type": "phase",
     "id": "0e0821e7-baa6-41b2-9b15-beaa40e0f40b",
     "status": "ready",
     "progress": {
-      "done": 42,
-      "total": 58
+      "done": 55,
+      "total": 61
     },
     "children": [
       {
@@ -127,8 +129,8 @@
             "canonicalId": "runtime-architecture::web-case-to-letter",
             "status": "IN_PROGRESS",
             "progress": {
-              "done": 7,
-              "total": 19
+              "done": 20,
+              "total": 22
             },
             "children": [
               {
@@ -197,82 +199,91 @@
               {
                 "type": "change",
                 "id": "web-07-criteria-selection-ui",
-                "status": "PENDING",
+                "status": "COMPLETE",
                 "progress": {
-                  "done": 1,
+                  "done": 6,
                   "total": 6
                 }
               },
               {
                 "type": "change",
                 "id": "web-08-evidence-assembly-core",
-                "status": "PENDING",
+                "status": "COMPLETE",
                 "progress": {
-                  "done": 0,
+                  "done": 6,
                   "total": 6
                 }
               },
               {
                 "type": "change",
                 "id": "web-09-evidence-workspace",
-                "status": "PENDING",
+                "status": "COMPLETE",
                 "progress": {
-                  "done": 0,
+                  "done": 7,
                   "total": 7
                 }
               },
               {
                 "type": "change",
-                "id": "web-10-prior-letter-command",
-                "status": "PENDING",
+                "id": "da-01-document-assembly-agent",
+                "status": "COMPLETE",
                 "progress": {
-                  "done": 0,
-                  "total": 6
+                  "done": 15,
+                  "total": 15
+                }
+              },
+              {
+                "type": "change",
+                "id": "web-10-prior-letter-command",
+                "status": "COMPLETE",
+                "progress": {
+                  "done": 9,
+                  "total": 9
                 }
               },
               {
                 "type": "change",
                 "id": "web-11-prior-letter-workspace",
-                "status": "PENDING",
+                "status": "COMPLETE",
                 "progress": {
-                  "done": 0,
-                  "total": 6
+                  "done": 9,
+                  "total": 9
                 }
               },
               {
                 "type": "change",
                 "id": "web-12-determination-ingest-core",
-                "status": "PENDING",
+                "status": "COMPLETE",
                 "progress": {
-                  "done": 0,
+                  "done": 6,
                   "total": 6
                 }
               },
               {
                 "type": "change",
                 "id": "web-13-denial-classification-ui",
-                "status": "PENDING",
+                "status": "COMPLETE",
                 "progress": {
-                  "done": 0,
+                  "done": 6,
                   "total": 6
                 }
               },
               {
                 "type": "change",
                 "id": "web-14-response-letter-command",
-                "status": "PENDING",
+                "status": "COMPLETE",
                 "progress": {
-                  "done": 0,
-                  "total": 6
+                  "done": 9,
+                  "total": 9
                 }
               },
               {
                 "type": "change",
                 "id": "web-15-response-letter-workspace",
-                "status": "PENDING",
+                "status": "COMPLETE",
                 "progress": {
-                  "done": 0,
-                  "total": 6
+                  "done": 9,
+                  "total": 9
                 }
               },
               {
@@ -280,17 +291,35 @@
                 "id": "web-15a-browser-hardening",
                 "status": "PENDING",
                 "progress": {
-                  "done": 0,
+                  "done": 5,
+                  "total": 6
+                }
+              },
+              {
+                "type": "change",
+                "id": "da-02-a2a-mcp-task-adapters",
+                "status": "COMPLETE",
+                "progress": {
+                  "done": 6,
+                  "total": 6
+                }
+              },
+              {
+                "type": "change",
+                "id": "da-03-mcp-app-document-surfaces",
+                "status": "COMPLETE",
+                "progress": {
+                  "done": 6,
                   "total": 6
                 }
               },
               {
                 "type": "change",
                 "id": "web-16-web-flow-fixture",
-                "status": "PENDING",
+                "status": "COMPLETE",
                 "progress": {
-                  "done": 0,
-                  "total": 6
+                  "done": 9,
+                  "total": 9
                 }
               },
               {
@@ -299,7 +328,7 @@
                 "status": "PENDING",
                 "progress": {
                   "done": 0,
-                  "total": 7
+                  "total": 11
                 }
               }
             ],

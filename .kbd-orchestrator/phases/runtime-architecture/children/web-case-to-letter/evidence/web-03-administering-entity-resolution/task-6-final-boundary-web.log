@@ -1,0 +1,23 @@
+
+ RUN  v3.2.7 /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web
+
+ ✓ src/features/session/model/session-parse.test.ts (13 tests) 4ms
+ ✓ src/features/case-queue/hooks/use-case-detail.test.tsx (1 test) 117ms
+ ✓ src/features/case-queue/components/case-form.test.tsx (5 tests) 124ms
+ ✓ src/features/administering-entity/components/administering-entity-panel.test.tsx (6 tests) 161ms
+ ✓ src/features/case-queue/components/case-intake.test.tsx (1 test) 75ms
+ ✓ src/features/case-queue/components/case-detail.test.tsx (2 tests) 143ms
+ ✓ src/app/routes/case-resolution-recovery-route.test.tsx (1 test) 172ms
+ ✓ src/shared/sync/protected-replica-boundaries.integration.test.ts (2 tests) 6ms
+ ✓ src/features/case-queue/hooks/use-case-projection.test.ts (6 tests) 3ms
+ ✓ src/features/case-queue/api/case-api.test.ts (1 test) 2ms
+ ✓ src/features/administering-entity/api/administering-entity-api.test.ts (1 test) 2ms
+ ✓ src/shared/sync/case-summary-materialization.test.ts (1 test) 1346ms
+   ✓ case summary materialization > projects an over-wide transport row onto the approved PEM case summary  1345ms
+ ✓ src/features/administering-entity/hooks/use-administering-entity-resolution.test.tsx (12 tests) 1106ms
+
+ Test Files  13 passed (13)
+      Tests  52 passed (52)
+   Start at  02:35:09
+   Duration  2.53s (transform 1.10s, setup 0ms, collect 4.23s, tests 3.26s, environment 8.41s, prepare 861ms)
+

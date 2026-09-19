@@ -42,6 +42,7 @@ export const TENANT_COLUMNS: Record<PGliteTable, string | null> = {
   case_evidence: "practice_id",
   evidence_citations: "practice_id",
   document_statuses: "practice_id",
+  document_task_statuses: "practice_id",
 
   // Reference data: the closed three-member set from ADR-003 — `key`, `label`,
   // `meaning`. No patient data, not practice-scoped. Explicit `null` rather
@@ -75,7 +76,7 @@ export const SYNC_COLUMNS: Record<PGliteTable, readonly string[]> = {
     "gate_affirmed_at", "updated_at", "revision",
   ],
   case_evidence: [
-    "id", "practice_id", "case_id", "policy_criterion_id",
+    "id", "practice_id", "case_id", "criterion_id",
     "state", "assessed_at", "created_at", "updated_at",
   ],
   evidence_citations: [
@@ -86,6 +87,9 @@ export const SYNC_COLUMNS: Record<PGliteTable, readonly string[]> = {
     "id", "case_id", "document_type_id", "name", "effective_date",
     "content_sha256_text", "page_count", "processing_status",
     "processing_error_code", "updated_at", "revision",
+  ],
+  document_task_statuses: [
+    "id", "case_id", "purpose", "state", "stage", "last_sequence", "updated_at",
   ],
   evidence_states: ["key", "label", "meaning"],
 };
@@ -99,4 +103,5 @@ export const ENTITY_TYPES: Record<PGliteTable, string> = {
   evidence_states: "EvidenceState",
   evidence_citations: "EvidenceCitation",
   document_statuses: "DocumentStatus",
+  document_task_statuses: "DocumentTaskStatus",
 };

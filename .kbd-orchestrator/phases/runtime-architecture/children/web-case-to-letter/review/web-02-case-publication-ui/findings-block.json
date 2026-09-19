@@ -1,0 +1,19 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-6-astra",
+  "isolation_mode": "harness-native",
+  "producer_model": "gpt-6-astra",
+  "cross_model_check": "same-model-collision",
+  "checked_classes": [],
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "web/src/app/routes/case-queue-route.tsx",
+      "line": 1,
+      "claim": "The reviewed diff is incomplete: it mounts new case queue, detail, and intake modules that are absent from the packet, so the patch cannot build or demonstrate acceptance criteria 1.3 and 1.4.",
+      "evidence": "The diff adds imports of '@/features/case-queue/components/case-queue' and '@/features/case-queue/components/case-intake', and app-routes.tsx adds lazy import './case-detail-route', but the packet contains no diff entries for any web/src/features/case-queue file or web/src/app/routes/case-detail-route.tsx. It likewise contains no selector, scoped Zustand store, or case-management test diff despite criteria 1.3 and 1.4 being marked complete.",
+      "suggested_fix": "Add every new case queue/detail/intake component, selector, scoped store, route, and focused test to the tracked change, then regenerate the review packet from a diff that includes untracked files."
+    }
+  ]
+}

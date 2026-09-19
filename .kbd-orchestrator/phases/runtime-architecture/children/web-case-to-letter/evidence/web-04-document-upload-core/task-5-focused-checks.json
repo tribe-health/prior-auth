@@ -1,0 +1,100 @@
+{
+  "result": "Passed",
+  "verification_tier": 1,
+  "checks": [
+    {
+      "label": "rustfmt",
+      "command": "cargo fmt --all -- --check",
+      "return_code": 0,
+      "tail": []
+    },
+    {
+      "label": "cargo-check",
+      "command": "cargo check -p aso-host -p aso-server-axum -p aso-web-server --tests",
+      "return_code": 0,
+      "tail": [
+        "    Finished `dev` profile [unoptimized + debuginfo] target(s) in 18.80s"
+      ]
+    },
+    {
+      "label": "clippy",
+      "command": "cargo clippy -p aso-host -p aso-server-axum -p aso-web-server --no-deps",
+      "return_code": 0,
+      "tail": [
+        "226 |         .map(|value| serde_json::from_str::<Value>(&value).map_err(|_| invalid()))",
+        "    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the `Err`-variant is at least 128 bytes",
+        "    |",
+        "    = help: try reducing the size of `axum::http::Response<axum::body::Body>`, for example by boxing large elements or replacing it with `Box<axum::http::Response<axum::body::Body>>`",
+        "    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#result_large_err",
+        "",
+        "warning: `aso-server-axum` (lib) generated 5 warnings",
+        "    Finished `dev` profile [unoptimized + debuginfo] target(s) in 7.90s"
+      ]
+    },
+    {
+      "label": "document-store",
+      "command": "cargo test -p aso-web-server adapters::document_store::tests --no-fail-fast",
+      "return_code": 0,
+      "tail": [
+        "test adapters::document_store::tests::reads_relative_object_and_refuses_path_escape ... ok",
+        "test adapters::document_store::tests::verified_delete_removes_only_matching_object ... ok",
+        "test adapters::document_store::tests::verified_write_is_idempotent_and_refuses_tampered_existing_object ... ok",
+        "",
+        "test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 25 filtered out; finished in 0.04s",
+        "",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.30s",
+        "     Running unittests src/main.rs (/Volumes/my-passport/cargo-build/02/70d32e977a4fbf/debug/deps/aso_web_server-e7a6905ccf4c4021)"
+      ]
+    },
+    {
+      "label": "document-routes",
+      "command": "cargo test -p aso-server-axum routes::documents::tests --no-fail-fast",
+      "return_code": 0,
+      "tail": [
+        "test routes::documents::tests::multipart_upload_reads_metadata_and_reconciles_receipt ... ok",
+        "test routes::documents::tests::multipart_and_service_failures_use_frozen_error_codes ... ok",
+        "test routes::documents::tests::route_specific_body_limit_maps_to_document_too_large ... ok",
+        "",
+        "test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 46 filtered out; finished in 0.04s",
+        "",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 12.86s",
+        "     Running unittests src/lib.rs (/Volumes/my-passport/cargo-build/02/70d32e977a4fbf/debug/deps/aso_server_axum-9795b240c03b019a)"
+      ]
+    },
+    {
+      "label": "gate-policy",
+      "command": "cargo test -p aso-server-axum routes::gate::tests --no-fail-fast",
+      "return_code": 0,
+      "tail": [
+        "test routes::gate::tests::raw_credentials_accept_each_single_source_and_reject_ambiguity ... ok",
+        "test routes::gate::tests::session_and_command_failures_have_only_sanitized_error_codes ... ok",
+        "test routes::gate::tests::expiry_and_nonhuman_principals_are_denied_with_accepting_downstream_ports ... ok",
+        "",
+        "test result: ok. 15 passed; 0 failed; 0 ignored; 0 measured; 37 filtered out; finished in 0.00s",
+        "",
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.12s",
+        "     Running unittests src/lib.rs (/Volumes/my-passport/cargo-build/02/70d32e977a4fbf/debug/deps/aso_server_axum-9795b240c03b019a)"
+      ]
+    },
+    {
+      "label": "openspec",
+      "command": "openspec validate web-04-document-upload-core --strict",
+      "return_code": 0,
+      "tail": [
+        "Change 'web-04-document-upload-core' is valid"
+      ]
+    },
+    {
+      "label": "python-compile",
+      "command": "python3 -m py_compile scripts/test-web04-document-upload-schema.py scripts/test-web04-document-upload-service.py scripts/test-web04-document-upload-http.py",
+      "return_code": 0,
+      "tail": []
+    },
+    {
+      "label": "diff-check",
+      "command": "git diff --check -- Cargo.toml Cargo.lock crates/aso-host/src/ports/mod.rs crates/aso-host/src/document_upload.rs crates/aso-server-axum/src/lib.rs crates/aso-server-axum/src/routes/mod.rs crates/aso-server-axum/src/routes/documents.rs crates/aso-server-axum/src/routes/documents/tests.rs crates/aso-server-axum/src/routes/gate.rs crates/aso-web-server/src/adapters/document_store.rs crates/aso-web-server/src/adapters/gate.rs crates/aso-web-server/src/adapters/gate/upload_transaction_tests.rs migrations/server/2026090620_document_upload_schema.sql scripts/test-web04-document-upload-schema.py scripts/test-web04-document-upload-service.py scripts/test-web04-document-upload-http.py docs/architecture/web-case-to-letter-contract.md",
+      "return_code": 0,
+      "tail": []
+    }
+  ]
+}

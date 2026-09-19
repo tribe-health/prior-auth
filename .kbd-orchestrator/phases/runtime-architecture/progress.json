@@ -2,16 +2,16 @@
   "schemaVersion": "2",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 1715,
-  "derivedRevision": 1715,
+  "sourceRevision": 1981,
+  "derivedRevision": 1981,
   "frontier": {
-    "e9a7936c-0a01-43d5-9004-b93a4e5fd031": 1715
+    "e9a7936c-0a01-43d5-9004-b93a4e5fd031": 1981
   },
   "conflictCount": 0,
   "phase": "runtime-architecture",
   "phaseId": "runtime-architecture",
   "parentPhase": null,
-  "last_updated": "2026-09-19T00:09:18.904989Z",
+  "last_updated": "2026-09-19T18:56:39.432938Z",
   "last_updated_by": "kbd-runtime",
   "changes_total": 24,
   "changes_completed": 20,
@@ -331,10 +331,10 @@
     },
     "web-case-to-letter": {
       "status": "IN_PROGRESS",
-      "changes_completed": 7,
-      "changes_total": 19,
-      "implementation_completed": 7,
-      "implementation_total": 19,
+      "changes_completed": 20,
+      "changes_total": 22,
+      "implementation_completed": 20,
+      "implementation_total": 22,
       "certification_status": "NOT_TRACKED",
       "handoff": null,
       "completed_at": null

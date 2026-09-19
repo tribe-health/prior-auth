@@ -47,6 +47,14 @@ export function markRuntimeCommandAwaitingProjection(
 
 const owners = new Map<string, RuntimeCommandOwner>();
 const listeners = new Map<string, Set<() => void>>();
+export type RuntimeCommandClearReason = 'revalidation' | 'purge';
+const sessionClearListeners = new Set<(sessionId: string, reason: RuntimeCommandClearReason) => void>();
+
+/** Private task channels drain at the same synchronous session fence as commands. */
+export function subscribeRuntimeCommandSessionClear(listener: (sessionId: string, reason: RuntimeCommandClearReason) => void): () => void {
+  sessionClearListeners.add(listener);
+  return () => { sessionClearListeners.delete(listener); };
+}
 
 function keyFor(scope: RuntimeCommandScope): string {
   return JSON.stringify([
@@ -61,7 +69,8 @@ function keyFor(scope: RuntimeCommandScope): string {
 }
 
 /** Drop unresolved commands before a revoked session can render again. */
-export function clearRuntimeCommandsForSession(sessionId: string): void {
+export function clearRuntimeCommandsForSession(sessionId: string, reason: RuntimeCommandClearReason = 'purge'): void {
+  for (const listener of sessionClearListeners) listener(sessionId, reason);
   const affected: string[] = [];
   for (const key of owners.keys()) {
     const parts = JSON.parse(key) as readonly unknown[];

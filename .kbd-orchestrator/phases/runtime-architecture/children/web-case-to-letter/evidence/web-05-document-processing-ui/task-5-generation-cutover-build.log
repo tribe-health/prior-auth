@@ -1,0 +1,55 @@
+$ tsc -b && vite build
+vite v7.1.5 building for production...
+transforming...
+node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/dist/fs/nodefs.js (1:227): "resolve" is not exported by "__vite-browser-external", imported by "node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/dist/fs/nodefs.js".
+node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/dist/fs/nodefs.js (1:240): "existsSync" is not exported by "__vite-browser-external", imported by "node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/dist/fs/nodefs.js".
+node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/dist/fs/nodefs.js (1:253): "join" is not exported by "__vite-browser-external", imported by "node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/dist/fs/nodefs.js".
+node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/dist/fs/nodefs.js (1:276): "mkdirSync" is not exported by "__vite-browser-external", imported by "node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/dist/fs/nodefs.js".
+✓ 2370 modules transformed.
+node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/dist/chunk-DDJLRBDX.js (1:26769): Use of eval in "node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/dist/chunk-DDJLRBDX.js" is strongly discouraged as it poses security risks and may cause issues with minification.
+node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/dist/chunk-DDJLRBDX.js (1:27247): Use of eval in "node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/dist/chunk-DDJLRBDX.js" is strongly discouraged as it poses security risks and may cause issues with minification.
+node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/dist/index.js (1:89303): Use of eval in "node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/dist/index.js" is strongly discouraged as it poses security risks and may cause issues with minification.
+node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/dist/index.js (1:89781): Use of eval in "node_modules/.pnpm/@electric-sql+pglite@0.5.8/node_modules/@electric-sql/pglite/dist/index.js" is strongly discouraged as it poses security risks and may cause issues with minification.
+rendering chunks...
+computing gzip size...
+dist/index.html                                                 0.46 kB │ gzip:     0.30 kB
+dist/assets/geist-cyrillic-ext-wght-normal-DjL33-gN.woff2       7.42 kB
+dist/assets/geist-vietnamese-wght-normal-6IgcOCM7.woff2         8.00 kB
+dist/assets/geist-cyrillic-wght-normal-BEAKL7Jp.woff2          15.08 kB
+dist/assets/geist-latin-ext-wght-normal-DC-KSUi6.woff2         16.51 kB
+dist/assets/geist-latin-wght-normal-BgDaEnEv.woff2             29.40 kB
+dist/assets/initdb-DwLcS450.wasm                              395.24 kB │ gzip:   147.20 kB
+dist/assets/pglite-n8RDJ3Sw.data                            6,295.32 kB
+dist/assets/pglite-DgipwPsY.wasm                           10,088.16 kB │ gzip: 3,443.92 kB
+dist/assets/index-BxAGevtW.css                                253.84 kB │ gzip:    37.56 kB
+dist/assets/__vite-browser-external-BIHI7g3E.js                 0.03 kB │ gzip:     0.05 kB
+dist/assets/settings-profile-route-Cn4H-2G8.js                  0.21 kB │ gzip:     0.18 kB
+dist/assets/case-queue-route-DIRSbvo5.js                        0.21 kB │ gzip:     0.18 kB
+dist/assets/settings-integrations-route-PIpmjGDI.js             0.22 kB │ gzip:     0.20 kB
+dist/assets/surgeon-gate-route-6BSw0c-5.js                      0.23 kB │ gzip:     0.19 kB
+dist/assets/peer-to-peer-route-Bur__zge.js                      0.23 kB │ gzip:     0.19 kB
+dist/assets/admin-console-route-BXUhkUC4.js                     0.23 kB │ gzip:     0.20 kB
+dist/assets/policy-panel-route-BQbZfAjV.js                      0.23 kB │ gzip:     0.20 kB
+dist/assets/submission-packet-route-CHCdBi6h.js                 0.23 kB │ gzip:     0.19 kB
+dist/assets/pathway-comparison-route-DTpAqQ2E.js                0.23 kB │ gzip:     0.20 kB
+dist/assets/receipt-verification-route-HMyTPHYO.js              0.24 kB │ gzip:     0.20 kB
+dist/assets/nodefs-XE4AiIBV.js                                  0.42 kB │ gzip:     0.30 kB
+dist/assets/route-placeholder-BH7uhNmX.js                       0.51 kB │ gzip:     0.32 kB
+dist/assets/textarea-DkHwCTwQ.js                                0.70 kB │ gzip:     0.38 kB
+dist/assets/refresh-cw-CdpjiNCg.js                              1.00 kB │ gzip:     0.47 kB
+dist/assets/use-scoped-view-store-vM76WSXa.js                   1.40 kB │ gzip:     0.70 kB
+dist/assets/badge-DAmhiURP.js                                   1.43 kB │ gzip:     0.66 kB
+dist/assets/letter-composer-route-emkDoEXh.js                   9.72 kB │ gzip:     3.43 kB
+dist/assets/opfs-ahp-BYU-YkTd.js                               10.02 kB │ gzip:     3.06 kB
+dist/assets/case-detail-route-DfMrsoze.js                      18.15 kB │ gzip:     5.28 kB
+dist/assets/case-queue-DT1RZk4-.js                             21.23 kB │ gzip:     6.64 kB
+dist/assets/intake-checklist-route-Ba3rxHDN.js                 22.52 kB │ gzip:     7.64 kB
+dist/assets/evidence-timeline-route-B6AwU2QW.js                46.82 kB │ gzip:    15.15 kB
+dist/assets/use-source-preview-D05oGxVe.js                     59.59 kB │ gzip:    20.13 kB
+dist/assets/index-DBS4TXN4.js                               1,064.64 kB │ gzip:   292.08 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 3.04s

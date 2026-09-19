@@ -44,6 +44,7 @@ export function useDocumentUpload(
   caseInputRevision: number,
   documentSetRevision: number,
   documents: readonly DocumentStatusRecord[],
+  initialDocumentTypeKey = EMPTY_DOCUMENT_UPLOAD_DRAFT.documentTypeKey,
 ) {
   const session = useRequiredSession();
   const epoch = useSessionEpoch();
@@ -70,7 +71,7 @@ export function useDocumentUpload(
     [caseId, epoch, session, viewInstanceId],
   );
   const [view, lease] = useScopedViewStore<DocumentUploadView>(scope, () => ({
-    draft: EMPTY_DOCUMENT_UPLOAD_DRAFT,
+    draft: { ...EMPTY_DOCUMENT_UPLOAD_DRAFT, documentTypeKey: initialDocumentTypeKey },
     outcome: 'idle',
     message: null,
   }));

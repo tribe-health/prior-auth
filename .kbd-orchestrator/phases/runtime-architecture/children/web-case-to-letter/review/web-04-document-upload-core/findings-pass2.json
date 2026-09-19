@@ -1,0 +1,24 @@
+{
+  "mode": "diff",
+  "verdict": "PASS",
+  "judge_model": "openai/gpt-5",
+  "isolation_mode": "harness-native",
+  "producer_model": "gpt-6-astra",
+  "cross_model_check": "verified-distinct",
+  "checked_classes": [
+    "Acceptance completeness \u2014 the packet includes the host contract, multipart route, bounded object store, PostgreSQL staging and commit migration, transaction adapter, mounted tests, and focused probes required by criteria 1.1 through 1.4.",
+    "Page-bound allocation \u2014 Web-04 parses supported documents and rejects counts above 500, including a retained 501-page negative case; canonical page-map and page_count materialization remain assigned to Web-05 by the binding phase allocation.",
+    "Atomicity and crash recovery \u2014 reservation precedes storage, the finalize transaction is acquired before object publication, known failures abandon staging and delete only digest-matching bytes, uncertain commits use command lookup, and expired staging uses bounded claim and completion operations.",
+    "Idempotency and conflict behavior \u2014 command payloads include the controlling revisions, media type, byte size, digest, and metadata; exact retries verify or restore the content-addressed object while changed payloads return command_conflict.",
+    "Input and storage security \u2014 the host and route enforce the 16 MiB bound, exact SHA-256, supported media, UTF-8 and PDF validation, nonempty content, bounded metadata, server-derived storage keys, path containment, mode-0600 temporary files, non-overwriting publication, and digest-checked deletion.",
+    "Tenant and capability authority \u2014 AppServices requires a current human session and operation-specific capability, SQL security-definer functions rederive actor and practice context and reauthorize the case, and mounted tests cover anonymous, missing-capability, and foreign-practice refusals.",
+    "Response and observability privacy \u2014 upload receipts and metadata omit storage keys and bytes, routes emit frozen bounded error codes with no-store headers, and retained service and HTTP evidence checks that source content and temporary storage identity do not enter process output.",
+    "Architecture constraints \u2014 aso-host remains shell-neutral, no query cache or web console logging is introduced, durable staging and receipts are excluded from publication, and no desktop or mobile implementation is claimed for this child."
+  ],
+  "findings": [],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

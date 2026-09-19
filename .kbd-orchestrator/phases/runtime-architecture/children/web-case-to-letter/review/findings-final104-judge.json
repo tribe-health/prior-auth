@@ -1,0 +1,34 @@
+{
+  "reviewer": "final104-judge",
+  "role": "independent final judge",
+  "digest": "57a23c177f126be71e20b7306fe1eee7999af237d67931b1cc26fe6cd97fe55a",
+  "verdict": "BLOCK",
+  "counts": {
+    "critical": 0,
+    "major": 1,
+    "minor": 0
+  },
+  "findings": [
+    {
+      "severity": "major",
+      "title": "The frozen evidence does not prove the authorized full-record load or narrow case-summary publication boundary",
+      "evidence": [
+        "dist/web/src/features/case-queue/components/case-intake.tsx imports useCaseIntakeProjection and useCaseDetail, but the implementations of those hooks, their API clients, and their response models are absent from the 114-entry source manifest.",
+        "dist/web/src/features/case-queue/components/case-intake.test.tsx mocks both hooks and supplies a hand-built narrow summary plus a hand-built full record. It proves that the route preserves the exact guidance and focuses Plan key after those mocked values are supplied; it does not exercise a tenant/capability-authorized full-record request or the real summary projection.",
+        "dist/web/src/features/case-queue/components/case-detail.test.tsx also mocks useCaseDetailProjection and its mock object includes memberId, procedureCode, and planKey. No retained assertion verifies that the actual case-summary response omits those fields.",
+        "dist/validate.py marks incomplete-input-recovery Passed from string presence, mocked focus tests, and red/restore logs. It never inspects or executes the missing production projection/full-record boundary, so its statement that intake loads an authorized full record without widening the summary exceeds the frozen evidence."
+      ],
+      "impact": "Two explicit focused Web-03 requirements remain unsupported: focus must occur only after an authorized full-record load, and the case-summary publication must remain narrow. The UI behavior after data injection is proven, but the security/publication boundary that supplies that data is not.",
+      "required_correction": "Freeze the production case-summary projection and full-record hook/API path, then retain a mounted local integration check showing that the summary response omits memberId, planKey, and procedureCode while the full-record request enforces verified tenant and capability scope before the first-missing-field focus is derived. Rebuild the manifest and rerun final review against its new digest."
+    }
+  ],
+  "checks_performed": [
+    "Computed SHA-256 of dist/source-manifest.sha256 and observed the required digest 57a23c177f126be71e20b7306fe1eee7999af237d67931b1cc26fe6cd97fe55a.",
+    "Counted exactly 114 entries in dist/source-manifest.sha256.",
+    "Ran SHA-256 verification from dist and observed OK for all 114 frozen entries.",
+    "Executed dist/validate.py and observed result Passed with all 15 validator checks Passed.",
+    "Independently reviewed the frozen OpenSpec proposal, design, specification, tasks, result, review narrative, validator, SQL migrations, Rust AppServices/routes/adapter snapshots, browser model/API/hook/store/panel/case-detail/intake/form snapshots, focused tests, command receipt, red/restore receipts, and completion evidence.",
+    "Confirmed the frozen server mutation accepts only commandId and expectedCaseInputRevision; five states and temporal intersection rules are implemented; practice/capability refusal is layered; invalidation and durable command reconciliation are retained; the panel is mounted in CaseDetail with responsive/accessibility classes; no desktop or mobile path is present; the administering-entity feature contains no TanStack Query, SWR, or Apollo cache import; and actual-browser/full case-to-letter certification is explicitly assigned to Web-17."
+  ],
+  "rationale": "The artifact supports the core server-authoritative resolution, temporal, refusal, invalidation, reconciliation, mounted component, scope, and deferral claims. A required security and publication claim depends on production files that are neither frozen nor exercised: the only retained destination test replaces both data-loading boundaries with mocks. Because the requested focused boundary expressly includes authorization-before-focus and narrow summary publication, that evidence gap is material and blocks a PASS."
+}

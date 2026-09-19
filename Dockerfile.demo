@@ -6,17 +6,43 @@ COPY Cargo.toml Cargo.lock ./
 COPY crates ./crates
 COPY desktop ./desktop
 COPY migrations ./migrations
-RUN cargo build --locked --release -p aso-web-server
+RUN --mount=type=cache,target=/usr/local/cargo/registry \
+    --mount=type=cache,target=/usr/local/cargo/git \
+    --mount=type=cache,target=/workspace/target \
+    cargo build --locked -p aso-web-server -p aso-document-assembly \
+    && mkdir -p /out \
+    && cp target/debug/aso-web-server target/debug/aso-document-assembly /out/
+
+FROM node:24.16.0-bookworm-slim AS mcp-app-builder
+WORKDIR /app
+RUN corepack enable && corepack prepare pnpm@11.25.0 --activate
+COPY web/package.json web/pnpm-lock.yaml web/pnpm-workspace.yaml ./
+COPY web/vendor ./vendor
+RUN pnpm install --frozen-lockfile
+COPY web ./
+RUN pnpm build:mcp-app
 
 FROM debian:bookworm-slim AS api
 RUN apt-get update \
     && apt-get install --yes --no-install-recommends ca-certificates curl \
     && rm -rf /var/lib/apt/lists/* \
     && useradd --create-home --uid 10001 aso
-COPY --from=rust-builder /workspace/target/release/aso-web-server /usr/local/bin/aso-web-server
+COPY --from=rust-builder /out/aso-web-server /usr/local/bin/aso-web-server
 RUN mkdir -p /var/lib/aso/documents && chown -R aso:aso /var/lib/aso
 USER aso
 ENTRYPOINT ["/usr/local/bin/aso-web-server"]
+
+FROM debian:bookworm-slim AS assembly
+RUN apt-get update \
+    && apt-get install --yes --no-install-recommends ca-certificates curl \
+    && rm -rf /var/lib/apt/lists/* \
+    && useradd --create-home --uid 10001 aso
+COPY --from=rust-builder /out/aso-document-assembly /usr/local/bin/aso-document-assembly
+COPY --from=mcp-app-builder /app/dist-mcp-app/mcp-app.html /etc/aso/mcp-app.html
+COPY crates/aso-document-assembly/templates /etc/aso/templates
+RUN chmod -R a=rX /etc/aso/templates
+USER aso
+ENTRYPOINT ["/usr/local/bin/aso-document-assembly"]
 
 FROM node:24.16.0-bookworm-slim AS web
 WORKDIR /app

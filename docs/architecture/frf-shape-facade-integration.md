@@ -1,7 +1,7 @@
 # FRF shape facade ↔ ASO replica: how the two fit together
 
-**Status:** Integration record updated 2026-09-15. The authorized facade is the accepted client
-path from Gate to Electric. Bounded local HTTP and topology evidence has passed; full runtime
+**Status:** Integration record updated 2026-09-19. The authorized facade is the implemented client
+path from Gate to Electric in the web Compose candidate. Bounded local HTTP, topology and revision-6 task-status evidence has passed; full runtime
 certification remains open. Supersedes nothing.
 
 ## Why this note exists
@@ -22,8 +22,9 @@ whoever reads the FRF artifacts next.
 
 **`web/src/shared/sync/pglite-schema.ts`** — the local schema as a deliberate subset:
 
-- Projection revision 5 contains seven tables: `annotation_types`, `annotations`, `cases`,
-  `case_evidence`, `evidence_states`, `evidence_citations`, and `document_statuses`. Nothing else is
+- Projection revision 6 contains eight tables: `annotation_types`, `annotations`, `cases`,
+  `case_evidence`, `evidence_states`, `evidence_citations`, `document_statuses`, and
+  `document_task_statuses`. Nothing else is
   synced. `annotation_types` and `evidence_states` are exact approved reference projections;
   every other table is practice-scoped.
 - `OMITTED_COLUMNS` records every excluded column **as data, with a reason** — `rationale`
@@ -50,6 +51,8 @@ whoever reads the FRF artifacts next.
   `document_statuses`, migration `2026090622_document_status_projection.sql` derives it from the
   controlling case and keeps it outside the returned column list. An Electric shape WHERE clause
   is flat and cannot join, so this derived WAL-producing table performs the join before publication.
+  `document_task_statuses` uses the task's authoritative practice scope and likewise keeps that
+  predicate outside the returned column list.
 
 That last point matters: the schema was shaped for a flat, per-shape WHERE clause. It already
 anticipates the facade's request model.
@@ -66,21 +69,24 @@ The FRF facade consumes the versioned ASO projection registry. The conformance r
 | scope column | `practice_id`, denormalized onto practice-owned rows; omitted only when `reference: true` and FRF's compiled registry both approve the exact `annotation_types` or `evidence_states` projection |
 | tenant decision | FRF requires `scope_column` or an exact compiled reference projection; the browser declaration rejects an omitted decision |
 
-RA15 introduced attributed annotations in projection revision 3. Projection revision 5 retains
-that contract and adds the server-owned `document_statuses` base projection. RA15 added the server-owned,
+RA15 introduced attributed annotations in projection revision 3. Projection revision 6 retains
+that contract and the server-owned `document_statuses` base projection, then adds the sanitized
+`document_task_statuses` projection. RA15 added the server-owned,
 practice-scoped annotation table and the exact approved `annotation_types` reference projection.
 Both name their approved columns in the Rust grant registry, Gate token contract, FRF catalog,
 client shape request, and PGlite schema. The catalog gives first-annotation UI creation a trusted
 type identity without replicating JSON Schema. Future widening still requires an explicit
 architecture decision; the facade does not choose it. The document status projection returns the
 frozen eleven fields, filters on its unreturned case-derived `practice_id`, and contains no source
-text, object location, parser output, or embedding column.
+text, object location, parser output, or embedding column. The task-status row exposes only task
+id, case, purpose, state, stage, sequence and update time; prompts, sources, artifacts, errors,
+commands and actor identities remain in protected host tables.
 
 ## Adopted client path
 
 The accepted runtime path is `client → Gate → FRF /v1/shape → Electric → Postgres`. The
-existing web adapter still names Electric parameters directly and has no caller; later
-materializer work replaces that disconnected seam with the facade protocol. Direct Electric
+web materializer names only the server-approved public shape identifier and preserves Electric
+continuation semantics through the facade protocol. Direct Electric
 access is restricted to an operator-loopback diagnostic and is never a client path.
 
 The bounded deployment expresses that order in network membership. Gate joins the internal

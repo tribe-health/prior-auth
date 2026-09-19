@@ -40,13 +40,14 @@ interface WebStorageLike {
  */
 export function createWebLeaseStore(
   storageKey: string,
-  storage: WebStorageLike | undefined = globalThis.localStorage,
+  storage?: WebStorageLike,
 ): LeaseStore {
   const key = `${KEY_PREFIX}${storageKey}`;
+  const backing = arguments.length > 1 ? storage : globalThis.localStorage;
 
   const read = (): StoredLease | null => {
-    if (!storage) return null;
-    const raw = storage.getItem(key);
+    if (!backing) return null;
+    const raw = backing.getItem(key);
     if (raw === null) return null;
     try {
       const parsed: unknown = JSON.parse(raw);
@@ -72,7 +73,7 @@ export function createWebLeaseStore(
     },
 
     async write(next, expected) {
-      if (!storage) return false;
+      if (!backing) return false;
       // Compare-and-set. Synchronous, so nothing in this process interleaves
       // between the check and the write.
       const current = read();
@@ -84,17 +85,17 @@ export function createWebLeaseStore(
             current.expiresAt === expected.expiresAt;
       if (!matches) return false;
 
-      storage.setItem(key, JSON.stringify(next));
+      backing.setItem(key, JSON.stringify(next));
       return true;
     },
 
     async clear(heldBy) {
-      if (!storage) return;
+      if (!backing) return;
       // Only the holder may release. A tab that lost the lease must not clear
       // the winner's claim on its way out.
       const current = read();
       if (current && current.holder !== heldBy) return;
-      storage.removeItem(key);
+      backing.removeItem(key);
     },
   };
 }

@@ -1,0 +1,30 @@
+
+running 1 test
+test adapters::document_store::tests::verified_write_is_idempotent_and_refuses_tampered_existing_object ... FAILED
+
+failures:
+
+failures:
+    adapters::document_store::tests::verified_write_is_idempotent_and_refuses_tampered_existing_object
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 28 filtered out; finished in 0.02s
+
+   Compiling aso-web-server v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server)
+warning: unused variable: `expected_sha256`
+   --> crates/aso-web-server/src/adapters/document_store.rs:129:9
+    |
+129 |         expected_sha256: &[u8; 32],
+    |         ^^^^^^^^^^^^^^^ help: if this is intentional, prefix it with an underscore: `_expected_sha256`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
+
+warning: `aso-web-server` (bin "aso-web-server" test) generated 1 warning (run `cargo fix --bin "aso-web-server" -p aso-web-server --tests` to apply 1 suggestion)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6m 24s
+     Running unittests src/main.rs (/Volumes/my-passport/cargo-build/02/70d32e977a4fbf/debug/deps/aso_web_server-e7a6905ccf4c4021)
+
+thread 'adapters::document_store::tests::verified_write_is_idempotent_and_refuses_tampered_existing_object' (1823369) panicked at crates/aso-web-server/src/adapters/document_store.rs:353:9:
+assertion `left == right` failed
+  left: Ok(())
+ right: Err(IntegrityMismatch)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+error: test failed, to rerun pass `-p aso-web-server --bin aso-web-server`

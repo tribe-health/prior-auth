@@ -1,0 +1,55 @@
+{
+  "result": "Passed",
+  "verification_tier": 0,
+  "observed_at": "2026-09-18T15:56:28.961818+00:00",
+  "scope": "Current-source mounted Web-05 caller chain from protected browser route through hooks, HTTP, Axum, AppServices repository, committed PEM status projection, and job-authorized processor endpoint.",
+  "command": "inline Python current-source mounted-caller verifier",
+  "checks": {
+    "protected_intake_route_is_registered": {
+      "result": "Passed"
+    },
+    "route_mounts_real_case_intake": {
+      "result": "Passed"
+    },
+    "case_intake_mounts_document_intake": {
+      "result": "Passed"
+    },
+    "document_intake_uses_real_hooks": {
+      "result": "Passed"
+    },
+    "status_reads_committed_pem_graph": {
+      "result": "Passed"
+    },
+    "upload_uses_typed_browser_http": {
+      "result": "Passed"
+    },
+    "upload_uncertainty_has_session_owner": {
+      "result": "Passed"
+    },
+    "production_axum_mounts_documents_router": {
+      "result": "Passed"
+    },
+    "processor_and_lookup_routes_are_mounted": {
+      "result": "Passed"
+    },
+    "production_repository_owns_bounded_processor": {
+      "result": "Passed"
+    }
+  },
+  "browser_chain": [
+    "/cases/:caseId/intake",
+    "intake-checklist-route",
+    "CaseIntake",
+    "DocumentIntake",
+    "useDocumentUpload + useDocumentStatuses",
+    "typed multipart HTTP + committed PEM graph"
+  ],
+  "server_chain": [
+    "aso_server_axum::api_router",
+    "documents::router",
+    "AppServices",
+    "PgGateRepository",
+    "BoundedDocumentProcessor"
+  ],
+  "authority_note": "React never calls the processor endpoint. A current service-principal job grant is required; Web-16 owns the synthetic runner and Web-17 owns actual-browser certification."
+}

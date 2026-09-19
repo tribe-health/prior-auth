@@ -27,20 +27,20 @@ export function PathwayComparison({ caseId }: { readonly caseId: string }) {
   }
   if (!view.selection || view.selection.state !== 'current') {
     return (
-      <main className="mx-auto grid w-full max-w-4xl gap-4 p-4 sm:p-6">
+      <section className="mx-auto grid w-full max-w-4xl gap-4 p-4 sm:p-6">
         <Alert>
           <ShieldAlert aria-hidden="true" />
           <AlertTitle>Select the controlling policy first</AlertTitle>
           <AlertDescription>A current immutable criteria snapshot is required before the case can advance.</AlertDescription>
         </Alert>
         <Link className={buttonVariants({ className: 'min-h-11 w-fit' })} to={`/cases/${caseId}/policy`}><ArrowLeft aria-hidden="true" /> Review policy</Link>
-      </main>
+      </section>
     );
   }
 
   const sections = groupBySection(view.selection.criteria);
   return (
-    <main className="mx-auto grid w-full max-w-6xl gap-6 p-4 sm:p-6" aria-labelledby="pathways-title">
+    <section className="workflow-surface mx-auto grid w-full max-w-6xl gap-6 p-4 sm:p-6" aria-labelledby="pathways-title">
       <header className="grid gap-4 border-b pb-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
         <div className="max-w-3xl">
           <h1 id="pathways-title" className="font-heading text-3xl font-medium tracking-tight text-balance sm:text-4xl">Review the viable policy pathways</h1>
@@ -87,6 +87,6 @@ export function PathwayComparison({ caseId }: { readonly caseId: string }) {
         <Link className={buttonVariants({ variant: 'outline', className: 'min-h-11 w-full sm:w-auto' })} to={`/cases/${caseId}/policy`}><ArrowLeft aria-hidden="true" /> Back to policy</Link>
         <Link className={buttonVariants({ className: 'min-h-11 w-full sm:w-auto' })} to={`/cases/${caseId}/evidence`}>Assemble evidence <ArrowRight aria-hidden="true" /></Link>
       </div>
-    </main>
+    </section>
   );
 }

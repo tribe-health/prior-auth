@@ -241,3 +241,58 @@ Execute web-00 through web-17 serially. The order is dependency-bearing and seve
 /opsx:new web-17-browser-scenario-certification
 
 PLAN COMPLETE
+
+## Plan revision 12 — approved interoperable document-generation work
+
+Registered by the supported runtime on 2026-09-19 at source revision 1717.
+`exactNextWork` is `/kbd-apply da-01-document-assembly-agent`. This section
+records the actual approved revision; generated state and prior completed work
+are preserved. The [implementation addendum](../../../../../docs/handoff/web-case-to-letter-revision-12-agent-integration.md)
+is the detailed task/dependency contract.
+
+Responsive web repair entry acceptance is recorded in
+[UI repair evidence](../../../../../docs/architecture/fixtures/web-case-to-letter/ui-repair-evidence-2026-09-19.md).
+It includes full viewport/resize checks, independent critic Passed, repeatable
+initialization, transient sync recovery, and the criteria-revision repair. These
+results permit agent work to proceed; they do not certify all three clinical
+scenarios or the new agent/protocol stack.
+
+### Scope and sequence changes
+
+1. Extend `da-01-document-assembly-agent` with store-free rendering, host-owned
+   durable tasks, authenticated Liter-LLM inference, authorized source/tool
+   collection, exact assembly persistence and actual AG-UI progress. Web-10/14
+   depend on these ports and replace SQL placeholder composition.
+2. Extend web-11/15 with shared draft/claims/QA/halt-memo views, channel-owner
+   subscriptions, provisional/committed state and existing clinical controls.
+3. Register `da-02-a2a-mcp-task-adapters` for A2A and MCP server/client adapters
+   around the same authorized task service. Register
+   `da-03-mcp-app-document-surfaces` for sandboxed MCP Apps sharing presentation
+   with A2UI. Both are required before web-16 is complete.
+4. Extend web-16 with internal assembly/Liter-LLM services, package pins, isolated
+   synthetic scenarios and repeatable initialization. Web-17 certifies one fixed
+   local candidate only after all added implementation work is done.
+
+Dependencies in the addendum govern order; numeric sequence ties in registered
+changes do not permit skipping prerequisites. Keep exact next work explicit.
+External model inference is now allowed for the synthetic Qwen demo route;
+production PHI inference remains disabled pending separate US-provider/BAA/retention
+qualification. There is no production-to-synthetic fallback. The older no-model
+prose and optional live-AG-UI deferrals are superseded. Tauri, Flutter, PDF,
+procedure-module migration, schema kind references and template governance stay
+deferred and are not current-child task checkboxes.
+
+### Reconciliation limits
+
+At registration entry, canonical web-00 through web-06 were complete. Web-07
+through web-17 and web-15a still carried pending tasks despite visible implemented
+UI and local scenario slices. Do not mark this backlog complete from screenshots
+or the existence of code. Reconcile each task against its current boundary and
+local receipts, distinguishing implementation, evidence and certification.
+Historical engine checkboxes in da-01 are preserved source records, not imported
+certification. New registered work remains pending until its own acceptance passes.
+
+The uncomfortable thing is that the inherited aggregate evidence/certification
+summary describes older phases and does not certify revision 12. The complete
+request, correction and appeal campaign and new protocol/provider boundaries are
+still required; no current UI success substitutes for them.

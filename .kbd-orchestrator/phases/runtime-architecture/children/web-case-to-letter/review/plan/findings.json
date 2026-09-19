@@ -1,0 +1,18 @@
+{
+  "artifact": "plan.md",
+  "reviewedAt": "2026-09-16",
+  "reviewer": "fresh-context artifact critic",
+  "rounds": 2,
+  "verdict": "PASS",
+  "criticalFindings": 0,
+  "warnings": 0,
+  "resolvedFindings": [
+    "Require document, page, and date for every generated assertion.",
+    "Freeze criteria as canonical and policy_criteria as a migrated read-only compatibility source.",
+    "Split broad changes into focused contract, command, publication, and mounted-view boundaries.",
+    "Make every acceptance criterion executable at its change boundary.",
+    "Require explicit HTTP/Tauri command parity checks.",
+    "Reserve Tier 3 for the parent milestone and add per-relation privacy acceptance.",
+    "Add local submission acknowledgement, reuse document ingestion for policies, serialize shared surfaces, and use separate denial fixtures."
+  ]
+}

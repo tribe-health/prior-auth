@@ -1,0 +1,13 @@
+## 1. {% if ctx.response_mode == "clinical_appeal" %}Determination Being Appealed{% else %}Determination Reference{% endif %}
+
+| Field | Value |
+| :-- | :-- |
+| Determination date | {{ ctx.determination.date }} |
+| Reference | {{ ctx.determination.reference }} |
+{% if ctx.determination.level -%}
+| Review level | {{ ctx.determination.level }} |
+{% endif %}
+
+**Stated basis**
+
+{{ claim(ctx.determination.claim_ordinal) }}

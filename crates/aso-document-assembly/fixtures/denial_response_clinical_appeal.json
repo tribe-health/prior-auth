@@ -1,0 +1,395 @@
+{
+  "kind": "pa.denial_response",
+  "claims": [
+    {
+      "ordinal": 1,
+      "text": "Mr. Castañeda is a 71-year-old man with grade I degenerative spondylolisthesis at L4-L5 with dynamic instability and severe stenosis, first documented on 2025-10-15.",
+      "criterionId": "summary",
+      "provenance": {
+        "kind": "document",
+        "documentId": "doc-office-1",
+        "documentVersion": 3,
+        "title": "Office notes with neurological examination and ODI",
+        "page": 2,
+        "effectiveDate": "2026-07-28",
+        "contentSha256": "sha256:1111",
+        "sourceQuote": "grade I degenerative spondylolisthesis L4-L5"
+      }
+    },
+    {
+      "ordinal": 2,
+      "text": "He reports low back pain and left leg pain in an L5 distribution, with neurogenic claudication limiting walking to one block.",
+      "criterionId": "summary",
+      "provenance": {
+        "kind": "document",
+        "documentId": "doc-office-1",
+        "documentVersion": 3,
+        "title": "Office notes with neurological examination and ODI",
+        "page": 2,
+        "effectiveDate": "2026-07-28",
+        "contentSha256": "sha256:1111",
+        "sourceQuote": "claudication at one block"
+      }
+    },
+    {
+      "ordinal": 3,
+      "text": "He can no longer walk his dog or shop without a motorized cart, and he has given up golf.",
+      "criterionId": "functional_impact",
+      "provenance": {
+        "kind": "document",
+        "documentId": "doc-office-1",
+        "documentVersion": 3,
+        "title": "Office notes with neurological examination and ODI",
+        "page": 3,
+        "effectiveDate": "2026-07-28",
+        "contentSha256": "sha256:1111",
+        "sourceQuote": "unable to walk dog; motorized cart"
+      }
+    },
+    {
+      "ordinal": 4,
+      "text": "Flexion-extension radiographs demonstrate 4.5 mm of sagittal translation at L4-L5 between flexion and extension, with a Meyerding grade I (18%) slip.",
+      "criterionId": "C1",
+      "provenance": {
+        "kind": "document",
+        "documentId": "doc-rad-1",
+        "documentVersion": 1,
+        "title": "Flexion-extension radiograph report",
+        "page": 1,
+        "effectiveDate": "2026-04-15",
+        "contentSha256": "sha256:4444",
+        "sourceQuote": "4.5 mm translation"
+      }
+    },
+    {
+      "ordinal": 5,
+      "text": "Documented conservative care spans 40 weeks (2025-10-20 to 2026-07-28) and includes 18 sessions of physical therapy, celecoxib and gabapentin, and two left L4-L5 transforaminal epidural steroid injections with relief lasting under three weeks each.",
+      "criterionId": "C2",
+      "provenance": {
+        "kind": "document",
+        "documentId": "doc-cons-1",
+        "documentVersion": 2,
+        "title": "Physical therapy, medication, and injection records",
+        "page": 4,
+        "effectiveDate": "2026-07-28",
+        "contentSha256": "sha256:2222",
+        "sourceQuote": "18 sessions; two TFESI"
+      }
+    },
+    {
+      "ordinal": 6,
+      "text": "Examination documents left great toe extension weakness (4/5) and diminished pinprick sensation over the left L5 dermatome, concordant with severe left lateral recess stenosis at L4-L5 on MRI.",
+      "criterionId": "C3",
+      "provenance": {
+        "kind": "document",
+        "documentId": "doc-office-1",
+        "documentVersion": 3,
+        "title": "Office notes with neurological examination and ODI",
+        "page": 2,
+        "effectiveDate": "2026-07-28",
+        "contentSha256": "sha256:1111",
+        "sourceQuote": "EHL 4/5 left; L5 hypesthesia"
+      }
+    },
+    {
+      "ordinal": 7,
+      "text": "MRI of the lumbar spine on 2026-04-15 shows grade I anterolisthesis at L4-L5 with severe central and left lateral recess stenosis.",
+      "criterionId": "C3",
+      "provenance": {
+        "kind": "document",
+        "documentId": "doc-mri-1",
+        "documentVersion": 1,
+        "title": "MRI lumbar spine report",
+        "page": 1,
+        "effectiveDate": "2026-04-15",
+        "contentSha256": "sha256:3333",
+        "sourceQuote": "severe central and left lateral recess stenosis"
+      }
+    },
+    {
+      "ordinal": 8,
+      "text": "Urine cotinine was negative on 2026-08-20; nicotine cessation is documented from 2026-05-01.",
+      "criterionId": "C4",
+      "provenance": {
+        "kind": "document",
+        "documentId": "doc-lab-1",
+        "documentVersion": 1,
+        "title": "Laboratory results: urine cotinine and HbA1c",
+        "page": 1,
+        "effectiveDate": "2026-08-20",
+        "contentSha256": "sha256:5555",
+        "sourceQuote": "cotinine negative"
+      }
+    },
+    {
+      "ordinal": 9,
+      "text": "HbA1c was 6.9% on 2026-08-20 and BMI was 32.1 kg/m² on 2026-07-28.",
+      "criterionId": "C5",
+      "provenance": {
+        "kind": "document",
+        "documentId": "doc-lab-1",
+        "documentVersion": 1,
+        "title": "Laboratory results: urine cotinine and HbA1c",
+        "page": 1,
+        "effectiveDate": "2026-08-20",
+        "contentSha256": "sha256:5555",
+        "sourceQuote": "HbA1c 6.9%"
+      }
+    },
+    {
+      "ordinal": 10,
+      "text": "adequate decompression of the left lateral recess requires partial facetectomy at a segment that already translates 4.5 mm, so decompression alone would further destabilize the segment and risk slip progression and recurrent stenosis.",
+      "criterionId": "necessity",
+      "provenance": {
+        "kind": "attributed_document",
+        "documentId": "doc-rad-1",
+        "documentVersion": 1,
+        "title": "Flexion-extension radiograph report",
+        "page": 1,
+        "effectiveDate": "2026-04-15",
+        "contentSha256": "sha256:4444",
+        "sourceQuote": "4.5 mm translation",
+        "annotationId": "ann-1",
+        "author": "Adaeze Okafor, MD",
+        "authoredOn": "2026-09-10"
+      }
+    },
+    {
+      "ordinal": 11,
+      "text": "decompression alone risks iatrogenic instability and slip progression, and further injections have produced diminishing, short-lived relief.",
+      "criterionId": "alternatives",
+      "provenance": {
+        "kind": "attributed_document",
+        "documentId": "doc-cons-1",
+        "documentVersion": 2,
+        "title": "Physical therapy, medication, and injection records",
+        "page": 4,
+        "effectiveDate": "2026-07-28",
+        "contentSha256": "sha256:2222",
+        "sourceQuote": "relief lasting under three weeks",
+        "annotationId": "ann-2",
+        "author": "Adaeze Okafor, MD",
+        "authoredOn": "2026-09-10"
+      }
+    },
+    {
+      "ordinal": 12,
+      "text": "delay risks progressive motor deficit, further loss of walking tolerance, and deconditioning that raises surgical risk later.",
+      "criterionId": "consequences",
+      "provenance": {
+        "kind": "attributed_document",
+        "documentId": "doc-office-1",
+        "documentVersion": 3,
+        "title": "Office notes with neurological examination and ODI",
+        "page": 2,
+        "effectiveDate": "2026-07-28",
+        "contentSha256": "sha256:1111",
+        "sourceQuote": "EHL 4/5 left; claudication at one block",
+        "annotationId": "ann-3",
+        "author": "Adaeze Okafor, MD",
+        "authoredOn": "2026-09-10"
+      }
+    },
+    {
+      "ordinal": 13,
+      "text": "The determination states that instability is not documented and conservative care duration is not established.",
+      "criterionId": null,
+      "provenance": {
+        "kind": "document",
+        "documentId": "doc-denial-1",
+        "documentVersion": 1,
+        "title": "Synthetic adverse determination",
+        "page": 1,
+        "effectiveDate": "2026-08-27",
+        "contentSha256": "sha256:6666",
+        "sourceQuote": "Instability not documented; conservative care duration not established."
+      }
+    }
+  ],
+  "requiredCriteria": [
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5"
+  ],
+  "evidence": {
+    "C1": "met",
+    "C2": "met",
+    "C3": "met",
+    "C4": "met",
+    "C5": "met"
+  },
+  "context": {
+    "letter_date": "September 18, 2026",
+    "practice": {
+      "name": "Advanced Spine & Orthopedics",
+      "address": "261 W Southlake Blvd, Southlake, TX 76092",
+      "phone": "(817) 555-0142",
+      "fax": "(817) 555-0143",
+      "npi": "[practice group NPI]"
+    },
+    "payer": {
+      "name": "Example Commercial Health Plan",
+      "unit": "Appeals and Grievances",
+      "address": "PO Box 1111, Example City, TX 75000",
+      "fax": "(800) 555-0188"
+    },
+    "payer_type": "commercial",
+    "benefit_manager": "Example Musculoskeletal Benefit Manager",
+    "member": {
+      "name": "Robert L. Castañeda",
+      "dob": "1955-02-14",
+      "member_id": "XCM-4471902"
+    },
+    "request": {
+      "procedure": "L4-L5 decompression with instrumented posterolateral and posterior interbody fusion",
+      "codes": [
+        {
+          "code": "22633",
+          "description": "Combined posterolateral and posterior interbody arthrodesis, lumbar, single interspace",
+          "units": 1
+        },
+        {
+          "code": "22840",
+          "description": "Posterior non-segmental instrumentation",
+          "units": 1
+        },
+        {
+          "code": "22853",
+          "description": "Insertion of interbody biomechanical device, each interspace",
+          "units": 1
+        },
+        {
+          "code": "20936",
+          "description": "Autograft, local, same incision, for spine surgery",
+          "units": 1
+        }
+      ],
+      "icd10": [
+        {
+          "code": "M43.16",
+          "description": "Spondylolisthesis, lumbar region (primary)"
+        },
+        {
+          "code": "M48.062",
+          "description": "Spinal stenosis, lumbar region, with neurogenic claudication"
+        }
+      ],
+      "levels": "L4-L5",
+      "site_of_service": "Inpatient hospital",
+      "facility": {
+        "name": "Trinity Valley Medical Center",
+        "npi": "1740000049"
+      },
+      "date_of_service": "2026-10-06"
+    },
+    "requesting_physician": {
+      "name": "Adaeze Okafor, MD",
+      "credentials": "Orthopedic Spine Surgery",
+      "npi": "1528000025",
+      "specialty": "orthopedic spine surgery"
+    },
+    "policy": {
+      "title": "Lumbar Spinal Fusion Medical Policy",
+      "id": "MP-SPINE-014",
+      "version": "sample, revised 2026-03"
+    },
+    "criteria": [
+      {
+        "id": "C1",
+        "text": "Spondylolisthesis with documented instability on flexion-extension imaging"
+      },
+      {
+        "id": "C2",
+        "text": "At least 12 weeks of conservative care including physical therapy and medication"
+      },
+      {
+        "id": "C3",
+        "text": "Neurological deficit or neurogenic claudication concordant with imaging"
+      },
+      {
+        "id": "C4",
+        "text": "Verified nicotine abstinence for at least 6 weeks before surgery"
+      },
+      {
+        "id": "C5",
+        "text": "BMI and glycemic control within surgical safety thresholds"
+      }
+    ],
+    "exhibits": [
+      {
+        "label": "A",
+        "title": "Office notes with neurological examination and ODI",
+        "date": "2025-12-01 to 2026-07-28",
+        "pages": 8
+      },
+      {
+        "label": "B",
+        "title": "Physical therapy, medication, and injection records",
+        "date": "2025-10-20 to 2026-07-28",
+        "pages": 14
+      },
+      {
+        "label": "C",
+        "title": "MRI lumbar spine report",
+        "date": "2026-04-15",
+        "pages": 2
+      },
+      {
+        "label": "D",
+        "title": "Flexion-extension radiograph report",
+        "date": "2026-04-15",
+        "pages": 1
+      },
+      {
+        "label": "E",
+        "title": "Laboratory results: urine cotinine and HbA1c",
+        "date": "2026-08-20",
+        "pages": 2
+      },
+      {
+        "label": "F",
+        "title": "Synthetic adverse determination",
+        "date": "2026-08-27",
+        "pages": 1
+      }
+    ],
+    "contacts": {
+      "p2p_phone": "(817) 555-0144",
+      "p2p_hours": "weekdays 7:00–9:00 a.m. and 12:00–1:00 p.m. Central",
+      "coordinator_phone": "(817) 555-0145",
+      "coordinator_email": "priorauth@example-spine.test"
+    },
+    "patient_cc": true,
+    "response_mode": "clinical_appeal",
+    "appeal": {
+      "level_label": "second-level appeal",
+      "deadline": "2026-10-18"
+    },
+    "determination": {
+      "date": "2026-08-27",
+      "reference": "2026-0827-A1",
+      "level": "First-level internal appeal",
+      "document_id": "doc-denial-1",
+      "claim_ordinal": 13
+    }
+  },
+  "checks": {
+    "citedPolicyVersion": "sample, revised 2026-03",
+    "inForcePolicyVersion": "sample, revised 2026-03",
+    "requestedCodes": [
+      "22633",
+      "22840",
+      "22853",
+      "20936"
+    ],
+    "affirmedPathwayCodes": [
+      "22633",
+      "22840",
+      "22853",
+      "20936"
+    ],
+    "dates": []
+  }
+}

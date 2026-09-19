@@ -1,0 +1,34 @@
+{
+  "result": "Passed",
+  "verification_tier": 1,
+  "scope": "Electric 1.8 automatic publication management using an empty uniquely named synthetic relation",
+  "observed_at": "2026-09-18T15:27:43.686984+00:00",
+  "checks": {
+    "synthetic_empty_relation_created": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "projected_shape_request": {
+      "result": "Passed",
+      "return_code": 0,
+      "http_status": 200
+    },
+    "electric_added_relation_on_shape_request": {
+      "result": "Passed",
+      "observed_publications": [
+        "electric_publication_default"
+      ]
+    }
+  },
+  "cleanup": {
+    "synthetic_relation_removed": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "publication_entry_removed": {
+      "result": "Passed",
+      "observed": "t"
+    }
+  },
+  "completed_at": "2026-09-18T15:27:44.266334+00:00"
+}

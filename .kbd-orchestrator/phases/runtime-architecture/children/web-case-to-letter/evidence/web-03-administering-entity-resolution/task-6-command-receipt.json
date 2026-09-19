@@ -1,0 +1,106 @@
+{
+  "result": "Passed",
+  "tier": "focused T0/T1 repair qualification",
+  "commands": [
+    {
+      "command": "pnpm --dir web exec vitest run src/features/session/model/session-parse.test.ts src/features/administering-entity/api/administering-entity-api.test.ts src/features/administering-entity/hooks/use-administering-entity-resolution.test.tsx src/features/administering-entity/components/administering-entity-panel.test.tsx src/features/case-queue/api/case-api.test.ts src/features/case-queue/hooks/use-case-detail.test.tsx src/features/case-queue/hooks/use-case-projection.test.ts src/features/case-queue/components/case-detail.test.tsx src/features/case-queue/components/case-intake.test.tsx src/features/case-queue/components/case-form.test.tsx src/shared/sync/protected-replica-boundaries.integration.test.ts src/shared/sync/case-summary-materialization.test.ts src/app/routes/case-resolution-recovery-route.test.tsx",
+      "result": "Passed",
+      "observation": "13 files passed; 52 tests passed, including production route composition, narrow case projection, PGlite materialization, typed case API, and full-record hook"
+    },
+    {
+      "command": "pnpm --dir web typecheck",
+      "result": "Passed",
+      "observation": "tsc --noEmit exited 0"
+    },
+    {
+      "command": "pnpm --dir web lint",
+      "result": "Passed",
+      "observation": "oxlint exited 0"
+    },
+    {
+      "command": "RUSTUP_TOOLCHAIN=1.97.1 cargo fmt --all -- --check",
+      "result": "Passed",
+      "observation": "exited 0"
+    },
+    {
+      "command": "RUSTUP_TOOLCHAIN=1.97.1 cargo check -p aso-host -p aso-server-axum -p aso-web-server",
+      "result": "Passed",
+      "observation": "all three dev profiles finished"
+    },
+    {
+      "command": "RUSTUP_TOOLCHAIN=1.97.1 cargo test -p aso-server-axum administering_entity_http -- --nocapture",
+      "result": "Passed",
+      "observation": "3 tests passed"
+    },
+    {
+      "command": "RUSTUP_TOOLCHAIN=1.97.1 cargo test -p aso-server-axum gate_policy_requires_case_capabilities_and_never_mutates -- --nocapture",
+      "result": "Passed",
+      "observation": "1 test passed"
+    },
+    {
+      "command": "RUSTUP_TOOLCHAIN=1.97.1 cargo test -p aso-server-axum case_detail_http_requires_verified_practice_and_read_capability -- --nocapture",
+      "result": "Passed",
+      "observation": "1 mounted test passed; authorized detail returned protected inputs, while missing read capability, foreign practice, and refused target returned 403 before unauthorized data publication"
+    },
+    {
+      "command": "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-web03-resolution-service.py --install-mode fresh --output task-6-fresh-review.json",
+      "result": "Passed",
+      "observation": "fresh migration and actual AppServices/PostgreSQL lifecycle passed, including neutral state-catalog copy plus disjoint, plan-ended, and enrollment-ended classification; cleanup passed"
+    },
+    {
+      "command": "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-web03-resolution-service.py --install-mode upgrade --output task-6-upgrade-review.json",
+      "result": "Passed",
+      "observation": "populated upgrade, preservation, and actual AppServices/PostgreSQL lifecycle passed, including neutral state-catalog copy plus disjoint, plan-ended, and enrollment-ended classification; cleanup passed"
+    },
+    {
+      "command": "openspec validate web-03-administering-entity-resolution --strict",
+      "result": "Passed",
+      "observation": "change is valid"
+    }
+  ],
+  "red_restore": [
+    {
+      "guard": "committed receipt followed by authoritative invalidation",
+      "red": "2 recovery tests failed after the uncertainty defect was temporarily restored",
+      "restored": "12 hook tests passed"
+    },
+    {
+      "guard": "authoritative input revisions remain visible after reload",
+      "red": "1 panel test failed after the entity revision was temporarily hidden",
+      "restored": "3 panel tests passed"
+    },
+    {
+      "guard": "resolution and authoritative-input mutation serialization",
+      "red": "race-only PostgreSQL control failed with DeadlockDetected and the resolution-first row was not invalidated when the production input-table lock was removed",
+      "restored": "race-only PostgreSQL control passed both transaction orders with cleanup after the lock was restored"
+    },
+    {
+      "guard": "non-empty historical validity intersection",
+      "red": "disposable PostgreSQL probe failed with return code 3 and reported disjoint historical windows misclassified as expired after the intersection predicate was removed",
+      "restored": "fresh and populated-upgrade PostgreSQL probes classified the same disjoint windows as missing and cleaned up successfully"
+    },
+    {
+      "guard": "exclusive validity and neutral expired copy",
+      "red": "3 of 6 component tests failed after restoring Effective through and Matching rule expired",
+      "restored": "6 of 6 component tests and the 33-test focused browser set passed with exclusive-boundary and coverage-path wording"
+    },
+    {
+      "guard": "neutral authoritative expired-state label",
+      "red": "disposable PostgreSQL probe observed Matching rule expired and failed the neutral state-catalog assertion after the old migration label was restored",
+      "restored": "fresh and populated-upgrade probes observed Coverage path expired in the authoritative catalog and cleaned up successfully"
+    },
+    {
+      "guard": "incomplete-input status, guidance, and first-missing-field recovery",
+      "red": "HTTP status sabotage failed with observed 409 instead of 422; disabling form autofocus failed four focus assertions",
+      "restored": "mounted route returned 422, exact hook guidance passed, and detail-to-intake recovery focused the first missing field; 40 focused browser tests passed"
+    },
+    {
+      "guard": "incomplete-input guidance survives navigation to intake",
+      "red": "disabling validated notice propagation failed the routed intake test because the exact guidance was absent",
+      "restored": "the routed intake destination displayed the exact guidance and focused the first missing Plan field"
+    }
+  ],
+  "infrastructure_observation": "The first mounted Rust sequence was interrupted after macOS dyld remained at _dyld_start on the shared external Cargo target. A later red-control attempt stopped before its assertion when the OrbStack Docker engine stopped answering; OrbStack was restarted without removing volumes. Neither interrupted run is counted as verification evidence, and the final fresh, upgrade, red, and restored disposable runs cleaned up successfully.",
+  "post_freeze_review_contract": "Independent artifact and distinct-model review outcomes are recorded outside this source snapshot against the final manifest digest before KBD task completion.",
+  "claim_boundary": "Focused Web-03 only; Web-17 owns the full actual-browser case-to-letter certification."
+}

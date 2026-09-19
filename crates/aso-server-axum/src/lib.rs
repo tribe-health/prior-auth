@@ -38,9 +38,11 @@ pub fn api_router(state: ServerState) -> Router {
         .merge(routes::criteria::router())
         .merge(routes::criteria_selection::router())
         .merge(routes::documents::router())
+        .merge(routes::document_tasks::router())
         .merge(routes::evidence::router())
         .merge(routes::gate::router())
         .merge(routes::letters::router())
         .merge(routes::sources::router())
+        .merge(routes::submissions::router())
         .with_state(state)
 }

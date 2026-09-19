@@ -1,0 +1,42 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "crates/aso-server-axum/src/routes/cases.rs",
+      "line": 122,
+      "claim": "The mounted case HTTP routes do not enforce the required case capabilities before executing reads or mutations.",
+      "evidence": "Acceptance criterion/spec says callers that lack the capability required by the operation must be refused; `clinical_context(&state, &headers, query.practice_id)` returns `(context, _)` and every handler discards capabilities, then directly calls `state.services.create_case/list_cases/read_case/update_case/transition_case`.",
+      "suggested_fix": "Use the capabilities returned by `clinical_context` in each handler and require `case:read` for reads and `case_write` for create/update/transition/command reconciliation before calling AppServices."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "crates/aso-host/src/case_management.rs",
+      "line": 161,
+      "claim": "The shell-neutral case service authorizes every human user without checking operation-specific case capabilities.",
+      "evidence": "`check_case_context` only rejects expired sessions and non-`Principal::User`, while the spec requires refusal when a caller \"lacks the capability required by this operation\".",
+      "suggested_fix": "Carry verified capabilities into the service boundary or add an authority/capability port check for `case:read` and `case_write` before delegating to the repository."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "migrations/server/2026090617_durable_case_commands.sql",
+      "line": 39,
+      "claim": "The migration uses the PostgreSQL 17 `MAINTAIN` privilege unconditionally, which can fail on older supported PostgreSQL versions.",
+      "evidence": "The migration calls `pg_catalog.has_table_privilege(..., 'SELECT, INSERT, UPDATE, DELETE, TRUNCATE, REFERENCES, TRIGGER, MAINTAIN')`, while the Rust role checks in `crates/aso-web-server/src/adapters/gate.rs` explicitly guard `MAINTAIN` with `current_setting('server_version_num')::integer >= 170000`, showing compatibility is expected.",
+      "suggested_fix": "Split the `MAINTAIN` check behind a server-version guard in the migration, matching the Rust `ROLE_CHECK`/`CASE_ROLE_CHECK` pattern."
+    },
+    {
+      "severity": "WARNING",
+      "file": "crates/aso-server-axum/src/routes/cases.rs",
+      "line": 39,
+      "claim": "The existing `/api/cases/{case_id}/evidence` evidence-count route is removed from this router without an equivalent replacement in the shown diff.",
+      "evidence": "The deleted code routed `Router::new().route(\"/api/cases/{case_id}/evidence\", get(evidence_counts))` and serialized distinct `met`, `gap`, and `void` counts; the new router only mounts `/api/cases`, `/api/cases/{case_id}`, `/api/cases/{case_id}/status`, and command lookup routes, while the blocking constraint requires preserving three evidence states.",
+      "suggested_fix": "Keep the evidence-count route or show/move an equivalent mounted route that still returns distinct `met`, `gap`, and `void` values."
+    }
+  ]
+}

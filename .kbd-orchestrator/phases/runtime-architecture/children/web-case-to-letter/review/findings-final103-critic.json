@@ -1,0 +1,27 @@
+{
+  "target": "web-03-administering-entity-resolution",
+  "manifest_digest": "2c095ed3fa255fd3034e9a91b66559d339945607caac3f5cebc1626613a9f021",
+  "verdict": "BLOCK",
+  "counts": {
+    "critical": 0,
+    "major": 1,
+    "minor": 0
+  },
+  "findings": [
+    {
+      "severity": "major",
+      "file": "web/src/features/case-queue/components/case-detail.tsx",
+      "line": 19,
+      "claim": "The incomplete-input recovery does not present the required guidance to the user after opening intake, despite the artifact claiming that it does.",
+      "evidence": "On a 422, use-administering-entity-resolution.ts lines 252-260 publishes the exact guidance into the case-detail view and immediately invokes onInputsIncomplete. CaseDetail's callback navigates to /cases/{caseId}/intake?focus=resolution at line 19, replacing the only component that can render that view message. intake-checklist-route.tsx lines 10-15 passes only a focus intent, and case-intake.tsx lines 55-110 renders the loaded form and focus target without the guidance. The retained tests split the behavior: the hook test asserts text in isolated hook state (lines 289-313), while the CaseDetail test asserts only the new URL (lines 69-86) and the CaseIntake test asserts only focus (lines 18-57). They never mount the navigation destination and assert that the exact sentence remains visible. This contradicts the OpenSpec requirement at specs/administering-entity-resolution/spec.md lines 50-52 and makes the completion evidence's visible-guidance claim unsupported.",
+      "suggested_fix": "Carry an incomplete-input recovery notice into the intake route through explicit navigation state or a narrowly validated query value, render the exact guidance in CaseIntake after the authorized full record loads, and add a routed component test that triggers the 422 recovery and asserts both the visible sentence and focus on the first missing field at the destination."
+    }
+  ],
+  "verification": {
+    "source_manifest": "Passed: the manifest file SHA-256 matched the expected digest and all 112 listed current sources matched their declared hashes.",
+    "frozen_validator": "Passed: python3 dist/validate.py reported Passed for all 14 checks.",
+    "review_scope": "Reviewed only the frozen artifact and its manifest-listed snapshots. Full actual-browser workflow certification was treated as deferred to Web-17 and was not counted as a defect.",
+    "result": "The frozen checks pass, but their decomposed incomplete-input tests do not prove the required visible recovery sequence, and the mounted component call chain drops the guidance on navigation."
+  },
+  "isolation_mode": "harness-native-fresh-context"
+}

@@ -1,0 +1,10 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 6.65s
+     Running unittests src/lib.rs (/Volumes/my-passport/cargo-build/02/70d32e977a4fbf/debug/deps/aso_host-dd1c39f6b1762bd5)
+
+running 3 tests
+test projection::tests::case_summary_is_exact_and_excludes_unapproved_case_data ... ok
+test projection::tests::seven_table_registry_is_exact_and_practice_scoped ... ok
+test projection::tests::unapproved_metadata_and_deferred_criterion_labels_stay_protected ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 34 filtered out; finished in 0.07s
+

@@ -1,0 +1,22 @@
+{
+  "mode": "diff",
+  "verdict": "PASS",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [],
+  "checked_classes": [
+    "Spec violations \u2014 task 2.1 evidence includes focused T0/T1 checks, forbidden-column sabotage/restore, Artifact Refiner validation, and this adversarial review boundary; task 3.1 is explicitly out of scope by acceptance_criteria.",
+    "Correctness \u2014 reviewed the current focused Rust/SQL/React/sync implementation paths in the packet for line-level logic defects within Web-05 task 2.1 and found no concrete blocking defect supported by the provided source snapshots.",
+    "Regressions \u2014 checked the changed projection, PGlite migration generation cutover, Electric exposure, document upload/status UI, and document processing paths against the packet evidence and found no unresolved regression with concrete evidence.",
+    "Security/privacy \u2014 checked source text, storage URI, embedding publication boundaries, Electric host exposure, tenant practice scoping, job-grant processing authority, and local document-store path handling; no unresolved critical breach is evidenced in the packet.",
+    "Constraint breaches \u2014 checked blocking constraints visible from the packet including shell-neutral aso-host, no query cache, generated theme files, no console.log/no explicit any in web source, no hardcoded secrets in constrained source paths, and Electric internal-only repair evidence; no concrete breach found.",
+    "Silent failure \u2014 checked error mappings, uncertain command reconciliation, migration failure handling, sabotage/restore evidence, and artifact validation receipts; no silent failure with concrete packet evidence found."
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

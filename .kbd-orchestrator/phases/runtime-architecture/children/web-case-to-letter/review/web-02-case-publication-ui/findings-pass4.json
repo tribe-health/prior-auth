@@ -1,0 +1,31 @@
+{
+  "mode": "diff",
+  "verdict": "BLOCK",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": ".refiner/artifacts/web-02-case-publication-ui/state.json",
+      "line": 27,
+      "claim": "The artifact records all blocking constraints as passed even though the required build-only command is not evidenced anywhere in the task-5 receipts.",
+      "evidence": "Blocking constraint `build-passes` requires `cargo build --workspace && pnpm --dir web build && flutter analyze mobile`, while the retained receipts show only `npm run typecheck`, `npm run lint`, focused Vitest, filtered Cargo tests, and FRF tests; `state.json` nevertheless records `blocking_constraints_passed: 11` and `blocking_constraints_total: 11`.",
+      "suggested_fix": "Run the exact build-passes command, retain its observed output, and only mark the constraint passed after the full command succeeds."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": ".kbd-orchestrator/phases/runtime-architecture/children/web-case-to-letter/evidence/web-02-case-publication-ui/task-5-review-findings-resolution.md",
+      "line": 58,
+      "claim": "The retained verification does not satisfy the repository's required invariant-test command before claiming completion.",
+      "evidence": "Blocking constraint `invariant-tests-pass` requires `cargo test --workspace && flutter test mobile`, but the recorded Rust commands are only `cargo test -p aso-host projection::tests`, `cargo test -p aso-server-axum session::tests::mounted_registry_derives_two_practice_grants`, and `cargo test -p frf-gateway --features shape-facade --test shape_projection_grant`; no workspace Cargo test or Flutter test output is retained.",
+      "suggested_fix": "Run `cargo test --workspace && flutter test mobile`, retain the full output, and update the artifact state only if it succeeds."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

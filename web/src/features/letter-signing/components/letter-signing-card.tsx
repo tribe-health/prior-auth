@@ -23,9 +23,10 @@ export function LetterSigningCard({ letterId, caseId }: { letterId: string; case
     reconcile,
   } =
     useLetterSigning(letterId);
-  const blockers = useMemo(() => target && !result ? signingBlockers(target) : [], [result, target]);
+  const alreadySigned = target?.status === 'signed';
+  const blockers = useMemo(() => target && !result && !alreadySigned ? signingBlockers(target) : [], [alreadySigned, result, target]);
   const wrongCase = target !== null && target.caseId !== caseId;
-  const ready = canSign && target !== null && blockers.length === 0 && !wrongCase;
+  const ready = canSign && target !== null && blockers.length === 0 && !wrongCase && !alreadySigned;
 
   return (
     <Card>
@@ -59,7 +60,7 @@ export function LetterSigningCard({ letterId, caseId }: { letterId: string; case
         ) : null}
         {outcome === 'confirmed' && result ? (
           <p className="text-sm text-ui-muted-foreground">Signed {new Date(result.signedAt).toLocaleString()}.</p>
-        ) : null}
+        ) : alreadySigned ? <p className="text-sm text-ui-muted-foreground">Signed revision confirmed.</p> : null}
         <div className="flex flex-col gap-2 sm:flex-row sm:justify-end">
           {uncertain || awaitingProjection ? (
             <Button className="min-h-11 w-full sm:w-auto" onClick={() => void reconcile()}>
@@ -68,10 +69,10 @@ export function LetterSigningCard({ letterId, caseId }: { letterId: string; case
           ) : (
             <Button
               className="min-h-11 w-full sm:w-auto"
-              disabled={!ready || submitting || outcome === 'confirmed'}
+              disabled={!ready || submitting || outcome === 'confirmed' || alreadySigned}
               onClick={() => void sign()}
             >
-              {submitting ? 'Signing…' : outcome === 'confirmed' ? 'Signed' : 'Sign letter'}
+              {submitting ? 'Signing…' : outcome === 'confirmed' || alreadySigned ? 'Signed' : 'Sign letter'}
             </Button>
           )}
         </div>

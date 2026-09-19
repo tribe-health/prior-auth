@@ -1,6 +1,6 @@
 # Application runtime architecture: browser and Tauri
 
-**Status:** Accepted target architecture; implementation is not certified.
+**Status:** Accepted architecture; the web Compose candidate is implemented and locally integrated, while release and native certification remain open.
 **ADR reconciliation:** 2026-09-09; see the [complete ADR index](README.md).
 **Date:** 2026-09-06.  
 **Scope:** Prior Authorization Workbench, Flint Forge, Flint Gate, Flint Realtime Fabric, Prometheus entity management, and self-hosted Ory Kratos.  
@@ -29,7 +29,7 @@ Open [prior-auth.code-workspace](../../prior-auth.code-workspace) to work across
 
 | Repository | Responsibility in this design | Observed source and limitation |
 |---|---|---|
-| `prior-auth` | Shared UI, application startup, domain services, clinical policy integration, deployment composition | The mounted server requires Kratos plus restricted session and clinical PostgreSQL logins against one database; it has no production memory clinical fallback. The legacy actor-less evidence-count route is unmounted until verified-context conversion. `web/src/main.tsx` still supplies a development-only stand-in session and a null production session pending browser Kratos integration. `graph-provider.tsx` owns PGlite and the scoped graph lifecycle; its RA11c realtime materializer is disabled by default after failing the browser RSS gate and is available only to exact experimental qualification builds. `desktop/src-tauri` now mounts the pinned Tauri core command surface in the mock runtime; a production Wry window remains unqualified. |
+| `prior-auth` | Shared UI, application startup, domain services, clinical policy integration, deployment composition | The mounted web stack uses self-hosted Kratos, restricted runtime/authority PostgreSQL roles, Gate, Electric, FRF, PGlite and the scoped PEM graph. The Compose demo enables the qualified memory-only materializer explicitly; persistent browser storage remains a release decision. The host owns durable document tasks and routes synthetic inference through Liter-LLM without a production-PHI fallback. `desktop/src-tauri` mounts the pinned Tauri core command surface in the mock runtime; a production Wry window remains unqualified. |
 | `flint-forge` | Practice Postgres substrate; database access, RLS and Cedar capabilities where Forge services are used | `crates/fdb-gateway/src/bootstrap.rs`, `authz_mode.rs`, and `crates/fdb-postgres`. ASO currently composes Forge's Postgres image; this does not prove every Forge API is on the ASO request path. |
 | `flint-gate` | Public entry point, Kratos session validation, policy, downstream identity projection | The RA05 local stack proved the Gate→FRF authorized facade path. RA06 and its repair children now use fresh ASO authority decisions and a durable shared fence across Gate replicas; final phase certification remains separate. |
 | `flint-realtime-fabric` | Authorized realtime facade; relational shape routing plus separate event/CRDT lanes | The Electric shape proxy and RA06 final-frame lease have bounded local evidence. Local SQL materialization remains ASO RA11c work; full assembled phase certification remains separate. |
@@ -307,7 +307,7 @@ path.
 
 Evidence reassessment follows the same command boundary. The timeline submits `commandId`, the selected `met`/`gap`/`void` state and its observed `assessedAt` timestamp to `POST /api/cases/{caseId}/evidence/{evidenceId}/state`, including the selected practice on both mutation and lookup. Gate requires `annotate`; `AppServices` and PostgreSQL independently enforce the verified human, practice, resource and current-revision checks. The database commits the new state, surgeon attribution, audit event and immutable result together. Explicit lookup reconciles an uncertain response. A runtime command registry keys ownership by feature, verified identity, selected practice and case. It survives route navigation and hook unmount/remount, hides another scope's feedback, and continues to refuse mutation in the original scope until the matching command reaches a definitive result or successful lookup. It waits for the authorized relational projection to change rendered entities, writes neither PEM nor local SQL, and enqueues no PEM replay action. The registry is memory-only; process restart recovery remains outside this task and cannot be claimed as implemented.
 
-Attributed annotations use `POST /api/cases/{caseId}/annotations/{annotationId}` and the matching command lookup route, with one-for-one desktop wrappers. The request carries a stable command and annotation ID, clinical content, a projected server-owned annotation-type ID, one optional evidence or document target, include/hold disposition, and expected revision. It carries no actor or practice authority. The verified session supplies attribution; Gate policy, `AppServices`, and PostgreSQL independently require a current human membership with `annotate`. One transaction writes the current annotation, an immutable revision, an immutable command result, and an audit event. Projection revision 3 introduced the attributed opinion fields and the approved `annotation_types` reference catalog containing only `id`, `key`, `name`, and `description`; current projection revision 5 retains them and adds the exact case-scoped document status projection. Type-specific JSON Schema, annotation `data`, source text, embeddings, and all ledgers remain server-side. The client applies no optimistic clinical row change and reconciles uncertain outcomes by command lookup before waiting for the graph projection.
+Attributed annotations use `POST /api/cases/{caseId}/annotations/{annotationId}` and the matching command lookup route, with one-for-one desktop wrappers. The request carries a stable command and annotation ID, clinical content, a projected server-owned annotation-type ID, one optional evidence or document target, include/hold disposition, and expected revision. It carries no actor or practice authority. The verified session supplies attribution; Gate policy, `AppServices`, and PostgreSQL independently require a current human membership with `annotate`. One transaction writes the current annotation, an immutable revision, an immutable command result, and an audit event. Projection revision 3 introduced the attributed opinion fields and the approved `annotation_types` reference catalog containing only `id`, `key`, `name`, and `description`; current projection revision 6 retains them, the exact case-scoped document status projection, and the sanitized document-task status projection. Type-specific JSON Schema, annotation `data`, source text, embeddings, task inputs/results/errors/actors, and all ledgers remain server-side. The client applies no optimistic clinical row change and reconciles uncertain outcomes by command lookup before waiting for the graph projection.
 
 Gate policy keeps target-reader outages distinct from clinical denial: typed
 unavailable and native-authentication-unavailable results return `503`, while
@@ -586,3 +586,32 @@ bounded revocation; cached room grants alone do not enable protected ASO media.
 Fabric CRDT engines, FFI tooling and internal media ownership are distinct from
 ASO replica storage. The standalone fabric admin-UI OIDC proposal does not make
 Hydra an ASO prerequisite. See the [ADR index](README.md) for all scoped records.
+
+## 2026-09-19 accepted extension — document-generation tasks
+
+The [revision-12 implementation addendum](../handoff/web-case-to-letter-revision-12-agent-integration.md)
+extends browser sequence step 5 after responsive UI acceptance. The local web
+candidate now implements the host task service, Liter-LLM route, protocol
+adapters and shared document surfaces; final web-17 certification remains
+separate. Liter-LLM supplies
+structured candidate prose through an internal authenticated synthetic Qwen route;
+a distinct production PHI route remains disabled until US provider qualification.
+There is no production-to-demo fallback.
+
+One trusted host task service owns authorized retrieval, durable task/event state
+in Flint Forge, revision capture, cancellation and atomic final letter/claims/QA/
+audit persistence. The assembly kernel remains store-free. Inference and MCP
+calls finish before final transaction locks; authorization and captured revisions
+are checked again before commit. The engine's kind/version/package/content digest
+is preserved separately from historical Markdown-only hashes.
+
+AG-UI, A2A and MCP adapters use that same task service. Protected task/artifact
+reads remain subject to current authority. Projection revision 6 publishes only
+the sanitized task id, case, purpose, state, stage, sequence and update time
+through FRF to PGlite and the entity graph; prompts, sources, artifacts, errors,
+commands and actor identities remain structurally absent. Shared A2UI/MCP App presentation uses typed hooks
+and scoped transient buffers, never an additional clinical writer. None of these
+protocols can grant signing or affirmation. The exact protocol/dependency pins,
+focused local protocol checks and a mounted browser projection proof are recorded
+in the implementation; the complete positive/negative browser campaign remains
+the web-17 gate.

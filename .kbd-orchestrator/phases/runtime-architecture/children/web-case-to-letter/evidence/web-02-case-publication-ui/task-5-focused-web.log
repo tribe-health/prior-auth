@@ -1,0 +1,32 @@
+
+> aso-web@0.1.0 test
+> vitest run --run src/shared/sync/case-summary-materialization.test.ts src/shared/sync/pglite-schema.test.ts src/shared/sync/catalog-conformance.test.ts src/shared/sync/storage-policy.test.ts src/features/case-queue/hooks/use-case-detail.test.tsx src/features/case-queue/components/case-queue.test.tsx src/app/routes/app-routes.test.tsx src/features/case-queue/components/case-form.test.tsx src/app/shell/app-shell.test.tsx src/app/providers/graph-provider-startup.test.tsx src/features/case-queue/hooks/use-case-command.test.tsx src/features/case-queue/hooks/use-case-queue-view.test.tsx src/app/providers/graph-storage-key.test.ts src/features/case-queue/hooks/use-case-projection.test.ts src/shared/sync/replica-wiring.test.ts src/features/case-queue/api/case-api.test.ts
+
+(node:33272) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+ RUN  v3.2.7 /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web
+
+ ✓ src/features/case-queue/hooks/use-case-detail.test.tsx (1 test) 127ms
+ ✓ src/app/shell/app-shell.test.tsx (1 test) 161ms
+ ✓ src/features/case-queue/hooks/use-case-command.test.tsx (5 tests) 213ms
+ ✓ src/features/case-queue/components/case-form.test.tsx (1 test) 525ms
+   ✓ case form adaptive interaction > keeps the same labeled form state across mobile and desktop resize and submits semantically  511ms
+ ✓ src/features/case-queue/components/case-queue.test.tsx (1 test) 177ms
+ ✓ src/shared/sync/pglite-schema.test.ts (6 tests) 1693ms
+ ✓ src/app/routes/app-routes.test.tsx (4 tests) 324ms
+ ✓ src/shared/sync/catalog-conformance.test.ts (5 tests) 2185ms
+ ✓ src/shared/sync/case-summary-materialization.test.ts (1 test) 2252ms
+   ✓ case summary materialization > projects an over-wide transport row onto the approved PEM case summary  2252ms
+ ✓ src/features/case-queue/hooks/use-case-queue-view.test.tsx (1 test) 10ms
+ ✓ src/shared/sync/storage-policy.test.ts (10 tests) 3ms
+ ✓ src/app/providers/graph-provider-startup.test.tsx (2 tests) 40ms
+ ✓ src/features/case-queue/api/case-api.test.ts (1 test) 4ms
+ ✓ src/app/providers/graph-storage-key.test.ts (11 tests) 3ms
+ ✓ src/features/case-queue/hooks/use-case-projection.test.ts (5 tests) 3ms
+ ✓ src/shared/sync/replica-wiring.test.ts (4 tests) 2ms
+
+ Test Files  16 passed (16)
+      Tests  59 passed (59)
+   Start at  03:28:00
+   Duration  3.77s (transform 1.69s, setup 0ms, collect 5.65s, tests 7.72s, environment 12.19s, prepare 1.73s)

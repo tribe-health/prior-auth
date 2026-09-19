@@ -1,0 +1,49 @@
+{
+  "result": "Failed",
+  "verification_tier": 1,
+  "checks": [
+    {
+      "label": "rustfmt",
+      "command": "cargo fmt --all -- --check",
+      "return_code": 0,
+      "tail": []
+    },
+    {
+      "label": "cargo-check",
+      "command": "cargo check -p aso-host -p aso-server-axum -p aso-web-server --tests",
+      "return_code": 0,
+      "tail": [
+        "    Checking aso-server-axum v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-server-axum)",
+        "    Checking aso-host v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host)",
+        "    Checking aso-web-server v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server)",
+        "    Finished `dev` profile [unoptimized + debuginfo] target(s) in 38.90s"
+      ]
+    },
+    {
+      "label": "clippy",
+      "command": "cargo clippy -p aso-host -p aso-server-axum -p aso-web-server --no-deps",
+      "return_code": 0,
+      "tail": [
+        "    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the `Err`-variant is at least 128 bytes",
+        "    |",
+        "    = help: try reducing the size of `axum::http::Response<axum::body::Body>`, for example by boxing large elements or replacing it with `Box<axum::http::Response<axum::body::Body>>`",
+        "    = help: for further information visit https://rust-lang.github.io/rust-clippy/rust-1.97.0/index.html#result_large_err",
+        "",
+        "warning: `aso-server-axum` (lib) generated 5 warnings",
+        "    Checking aso-web-server v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server)",
+        "    Finished `dev` profile [unoptimized + debuginfo] target(s) in 34.95s"
+      ]
+    },
+    {
+      "label": "document-store",
+      "command": "cargo test -p aso-web-server adapters::document_store::tests -- --no-fail-fast",
+      "return_code": 101,
+      "tail": [
+        "    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.33s",
+        "     Running unittests src/main.rs (/Volumes/my-passport/cargo-build/02/70d32e977a4fbf/debug/deps/aso_web_server-e7a6905ccf4c4021)",
+        "error: Unrecognized option: 'no-fail-fast'",
+        "error: test failed, to rerun pass `-p aso-web-server --bin aso-web-server`"
+      ]
+    }
+  ]
+}

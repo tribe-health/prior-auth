@@ -1,0 +1,22 @@
+{
+  "mode": "diff",
+  "verdict": "PASS",
+  "judge_model": "gpt-5.5",
+  "producer_model": "gpt-6-astra",
+  "isolation_mode": "rest-gateway:http://localhost:4000/v1",
+  "cross_model_check": "verified-distinct",
+  "findings": [
+    {
+      "severity": "WARNING",
+      "file": "crates/aso-host/src/projection.rs",
+      "claim": "The replica grant now publishes annotation `body` text even though the current Web-02 scope is case-summary publication and the browser-side mitigation only prevents persistent materialization, not authorization of the shape itself.",
+      "evidence": "The hunk adds `ProjectionId::Annotations` with columns including `\"body\"` and `scope: DefinitionScope::Practice(\"practice_id\")`; acceptance criterion 1.2 is limited to registering the case summary lane/privacy/columns/tenant/revocation, while `web/src/shared/sync/storage-policy.ts` only throws when `materializerEnabled && policy.mode === PERSISTENT`.",
+      "suggested_fix": "Do not include `annotations.body` in the Web-02 replica grant unless this change's acceptance scope explicitly approves that publication; otherwise gate it behind the separate annotation approval path and add an authorization/negative test at the grant boundary."
+    }
+  ],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

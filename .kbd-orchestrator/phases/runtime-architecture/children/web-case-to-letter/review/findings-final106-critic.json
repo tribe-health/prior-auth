@@ -1,0 +1,65 @@
+{
+  "reviewer": "artifact-critic-final106",
+  "role": "fresh-context artifact critic",
+  "digest": "03f9035e699cb17bf8fb2bbeba1840b67fd46a23dc80773ca6744bc9239e3084",
+  "verdict": "PASS",
+  "counts": {
+    "critical": 0,
+    "major": 0,
+    "minor": 0
+  },
+  "findings": [],
+  "checks_performed": [
+    {
+      "check": "manifest digest and inventory",
+      "result": "Passed",
+      "detail": "sha256sum of dist/source-manifest.sha256 was exactly 03f9035e699cb17bf8fb2bbeba1840b67fd46a23dc80773ca6744bc9239e3084. The file contains 136 well-formed entries; all 136 frozen snapshot hashes passed, all 136 current inputs matched the recorded hashes and were byte-identical to their snapshots, and artifact_manifest.json lists the same 136 snapshots plus review.md, source-manifest.sha256, and validate.py with no missing file."
+    },
+    {
+      "check": "deterministic validator",
+      "result": "Passed",
+      "detail": "Executed dist/validate.py in an isolated temporary repository assembled from the frozen snapshots so the reviewed artifact was not modified. It exited 0 and reported Passed for all 17 checks."
+    },
+    {
+      "check": "production detail-to-intake recovery route",
+      "result": "Passed",
+      "detail": "The frozen app-routes.tsx maps /cases/:caseId and /cases/:caseId/intake to the frozen case-detail-route.tsx and intake-checklist-route.tsx modules. The frozen routed test resolves those production route objects, starts at case detail, invokes the production recovery callback, reaches the exact focus=resolution&notice=case_inputs_incomplete destination, preserves the required guidance, and focuses Plan key from the authorized full record."
+    },
+    {
+      "check": "verified-practice full-record read and mounted Axum refusal",
+      "result": "Passed",
+      "detail": "The frozen caseApi.read encodes the case and practice into the full-record route, and useCaseDetail calls it with the captured verified session practice. The frozen mounted Axum test asserts an authorized full record, then 403 refusals for missing case:read, foreign practice, and a repository-denied target without permitting an unauthorized read; the retained focused log reports that mounted test Passed."
+    },
+    {
+      "check": "narrow case-summary transport and storage boundary",
+      "result": "Passed",
+      "detail": "The production frf-shape-transport.ts, chunk-writer.ts, pglite-schema.ts, electric-shapes.ts, and replica-wiring.ts sources are frozen. The transport-to-SQL control injects member_id, procedure_code, and plan_key together and proves none enters SQL or its parameters. The production-target PGlite control injects all three together and proves the stored row has exactly the approved SYNC_COLUMNS.cases keys."
+    },
+    {
+      "check": "PEM selector boundary",
+      "result": "Passed",
+      "detail": "The frozen production use-case-projection.ts builds CaseRecord from the approved summary fields only. Its over-wide-row control injects member_id, procedure_code, and plan_key together and asserts the projected entity has no memberId, procedureCode, or planKey. The retained final boundary log reports 52/52 focused browser tests Passed."
+    },
+    {
+      "check": "server-authoritative resolution and lifecycle semantics",
+      "result": "Passed",
+      "detail": "The frozen mutation DTO accepts only commandId and expectedCaseInputRevision and denies caller-selected entity/path fields. Frozen SQL, AppServices, adapter, fixtures, fresh and upgrade probes, and red/restore receipts cover effective member enrollment, non-empty three-way validity, future and disjoint historical classification, inactive entities, neutral expired copy, source and authoritative-input invalidation, serialized races, idempotent retry reauthorization, durable receipts, least privilege, and versioned path provenance."
+    },
+    {
+      "check": "browser reconciliation and blocking behavior",
+      "result": "Passed",
+      "detail": "The frozen scoped Zustand hook retains only dispatched commands with the expected revision, performs exact lookup before accepting current state, reissues the same command after a racing 404, clears terminal stale or incomplete-input absence, treats post-receipt current-row absence as authoritative invalidation, and leaves all non-resolved states blocked. The panel retains labeled states, responsive layout, minimum touch targets, reduced-motion-safe animation, source metadata, controlling revisions, and the exclusive validity label."
+    },
+    {
+      "check": "no query cache and browser-only scope",
+      "result": "Passed",
+      "detail": "The frozen Web-03 browser sources use scoped Zustand and typed HTTP/entity projections and contain no TanStack Query, SWR, or Apollo client import. No reviewed manifest path enters desktop or mobile."
+    },
+    {
+      "check": "claim boundary",
+      "result": "Passed",
+      "detail": "The frozen design, result, architecture contract, task evidence, review, and command receipt consistently limit Web-03 to focused T0/T1 browser and mounted HTTP qualification. They assign complete local-stack actual-browser and full case-to-letter certification to Web-17 and leave Web-04 through Web-16 responsible for the remaining workflow capabilities."
+    }
+  ],
+  "rationale": "The exact final106 digest, all 136 source snapshots, and every deterministic validator check pass. The prior final105 boundary gap is repaired: the three omitted production sync sources are now frozen, and member_id, procedure_code, and plan_key are exercised together through transport-to-SQL, production-target PGlite storage, and PEM projection controls. The production browser recovery routes and full-record client path are frozen and tested through focused intake recovery, while the mounted Axum test covers the three requested refusal cases. The artifact stays within browser-only Web-03 scope, uses no query cache, and truthfully reserves full actual-browser certification for Web-17."
+}

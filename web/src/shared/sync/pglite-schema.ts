@@ -25,12 +25,13 @@
  * and the test that fails when an undeclared table appears.
  */
 
-/** The seven tables the evidence and annotation slice reads. Nothing else syncs. */
+/** The eight tables the web replica reads. Nothing else syncs. */
 export const PGLITE_TABLES = [
   "annotation_types",
   "evidence_states",
   "cases",
   "document_statuses",
+  "document_task_statuses",
   "case_evidence",
   "evidence_citations",
   "annotations",
@@ -171,6 +172,41 @@ export const OMITTED_COLUMNS: Record<string, { column: string; reason: string }[
         "Vector representations of clinical text are PHI regardless of the storage type used by the server.",
     },
   ],
+  document_task_statuses: [
+    {
+      column: "practice_id",
+      reason:
+        "The verified-practice predicate is enforced by FRF and is not part of the browser task-status row.",
+    },
+    {
+      column: "kratos_identity_id",
+      reason: "Task ownership is enforced by the host; the identity does not enter the replica.",
+    },
+    {
+      column: "actor_id",
+      reason: "The actor identity is audit data and is not needed to render task progress.",
+    },
+    {
+      column: "command_id",
+      reason: "Command idempotency remains a protected host concern.",
+    },
+    {
+      column: "request_payload",
+      reason: "Generation requests can contain clinical context and remain local to the host.",
+    },
+    {
+      column: "input_snapshot",
+      reason: "The captured generation snapshot contains protected case and source data.",
+    },
+    {
+      column: "result",
+      reason: "Generated artifacts are retrieved through an authorized task read.",
+    },
+    {
+      column: "error_code",
+      reason: "Detailed task failures remain on the authorized task channel.",
+    },
+  ],
 };
 
 /**
@@ -210,7 +246,7 @@ CREATE TABLE IF NOT EXISTS case_evidence (
   id                  UUID PRIMARY KEY,
   practice_id         UUID NOT NULL,
   case_id             UUID NOT NULL,
-  policy_criterion_id UUID NOT NULL,
+  criterion_id UUID NOT NULL,
   state               TEXT NOT NULL REFERENCES evidence_states(key),
   assessed_at         TIMESTAMPTZ,
   created_at          TIMESTAMPTZ,
@@ -361,6 +397,22 @@ CREATE TABLE document_statuses (
 CREATE INDEX document_statuses_case_ix ON document_statuses(case_id);
 `;
 
+/** Revision-8 sanitized document-task status projection. */
+export const PGLITE_DOCUMENT_TASK_STATUS_SQL = /* sql */ `
+CREATE TABLE document_task_statuses (
+  id            UUID PRIMARY KEY,
+  case_id       UUID NOT NULL,
+  purpose       TEXT NOT NULL,
+  state         TEXT NOT NULL,
+  stage         TEXT NOT NULL,
+  last_sequence BIGINT NOT NULL,
+  updated_at    TIMESTAMPTZ NOT NULL
+);
+
+CREATE INDEX document_task_statuses_case_ix
+  ON document_task_statuses(case_id, purpose, updated_at DESC);
+`;
+
 /** Complete current schema used by boundary tests and disposable fixtures. */
 export const PGLITE_CURRENT_SCHEMA_SQL = [
   PGLITE_SCHEMA_SQL,
@@ -368,4 +420,5 @@ export const PGLITE_CURRENT_SCHEMA_SQL = [
   PGLITE_SOURCE_HASH_SQL,
   PGLITE_CASE_SUMMARY_SQL,
   PGLITE_DOCUMENT_STATUS_SQL,
+  PGLITE_DOCUMENT_TASK_STATUS_SQL,
 ].join("\n");

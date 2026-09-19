@@ -1,0 +1,336 @@
+{
+  "result": "Failed",
+  "verification_tier": 1,
+  "install_mode": "fresh",
+  "observed_at": "2026-09-17T04:24:00.281505+00:00",
+  "scope": "Additive web-01 migration, least-privilege case functions, idempotency, revisions, tenant refusal, and direct-write refusal against disposable PostgreSQL",
+  "prerequisites": [
+    "Existing Docker Compose db service with schema extensions available",
+    "Configured PostgreSQL admin password from container environment",
+    "Pinned Rust toolchain and idle workspace Cargo build directory",
+    "No concurrent database fixtures; a local exclusive lock covers this runner"
+  ],
+  "commands": [
+    "python3 scripts/test-web01-case-migration.py --install-mode fresh",
+    "cargo run -p aso-web-server -- --migrate-server"
+  ],
+  "environment_contract": {
+    "migration": [
+      "ASO_MIGRATION_DATABASE_URL"
+    ],
+    "test": [
+      "ASO_TEST_DATABASE_URL",
+      "ASO_TEST_ADMIN_DATABASE_URL",
+      "ASO_TEST_OWNER_ROLE",
+      "ASO_TEST_GATE_CONTEXTS",
+      "ASO_TEST_GATE_CASE_ID",
+      "ASO_TEST_FOREIGN_CASE_ID"
+    ],
+    "credentials": "Disposable passwords supplied only through environment or captured SQL stdin"
+  },
+  "checks": {
+    "postgres_port_discovery": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "configured_admin_password_available": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "fresh_schema_has_no_clinical_rows_before_migration": {
+      "result": "Passed",
+      "row_counts": {
+        "cases": 0,
+        "users": 0,
+        "letters": 0,
+        "patients": 0,
+        "receipts": 0,
+        "documents": 0,
+        "practices": 0,
+        "user_roles": 0,
+        "annotations": 0,
+        "submissions": 0,
+        "audit_events": 0,
+        "peer_reviews": 0,
+        "case_evidence": 0,
+        "case_pathways": 0,
+        "letter_claims": 0,
+        "receipt_items": 0,
+        "custody_events": 0,
+        "determinations": 0,
+        "gate_affirmations": 0,
+        "letter_qa_results": 0,
+        "evidence_citations": 0,
+        "patient_identities": 0,
+        "case_diagnosis_codes": 0,
+        "case_procedure_codes": 0,
+        "submission_attachments": 0
+      }
+    },
+    "initial_server_migration": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "fresh_migration_leaves_clinical_rows_empty": {
+      "result": "Passed",
+      "row_counts": {
+        "cases": 0,
+        "users": 0,
+        "letters": 0,
+        "patients": 0,
+        "receipts": 0,
+        "documents": 0,
+        "practices": 0,
+        "user_roles": 0,
+        "annotations": 0,
+        "submissions": 0,
+        "audit_events": 0,
+        "peer_reviews": 0,
+        "case_commands": 0,
+        "case_evidence": 0,
+        "case_pathways": 0,
+        "gate_commands": 0,
+        "letter_claims": 0,
+        "receipt_items": 0,
+        "custody_events": 0,
+        "determinations": 0,
+        "gate_affirmations": 0,
+        "letter_qa_results": 0,
+        "evidence_citations": 0,
+        "patient_identities": 0,
+        "case_diagnosis_codes": 0,
+        "case_procedure_codes": 0,
+        "submission_attachments": 0
+      }
+    },
+    "fresh_fixture_seeded_after_migration": {
+      "result": "Passed"
+    },
+    "unchanged_migration_rerun": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "migration_ledger_and_populated_cases_unchanged": {
+      "result": "Passed"
+    },
+    "durable_gate_migration_recorded": {
+      "result": "Passed"
+    },
+    "checksum_mismatch_refused": {
+      "result": "Passed",
+      "return_code": 1,
+      "checksum_mismatch_reported": true
+    },
+    "checksum_refusal_preserves_populated_cases": {
+      "result": "Passed"
+    },
+    "restored_checksum_rerun": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "checksum_restoration_preserves_ledger_and_cases": {
+      "result": "Passed"
+    },
+    "synthetic_case_fixture_seeded": {
+      "result": "Passed"
+    },
+    "create_commits_one_intake_case_with_revisions": {
+      "result": "Passed"
+    },
+    "lost_create_response_reconciles_exact_result": {
+      "result": "Passed"
+    },
+    "same_command_different_payload_is_explicit_conflict": {
+      "result": "Passed",
+      "expected_sqlstate": "23505"
+    },
+    "update_advances_case_and_input_revisions": {
+      "result": "Passed"
+    },
+    "stale_case_revision_is_refused": {
+      "result": "Passed",
+      "expected_sqlstate": "40001"
+    },
+    "valid_transition_advances_status_and_row_revisions": {
+      "result": "Passed"
+    },
+    "invalid_transition_is_refused": {
+      "result": "Passed",
+      "expected_sqlstate": "23514"
+    },
+    "foreign_practice_case_is_refused": {
+      "result": "Passed",
+      "expected_sqlstate": "42501"
+    },
+    "executor_direct_case_insert_is_refused": {
+      "result": "Passed",
+      "expected_sqlstate": "42501"
+    },
+    "executor_direct_case_update_is_refused": {
+      "result": "Passed",
+      "expected_sqlstate": "42501"
+    },
+    "executor_cannot_read_local_command_ledger": {
+      "result": "Passed",
+      "expected_sqlstate": "42501"
+    },
+    "known_anchor_lookups_reconcile_all_committed_results": {
+      "result": "Passed"
+    },
+    "least_privilege_and_atomic_audit_contract": {
+      "result": "Passed",
+      "observed": {
+        "audits": 3,
+        "commands": 3,
+        "ownerMembers": 0,
+        "executorCaseWrite": false,
+        "executorLedgerRead": false
+      }
+    },
+    "migration_recorded_and_existing_case_defaults_preserved": {
+      "result": "Passed"
+    },
+    "case_service_login_is_restricted_executor": {
+      "result": "Passed",
+      "psql_output": "t"
+    },
+    "actual_appservices_case_repository_lifecycle": {
+      "result": "Failed",
+      "return_code": 0,
+      "assertion_count": 0
+    }
+  },
+  "processes": [
+    {
+      "label": "initial_server_migration",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 0,
+      "actual_result_output": []
+    },
+    {
+      "label": "unchanged_server_migration_rerun",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 0,
+      "actual_result_output": []
+    },
+    {
+      "label": "checksum_mismatch_refusal",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 1,
+      "actual_result_output": [],
+      "checksum_mismatch_reported": true
+    },
+    {
+      "label": "restored_checksum_migration_rerun",
+      "command": [
+        "cargo",
+        "run",
+        "-p",
+        "aso-web-server",
+        "--",
+        "--migrate-server"
+      ],
+      "return_code": 0,
+      "actual_result_output": []
+    },
+    {
+      "label": "actual_case_command_service_lifecycle",
+      "command": [
+        "cargo",
+        "test",
+        "-p",
+        "aso-web-server",
+        "adapters::gate::case_transaction_tests::case_command_service_lifecycle",
+        "--",
+        "--ignored",
+        "--exact",
+        "--nocapture"
+      ],
+      "return_code": 0,
+      "actual_result_output": [
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 20 filtered out; finished in 0.13s"
+      ]
+    }
+  ],
+  "cleanup": {
+    "disposable_database_deleted": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "disposable_login_deleted": {
+      "result": "Passed",
+      "return_code": 0
+    },
+    "aso_session_reader": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_gate_executor": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_gate_owner": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    },
+    "aso_case_executor": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    },
+    "aso_case_owner": {
+      "result": "Passed",
+      "action": "fixture_created_role_deletion",
+      "return_code": 0
+    },
+    "aso_authority_event_reader": {
+      "result": "Passed",
+      "action": "preexisting_role_preserved"
+    }
+  },
+  "unverified": [
+    "Mounted HTTP routes, React UI, browser flow, Tauri, and mobile are outside web-01 task 1.3."
+  ],
+  "source_sha256": {
+    "migrations/server/2026090601_durable_gate.sql": "b3da2e91629534c011c6186eeb658fc2286896d2d491ca94dcda03a2f009a899",
+    "crates/aso-web-server/src/adapters/gate.rs": "d0092ac1a0f544d9696a2b1774d75651a3a3642ac44cbb46a7241db0c1166e7e",
+    "crates/aso-web-server/src/adapters/gate/transaction_tests.rs": "9690fe42a3cda9fc797b1bd6cfbd844155581d64227f75fc8ecd5a65e4196695",
+    "crates/aso-host/src/affirmation.rs": "adc28699815e2e24016b99742820eb3731a3ee31d2c0750721866b2a5fe679bb",
+    "crates/aso-host/src/lib.rs": "6b61392b318adcfbe026099a8f983243b28e3a975ead2f6a0fbe285014ab3cf7",
+    "docs/design/schema/schema.sql": "0659af835b02cd91b697f5c29f5ad6ff1e34ecad92dcf7a7d41eb14391ea9679",
+    "docker/bootstrap/25-session-authority.sql": "fae999acbbaf98ca6b3ae107670ea25511426a233fa4ced5e72556c3fbc8c21b",
+    "scripts/test-gate-transaction.py": "343da925efe42d62bd394525340a73974eb21e7f9049f7268001d058410de006",
+    "migrations/server/2026090617_durable_case_commands.sql": "f8bae2676f014b43a801e0c6a32af07de3a401c5ea1e43cc7d0ae3e04075137e",
+    "crates/aso-host/src/case_management.rs": "8fd564060974b66cbfddf4408695d00ae12ffb27c25cc5747a844968295fcaf9",
+    "crates/aso-host/src/ports/mod.rs": "ecef0134948b3e7541cc7722145ab55d46e6e567ade046ee310304843e2fb8bd",
+    "crates/aso-web-server/src/adapters/gate/case_transaction_tests.rs": "5c1bd1d7b34cd15ff8286f65710d8e2a45194def2c079ccf92b91569d9349fdb",
+    "crates/aso-web-server/src/migrations.rs": "6d347f60ed0190eb54e9f52ad25c2586c845deb7968250f5631668f8ae792630",
+    "scripts/test-web01-case-migration.py": "b56acbe9be77531f544587e0c4263075106358efaad81538ecf8a69991e29e55"
+  },
+  "failure": {
+    "stage": "actual_case_command_service_lifecycle",
+    "type": "AssertionError"
+  },
+  "completed_at": "2026-09-17T04:25:03.102944+00:00"
+}

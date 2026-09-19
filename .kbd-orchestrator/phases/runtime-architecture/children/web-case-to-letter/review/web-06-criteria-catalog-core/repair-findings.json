@@ -1,0 +1,30 @@
+{
+  "mode": "diff",
+  "target": "web-06-criteria-catalog-core-repair",
+  "verdict": "BLOCK",
+  "isolation_mode": "harness-native",
+  "product_source_sha256": "849d377c92b57adc1f9fec77104b96d997360c58c0de1b191013cb6399d94bbf",
+  "findings": [
+    {
+      "severity": "CRITICAL",
+      "file": "migrations/server/2026090624_criteria_catalog.sql",
+      "line": 92,
+      "claim": "The repair is not deployable over an installation that has already applied the Web-06 migrations, so existing catalogs can retain all four repaired defects.",
+      "evidence": "The delta changes the bodies of the already-numbered 2026090624 and 2026090625 migrations and contains no later forward migration. A migration runner that records applied versions will skip those versions (or reject their changed checksums), leaving the old exclusion constraint, token validation, source-date validation, and supersession validation in place. The reported populated-upgrade receipt lists behavioral markers but does not demonstrate an upgrade from a database on which the frozen 2026090624 and 2026090625 versions were already recorded.",
+      "suggested_fix": "Restore the historical migrations byte-for-byte and add a new forward migration. In that migration, replace and validate the overlap and controlling-scope constraints, replace the import function, and update the revision-token constraint without permitting incompatible existing rows to pass silently. Run the repair upgrade against a database with the frozen Web-06 migrations already applied and populated, then record the schema and behavioral checks."
+    },
+    {
+      "severity": "CRITICAL",
+      "file": "crates/aso-web-server/src/adapters/gate/criteria_transaction_tests.rs",
+      "line": 264,
+      "claim": "The focused revision-token checks do not exercise the required pre-repository rejection boundary.",
+      "evidence": "The two new cases call import_criteria_catalog and assert only Err(CriteriaCatalogError::Invalid). The repaired SQL function also rejects the same arbitrary prefix and noncanonical zero, so both assertions still pass if the host forwards either invalid token to the repository and the repository performs the rejection. The checks therefore cannot detect a regression in the architecture contract that invalid tokens must be rejected before repository execution.",
+      "suggested_fix": "Add a host-layer test with an instrumented or mock criteria repository and assert that its import method is called zero times for both attacker:criteriaCatalogRevision:r0 and catalog:criteriaCatalogRevision:r00. Keep the database checks as defense in depth, but do not use their final error as evidence of the pre-repository boundary."
+    }
+  ],
+  "counts": {
+    "CRITICAL": 2,
+    "WARNING": 0,
+    "SUGGESTION": 0
+  }
+}

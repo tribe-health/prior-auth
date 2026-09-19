@@ -181,3 +181,20 @@ the synthetic failure permits the same command ID to commit once. Signing's
 administrator, agent and foreign-practice direct-trigger probes require SQLSTATE
 `42501`, so a later signature or data error cannot masquerade as the authority
 refusal.
+
+## 2026-09-19 extension — generation protocols do not confer clinical authority
+
+Accepted target under the [revision-12 agent addendum](../handoff/web-case-to-letter-revision-12-agent-integration.md):
+AG-UI, A2A and MCP adapters share the host-owned task service and independently
+authenticate their callers. The model receives bounded case/source/policy tools;
+it receives no affirmation, approval, signing, submission, arbitrary SQL, or
+credential capability. An agent's successful generation task is not a surgeon's
+clinical act. Tool descriptions and caller-supplied task IDs grant no authority.
+
+External claims retain document/page/date provenance, including the backing
+document for an attributed annotation. Final persistence rechecks the verified
+principal and captured revisions after model/tool work. Seven engine QA findings
+are preserved; a review action cannot overwrite failing findings with passes.
+The exact persisted assembly digest binds approval/signing, with historical hashes
+remaining valid under their original format. This extension is not evidence that
+the new protocol or provider boundaries have passed local certification.

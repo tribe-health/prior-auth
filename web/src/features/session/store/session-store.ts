@@ -104,6 +104,14 @@ export function createSessionStore(
   },
 ) {
   return createStore<SessionState>((set, get) => {
+    // The visible session is null during verification. Keep its verified scope
+    // until the attempt resolves so terminal outcomes can purge command recovery.
+    let revalidationSession: VerifiedSession | null = null;
+    const purgeCommands = () => {
+      const sessions = new Set([get().session?.sessionId, revalidationSession?.sessionId]);
+      revalidationSession = null;
+      for (const sessionId of sessions) if (sessionId) clearRuntimeCommandsForSession(sessionId, 'purge');
+    };
     const draftNotice = (count: number): string | null => count > 0
       ? `${count} unsent ${count === 1 ? 'draft is' : 'drafts are'} stored only in this open application and will be lost if it closes or reloads.`
       : null;
@@ -125,8 +133,7 @@ export function createSessionStore(
     if (!startsLocked && initialSession) privateWork.authorize(initialSession, 0);
 
     const fence = (accessState: AccessState, notice: string | null) => {
-      const current = get().session;
-      if (current) clearRuntimeCommandsForSession(current.sessionId);
+      purgeCommands();
       const retainedDrafts = privateWork.quarantine();
       set((state) => ({
         session: null,
@@ -141,6 +148,7 @@ export function createSessionStore(
     const installSession = (session: VerifiedSession) => {
       const control = logoutControl.read();
       if (control.status !== 'clear') {
+        purgeCommands();
         set(logoutLock(control));
         return;
       }
@@ -156,7 +164,8 @@ export function createSessionStore(
         });
         return;
       }
-      if (current) clearRuntimeCommandsForSession(current.sessionId);
+      if (current || (revalidationSession && !sameVerifiedSessionScope(revalidationSession, session))) purgeCommands();
+      revalidationSession = null;
       const nextEpoch = get().epoch + 1;
       privateWork.authorize(session, nextEpoch);
       set({
@@ -172,6 +181,7 @@ export function createSessionStore(
     };
 
     const completeLogout = async () => {
+      purgeCommands();
       const control = logoutControl.ensurePending();
       set({
         logoutState: 'submitting',
@@ -242,7 +252,8 @@ export function createSessionStore(
         const state = get();
         const current = state.session;
         if (!current) return null;
-        clearRuntimeCommandsForSession(current.sessionId);
+        revalidationSession = current;
+        clearRuntimeCommandsForSession(current.sessionId, 'revalidation');
         const retainedDrafts = privateWork.quarantine();
         const attempt: SessionRevalidationAttempt = {
           epoch: state.epoch + 1,
@@ -263,12 +274,15 @@ export function createSessionStore(
       },
       completeRevalidation(attempt, result) {
         const state = get();
-        if (state.epoch !== attempt.epoch || state.session) return false;
+        if (state.epoch !== attempt.epoch || state.session || !revalidationSession) return false;
         const control = logoutControl.read();
         if (control.status !== 'clear') {
+          purgeCommands();
           set(logoutLock(control));
           return true;
         }
+        if (result.status !== 'authenticated' || !sameVerifiedSessionScope(revalidationSession, result.session)) purgeCommands();
+        revalidationSession = null;
         if (result.status === 'authenticated' && result.session) {
           privateWork.authorize(result.session, attempt.epoch);
           set({
@@ -299,7 +313,8 @@ export function createSessionStore(
       },
       failRevalidation(attempt, notice) {
         const state = get();
-        if (state.epoch !== attempt.epoch || state.session) return false;
+        if (state.epoch !== attempt.epoch || state.session || !revalidationSession) return false;
+        purgeCommands();
         set({
           accessState: 'locally-locked',
           notice,
@@ -309,6 +324,7 @@ export function createSessionStore(
       },
       installStartupSession(result) {
         if (result.status === 'logout-pending' || result.status === 'logout-storage-unavailable') {
+          purgeCommands();
           set(logoutLock(
             result.status === 'logout-pending' ? logoutControl.read() : { status: 'unavailable' },
             result.status === 'logout-pending',
@@ -324,7 +340,7 @@ export function createSessionStore(
           return;
         }
         const current = get().session;
-        if (current) clearRuntimeCommandsForSession(current.sessionId);
+        purgeCommands();
         const retainedDrafts = current ? privateWork.quarantine() : 0;
         set((state) => ({
           session: null,
@@ -344,7 +360,7 @@ export function createSessionStore(
       installVerifiedSession(session) {
         const current = get().session;
         if (!session) {
-          if (current) fence('signed-out', 'Sign in to continue.');
+          if (current || revalidationSession) fence('signed-out', 'Sign in to continue.');
           return;
         }
         installSession(session);
@@ -364,10 +380,10 @@ export function createSessionStore(
         }
       },
       observeRevocation(reason) {
-        if (get().accessState === 'authenticated') fence('locally-locked', reason);
+        if (get().accessState === 'authenticated' || revalidationSession) fence('locally-locked', reason);
       },
       async logout() {
-        if (get().accessState === 'authenticated') {
+        if (get().accessState === 'authenticated' || revalidationSession) {
           fence('locally-locked', 'Signing out…');
         }
         await completeLogout();

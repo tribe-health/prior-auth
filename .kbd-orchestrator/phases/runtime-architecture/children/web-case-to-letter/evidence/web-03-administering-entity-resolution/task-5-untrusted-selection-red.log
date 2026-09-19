@@ -1,0 +1,21 @@
+   Compiling aso-server-axum v0.1.0 (/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-server-axum)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.35s
+     Running unittests src/lib.rs (/Volumes/my-passport/cargo-build/02/70d32e977a4fbf/debug/deps/aso_server_axum-8a863bb18a71d473)
+
+running 1 test
+
+thread 'routes::cases::tests::administering_entity_http_refuses_untrusted_selection' (57041984) panicked at crates/aso-server-axum/src/routes/cases/tests.rs:631:5:
+assertion `left == right` failed
+  left: 200
+ right: 400
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test routes::cases::tests::administering_entity_http_refuses_untrusted_selection ... FAILED
+
+failures:
+
+failures:
+    routes::cases::tests::administering_entity_http_refuses_untrusted_selection
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 44 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass `-p aso-server-axum --lib`

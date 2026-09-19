@@ -1,0 +1,124 @@
+{
+  "artifact": "web-03-administering-entity-resolution",
+  "review_role": "independent technical judge",
+  "phase": "Reflect",
+  "verdict": "PASS",
+  "result": "Passed",
+  "blocking": false,
+  "review_boundary": {
+    "artifact_root": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/.refiner/artifacts/web-03-administering-entity-resolution",
+    "inspected": [
+      "frozen dist source snapshots",
+      "persisted dist verification receipts and logs",
+      "dist/source-manifest.sha256",
+      "dist/validate.py execution"
+    ],
+    "excluded": [
+      "generation history",
+      "prior review contents",
+      "live product source outside dist",
+      "mutable OpenSpec or evidence outside dist"
+    ]
+  },
+  "manifest": {
+    "path": "dist/source-manifest.sha256",
+    "expected_sha256": "146c33d2418f3d9e22c345c159da4c9574d8c7a5b98a3089db95ef7e7281ed49",
+    "observed_sha256": "146c33d2418f3d9e22c345c159da4c9574d8c7a5b98a3089db95ef7e7281ed49",
+    "digest_match": true,
+    "snapshot_entries": 101,
+    "snapshot_matches": 101,
+    "snapshot_mismatches": 0,
+    "sha256sum_check_exit_code": 0
+  },
+  "exact_counts": {
+    "dist_validator_checks": 14,
+    "dist_validator_passed": 14,
+    "focused_commands": 10,
+    "focused_commands_passed": 10,
+    "focused_browser_test_files": 5,
+    "focused_browser_tests_passed": 33,
+    "focused_browser_tests_failed": 0,
+    "mounted_administering_entity_http_tests_passed": 3,
+    "mounted_administering_entity_http_tests_failed": 0,
+    "gate_policy_tests_passed": 1,
+    "gate_policy_tests_failed": 0,
+    "fresh_lifecycle_checks_passed": 23,
+    "fresh_lifecycle_checks_failed": 0,
+    "upgrade_lifecycle_checks_passed": 29,
+    "upgrade_lifecycle_checks_failed": 0,
+    "restored_race_receipt_checks_passed": 15,
+    "restored_race_receipt_checks_failed": 0,
+    "red_restore_controls": 5,
+    "judged_focus_areas": 8,
+    "judged_focus_areas_proven": 8,
+    "substantive_findings": 0,
+    "blocking_findings": 0,
+    "non_blocking_observations": 1
+  },
+  "focus_judgment": [
+    {
+      "area": "non-empty historical validity",
+      "proven": true,
+      "basis": "The SQL historical predicate requires the greatest start to precede the earliest non-null end and the end to be on or before the service date. Persisted fresh and upgrade database checks classify disjoint historical windows as missing."
+    },
+    {
+      "area": "exclusive validTo copy",
+      "proven": true,
+      "basis": "Resolution uses date_of_service < valid_to and the mounted panel labels validTo as Effective until (exclusive). The focused component control passed."
+    },
+    {
+      "area": "neutral expired coverage-path copy backed by plan-ended and enrollment-ended database cases",
+      "proven": true,
+      "basis": "The UI says Coverage path expired and does not name a component. Both fresh and upgrade PostgreSQL receipts passed plan_ended_first and enrollment_ended_first scenarios."
+    },
+    {
+      "area": "concurrency",
+      "proven": true,
+      "basis": "The resolver takes compatible authoritative-input table locks before the case row lock, matching mutation trigger order. The persisted race control passed resolution-first and mutation-first interleavings and observed later invalidation or the new input path."
+    },
+    {
+      "area": "authority",
+      "proven": true,
+      "basis": "The route, AppServices, and PostgreSQL function each enforce capability and tenant scope. The restricted runtime role lacks owner membership and direct writes; foreign target and unauthorized retry refusals are retained."
+    },
+    {
+      "area": "actual route/AppServices/repository/SQL chain",
+      "proven": true,
+      "basis": "The disposable PostgreSQL lifecycle mounts api_router over AppServices backed by PgGateRepository, executes the SQL command through a restricted login, and verifies POST, read, lookup, reload, all five states, and tenant refusal."
+    },
+    {
+      "area": "browser recovery",
+      "proven": true,
+      "basis": "The scoped hook persists command ID and expected case-input revision, looks up before retry, reissues the same command after a racing 404, survives remount, clears terminal stale or incomplete commands, and handles post-receipt invalidation. Twelve hook tests and the 33-test focused browser set passed."
+    },
+    {
+      "area": "Web-17 claim boundary",
+      "proven": true,
+      "basis": "The frozen contract and completion receipt explicitly reserve full local-stack actual-browser case-to-letter certification for Web-17. Web-03 claims only focused Tier 1 coverage."
+    }
+  ],
+  "findings": [],
+  "non_blocking_observations": [
+    {
+      "severity": "note",
+      "summary": "The frozen OpenSpec result text underreports the final focused browser count as 30 in two places. The persisted final log and command receipt prove the exact count is 33 passed across 5 files, with 0 failed. This does not weaken the Tier 1 proof."
+    }
+  ],
+  "commands_observed": [
+    {
+      "command": "sha256sum dist/source-manifest.sha256",
+      "exit_code": 0,
+      "result": "146c33d2418f3d9e22c345c159da4c9574d8c7a5b98a3089db95ef7e7281ed49"
+    },
+    {
+      "command": "cd dist && sha256sum -c source-manifest.sha256",
+      "exit_code": 0,
+      "result": "101 OK, 0 mismatches"
+    },
+    {
+      "command": "cd dist && python3 validate.py",
+      "exit_code": 0,
+      "result": "Passed; 14 of 14 checks passed"
+    }
+  ]
+}

@@ -758,3 +758,7 @@ Web-02 is complete when the production browser composition mounts queue, dashboa
 ## 2026-09-19 — The demo stack uses its own Compose project name
 
 The default Compose project is `aso-prior-auth-demo`. This prevents the demo command from silently attaching to the older `aso-prior-auth` development database volume, while preserving that existing volume for other work. `docker compose down --volumes` now removes only the demo data.
+
+## 2026-09-19 — D-1 document assembly engine home: standalone Axum AG-UI/A2UI agent in the monorepo
+
+Decision (operator): document assembly runs as a self-contained Axum 0.8 agent service, `crates/aso-document-assembly`, speaking AG-UI and emitting A2UI surface descriptors, with the pure engine in `crates/clinical-docs`. Supersedes the 2026-09-10 recommendation (library linked by aso-host) recorded in ASO-DA-SPEC-001. Rationale: matches the agent roster (08 Document Assembler) and the capability-inversion rule — the agent has no write path by dependency graph; the engine stays linkable in-process for the desktop/mobile local lane. Change: openspec/changes/da-01-document-assembly-agent. D-2..D-8 remain open.

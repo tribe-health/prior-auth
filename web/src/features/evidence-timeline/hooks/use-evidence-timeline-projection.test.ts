@@ -14,7 +14,7 @@ describe('evidence timeline temporal projection', () => {
           id: 'evidence-1',
           practice_id: 'practice-1',
           case_id: 'case-1',
-          policy_criterion_id: 'criterion-1',
+          criterion_id: 'criterion-1',
           state: 'met',
           assessed_at: new Date('2026-01-16T12:00:00.000Z'),
         },

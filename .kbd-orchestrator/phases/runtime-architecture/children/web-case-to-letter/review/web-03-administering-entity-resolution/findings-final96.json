@@ -1,0 +1,25 @@
+{
+  "mode": "diff",
+  "verdict": "PASS",
+  "judge_model": "gpt-5",
+  "isolation_mode": "harness-native",
+  "producer_model": "gpt-6-astra",
+  "cross_model_check": "verified-distinct",
+  "checked_classes": [
+    "source manifest integrity checked: no finding. The frozen artifact manifest has exactly 96 entries, and `cd .refiner/artifacts/web-03-administering-entity-resolution/dist && shasum -a 256 -c source-manifest.sha256` reported OK for every listed source, test, and evidence snapshot.",
+    "post-receipt invalidation recovery checked: no finding. In `web/src/features/administering-entity/hooks/use-administering-entity-resolution.ts`, `refreshCommitted` clears the scoped pending command and publishes unresolved with the invalidation guidance when the committed row reload returns 404 after receipt or reconciliation. The frozen task-6 red/restore evidence shows the temporarily restored defect failed the two recovery tests and the restored hook suite passed 12/12.",
+    "remounted authoritative version visibility checked: no finding. The hook reloads the current authoritative row after exact command recovery, the model carries entity, plan, enrollment, rule, and source-document versions, and `administering-entity-panel.tsx` renders those revisions plus source metadata. The frozen task-6 version red/restore evidence shows hiding the entity revision failed the panel test and restoration passed 3/3.",
+    "tenant and capability refusal checked: no finding. The Axum route requires `case:read` for current reads and `resolve_administering_entity` for resolve and command lookup; the gate route separates read and write resolution policy. The mounted route tests retain foreign-practice, capability, invalid-request, and non-human refusal paths, and the task-6 mounted HTTP and gate-policy logs passed 3/3 and 1/1 respectively.",
+    "server-owned selection checked: no finding. The browser mutation type contains only `commandId` and `expectedCaseInputRevision`, with `deny_unknown_fields` on the server request body. The task-5 untrusted-selection sabotage receipt shows removing that guard made the mounted refusal test fail with 200 instead of 400, then the exact route hash was restored.",
+    "exact-command reconciliation checked: no finding. The pending command store is keyed by identity, session, practice, authorization revision, epoch, and case; pending commands retain the expected case-input revision. The hook performs exact lookup before current-state read, reissues the same command after a racing 404, clears terminal stale or incomplete-input outcomes, preserves guidance on visible reconciliation, and the focused task-6 web log records 30/30 tests passed.",
+    "authoritative resolver lifecycle checked: no finding. The SQL reauthorizes `require_case(target_case, 'resolve_administering_entity')` before returning an idempotent receipt, derives output fields inside the resolver, stores immutable receipts and audit data, invalidates on case input, entity, plan, enrollment, rule, and selected source-document changes, and classifies inactive current entities as missing. Fresh and populated-upgrade task-6 PostgreSQL/AppServices probes passed the lifecycle, invalidation, retry-reauthorization, and least-privilege checks.",
+    "responsive UI checked: no finding. The panel uses responsive two-column layout, minimum touch targets, visible loading status, reduced-motion-safe animation, text labels for all resolution states, and blocks downstream evidence unless the view is ready with a resolved state. The focused component/case-detail tests are included in the 30/30 task-6 web pass.",
+    "focused-vs-Web-17 claim boundary checked: no finding. `review.md`, task-5 focused review, task-6 completion evidence, and the final fresh/upgrade receipts explicitly limit this result to the focused Web-03 mounted component boundary and leave complete actual-browser case-to-letter certification, Tauri, and mobile to Web-17."
+  ],
+  "findings": [],
+  "sycophancy_screen": {
+    "reject_cap": 2,
+    "cap_overridden": false,
+    "cap_default": 2
+  }
+}

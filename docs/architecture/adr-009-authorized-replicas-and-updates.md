@@ -1,11 +1,12 @@
 # ADR-009 · Authorized replicas, platform storage and coordinated updates
 
-**Status** Accepted target design · **Date** 2026-09-06  
+**Status** Accepted; web Compose candidate implemented · **Date** 2026-09-06
 **Supersedes** [ADR-007](adr-007-local-first-sync.md).  
-**Implementation** Not certified; the authorized FRF facade exists and the
-synthetic PGlite baseline is measured in one macOS WKWebView runtime. Production
-shape materialization, native SQLite parity, and cross-platform qualification
-still require implementation and proof.
+**Implementation** The browser Compose candidate now performs authorized shape
+materialization into memory-only PGlite and atomic PEM graph projection under a
+verified Kratos session. Local integration proves revision-6 document-task status
+delivery. Persistent browser storage, native SQLite parity, safe release updates,
+the complete browser campaign and cross-platform qualification remain open.
 
 ## Context
 
@@ -70,7 +71,7 @@ The local schema contains only the approved projection. IDs and document names
 can still be sensitive; neither a small table set nor extension availability
 proves that a replica contains no PHI.
 
-Projection revision 5 retains attributed annotations as a practice-scoped
+Projection revision 6 retains attributed annotations as a practice-scoped
 base table and `annotation_types` as an approved reference projection. The
 annotation row includes the opinion body, author label, `surgeon` provenance,
 include/hold state, revision, and evidence/document target needed by the UI.
@@ -81,7 +82,11 @@ remain server-side. Revision 5 also replaces the raw document metadata shape
 with `document_statuses`: a case-scoped derived base table whose exact public
 columns carry processing state and an immutable content digest while source
 text, object locations, parser output, and embeddings remain structurally
-absent. Until G-DATA approves durable private client storage, the
+absent. Revision 6 also adds `document_task_statuses`, a trigger-maintained
+projection containing only task id, case id, purpose, state, stage, durable event
+sequence and update time. The practice id exists only as the server-side scope
+predicate. Prompts, source snapshots, result artifacts, errors, commands and
+actor identities are structurally absent. Until G-DATA approves durable private client storage, the
 clinical projection is eligible only in the memory-only browser runtime and
 synthetic verification.
 
