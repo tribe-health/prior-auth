@@ -27,6 +27,103 @@ docker compose up --build --wait
 The included Qwen route is for the synthetic demo case only. Production patient-data
 inference stays disabled until a separate US provider qualification passes.
 
+### Run the customer demo
+
+The walkthrough uses only `DEMO-CASE-001` and synthetic source text. Start from a
+fresh demo when you need the complete sequence in one sitting:
+
+```bash
+docker compose down --volumes
+docker compose up --build --wait
+```
+
+Create the two text files used during the demonstration:
+
+```bash
+cat > /tmp/aso-synthetic-clinical-note.txt <<'EOF'
+Synthetic demonstration record. No real patient data.
+
+The chart documents six weeks of supervised physical therapy with persistent
+activity-limiting lumbar symptoms and no durable improvement.
+EOF
+
+cat > /tmp/aso-synthetic-denial.txt <<'EOF'
+SYNTHETIC ADVERSE DETERMINATION
+Case: DEMO-CASE-001
+Outcome: Denied
+Reason code: medical-necessity
+Reason: The submitted record does not demonstrate the required conservative-treatment course.
+This document contains synthetic demonstration data only.
+EOF
+```
+
+Sign in, open **Cases**, and select `DEMO-CASE-001`. Wait for each uploaded
+document to show **Ready** before continuing.
+
+#### Use case 1: initial pre-authorization letter
+
+1. Open **Intake checklist**. Upload `/tmp/aso-synthetic-clinical-note.txt`,
+   choose **Physical therapy note**, enter a source date and the name
+   `Synthetic physical therapy note`, then select **Upload document**.
+2. Open **Evidence timeline**. For **Documented conservative treatment**, choose
+   **Met**, select the uploaded note, enter page `1`, copy the exact sentence
+   from the note into **Exact source quote**, add a short assessment rationale,
+   and select **Save evidence revision**.
+3. Open **Surgeon gate**. Complete **Affirm controlling policy**, **Affirm
+   criterion section**, **Affirm surgical pathway**, and **Affirm operative
+   plan**. The header must read `4 of 4 affirmed for this case.`
+4. Open **Letter & QA** and select **Generate cited draft**. During generation,
+   the draft remains provisional. Continue only after the interface shows that
+   the generated artifacts were saved to the case.
+5. Review the draft, claims manifest, source citations, and all seven QA
+   findings. Select **Confirm source review**, **Approve current revision**, and
+   **Sign letter** in order.
+6. Open **Submission packet**, confirm the signed letter and attachment
+   manifest, and select **Submit signed packet**. Follow **Track receipt and
+   custody**, enter a synthetic payer reference and acknowledgement time, then
+   select **Record acknowledgement**. The final state is **Acknowledged in
+   full**.
+
+#### Use case 2: response to a pre-authorization denial with evidence
+
+1. Open **Denial response**. Upload `/tmp/aso-synthetic-denial.txt` with document
+   type **Payer determination**, a source date, and the name
+   `Synthetic adverse determination`.
+2. In **Record adverse determination**, select that ready document. Enter the
+   determination date, an appeal deadline, reason code `medical-necessity`, and
+   the payer's stated reason from the document. Select **Record denial and open
+   appeal**.
+3. Select **Prepare a clinical appeal**. This path demonstrates the evidence and
+   clinical-authority controls. **Correct and resubmit the request** is the
+   alternate response path when the original request itself needs correction.
+4. Follow **Open surgeon review** and complete all four affirmations again. The
+   appeal requires an affirmation made after the payer determination.
+5. Return to **Denial response**, select **Generate cited draft**, and wait for
+   the appeal draft, claims, citations, and seven QA findings to be saved.
+6. Complete **Confirm source review**, **Approve current revision**, **Sign
+   letter**, **Submit signed packet**, and **Record acknowledgement**. The final
+   state is **Acknowledged in full**.
+
+After the synthetic clinical evidence and surgeon gate are prepared, the
+automated evidence runner executes the initial-request, corrected-resubmission,
+and clinical-appeal paths against the local stack:
+
+```bash
+python3 scripts/record-web-case-to-letter-demo.py
+```
+
+### Browser evidence videos
+
+These recordings contain synthetic data. Each IPFS gateway response was
+downloaded after pinning and matched byte-for-byte with the H.264 MP4 in the
+[certification bundle](docs/certifications/web-case-to-letter/4cb7b636334a/report.html).
+
+| Scenario | Public evidence video | SHA-256 |
+|---|---|---|
+| Initial pre-authorization request | [Play video](https://ipfs.prometheusags.ai/ipfs/bafybeibxjg5o6ome7ems7crivplfvvysygnp4ev2mk6nd22f4rbv5ysonu) | `11211b14c2670dead0f4aa16c0173ed3bd8d2743f96d5031899c5397c986264a` |
+| Corrected resubmission | [Play video](https://ipfs.prometheusags.ai/ipfs/bafybeiguhvjyqe52zd5t3oztmmbh3hwvc3fc73mli22cvt3ab6fmkzmnvi) | `8b1f20756aa28b0199ff7d07a3fa9820e41ff71cf5d00a0b34771cc29de2c8f8` |
+| Clinical appeal with fresh surgeon affirmation | [Play video](https://ipfs.prometheusags.ai/ipfs/bafybeidxazqsusse472k4v4t5bwvg5yipcrnr2orwnwvdvdyirgervkbpy) | `2e14c226c995fa43b172bf41ff05ebc73689eb22f677dd0cc7349352a421a535` |
+
 Override the local-only credentials through `ASO_DEMO_EMAIL`,
 `ASO_DEMO_PASSWORD`, `ASO_RUNTIME_DATABASE_PASSWORD`, and
 `ASO_AUTHORITY_DATABASE_PASSWORD`, and `ASO_GATE_AUTHORITY_DATABASE_PASSWORD`
@@ -72,10 +169,14 @@ Everything below was executed, not assumed.
 | Design tokens | `bash scripts/gen-design-tokens.sh .` | 22 roles × 2 themes, parity verified |
 | Web production build | `npm --prefix web run build` | Vite production bundle built |
 
-**Not yet verified:** no complete local browser scenario, physical-device run,
-or Tauri window launch. Per the verification contract those runtime surfaces
-are **build-only** — real, but not yet "working". Web-17 owns the complete
-browser scenario; native certification remains deferred until that passes.
+The complete synthetic web scenario is browser-certified for the initial
+request, corrected resubmission, and clinical appeal through payer
+acknowledgement. The [certification manifest](docs/certifications/web-case-to-letter/4cb7b636334a/manifest.json)
+binds the recordings and screenshots to implementation commit
+`4cb7b636334aa0e3ff0e2a9d025e786c9c986786`.
+
+**Not yet verified:** physical-device runs and the Tauri window launch remain
+build-only and are outside this web certification.
 
 ## Quick start
 
