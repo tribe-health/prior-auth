@@ -2775,3 +2775,12 @@ Web layout repair passed desktop/mobile/full-viewport/form-preservation and inde
 - Verification: Rust workspace Passed; web 689 tests Passed with two existing
   fixture-gated skips; SQL determination/response/signing regressions Passed;
   architecture audit Passed 6/6.
+
+## 2026-09-19 — public demo evidence publication
+
+- Published the three synthetic browser recordings to the Prometheus AGS IPFS
+  node as pinned CIDv1 objects.
+- Downloaded every public gateway object and verified its SHA-256 against the
+  committed certification bundle before documenting the URL.
+- Added the complete clean-volume customer walkthrough for the initial request
+  and evidence-based denial response to README.md.
