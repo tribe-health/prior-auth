@@ -485,6 +485,16 @@ impl MigrationSource<'static> for ServerMigrations {
                     .into(),
                     false,
                 ),
+                Migration::new(
+                    2026090647,
+                    "determination case progress".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090647_determination_case_progress.sql"
+                    )
+                    .into(),
+                    false,
+                ),
             ])
         })
     }

@@ -2762,3 +2762,16 @@ Web layout repair passed desktop/mobile/full-viewport/form-preservation and inde
 - Local evidence passed: full Rust workspace, 689 web tests with mounted suites run separately, six architecture checks, mounted replica/browser campaigns, deterministic task/persistence/submission scenarios, repeat initialization, A2A/MCP/MCP App smoke, and strict validation for all 19 active OpenSpec changes.
 - The fixture verifier passed three standalone positive families and four isolated negative controls. Actual browser evidence covered generation, review, approval, signing, submission acknowledgement, desktop/mobile overflow, and reduced motion.
 - The public demo remains synthetic. Production patient-data inference remains disabled pending provider qualification.
+
+## 2026-09-19 — web case-to-letter browser proof
+
+- Phase: Execute, `runtime-architecture > web-case-to-letter`, plan revision 12.
+- Browser evidence: initial request, corrected resubmission, and clinical appeal
+  with fresh four-part surgeon affirmation each reached full payer
+  acknowledgement against the local Compose stack.
+- Observed and repaired the missing denial/response-mode case progression with
+  additive migration 2026090647; the signing boundary remains narrow.
+- Added a reusable Playwright video runner using only synthetic demo data.
+- Verification: Rust workspace Passed; web 689 tests Passed with two existing
+  fixture-gated skips; SQL determination/response/signing regressions Passed;
+  architecture audit Passed 6/6.

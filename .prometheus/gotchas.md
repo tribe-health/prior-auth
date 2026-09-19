@@ -866,3 +866,29 @@ The real policy-selection UI rejected matching resolution/catalog tokens. A PL/p
 ## 2026-09-19 — Assembly package digests are loaded at service startup
 
 After changing a template and its frozen manifest digest, a running API process still used the package digest loaded at startup and correctly refused the request as `auth-required` or `invalid_assembly`. Recreate the API service after an authorized package-manifest change before running live generation. Do not weaken digest validation or silently update the expected digest.
+
+## 2026-09-19 — final web case-to-letter browser certification
+
+### A signed denial response cannot repair a missing determination transition
+The live corrected-resubmission browser run generated, reviewed, approved, and
+signed the response, but packet submission remained blocked because the case
+was still `submitted`. The signed-letter helper was intentionally bounded to
+`response_drafting -> response_ready`; widening it would let a signature invent
+an adverse payer event. The repair belongs at the actual events: a recorded
+denial advances through `denied` to `denial_review`, and confirmed response mode
+advances to `response_drafting`. Migration 2026090647 adds those transitions and
+reconciles already-confirmed synthetic demo rows before the existing signing
+helper performs its final edge.
+
+### Node 24 experimental Web Storage can replace jsdom storage in Vitest 3
+The full web suite produced 58 cascading session failures with
+`localStorage` undefined and an AbortSignal realm mismatch under Node 24.16.0.
+Running Node 22 repaired storage but broke the binary `Blob.stream()` contract.
+Node 24 with `--no-experimental-webstorage` passed both boundaries. The web test
+script now supplies that flag and keeps the existing 4096 MiB worker limit.
+
+### VP8 WebM cannot be stream-copied into this FFmpeg MP4 container
+The bdd-video-proof skill documents `ffmpeg -c copy` for Playwright WebM to MP4.
+Measured with FFmpeg 9.0.1, the command fails because the MP4 muxer rejects VP8.
+Customer-playable evidence must transcode the video to H.264 (or retain WebM)
+instead of claiming a lossless MP4 remux.

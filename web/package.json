@@ -11,7 +11,7 @@
     "lint": "oxlint",
     "typecheck": "tsc --noEmit",
     "audit:arch": "bash ../scripts/audit.sh",
-    "test": "vitest run"
+    "test": "NODE_OPTIONS='--no-experimental-webstorage --max-old-space-size=4096' vitest run"
   },
   "dependencies": {
     "@ai-sdk/openai": "^4.0.58",

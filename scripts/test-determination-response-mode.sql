@@ -2,12 +2,12 @@
 -- docker compose exec -T db psql -U flint -d flint -X -v ON_ERROR_STOP=1 < scripts/test-determination-response-mode.sql
 \set ON_ERROR_STOP on
 BEGIN;
-DO $$ DECLARE identity uuid; source uuid; target uuid:=gen_random_uuid(); payload jsonb;
+DO $$ DECLARE identity uuid; source uuid; target uuid:=gen_random_uuid(); payload jsonb; decision_date date;
 BEGIN
  IF NOT EXISTS(SELECT FROM aso.practices WHERE id='10000000-0000-4000-8000-000000000001' AND key='aso-demo')
  THEN RAISE EXCEPTION 'synthetic fixture required'; END IF;
  SELECT kratos_identity_id INTO STRICT identity FROM aso.users WHERE id='10000000-0000-4000-8000-000000000002';
- SELECT document_id INTO STRICT source FROM aso.determinations
+ SELECT document_id,max(decided_on) OVER()+1 INTO STRICT source,decision_date FROM aso.determinations
  WHERE case_id='10000000-0000-4000-8000-000000000005' AND outcome IN ('denied','partial')
  ORDER BY decided_on DESC,created_at DESC,id DESC LIMIT 1;
  PERFORM set_config('aso.actor_id','10000000-0000-4000-8000-000000000002',true);
@@ -19,7 +19,7 @@ BEGIN
  'at',(SELECT gate_affirmed_at FROM aso.cases WHERE id='10000000-0000-4000-8000-000000000005'))::text
  FROM aso.gate_affirmations a WHERE case_id='10000000-0000-4000-8000-000000000005'),true);
  INSERT INTO aso.determinations(id,case_id,outcome,decided_on,reason_text,document_id,created_at)
- VALUES(target,'10000000-0000-4000-8000-000000000005','denied',current_date+1,'Synthetic classification regression',source,clock_timestamp());
+ VALUES(target,'10000000-0000-4000-8000-000000000005','denied',decision_date,'Synthetic classification regression',source,clock_timestamp());
  SELECT jsonb_build_object('caseId',id,'determinationId',target,'commandId',gen_random_uuid(),
   'resolution',id::text||':resolutionRevision:r'||resolution_revision,
   'selection',id::text||':criteriaSelectionRevision:r'||criteria_selection_revision,
@@ -72,11 +72,12 @@ BEGIN
  EXCEPTION WHEN invalid_parameter_value THEN RAISE NOTICE 'Passed: generation refuses mismatched confirmed mode'; END;
 END $$;
 RESET ROLE;
-DO $$ DECLARE p jsonb:=current_setting('aso_test.response_payload')::jsonb; source uuid; target uuid:=gen_random_uuid();
+DO $$ DECLARE p jsonb:=current_setting('aso_test.response_payload')::jsonb; source uuid; target uuid:=gen_random_uuid(); decision_date date;
 BEGIN
  SELECT document_id INTO source FROM aso.determinations WHERE id=(p->>'determinationId')::uuid;
+ SELECT max(decided_on)+1 INTO decision_date FROM aso.determinations WHERE case_id=(p->>'caseId')::uuid;
  INSERT INTO aso.determinations(id,case_id,outcome,decided_on,reason_text,document_id,created_at)
- VALUES(target,(p->>'caseId')::uuid,'denied',current_date+2,'Synthetic clinical appeal regression',source,clock_timestamp());
+ VALUES(target,(p->>'caseId')::uuid,'denied',decision_date,'Synthetic clinical appeal regression',source,clock_timestamp());
  PERFORM set_config('aso_test.response_payload',jsonb_set(p,'{determinationId}',to_jsonb(target))::text,true);
 END $$;
 SET LOCAL ROLE aso_case_executor;
