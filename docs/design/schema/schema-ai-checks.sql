@@ -25,7 +25,13 @@ INSERT INTO users (id,kratos_identity_id,practice_id,email,full_name) VALUES
 INSERT INTO user_roles (user_id,role_id,practice_id)
   SELECT 'a0000000-0000-0000-0000-000000000001',id,'11111111-1111-1111-1111-111111111111'
     FROM roles WHERE key='surgeon';
-INSERT INTO policy_types (name) VALUES ('Medical policy');
+SELECT set_config(
+  'aso.kratos_identity_id',
+  (SELECT kratos_identity_id::text FROM users
+    WHERE id='a0000000-0000-0000-0000-000000000001'),
+  true
+);
+SELECT set_config('aso.selected_practice_id','11111111-1111-1111-1111-111111111111',true);
 INSERT INTO policies (id,policy_type_id,payer_id,name,policy_number,version,effective_from)
   SELECT 'aa000000-0000-0000-0000-0000000000aa',id,'c0000000-0000-0000-0000-000000000001',
          'CPB 0743','CPB 0743','2026-01',DATE '2026-01-01' FROM policy_types LIMIT 1;
@@ -81,17 +87,38 @@ ROLLBACK TO a7;
 \echo '=== A8  [K3-3] cite a derived criterion as payer policy  -> expect ERROR'
 INSERT INTO letters (id,case_id,version,body_markdown)
   VALUES ('11100000-0000-0000-0000-000000000111','d0000000-0000-0000-0000-000000000001',1,'draft');
+INSERT INTO documents (id,document_type_id,patient_id,case_id,name,effective_date,data)
+  SELECT 'd0000000-0000-0000-0000-00000000000d',id,'b0000000-0000-0000-0000-000000000001',
+         'd0000000-0000-0000-0000-000000000001',
+         'MRI','2026-01-01','{"modality":"MRI","body_region":"lumbar","impression":"stenosis"}'::jsonb
+    FROM document_types WHERE key='mri-report';
 SAVEPOINT a8;
-INSERT INTO letter_claims (letter_id,ordinal,claim_text,criterion_id,attribution)
-  VALUES ('11100000-0000-0000-0000-000000000111',1,'BCBS requires translation >3mm',
+INSERT INTO letter_claims (
+  letter_id,case_id,ordinal,claim_text,document_id,document_version,page_number,
+  source_quote,source_span_start,source_span_end,source_date,source_date_kind,
+  criterion_id,attribution)
+  VALUES ('11100000-0000-0000-0000-000000000111','d0000000-0000-0000-0000-000000000001',1,'BCBS requires translation >3mm',
+          'd0000000-0000-0000-0000-00000000000d',1,1,
+          'stenosis',0,8,DATE '2026-01-01','effective_date',
           'f0000000-0000-0000-0000-00000000000f','published_policy');
 ROLLBACK TO a8;
 
+-- Keep one fully sourced and human-supported claim on the draft. A12 and A13
+-- therefore isolate the unresolved-retrieval signing rule rather than failing
+-- on missing claim provenance or review.
+INSERT INTO letter_claims (
+  letter_id,case_id,ordinal,claim_text,document_id,document_version,page_number,
+  source_quote,source_span_start,source_span_end,source_date,source_date_kind,
+  support_status,support_reviewed_by,support_reviewed_at,support_claim_version,
+  criterion_id,attribution)
+  VALUES ('11100000-0000-0000-0000-000000000111','d0000000-0000-0000-0000-000000000001',1,
+          'This practice has observed translation greater than 3mm.',
+          'd0000000-0000-0000-0000-00000000000d',1,1,
+          'stenosis',0,8,DATE '2026-01-01','effective_date',
+          'supported','a0000000-0000-0000-0000-000000000001',now(),1,
+          'f0000000-0000-0000-0000-00000000000f','practice_experience');
+
 \echo '=== A9  [K3-2] PHI chunk sent to a hosted model          -> expect ERROR'
-INSERT INTO documents (id,document_type_id,patient_id,name,effective_date,data)
-  SELECT 'd0000000-0000-0000-0000-00000000000d',id,'b0000000-0000-0000-0000-000000000001',
-         'MRI','2026-01-01','{"modality":"MRI","body_region":"lumbar","impression":"stenosis"}'::jsonb
-    FROM document_types WHERE key='mri-report';
 INSERT INTO chunks (id,corpus_key,document_id,practice_id,patient_id,ordinal,content,content_sha256)
   VALUES ('e0000000-0000-0000-0000-00000000000e','document','d0000000-0000-0000-0000-00000000000d',
           '11111111-1111-1111-1111-111111111111','b0000000-0000-0000-0000-000000000001',1,

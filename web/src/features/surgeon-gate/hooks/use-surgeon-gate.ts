@@ -1,7 +1,9 @@
-import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useSyncExternalStore } from 'react';
 
-import { useSession } from '../../../app/providers/session-provider';
+import { useSession, useSessionEpoch } from '../../../app/providers/session-provider';
 import { ApiError } from '../../../shared/api/http-client';
+import type { ViewScope } from '../../../shared/scoped-view-store';
+import { useScopedViewStore } from '../../../shared/use-scoped-view-store';
 import {
   claimRuntimeCommand,
   clearRuntimeCommand,
@@ -54,9 +56,8 @@ type GateView = Pick<
   'state' | 'loading' | 'error' | 'refusal'
 >;
 
-function initialView(caseId: string, practiceId: string | undefined, identityId: string) {
+function initialView(): GateView {
   return {
-    scope: { caseId, practiceId, identityId },
     state: null as GateState | null,
     loading: true,
     error: null as string | null,
@@ -66,14 +67,28 @@ function initialView(caseId: string, practiceId: string | undefined, identityId:
 
 export function useSurgeonGate(caseId: string, options?: SurgeonGateScope): UseSurgeonGate {
   const session = useSession();
+  const epoch = useSessionEpoch();
   const practiceId = options?.practiceId ?? session?.practiceId;
   const identityId = session?.identityId ?? 'unverified-session';
+  const viewInstanceId = useRef(crypto.randomUUID()).current;
+  const viewScope = useMemo<ViewScope>(() => ({
+    identityId,
+    sessionId: session?.sessionId ?? 'unverified-session',
+    practiceId: practiceId ?? 'unverified-practice',
+    authorizationRevision: session?.authorizationRevision ?? 'unverified-session',
+    epoch,
+    caseId,
+    viewInstanceId,
+  }), [caseId, epoch, identityId, practiceId, session?.authorizationRevision, session?.sessionId, viewInstanceId]);
   const commandScope = useMemo<RuntimeCommandScope>(() => ({
     feature: 'surgeon-gate',
+    sessionId: session?.sessionId ?? 'unverified-session',
+    authorizationRevision: session?.authorizationRevision ?? 'unverified-session',
+    epoch,
     identityId,
     practiceId,
     caseId,
-  }), [caseId, identityId, practiceId]);
+  }), [caseId, epoch, identityId, practiceId, session?.authorizationRevision, session?.sessionId]);
   const runtimeCommand = useSyncExternalStore(
     useCallback(
       (listener: () => void) => subscribeRuntimeCommand(commandScope, listener),
@@ -82,32 +97,22 @@ export function useSurgeonGate(caseId: string, options?: SurgeonGateScope): UseS
     useCallback(() => getRuntimeCommand(commandScope), [commandScope]),
     useCallback(() => getRuntimeCommand(commandScope), [commandScope]),
   );
-  const [storedView, setView] = useState(() => initialView(caseId, practiceId, identityId));
-  let view = storedView;
-  if (
-    view.scope.caseId !== caseId
-    || view.scope.practiceId !== practiceId
-    || view.scope.identityId !== identityId
-  ) {
-    // Reset before exposing another case/practice's data, even for one render.
-    view = initialView(caseId, practiceId, identityId);
-    setView(view);
-  }
-  const { scope, state, loading, error, refusal } = view;
+  const [view, lease] = useScopedViewStore(viewScope, initialView);
+  const { state, loading, error, refusal } = view;
+  const scope = lease.scope;
   const lastCommandId = runtimeCommand?.status === 'uncertain' ? runtimeCommand.id : null;
   const submitting = runtimeCommand?.status === 'submitting';
   const update = useCallback((patch: Partial<GateView>) => {
-    // Scope identity also fences a late response after A -> B -> A navigation.
-    setView((current) => current.scope === scope ? { ...current, ...patch } : current);
-  }, [scope]);
+    lease.publish((current) => ({ ...current, ...patch }));
+  }, [lease]);
 
   useEffect(() => {
     let live = true;
     gateApi
-      .read(scope.caseId, scope.practiceId)
-      .then((s) => {
+      .read(scope.caseId, practiceId, scope.epoch)
+      .then((snapshot) => {
         if (!live) return;
-        update({ state: gateStateFromSnapshot(s), error: null });
+        update({ state: gateStateFromSnapshot(snapshot), error: null });
       })
       .catch((e: unknown) => {
         // The gate is the highest-stakes read in the product. A swallowed
@@ -118,7 +123,7 @@ export function useSurgeonGate(caseId: string, options?: SurgeonGateScope): UseS
     return () => {
       live = false;
     };
-  }, [scope, update]);
+  }, [practiceId, scope, update]);
 
   const mutate = useCallback(
     async (action: 'affirm' | 'remove', kind: GateAffirmationKind) => {
@@ -140,7 +145,8 @@ export function useSurgeonGate(caseId: string, options?: SurgeonGateScope): UseS
         const result = await gateApi[action](
           scope.caseId,
           { commandId, kind },
-          scope.practiceId,
+          practiceId,
+          scope.epoch,
         );
         clearRuntimeCommand(commandScope, commandId);
         update({ state: gateStateFromSnapshot(result.gate) });
@@ -167,25 +173,30 @@ export function useSurgeonGate(caseId: string, options?: SurgeonGateScope): UseS
         throw e;
       }
     },
-    [commandScope, scope, update],
+    [commandScope, practiceId, scope, update],
   );
 
   const affirm = useCallback((kind: GateAffirmationKind) => mutate('affirm', kind), [mutate]);
   const remove = useCallback((kind: GateAffirmationKind) => mutate('remove', kind), [mutate]);
   const lookupCommand = useCallback(
     async (commandId: string) => {
-      const receipt = await gateApi.lookupCommand(scope.caseId, commandId, scope.practiceId);
+      const receipt = await gateApi.lookupCommand(
+        scope.caseId,
+        commandId,
+        practiceId,
+        scope.epoch,
+      );
       clearRuntimeCommand(commandScope, commandId);
       try {
         // A receipt is historical: refresh the current gate after recovery.
-        const current = await gateApi.read(scope.caseId, scope.practiceId);
+        const current = await gateApi.read(scope.caseId, practiceId, scope.epoch);
         update({ state: gateStateFromSnapshot(current), error: null });
       } catch (e) {
         update({ state: null, error: e instanceof Error ? e.message : String(e) });
       }
       return receipt;
     },
-    [commandScope, scope, update],
+    [commandScope, practiceId, scope, update],
   );
 
   return {

@@ -33,11 +33,20 @@ import uuid
 
 
 ROOT = Path(__file__).resolve().parents[1]
+DOCKER_TOOL = os.environ.get("RA06_TOOL_DOCKER", "docker")
+CARGO_TOOL = os.environ.get("RA06_TOOL_CARGO", "cargo")
 OUTPUT = ROOT / ".kbd-orchestrator/phases/runtime-architecture/evidence/ra-02-durable-affirmation/transaction.json"
-ROLES = ("aso_session_reader", "aso_gate_executor", "aso_gate_owner")
-MIGRATE = ["cargo", "run", "-p", "aso-web-server", "--", "--migrate-server"]
+ROLES = (
+    "aso_session_reader",
+    "aso_gate_executor",
+    "aso_gate_owner",
+    "aso_case_executor",
+    "aso_case_owner",
+    "aso_authority_event_reader",
+)
+MIGRATE = [CARGO_TOOL, "run", "-p", "aso-web-server", "--", "--migrate-server"]
 TEST = [
-    "cargo",
+    CARGO_TOOL,
     "test",
     "-p",
     "aso-web-server",
@@ -144,7 +153,7 @@ class Probe:
 
     def sql(self, database, statement, require_success=True):
         completed = subprocess.run(
-            ["docker", "compose", "exec", "-T", "db", "psql", "-U",
+            [DOCKER_TOOL, "compose", "exec", "-T", "db", "psql", "-U",
              self.args.postgres_user, "-X", "-A", "-t", "-q", "-v",
              "ON_ERROR_STOP=1", "-d", database],
             input=statement, capture_output=True, text=True, cwd=ROOT, timeout=60,
@@ -207,7 +216,10 @@ class Probe:
         entry["actual_result_output"] = [
             line.strip() for line in output.splitlines()
             if re.fullmatch(r"gate_transaction_check: [a-z][a-z0-9_]*", line.strip())
+            or re.fullmatch(r"case_transaction_check: [a-z][a-z0-9_]*", line.strip())
             or re.fullmatch(r"test [a-zA-Z0-9_:]*gate_transaction_lifecycle \.\.\. (ok|FAILED)", line.strip())
+            or re.fullmatch(r"test [a-zA-Z0-9_:]*case_command_service_lifecycle \.\.\. (ok|FAILED)", line.strip())
+            or re.fullmatch(r"test [a-zA-Z0-9_:]*case_write_target_authorization_without_read_capability \.\.\. (ok|FAILED)", line.strip())
             or re.fullmatch(r"test result: (ok|FAILED)\. \d+ passed; \d+ failed; \d+ ignored; \d+ measured; \d+ filtered out; finished in [0-9.]+s", line.strip())
         ]
         return completed, entry
@@ -217,7 +229,7 @@ class Probe:
         self.preexisting_roles = self.roles_present()
         port = self.args.postgres_port
         if port is None:
-            published = subprocess.run(["docker", "compose", "port", "db", "5432"],
+            published = subprocess.run([DOCKER_TOOL, "compose", "port", "db", "5432"],
                                        cwd=ROOT, capture_output=True, text=True, timeout=20)
             self.check("postgres_port_discovery", published.returncode == 0,
                        return_code=published.returncode)
@@ -225,7 +237,7 @@ class Probe:
         if not 0 < port < 65536:
             raise ValueError("invalid_database_port")
         password_result = subprocess.run(
-            ["docker", "compose", "exec", "-T", "db", "printenv", "POSTGRES_PASSWORD"],
+            [DOCKER_TOOL, "compose", "exec", "-T", "db", "printenv", "POSTGRES_PASSWORD"],
             cwd=ROOT, capture_output=True, text=True, timeout=20,
         )
         self.check("configured_admin_password_available",
@@ -244,7 +256,9 @@ class Probe:
             self.seed_upgrade_summaries()
 
     def assert_empty_clinical_schema(self, label, migrated=False):
-        tables = CLINICAL_FIXTURE_TABLES + (("gate_commands",) if migrated else ())
+        tables = CLINICAL_FIXTURE_TABLES + (
+            ("gate_commands", "case_commands") if migrated else ()
+        )
         fields = ",".join(literal(table) + ", (SELECT count(*) FROM aso." + identifier(table) + ")"
                           for table in tables)
         counts = json.loads(self.sql(self.name, "SELECT jsonb_build_object(" + fields + ")::text;").stdout.strip())
@@ -286,7 +300,7 @@ class Probe:
 
     def case_snapshot(self, case_ids=None):
         selected = case_ids if case_ids is not None else (self.case, self.foreign_case)
-        return self.sql(self.name, "SELECT jsonb_agg(to_jsonb(c) ORDER BY id)::text FROM aso.cases c WHERE id IN (" +
+        return self.sql(self.name, "SELECT jsonb_agg(to_jsonb(c) - ARRAY['revision','case_input_revision','status_revision','resolution_revision','procedure_code','plan_key'] ORDER BY id)::text FROM aso.cases c WHERE id IN (" +
                         ",".join(literal(case_id) for case_id in selected) + ");").stdout.strip()
 
     def upgrade_affirmations_snapshot(self):
@@ -297,23 +311,44 @@ class Probe:
         self.mark("legacy_derived_summary_upgrade_fixtures")
         surgeon_a = self.contexts["A"]["actor_id"]
         surgeon_b = self.contexts["B"]["actor_id"]
-        for label, case_id in self.upgrade_cases.items():
-            self.sql(self.name, f"""
-                INSERT INTO aso.cases(id,practice_id,patient_id,surgeon_id,payer_id,case_number)
-                SELECT '{case_id}',practice_id,patient_id,surgeon_id,payer_id,'synthetic-{label}'
-                  FROM aso.cases WHERE id='{self.case}';
-            """)
-            if label != "stale_empty":
-                # Exercise the legacy authority and summary triggers. The last
-                # affirmation belongs to B and has a distinct fixed timestamp.
+        # These rows represent data that predates the verified-context command
+        # boundary. Bypass only the current authority trigger while constructing
+        # that historical state; retain the summary trigger and restore authority
+        # enforcement before any migration runs.
+        self.sql(
+            self.name,
+            "ALTER TABLE aso.gate_affirmations "
+            "DISABLE TRIGGER gate_affirmations_authority;",
+        )
+        try:
+            for label, case_id in self.upgrade_cases.items():
                 self.sql(self.name, f"""
-                    SET search_path=aso,public;
-                    INSERT INTO aso.gate_affirmations(case_id,kind,affirmed_by,affirmed_at)
-                    SELECT '{case_id}',key,
-                        CASE WHEN ordinal=4 THEN '{surgeon_b}'::uuid ELSE '{surgeon_a}'::uuid END,
-                        TIMESTAMPTZ '2001-01-01 00:00:00+00' + ordinal * INTERVAL '1 hour'
-                      FROM aso.gate_affirmation_kinds ORDER BY ordinal;
+                    INSERT INTO aso.cases(
+                      id,practice_id,patient_id,surgeon_id,payer_id,case_number)
+                    SELECT '{case_id}',practice_id,patient_id,surgeon_id,payer_id,
+                           'synthetic-{label}'
+                      FROM aso.cases WHERE id='{self.case}';
                 """)
+                if label != "stale_empty":
+                    # The last affirmation belongs to B and has a distinct fixed
+                    # timestamp so the migration can repair the derived summary.
+                    self.sql(self.name, f"""
+                        SET search_path=aso,public;
+                        INSERT INTO aso.gate_affirmations(
+                          case_id,kind,affirmed_by,affirmed_at)
+                        SELECT '{case_id}',key,
+                            CASE WHEN ordinal=4 THEN '{surgeon_b}'::uuid
+                                 ELSE '{surgeon_a}'::uuid END,
+                            TIMESTAMPTZ '2001-01-01 00:00:00+00'
+                              + ordinal * INTERVAL '1 hour'
+                          FROM aso.gate_affirmation_kinds ORDER BY ordinal;
+                    """)
+        finally:
+            self.sql(
+                self.name,
+                "ALTER TABLE aso.gate_affirmations "
+                "ENABLE TRIGGER gate_affirmations_authority;",
+            )
         empty = self.upgrade_cases["stale_empty"]
         complete = self.upgrade_cases["stale_complete"]
         correct = self.upgrade_cases["correct_complete"]

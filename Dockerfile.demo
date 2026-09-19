@@ -1,0 +1,29 @@
+# syntax=docker/dockerfile:1.7
+
+FROM rust:1.97.1-bookworm AS rust-builder
+WORKDIR /workspace
+COPY Cargo.toml Cargo.lock ./
+COPY crates ./crates
+COPY desktop ./desktop
+COPY migrations ./migrations
+RUN cargo build --locked --release -p aso-web-server
+
+FROM debian:bookworm-slim AS api
+RUN apt-get update \
+    && apt-get install --yes --no-install-recommends ca-certificates curl \
+    && rm -rf /var/lib/apt/lists/* \
+    && useradd --create-home --uid 10001 aso
+COPY --from=rust-builder /workspace/target/release/aso-web-server /usr/local/bin/aso-web-server
+RUN mkdir -p /var/lib/aso/documents && chown -R aso:aso /var/lib/aso
+USER aso
+ENTRYPOINT ["/usr/local/bin/aso-web-server"]
+
+FROM node:24.16.0-bookworm-slim AS web
+WORKDIR /app
+RUN corepack enable && corepack prepare pnpm@11.25.0 --activate
+COPY web/package.json web/pnpm-lock.yaml web/pnpm-workspace.yaml ./
+COPY web/vendor ./vendor
+RUN pnpm install --frozen-lockfile
+COPY web ./
+EXPOSE 5173
+CMD ["pnpm", "dev", "--host", "0.0.0.0"]

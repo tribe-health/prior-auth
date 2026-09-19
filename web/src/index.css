@@ -161,11 +161,22 @@
     @apply border-border outline-ring/50;
     }
   body {
-    @apply bg-background text-foreground;
+    @apply overflow-x-clip bg-background text-foreground;
     }
   html {
-    @apply font-sans;
+    @apply overflow-x-clip font-sans;
     }
+  ::selection {
+    background: color-mix(in srgb, var(--color-accent, #A85417) 22%, transparent);
+  }
+  input,
+  textarea {
+    caret-color: var(--color-accent, #A85417);
+  }
+  * {
+    scrollbar-color: color-mix(in srgb, var(--color-muted, #6B665F) 55%, transparent) transparent;
+    scrollbar-width: thin;
+  }
 }
 
 @custom-variant data-open (&:where([data-state="open"], [data-open]:not([data-open="false"])));
@@ -182,4 +193,83 @@
     outline-offset: 2px;
     border-radius: 4px;
   }
+}
+
+@layer components {
+  .workflow-surface {
+    animation: workflow-reveal 240ms ease-out both;
+  }
+
+  .workflow-card {
+    transition: border-color 160ms ease, box-shadow 160ms ease;
+  }
+
+  .workflow-action-bar {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+
+  .letter-sheet {
+    box-shadow: 0.45rem 0.55rem 0 0 color-mix(in srgb, var(--color-border, #ddd) 58%, transparent);
+  }
+
+  .letter-sheet h1 {
+    margin-bottom: 1.5rem;
+    font-family: var(--font-display, Georgia, serif);
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+
+  .letter-sheet h2 {
+    margin-block: 1.5rem 0.5rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+
+  .letter-sheet p + p,
+  .letter-sheet ul,
+  .letter-sheet ol {
+    margin-top: 0.85rem;
+  }
+
+  .letter-sheet ul,
+  .letter-sheet ol {
+    padding-left: 1.5rem;
+  }
+
+  .letter-sheet ul { list-style: disc; }
+  .letter-sheet ol { list-style: decimal; }
+
+  @media (hover: hover) and (pointer: fine) {
+    .workflow-card:hover {
+      border-color: color-mix(in srgb, var(--color-accent, #A85417) 30%, var(--color-border));
+      box-shadow: 0 0.5rem 1.5rem color-mix(in srgb, var(--color-foreground, #171717) 6%, transparent);
+    }
+  }
+}
+
+@keyframes workflow-reveal {
+  from {
+    opacity: 0;
+    clip-path: inset(0 0 0.75rem 0);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .workflow-surface {
+    animation: workflow-reveal-reduced 120ms linear both;
+  }
+
+  .workflow-card {
+    transition-duration: 0.01ms;
+  }
+}
+
+@keyframes workflow-reveal-reduced {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

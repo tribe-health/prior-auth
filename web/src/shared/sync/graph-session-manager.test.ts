@@ -159,6 +159,28 @@ describe("GraphSessionManager", () => {
     expect(rec.disposed).toEqual(["k1"]);
   });
 
+  it("closes the retained session when external ownership is invalidated", async () => {
+    let invalidate!: () => void;
+    const invalidated = new Promise<void>((resolve) => {
+      invalidate = resolve;
+    });
+    const disposed: string[] = [];
+    const manager = new GraphSessionManager({
+      open: async (key) => ({
+        pglite: { key } as never,
+        store: { key },
+        invalidated,
+        dispose: async () => { disposed.push(key); },
+      }),
+    });
+    const session = await manager.open("k1");
+
+    invalidate();
+    await session.closed;
+    expect(disposed).toEqual(["k1"]);
+    expect(manager.current).toBeNull();
+  });
+
   it("closing with no live session is a no-op", async () => {
     const rec = recordingFactory();
     const manager = new GraphSessionManager(rec.factory);
@@ -166,9 +188,54 @@ describe("GraphSessionManager", () => {
     expect(rec.disposed).toEqual([]);
   });
 
-  it("does not wedge when teardown fails", async () => {
-    // A session that cannot be disposed is still gone as far as the next open
-    // is concerned; a rejected dispose must not block the manager forever.
+  it("cancels an in-flight follower opening when the consumer closes", async () => {
+    const manager = new GraphSessionManager({
+      open: async (_key, signal) =>
+        new Promise((_resolve, reject) => {
+          signal.addEventListener(
+            "abort",
+            () => reject(new DOMException("Follower cancelled", "AbortError")),
+            { once: true },
+          );
+        }),
+    });
+
+    const opening = manager.open("k1");
+    await flushMicrotasks();
+    await expect(manager.close()).resolves.toBeUndefined();
+    await expect(opening).rejects.toMatchObject({ name: "AbortError" });
+  });
+
+  it("starts a fresh open when a new consumer races a cancelled opening", async () => {
+    let attempts = 0;
+    const manager = new GraphSessionManager({
+      open: async (key, signal) => {
+        attempts += 1;
+        if (attempts === 1) {
+          await new Promise<void>((_resolve, reject) => {
+            signal.addEventListener(
+              "abort",
+              () => reject(new DOMException("Follower cancelled", "AbortError")),
+              { once: true },
+            );
+          });
+        }
+        return { pglite: { key } as never, store: { key }, dispose: async () => undefined };
+      },
+    });
+
+    const abandoned = manager.open("k1");
+    await flushMicrotasks();
+    const closing = manager.close();
+    const replacement = manager.open("k1");
+
+    await expect(abandoned).rejects.toMatchObject({ name: "AbortError" });
+    await closing;
+    await expect(replacement).resolves.toMatchObject({ key: "k1" });
+    expect(attempts).toBe(2);
+  });
+
+  it("quarantines a session when teardown fails until explicit recovery", async () => {
     const manager = new GraphSessionManager({
       open: async (key: string) => ({
         pglite: { key } as never,
@@ -180,7 +247,9 @@ describe("GraphSessionManager", () => {
     });
 
     await manager.open("k1");
-    await expect(manager.close()).resolves.toBeUndefined();
+    await expect(manager.close()).rejects.toThrow("teardown failed");
+    await expect(manager.open("k2")).rejects.toThrow("teardown failed");
+    await manager.recoverAfterTeardown(async () => undefined);
     const next = await manager.open("k2");
     expect(next.key).toBe("k2");
   });

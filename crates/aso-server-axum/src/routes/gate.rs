@@ -7,7 +7,8 @@ use crate::{
 #[cfg(test)]
 use aso_host::session::Principal;
 use aso_host::{
-    affirmation::*, domain::LetterId, reassessment::ReassessmentError, signing::SigningError,
+    administering_entity::ResolutionError, affirmation::*, annotation::AnnotationError,
+    domain::LetterId, reassessment::ReassessmentError, signing::SigningError,
 };
 use axum::{
     Json, Router,
@@ -108,6 +109,23 @@ fn reassessment_policy_error(value: ReassessmentError) -> Response {
         }
     };
     gate_error(error)
+}
+fn annotation_policy_error(value: AnnotationError) -> Response {
+    let error = match value {
+        AnnotationError::Unauthenticated => GateError::Unauthenticated,
+        AnnotationError::Denied | AnnotationError::NotFound => GateError::Denied,
+        AnnotationError::RevisionConflict
+        | AnnotationError::CommandConflict
+        | AnnotationError::Invalid => GateError::CommandConflict,
+        AnnotationError::Unavailable => GateError::Unavailable,
+        AnnotationError::NativeAuthenticationUnavailable => {
+            GateError::NativeAuthenticationUnavailable
+        }
+    };
+    gate_error(error)
+}
+fn resolution_policy_error(value: ResolutionError) -> Response {
+    crate::routes::administering_entity::resolution_error(value)
 }
 async fn gate_state(
     State(state): State<ServerState>,
@@ -218,11 +236,89 @@ async fn authorize(
     }
     let parts: Vec<_> = uri.path().trim_start_matches('/').split('/').collect();
     enum PolicyTarget {
+        CaseRoot {
+            write: bool,
+        },
+        CaseResource {
+            case_id: Uuid,
+            write: bool,
+        },
+        CaseCreateLookup,
+        Resolution {
+            case_id: Uuid,
+            write: bool,
+        },
+        Document {
+            case_id: Uuid,
+            document_id: Option<Uuid>,
+            write: bool,
+        },
         Gate(Uuid, bool),
         Letter(LetterId),
         Evidence(Uuid, Uuid),
+        Annotation(Uuid, Uuid),
     }
     let target = match (request.method.as_str(), parts.as_slice()) {
+        ("POST", ["api", "cases"]) => PolicyTarget::CaseRoot { write: true },
+        ("GET", ["api", "cases"]) => PolicyTarget::CaseRoot { write: false },
+        ("GET", ["api", "case-commands", command]) if Uuid::parse_str(command).is_ok() => {
+            PolicyTarget::CaseCreateLookup
+        }
+        (method @ ("GET" | "PATCH"), ["api", "cases", case]) => PolicyTarget::CaseResource {
+            case_id: Uuid::parse_str(case).map_err(|_| invalid())?,
+            write: method == "PATCH",
+        },
+        ("POST", ["api", "cases", case, "status"]) => PolicyTarget::CaseResource {
+            case_id: Uuid::parse_str(case).map_err(|_| invalid())?,
+            write: true,
+        },
+        ("GET", ["api", "cases", case, "commands", command])
+            if Uuid::parse_str(command).is_ok() =>
+        {
+            PolicyTarget::CaseResource {
+                case_id: Uuid::parse_str(case).map_err(|_| invalid())?,
+                write: true,
+            }
+        }
+        (method @ ("GET" | "POST"), ["api", "cases", case, "administering-entity"]) => {
+            PolicyTarget::Resolution {
+                case_id: Uuid::parse_str(case).map_err(|_| invalid())?,
+                write: method == "POST",
+            }
+        }
+        (
+            "GET",
+            [
+                "api",
+                "cases",
+                case,
+                "administering-entity",
+                "commands",
+                command,
+            ],
+        ) if Uuid::parse_str(command).is_ok() => PolicyTarget::Resolution {
+            case_id: Uuid::parse_str(case).map_err(|_| invalid())?,
+            write: true,
+        },
+        ("POST", ["api", "cases", case, "documents"]) => PolicyTarget::Document {
+            case_id: Uuid::parse_str(case).map_err(|_| invalid())?,
+            document_id: None,
+            write: true,
+        },
+        ("GET", ["api", "cases", case, "documents", document]) => PolicyTarget::Document {
+            case_id: Uuid::parse_str(case).map_err(|_| invalid())?,
+            document_id: Some(Uuid::parse_str(document).map_err(|_| invalid())?),
+            write: false,
+        },
+        ("GET", ["api", "cases", case, "document-commands", command])
+            if Uuid::parse_str(command).is_ok() =>
+        {
+            PolicyTarget::Document {
+                case_id: Uuid::parse_str(case).map_err(|_| invalid())?,
+                document_id: None,
+                write: true,
+            }
+        }
         ("POST", ["api", "cases", case, "gate", "affirm" | "remove"]) => {
             PolicyTarget::Gate(Uuid::parse_str(case).map_err(|_| invalid())?, true)
         }
@@ -240,6 +336,9 @@ async fn authorize(
         ("GET", ["api", "letters", letter, "sign", "commands", command])
             if Uuid::parse_str(command).is_ok() =>
         {
+            PolicyTarget::Letter(LetterId(Uuid::parse_str(letter).map_err(|_| invalid())?))
+        }
+        ("GET", ["api", "letters", letter, "signing-target"]) => {
             PolicyTarget::Letter(LetterId(Uuid::parse_str(letter).map_err(|_| invalid())?))
         }
         ("POST", ["api", "cases", case, "evidence", evidence, "state"]) => PolicyTarget::Evidence(
@@ -261,13 +360,136 @@ async fn authorize(
             Uuid::parse_str(case).map_err(|_| invalid())?,
             Uuid::parse_str(evidence).map_err(|_| invalid())?,
         ),
+        ("POST", ["api", "cases", case, "annotations", annotation]) => PolicyTarget::Annotation(
+            Uuid::parse_str(case).map_err(|_| invalid())?,
+            Uuid::parse_str(annotation).map_err(|_| invalid())?,
+        ),
+        (
+            "GET",
+            [
+                "api",
+                "cases",
+                case,
+                "annotations",
+                annotation,
+                "commands",
+                command,
+            ],
+        ) if Uuid::parse_str(command).is_ok() => PolicyTarget::Annotation(
+            Uuid::parse_str(case).map_err(|_| invalid())?,
+            Uuid::parse_str(annotation).map_err(|_| invalid())?,
+        ),
         _ => return Err(invalid()),
     };
     let Query(query) = Query::<GateQuery>::try_from_uri(&uri).map_err(|_| invalid())?;
-    let (context, capabilities) = clinical_context(&state, &headers, query.practice_id)
-        .await
-        .map_err(context_error)?;
+    let resolved = clinical_context(&state, &headers, query.practice_id).await;
+    let (context, capabilities) = match resolved {
+        Ok(value) => value,
+        Err(error)
+            if matches!(
+                &target,
+                PolicyTarget::CaseRoot { .. }
+                    | PolicyTarget::CaseResource { .. }
+                    | PolicyTarget::CaseCreateLookup
+                    | PolicyTarget::Resolution { .. }
+                    | PolicyTarget::Document { .. }
+            ) =>
+        {
+            return Err(match target {
+                PolicyTarget::Document { .. } => {
+                    crate::routes::documents::document_context_error(error)
+                }
+                _ => crate::routes::cases::case_context_error(error),
+            });
+        }
+        Err(error) => return Err(context_error(error)),
+    };
     match target {
+        PolicyTarget::CaseRoot { write } | PolicyTarget::CaseResource { write, .. } => {
+            let required = if write { "case_write" } else { "case:read" };
+            if !capabilities.iter().any(|capability| capability == required) {
+                return Err(crate::routes::cases::case_error(
+                    aso_host::case_management::CaseError::Denied,
+                ));
+            }
+            if let PolicyTarget::CaseResource { case_id, .. } = target {
+                if write {
+                    state
+                        .services
+                        .authorize_case_write_target(&context, &capabilities, case_id)
+                        .await
+                        .map_err(crate::routes::cases::case_error)?;
+                } else {
+                    state
+                        .services
+                        .read_case(&context, &capabilities, case_id)
+                        .await
+                        .map_err(crate::routes::cases::case_error)?;
+                }
+            }
+        }
+        PolicyTarget::CaseCreateLookup => {
+            if !capabilities
+                .iter()
+                .any(|capability| capability == "case_write")
+            {
+                return Err(crate::routes::cases::case_error(
+                    aso_host::case_management::CaseError::Denied,
+                ));
+            }
+        }
+        PolicyTarget::Resolution { case_id, write } => {
+            let required = if write {
+                "resolve_administering_entity"
+            } else {
+                "case:read"
+            };
+            if !capabilities.iter().any(|capability| capability == required) {
+                return Err(resolution_policy_error(ResolutionError::Denied));
+            }
+            if write {
+                state
+                    .services
+                    .authorize_administering_entity_target(&context, &capabilities, case_id)
+                    .await
+                    .map_err(resolution_policy_error)?;
+            } else {
+                state
+                    .services
+                    .read_case(&context, &capabilities, case_id)
+                    .await
+                    .map_err(crate::routes::cases::case_error)?;
+            }
+        }
+        PolicyTarget::Document {
+            case_id,
+            document_id,
+            write,
+        } => {
+            let required = if write {
+                "document_upload"
+            } else {
+                "case:read"
+            };
+            if !capabilities.iter().any(|capability| capability == required) {
+                return Err(crate::routes::documents::document_error(
+                    aso_host::document_upload::DocumentUploadError::Denied,
+                ));
+            }
+            if let Some(document_id) = document_id {
+                state
+                    .services
+                    .read_case_document(&context, &capabilities, case_id, document_id)
+                    .await
+                    .map_err(crate::routes::documents::document_error)?;
+            } else {
+                state
+                    .services
+                    .authorize_document_upload_target(&context, &capabilities, case_id)
+                    .await
+                    .map_err(crate::routes::documents::document_error)?;
+            }
+        }
         PolicyTarget::Gate(case_id, clinical) => {
             if clinical
                 && !capabilities
@@ -307,6 +529,19 @@ async fn authorize(
                 .read_reassessment_target(&context, case_id, evidence_id)
                 .await
                 .map_err(reassessment_policy_error)?;
+        }
+        PolicyTarget::Annotation(case_id, annotation_id) => {
+            if !capabilities
+                .iter()
+                .any(|capability| capability == "annotate")
+            {
+                return Err(gate_error(GateError::Denied));
+            }
+            state
+                .services
+                .read_annotation_target(&context, case_id, annotation_id)
+                .await
+                .map_err(annotation_policy_error)?;
         }
     }
     Ok(StatusCode::NO_CONTENT)

@@ -318,7 +318,7 @@ INSERT INTO role_capabilities (role_id, capability_key)
 SELECT r.id, c.key
   FROM roles r
   JOIN LATERAL (VALUES
-        ('admin','configure'),   ('admin','submit'),      ('admin','view_audit'),
+        ('admin','configure'),   ('admin','view_audit'),
         ('surgeon','affirm_gate'),('surgeon','sign_letter'),('surgeon','annotate'),
         ('surgeon','submit'),
         ('staff','submit')
@@ -612,6 +612,9 @@ CREATE TRIGGER policy_types_key BEFORE INSERT OR UPDATE ON policy_types
 CREATE TRIGGER policy_types_touch BEFORE UPDATE ON policy_types
   FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 
+INSERT INTO policy_types (name, description) VALUES
+  ('Medical Policy', 'Effective-dated payer medical policy or submission requirement.');
+
 -- Policies are versioned and effective-dated. A letter must be judged against
 -- the policy version in force on the date of service, not today's text, so
 -- the version is never updated in place.
@@ -681,8 +684,13 @@ INSERT INTO case_statuses (key, label, ordinal, is_terminal) VALUES
   ('submitted',     'Submitted',               70, false),
   ('peer_review',   'Peer-to-peer',            80, false),
   ('approved',      'Approved',                90, true),
-  ('denied',        'Denied',                 100, true),
-  ('withdrawn',     'Withdrawn',              110, true);
+  ('denied',        'Denied',                 100, false),
+  ('denial_review', 'Denial review',          110, false),
+  ('response_drafting', 'Response drafting',  120, false),
+  ('response_ready','Response ready',         130, false),
+  ('resubmitted',   'Resubmitted',            140, false),
+  ('appealed',      'Appealed',               150, false),
+  ('withdrawn',     'Withdrawn',              160, true);
 
 CREATE TABLE cases (
   id                  uuid PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -834,6 +842,20 @@ INSERT INTO document_types (name, description, schema) VALUES
        "exam_findings":{"type":"string"},
        "provider_npi":{"type":"string"}}}'::jsonb);
 
+-- Workflow source types whose complete content is preserved as immutable
+-- pages. Their structure is carried by the page/custody contract rather than
+-- an additional typed JSON payload.
+INSERT INTO document_types (name, description, schema) VALUES
+  ('Policy Document',
+   'Effective-dated payer policy or submission guide used as a cited source.',
+   NULL),
+  ('Insurance Card',
+   'Member and plan identity source captured for administrative review.',
+   NULL),
+  ('Payer Determination',
+   'Payer decision notice used as the sourced basis for response classification.',
+   NULL);
+
 CREATE TABLE documents (
   id                 uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   document_type_id   uuid NOT NULL REFERENCES document_types(id) ON DELETE RESTRICT,
@@ -850,12 +872,14 @@ CREATE TABLE documents (
   source_system_id   text,                    -- DocumentReference id in the EMR
   storage_uri        text,                    -- object store location of the PDF
   content_sha256     bytea,                   -- integrity, and the basis of custody proof
+  document_version   integer NOT NULL DEFAULT 1 CHECK (document_version > 0),
   page_count         integer CHECK (page_count > 0),
   retrieved_at       timestamptz,
   ingest_method      text NOT NULL DEFAULT 'api'
                        CHECK (ingest_method IN ('api','hl7','manual_upload','fax','scan')),
   created_at         timestamptz NOT NULL DEFAULT now(),
-  updated_at         timestamptz
+  updated_at         timestamptz,
+  UNIQUE (id, case_id)
 );
 CREATE INDEX documents_patient_ix ON documents(patient_id, effective_date DESC);
 CREATE INDEX documents_case_ix    ON documents(case_id) WHERE case_id IS NOT NULL;
@@ -925,10 +949,9 @@ CREATE INDEX evidence_citations_doc_ix ON evidence_citations(document_id);
 -- ─────────────────────────────────────────────────────────────────────────
 -- 9 · Surgeon annotations
 --
--- The one mechanism by which a claim enters a letter without a chart
--- document behind it. That makes provenance load-bearing rather than
--- cosmetic, and it is why this is a separate table from case_evidence: an
--- annotation must never be rendered as though a document said it.
+-- Surgeon attribution attached to a case or source document. An annotation
+-- never replaces the document/page/date provenance required by letter_claims;
+-- it records who supplied the clinical judgment about that source.
 --
 -- `is_included` is deliberately separate from existence. A surgeon may record
 -- a point for the record, for a peer-to-peer, or for a future appeal without
@@ -1030,10 +1053,24 @@ CREATE OR REPLACE FUNCTION enforce_annotation_authority()
 RETURNS trigger
 LANGUAGE plpgsql
 AS $$
+DECLARE
+  target_practice uuid;
 BEGIN
+  SELECT c.practice_id INTO target_practice FROM cases c WHERE c.id = NEW.case_id;
+  IF target_practice IS DISTINCT FROM current_verified_practice_id()
+     OR NEW.author_id IS DISTINCT FROM current_app_user_id()
+  THEN
+    RAISE EXCEPTION
+      'annotation actor % is not the verified actor for selected practice %',
+      NEW.author_id, target_practice
+      USING ERRCODE = 'insufficient_privilege';
+  END IF;
   IF NOT EXISTS (
-    SELECT 1 FROM user_capabilities uc
+    SELECT 1
+      FROM user_capabilities uc
+      JOIN users u ON u.id = uc.user_id AND u.status = 'active'
      WHERE uc.user_id = NEW.author_id
+       AND uc.practice_id = target_practice
        AND uc.capability_key = 'annotate')
   THEN
     RAISE EXCEPTION
@@ -1199,10 +1236,24 @@ CREATE OR REPLACE FUNCTION enforce_gate_authority()
 RETURNS trigger
 LANGUAGE plpgsql
 AS $$
+DECLARE
+  target_practice uuid;
 BEGIN
+  SELECT c.practice_id INTO target_practice FROM cases c WHERE c.id = NEW.case_id;
+  IF target_practice IS DISTINCT FROM current_verified_practice_id()
+     OR NEW.affirmed_by IS DISTINCT FROM current_app_user_id()
+  THEN
+    RAISE EXCEPTION
+      'gate actor % is not the verified actor for selected practice %',
+      NEW.affirmed_by, target_practice
+      USING ERRCODE = 'insufficient_privilege';
+  END IF;
   IF NOT EXISTS (
-    SELECT 1 FROM user_capabilities uc
+    SELECT 1
+      FROM user_capabilities uc
+      JOIN users u ON u.id = uc.user_id AND u.status = 'active'
      WHERE uc.user_id = NEW.affirmed_by
+       AND uc.practice_id = target_practice
        AND uc.capability_key = 'affirm_gate')
   THEN
     RAISE EXCEPTION
@@ -1264,6 +1315,9 @@ CREATE TRIGGER gate_affirmations_refresh
 CREATE TABLE letters (
   id             uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   case_id        uuid NOT NULL REFERENCES cases(id) ON DELETE CASCADE,
+  purpose        text NOT NULL DEFAULT 'prior_authorization_request'
+                   CHECK (purpose IN
+                     ('prior_authorization_request','corrected_resubmission','clinical_appeal')),
   version        integer NOT NULL,
   status         text NOT NULL DEFAULT 'draft'
                    CHECK (status IN ('draft','in_review','approved','signed','superseded')),
@@ -1277,14 +1331,28 @@ CREATE TABLE letters (
   approved_at    timestamptz,
   signature_id   uuid REFERENCES signatures(id) ON DELETE RESTRICT,
   signed_at      timestamptz,
+  original_request_letter_id uuid,
+  challenged_determination_id uuid,
   data           jsonb NOT NULL DEFAULT '{}'::jsonb,
   created_at     timestamptz NOT NULL DEFAULT now(),
   updated_at     timestamptz,
-  UNIQUE (case_id, version),
+  UNIQUE (id, case_id),
+  UNIQUE (case_id, purpose, version),
+  CONSTRAINT letters_original_request_same_case_fkey
+    FOREIGN KEY (original_request_letter_id, case_id)
+    REFERENCES letters(id, case_id) ON DELETE RESTRICT,
+  CONSTRAINT letters_response_linkage CHECK (
+    (purpose = 'prior_authorization_request'
+      AND original_request_letter_id IS NULL
+      AND challenged_determination_id IS NULL)
+    OR
+    (purpose IN ('corrected_resubmission','clinical_appeal')
+      AND original_request_letter_id IS NOT NULL
+      AND challenged_determination_id IS NOT NULL)),
   CONSTRAINT letters_signed_pair CHECK (
     (signed_at IS NULL) = (signature_id IS NULL))
 );
-CREATE INDEX letters_case_ix ON letters(case_id, version DESC);
+CREATE INDEX letters_case_ix ON letters(case_id, purpose, version DESC);
 CREATE TRIGGER letters_touch BEFORE UPDATE ON letters
   FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 
@@ -1298,12 +1366,40 @@ AS $$
 DECLARE
   affirmed  timestamptz;
   signer    uuid;
+  target_practice uuid;
 BEGIN
+  SELECT practice_id, gate_affirmed_at
+    INTO target_practice, affirmed
+    FROM cases
+   WHERE id = NEW.case_id;
+
+  IF NEW.approved_by IS NOT NULL AND (
+    TG_OP = 'INSERT'
+    OR OLD.approved_by IS DISTINCT FROM NEW.approved_by
+    OR OLD.approved_at IS DISTINCT FROM NEW.approved_at
+  ) THEN
+    IF target_practice IS DISTINCT FROM current_verified_practice_id()
+       OR NEW.approved_by IS DISTINCT FROM current_app_user_id()
+       OR NOT EXISTS (
+         SELECT 1
+           FROM user_capabilities uc
+           JOIN users u ON u.id = uc.user_id AND u.status = 'active'
+          WHERE uc.user_id = NEW.approved_by
+            AND uc.practice_id = target_practice
+            AND uc.capability_key = 'letter_approve'
+       )
+    THEN
+      RAISE EXCEPTION
+        'user % may not approve a letter for case % in selected practice %',
+        NEW.approved_by, NEW.case_id, target_practice
+        USING ERRCODE = 'insufficient_privilege';
+    END IF;
+  END IF;
+
   IF NEW.signed_at IS NULL THEN
     RETURN NEW;
   END IF;
 
-  SELECT gate_affirmed_at INTO affirmed FROM cases WHERE id = NEW.case_id;
   IF affirmed IS NULL THEN
     RAISE EXCEPTION
       'case % has not been affirmed at the surgeon gate; a letter may not be signed',
@@ -1312,13 +1408,30 @@ BEGIN
   END IF;
 
   SELECT user_id INTO signer FROM signatures WHERE id = NEW.signature_id;
-  IF NOT EXISTS (
-    SELECT 1 FROM user_capabilities uc
-     WHERE uc.user_id = signer AND uc.capability_key = 'sign_letter')
+  IF target_practice IS DISTINCT FROM current_verified_practice_id()
+     OR signer IS DISTINCT FROM current_app_user_id()
+     OR NOT EXISTS (
+    SELECT 1
+      FROM user_capabilities uc
+      JOIN users u ON u.id = uc.user_id AND u.status = 'active'
+     WHERE uc.user_id = signer
+       AND uc.practice_id = target_practice
+       AND uc.capability_key = 'sign_letter')
   THEN
     RAISE EXCEPTION
       'user % may not sign a letter of medical necessity', signer
       USING ERRCODE = 'insufficient_privilege';
+  END IF;
+
+  IF EXISTS (
+    SELECT 1 FROM letter_claims lc
+     WHERE lc.letter_id = NEW.id
+       AND (lc.support_status <> 'supported'
+         OR lc.support_claim_version <> NEW.version)
+  ) THEN
+    RAISE EXCEPTION
+      'letter % has an unsupported or stale claim review', NEW.id
+      USING ERRCODE = 'check_violation';
   END IF;
 
   RETURN NEW;
@@ -1327,21 +1440,72 @@ $$;
 CREATE TRIGGER letters_signing_rules BEFORE INSERT OR UPDATE ON letters
   FOR EACH ROW EXECUTE FUNCTION enforce_letter_signing();
 
--- Every factual claim in the letter traces to a document or an annotation.
--- The XOR is the mechanism that stops surgeon opinion from being rendered as
--- though a chart document said it.
+-- A case with clinical authorship cannot be reassigned to another practice.
+-- Reassignment would otherwise change the tenant beneath existing authority
+-- records without re-running their clinical acts.
+CREATE OR REPLACE FUNCTION refuse_clinical_case_practice_reassignment()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  IF NEW.practice_id IS DISTINCT FROM OLD.practice_id AND (
+    EXISTS (SELECT 1 FROM annotations a WHERE a.case_id = OLD.id)
+    OR EXISTS (SELECT 1 FROM gate_affirmations ga WHERE ga.case_id = OLD.id)
+    OR EXISTS (SELECT 1 FROM letters l WHERE l.case_id = OLD.id)
+  ) THEN
+    RAISE EXCEPTION
+      'case % practice cannot change after a clinical record exists', OLD.id
+      USING ERRCODE = 'check_violation';
+  END IF;
+  RETURN NEW;
+END;
+$$;
+CREATE TRIGGER cases_clinical_practice_immutable
+  BEFORE UPDATE OF practice_id ON cases
+  FOR EACH ROW EXECUTE FUNCTION refuse_clinical_case_practice_reassignment();
+
+-- Every factual claim included in a letter traces to a source document, page
+-- and source date. An annotation may supply auxiliary surgeon attribution but
+-- never replaces chart provenance.
 CREATE TABLE letter_claims (
-  id            uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  letter_id     uuid NOT NULL REFERENCES letters(id) ON DELETE CASCADE,
-  ordinal       integer NOT NULL,
-  claim_text    text NOT NULL,
-  document_id   uuid REFERENCES documents(id) ON DELETE RESTRICT,
-  annotation_id uuid REFERENCES annotations(id) ON DELETE RESTRICT,
-  page_number   integer CHECK (page_number > 0),
-  created_at    timestamptz NOT NULL DEFAULT now(),
-  UNIQUE (letter_id, ordinal),
-  CONSTRAINT letter_claims_one_source CHECK (
-    num_nonnulls(document_id, annotation_id) = 1)
+  id                    uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  letter_id             uuid NOT NULL,
+  case_id               uuid NOT NULL REFERENCES cases(id) ON DELETE CASCADE,
+  ordinal               integer NOT NULL,
+  claim_text            text NOT NULL,
+  document_id           uuid NOT NULL,
+  document_version      integer NOT NULL CHECK (document_version > 0),
+  annotation_id         uuid REFERENCES annotations(id) ON DELETE RESTRICT,
+  page_number           integer NOT NULL CHECK (page_number > 0),
+  source_quote          text NOT NULL CHECK (source_quote <> ''),
+  source_span_start     integer NOT NULL CHECK (source_span_start >= 0),
+  source_span_end       integer NOT NULL,
+  source_date           date NOT NULL,
+  source_date_kind      text NOT NULL
+                          CHECK (source_date_kind IN
+                            ('effective_date','service_date','authored_date','determination_date')),
+  support_status        text NOT NULL DEFAULT 'pending'
+                          CHECK (support_status IN ('pending','supported','unsupported')),
+  support_reviewed_by   uuid REFERENCES users(id) ON DELETE RESTRICT,
+  support_reviewed_at   timestamptz,
+  support_claim_version integer,
+  created_at            timestamptz NOT NULL DEFAULT now(),
+  CONSTRAINT letter_claims_letter_same_case_fkey
+    FOREIGN KEY (letter_id, case_id)
+    REFERENCES letters(id, case_id) ON DELETE CASCADE,
+  CONSTRAINT letter_claims_document_same_case_fkey
+    FOREIGN KEY (document_id, case_id)
+    REFERENCES documents(id, case_id) ON DELETE RESTRICT,
+  CONSTRAINT letter_claims_span_nonempty CHECK (source_span_end > source_span_start),
+  CONSTRAINT letter_claims_support_review_complete CHECK (
+    (support_status = 'pending' AND support_reviewed_by IS NULL
+      AND support_reviewed_at IS NULL AND support_claim_version IS NULL)
+    OR
+    (support_status IN ('supported','unsupported') AND support_reviewed_by IS NOT NULL
+      AND support_reviewed_at IS NOT NULL AND support_claim_version IS NOT NULL
+      AND support_claim_version > 0)
+  ),
+  UNIQUE (letter_id, ordinal)
 );
 CREATE INDEX letter_claims_letter_ix ON letter_claims(letter_id);
 
@@ -1362,7 +1526,7 @@ CREATE TRIGGER qa_check_types_touch BEFORE UPDATE ON qa_check_types
   FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 
 INSERT INTO qa_check_types (name, description, severity, schema) VALUES
-  ('Unsupported Claim', 'Every factual claim resolves to a document or an attributed annotation.', 'blocking',
+  ('Unsupported Claim', 'Every factual claim resolves to a source document, positive page number, and source date.', 'blocking',
    '{"type":"object","properties":{"claim_ordinals":{"type":"array","items":{"type":"number"}}}}'::jsonb),
   ('Annotation Attribution', 'No annotation is rendered as though a chart document stated it.', 'blocking',
    '{"type":"object","properties":{"annotation_ids":{"type":"array","items":{"type":"string"}}}}'::jsonb),
@@ -1470,7 +1634,7 @@ CREATE TABLE submissions (
   id                          uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   submission_channel_type_id  uuid NOT NULL REFERENCES submission_channel_types(id) ON DELETE RESTRICT,
   case_id                     uuid NOT NULL REFERENCES cases(id) ON DELETE CASCADE,
-  letter_id                   uuid NOT NULL REFERENCES letters(id) ON DELETE RESTRICT,
+  letter_id                   uuid NOT NULL,
   name                        text NOT NULL,
   data                        jsonb,
 
@@ -1483,7 +1647,11 @@ CREATE TABLE submissions (
   total_pages                 integer NOT NULL CHECK (total_pages > 0),
   created_at                  timestamptz NOT NULL DEFAULT now(),
   updated_at                  timestamptz,
-  UNIQUE (case_id, attempt)
+  UNIQUE (id, case_id),
+  UNIQUE (letter_id, attempt),
+  CONSTRAINT submissions_letter_same_case_fkey
+    FOREIGN KEY (letter_id, case_id)
+    REFERENCES letters(id, case_id) ON DELETE RESTRICT
 );
 CREATE INDEX submissions_case_ix ON submissions(case_id, submitted_at DESC);
 CREATE TRIGGER submissions_touch BEFORE UPDATE ON submissions
@@ -1656,7 +1824,7 @@ CREATE TRIGGER peer_reviews_touch BEFORE UPDATE ON peer_reviews
 CREATE TABLE determinations (
   id             uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   case_id        uuid NOT NULL REFERENCES cases(id) ON DELETE CASCADE,
-  submission_id  uuid REFERENCES submissions(id) ON DELETE SET NULL,
+  submission_id  uuid,
   peer_review_id uuid REFERENCES peer_reviews(id) ON DELETE SET NULL,
   reviewer_id    uuid REFERENCES reviewers(id) ON DELETE SET NULL,
   outcome        text NOT NULL CHECK (outcome IN ('approved','denied','partial','pended','withdrawn')),
@@ -1670,11 +1838,56 @@ CREATE TABLE determinations (
   document_id    uuid REFERENCES documents(id) ON DELETE SET NULL,
   data           jsonb NOT NULL DEFAULT '{}'::jsonb,
   created_at     timestamptz NOT NULL DEFAULT now(),
-  updated_at     timestamptz
+  updated_at     timestamptz,
+  UNIQUE (id, case_id),
+  CONSTRAINT determinations_submission_same_case_fkey
+    FOREIGN KEY (submission_id, case_id)
+    REFERENCES submissions(id, case_id) ON DELETE SET NULL (submission_id)
 );
 CREATE INDEX determinations_case_ix ON determinations(case_id, decided_on DESC);
 CREATE TRIGGER determinations_touch BEFORE UPDATE ON determinations
   FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+
+ALTER TABLE letters
+  ADD CONSTRAINT letters_challenged_determination_fkey
+  FOREIGN KEY (challenged_determination_id, case_id)
+  REFERENCES determinations(id, case_id) ON DELETE RESTRICT;
+
+CREATE OR REPLACE FUNCTION enforce_letter_lineage()
+RETURNS trigger
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  IF NEW.purpose IN ('corrected_resubmission','clinical_appeal') THEN
+    IF NOT EXISTS (
+      SELECT 1 FROM letters original
+       WHERE original.id = NEW.original_request_letter_id
+         AND original.case_id = NEW.case_id
+         AND original.purpose = 'prior_authorization_request'
+    ) THEN
+      RAISE EXCEPTION
+        'response letter % does not link an initial request in case %', NEW.id, NEW.case_id
+        USING ERRCODE = 'foreign_key_violation';
+    END IF;
+    IF NOT EXISTS (
+      SELECT 1 FROM determinations d
+       WHERE d.id = NEW.challenged_determination_id
+         AND d.case_id = NEW.case_id
+         AND d.outcome IN ('denied','partial')
+    ) THEN
+      RAISE EXCEPTION
+        'response letter % does not link a denied or partial determination in case %',
+        NEW.id, NEW.case_id
+        USING ERRCODE = 'foreign_key_violation';
+    END IF;
+  END IF;
+  RETURN NEW;
+END;
+$$;
+CREATE TRIGGER letters_lineage
+  BEFORE INSERT OR UPDATE OF case_id, purpose, original_request_letter_id,
+    challenged_determination_id ON letters
+  FOR EACH ROW EXECUTE FUNCTION enforce_letter_lineage();
 
 
 -- ─────────────────────────────────────────────────────────────────────────
@@ -1745,20 +1958,48 @@ AS $$
      AND u.status = 'active';
 $$;
 
+-- The application sets this GUC from the verified session's active practice.
+-- Membership in another practice does not make that practice readable or
+-- writable until the user explicitly selects it and the host re-verifies the
+-- session scope.
+CREATE OR REPLACE FUNCTION current_verified_practice_id()
+RETURNS uuid
+LANGUAGE sql
+STABLE
+AS $$
+  SELECT selected.practice_id
+    FROM (
+      SELECT NULLIF(
+        current_setting('aso.selected_practice_id', true), ''
+      )::uuid AS practice_id
+    ) selected
+    JOIN user_roles ur
+      ON ur.practice_id = selected.practice_id
+     AND ur.user_id = current_app_user_id()
+   LIMIT 1;
+$$;
+
 CREATE OR REPLACE FUNCTION current_app_practice_ids()
 RETURNS setof uuid
 LANGUAGE sql
 STABLE
 AS $$
-  SELECT ur.practice_id
-    FROM user_roles ur
-   WHERE ur.user_id = current_app_user_id();
+  SELECT current_verified_practice_id()
+   WHERE current_verified_practice_id() IS NOT NULL;
 $$;
 
 ALTER TABLE cases        ENABLE ROW LEVEL SECURITY;
 ALTER TABLE patients     ENABLE ROW LEVEL SECURITY;
 ALTER TABLE documents    ENABLE ROW LEVEL SECURITY;
 ALTER TABLE annotations  ENABLE ROW LEVEL SECURITY;
+ALTER TABLE case_evidence ENABLE ROW LEVEL SECURITY;
+ALTER TABLE evidence_citations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE gate_affirmations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE letters       ENABLE ROW LEVEL SECURITY;
+ALTER TABLE letter_claims ENABLE ROW LEVEL SECURITY;
+ALTER TABLE letter_qa_results ENABLE ROW LEVEL SECURITY;
+ALTER TABLE submissions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE determinations ENABLE ROW LEVEL SECURITY;
 ALTER TABLE audit_events ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY cases_tenant ON cases
@@ -1773,6 +2014,49 @@ CREATE POLICY documents_tenant ON documents
      WHERE p.practice_id IN (SELECT current_app_practice_ids())));
 
 CREATE POLICY annotations_tenant ON annotations
+  USING (case_id IN (
+    SELECT c.id FROM cases c
+     WHERE c.practice_id IN (SELECT current_app_practice_ids())));
+
+CREATE POLICY case_evidence_tenant ON case_evidence
+  USING (case_id IN (
+    SELECT c.id FROM cases c
+     WHERE c.practice_id IN (SELECT current_app_practice_ids())));
+
+CREATE POLICY evidence_citations_tenant ON evidence_citations
+  USING (case_evidence_id IN (
+    SELECT ce.id FROM case_evidence ce
+    JOIN cases c ON c.id = ce.case_id
+     WHERE c.practice_id IN (SELECT current_app_practice_ids())));
+
+CREATE POLICY gate_affirmations_tenant ON gate_affirmations
+  USING (case_id IN (
+    SELECT c.id FROM cases c
+     WHERE c.practice_id IN (SELECT current_app_practice_ids())));
+
+CREATE POLICY letters_tenant ON letters
+  USING (case_id IN (
+    SELECT c.id FROM cases c
+     WHERE c.practice_id IN (SELECT current_app_practice_ids())));
+
+CREATE POLICY letter_claims_tenant ON letter_claims
+  USING (letter_id IN (
+    SELECT l.id FROM letters l
+    JOIN cases c ON c.id = l.case_id
+     WHERE c.practice_id IN (SELECT current_app_practice_ids())));
+
+CREATE POLICY letter_qa_results_tenant ON letter_qa_results
+  USING (letter_id IN (
+    SELECT l.id FROM letters l
+    JOIN cases c ON c.id = l.case_id
+     WHERE c.practice_id IN (SELECT current_app_practice_ids())));
+
+CREATE POLICY submissions_tenant ON submissions
+  USING (case_id IN (
+    SELECT c.id FROM cases c
+     WHERE c.practice_id IN (SELECT current_app_practice_ids())));
+
+CREATE POLICY determinations_tenant ON determinations
   USING (case_id IN (
     SELECT c.id FROM cases c
      WHERE c.practice_id IN (SELECT current_app_practice_ids())));

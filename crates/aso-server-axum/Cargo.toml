@@ -17,3 +17,6 @@ uuid.workspace = true
 tracing.workspace = true
 async-trait.workspace = true
 chrono.workspace = true
+
+[dev-dependencies]
+sha2.workspace = true

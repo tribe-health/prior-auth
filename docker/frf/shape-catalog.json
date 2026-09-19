@@ -1,0 +1,117 @@
+{
+  "annotation_types": {
+    "table": "aso.annotation_types",
+    "columns": ["id", "key", "name", "description"],
+    "allowed_params": [],
+    "relation": "view",
+    "object_namespace": "practice",
+    "reference": true
+  },
+  "annotations": {
+    "table": "aso.annotations",
+    "columns": [
+      "id",
+      "practice_id",
+      "case_id",
+      "annotation_type_id",
+      "name",
+      "body",
+      "author_id",
+      "author_label",
+      "provenance",
+      "is_included",
+      "included_at",
+      "target_evidence_id",
+      "target_document_id",
+      "revision",
+      "created_at",
+      "updated_at"
+    ],
+    "allowed_params": [],
+    "relation": "view",
+    "object_namespace": "practice",
+    "scope_column": "practice_id"
+  },
+  "cases": {
+    "table": "aso.cases",
+    "columns": [
+      "id",
+      "practice_id",
+      "case_number",
+      "patient_id",
+      "surgeon_id",
+      "coordinator_id",
+      "payer_id",
+      "status",
+      "date_of_service",
+      "gate_affirmed_at",
+      "updated_at",
+      "revision"
+    ],
+    "allowed_params": [],
+    "relation": "view",
+    "object_namespace": "practice",
+    "scope_column": "practice_id"
+  },
+  "case_evidence": {
+    "table": "aso.case_evidence",
+    "columns": [
+      "id",
+      "practice_id",
+      "case_id",
+      "policy_criterion_id",
+      "state",
+      "assessed_at",
+      "created_at",
+      "updated_at"
+    ],
+    "allowed_params": [],
+    "relation": "view",
+    "object_namespace": "practice",
+    "scope_column": "practice_id"
+  },
+  "evidence_states": {
+    "table": "aso.evidence_states",
+    "columns": ["key", "label", "meaning"],
+    "allowed_params": [],
+    "relation": "view",
+    "object_namespace": "practice",
+    "reference": true
+  },
+  "evidence_citations": {
+    "table": "aso.evidence_citations",
+    "columns": [
+      "id",
+      "practice_id",
+      "case_evidence_id",
+      "document_id",
+      "page_number",
+      "relevance",
+      "created_at"
+    ],
+    "allowed_params": [],
+    "relation": "view",
+    "object_namespace": "practice",
+    "scope_column": "practice_id"
+  },
+  "document_statuses": {
+    "table": "aso.document_statuses",
+    "columns": [
+      "id",
+      "case_id",
+      "document_type_id",
+      "name",
+      "effective_date",
+      "content_sha256_text",
+      "page_count",
+      "processing_status",
+      "processing_error_code",
+      "updated_at",
+      "revision"
+    ],
+    "allowed_params": [],
+    "relation": "view",
+    "object_namespace": "practice",
+    "scope_column": "practice_id"
+  }
+}

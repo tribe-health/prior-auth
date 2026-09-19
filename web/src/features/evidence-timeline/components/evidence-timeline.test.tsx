@@ -15,6 +15,14 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { TimelineEntry } from '../model/timeline-entry';
 import { useInteractionStore } from '../../../shared/store/interaction-store';
 
+const commandState = vi.hoisted(() => ({
+  lastCommandId: null as string | null,
+  lastCommandEntryId: null as string | null,
+  commandOutcome: 'idle',
+  awaitingProjection: false,
+  lookupCommand: vi.fn(),
+}));
+
 const entries: TimelineEntry[] = [
   { id: 'a', caseId: 'c1', policyCriterionId: 'p1', criterionLabel: null,
     state: 'met',  assessedAt: null, citations: [] },
@@ -29,13 +37,42 @@ const entries: TimelineEntry[] = [
 vi.mock('../hooks/use-evidence-timeline', () => ({
   useEvidenceTimeline: () => ({
     entries, loading: false, unavailable: false, error: null,
-    refusal: null, reassess: vi.fn(),
+    refusal: null,
+    lastCommandId: commandState.lastCommandId,
+    lastCommandEntryId: commandState.lastCommandEntryId,
+    commandOutcome: commandState.commandOutcome,
+    commandMessage: null,
+    awaitingProjection: commandState.awaitingProjection,
+    submitting: false,
+    reassess: vi.fn(),
+    lookupCommand: commandState.lookupCommand,
   }),
+}));
+
+vi.mock('../../../app/providers/session-provider', () => ({
+  useCan: () => false,
+  useRequiredSession: () => ({
+    identityId: 'identity-1', sessionId: 'session-1', userId: 'user-1',
+    practiceId: 'practice-1', displayName: 'Synthetic reviewer', capabilities: [],
+    principal: 'user', expiresAt: '2099-01-01T00:00:00Z', authorizationRevision: 'test:1',
+  }),
+  useSessionEpoch: () => 1,
+}));
+
+vi.mock('@/features/annotations/components/annotation-section', () => ({
+  AnnotationSection: () => <section aria-label="Clinical annotations" />,
 }));
 
 const { EvidenceTimeline } = await import('./evidence-timeline');
 
-beforeEach(() => useInteractionStore.getState().resetForCase());
+beforeEach(() => {
+  useInteractionStore.getState().resetForCase();
+  commandState.lastCommandId = null;
+  commandState.lastCommandEntryId = null;
+  commandState.commandOutcome = 'idle';
+  commandState.awaitingProjection = false;
+  vi.clearAllMocks();
+});
 afterEach(cleanup);
 
 describe('the counts summary describes the CASE, not the current lens', () => {
@@ -82,5 +119,19 @@ describe('the filter control is reachable', () => {
     render(<EvidenceTimeline caseId="c1" />);
     expect(screen.getByRole('button', { name: /^all$/i }).getAttribute('aria-pressed'))
       .toBe('true');
+  });
+});
+
+describe('accepted command status', () => {
+  it('keeps a full-width compact action available while projection is pending', () => {
+    commandState.lastCommandId = 'command-1';
+    commandState.lastCommandEntryId = 'a';
+    commandState.commandOutcome = 'awaiting-projection';
+    commandState.awaitingProjection = true;
+
+    render(<EvidenceTimeline caseId="c1" />);
+
+    expect(screen.getByText('Assessment accepted')).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Check evidence record' })).toBeTruthy();
   });
 });

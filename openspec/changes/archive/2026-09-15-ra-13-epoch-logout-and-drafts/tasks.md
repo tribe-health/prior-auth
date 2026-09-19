@@ -1,0 +1,19 @@
+## 1. Eligibility and bounded implementation
+
+- [x] 1.1 Confirm dependency completion (ra-12-public-auth-startup), the assigned file ownership and applicable phase decision gates before code changes; verify canonical dependency status and retain the gate decision/evidence artifact.
+- [x] 1.2 Implement epoch invalidation, coordinated cross-tab hints and authoritative revalidation before foreground/resume reopens protected content; scope view state by identity/practice/epoch/case/view instance. Verification: Account/practice changes during hydration, catch-up, persistence or an attachment request, or a suspended client resumes must produce this observed outcome: Old work cannot publish, save into or execute in the new scope; protected content stays locked until the current session/practice/authority revision is verified and Quiescing completes deterministically.
+- [x] 1.3 Implement `logoutPending` durability around the shell-neutral server logout operation, with credentials only in their protected facility. Verification: Logout reports incomplete, then the browser reloads or another tab opens must produce this observed outcome: The durable client marker blocks passive cookie reentry while the ASO recovery runner owns retry leases and journal transitions; only confirmed revocation or explicit fresh login resolves the marker.
+- [x] 1.4 Implement separately scoped draft persistence/recovery and test delayed old work, reload/new-tab logout, unavailable storage and migration/rebuild behavior. Verification: A replica rebuild, revocation or unsupported migration intersects unsent work must produce this observed outcome: Only the freshly authorized original user can recover permitted drafts; memory-only loss on emergency lock is explicit; offline access stays locked without a grant.
+
+## 2. Behavioral acceptance
+
+- [x] 2.1 Prove: when Account/practice changes during hydration, catch-up, persistence or an attachment request, or a suspended client resumes, then Old work cannot publish, save into or execute in the new scope; protected content remains locked through authoritative revalidation and Quiescing completes deterministically. Record the actual command, prerequisite availability and observed result.
+- [x] 2.2 Prove: when Logout reports incomplete, then the browser reloads or another tab opens, then The durable client marker blocks passive cookie reentry while the server recovery runner continues; only confirmed revocation or explicit fresh login resolves it and the client never mutates the denial/retry journal. Record the actual command, prerequisite availability and observed result.
+- [x] 2.3 Prove: when A replica rebuild, revocation or unsupported migration intersects unsent work, then Only the freshly authorized original user can recover permitted drafts; memory-only loss on emergency lock is explicit; offline access stays locked without a grant. Record the actual command, prerequisite availability and observed result.
+
+## 3. Completion evidence
+
+- [x] 3.1 Complete applicable T0/T1 and the phase-prescribed artifact-refiner then adversarial review; preserve synthetic evidence, confirm real callers and mark only actually satisfied work complete. Do not run broad phase/release tiers early.
+- [x] 3.2 Repair the isolated-review logout response and injected hint-bus ownership findings; rerun focused T0/T1, artifact-refiner and isolated adversarial review.
+- [x] 3.3 Prove the shared epoch transition clears unresolved clinical command ownership while preserving same-epoch remount reconciliation; rerun focused T0/T1, artifact-refiner and isolated adversarial review.
+- [x] 3.4 Add epoch to the clinical command ownership key while preserving same-epoch remount reconciliation; rerun focused T0/T1, artifact-refiner and isolated adversarial review.

@@ -122,6 +122,7 @@ auth_providers:
   kratos_session:
     type: kratos
     base_url: "http://kratos:4433"
+    issuer: "http://kratos:4433"
     forward_cookies: true
     session_cookie: "ory_kratos_session"
 
@@ -401,6 +402,32 @@ routes:
       methods: ["GET"]
     auth: passthrough
     priority: 101
+    hooks:
+      pre_request:
+        - type: aso_clinical_authorize
+          config:
+            url: "http://host.docker.internal:8787/internal/gate/authorize"
+
+  - id: "aso-annotation-save"
+    site: "aso-session"
+    match:
+      path: "/api/cases/*/annotations/*"
+      methods: ["POST"]
+    auth: passthrough
+    priority: 101
+    hooks:
+      pre_request:
+        - type: aso_clinical_authorize
+          config:
+            url: "http://host.docker.internal:8787/internal/gate/authorize"
+
+  - id: "aso-annotation-command"
+    site: "aso-session"
+    match:
+      path: "/api/cases/*/annotations/*/commands/*"
+      methods: ["GET"]
+    auth: passthrough
+    priority: 102
     hooks:
       pre_request:
         - type: aso_clinical_authorize

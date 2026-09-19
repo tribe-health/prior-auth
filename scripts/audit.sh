@@ -33,10 +33,10 @@ echo "── 2. No query cache ────────────────�
 # A query cache models REQUESTS; a local-first app models DATA. The sync engine
 # already owns staleness — a cache on top re-answers that in the wrong layer
 # with a second source of truth that drifts. See adr-001.
-if grep -rqE '"@tanstack/react-query"|"swr"|"@apollo/client"' "$ROOT/web/package.json" 2>/dev/null; then
-  fail "a query cache is declared in web/package.json (see docs/architecture/adr-001-no-query-cache.md)"
+if python3 "$ROOT/scripts/check-query-cache-dependencies.py" --project "$ROOT/web"; then
+  pass "no direct or transitive query cache dependency"
 else
-  pass "no query cache dependency"
+  fail "query cache dependency check failed (see docs/architecture/adr-001-no-query-cache.md)"
 fi
 
 echo "── 3. Components do not call the network directly ─────────────────────"

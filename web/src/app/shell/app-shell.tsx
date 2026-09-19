@@ -9,45 +9,50 @@
  * session capability, never a component flag.
  */
 import { Suspense } from "react";
-import { NavLink, Outlet, useParams } from "react-router";
+import { NavLink, Outlet, useLocation, useParams } from "react-router";
 
-import { CASE_PIPELINE, GLOBAL_NAV, isStepReachable } from "@/app/navigation/pipeline";
-import { useSession } from "@/app/providers/session-provider";
+import { CASE_PIPELINE, GLOBAL_NAV, isStepReachable, type CaseGateStatus } from "@/app/navigation/pipeline";
+import { useCommittedCaseGate } from "@/app/navigation/use-committed-case-gate";
+import { useRequiredSession, useSession, useSessionActions } from "@/app/providers/session-provider";
+import { Button } from "@/components/ui/button";
 import { can } from "@/shared/model/session";
 import { cn } from "@/lib/utils";
 
-/**
- * Whether the surgeon gate is affirmed for the open case.
- *
- * Placeholder: RA14 replaces this with a graph selector for the projected
- * `cases.gate_affirmed_at` field. It returns **false** so the gated steps are
- * locked by default — a stub that defaulted to open would silently disable the
- * gate, and this is the one place a wrong default is unsafe.
- */
-function useGateAffirmed(_caseId: string | undefined): boolean {
-  return false;
-}
-
 function GlobalNav() {
   const session = useSession();
+  const { logout } = useSessionActions();
 
   return (
-    <nav aria-label="Sections" className="flex shrink-0 gap-1 overflow-x-auto border-b bg-ui-muted/30 p-2 md:flex-col md:border-b-0 md:border-r md:overflow-x-visible">
-      {GLOBAL_NAV.filter((item) => !item.requires || can(session, item.requires)).map((item) => (
-        <NavLink
-          key={item.id}
-          to={item.path}
-          className={({ isActive }) =>
-            cn(
-              "px-3 py-2 rounded-md text-sm transition-colors",
-              isActive ? "bg-background font-medium" : "text-ui-muted-foreground hover:text-foreground",
-            )
-          }
-        >
-          {item.label}
-        </NavLink>
-      ))}
-    </nav>
+    <div className="flex w-full min-w-0 shrink-0 items-center gap-1 overflow-x-auto border-b bg-ui-muted/30 p-2 md:w-48 md:flex-col md:items-stretch md:border-b-0 md:border-r md:overflow-x-visible">
+      <nav aria-label="Sections" className="flex gap-1 md:flex-col">
+        {GLOBAL_NAV.filter((item) => !item.requires || can(session, item.requires)).map((item) => (
+          <NavLink
+            key={item.id}
+            to={item.path}
+            className={({ isActive }) =>
+              cn(
+                "min-h-11 rounded-md px-3 py-2 text-sm transition-colors motion-reduce:transition-none",
+                isActive ? "bg-background font-medium" : "text-ui-muted-foreground hover:text-foreground",
+              )
+            }
+          >
+            {item.label}
+          </NavLink>
+        ))}
+      </nav>
+      <Button
+        type="button"
+        variant="ghost"
+        className="ml-auto min-h-11 px-3 motion-reduce:transition-none md:mt-auto md:ml-0 md:justify-start"
+        aria-label={`Sign out ${session?.displayName ?? 'current user'}`}
+        onClick={() => void logout()}
+      >
+        Sign out
+      </Button>
+      <span className="sr-only" aria-live="polite">
+        Signed in as {session?.displayName}
+      </span>
+    </div>
   );
 }
 
@@ -58,14 +63,12 @@ function GlobalNav() {
  * A missing step is a confusing interface; a step that says why it is
  * unavailable is an accurate one.
  */
-function CasePipelineNav({ caseId }: { caseId: string }) {
-  const gateAffirmed = useGateAffirmed(caseId);
-
+function CasePipelineNav({ caseId, gateStatus }: { caseId: string; gateStatus: CaseGateStatus }) {
   return (
-    <nav aria-label="Case pipeline" className="flex gap-0.5 overflow-x-auto p-2 md:flex-col md:overflow-x-visible">
+    <nav aria-label="Case pipeline" className="flex w-full min-w-0 gap-0.5 overflow-x-auto p-2 md:flex-col md:overflow-x-visible">
       {CASE_PIPELINE.map((step) => {
-        const reachable = isStepReachable(step, { gateAffirmed });
-        const to = step.path ? `/cases/${caseId}/${step.path}` : "/";
+        const reachable = isStepReachable(step, { gateStatus });
+        const to = step.path ? `/cases/${caseId}/${step.path}` : `/cases/${caseId}`;
 
         if (reachable.kind !== "reachable") {
           // The REASON is the useful part, and `title` alone does not deliver
@@ -97,7 +100,7 @@ function CasePipelineNav({ caseId }: { caseId: string }) {
             to={to}
             className={({ isActive }) =>
               cn(
-                "flex items-baseline gap-2 px-3 py-2 rounded-md text-sm transition-colors",
+                "flex items-baseline gap-2 px-3 py-2 rounded-md text-sm transition-colors motion-reduce:transition-none",
                 isActive ? "bg-ui-muted font-medium" : "hover:bg-ui-muted/50",
               )
             }
@@ -113,6 +116,41 @@ function CasePipelineNav({ caseId }: { caseId: string }) {
   );
 }
 
+function CaseWorkspace({ caseId }: { caseId: string }) {
+  const session = useRequiredSession();
+  const { pathname } = useLocation();
+  const gate = useCommittedCaseGate(caseId, session.practiceId);
+  const activeStep = CASE_PIPELINE.find((step) => (
+    step.path === null
+      ? pathname === `/cases/${caseId}`
+      : pathname === `/cases/${caseId}/${step.path}`
+  ));
+  const activeReachability = activeStep
+    ? isStepReachable(activeStep, { gateStatus: gate.status })
+    : { kind: 'reachable' as const };
+
+  return (
+    <>
+      <aside className="w-full min-w-0 shrink-0 border-b md:w-56 md:border-b-0 md:border-r md:overflow-y-auto">
+        <CasePipelineNav caseId={caseId} gateStatus={gate.status} />
+      </aside>
+      <main className="min-w-0 flex-1 overflow-x-hidden overflow-y-auto">
+        {activeReachability.kind === 'reachable' ? (
+          <Suspense fallback={<ShellLoading />}>
+            <Outlet />
+          </Suspense>
+        ) : (
+          <div className="p-4 sm:p-6">
+            <div role="alert" className="rounded-md border border-ui-border bg-ui-muted/30 p-4 text-sm">
+              {activeReachability.message}
+            </div>
+          </div>
+        )}
+      </main>
+    </>
+  );
+}
+
 export function AppShell() {
   const { caseId } = useParams();
 
@@ -120,18 +158,17 @@ export function AppShell() {
   // disappearing. Hiding navigation strands a phone user with no way to move
   // between steps, which is a worse failure than a narrow column.
   return (
-    <div className="flex h-dvh flex-col md:flex-row">
+    <div className="flex h-dvh w-full min-w-0 flex-col overflow-x-hidden md:flex-row">
       <GlobalNav />
       {caseId ? (
-        <aside className="shrink-0 border-b md:border-b-0 md:border-r md:w-56 md:overflow-y-auto">
-          <CasePipelineNav caseId={caseId} />
-        </aside>
-      ) : null}
-      <main className="flex-1 min-w-0 overflow-auto">
-        <Suspense fallback={<ShellLoading />}>
-          <Outlet />
-        </Suspense>
-      </main>
+        <CaseWorkspace caseId={caseId} />
+      ) : (
+        <main className="min-w-0 flex-1 overflow-x-hidden overflow-y-auto">
+          <Suspense fallback={<ShellLoading />}>
+            <Outlet />
+          </Suspense>
+        </main>
+      )}
     </div>
   );
 }

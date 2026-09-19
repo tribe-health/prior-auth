@@ -1,5 +1,34 @@
 # Prior Authorization Workbench
 
+## Local web demo
+
+Start the complete browser stack, including PostgreSQL bootstrap, checksum-verified
+server migrations, Kratos migrations, the synthetic demo identity, API, Electric,
+Flint Gate, and Vite:
+
+```bash
+docker compose up --build --wait
+```
+
+Open <http://127.0.0.1:5173/login> and sign in with:
+
+- Email: `surgeon.demo@example.invalid`
+- Password: `DemoOnly-2026!`
+
+The stack creates `DEMO-CASE-001` with synthetic patient and payer data. Uploaded
+documents are retained in the `demo_documents` volume. Re-running `up` preserves
+the database and reapplies only pending migrations. For a clean demonstration:
+
+```bash
+docker compose down --volumes
+docker compose up --build --wait
+```
+
+Override the local-only credentials through `ASO_DEMO_EMAIL`,
+`ASO_DEMO_PASSWORD`, `ASO_RUNTIME_DATABASE_PASSWORD`, and
+`ASO_AUTHORITY_DATABASE_PASSWORD`, and `ASO_GATE_AUTHORITY_DATABASE_PASSWORD`
+when needed.
+
 A surgeon decides an operation is necessary. An insurer decides whether to pay
 for it. Between those two decisions sits a document, and most of the work is
 assembling the evidence it stands on.
@@ -38,12 +67,12 @@ Everything below was executed, not assumed.
 | Flutter tests | `flutter test` | 7 passed |
 | Architecture audit | `bash scripts/audit.sh` | 6 checks pass |
 | Design tokens | `bash scripts/gen-design-tokens.sh .` | 22 roles × 2 themes, parity verified |
+| Web production build | `npm --prefix web run build` | Vite production bundle built |
 
-**Not yet verified:** no physical-device run, no production web build, no Tauri
-window launched. Per the verification contract those surfaces are
-**build-only** — real, but not yet "working". A generated project starts
-unverified on purpose; that is an accurate statement until someone runs it on
-hardware.
+**Not yet verified:** no complete local browser scenario, physical-device run,
+or Tauri window launch. Per the verification contract those runtime surfaces
+are **build-only** — real, but not yet "working". Web-17 owns the complete
+browser scenario; native certification remains deferred until that passes.
 
 ## Quick start
 
@@ -74,6 +103,32 @@ memory-only."* A shared clinic workstation is the normal case.
 An unrecognised value (`true`, `1`, `yes`, …) resolves to memory **and logs an
 error** — ADR-009 forbids a silent fallback, so a deployment that meant to
 persist and mistyped finds out rather than quietly running ephemeral.
+
+### How a session starts
+
+The browser asks the server who it is. `useStartupSession()` calls
+`GET /api/session` once at mount, and the Kratos cookie the browser already
+holds is the credential — the client never constructs one.
+
+| Server answer | Startup state | What renders |
+|---|---|---|
+| `200` + a parseable session | `authenticated` | private startup; the application after `ready` |
+| `401` / `403` | `none` | "Sign in to continue." |
+| unreachable, or a `200` this client cannot parse | `unreachable` | public sign-in/recovery with the service-unavailable notice |
+
+**A 401 is an answer, not a failure.** An unauthenticated first visit is the
+normal case, so it resolves to "signed out" rather than an error. A transport
+or payload failure resolves to the distinct `unreachable` state. Public sign-in
+and recovery remain mounted in that state; the private database and shape
+subscription stay closed until a later verified session begins ordered startup.
+
+The payload is **parsed, not cast** (`session-parse.ts`). The server sends
+`capabilities` as free strings; a value this client does not know is dropped
+with a warning rather than passed into `can()`, where it would silently match
+nothing and hide a power the session actually holds. A malformed payload yields
+no session at all — a half-built one would still produce a usable-looking
+replica storage key, which is the fail-closed property the composition order
+exists to protect.
 
 ### Where reads come from
 

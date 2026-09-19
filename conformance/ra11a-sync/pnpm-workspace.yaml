@@ -1,0 +1,5 @@
+packages:
+  - .
+
+overrides:
+  "@electric-sql/pglite-sync>@electric-sql/client": 1.0.14

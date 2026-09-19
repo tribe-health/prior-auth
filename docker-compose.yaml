@@ -26,11 +26,12 @@
 # by design (docs/design/schema/schema.sql:230-257).
 # ═══════════════════════════════════════════════════════════════════════════
 
-name: aso-prior-auth
+name: aso-prior-auth-demo
 
 services:
   # ── Data plane ───────────────────────────────────────────────────────────
   db:
+    image: ${ASO_DB_IMAGE:-aso-prior-auth-db:local}
     build:
       context: ${PROMETHEUS_ROOT:-/Users/gqadonis/Projects/prometheus}/flint-forge
       dockerfile: images/postgres18/Dockerfile
@@ -75,18 +76,16 @@ services:
   # practice_id column (docker/bootstrap/15-*.sql), and the PHI boundary is the
   # per-shape `columns=` projection in web/src/shared/sync/electric-shapes.ts.
   #
-  # WARNING: with ELECTRIC_INSECURE and port 3000 published, anything that can
-  # reach localhost:3000 can request a base-table shape with no projection and
-  # no where-clause. That is acceptable ONLY on a developer machine. A real
-  # deployment must not publish this port and must terminate authorization at
-  # the gateway.
+  # Electric remains internal to the Compose network. It runs in insecure mode
+  # because Gate/FRF terminate authorization before forwarding a bounded shape;
+  # publishing this port would let a host caller bypass that boundary.
   electric:
     image: electricsql/electric:1.8.0
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER:-flint}:${POSTGRES_PASSWORD:-flint}@db:5432/${POSTGRES_DB:-flint}
-      ELECTRIC_INSECURE: "true" # local only — the gateway terminates auth in a real deployment
-    ports:
-      - "${ELECTRIC_PORT:-3000}:3000"
+      ELECTRIC_INSECURE: "true"
+    expose:
+      - "3000"
     depends_on:
       db:
         condition: service_healthy
@@ -117,7 +116,7 @@ services:
     environment:
       DSN: postgres://${POSTGRES_USER:-flint}:${POSTGRES_PASSWORD:-flint}@db:5432/kratos?sslmode=disable
       LOG_LEVEL: info
-      SERVE_PUBLIC_BASE_URL: http://localhost:${KRATOS_PUBLIC_PORT:-4433}/
+      SERVE_PUBLIC_BASE_URL: http://127.0.0.1:${KRATOS_PUBLIC_PORT:-4433}/
       SERVE_ADMIN_BASE_URL: http://kratos:4434/
     ports:
       - "${KRATOS_PUBLIC_PORT:-4433}:4433"
@@ -127,67 +126,245 @@ services:
         condition: service_completed_successfully
     restart: unless-stopped
 
-  # ── Gateway ──────────────────────────────────────────────────────────────
-  # Validates the Kratos session and enforces policy. ADR-002's first layer.
-  # A Kratos session maps to `User`, never `Agent` — an AI assistant acting for
-  # a surgeon is a different principal and holds no clinical capability.
-  flint-gate:
+  # Applies every checksum-verified server migration before either the demo
+  # fixture or API starts. This job is safe to rerun against an existing volume.
+  aso-migrate:
+    image: ${ASO_API_IMAGE:-aso-prior-auth-api:local}
     build:
-      context: ${PROMETHEUS_ROOT:-/Users/gqadonis/Projects/prometheus}/flint-gate
-    # flint-gate reads /app/config/config.yaml and exits if it is absent —
-    # environment variables alone are not enough. Observed 2026-09-06 as a
-    # restart loop: "reading config file /app/config/config.yaml: No such
-    # file or directory".
-    volumes:
-      - ./docker/flint-gate:/app/config:ro
+      context: .
+      dockerfile: Dockerfile.demo
+      target: api
+    command: ["--migrate-server"]
     environment:
-      DATABASE_URL: postgres://${POSTGRES_USER:-flint}:${POSTGRES_PASSWORD:-flint}@db:5432/flintgate
-      FLINT_GATE_JWT_SECRET: ${FLINT_GATE_JWT_SECRET:-change-me-in-development-only}
-      RUST_LOG: ${RUST_LOG:-info,flint_gate=debug}
-    ports:
-      - "${GATE_PROXY_PORT:-4456}:4456"
-      # 4457 (admin) is intentionally NOT published. flint-gate refuses a
-      # non-loopback admin bind without admin_auth, so the admin API stays
-      # loopback-only inside the container; reach it with `docker compose exec`.
+      ASO_MIGRATION_DATABASE_URL: postgresql://${POSTGRES_USER:-flint}:${POSTGRES_PASSWORD:-flint}@db:5432/${POSTGRES_DB:-flint}
     depends_on:
       db:
         condition: service_healthy
+    restart: "no"
+
+  # Creates a deterministic local-only login and synthetic case after both
+  # schema owners have completed their migrations.
+  aso-demo-init:
+    image: ${ASO_DB_IMAGE:-aso-prior-auth-db:local}
+    entrypoint: ["/bin/sh", "/demo-init.sh"]
+    environment:
+      ASO_MIGRATION_DATABASE_URL: postgresql://${POSTGRES_USER:-flint}:${POSTGRES_PASSWORD:-flint}@db:5432/${POSTGRES_DB:-flint}
+      ASO_KRATOS_ADMIN_URL: http://kratos:4434
+      ASO_DEMO_EMAIL: ${ASO_DEMO_EMAIL:-surgeon.demo@example.invalid}
+      ASO_DEMO_PASSWORD: ${ASO_DEMO_PASSWORD:-DemoOnly-2026!}
+      ASO_RUNTIME_DATABASE_PASSWORD: ${ASO_RUNTIME_DATABASE_PASSWORD:-demo-runtime-only}
+      ASO_AUTHORITY_DATABASE_PASSWORD: ${ASO_AUTHORITY_DATABASE_PASSWORD:-demo-authority-only}
+      ASO_GATE_AUTHORITY_DATABASE_PASSWORD: ${ASO_GATE_AUTHORITY_DATABASE_PASSWORD:-demo-gate-authority-only}
+    volumes:
+      - ./docker/demo-init.sh:/demo-init.sh:ro
+    depends_on:
+      aso-migrate:
+        condition: service_completed_successfully
       kratos:
         condition: service_started
+    restart: "no"
+
+  aso-api:
+    image: ${ASO_API_IMAGE:-aso-prior-auth-api:local}
+    build:
+      context: .
+      dockerfile: Dockerfile.demo
+      target: api
+    environment:
+      ASO_DATABASE_URL: postgresql://aso_demo_runtime:${ASO_RUNTIME_DATABASE_PASSWORD:-demo-runtime-only}@db:5432/${POSTGRES_DB:-flint}
+      ASO_GATE_DATABASE_URL: postgresql://aso_demo_runtime:${ASO_RUNTIME_DATABASE_PASSWORD:-demo-runtime-only}@db:5432/${POSTGRES_DB:-flint}
+      ASO_SESSION_AUTHORITY_DATABASE_URL: postgresql://aso_demo_authority:${ASO_AUTHORITY_DATABASE_PASSWORD:-demo-authority-only}@db:5432/${POSTGRES_DB:-flint}
+      ASO_KRATOS_PUBLIC_URL: http://kratos:4433
+      ASO_KRATOS_ADMIN_URL: http://kratos:4434
+      ASO_ALLOW_INSECURE_KRATOS: "true"
+      ASO_DOCUMENT_STORE_ROOT: /var/lib/aso/documents
+      ASO_BIND_ADDRESS: 0.0.0.0
+      ASO_PORT: 8788
+      RUST_LOG: ${RUST_LOG:-info,aso_web_server=debug}
+    volumes:
+      - demo_documents:/var/lib/aso/documents
+    ports:
+      - "${ASO_API_PORT:-8788}:8788"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "http://127.0.0.1:8788/ready"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    depends_on:
+      aso-demo-init:
+        condition: service_completed_successfully
     restart: unless-stopped
 
-  # ── Realtime substrate ───────────────────────────────────────────────────
-  # ── Realtime substrate — NOT STARTED BY DEFAULT ──────────────────────────
-  #
-  # `docker compose up` deliberately skips this. Start it explicitly with
-  # `docker compose --profile realtime up -d realtime-fabric` once its
-  # dependencies exist.
-  #
-  # WHY (measured 2026-09-06): the image BUILDS, then exits on
-  # "IGGY_CONNECTION_STRING must be set". Its docs/ENVIRONMENT.md marks 15
-  # settings required, and its own compose.yml brings four more services —
-  # iggy-server, keto, keto-migrate, surrealdb — plus a SECOND Postgres
-  # replication slot and publication (frf_slot / frf_pub) alongside Electric's.
-  #
-  # Nothing consumes it yet: grep of web/src, web/package.json and
-  # docs/architecture finds no reference to realtime-fabric, Iggy, LiveKit or
-  # Keto. It is named in one line of the phase plan's service list.
-  #
-  # Standing it up now would add four unused services and a second CDC
-  # consumer on the same database, for no caller. Left defined and profiled
-  # off so the intent survives and the default `up` stays green.
+  web:
+    image: ${ASO_WEB_IMAGE:-aso-prior-auth-web:local}
+    build:
+      context: .
+      dockerfile: Dockerfile.demo
+      target: web
+    environment:
+      ASO_API_PROXY_TARGET: http://aso-api:8788
+      ASO_CLINICAL_GATE_PROXY_TARGET: http://aso-api:8788
+      ASO_KRATOS_PROXY_TARGET: http://kratos:4433
+      ASO_GATE_PROXY_TARGET: http://flint-gate:4456
+      VITE_ASO_SHAPE_GATEWAY: /v1/shape
+      VITE_ASO_REPLICA_PERSISTENCE: memory
+      VITE_ASO_ENABLE_RA11C_MATERIALIZER: "true"
+    ports:
+      - "${ASO_WEB_PORT:-5173}:5173"
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:5173/login').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    depends_on:
+      aso-api:
+        condition: service_healthy
+      flint-gate:
+        condition: service_healthy
+      realtime-fabric:
+        condition: service_healthy
+    restart: unless-stopped
+
+  gate-keys:
+    image: ${ASO_DB_IMAGE:-aso-prior-auth-db:local}
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        set -eu
+        if [ ! -s /keys/private.pem ]; then
+          openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048 -out /keys/private.pem
+          openssl pkey -in /keys/private.pem -pubout -out /keys/public.pem
+        fi
+        chown 1001:1001 /keys/private.pem /keys/public.pem
+        chmod 600 /keys/private.pem
+        chmod 644 /keys/public.pem
+    volumes:
+      - gate_keys:/keys
+    restart: "no"
+
+  redis:
+    image: redis@sha256:becdda6c7f4b3fb42e42fd7f120bbf5c54c4caaaf16f26da24e4563d2c1f0576
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 2s
+      timeout: 2s
+      retries: 20
+    restart: unless-stopped
+
+  iggy-server:
+    image: iggyrs/iggy@sha256:68a314c1380be5a792a134f3bd346ded42bd49d9f7114c86f70b48fc85bc5272
+    environment:
+      IGGY_SYSTEM_PATH: /data
+    volumes:
+      - iggy_data:/data
+    healthcheck:
+      test: ["CMD", "iggy", "--transport", "tcp", "--tcp-server-address", "localhost:8090", "-u", "iggy", "-p", "iggy", "me"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 10s
+    restart: unless-stopped
+
+  flint-gate-init:
+    image: ${ASO_GATE_IMAGE:-aso-prior-auth-flint-gate:local}
+    build:
+      context: ${PROMETHEUS_ROOT:-/Users/gqadonis/Projects/prometheus}/flint-gate
+    command: ["--database-init-only"]
+    volumes:
+      - ./docker/flint-gate/config.ra05.yaml:/app/config/config.yaml:ro
+      - gate_keys:/run/ra05-keys:ro
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-flint}:${POSTGRES_PASSWORD:-flint}@db:5432/flintgate
+      FLINT_GATE_CONFIG: /app/config/config.yaml
+      FLINT_GATE_REQUIRE_DATABASE: "true"
+      FLINT_GATE_JWT_KEY_PATH: /run/ra05-keys/private.pem
+      FLINT_GATE_JWT_PUBLIC_KEY_PATH: /run/ra05-keys/public.pem
+      FLINT_GATE_ASO_AUTHORITY_DATABASE_URL: postgresql://aso_demo_gate_authority:${ASO_GATE_AUTHORITY_DATABASE_PASSWORD:-demo-gate-authority-only}@db:5432/${POSTGRES_DB:-flint}
+    depends_on:
+      aso-demo-init:
+        condition: service_completed_successfully
+      gate-keys:
+        condition: service_completed_successfully
+    restart: "no"
+
+  # Validates the Kratos session, resolves the fresh ASO replica grant, and
+  # mints the bounded token accepted by the shape facade.
+  flint-gate:
+    image: ${ASO_GATE_IMAGE:-aso-prior-auth-flint-gate:local}
+    build:
+      context: ${PROMETHEUS_ROOT:-/Users/gqadonis/Projects/prometheus}/flint-gate
+    volumes:
+      - ./docker/flint-gate/config.ra05.yaml:/app/config/config.yaml:ro
+      - gate_keys:/run/ra05-keys:ro
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-flint}:${POSTGRES_PASSWORD:-flint}@db:5432/flintgate
+      FLINT_GATE_CONFIG: /app/config/config.yaml
+      FLINT_GATE_REQUIRE_DATABASE: "true"
+      FLINT_GATE_JWT_KEY_PATH: /run/ra05-keys/private.pem
+      FLINT_GATE_JWT_SECRET: ""
+      FLINT_GATE_ASO_AUTHORITY_DATABASE_URL: postgresql://aso_demo_gate_authority:${ASO_GATE_AUTHORITY_DATABASE_PASSWORD:-demo-gate-authority-only}@db:5432/${POSTGRES_DB:-flint}
+      RUST_LOG: ${RUST_LOG:-info,flint_gate=info}
+    ports:
+      - "${GATE_PROXY_PORT:-4456}:4456"
+    healthcheck:
+      test: ["CMD", "bash", "-ec", "exec 3<>/dev/tcp/127.0.0.1/4457; printf 'GET /ready HTTP/1.0\r\n\r\n' >&3; read -r line <&3; [[ $$line == *' 200 '* ]]"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+    depends_on:
+      flint-gate-init:
+        condition: service_completed_successfully
+      kratos:
+        condition: service_started
+      redis:
+        condition: service_healthy
+      aso-api:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # The browser names only a catalog shape. The facade owns its base table,
+  # projected columns, and verified-practice predicate before calling Electric.
   realtime-fabric:
-    profiles: ["realtime"]
+    image: ${ASO_FRF_IMAGE:-aso-prior-auth-realtime-fabric:local}
     build:
       context: ${PROMETHEUS_ROOT:-/Users/gqadonis/Projects/prometheus}/flint-realtime-fabric
+      args:
+        CARGO_FEATURES: shape-facade
+    volumes:
+      - ./docker/frf/shape-catalog.json:/app/config/shape-catalog.json:ro
     environment:
-      RUST_LOG: ${RUST_LOG:-info}
-    ports:
-      - "${FABRIC_PORT:-8080}:8080"
+      BIND_ADDR: 0.0.0.0:8080
+      GATEWAY_PROFILE: shape-only
+      GRPC_PORT: "0"
+      AUTHZ_BACKEND: verified-identity
+      GATEWAY_JWKS_URL: http://flint-gate:4456/.well-known/jwks.json
+      JWT_AUDIENCE: frf-gateway
+      JWT_ISSUER: https://gate.aso.local
+      SFU_MODE: sovereign
+      CDC_ENABLED: "false"
+      FEDERATION_ENABLED: "false"
+      POLICY_ENGINE: none
+      SHAPE_ELECTRIC_URL: http://electric:3000
+      SHAPE_CATALOG_PATH: /app/config/shape-catalog.json
+      RUST_LOG: ${RUST_LOG:-info,frf_gateway=info}
     depends_on:
-      db:
+      electric:
+        condition: service_started
+      flint-gate:
         condition: service_healthy
+      iggy-server:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://127.0.0.1:8080/readyz"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+      start_period: 10s
     restart: unless-stopped
 
 volumes:
   db_data:
+  demo_documents:
+  gate_keys:
+  iggy_data:

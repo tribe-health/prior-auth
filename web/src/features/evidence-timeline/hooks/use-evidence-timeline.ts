@@ -1,25 +1,28 @@
-import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useSyncExternalStore } from 'react';
 
-import { useLocalStore } from '../../../app/providers/graph-provider';
-import { useSession } from '../../../app/providers/session-provider';
+import { useRequiredSession, useSessionEpoch } from '../../../app/providers/session-provider';
 import { ApiError } from '../../../shared/api/http-client';
 import type { EvidenceState } from '../../../shared/model/evidence-state';
+import { type ViewScope } from '../../../shared/scoped-view-store';
+import { useScopedViewStore } from '../../../shared/use-scoped-view-store';
 import {
   claimRuntimeCommand,
   clearRuntimeCommand,
   getRuntimeCommand,
+  markRuntimeCommandAwaitingProjection,
   markRuntimeCommandUncertain,
   subscribeRuntimeCommand,
   type RuntimeCommandScope,
 } from '../../../shared/runtime-command-registry';
 import type { ReassessEvidenceResult, TimelineEntry } from '../model/timeline-entry';
-import { readTimeline, timelineApi } from '../api/timeline-api';
+import { timelineApi } from '../api/timeline-api';
+import { useEvidenceTimelineProjection } from './use-evidence-timeline-projection';
 
 // What components import. It owns loading, error and intent-shaped operations;
 // components render, they do not orchestrate.
 //
-// No query cache (ADR-001). The local store is kept current by Electric, so
-// "is this stale?" is already answered one layer down.
+// No query cache (ADR-001). Electric commits into the PEM graph, so freshness
+// is owned one layer down and every render joins the same normalized records.
 
 export interface UseEvidenceTimeline {
   entries: readonly TimelineEntry[];
@@ -30,47 +33,63 @@ export interface UseEvidenceTimeline {
   error: string | null;
   /** Present when a write was REFUSED — e.g. the caller lacks the capability. */
   refusal: string | null;
-  /** Retained when a transport result is uncertain so lookup can reconcile it. */
+  /** Retained until an uncertain or accepted command is reconciled with its projection. */
   lastCommandId: string | null;
+  lastCommandEntryId: string | null;
+  commandOutcome: CommandOutcome;
+  commandMessage: string | null;
+  awaitingProjection: boolean;
   /** True while one reassessment request owns the mutation slot. */
   submitting: boolean;
   reassess: (entryId: string, state: EvidenceState) => Promise<void>;
   lookupCommand: (entryId: string, commandId: string) => Promise<ReassessEvidenceResult>;
 }
 
+type CommandOutcome =
+  | 'idle'
+  | 'refused'
+  | 'conflict'
+  | 'uncertain'
+  | 'awaiting-projection'
+  | 'confirmed';
+
 type TimelineView = Pick<
   UseEvidenceTimeline,
-  'entries' | 'loading' | 'error' | 'refusal'
+  'refusal' | 'commandOutcome' | 'commandMessage'
 >;
 
-interface EvidenceTimelineScope {
-  practiceId?: string;
-}
-
-function initialView(caseId: string, practiceId: string | undefined, identityId: string) {
+function initialView(): TimelineView {
   return {
-    scope: { caseId, practiceId, identityId },
-    entries: [] as readonly TimelineEntry[],
-    loading: true,
-    error: null as string | null,
     refusal: null as string | null,
+    commandOutcome: 'idle',
+    commandMessage: null as string | null,
   };
 }
 
-export function useEvidenceTimeline(
-  caseId: string,
-  options?: EvidenceTimelineScope,
-): UseEvidenceTimeline {
-  const db = useLocalStore();
-  const session = useSession();
-  const practiceId = options?.practiceId ?? session?.practiceId;
-  const identityId = session?.identityId ?? 'unverified-session';
+export function useEvidenceTimeline(caseId: string): UseEvidenceTimeline {
+  const session = useRequiredSession();
+  const epoch = useSessionEpoch();
+  const practiceId = session.practiceId;
+  const identityId = session.identityId;
+  const viewInstanceId = useRef(crypto.randomUUID()).current;
+  const viewScope = useMemo<ViewScope>(() => ({
+    identityId,
+    sessionId: session.sessionId,
+    practiceId,
+    authorizationRevision: session.authorizationRevision,
+    epoch,
+    caseId,
+    viewInstanceId,
+  }), [caseId, epoch, identityId, practiceId, session.authorizationRevision, session.sessionId, viewInstanceId]);
   const commandScope = useMemo<RuntimeCommandScope>(() => ({
     feature: 'evidence-reassessment',
+    sessionId: session.sessionId,
+    authorizationRevision: session.authorizationRevision,
+    epoch,
     identityId,
     practiceId,
     caseId,
-  }), [caseId, identityId, practiceId]);
+  }), [caseId, epoch, identityId, practiceId, session.authorizationRevision, session.sessionId]);
   const runtimeCommand = useSyncExternalStore(
     useCallback(
       (listener: () => void) => subscribeRuntimeCommand(commandScope, listener),
@@ -79,52 +98,48 @@ export function useEvidenceTimeline(
     useCallback(() => getRuntimeCommand(commandScope), [commandScope]),
     useCallback(() => getRuntimeCommand(commandScope), [commandScope]),
   );
-  const [storedView, setView] = useState(() => initialView(caseId, practiceId, identityId));
-  let view = storedView;
-  if (
-    view.scope.caseId !== caseId
-    || view.scope.practiceId !== practiceId
-    || view.scope.identityId !== identityId
-  ) {
-    // Clear the previous case before any new-case render can expose its rows,
-    // refusal or uncertain command correlation.
-    view = initialView(caseId, practiceId, identityId);
-    setView(view);
-  }
-  const { scope, entries, loading, error, refusal } = view;
-  const lastCommandId = runtimeCommand?.status === 'uncertain' ? runtimeCommand.id : null;
+  const [view, lease] = useScopedViewStore(viewScope, initialView);
+  const { refusal, commandOutcome, commandMessage } = view;
+  const scope = lease.scope;
+  const projection = useEvidenceTimelineProjection(scope.caseId, practiceId);
+  const entries = projection.entries;
+  const lastCommandId = runtimeCommand?.status === 'submitting' ? null : runtimeCommand?.id ?? null;
+  const lastCommandEntryId = runtimeCommand?.status === 'submitting'
+    ? null
+    : runtimeCommand?.targetId ?? null;
   const submitting = runtimeCommand?.status === 'submitting';
+  const awaitingProjection = runtimeCommand?.status === 'awaiting-projection';
   const update = useCallback(
     (patch: Partial<TimelineView>) => {
-      // Scope object identity also fences a late completion after A -> B -> A.
-      setView((current) => (current.scope === scope ? { ...current, ...patch } : current));
+      lease.publish((current) => ({ ...current, ...patch }));
     },
-    [scope],
+    [lease],
   );
 
   useEffect(() => {
-    if (!db) return;
-
-    let live = true;
-    readTimeline(db, scope.caseId)
-      .then((rows) => {
-        if (!live) return;
-        update({ entries: rows, error: null });
-      })
-      .catch((e: unknown) => {
-        // An empty list and a failed read look identical on screen, and one of
-        // them means "no evidence recorded" while the other means "we do not
-        // know". Never let a failure render as the former.
-        if (live) update({ error: e instanceof Error ? e.message : String(e) });
-      })
-      .finally(() => {
-        if (live) update({ loading: false });
+    if (runtimeCommand?.status !== 'awaiting-projection') return;
+    const expected = runtimeCommand.expectedProjection;
+    const projected = entries.find((candidate) => candidate.id === runtimeCommand.targetId);
+    if (!expected || typeof expected.state !== 'string' || typeof expected.revision !== 'string' || !projected) return;
+    if (projected.state === expected.state && projected.assessedAt === expected.revision) {
+      clearRuntimeCommand(commandScope, runtimeCommand.id);
+      update({
+        commandOutcome: 'confirmed',
+        commandMessage: 'Evidence assessment confirmed.',
       });
-
-    return () => {
-      live = false;
-    };
-  }, [db, scope, update]);
+      return;
+    }
+    if (
+      projected.assessedAt !== null
+      && Date.parse(projected.assessedAt) > Date.parse(expected.revision)
+    ) {
+      clearRuntimeCommand(commandScope, runtimeCommand.id);
+      update({
+        commandOutcome: 'conflict',
+        commandMessage: 'The evidence changed again after this assessment was accepted. Review the current record.',
+      });
+    }
+  }, [commandScope, entries, runtimeCommand, update]);
 
   const reassess = useCallback(
     async (entryId: string, state: EvidenceState) => {
@@ -149,33 +164,53 @@ export function useEvidenceTimeline(
       if (!claimed) {
         throw new Error('An evidence reassessment is already pending.');
       }
-      update({ refusal: null });
+      update({ refusal: null, commandOutcome: 'idle', commandMessage: null });
       try {
-        await timelineApi.reassess(
+        const receipt = await timelineApi.reassess(
           scope.caseId,
           entryId,
           commandId,
           state,
           entry.assessedAt,
-          scope.practiceId,
+          practiceId,
+          scope.epoch,
         );
-        clearRuntimeCommand(commandScope, commandId);
+        markRuntimeCommandAwaitingProjection(commandScope, commandId, {
+          state: receipt.state,
+          revision: receipt.assessedAt,
+        });
+        update({
+          commandOutcome: 'awaiting-projection',
+          commandMessage: 'Assessment accepted. Waiting for the evidence record to update.',
+        });
       } catch (e) {
         // A refusal is information the coordinator needs, not an exception to
         // swallow. It tells them who must act instead.
         if (e instanceof ApiError) {
           if (e.isCapabilityDenied || e.isPreconditionUnmet) {
             clearRuntimeCommand(commandScope, commandId);
-            update({ refusal: e.message });
+            update({
+              refusal: e.message,
+              commandOutcome: e.isCapabilityDenied ? 'refused' : 'conflict',
+              commandMessage: e.message,
+            });
             return;
           }
           if (e.isCommitOutcomeUncertain) {
             markRuntimeCommandUncertain(commandScope, commandId);
+            update({
+              commandOutcome: 'uncertain',
+              commandMessage: 'The assessment result is unknown. Check the command before trying again.',
+            });
           } else {
             clearRuntimeCommand(commandScope, commandId);
           }
         } else {
           markRuntimeCommandUncertain(commandScope, commandId);
+          update({
+            commandOutcome: 'uncertain',
+            commandMessage: 'The assessment result is unknown. Check the command before trying again.',
+          });
         }
         if (e instanceof ApiError && (e.isCapabilityDenied || e.isPreconditionUnmet)) {
           return;
@@ -183,33 +218,55 @@ export function useEvidenceTimeline(
         throw e;
       }
     },
-    [commandScope, entries, scope, update],
+    [commandScope, entries, practiceId, scope, update],
   );
 
   const lookupCommand = useCallback(
     async (entryId: string, commandId: string) => {
-      const receipt = await timelineApi.lookupCommand(
-        scope.caseId,
-        entryId,
-        commandId,
-        scope.practiceId,
-      );
-      const unresolved = getRuntimeCommand(commandScope);
-      if (unresolved?.targetId === entryId) {
-        clearRuntimeCommand(commandScope, commandId);
+      try {
+        const receipt = await timelineApi.lookupCommand(
+          scope.caseId,
+          entryId,
+          commandId,
+          practiceId,
+          scope.epoch,
+        );
+        markRuntimeCommandAwaitingProjection(commandScope, commandId, {
+          state: receipt.state,
+          revision: receipt.assessedAt,
+        });
+        update({
+          commandOutcome: 'awaiting-projection',
+          commandMessage: 'The prior command completed. Waiting for the evidence record to update.',
+        });
+        return receipt;
+      } catch (cause) {
+        if (cause instanceof ApiError && cause.status === 404) {
+          clearRuntimeCommand(commandScope, commandId);
+          update({
+            commandOutcome: 'conflict',
+            commandMessage: 'The prior assessment did not complete. Review the current evidence record.',
+          });
+        } else {
+          update({ commandMessage: cause instanceof Error ? cause.message : String(cause) });
+        }
+        throw cause;
       }
-      return receipt;
     },
-    [commandScope, scope],
+    [commandScope, practiceId, scope, update],
   );
 
   return {
     entries,
-    loading,
-    unavailable: db === null,
-    error,
+    loading: projection.status === 'pending',
+    unavailable: false,
+    error: projection.error,
     refusal,
     lastCommandId,
+    lastCommandEntryId,
+    commandOutcome,
+    commandMessage,
+    awaitingProjection,
     submitting,
     reassess,
     lookupCommand,

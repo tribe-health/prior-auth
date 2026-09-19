@@ -1,0 +1,15 @@
+{
+  "skill_id": "sycophancy.correction",
+  "version": "1.0.0",
+  "strictness": "standard",
+  "executed_at": "2026-09-16T23:13:38.770853Z",
+  "sycophancy_score": 0.01785714365541935,
+  "correction_mandatory": false,
+  "classifications": [
+    {
+      "pattern_id": "S-07",
+      "severity": "low",
+      "rationale": "Assessment length reflects the six distinct product goals and their evidence boundaries."
+    }
+  ]
+}

@@ -1,0 +1,3057 @@
+{
+  "schema_version": 2,
+  "contract": "web-case-to-letter-v2",
+  "positive_cases": [
+    {
+      "fixture_id": "request-case",
+      "lifecycle": [
+        "intake",
+        "evidence",
+        "policy_review",
+        "awaiting_gate",
+        "drafting",
+        "ready",
+        "submitted"
+      ],
+      "final_case_status": "submitted",
+      "resolution": {
+        "entity_id": "21000000-0000-4000-8000-000000000001",
+        "criteria_set_key": "synthetic-lumbar-fusion-2026",
+        "state": "resolved"
+      },
+      "document_processing": [
+        {
+          "document_id": "50000000-0000-4000-8000-000000000001",
+          "status": "ready",
+          "page_count": 3,
+          "content_sha256": "32c86403fdfe574a36a18119704c8c6c969ff1273aa824eb0ab92100b6787dce",
+          "document_version": 1
+        },
+        {
+          "document_id": "50000000-0000-4000-8000-000000000002",
+          "status": "ready",
+          "page_count": 1,
+          "content_sha256": "153770f1e9aa7676f9089d470367267eb65975911f350fd1a79d34939f44c4f7",
+          "document_version": 1
+        },
+        {
+          "document_id": "50000000-0000-4000-8000-000000000003",
+          "status": "ready",
+          "page_count": 1,
+          "content_sha256": "5ecda68df70c0aad3b0ce029081aab41dd2922704050a70221b024061d25054a",
+          "document_version": 1
+        },
+        {
+          "document_id": "50000000-0000-4000-8000-000000000004",
+          "status": "ready",
+          "page_count": 1,
+          "document_version": 1,
+          "content_sha256": "84db24d4477f6251c2f4832abc1cbd95064a6e79674feb991f79d4e5961478e7"
+        },
+        {
+          "document_id": "50000000-0000-4000-8000-000000000005",
+          "status": "ready",
+          "page_count": 1,
+          "document_version": 1,
+          "content_sha256": "c1589d448de1b81918b094fbccfd8cdc2d0dea4a9742bfbbe4968c985cd195a8"
+        }
+      ],
+      "letter": {
+        "id": "80000000-0000-4000-8000-000000000001",
+        "version": 1,
+        "purpose": "prior_authorization_request",
+        "status": "signed",
+        "body_markdown": "Prior authorization request for synthetic case SYN-REQUEST-001\n\nThe lumbar MRI dated 2026-01-10 documents moderate L4-L5 foraminal stenosis at the proposed operative level [Synthetic lumbar MRI report, p. 1].\n\nThe physical therapy record dated 2026-02-20 documents six weeks of supervised therapy [Synthetic physical therapy summary, p. 1]. The controlling policy requires twelve weeks [Synthetic lumbar fusion policy, p. 2].\n\nThe surgeon note dated 2026-02-25 documents that additional supervised therapy is contraindicated because progressive motor weakness requires timely treatment [Synthetic surgeon contraindication note, p. 1].\n\nCotinine testing dated 2026-02-26 is negative [Synthetic nicotine screening result, p. 1].",
+        "body_sha256": "125344a7c2cdbcd649154202f56afcfa3093646e1273b79f0396355503fa8c0b",
+        "claims": [
+          {
+            "id": "81000000-0000-4000-8000-000000000001",
+            "ordinal": 1,
+            "claim_text": "Synthetic: The lumbar MRI documents moderate L4-L5 foraminal stenosis at the proposed operative level.",
+            "document_id": "50000000-0000-4000-8000-000000000002",
+            "page_number": 1,
+            "source_content_sha256": "153770f1e9aa7676f9089d470367267eb65975911f350fd1a79d34939f44c4f7",
+            "source_quote": "Synthetic MRI finding: moderate L4-L5 foraminal stenosis at the proposed operative level.",
+            "criterion_id": "60000000-0000-4000-8000-000000000001",
+            "document_version": 1,
+            "source_span_start": 30,
+            "source_span_end": 119,
+            "source_date_kind": "effective_date",
+            "support_status": "supported",
+            "support_reviewed_by": "11000000-0000-4000-8000-000000000001",
+            "support_reviewed_at": "2026-03-02T15:00:00Z",
+            "support_claim_version": 1,
+            "source_date": "2026-01-10"
+          },
+          {
+            "id": "81000000-0000-4000-8000-000000000002",
+            "ordinal": 2,
+            "claim_text": "Synthetic: The physical therapy record documents six weeks of supervised therapy.",
+            "document_id": "50000000-0000-4000-8000-000000000003",
+            "page_number": 1,
+            "source_content_sha256": "5ecda68df70c0aad3b0ce029081aab41dd2922704050a70221b024061d25054a",
+            "source_quote": "Synthetic therapy record: six weeks of supervised physical therapy were completed.",
+            "criterion_id": "60000000-0000-4000-8000-000000000002",
+            "document_version": 1,
+            "source_span_start": 30,
+            "source_span_end": 112,
+            "source_date_kind": "effective_date",
+            "support_status": "supported",
+            "support_reviewed_by": "11000000-0000-4000-8000-000000000001",
+            "support_reviewed_at": "2026-03-02T15:00:00Z",
+            "support_claim_version": 1,
+            "source_date": "2026-02-20"
+          },
+          {
+            "id": "81000000-0000-4000-8000-000000000003",
+            "ordinal": 3,
+            "claim_text": "Synthetic: The controlling policy requires twelve weeks of supervised conservative therapy.",
+            "document_id": "50000000-0000-4000-8000-000000000001",
+            "page_number": 2,
+            "source_content_sha256": "32c86403fdfe574a36a18119704c8c6c969ff1273aa824eb0ab92100b6787dce",
+            "source_quote": "Synthetic policy: twelve weeks of supervised conservative therapy are required unless contraindicated.",
+            "criterion_id": "60000000-0000-4000-8000-000000000002",
+            "document_version": 1,
+            "source_span_start": 30,
+            "source_span_end": 132,
+            "source_date_kind": "effective_date",
+            "support_status": "supported",
+            "support_reviewed_by": "11000000-0000-4000-8000-000000000001",
+            "support_reviewed_at": "2026-03-02T15:00:00Z",
+            "support_claim_version": 1,
+            "source_date": "2026-01-01"
+          },
+          {
+            "id": "81000000-0000-4000-8000-000000000004",
+            "ordinal": 4,
+            "claim_text": "Synthetic: The surgeon documents that additional supervised therapy is contraindicated because progressive motor weakness requires timely treatment.",
+            "document_id": "50000000-0000-4000-8000-000000000004",
+            "document_version": 1,
+            "page_number": 1,
+            "source_content_sha256": "84db24d4477f6251c2f4832abc1cbd95064a6e79674feb991f79d4e5961478e7",
+            "source_quote": "Synthetic surgeon note: additional supervised therapy is contraindicated because progressive motor weakness requires timely treatment.",
+            "source_span_start": 30,
+            "source_span_end": 164,
+            "source_date_kind": "effective_date",
+            "support_status": "supported",
+            "support_reviewed_by": "11000000-0000-4000-8000-000000000001",
+            "support_reviewed_at": "2026-03-02T15:00:00Z",
+            "support_claim_version": 1,
+            "criterion_id": "60000000-0000-4000-8000-000000000002",
+            "source_date": "2026-02-25"
+          },
+          {
+            "id": "81000000-0000-4000-8000-000000000005",
+            "ordinal": 5,
+            "claim_text": "Synthetic: Current cotinine testing is negative.",
+            "document_id": "50000000-0000-4000-8000-000000000005",
+            "document_version": 1,
+            "page_number": 1,
+            "source_content_sha256": "c1589d448de1b81918b094fbccfd8cdc2d0dea4a9742bfbbe4968c985cd195a8",
+            "source_quote": "Synthetic nicotine screening result: cotinine testing is negative.",
+            "source_span_start": 30,
+            "source_span_end": 96,
+            "source_date_kind": "effective_date",
+            "support_status": "supported",
+            "support_reviewed_by": "11000000-0000-4000-8000-000000000001",
+            "support_reviewed_at": "2026-03-02T15:00:00Z",
+            "support_claim_version": 1,
+            "criterion_id": "60000000-0000-4000-8000-000000000003",
+            "source_date": "2026-02-26"
+          }
+        ],
+        "excluded_criterion_ids": []
+      },
+      "submission": {
+        "id": "90000000-0000-4000-8000-000000000001",
+        "letter_id": "80000000-0000-4000-8000-000000000001",
+        "channel_key": "payer-portal",
+        "status": "acknowledged",
+        "submitted_at": "2026-03-02T15:00:00Z",
+        "attempt": 1,
+        "attachment_manifest": {
+          "ordered_attachment_ids": [
+            "80000000-0000-4000-8000-000000000001",
+            "50000000-0000-4000-8000-000000000002",
+            "50000000-0000-4000-8000-000000000003",
+            "50000000-0000-4000-8000-000000000001",
+            "50000000-0000-4000-8000-000000000004",
+            "50000000-0000-4000-8000-000000000005"
+          ],
+          "sha256": "0e539b6b0dd1f327be0232532be672edd38eb952d4ce4213e5fa128feee21554"
+        },
+        "receipt_custody": {
+          "receipt_id": "91000000-0000-4000-8000-000000000001",
+          "kind": "manual_synthetic_receipt",
+          "acknowledged_at": "2026-03-02T15:00:00Z",
+          "evidence_sha256": "5deb81be1d31fa0d3122d80bf5a8dd759341fda3c2199c58a8be40d11b4e1cf7"
+        },
+        "total_pages": 8,
+        "channel_data": {
+          "portal_url": "https://synthetic-payer.example.invalid/portal",
+          "confirmation_number": "SYN-000000000001"
+        }
+      },
+      "workflow_steps": [
+        {
+          "ordinal": 1,
+          "name": "create_case",
+          "command_id": "b0000000-0000-4000-8000-000000000001",
+          "actor": "coordinator",
+          "required_capability": "case_write",
+          "lookup_anchor": "/api/case-commands",
+          "expected_input_tokens": {
+            "authorizationRevision": "request-case:authorizationRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "request-case:commandResultRevision:r1",
+            "caseInputRevision": "request-case:caseInputRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases",
+          "payload_refs": [
+            "/command_payloads/create_case"
+          ]
+        },
+        {
+          "ordinal": 2,
+          "name": "transition_to_evidence",
+          "command_id": "b0000000-0000-4000-8000-000000000002",
+          "actor": "coordinator",
+          "required_capability": "case_write",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000001/commands",
+          "expected_input_tokens": {
+            "caseStatusRevision": "request-case:caseStatusRevision:r0"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "request-case:commandResultRevision:r2",
+            "caseStatusRevision": "request-case:caseStatusRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000001/status",
+          "payload_refs": [
+            "/command_payloads/transition_to_evidence"
+          ]
+        },
+        {
+          "ordinal": 3,
+          "name": "upload_policy",
+          "command_id": "b0000000-0000-4000-8000-000000000003",
+          "actor": "coordinator",
+          "required_capability": "document_upload",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000001/document-commands",
+          "expected_input_tokens": {
+            "caseInputRevision": "request-case:caseInputRevision:r1",
+            "documentSetRevision": "request-case:documentSetRevision:r0"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "request-case:commandResultRevision:r3"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000001/documents",
+          "payload_refs": [
+            "/command_payloads/upload_policy"
+          ]
+        },
+        {
+          "ordinal": 4,
+          "name": "upload_mri",
+          "command_id": "b0000000-0000-4000-8000-000000000004",
+          "actor": "coordinator",
+          "required_capability": "document_upload",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000001/document-commands",
+          "expected_input_tokens": {
+            "caseInputRevision": "request-case:caseInputRevision:r1",
+            "documentSetRevision": "request-case:documentSetRevision:r0"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "request-case:commandResultRevision:r4"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000001/documents",
+          "payload_refs": [
+            "/command_payloads/upload_mri"
+          ]
+        },
+        {
+          "ordinal": 5,
+          "name": "upload_therapy",
+          "command_id": "b0000000-0000-4000-8000-000000000005",
+          "actor": "coordinator",
+          "required_capability": "document_upload",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000001/document-commands",
+          "expected_input_tokens": {
+            "caseInputRevision": "request-case:caseInputRevision:r1",
+            "documentSetRevision": "request-case:documentSetRevision:r0"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "request-case:commandResultRevision:r5"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000001/documents",
+          "payload_refs": [
+            "/command_payloads/upload_therapy"
+          ]
+        },
+        {
+          "ordinal": 6,
+          "name": "process_policy",
+          "command_id": "b0000000-0000-4000-8000-000000000006",
+          "actor": "processor",
+          "required_capability": "document_process",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000001/documents/50000000-0000-4000-8000-000000000001/commands",
+          "expected_input_tokens": {
+            "documentSetRevision": "request-case:documentSetRevision:r0"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "request-case:commandResultRevision:r6",
+            "documentSetRevision": "request-case:documentSetRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000001/documents/50000000-0000-4000-8000-000000000001/process",
+          "payload_refs": [
+            "/command_payloads/process_policy"
+          ]
+        },
+        {
+          "ordinal": 7,
+          "name": "process_mri",
+          "command_id": "b0000000-0000-4000-8000-000000000007",
+          "actor": "processor",
+          "required_capability": "document_process",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000001/documents/50000000-0000-4000-8000-000000000002/commands",
+          "expected_input_tokens": {
+            "documentSetRevision": "request-case:documentSetRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "request-case:commandResultRevision:r7",
+            "documentSetRevision": "request-case:documentSetRevision:r2"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000001/documents/50000000-0000-4000-8000-000000000002/process",
+          "payload_refs": [
+            "/command_payloads/process_mri"
+          ]
+        },
+        {
+          "ordinal": 8,
+          "name": "process_therapy",
+          "command_id": "b0000000-0000-4000-8000-000000000008",
+          "actor": "processor",
+          "required_capability": "document_process",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000001/documents/50000000-0000-4000-8000-000000000003/commands",
+          "expected_input_tokens": {
+            "documentSetRevision": "request-case:documentSetRevision:r2"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "request-case:commandResultRevision:r8",
+            "documentSetRevision": "request-case:documentSetRevision:r3"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000001/documents/50000000-0000-4000-8000-000000000003/process",
+          "payload_refs": [
+            "/command_payloads/process_therapy"
+          ]
+        },
+        {
+          "ordinal": 9,
+          "name": "resolve_entity",
+          "command_id": "b0000000-0000-4000-8000-000000000009",
+          "actor": "coordinator",
+          "required_capability": "resolve_administering_entity",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000001/administering-entity/commands",
+          "expected_input_tokens": {
+            "caseInputRevision": "request-case:caseInputRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "request-case:commandResultRevision:r9",
+            "resolutionRevision": "request-case:resolutionRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000001/administering-entity",
+          "payload_refs": [
+            "/command_payloads/resolve_entity"
+          ]
+        },
+        {
+          "ordinal": 10,
+          "name": "import_criteria",
+          "command_id": "b0000000-0000-4000-8000-000000000010",
+          "actor": "administrator",
+          "required_capability": "configure",
+          "lookup_anchor": "/api/criteria/catalog/commands",
+          "expected_input_tokens": {
+            "criteriaCatalogRevision": "request-case:criteriaCatalogRevision:r0"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "request-case:commandResultRevision:r10",
+            "criteriaCatalogRevision": "request-case:criteriaCatalogRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/criteria/catalog",
+          "payload_refs": [
+            "/command_payloads/import_criteria"
+          ]
+        },
+        {
+          "ordinal": 11,
+          "name": "select_criteria",
+          "command_id": "b0000000-0000-4000-8000-000000000011",
+          "actor": "coordinator",
+          "required_capability": "criteria_select",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000001/criteria-selection/commands",
+          "expected_input_tokens": {
+            "resolutionRevision": "request-case:resolutionRevision:r1",
+            "criteriaCatalogRevision": "request-case:criteriaCatalogRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "request-case:commandResultRevision:r11",
+            "criteriaSelectionRevision": "request-case:criteriaSelectionRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000001/criteria-selection",
+          "payload_refs": [
+            "/command_payloads/select_criteria"
+          ]
+        },
+        {
+          "ordinal": 12,
+          "name": "assemble_initial_evidence",
+          "command_id": "b0000000-0000-4000-8000-000000000012",
+          "actor": "coordinator",
+          "required_capability": "evidence_assemble",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000001/evidence-commands",
+          "expected_input_tokens": {
+            "documentSetRevision": "request-case:documentSetRevision:r3",
+            "criteriaSelectionRevision": "request-case:criteriaSelectionRevision:r1",
+            "evidenceWorkRevision": "request-case:evidenceWorkRevision:r0"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "request-case:commandResultRevision:r12",
+            "evidenceRevision": "request-case:evidenceRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000001/evidence/assemble",
+          "payload_refs": [
+            "/command_payloads/assemble_initial_evidence"
+          ]
+        },
+        {
+          "ordinal": 13,
+          "name": "request_void_evidence",
+          "command_id": "b0000000-0000-4000-8000-000000000013",
+          "actor": "coordinator",
+          "required_capability": "evidence_obtain",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000001/evidence-work-commands",
+          "expected_input_tokens": {
+            "evidenceRevision": "request-case:evidenceRevision:r1",
+            "evidenceWorkRevision": "request-case:evidenceWorkRevision:r0"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "request-case:commandResultRevision:r13",
+            "evidenceWorkRevision": "request-case:evidenceWorkRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000001/evidence/void-work",
+          "payload_refs": [
+            "/command_payloads/request_void_evidence"
+          ]
+        },
+        {
+          "ordinal": 14,
+          "name": "upload_surgeon_note",
+          "command_id": "b0000000-0000-4000-8000-000000000014",
+          "actor": "coordinator",
+          "required_capability": "document_upload",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000001/document-commands",
+          "expected_input_tokens": {
+            "caseInputRevision": "request-case:caseInputRevision:r1",
+            "documentSetRevision": "request-case:documentSetRevision:r3"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "request-case:commandResultRevision:r14"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000001/documents",
+          "payload_refs": [
+            "/command_payloads/upload_surgeon_note"
+          ]
+        },
+        {
+          "ordinal": 15,
+          "name": "process_surgeon_note",
+          "command_id": "b0000000-0000-4000-8000-000000000015",
+          "actor": "processor",
+          "required_capability": "document_process",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000001/documents/50000000-0000-4000-8000-000000000004/commands",
+          "expected_input_tokens": {
+            "documentSetRevision": "request-case:documentSetRevision:r3"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "request-case:commandResultRevision:r15",
+            "documentSetRevision": "request-case:documentSetRevision:r4"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000001/documents/50000000-0000-4000-8000-000000000004/process",
+          "payload_refs": [
+            "/command_payloads/process_surgeon_note"
+          ]
+        },
+        {
+          "ordinal": 16,
+          "name": "record_gap_argument",
+          "command_id": "b0000000-0000-4000-8000-000000000016",
+          "actor": "surgeon",
+          "required_capability": "annotate",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000001/evidence-work-commands",
+          "expected_input_tokens": {
+            "evidenceRevision": "request-case:evidenceRevision:r1",
+            "evidenceWorkRevision": "request-case:evidenceWorkRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "request-case:commandResultRevision:r16",
+            "evidenceWorkRevision": "request-case:evidenceWorkRevision:r2"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000001/evidence/gap-arguments",
+          "payload_refs": [
+            "/command_payloads/record_gap_argument"
+          ]
+        },
+        {
+          "ordinal": 17,
+          "name": "upload_nicotine_result",
+          "command_id": "b0000000-0000-4000-8000-000000000017",
+          "actor": "coordinator",
+          "required_capability": "document_upload",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000001/document-commands",
+          "expected_input_tokens": {
+            "caseInputRevision": "request-case:caseInputRevision:r1",
+            "documentSetRevision": "request-case:documentSetRevision:r4"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "request-case:commandResultRevision:r17"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000001/documents",
+          "payload_refs": [
+            "/command_payloads/upload_nicotine_result"
+          ]
+        },
+        {
+          "ordinal": 18,
+          "name": "process_nicotine_result",
+          "command_id": "b0000000-0000-4000-8000-000000000018",
+          "actor": "processor",
+          "required_capability": "document_process",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000001/documents/50000000-0000-4000-8000-000000000005/commands",
+          "expected_input_tokens": {
+            "documentSetRevision": "request-case:documentSetRevision:r4"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "request-case:commandResultRevision:r18",
+            "documentSetRevision": "request-case:documentSetRevision:r5"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000001/documents/50000000-0000-4000-8000-000000000005/process",
+          "payload_refs": [
+            "/command_payloads/process_nicotine_result"
+          ]
+        },
+        {
+          "ordinal": 19,
+          "name": "resolve_void_work",
+          "command_id": "b0000000-0000-4000-8000-000000000019",
+          "actor": "coordinator",
+          "required_capability": "evidence_obtain",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000001/evidence-work-commands",
+          "expected_input_tokens": {
+            "evidenceRevision": "request-case:evidenceRevision:r1",
+            "evidenceWorkRevision": "request-case:evidenceWorkRevision:r2"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "request-case:commandResultRevision:r19",
+            "evidenceWorkRevision": "request-case:evidenceWorkRevision:r3"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000001/evidence/void-work/70000000-0000-4000-8000-000000000005/resolve",
+          "payload_refs": [
+            "/command_payloads/resolve_void_work"
+          ]
+        },
+        {
+          "ordinal": 20,
+          "name": "assemble_final_evidence",
+          "command_id": "b0000000-0000-4000-8000-000000000020",
+          "actor": "coordinator",
+          "required_capability": "evidence_assemble",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000001/evidence-commands",
+          "expected_input_tokens": {
+            "documentSetRevision": "request-case:documentSetRevision:r5",
+            "criteriaSelectionRevision": "request-case:criteriaSelectionRevision:r1",
+            "evidenceWorkRevision": "request-case:evidenceWorkRevision:r3"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "request-case:commandResultRevision:r20",
+            "evidenceRevision": "request-case:evidenceRevision:r2"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000001/evidence/assemble",
+          "payload_refs": [
+            "/command_payloads/assemble_final_evidence"
+          ]
+        },
+        {
+          "ordinal": 21,
+          "name": "transition_to_policy_review",
+          "command_id": "b0000000-0000-4000-8000-000000000021",
+          "actor": "coordinator",
+          "required_capability": "case_write",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000001/commands",
+          "expected_input_tokens": {
+            "caseStatusRevision": "request-case:caseStatusRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "request-case:commandResultRevision:r21",
+            "caseStatusRevision": "request-case:caseStatusRevision:r2"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000001/status",
+          "payload_refs": [
+            "/command_payloads/transition_to_policy_review"
+          ]
+        },
+        {
+          "ordinal": 22,
+          "name": "transition_to_awaiting_gate",
+          "command_id": "b0000000-0000-4000-8000-000000000022",
+          "actor": "coordinator",
+          "required_capability": "case_write",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000001/commands",
+          "expected_input_tokens": {
+            "caseStatusRevision": "request-case:caseStatusRevision:r2"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "request-case:commandResultRevision:r22",
+            "caseStatusRevision": "request-case:caseStatusRevision:r3"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000001/status",
+          "payload_refs": [
+            "/command_payloads/transition_to_awaiting_gate"
+          ]
+        },
+        {
+          "ordinal": 23,
+          "name": "affirm_policy",
+          "command_id": "b0000000-0000-4000-8000-000000000023",
+          "actor": "surgeon",
+          "required_capability": "affirm_gate",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000001/gate/commands",
+          "expected_input_tokens": {
+            "evidenceRevision": "request-case:evidenceRevision:r2",
+            "criteriaSelectionRevision": "request-case:criteriaSelectionRevision:r1",
+            "gateRevision": "request-case:gateRevision:r0"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "request-case:commandResultRevision:r23",
+            "gateRevision": "request-case:gateRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000001/gate/affirm",
+          "payload_refs": [
+            "/command_payloads/affirm_policy"
+          ]
+        },
+        {
+          "ordinal": 24,
+          "name": "affirm_section",
+          "command_id": "b0000000-0000-4000-8000-000000000024",
+          "actor": "surgeon",
+          "required_capability": "affirm_gate",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000001/gate/commands",
+          "expected_input_tokens": {
+            "evidenceRevision": "request-case:evidenceRevision:r2",
+            "criteriaSelectionRevision": "request-case:criteriaSelectionRevision:r1",
+            "gateRevision": "request-case:gateRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "request-case:commandResultRevision:r24",
+            "gateRevision": "request-case:gateRevision:r2"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000001/gate/affirm",
+          "payload_refs": [
+            "/command_payloads/affirm_section"
+          ]
+        },
+        {
+          "ordinal": 25,
+          "name": "affirm_pathway",
+          "command_id": "b0000000-0000-4000-8000-000000000025",
+          "actor": "surgeon",
+          "required_capability": "affirm_gate",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000001/gate/commands",
+          "expected_input_tokens": {
+            "evidenceRevision": "request-case:evidenceRevision:r2",
+            "criteriaSelectionRevision": "request-case:criteriaSelectionRevision:r1",
+            "gateRevision": "request-case:gateRevision:r2"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "request-case:commandResultRevision:r25",
+            "gateRevision": "request-case:gateRevision:r3"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000001/gate/affirm",
+          "payload_refs": [
+            "/command_payloads/affirm_pathway"
+          ]
+        },
+        {
+          "ordinal": 26,
+          "name": "affirm_plan",
+          "command_id": "b0000000-0000-4000-8000-000000000026",
+          "actor": "surgeon",
+          "required_capability": "affirm_gate",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000001/gate/commands",
+          "expected_input_tokens": {
+            "evidenceRevision": "request-case:evidenceRevision:r2",
+            "criteriaSelectionRevision": "request-case:criteriaSelectionRevision:r1",
+            "gateRevision": "request-case:gateRevision:r3"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "request-case:commandResultRevision:r26",
+            "gateRevision": "request-case:gateRevision:r4"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000001/gate/affirm",
+          "payload_refs": [
+            "/command_payloads/affirm_plan"
+          ]
+        },
+        {
+          "ordinal": 27,
+          "name": "generate_letter",
+          "command_id": "b0000000-0000-4000-8000-000000000027",
+          "actor": "coordinator",
+          "required_capability": "letter_generate",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000001/letter-commands",
+          "expected_input_tokens": {
+            "resolutionRevision": "request-case:resolutionRevision:r1",
+            "criteriaSelectionRevision": "request-case:criteriaSelectionRevision:r1",
+            "evidenceRevision": "request-case:evidenceRevision:r2",
+            "gateRevision": "request-case:gateRevision:r4"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "request-case:commandResultRevision:r27",
+            "letterRevision": "request-case:letterRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000001/letters",
+          "payload_refs": [
+            "/command_payloads/generate_letter"
+          ]
+        },
+        {
+          "ordinal": 28,
+          "name": "record_letter_qa",
+          "command_id": "b0000000-0000-4000-8000-000000000028",
+          "actor": "coordinator",
+          "required_capability": "letter_review",
+          "lookup_anchor": "/api/letters/80000000-0000-4000-8000-000000000001/commands",
+          "expected_input_tokens": {
+            "letterRevision": "request-case:letterRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "request-case:commandResultRevision:r28",
+            "letterRevision": "request-case:letterRevision:r2",
+            "qaRevision": "request-case:qaRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/letters/80000000-0000-4000-8000-000000000001/qa",
+          "payload_refs": [
+            "/command_payloads/record_letter_qa"
+          ]
+        },
+        {
+          "ordinal": 29,
+          "name": "approve_letter",
+          "command_id": "b0000000-0000-4000-8000-000000000029",
+          "actor": "surgeon",
+          "required_capability": "letter_approve",
+          "lookup_anchor": "/api/letters/80000000-0000-4000-8000-000000000001/commands",
+          "expected_input_tokens": {
+            "letterRevision": "request-case:letterRevision:r2",
+            "qaRevision": "request-case:qaRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "request-case:commandResultRevision:r29",
+            "letterRevision": "request-case:letterRevision:r3"
+          },
+          "method": "POST",
+          "route": "/api/letters/80000000-0000-4000-8000-000000000001/approve",
+          "payload_refs": [
+            "/command_payloads/approve_letter"
+          ]
+        },
+        {
+          "ordinal": 30,
+          "name": "sign_letter",
+          "command_id": "b0000000-0000-4000-8000-000000000030",
+          "actor": "surgeon",
+          "required_capability": "sign_letter",
+          "lookup_anchor": "/api/letters/80000000-0000-4000-8000-000000000001/sign/commands",
+          "expected_input_tokens": {
+            "letterRevision": "request-case:letterRevision:r3",
+            "qaRevision": "request-case:qaRevision:r1",
+            "signatureRevision": "request-case:signatureRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "request-case:commandResultRevision:r30",
+            "letterRevision": "request-case:letterRevision:r4"
+          },
+          "method": "POST",
+          "route": "/api/letters/80000000-0000-4000-8000-000000000001/sign",
+          "payload_refs": [
+            "/command_payloads/sign_letter"
+          ]
+        },
+        {
+          "ordinal": 31,
+          "name": "acknowledge_submission",
+          "command_id": "b0000000-0000-4000-8000-000000000031",
+          "actor": "coordinator",
+          "required_capability": "submit",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000001/submission-commands",
+          "expected_input_tokens": {
+            "letterRevision": "request-case:letterRevision:r4",
+            "submissionRevision": "request-case:submissionRevision:r0"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "request-case:commandResultRevision:r31",
+            "submissionRevision": "request-case:submissionRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000001/submissions/acknowledge",
+          "payload_refs": [
+            "/command_payloads/acknowledge_submission"
+          ]
+        }
+      ],
+      "initial_evidence": [
+        {
+          "id": "70000000-0000-4000-8000-000000000001",
+          "criterion_id": "60000000-0000-4000-8000-000000000001",
+          "state": "met",
+          "document_id": "50000000-0000-4000-8000-000000000002",
+          "page_number": 1
+        },
+        {
+          "id": "70000000-0000-4000-8000-000000000002",
+          "criterion_id": "60000000-0000-4000-8000-000000000002",
+          "state": "gap",
+          "document_id": "50000000-0000-4000-8000-000000000003",
+          "page_number": 1
+        },
+        {
+          "id": "70000000-0000-4000-8000-000000000003",
+          "criterion_id": "60000000-0000-4000-8000-000000000003",
+          "state": "void",
+          "document_id": null,
+          "page_number": null
+        }
+      ],
+      "initial_evidence_counts": {
+        "met": 1,
+        "gap": 1,
+        "void": 1
+      },
+      "final_evidence": [
+        {
+          "id": "70000000-0000-4000-8000-000000000001",
+          "criterion_id": "60000000-0000-4000-8000-000000000001",
+          "state": "met",
+          "document_id": "50000000-0000-4000-8000-000000000002",
+          "page_number": 1
+        },
+        {
+          "id": "70000000-0000-4000-8000-000000000002",
+          "criterion_id": "60000000-0000-4000-8000-000000000002",
+          "state": "gap",
+          "document_id": "50000000-0000-4000-8000-000000000003",
+          "page_number": 1
+        },
+        {
+          "id": "70000000-0000-4000-8000-000000000003",
+          "criterion_id": "60000000-0000-4000-8000-000000000003",
+          "state": "met",
+          "document_id": "50000000-0000-4000-8000-000000000005",
+          "page_number": 1
+        }
+      ],
+      "final_evidence_counts": {
+        "met": 2,
+        "gap": 1,
+        "void": 0
+      },
+      "evidence_work": [
+        {
+          "id": "70000000-0000-4000-8000-000000000004",
+          "kind": "surgeon_argument",
+          "status": "accepted",
+          "criterion_id": "60000000-0000-4000-8000-000000000002"
+        },
+        {
+          "id": "70000000-0000-4000-8000-000000000005",
+          "kind": "obtain_evidence",
+          "status": "completed",
+          "criterion_id": "60000000-0000-4000-8000-000000000003"
+        }
+      ],
+      "lifecycle_transitions": [
+        {
+          "from": "intake",
+          "to": "evidence",
+          "owned_by_command": "transition_to_evidence"
+        },
+        {
+          "from": "evidence",
+          "to": "policy_review",
+          "owned_by_command": "transition_to_policy_review"
+        },
+        {
+          "from": "policy_review",
+          "to": "awaiting_gate",
+          "owned_by_command": "transition_to_awaiting_gate"
+        },
+        {
+          "from": "awaiting_gate",
+          "to": "drafting",
+          "owned_by_command": "generate_letter"
+        },
+        {
+          "from": "drafting",
+          "to": "ready",
+          "owned_by_command": "approve_letter"
+        },
+        {
+          "from": "ready",
+          "to": "submitted",
+          "owned_by_command": "acknowledge_submission"
+        }
+      ],
+      "revision_ledger": {
+        "authorizationRevision": "request-case:authorizationRevision:r1",
+        "caseInputRevision": "request-case:caseInputRevision:r1",
+        "caseStatusRevision": "request-case:caseStatusRevision:r3",
+        "resolutionRevision": "request-case:resolutionRevision:r1",
+        "documentSetRevision": "request-case:documentSetRevision:r5",
+        "criteriaCatalogRevision": "request-case:criteriaCatalogRevision:r1",
+        "criteriaSelectionRevision": "request-case:criteriaSelectionRevision:r1",
+        "evidenceWorkRevision": "request-case:evidenceWorkRevision:r3",
+        "evidenceRevision": "request-case:evidenceRevision:r2",
+        "gateRevision": "request-case:gateRevision:r4",
+        "submissionRevision": "request-case:submissionRevision:r1",
+        "determinationRevision": "request-case:determinationRevision:r0",
+        "classificationRevision": "request-case:classificationRevision:r0",
+        "responseGateRevision": "request-case:responseGateRevision:r0",
+        "letterRevision": "request-case:letterRevision:r4",
+        "qaRevision": "request-case:qaRevision:r1",
+        "signatureRevision": "request-case:signatureRevision:r1"
+      },
+      "precondition_reads": [
+        {
+          "name": "read_signing_target",
+          "lookup_anchor": "/api/letters/80000000-0000-4000-8000-000000000001/sign/commands",
+          "expected_tokens": {
+            "letterRevision": "request-case:letterRevision:r3",
+            "qaRevision": "request-case:qaRevision:r1",
+            "signatureRevision": "request-case:signatureRevision:r1"
+          }
+        }
+      ]
+    },
+    {
+      "fixture_id": "corrected-resubmission-case",
+      "lifecycle": [
+        "intake",
+        "evidence",
+        "policy_review",
+        "awaiting_gate",
+        "drafting",
+        "ready",
+        "submitted",
+        "denied",
+        "denial_review",
+        "response_drafting",
+        "response_ready",
+        "resubmitted"
+      ],
+      "final_case_status": "resubmitted",
+      "classification": {
+        "state": "confirmed",
+        "response_type": "administrative_corrected_resubmission",
+        "confidence": "1.0000"
+      },
+      "workflow_steps": [
+        {
+          "ordinal": 1,
+          "name": "create_case",
+          "command_id": "b0000000-0000-4000-8000-000000000101",
+          "actor": "coordinator",
+          "required_capability": "case_write",
+          "lookup_anchor": "/api/case-commands",
+          "expected_input_tokens": {
+            "authorizationRevision": "corrected-resubmission-case:authorizationRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "corrected-resubmission-case:commandResultRevision:r1",
+            "caseInputRevision": "corrected-resubmission-case:caseInputRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases",
+          "payload_refs": [
+            "/command_payloads/create_case"
+          ]
+        },
+        {
+          "ordinal": 2,
+          "name": "transition_to_evidence",
+          "command_id": "b0000000-0000-4000-8000-000000000102",
+          "actor": "coordinator",
+          "required_capability": "case_write",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000101/commands",
+          "expected_input_tokens": {
+            "caseStatusRevision": "corrected-resubmission-case:caseStatusRevision:r0"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "corrected-resubmission-case:commandResultRevision:r2",
+            "caseStatusRevision": "corrected-resubmission-case:caseStatusRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000101/status",
+          "payload_refs": [
+            "/command_payloads/transition_to_evidence"
+          ]
+        },
+        {
+          "ordinal": 3,
+          "name": "upload_policy",
+          "command_id": "b0000000-0000-4000-8000-000000000103",
+          "actor": "coordinator",
+          "required_capability": "document_upload",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000101/document-commands",
+          "expected_input_tokens": {
+            "caseInputRevision": "corrected-resubmission-case:caseInputRevision:r1",
+            "documentSetRevision": "corrected-resubmission-case:documentSetRevision:r0"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "corrected-resubmission-case:commandResultRevision:r3"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000101/documents",
+          "payload_refs": [
+            "/command_payloads/upload_policy"
+          ]
+        },
+        {
+          "ordinal": 4,
+          "name": "upload_case_record",
+          "command_id": "b0000000-0000-4000-8000-000000000104",
+          "actor": "coordinator",
+          "required_capability": "document_upload",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000101/document-commands",
+          "expected_input_tokens": {
+            "caseInputRevision": "corrected-resubmission-case:caseInputRevision:r1",
+            "documentSetRevision": "corrected-resubmission-case:documentSetRevision:r0"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "corrected-resubmission-case:commandResultRevision:r4"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000101/documents",
+          "payload_refs": [
+            "/command_payloads/upload_case_record"
+          ]
+        },
+        {
+          "ordinal": 5,
+          "name": "process_policy",
+          "command_id": "b0000000-0000-4000-8000-000000000105",
+          "actor": "processor",
+          "required_capability": "document_process",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000101/documents/50000000-0000-4000-8000-000000000101/commands",
+          "expected_input_tokens": {
+            "documentSetRevision": "corrected-resubmission-case:documentSetRevision:r0"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "corrected-resubmission-case:commandResultRevision:r5",
+            "documentSetRevision": "corrected-resubmission-case:documentSetRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000101/documents/50000000-0000-4000-8000-000000000101/process",
+          "payload_refs": [
+            "/command_payloads/process_policy"
+          ]
+        },
+        {
+          "ordinal": 6,
+          "name": "process_case_record",
+          "command_id": "b0000000-0000-4000-8000-000000000106",
+          "actor": "processor",
+          "required_capability": "document_process",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000101/documents/50000000-0000-4000-8000-000000000102/commands",
+          "expected_input_tokens": {
+            "documentSetRevision": "corrected-resubmission-case:documentSetRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "corrected-resubmission-case:commandResultRevision:r6",
+            "documentSetRevision": "corrected-resubmission-case:documentSetRevision:r2"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000101/documents/50000000-0000-4000-8000-000000000102/process",
+          "payload_refs": [
+            "/command_payloads/process_case_record"
+          ]
+        },
+        {
+          "ordinal": 7,
+          "name": "resolve_entity",
+          "command_id": "b0000000-0000-4000-8000-000000000107",
+          "actor": "coordinator",
+          "required_capability": "resolve_administering_entity",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000101/administering-entity/commands",
+          "expected_input_tokens": {
+            "caseInputRevision": "corrected-resubmission-case:caseInputRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "corrected-resubmission-case:commandResultRevision:r7",
+            "resolutionRevision": "corrected-resubmission-case:resolutionRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000101/administering-entity",
+          "payload_refs": [
+            "/command_payloads/resolve_entity"
+          ]
+        },
+        {
+          "ordinal": 8,
+          "name": "import_criteria",
+          "command_id": "b0000000-0000-4000-8000-000000000108",
+          "actor": "administrator",
+          "required_capability": "configure",
+          "lookup_anchor": "/api/criteria/catalog/commands",
+          "expected_input_tokens": {
+            "criteriaCatalogRevision": "corrected-resubmission-case:criteriaCatalogRevision:r0"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "corrected-resubmission-case:commandResultRevision:r8",
+            "criteriaCatalogRevision": "corrected-resubmission-case:criteriaCatalogRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/criteria/catalog",
+          "payload_refs": [
+            "/command_payloads/import_criteria"
+          ]
+        },
+        {
+          "ordinal": 9,
+          "name": "select_criteria",
+          "command_id": "b0000000-0000-4000-8000-000000000109",
+          "actor": "coordinator",
+          "required_capability": "criteria_select",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000101/criteria-selection/commands",
+          "expected_input_tokens": {
+            "resolutionRevision": "corrected-resubmission-case:resolutionRevision:r1",
+            "criteriaCatalogRevision": "corrected-resubmission-case:criteriaCatalogRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "corrected-resubmission-case:commandResultRevision:r9",
+            "criteriaSelectionRevision": "corrected-resubmission-case:criteriaSelectionRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000101/criteria-selection",
+          "payload_refs": [
+            "/command_payloads/select_criteria"
+          ]
+        },
+        {
+          "ordinal": 10,
+          "name": "assemble_evidence",
+          "command_id": "b0000000-0000-4000-8000-000000000110",
+          "actor": "coordinator",
+          "required_capability": "evidence_assemble",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000101/evidence-commands",
+          "expected_input_tokens": {
+            "documentSetRevision": "corrected-resubmission-case:documentSetRevision:r2",
+            "criteriaSelectionRevision": "corrected-resubmission-case:criteriaSelectionRevision:r1",
+            "evidenceWorkRevision": "corrected-resubmission-case:evidenceWorkRevision:r0"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "corrected-resubmission-case:commandResultRevision:r10",
+            "evidenceRevision": "corrected-resubmission-case:evidenceRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000101/evidence/assemble",
+          "payload_refs": [
+            "/command_payloads/assemble_evidence"
+          ]
+        },
+        {
+          "ordinal": 11,
+          "name": "transition_to_policy_review",
+          "command_id": "b0000000-0000-4000-8000-000000000111",
+          "actor": "coordinator",
+          "required_capability": "case_write",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000101/commands",
+          "expected_input_tokens": {
+            "caseStatusRevision": "corrected-resubmission-case:caseStatusRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "corrected-resubmission-case:commandResultRevision:r11",
+            "caseStatusRevision": "corrected-resubmission-case:caseStatusRevision:r2"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000101/status",
+          "payload_refs": [
+            "/command_payloads/transition_to_policy_review"
+          ]
+        },
+        {
+          "ordinal": 12,
+          "name": "transition_to_awaiting_gate",
+          "command_id": "b0000000-0000-4000-8000-000000000112",
+          "actor": "coordinator",
+          "required_capability": "case_write",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000101/commands",
+          "expected_input_tokens": {
+            "caseStatusRevision": "corrected-resubmission-case:caseStatusRevision:r2"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "corrected-resubmission-case:commandResultRevision:r12",
+            "caseStatusRevision": "corrected-resubmission-case:caseStatusRevision:r3"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000101/status",
+          "payload_refs": [
+            "/command_payloads/transition_to_awaiting_gate"
+          ]
+        },
+        {
+          "ordinal": 13,
+          "name": "affirm_policy",
+          "command_id": "b0000000-0000-4000-8000-000000000113",
+          "actor": "surgeon",
+          "required_capability": "affirm_gate",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000101/gate/commands",
+          "expected_input_tokens": {
+            "evidenceRevision": "corrected-resubmission-case:evidenceRevision:r1",
+            "criteriaSelectionRevision": "corrected-resubmission-case:criteriaSelectionRevision:r1",
+            "gateRevision": "corrected-resubmission-case:gateRevision:r0"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "corrected-resubmission-case:commandResultRevision:r13",
+            "gateRevision": "corrected-resubmission-case:gateRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000101/gate/affirm",
+          "payload_refs": [
+            "/command_payloads/affirm_policy"
+          ]
+        },
+        {
+          "ordinal": 14,
+          "name": "affirm_section",
+          "command_id": "b0000000-0000-4000-8000-000000000114",
+          "actor": "surgeon",
+          "required_capability": "affirm_gate",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000101/gate/commands",
+          "expected_input_tokens": {
+            "evidenceRevision": "corrected-resubmission-case:evidenceRevision:r1",
+            "criteriaSelectionRevision": "corrected-resubmission-case:criteriaSelectionRevision:r1",
+            "gateRevision": "corrected-resubmission-case:gateRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "corrected-resubmission-case:commandResultRevision:r14",
+            "gateRevision": "corrected-resubmission-case:gateRevision:r2"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000101/gate/affirm",
+          "payload_refs": [
+            "/command_payloads/affirm_section"
+          ]
+        },
+        {
+          "ordinal": 15,
+          "name": "affirm_pathway",
+          "command_id": "b0000000-0000-4000-8000-000000000115",
+          "actor": "surgeon",
+          "required_capability": "affirm_gate",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000101/gate/commands",
+          "expected_input_tokens": {
+            "evidenceRevision": "corrected-resubmission-case:evidenceRevision:r1",
+            "criteriaSelectionRevision": "corrected-resubmission-case:criteriaSelectionRevision:r1",
+            "gateRevision": "corrected-resubmission-case:gateRevision:r2"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "corrected-resubmission-case:commandResultRevision:r15",
+            "gateRevision": "corrected-resubmission-case:gateRevision:r3"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000101/gate/affirm",
+          "payload_refs": [
+            "/command_payloads/affirm_pathway"
+          ]
+        },
+        {
+          "ordinal": 16,
+          "name": "affirm_plan",
+          "command_id": "b0000000-0000-4000-8000-000000000116",
+          "actor": "surgeon",
+          "required_capability": "affirm_gate",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000101/gate/commands",
+          "expected_input_tokens": {
+            "evidenceRevision": "corrected-resubmission-case:evidenceRevision:r1",
+            "criteriaSelectionRevision": "corrected-resubmission-case:criteriaSelectionRevision:r1",
+            "gateRevision": "corrected-resubmission-case:gateRevision:r3"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "corrected-resubmission-case:commandResultRevision:r16",
+            "gateRevision": "corrected-resubmission-case:gateRevision:r4"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000101/gate/affirm",
+          "payload_refs": [
+            "/command_payloads/affirm_plan"
+          ]
+        },
+        {
+          "ordinal": 17,
+          "name": "generate_letter",
+          "command_id": "b0000000-0000-4000-8000-000000000117",
+          "actor": "coordinator",
+          "required_capability": "letter_generate",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000101/letter-commands",
+          "expected_input_tokens": {
+            "resolutionRevision": "corrected-resubmission-case:resolutionRevision:r1",
+            "criteriaSelectionRevision": "corrected-resubmission-case:criteriaSelectionRevision:r1",
+            "evidenceRevision": "corrected-resubmission-case:evidenceRevision:r1",
+            "gateRevision": "corrected-resubmission-case:gateRevision:r4"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "corrected-resubmission-case:commandResultRevision:r17",
+            "letterRevision": "corrected-resubmission-case:letterRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000101/letters",
+          "payload_refs": [
+            "/command_payloads/generate_letter"
+          ]
+        },
+        {
+          "ordinal": 18,
+          "name": "record_initial_qa",
+          "command_id": "b0000000-0000-4000-8000-000000000118",
+          "actor": "coordinator",
+          "required_capability": "letter_review",
+          "lookup_anchor": "/api/letters/80000000-0000-4000-8000-000000000101/commands",
+          "expected_input_tokens": {
+            "letterRevision": "corrected-resubmission-case:letterRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "corrected-resubmission-case:commandResultRevision:r18",
+            "letterRevision": "corrected-resubmission-case:letterRevision:r2",
+            "qaRevision": "corrected-resubmission-case:qaRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/letters/80000000-0000-4000-8000-000000000101/qa",
+          "payload_refs": [
+            "/command_payloads/record_initial_qa"
+          ]
+        },
+        {
+          "ordinal": 19,
+          "name": "approve_initial_letter",
+          "command_id": "b0000000-0000-4000-8000-000000000119",
+          "actor": "surgeon",
+          "required_capability": "letter_approve",
+          "lookup_anchor": "/api/letters/80000000-0000-4000-8000-000000000101/commands",
+          "expected_input_tokens": {
+            "letterRevision": "corrected-resubmission-case:letterRevision:r2",
+            "qaRevision": "corrected-resubmission-case:qaRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "corrected-resubmission-case:commandResultRevision:r19",
+            "letterRevision": "corrected-resubmission-case:letterRevision:r3"
+          },
+          "method": "POST",
+          "route": "/api/letters/80000000-0000-4000-8000-000000000101/approve",
+          "payload_refs": [
+            "/command_payloads/approve_initial_letter"
+          ]
+        },
+        {
+          "ordinal": 20,
+          "name": "sign_initial_letter",
+          "command_id": "b0000000-0000-4000-8000-000000000120",
+          "actor": "surgeon",
+          "required_capability": "sign_letter",
+          "lookup_anchor": "/api/letters/80000000-0000-4000-8000-000000000101/sign/commands",
+          "expected_input_tokens": {
+            "letterRevision": "corrected-resubmission-case:letterRevision:r3",
+            "qaRevision": "corrected-resubmission-case:qaRevision:r1",
+            "signatureRevision": "corrected-resubmission-case:signatureRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "corrected-resubmission-case:commandResultRevision:r20",
+            "letterRevision": "corrected-resubmission-case:letterRevision:r4"
+          },
+          "method": "POST",
+          "route": "/api/letters/80000000-0000-4000-8000-000000000101/sign",
+          "payload_refs": [
+            "/command_payloads/sign_initial_letter"
+          ]
+        },
+        {
+          "ordinal": 21,
+          "name": "acknowledge_initial_submission",
+          "command_id": "b0000000-0000-4000-8000-000000000121",
+          "actor": "coordinator",
+          "required_capability": "submit",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000101/submission-commands",
+          "expected_input_tokens": {
+            "letterRevision": "corrected-resubmission-case:letterRevision:r4",
+            "submissionRevision": "corrected-resubmission-case:submissionRevision:r0"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "corrected-resubmission-case:commandResultRevision:r21",
+            "submissionRevision": "corrected-resubmission-case:submissionRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000101/submissions/acknowledge",
+          "payload_refs": [
+            "/command_payloads/acknowledge_initial_submission"
+          ]
+        },
+        {
+          "ordinal": 22,
+          "name": "upload_determination",
+          "command_id": "b0000000-0000-4000-8000-000000000122",
+          "actor": "coordinator",
+          "required_capability": "document_upload",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000101/document-commands",
+          "expected_input_tokens": {
+            "caseInputRevision": "corrected-resubmission-case:caseInputRevision:r1",
+            "documentSetRevision": "corrected-resubmission-case:documentSetRevision:r2"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "corrected-resubmission-case:commandResultRevision:r22"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000101/documents",
+          "payload_refs": [
+            "/command_payloads/upload_determination"
+          ]
+        },
+        {
+          "ordinal": 23,
+          "name": "process_determination",
+          "command_id": "b0000000-0000-4000-8000-000000000123",
+          "actor": "processor",
+          "required_capability": "document_process",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000101/documents/50000000-0000-4000-8000-000000000103/commands",
+          "expected_input_tokens": {
+            "documentSetRevision": "corrected-resubmission-case:documentSetRevision:r2"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "corrected-resubmission-case:commandResultRevision:r23",
+            "documentSetRevision": "corrected-resubmission-case:documentSetRevision:r3"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000101/documents/50000000-0000-4000-8000-000000000103/process",
+          "payload_refs": [
+            "/command_payloads/process_determination"
+          ]
+        },
+        {
+          "ordinal": 24,
+          "name": "record_determination",
+          "command_id": "b0000000-0000-4000-8000-000000000124",
+          "actor": "coordinator",
+          "required_capability": "determination_record",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000101/determination-commands",
+          "expected_input_tokens": {
+            "submissionRevision": "corrected-resubmission-case:submissionRevision:r1",
+            "documentSetRevision": "corrected-resubmission-case:documentSetRevision:r3"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "corrected-resubmission-case:commandResultRevision:r24",
+            "determinationRevision": "corrected-resubmission-case:determinationRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000101/determinations",
+          "payload_refs": [
+            "/command_payloads/record_determination"
+          ]
+        },
+        {
+          "ordinal": 25,
+          "name": "correct_determination",
+          "command_id": "b0000000-0000-4000-8000-000000000131",
+          "actor": "coordinator",
+          "required_capability": "determination_correct",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000101/determinations/a0000000-0000-4000-8000-000000000101/commands",
+          "expected_input_tokens": {
+            "determinationRevision": "corrected-resubmission-case:determinationRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "corrected-resubmission-case:commandResultRevision:r25",
+            "determinationRevision": "corrected-resubmission-case:determinationRevision:r2"
+          },
+          "method": "PATCH",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000101/determinations/a0000000-0000-4000-8000-000000000101",
+          "payload_refs": [
+            "/command_payloads/correct_determination"
+          ]
+        },
+        {
+          "ordinal": 26,
+          "name": "confirm_classification",
+          "command_id": "b0000000-0000-4000-8000-000000000125",
+          "actor": "coordinator",
+          "required_capability": "determination_classify",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000101/determinations/a0000000-0000-4000-8000-000000000101/classification/commands",
+          "expected_input_tokens": {
+            "determinationRevision": "corrected-resubmission-case:determinationRevision:r2",
+            "classificationRevision": "corrected-resubmission-case:classificationRevision:r0"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "corrected-resubmission-case:commandResultRevision:r26",
+            "classificationRevision": "corrected-resubmission-case:classificationRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000101/determinations/a0000000-0000-4000-8000-000000000101/classification",
+          "payload_refs": [
+            "/command_payloads/confirm_classification"
+          ]
+        },
+        {
+          "ordinal": 27,
+          "name": "generate_response_letter",
+          "command_id": "b0000000-0000-4000-8000-000000000126",
+          "actor": "coordinator",
+          "required_capability": "letter_generate",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000101/response-letter-commands",
+          "expected_input_tokens": {
+            "resolutionRevision": "corrected-resubmission-case:resolutionRevision:r1",
+            "criteriaSelectionRevision": "corrected-resubmission-case:criteriaSelectionRevision:r1",
+            "evidenceRevision": "corrected-resubmission-case:evidenceRevision:r1",
+            "determinationRevision": "corrected-resubmission-case:determinationRevision:r2",
+            "classificationRevision": "corrected-resubmission-case:classificationRevision:r1",
+            "responseGateRevision": "corrected-resubmission-case:responseGateRevision:r0"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "corrected-resubmission-case:commandResultRevision:r27",
+            "letterRevision": "corrected-resubmission-case:letterRevision:r5"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000101/response-letters",
+          "payload_refs": [
+            "/command_payloads/generate_response_letter"
+          ]
+        },
+        {
+          "ordinal": 28,
+          "name": "record_response_qa",
+          "command_id": "b0000000-0000-4000-8000-000000000127",
+          "actor": "coordinator",
+          "required_capability": "letter_review",
+          "lookup_anchor": "/api/letters/80000000-0000-4000-8000-000000000102/commands",
+          "expected_input_tokens": {
+            "letterRevision": "corrected-resubmission-case:letterRevision:r5"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "corrected-resubmission-case:commandResultRevision:r28",
+            "letterRevision": "corrected-resubmission-case:letterRevision:r6",
+            "qaRevision": "corrected-resubmission-case:qaRevision:r2"
+          },
+          "method": "POST",
+          "route": "/api/letters/80000000-0000-4000-8000-000000000102/qa",
+          "payload_refs": [
+            "/command_payloads/record_response_qa"
+          ]
+        },
+        {
+          "ordinal": 29,
+          "name": "approve_response_letter",
+          "command_id": "b0000000-0000-4000-8000-000000000128",
+          "actor": "surgeon",
+          "required_capability": "letter_approve",
+          "lookup_anchor": "/api/letters/80000000-0000-4000-8000-000000000102/commands",
+          "expected_input_tokens": {
+            "letterRevision": "corrected-resubmission-case:letterRevision:r6",
+            "qaRevision": "corrected-resubmission-case:qaRevision:r2"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "corrected-resubmission-case:commandResultRevision:r29",
+            "letterRevision": "corrected-resubmission-case:letterRevision:r7"
+          },
+          "method": "POST",
+          "route": "/api/letters/80000000-0000-4000-8000-000000000102/approve",
+          "payload_refs": [
+            "/command_payloads/approve_response_letter"
+          ]
+        },
+        {
+          "ordinal": 30,
+          "name": "sign_response_letter",
+          "command_id": "b0000000-0000-4000-8000-000000000129",
+          "actor": "surgeon",
+          "required_capability": "sign_letter",
+          "lookup_anchor": "/api/letters/80000000-0000-4000-8000-000000000102/sign/commands",
+          "expected_input_tokens": {
+            "letterRevision": "corrected-resubmission-case:letterRevision:r7",
+            "qaRevision": "corrected-resubmission-case:qaRevision:r2",
+            "signatureRevision": "corrected-resubmission-case:signatureRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "corrected-resubmission-case:commandResultRevision:r30",
+            "letterRevision": "corrected-resubmission-case:letterRevision:r8"
+          },
+          "method": "POST",
+          "route": "/api/letters/80000000-0000-4000-8000-000000000102/sign",
+          "payload_refs": [
+            "/command_payloads/sign_response_letter"
+          ]
+        },
+        {
+          "ordinal": 31,
+          "name": "acknowledge_response_submission",
+          "command_id": "b0000000-0000-4000-8000-000000000130",
+          "actor": "coordinator",
+          "required_capability": "submit",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000101/submission-commands",
+          "expected_input_tokens": {
+            "letterRevision": "corrected-resubmission-case:letterRevision:r8",
+            "submissionRevision": "corrected-resubmission-case:submissionRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "corrected-resubmission-case:commandResultRevision:r31",
+            "submissionRevision": "corrected-resubmission-case:submissionRevision:r2"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000101/submissions/acknowledge",
+          "payload_refs": [
+            "/command_payloads/acknowledge_response_submission"
+          ]
+        }
+      ],
+      "response_submission": {
+        "id": "90000000-0000-4000-8000-000000000102",
+        "letter_id": "80000000-0000-4000-8000-000000000102",
+        "channel_key": "payer-portal",
+        "status": "acknowledged",
+        "submitted_at": "2026-03-12T18:00:00Z",
+        "attempt": 1,
+        "attachment_manifest": {
+          "ordered_attachment_ids": [
+            "80000000-0000-4000-8000-000000000102",
+            "50000000-0000-4000-8000-000000000103",
+            "50000000-0000-4000-8000-000000000102"
+          ],
+          "sha256": "eda273731f87b0c996d5896d21a561d79042d2d7a11c4b157bb1c3da390b2afe"
+        },
+        "receipt_custody": {
+          "receipt_id": "91000000-0000-4000-8000-000000000102",
+          "kind": "manual_synthetic_receipt",
+          "acknowledged_at": "2026-03-12T18:00:00Z",
+          "evidence_sha256": "4f27e3329f7f79c01b2aa24c0c9e5810ad64a7f8f5109490355eaf57a635eed9"
+        },
+        "total_pages": 3,
+        "channel_data": {
+          "portal_url": "https://synthetic-payer.example.invalid/portal",
+          "confirmation_number": "SYN-000000000102"
+        }
+      },
+      "signed_status_before_acknowledgement": "response_ready",
+      "original_request": {
+        "letter_id": "80000000-0000-4000-8000-000000000101",
+        "purpose": "prior_authorization_request",
+        "status": "signed",
+        "version": 1,
+        "body_markdown": "Synthetic prior authorization request for case SYN-RESUBMIT-001.\n\nThe current plan record identifies the member as SYN-MEMBER-2002 [Synthetic corrected plan card, p. 1].\n\nThe submission guide requires the cover sheet member identifier to match the current plan record [Synthetic administrative submission guide, p. 1].",
+        "body_sha256": "1d438bba4f6cffd15ad7ce98d184ef2280153335d8825a6666c396b159c160ed",
+        "submission_id": "90000000-0000-4000-8000-000000000101",
+        "submission_status": "acknowledged"
+      },
+      "initial_submission": {
+        "id": "90000000-0000-4000-8000-000000000101",
+        "letter_id": "80000000-0000-4000-8000-000000000101",
+        "status": "acknowledged",
+        "attempt": 1,
+        "channel_key": "payer-portal",
+        "submitted_at": "2026-03-09T15:00:00Z",
+        "attachment_manifest": {
+          "ordered_attachment_ids": [
+            "80000000-0000-4000-8000-000000000101",
+            "50000000-0000-4000-8000-000000000102",
+            "50000000-0000-4000-8000-000000000101"
+          ],
+          "sha256": "d2452f1d4492bbb3d786ea5141fb109cfd065c312e3e4f3bd05f0cfd51e0ac7f"
+        },
+        "receipt_custody": {
+          "receipt_id": "91000000-0000-4000-8000-000000000101",
+          "kind": "manual_synthetic_receipt",
+          "acknowledged_at": "2026-03-09T15:00:00Z",
+          "evidence_sha256": "ac9b229764447031a27ab6db3419edf95b03e1f33a0fd56957ba3ce2409d7d7e"
+        },
+        "total_pages": 3,
+        "channel_data": {
+          "portal_url": "https://synthetic-payer.example.invalid/portal",
+          "confirmation_number": "SYN-000000000101"
+        }
+      },
+      "determination": {
+        "id": "a0000000-0000-4000-8000-000000000101",
+        "submission_id": "90000000-0000-4000-8000-000000000101",
+        "outcome": "denied",
+        "decided_on": "2026-03-10",
+        "reason_code": "administrative_member_id_mismatch",
+        "reason_text": "Synthetic: The submitted member identifier did not match the plan record.",
+        "document_id": "50000000-0000-4000-8000-000000000103",
+        "source_page_number": 1,
+        "appeal_deadline": "2026-04-09",
+        "revision": "corrected-resubmission-case:determinationRevision:r2",
+        "reviewed_correction": {
+          "reason_code": "administrative_member_id_mismatch",
+          "reason_text": "Synthetic: The submitted member identifier did not match the plan record.",
+          "source_page_number": 1,
+          "reviewed_by": "11000000-0000-4000-8000-000000000102",
+          "reviewed_at": "2026-03-10T15:45:00Z"
+        }
+      },
+      "lifecycle_transitions": [
+        {
+          "from": "intake",
+          "to": "evidence",
+          "owned_by_command": "transition_to_evidence"
+        },
+        {
+          "from": "evidence",
+          "to": "policy_review",
+          "owned_by_command": "transition_to_policy_review"
+        },
+        {
+          "from": "policy_review",
+          "to": "awaiting_gate",
+          "owned_by_command": "transition_to_awaiting_gate"
+        },
+        {
+          "from": "awaiting_gate",
+          "to": "drafting",
+          "owned_by_command": "generate_letter"
+        },
+        {
+          "from": "drafting",
+          "to": "ready",
+          "owned_by_command": "approve_initial_letter"
+        },
+        {
+          "from": "ready",
+          "to": "submitted",
+          "owned_by_command": "acknowledge_initial_submission"
+        },
+        {
+          "from": "submitted",
+          "to": "denied",
+          "owned_by_command": "record_determination"
+        },
+        {
+          "from": "denied",
+          "to": "denial_review",
+          "owned_by_command": "confirm_classification"
+        },
+        {
+          "from": "denial_review",
+          "to": "response_drafting",
+          "owned_by_command": "generate_response_letter"
+        },
+        {
+          "from": "response_drafting",
+          "to": "response_ready",
+          "owned_by_command": "approve_response_letter"
+        },
+        {
+          "from": "response_ready",
+          "to": "resubmitted",
+          "owned_by_command": "acknowledge_response_submission"
+        }
+      ],
+      "revision_ledger": {
+        "authorizationRevision": "corrected-resubmission-case:authorizationRevision:r1",
+        "caseInputRevision": "corrected-resubmission-case:caseInputRevision:r1",
+        "caseStatusRevision": "corrected-resubmission-case:caseStatusRevision:r3",
+        "resolutionRevision": "corrected-resubmission-case:resolutionRevision:r1",
+        "documentSetRevision": "corrected-resubmission-case:documentSetRevision:r3",
+        "criteriaCatalogRevision": "corrected-resubmission-case:criteriaCatalogRevision:r1",
+        "criteriaSelectionRevision": "corrected-resubmission-case:criteriaSelectionRevision:r1",
+        "evidenceWorkRevision": "corrected-resubmission-case:evidenceWorkRevision:r0",
+        "evidenceRevision": "corrected-resubmission-case:evidenceRevision:r1",
+        "gateRevision": "corrected-resubmission-case:gateRevision:r4",
+        "submissionRevision": "corrected-resubmission-case:submissionRevision:r2",
+        "determinationRevision": "corrected-resubmission-case:determinationRevision:r2",
+        "classificationRevision": "corrected-resubmission-case:classificationRevision:r1",
+        "responseGateRevision": "corrected-resubmission-case:responseGateRevision:r0",
+        "letterRevision": "corrected-resubmission-case:letterRevision:r8",
+        "qaRevision": "corrected-resubmission-case:qaRevision:r2",
+        "signatureRevision": "corrected-resubmission-case:signatureRevision:r1"
+      },
+      "response_letter": {
+        "id": "80000000-0000-4000-8000-000000000102",
+        "version": 1,
+        "purpose": "corrected_resubmission",
+        "status": "signed",
+        "challenged_determination_id": "a0000000-0000-4000-8000-000000000101",
+        "original_request_letter_id": "80000000-0000-4000-8000-000000000101",
+        "body_markdown": "Corrected resubmission for synthetic case SYN-RESUBMIT-001\n\nThe denial dated 2026-03-10 states that the submitted member identifier did not match the plan record [Synthetic administrative denial, p. 1].\n\nThe corrected plan record dated 2026-03-01 identifies the member as SYN-MEMBER-2002 [Synthetic corrected plan card, p. 1].",
+        "body_sha256": "861aed95636b94c7e877a4b2a2b0394aeda3e7ca11737a646a166f94676a509d",
+        "claims": [
+          {
+            "id": "81000000-0000-4000-8000-000000000101",
+            "ordinal": 1,
+            "claim_text": "Synthetic: The denial states that the submitted member identifier did not match the plan record.",
+            "document_id": "50000000-0000-4000-8000-000000000103",
+            "page_number": 1,
+            "source_content_sha256": "0f3c2d6bfc52a5537ba75a6bb1ec338870894eb2930c708e50af3d6648bfa8f7",
+            "source_quote": "Synthetic denial reason: the request cover sheet used member identifier SYN-MEMBER-OLD, which did not match the plan record.",
+            "document_version": 1,
+            "source_span_start": 30,
+            "source_span_end": 154,
+            "source_date_kind": "determination_date",
+            "support_status": "supported",
+            "support_reviewed_by": "11000000-0000-4000-8000-000000000001",
+            "support_reviewed_at": "2026-03-12T16:00:00Z",
+            "support_claim_version": 1,
+            "source_date": "2026-03-10"
+          },
+          {
+            "id": "81000000-0000-4000-8000-000000000102",
+            "ordinal": 2,
+            "claim_text": "Synthetic: The corrected plan record identifies the member as SYN-MEMBER-2002.",
+            "document_id": "50000000-0000-4000-8000-000000000102",
+            "page_number": 1,
+            "source_content_sha256": "377689d483ddd7df91f5d5c72220fec95ff5edade30ab42db443ef8c276476aa",
+            "source_quote": "Synthetic plan record: member identifier SYN-MEMBER-2002 is active.",
+            "criterion_id": "60000000-0000-4000-8000-000000000101",
+            "document_version": 1,
+            "source_span_start": 30,
+            "source_span_end": 97,
+            "source_date_kind": "effective_date",
+            "support_status": "supported",
+            "support_reviewed_by": "11000000-0000-4000-8000-000000000001",
+            "support_reviewed_at": "2026-03-12T16:00:00Z",
+            "support_claim_version": 1,
+            "source_date": "2026-03-01"
+          }
+        ]
+      },
+      "initial_request_letter": {
+        "id": "80000000-0000-4000-8000-000000000101",
+        "version": 1,
+        "purpose": "prior_authorization_request",
+        "status": "signed",
+        "body_markdown": "Synthetic prior authorization request for case SYN-RESUBMIT-001.\n\nThe current plan record identifies the member as SYN-MEMBER-2002 [Synthetic corrected plan card, p. 1].\n\nThe submission guide requires the cover sheet member identifier to match the current plan record [Synthetic administrative submission guide, p. 1].",
+        "body_sha256": "1d438bba4f6cffd15ad7ce98d184ef2280153335d8825a6666c396b159c160ed",
+        "claims": [
+          {
+            "id": "81000000-0000-4000-8000-000000000110",
+            "ordinal": 1,
+            "claim_text": "Synthetic: The current plan record identifies the member as SYN-MEMBER-2002.",
+            "document_id": "50000000-0000-4000-8000-000000000102",
+            "document_version": 1,
+            "page_number": 1,
+            "source_date": "2026-03-01",
+            "source_content_sha256": "377689d483ddd7df91f5d5c72220fec95ff5edade30ab42db443ef8c276476aa",
+            "source_quote": "Synthetic plan record: member identifier SYN-MEMBER-2002 is active.",
+            "source_span_start": 30,
+            "source_span_end": 97,
+            "source_date_kind": "effective_date",
+            "support_status": "supported",
+            "support_reviewed_by": "11000000-0000-4000-8000-000000000001",
+            "support_reviewed_at": "2026-03-02T15:00:00Z",
+            "support_claim_version": 1,
+            "criterion_id": "60000000-0000-4000-8000-000000000101"
+          },
+          {
+            "id": "81000000-0000-4000-8000-000000000111",
+            "ordinal": 2,
+            "claim_text": "Synthetic: The submission guide requires a matching current member identifier.",
+            "document_id": "50000000-0000-4000-8000-000000000101",
+            "document_version": 1,
+            "page_number": 1,
+            "source_date": "2026-01-01",
+            "source_content_sha256": "7692e6606f20a66b4423b1b6a683b02504c53dea55433423bfb7a5f21be57a41",
+            "source_quote": "Synthetic submission guide: the cover sheet member identifier must match the current plan record.",
+            "source_span_start": 30,
+            "source_span_end": 127,
+            "source_date_kind": "effective_date",
+            "support_status": "supported",
+            "support_reviewed_by": "11000000-0000-4000-8000-000000000001",
+            "support_reviewed_at": "2026-03-02T15:00:00Z",
+            "support_claim_version": 1,
+            "criterion_id": "60000000-0000-4000-8000-000000000101"
+          }
+        ]
+      },
+      "precondition_reads": [
+        {
+          "name": "read_signing_target",
+          "lookup_anchor": "/api/letters/80000000-0000-4000-8000-000000000101/sign/commands",
+          "expected_tokens": {
+            "letterRevision": "corrected-resubmission-case:letterRevision:r3",
+            "qaRevision": "corrected-resubmission-case:qaRevision:r1",
+            "signatureRevision": "corrected-resubmission-case:signatureRevision:r1"
+          }
+        },
+        {
+          "name": "read_signing_target",
+          "lookup_anchor": "/api/letters/80000000-0000-4000-8000-000000000102/sign/commands",
+          "expected_tokens": {
+            "letterRevision": "corrected-resubmission-case:letterRevision:r7",
+            "qaRevision": "corrected-resubmission-case:qaRevision:r2",
+            "signatureRevision": "corrected-resubmission-case:signatureRevision:r1"
+          }
+        }
+      ]
+    },
+    {
+      "fixture_id": "clinical-appeal-case",
+      "lifecycle": [
+        "intake",
+        "evidence",
+        "policy_review",
+        "awaiting_gate",
+        "drafting",
+        "ready",
+        "submitted",
+        "denied",
+        "denial_review",
+        "response_drafting",
+        "response_ready",
+        "appealed"
+      ],
+      "final_case_status": "appealed",
+      "classification": {
+        "state": "confirmed",
+        "response_type": "clinical_appeal",
+        "confidence": "1.0000"
+      },
+      "required_gate": {
+        "fresh_for_response": true,
+        "affirmed_by": "11000000-0000-4000-8000-000000000001",
+        "determination_revision": "clinical-appeal-case:determinationRevision:r1",
+        "classification_revision": "clinical-appeal-case:classificationRevision:r1",
+        "response_gate_revision": "clinical-appeal-case:responseGateRevision:r4",
+        "resolution_revision": "clinical-appeal-case:resolutionRevision:r1",
+        "criteria_selection_revision": "clinical-appeal-case:criteriaSelectionRevision:r1",
+        "evidence_revision": "clinical-appeal-case:evidenceRevision:r1"
+      },
+      "workflow_steps": [
+        {
+          "ordinal": 1,
+          "name": "create_case",
+          "command_id": "b0000000-0000-4000-8000-000000000201",
+          "actor": "coordinator",
+          "required_capability": "case_write",
+          "lookup_anchor": "/api/case-commands",
+          "expected_input_tokens": {
+            "authorizationRevision": "clinical-appeal-case:authorizationRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r1",
+            "caseInputRevision": "clinical-appeal-case:caseInputRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases",
+          "payload_refs": [
+            "/command_payloads/create_case"
+          ]
+        },
+        {
+          "ordinal": 2,
+          "name": "transition_to_evidence",
+          "command_id": "b0000000-0000-4000-8000-000000000202",
+          "actor": "coordinator",
+          "required_capability": "case_write",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000201/commands",
+          "expected_input_tokens": {
+            "caseStatusRevision": "clinical-appeal-case:caseStatusRevision:r0"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r2",
+            "caseStatusRevision": "clinical-appeal-case:caseStatusRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000201/status",
+          "payload_refs": [
+            "/command_payloads/transition_to_evidence"
+          ]
+        },
+        {
+          "ordinal": 3,
+          "name": "upload_policy",
+          "command_id": "b0000000-0000-4000-8000-000000000203",
+          "actor": "coordinator",
+          "required_capability": "document_upload",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000201/document-commands",
+          "expected_input_tokens": {
+            "caseInputRevision": "clinical-appeal-case:caseInputRevision:r1",
+            "documentSetRevision": "clinical-appeal-case:documentSetRevision:r0"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r3"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000201/documents",
+          "payload_refs": [
+            "/command_payloads/upload_policy"
+          ]
+        },
+        {
+          "ordinal": 4,
+          "name": "upload_case_record",
+          "command_id": "b0000000-0000-4000-8000-000000000204",
+          "actor": "coordinator",
+          "required_capability": "document_upload",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000201/document-commands",
+          "expected_input_tokens": {
+            "caseInputRevision": "clinical-appeal-case:caseInputRevision:r1",
+            "documentSetRevision": "clinical-appeal-case:documentSetRevision:r0"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r4"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000201/documents",
+          "payload_refs": [
+            "/command_payloads/upload_case_record"
+          ]
+        },
+        {
+          "ordinal": 5,
+          "name": "process_policy",
+          "command_id": "b0000000-0000-4000-8000-000000000205",
+          "actor": "processor",
+          "required_capability": "document_process",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000201/documents/50000000-0000-4000-8000-000000000201/commands",
+          "expected_input_tokens": {
+            "documentSetRevision": "clinical-appeal-case:documentSetRevision:r0"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r5",
+            "documentSetRevision": "clinical-appeal-case:documentSetRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000201/documents/50000000-0000-4000-8000-000000000201/process",
+          "payload_refs": [
+            "/command_payloads/process_policy"
+          ]
+        },
+        {
+          "ordinal": 6,
+          "name": "process_case_record",
+          "command_id": "b0000000-0000-4000-8000-000000000206",
+          "actor": "processor",
+          "required_capability": "document_process",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000201/documents/50000000-0000-4000-8000-000000000202/commands",
+          "expected_input_tokens": {
+            "documentSetRevision": "clinical-appeal-case:documentSetRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r6",
+            "documentSetRevision": "clinical-appeal-case:documentSetRevision:r2"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000201/documents/50000000-0000-4000-8000-000000000202/process",
+          "payload_refs": [
+            "/command_payloads/process_case_record"
+          ]
+        },
+        {
+          "ordinal": 7,
+          "name": "resolve_entity",
+          "command_id": "b0000000-0000-4000-8000-000000000207",
+          "actor": "coordinator",
+          "required_capability": "resolve_administering_entity",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000201/administering-entity/commands",
+          "expected_input_tokens": {
+            "caseInputRevision": "clinical-appeal-case:caseInputRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r7",
+            "resolutionRevision": "clinical-appeal-case:resolutionRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000201/administering-entity",
+          "payload_refs": [
+            "/command_payloads/resolve_entity"
+          ]
+        },
+        {
+          "ordinal": 8,
+          "name": "import_criteria",
+          "command_id": "b0000000-0000-4000-8000-000000000208",
+          "actor": "administrator",
+          "required_capability": "configure",
+          "lookup_anchor": "/api/criteria/catalog/commands",
+          "expected_input_tokens": {
+            "criteriaCatalogRevision": "clinical-appeal-case:criteriaCatalogRevision:r0"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r8",
+            "criteriaCatalogRevision": "clinical-appeal-case:criteriaCatalogRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/criteria/catalog",
+          "payload_refs": [
+            "/command_payloads/import_criteria"
+          ]
+        },
+        {
+          "ordinal": 9,
+          "name": "select_criteria",
+          "command_id": "b0000000-0000-4000-8000-000000000209",
+          "actor": "coordinator",
+          "required_capability": "criteria_select",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000201/criteria-selection/commands",
+          "expected_input_tokens": {
+            "resolutionRevision": "clinical-appeal-case:resolutionRevision:r1",
+            "criteriaCatalogRevision": "clinical-appeal-case:criteriaCatalogRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r9",
+            "criteriaSelectionRevision": "clinical-appeal-case:criteriaSelectionRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000201/criteria-selection",
+          "payload_refs": [
+            "/command_payloads/select_criteria"
+          ]
+        },
+        {
+          "ordinal": 10,
+          "name": "assemble_evidence",
+          "command_id": "b0000000-0000-4000-8000-000000000210",
+          "actor": "coordinator",
+          "required_capability": "evidence_assemble",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000201/evidence-commands",
+          "expected_input_tokens": {
+            "documentSetRevision": "clinical-appeal-case:documentSetRevision:r2",
+            "criteriaSelectionRevision": "clinical-appeal-case:criteriaSelectionRevision:r1",
+            "evidenceWorkRevision": "clinical-appeal-case:evidenceWorkRevision:r0"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r10",
+            "evidenceRevision": "clinical-appeal-case:evidenceRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000201/evidence/assemble",
+          "payload_refs": [
+            "/command_payloads/assemble_evidence"
+          ]
+        },
+        {
+          "ordinal": 11,
+          "name": "transition_to_policy_review",
+          "command_id": "b0000000-0000-4000-8000-000000000211",
+          "actor": "coordinator",
+          "required_capability": "case_write",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000201/commands",
+          "expected_input_tokens": {
+            "caseStatusRevision": "clinical-appeal-case:caseStatusRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r11",
+            "caseStatusRevision": "clinical-appeal-case:caseStatusRevision:r2"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000201/status",
+          "payload_refs": [
+            "/command_payloads/transition_to_policy_review"
+          ]
+        },
+        {
+          "ordinal": 12,
+          "name": "transition_to_awaiting_gate",
+          "command_id": "b0000000-0000-4000-8000-000000000212",
+          "actor": "coordinator",
+          "required_capability": "case_write",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000201/commands",
+          "expected_input_tokens": {
+            "caseStatusRevision": "clinical-appeal-case:caseStatusRevision:r2"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r12",
+            "caseStatusRevision": "clinical-appeal-case:caseStatusRevision:r3"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000201/status",
+          "payload_refs": [
+            "/command_payloads/transition_to_awaiting_gate"
+          ]
+        },
+        {
+          "ordinal": 13,
+          "name": "affirm_policy",
+          "command_id": "b0000000-0000-4000-8000-000000000213",
+          "actor": "surgeon",
+          "required_capability": "affirm_gate",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000201/gate/commands",
+          "expected_input_tokens": {
+            "evidenceRevision": "clinical-appeal-case:evidenceRevision:r1",
+            "criteriaSelectionRevision": "clinical-appeal-case:criteriaSelectionRevision:r1",
+            "gateRevision": "clinical-appeal-case:gateRevision:r0"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r13",
+            "gateRevision": "clinical-appeal-case:gateRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000201/gate/affirm",
+          "payload_refs": [
+            "/command_payloads/affirm_policy"
+          ]
+        },
+        {
+          "ordinal": 14,
+          "name": "affirm_section",
+          "command_id": "b0000000-0000-4000-8000-000000000214",
+          "actor": "surgeon",
+          "required_capability": "affirm_gate",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000201/gate/commands",
+          "expected_input_tokens": {
+            "evidenceRevision": "clinical-appeal-case:evidenceRevision:r1",
+            "criteriaSelectionRevision": "clinical-appeal-case:criteriaSelectionRevision:r1",
+            "gateRevision": "clinical-appeal-case:gateRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r14",
+            "gateRevision": "clinical-appeal-case:gateRevision:r2"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000201/gate/affirm",
+          "payload_refs": [
+            "/command_payloads/affirm_section"
+          ]
+        },
+        {
+          "ordinal": 15,
+          "name": "affirm_pathway",
+          "command_id": "b0000000-0000-4000-8000-000000000215",
+          "actor": "surgeon",
+          "required_capability": "affirm_gate",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000201/gate/commands",
+          "expected_input_tokens": {
+            "evidenceRevision": "clinical-appeal-case:evidenceRevision:r1",
+            "criteriaSelectionRevision": "clinical-appeal-case:criteriaSelectionRevision:r1",
+            "gateRevision": "clinical-appeal-case:gateRevision:r2"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r15",
+            "gateRevision": "clinical-appeal-case:gateRevision:r3"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000201/gate/affirm",
+          "payload_refs": [
+            "/command_payloads/affirm_pathway"
+          ]
+        },
+        {
+          "ordinal": 16,
+          "name": "affirm_plan",
+          "command_id": "b0000000-0000-4000-8000-000000000216",
+          "actor": "surgeon",
+          "required_capability": "affirm_gate",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000201/gate/commands",
+          "expected_input_tokens": {
+            "evidenceRevision": "clinical-appeal-case:evidenceRevision:r1",
+            "criteriaSelectionRevision": "clinical-appeal-case:criteriaSelectionRevision:r1",
+            "gateRevision": "clinical-appeal-case:gateRevision:r3"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r16",
+            "gateRevision": "clinical-appeal-case:gateRevision:r4"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000201/gate/affirm",
+          "payload_refs": [
+            "/command_payloads/affirm_plan"
+          ]
+        },
+        {
+          "ordinal": 17,
+          "name": "generate_letter",
+          "command_id": "b0000000-0000-4000-8000-000000000217",
+          "actor": "coordinator",
+          "required_capability": "letter_generate",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000201/letter-commands",
+          "expected_input_tokens": {
+            "resolutionRevision": "clinical-appeal-case:resolutionRevision:r1",
+            "criteriaSelectionRevision": "clinical-appeal-case:criteriaSelectionRevision:r1",
+            "evidenceRevision": "clinical-appeal-case:evidenceRevision:r1",
+            "gateRevision": "clinical-appeal-case:gateRevision:r4"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r17",
+            "letterRevision": "clinical-appeal-case:letterRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000201/letters",
+          "payload_refs": [
+            "/command_payloads/generate_letter"
+          ]
+        },
+        {
+          "ordinal": 18,
+          "name": "record_initial_qa",
+          "command_id": "b0000000-0000-4000-8000-000000000218",
+          "actor": "coordinator",
+          "required_capability": "letter_review",
+          "lookup_anchor": "/api/letters/80000000-0000-4000-8000-000000000201/commands",
+          "expected_input_tokens": {
+            "letterRevision": "clinical-appeal-case:letterRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r18",
+            "letterRevision": "clinical-appeal-case:letterRevision:r2",
+            "qaRevision": "clinical-appeal-case:qaRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/letters/80000000-0000-4000-8000-000000000201/qa",
+          "payload_refs": [
+            "/command_payloads/record_initial_qa"
+          ]
+        },
+        {
+          "ordinal": 19,
+          "name": "approve_initial_letter",
+          "command_id": "b0000000-0000-4000-8000-000000000219",
+          "actor": "surgeon",
+          "required_capability": "letter_approve",
+          "lookup_anchor": "/api/letters/80000000-0000-4000-8000-000000000201/commands",
+          "expected_input_tokens": {
+            "letterRevision": "clinical-appeal-case:letterRevision:r2",
+            "qaRevision": "clinical-appeal-case:qaRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r19",
+            "letterRevision": "clinical-appeal-case:letterRevision:r3"
+          },
+          "method": "POST",
+          "route": "/api/letters/80000000-0000-4000-8000-000000000201/approve",
+          "payload_refs": [
+            "/command_payloads/approve_initial_letter"
+          ]
+        },
+        {
+          "ordinal": 20,
+          "name": "sign_initial_letter",
+          "command_id": "b0000000-0000-4000-8000-000000000220",
+          "actor": "surgeon",
+          "required_capability": "sign_letter",
+          "lookup_anchor": "/api/letters/80000000-0000-4000-8000-000000000201/sign/commands",
+          "expected_input_tokens": {
+            "letterRevision": "clinical-appeal-case:letterRevision:r3",
+            "qaRevision": "clinical-appeal-case:qaRevision:r1",
+            "signatureRevision": "clinical-appeal-case:signatureRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r20",
+            "letterRevision": "clinical-appeal-case:letterRevision:r4"
+          },
+          "method": "POST",
+          "route": "/api/letters/80000000-0000-4000-8000-000000000201/sign",
+          "payload_refs": [
+            "/command_payloads/sign_initial_letter"
+          ]
+        },
+        {
+          "ordinal": 21,
+          "name": "acknowledge_initial_submission",
+          "command_id": "b0000000-0000-4000-8000-000000000221",
+          "actor": "coordinator",
+          "required_capability": "submit",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000201/submission-commands",
+          "expected_input_tokens": {
+            "letterRevision": "clinical-appeal-case:letterRevision:r4",
+            "submissionRevision": "clinical-appeal-case:submissionRevision:r0"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r21",
+            "submissionRevision": "clinical-appeal-case:submissionRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000201/submissions/acknowledge",
+          "payload_refs": [
+            "/command_payloads/acknowledge_initial_submission"
+          ]
+        },
+        {
+          "ordinal": 22,
+          "name": "upload_determination",
+          "command_id": "b0000000-0000-4000-8000-000000000222",
+          "actor": "coordinator",
+          "required_capability": "document_upload",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000201/document-commands",
+          "expected_input_tokens": {
+            "caseInputRevision": "clinical-appeal-case:caseInputRevision:r1",
+            "documentSetRevision": "clinical-appeal-case:documentSetRevision:r2"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r22"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000201/documents",
+          "payload_refs": [
+            "/command_payloads/upload_determination"
+          ]
+        },
+        {
+          "ordinal": 23,
+          "name": "process_determination",
+          "command_id": "b0000000-0000-4000-8000-000000000223",
+          "actor": "processor",
+          "required_capability": "document_process",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000201/documents/50000000-0000-4000-8000-000000000203/commands",
+          "expected_input_tokens": {
+            "documentSetRevision": "clinical-appeal-case:documentSetRevision:r2"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r23",
+            "documentSetRevision": "clinical-appeal-case:documentSetRevision:r3"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000201/documents/50000000-0000-4000-8000-000000000203/process",
+          "payload_refs": [
+            "/command_payloads/process_determination"
+          ]
+        },
+        {
+          "ordinal": 24,
+          "name": "record_determination",
+          "command_id": "b0000000-0000-4000-8000-000000000224",
+          "actor": "coordinator",
+          "required_capability": "determination_record",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000201/determination-commands",
+          "expected_input_tokens": {
+            "submissionRevision": "clinical-appeal-case:submissionRevision:r1",
+            "documentSetRevision": "clinical-appeal-case:documentSetRevision:r3"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r24",
+            "determinationRevision": "clinical-appeal-case:determinationRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000201/determinations",
+          "payload_refs": [
+            "/command_payloads/record_determination"
+          ]
+        },
+        {
+          "ordinal": 25,
+          "name": "confirm_classification",
+          "command_id": "b0000000-0000-4000-8000-000000000225",
+          "actor": "coordinator",
+          "required_capability": "determination_classify",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000201/determinations/a0000000-0000-4000-8000-000000000201/classification/commands",
+          "expected_input_tokens": {
+            "determinationRevision": "clinical-appeal-case:determinationRevision:r1",
+            "classificationRevision": "clinical-appeal-case:classificationRevision:r0"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r25",
+            "classificationRevision": "clinical-appeal-case:classificationRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000201/determinations/a0000000-0000-4000-8000-000000000201/classification",
+          "payload_refs": [
+            "/command_payloads/confirm_classification"
+          ]
+        },
+        {
+          "ordinal": 26,
+          "name": "reaffirm_response_policy",
+          "command_id": "b0000000-0000-4000-8000-000000000226",
+          "actor": "surgeon",
+          "required_capability": "affirm_gate",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000201/response-gate/commands",
+          "expected_input_tokens": {
+            "determinationRevision": "clinical-appeal-case:determinationRevision:r1",
+            "classificationRevision": "clinical-appeal-case:classificationRevision:r1",
+            "evidenceRevision": "clinical-appeal-case:evidenceRevision:r1",
+            "criteriaSelectionRevision": "clinical-appeal-case:criteriaSelectionRevision:r1",
+            "responseGateRevision": "clinical-appeal-case:responseGateRevision:r0",
+            "resolutionRevision": "clinical-appeal-case:resolutionRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r26",
+            "responseGateRevision": "clinical-appeal-case:responseGateRevision:r1"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000201/response-gate/affirmations",
+          "payload_refs": [
+            "/command_payloads/reaffirm_response_policy"
+          ]
+        },
+        {
+          "ordinal": 27,
+          "name": "reaffirm_response_section",
+          "command_id": "b0000000-0000-4000-8000-000000000227",
+          "actor": "surgeon",
+          "required_capability": "affirm_gate",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000201/response-gate/commands",
+          "expected_input_tokens": {
+            "determinationRevision": "clinical-appeal-case:determinationRevision:r1",
+            "classificationRevision": "clinical-appeal-case:classificationRevision:r1",
+            "evidenceRevision": "clinical-appeal-case:evidenceRevision:r1",
+            "criteriaSelectionRevision": "clinical-appeal-case:criteriaSelectionRevision:r1",
+            "responseGateRevision": "clinical-appeal-case:responseGateRevision:r1",
+            "resolutionRevision": "clinical-appeal-case:resolutionRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r27",
+            "responseGateRevision": "clinical-appeal-case:responseGateRevision:r2"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000201/response-gate/affirmations",
+          "payload_refs": [
+            "/command_payloads/reaffirm_response_section"
+          ]
+        },
+        {
+          "ordinal": 28,
+          "name": "reaffirm_response_pathway",
+          "command_id": "b0000000-0000-4000-8000-000000000228",
+          "actor": "surgeon",
+          "required_capability": "affirm_gate",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000201/response-gate/commands",
+          "expected_input_tokens": {
+            "determinationRevision": "clinical-appeal-case:determinationRevision:r1",
+            "classificationRevision": "clinical-appeal-case:classificationRevision:r1",
+            "evidenceRevision": "clinical-appeal-case:evidenceRevision:r1",
+            "criteriaSelectionRevision": "clinical-appeal-case:criteriaSelectionRevision:r1",
+            "responseGateRevision": "clinical-appeal-case:responseGateRevision:r2",
+            "resolutionRevision": "clinical-appeal-case:resolutionRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r28",
+            "responseGateRevision": "clinical-appeal-case:responseGateRevision:r3"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000201/response-gate/affirmations",
+          "payload_refs": [
+            "/command_payloads/reaffirm_response_pathway"
+          ]
+        },
+        {
+          "ordinal": 29,
+          "name": "reaffirm_response_plan",
+          "command_id": "b0000000-0000-4000-8000-000000000229",
+          "actor": "surgeon",
+          "required_capability": "affirm_gate",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000201/response-gate/commands",
+          "expected_input_tokens": {
+            "determinationRevision": "clinical-appeal-case:determinationRevision:r1",
+            "classificationRevision": "clinical-appeal-case:classificationRevision:r1",
+            "evidenceRevision": "clinical-appeal-case:evidenceRevision:r1",
+            "criteriaSelectionRevision": "clinical-appeal-case:criteriaSelectionRevision:r1",
+            "responseGateRevision": "clinical-appeal-case:responseGateRevision:r3",
+            "resolutionRevision": "clinical-appeal-case:resolutionRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r29",
+            "responseGateRevision": "clinical-appeal-case:responseGateRevision:r4"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000201/response-gate/affirmations",
+          "payload_refs": [
+            "/command_payloads/reaffirm_response_plan"
+          ]
+        },
+        {
+          "ordinal": 30,
+          "name": "generate_response_letter",
+          "command_id": "b0000000-0000-4000-8000-000000000230",
+          "actor": "coordinator",
+          "required_capability": "letter_generate",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000201/response-letter-commands",
+          "expected_input_tokens": {
+            "resolutionRevision": "clinical-appeal-case:resolutionRevision:r1",
+            "criteriaSelectionRevision": "clinical-appeal-case:criteriaSelectionRevision:r1",
+            "evidenceRevision": "clinical-appeal-case:evidenceRevision:r1",
+            "determinationRevision": "clinical-appeal-case:determinationRevision:r1",
+            "classificationRevision": "clinical-appeal-case:classificationRevision:r1",
+            "responseGateRevision": "clinical-appeal-case:responseGateRevision:r4"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r30",
+            "letterRevision": "clinical-appeal-case:letterRevision:r5"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000201/response-letters",
+          "payload_refs": [
+            "/command_payloads/generate_response_letter"
+          ]
+        },
+        {
+          "ordinal": 31,
+          "name": "record_response_qa",
+          "command_id": "b0000000-0000-4000-8000-000000000231",
+          "actor": "coordinator",
+          "required_capability": "letter_review",
+          "lookup_anchor": "/api/letters/80000000-0000-4000-8000-000000000202/commands",
+          "expected_input_tokens": {
+            "letterRevision": "clinical-appeal-case:letterRevision:r5"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r31",
+            "letterRevision": "clinical-appeal-case:letterRevision:r6",
+            "qaRevision": "clinical-appeal-case:qaRevision:r2"
+          },
+          "method": "POST",
+          "route": "/api/letters/80000000-0000-4000-8000-000000000202/qa",
+          "payload_refs": [
+            "/command_payloads/record_response_qa"
+          ]
+        },
+        {
+          "ordinal": 32,
+          "name": "approve_response_letter",
+          "command_id": "b0000000-0000-4000-8000-000000000232",
+          "actor": "surgeon",
+          "required_capability": "letter_approve",
+          "lookup_anchor": "/api/letters/80000000-0000-4000-8000-000000000202/commands",
+          "expected_input_tokens": {
+            "letterRevision": "clinical-appeal-case:letterRevision:r6",
+            "qaRevision": "clinical-appeal-case:qaRevision:r2",
+            "responseGateRevision": "clinical-appeal-case:responseGateRevision:r4"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r32",
+            "letterRevision": "clinical-appeal-case:letterRevision:r7"
+          },
+          "method": "POST",
+          "route": "/api/letters/80000000-0000-4000-8000-000000000202/approve",
+          "payload_refs": [
+            "/command_payloads/approve_response_letter"
+          ]
+        },
+        {
+          "ordinal": 33,
+          "name": "sign_response_letter",
+          "command_id": "b0000000-0000-4000-8000-000000000233",
+          "actor": "surgeon",
+          "required_capability": "sign_letter",
+          "lookup_anchor": "/api/letters/80000000-0000-4000-8000-000000000202/sign/commands",
+          "expected_input_tokens": {
+            "letterRevision": "clinical-appeal-case:letterRevision:r7",
+            "qaRevision": "clinical-appeal-case:qaRevision:r2",
+            "signatureRevision": "clinical-appeal-case:signatureRevision:r1",
+            "responseGateRevision": "clinical-appeal-case:responseGateRevision:r4"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r33",
+            "letterRevision": "clinical-appeal-case:letterRevision:r8"
+          },
+          "method": "POST",
+          "route": "/api/letters/80000000-0000-4000-8000-000000000202/sign",
+          "payload_refs": [
+            "/command_payloads/sign_response_letter"
+          ]
+        },
+        {
+          "ordinal": 34,
+          "name": "acknowledge_response_submission",
+          "command_id": "b0000000-0000-4000-8000-000000000234",
+          "actor": "coordinator",
+          "required_capability": "submit",
+          "lookup_anchor": "/api/cases/40000000-0000-4000-8000-000000000201/submission-commands",
+          "expected_input_tokens": {
+            "letterRevision": "clinical-appeal-case:letterRevision:r8",
+            "submissionRevision": "clinical-appeal-case:submissionRevision:r1"
+          },
+          "expected_result_tokens": {
+            "commandResultRevision": "clinical-appeal-case:commandResultRevision:r34",
+            "submissionRevision": "clinical-appeal-case:submissionRevision:r2"
+          },
+          "method": "POST",
+          "route": "/api/cases/40000000-0000-4000-8000-000000000201/submissions/acknowledge",
+          "payload_refs": [
+            "/command_payloads/acknowledge_response_submission"
+          ]
+        }
+      ],
+      "response_submission": {
+        "id": "90000000-0000-4000-8000-000000000202",
+        "letter_id": "80000000-0000-4000-8000-000000000202",
+        "channel_key": "payer-portal",
+        "status": "acknowledged",
+        "submitted_at": "2026-03-12T18:30:00Z",
+        "attempt": 1,
+        "attachment_manifest": {
+          "ordered_attachment_ids": [
+            "80000000-0000-4000-8000-000000000202",
+            "50000000-0000-4000-8000-000000000203",
+            "50000000-0000-4000-8000-000000000202"
+          ],
+          "sha256": "63dcabbd84f8238c468ef39b929ddd09e1ca0670b2a7bcd1deadc71356ba3a36"
+        },
+        "receipt_custody": {
+          "receipt_id": "91000000-0000-4000-8000-000000000202",
+          "kind": "manual_synthetic_receipt",
+          "acknowledged_at": "2026-03-12T18:30:00Z",
+          "evidence_sha256": "68b15ab05ff3ad16dd993126eb4a849960cfef21e67dc66e7e8c03aaf4b36187"
+        },
+        "total_pages": 3,
+        "channel_data": {
+          "portal_url": "https://synthetic-payer.example.invalid/portal",
+          "confirmation_number": "SYN-000000000202"
+        }
+      },
+      "signed_status_before_acknowledgement": "response_ready",
+      "original_request": {
+        "letter_id": "80000000-0000-4000-8000-000000000201",
+        "purpose": "prior_authorization_request",
+        "status": "signed",
+        "version": 1,
+        "body_markdown": "Synthetic prior authorization request for case SYN-APPEAL-001.\n\nThe controlling policy requires twelve weeks of supervised physical therapy [Synthetic conservative care policy, p. 1].\n\nThe therapy record documents twelve weeks without durable relief [Synthetic completed therapy record, p. 1].",
+        "body_sha256": "2cbb07ed1ebf58f171680d8d411ef41bb33db158e10c7480ae7c275a41adc918",
+        "submission_id": "90000000-0000-4000-8000-000000000201",
+        "submission_status": "acknowledged"
+      },
+      "initial_submission": {
+        "id": "90000000-0000-4000-8000-000000000201",
+        "letter_id": "80000000-0000-4000-8000-000000000201",
+        "status": "acknowledged",
+        "attempt": 1,
+        "channel_key": "payer-portal",
+        "submitted_at": "2026-03-09T15:30:00Z",
+        "attachment_manifest": {
+          "ordered_attachment_ids": [
+            "80000000-0000-4000-8000-000000000201",
+            "50000000-0000-4000-8000-000000000201",
+            "50000000-0000-4000-8000-000000000202"
+          ],
+          "sha256": "472b1849514f34de7e9d092c8916ab549cb411026f0e3a91ca6b9c8193d38a0e"
+        },
+        "receipt_custody": {
+          "receipt_id": "91000000-0000-4000-8000-000000000201",
+          "kind": "manual_synthetic_receipt",
+          "acknowledged_at": "2026-03-09T15:30:00Z",
+          "evidence_sha256": "cd594722a8a594ac1a26bf5979225ea91b4502bf2c40e506ffdb1c06948e1ea4"
+        },
+        "total_pages": 3,
+        "channel_data": {
+          "portal_url": "https://synthetic-payer.example.invalid/portal",
+          "confirmation_number": "SYN-000000000201"
+        }
+      },
+      "determination": {
+        "id": "a0000000-0000-4000-8000-000000000201",
+        "submission_id": "90000000-0000-4000-8000-000000000201",
+        "outcome": "denied",
+        "decided_on": "2026-03-10",
+        "reason_code": "clinical_conservative_care_duration",
+        "reason_text": "Synthetic: The record did not demonstrate twelve weeks of supervised conservative therapy.",
+        "document_id": "50000000-0000-4000-8000-000000000203",
+        "source_page_number": 1,
+        "appeal_deadline": "2026-04-09"
+      },
+      "lifecycle_transitions": [
+        {
+          "from": "intake",
+          "to": "evidence",
+          "owned_by_command": "transition_to_evidence"
+        },
+        {
+          "from": "evidence",
+          "to": "policy_review",
+          "owned_by_command": "transition_to_policy_review"
+        },
+        {
+          "from": "policy_review",
+          "to": "awaiting_gate",
+          "owned_by_command": "transition_to_awaiting_gate"
+        },
+        {
+          "from": "awaiting_gate",
+          "to": "drafting",
+          "owned_by_command": "generate_letter"
+        },
+        {
+          "from": "drafting",
+          "to": "ready",
+          "owned_by_command": "approve_initial_letter"
+        },
+        {
+          "from": "ready",
+          "to": "submitted",
+          "owned_by_command": "acknowledge_initial_submission"
+        },
+        {
+          "from": "submitted",
+          "to": "denied",
+          "owned_by_command": "record_determination"
+        },
+        {
+          "from": "denied",
+          "to": "denial_review",
+          "owned_by_command": "confirm_classification"
+        },
+        {
+          "from": "denial_review",
+          "to": "response_drafting",
+          "owned_by_command": "generate_response_letter"
+        },
+        {
+          "from": "response_drafting",
+          "to": "response_ready",
+          "owned_by_command": "approve_response_letter"
+        },
+        {
+          "from": "response_ready",
+          "to": "appealed",
+          "owned_by_command": "acknowledge_response_submission"
+        }
+      ],
+      "revision_ledger": {
+        "authorizationRevision": "clinical-appeal-case:authorizationRevision:r1",
+        "caseInputRevision": "clinical-appeal-case:caseInputRevision:r1",
+        "caseStatusRevision": "clinical-appeal-case:caseStatusRevision:r3",
+        "resolutionRevision": "clinical-appeal-case:resolutionRevision:r1",
+        "documentSetRevision": "clinical-appeal-case:documentSetRevision:r3",
+        "criteriaCatalogRevision": "clinical-appeal-case:criteriaCatalogRevision:r1",
+        "criteriaSelectionRevision": "clinical-appeal-case:criteriaSelectionRevision:r1",
+        "evidenceWorkRevision": "clinical-appeal-case:evidenceWorkRevision:r0",
+        "evidenceRevision": "clinical-appeal-case:evidenceRevision:r1",
+        "gateRevision": "clinical-appeal-case:gateRevision:r4",
+        "submissionRevision": "clinical-appeal-case:submissionRevision:r2",
+        "determinationRevision": "clinical-appeal-case:determinationRevision:r1",
+        "classificationRevision": "clinical-appeal-case:classificationRevision:r1",
+        "responseGateRevision": "clinical-appeal-case:responseGateRevision:r4",
+        "letterRevision": "clinical-appeal-case:letterRevision:r8",
+        "qaRevision": "clinical-appeal-case:qaRevision:r2",
+        "signatureRevision": "clinical-appeal-case:signatureRevision:r1"
+      },
+      "response_letter": {
+        "id": "80000000-0000-4000-8000-000000000202",
+        "version": 1,
+        "purpose": "clinical_appeal",
+        "status": "signed",
+        "challenged_determination_id": "a0000000-0000-4000-8000-000000000201",
+        "original_request_letter_id": "80000000-0000-4000-8000-000000000201",
+        "body_markdown": "Clinical appeal for synthetic case SYN-APPEAL-001\n\nThe denial dated 2026-03-10 states that the record did not demonstrate twelve weeks of supervised conservative therapy [Synthetic medical-necessity denial, p. 1].\n\nThe therapy record dated 2026-03-05 documents twelve weeks of supervised physical therapy without durable relief [Synthetic completed therapy record, p. 1].",
+        "body_sha256": "2cd19bc2c461bd9c3f00f736a75324d95fca43d3dd4583ed0e6cfe303f7515b6",
+        "claims": [
+          {
+            "id": "81000000-0000-4000-8000-000000000201",
+            "ordinal": 1,
+            "claim_text": "Synthetic: The denial states that the record did not demonstrate twelve weeks of supervised conservative therapy.",
+            "document_id": "50000000-0000-4000-8000-000000000203",
+            "page_number": 1,
+            "source_content_sha256": "3af9b0b18a6ddb27d13b422681d20b11fd3e4b9cdfeb71e933e47a8dc35fc26a",
+            "source_quote": "Synthetic denial reason: the submitted record did not demonstrate twelve weeks of supervised conservative therapy.",
+            "document_version": 1,
+            "source_span_start": 30,
+            "source_span_end": 144,
+            "source_date_kind": "determination_date",
+            "support_status": "supported",
+            "support_reviewed_by": "11000000-0000-4000-8000-000000000001",
+            "support_reviewed_at": "2026-03-12T17:00:00Z",
+            "support_claim_version": 1,
+            "source_date": "2026-03-10"
+          },
+          {
+            "id": "81000000-0000-4000-8000-000000000202",
+            "ordinal": 2,
+            "claim_text": "Synthetic: The therapy record documents twelve weeks of supervised physical therapy without durable relief.",
+            "document_id": "50000000-0000-4000-8000-000000000202",
+            "page_number": 1,
+            "source_content_sha256": "6dd04d28cac762ce7f143d348a1911a73bc58adf37cef20ebc1636a896e62627",
+            "source_quote": "Synthetic therapy record: twelve weeks of supervised physical therapy were completed without durable relief.",
+            "criterion_id": "60000000-0000-4000-8000-000000000201",
+            "document_version": 1,
+            "source_span_start": 30,
+            "source_span_end": 138,
+            "source_date_kind": "effective_date",
+            "support_status": "supported",
+            "support_reviewed_by": "11000000-0000-4000-8000-000000000001",
+            "support_reviewed_at": "2026-03-12T17:00:00Z",
+            "support_claim_version": 1,
+            "source_date": "2026-03-05"
+          }
+        ]
+      },
+      "initial_request_letter": {
+        "id": "80000000-0000-4000-8000-000000000201",
+        "version": 1,
+        "purpose": "prior_authorization_request",
+        "status": "signed",
+        "body_markdown": "Synthetic prior authorization request for case SYN-APPEAL-001.\n\nThe controlling policy requires twelve weeks of supervised physical therapy [Synthetic conservative care policy, p. 1].\n\nThe therapy record documents twelve weeks without durable relief [Synthetic completed therapy record, p. 1].",
+        "body_sha256": "2cbb07ed1ebf58f171680d8d411ef41bb33db158e10c7480ae7c275a41adc918",
+        "claims": [
+          {
+            "id": "81000000-0000-4000-8000-000000000210",
+            "ordinal": 1,
+            "claim_text": "Synthetic: The controlling policy requires twelve weeks of supervised physical therapy.",
+            "document_id": "50000000-0000-4000-8000-000000000201",
+            "document_version": 1,
+            "page_number": 1,
+            "source_date": "2026-01-01",
+            "source_content_sha256": "176d5729991de136d09be62a86ed6a36ed4990f172bfc16b216b6ed5ed9ef3cb",
+            "source_quote": "Synthetic clinical policy: twelve weeks of supervised physical therapy satisfy the conservative-care criterion.",
+            "source_span_start": 30,
+            "source_span_end": 141,
+            "source_date_kind": "effective_date",
+            "support_status": "supported",
+            "support_reviewed_by": "11000000-0000-4000-8000-000000000001",
+            "support_reviewed_at": "2026-03-06T15:00:00Z",
+            "support_claim_version": 1,
+            "criterion_id": "60000000-0000-4000-8000-000000000201"
+          },
+          {
+            "id": "81000000-0000-4000-8000-000000000211",
+            "ordinal": 2,
+            "claim_text": "Synthetic: The therapy record documents twelve weeks without durable relief.",
+            "document_id": "50000000-0000-4000-8000-000000000202",
+            "document_version": 1,
+            "page_number": 1,
+            "source_date": "2026-03-05",
+            "source_content_sha256": "6dd04d28cac762ce7f143d348a1911a73bc58adf37cef20ebc1636a896e62627",
+            "source_quote": "Synthetic therapy record: twelve weeks of supervised physical therapy were completed without durable relief.",
+            "source_span_start": 30,
+            "source_span_end": 138,
+            "source_date_kind": "effective_date",
+            "support_status": "supported",
+            "support_reviewed_by": "11000000-0000-4000-8000-000000000001",
+            "support_reviewed_at": "2026-03-06T15:00:00Z",
+            "support_claim_version": 1,
+            "criterion_id": "60000000-0000-4000-8000-000000000201"
+          }
+        ]
+      },
+      "precondition_reads": [
+        {
+          "name": "read_signing_target",
+          "lookup_anchor": "/api/letters/80000000-0000-4000-8000-000000000201/sign/commands",
+          "expected_tokens": {
+            "letterRevision": "clinical-appeal-case:letterRevision:r3",
+            "qaRevision": "clinical-appeal-case:qaRevision:r1",
+            "signatureRevision": "clinical-appeal-case:signatureRevision:r1"
+          }
+        },
+        {
+          "name": "read_signing_target",
+          "lookup_anchor": "/api/letters/80000000-0000-4000-8000-000000000202/sign/commands",
+          "expected_tokens": {
+            "letterRevision": "clinical-appeal-case:letterRevision:r7",
+            "qaRevision": "clinical-appeal-case:qaRevision:r2",
+            "signatureRevision": "clinical-appeal-case:signatureRevision:r1",
+            "responseGateRevision": "clinical-appeal-case:responseGateRevision:r4"
+          }
+        }
+      ]
+    }
+  ],
+  "negative_controls": [
+    {
+      "fixture_id": "low-confidence-denial",
+      "classification_state": "needs_review",
+      "stable_code": "classification_needs_review",
+      "browser_copy": "Review the denial reason and choose the response path.",
+      "response_letter_created": false
+    },
+    {
+      "fixture_id": "missing-citation-claim",
+      "stable_code": "citation_incomplete",
+      "browser_copy": "This assertion has no source document. It will not be included.",
+      "persisted_claim": false,
+      "included_in_prose": false
+    },
+    {
+      "fixture_id": "unrelated-page-claim",
+      "stable_code": "citation_unsupported",
+      "browser_copy": "This citation does not support the assertion. It will not be included.",
+      "support_status": "unsupported",
+      "approval_allowed": false,
+      "included_in_prose": false
+    },
+    {
+      "fixture_id": "foreign-practice-case",
+      "http_status": 404,
+      "stable_code": "resource_not_found",
+      "browser_copy": "This record is unavailable in the selected practice.",
+      "gateway": "refused",
+      "app_services": "refused",
+      "postgres": "refused",
+      "replica_materialized": false,
+      "browser_route": "unavailable"
+    }
+  ],
+  "isolation": {
+    "case_ids_distinct": true,
+    "determination_ids_distinct": true,
+    "response_letter_ids_distinct": true,
+    "command_ids_disjoint": true,
+    "mutation_of_one_denial_fixture_changes_other": false
+  },
+  "fixture_manifest_sha256": "aafc14dcf205b211b652fc8896dbad07de3d9d738a0e3747eb67c81c4ef37a71",
+  "administering_entity_resolution_fixture": {
+    "fixture_id": "web-03-resolution-rules",
+    "outcomes": [
+      {
+        "fixture_id": "valid",
+        "state": "resolved",
+        "candidate_count": 1,
+        "historical_candidate_count": 1,
+        "downstream_blocked": false,
+        "matched_rule_id": "23000000-0000-4000-8000-000000000301",
+        "entity_id": "21000000-0000-4000-8000-000000000301",
+        "criteria_set_key": "synthetic-lumbar-fusion-2026",
+        "submission_channel_key": "manual_synthetic",
+        "appeal_path_key": "synthetic-standard-appeal",
+        "source_document_id": "50000000-0000-4000-8000-000000000301",
+        "valid_from": "2026-02-01",
+        "valid_to": "2026-12-31"
+      },
+      {
+        "fixture_id": "missing",
+        "state": "missing",
+        "candidate_count": 0,
+        "historical_candidate_count": 0,
+        "downstream_blocked": true
+      },
+      {
+        "fixture_id": "ambiguous",
+        "state": "ambiguous",
+        "candidate_count": 2,
+        "historical_candidate_count": 2,
+        "downstream_blocked": true
+      },
+      {
+        "fixture_id": "conflicting",
+        "state": "conflicting",
+        "candidate_count": 2,
+        "historical_candidate_count": 2,
+        "downstream_blocked": true
+      },
+      {
+        "fixture_id": "expired",
+        "state": "expired",
+        "candidate_count": 0,
+        "historical_candidate_count": 1,
+        "downstream_blocked": true
+      }
+    ]
+  }
+}

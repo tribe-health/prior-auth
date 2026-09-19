@@ -8,7 +8,11 @@
  */
 import { describe, expect, it } from "vitest";
 
-import { pgliteDataDir, resolveStoragePolicy } from "./storage-policy";
+import {
+  assertMaterializerStoragePolicy,
+  pgliteDataDir,
+  resolveStoragePolicy,
+} from "./storage-policy";
 
 describe("resolveStoragePolicy", () => {
   it("persists only on an explicit opt-in", () => {
@@ -74,5 +78,24 @@ describe("pgliteDataDir", () => {
   it("returns undefined for memory, which is PGlite's in-memory default", () => {
     const policy = resolveStoragePolicy("memory");
     expect(pgliteDataDir(policy, "aso:g1:user:practice-1:identity-1")).toBeUndefined();
+  });
+});
+
+describe("assertMaterializerStoragePolicy", () => {
+  it("refuses the experimental clinical materializer on persistent storage", () => {
+    expect(() =>
+      assertMaterializerStoragePolicy(resolveStoragePolicy("persistent"), true),
+    ).toThrowError(
+      "The experimental clinical materializer is approved only for memory-only qualification.",
+    );
+  });
+
+  it("allows the experimental materializer in memory and persistent storage without it", () => {
+    expect(() =>
+      assertMaterializerStoragePolicy(resolveStoragePolicy("memory"), true),
+    ).not.toThrow();
+    expect(() =>
+      assertMaterializerStoragePolicy(resolveStoragePolicy("persistent"), false),
+    ).not.toThrow();
   });
 });

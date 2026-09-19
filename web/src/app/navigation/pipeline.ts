@@ -67,7 +67,11 @@ export const GLOBAL_NAV: readonly GlobalNavItem[] = [
 /** Why a step is unavailable. Rendered to the user, so it is prose. */
 export type StepBlockReason =
   | { kind: "reachable" }
-  | { kind: "awaiting-gate"; message: string };
+  | { kind: "awaiting-gate"; message: string }
+  | { kind: "gate-pending"; message: string }
+  | { kind: "case-unavailable"; message: string };
+
+export type CaseGateStatus = 'pending' | 'unavailable' | 'not-affirmed' | 'affirmed';
 // A `no-capability` variant was declared here and never constructed:
 // `isStepReachable` takes no session and cannot produce it. A type permitting
 // a state the function cannot return invites a caller to assume capability
@@ -90,9 +94,22 @@ export type StepBlockReason =
  */
 export function isStepReachable(
   step: PipelineStep,
-  opts: { gateAffirmed: boolean },
+  opts: { gateStatus: CaseGateStatus },
 ): StepBlockReason {
-  if (step.requires === "affirm_gate" && !opts.gateAffirmed) {
+  if (step.requires !== "affirm_gate") return { kind: "reachable" };
+  if (opts.gateStatus === 'pending') {
+    return {
+      kind: 'gate-pending',
+      message: 'Surgeon gate status is still synchronizing.',
+    };
+  }
+  if (opts.gateStatus === 'unavailable') {
+    return {
+      kind: 'case-unavailable',
+      message: 'This case is not available in the current authorized data.',
+    };
+  }
+  if (opts.gateStatus === 'not-affirmed') {
     return {
       kind: "awaiting-gate",
       // Specific about consequence, per the brand voice: say what is missing,

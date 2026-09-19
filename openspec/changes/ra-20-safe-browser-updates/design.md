@@ -12,7 +12,7 @@ This change implements runtime order 6 from the reviewed [phase plan](../../../.
 
 Ownership: ASO: runtime update coordinator, compatibility service/manifest and browser deployment assets; server migration deployment job; scoped draft and replica services.
 
-Dependencies: ra-16-authorized-source-preview. Confirm their implementation evidence before applying this change. This root OpenSpec artifact coordinates the user-named five-repository workspace; companion implementation must run under its own repository rules and only within the explicitly assigned modules.
+Dependencies: web-case-to-letter/web-17-browser-scenario-certification. Confirm its complete local-stack and actual-browser evidence before applying this change. This root OpenSpec artifact coordinates the user-named five-repository workspace; companion implementation must run under its own repository rules and only within the explicitly assigned modules.
 
 - Implement compatibility metadata and additive server deployment migration flow for existing installations.
 - Add safe activation across tabs with retained chunks, draft resolution and clinical idempotency reconciliation; add a service worker only if required, static-only by default.

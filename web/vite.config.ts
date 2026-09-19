@@ -7,6 +7,31 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  server: {
+    proxy: {
+      '/self-service': {
+        target: process.env.ASO_KRATOS_PROXY_TARGET ?? 'http://127.0.0.1:4433',
+        changeOrigin: true,
+      },
+      '/api/cases': {
+        target: process.env.ASO_CLINICAL_GATE_PROXY_TARGET
+          ?? process.env.ASO_API_PROXY_TARGET
+          ?? 'http://127.0.0.1:8788',
+        changeOrigin: !process.env.ASO_CLINICAL_GATE_HOST,
+        headers: process.env.ASO_CLINICAL_GATE_HOST
+          ? { host: process.env.ASO_CLINICAL_GATE_HOST }
+          : undefined,
+      },
+      '/api': {
+        target: process.env.ASO_API_PROXY_TARGET ?? 'http://127.0.0.1:8788',
+        changeOrigin: true,
+      },
+      '/v1/shape': {
+        target: process.env.ASO_GATE_PROXY_TARGET ?? 'http://127.0.0.1:4456',
+        changeOrigin: true,
+      },
+    },
+  },
   optimizeDeps: {
     // PGlite ships a ~6MB WASM filesystem bundle. Vite's dependency
     // pre-bundling rewrites the module and breaks the data file's integrity

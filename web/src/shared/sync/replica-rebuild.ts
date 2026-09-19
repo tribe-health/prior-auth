@@ -54,7 +54,8 @@ export interface RebuildResult {
  *    the old generation is now recognisably stale, so the next start rebuilds
  *    again. Clearing first and dying before the bump would leave an empty
  *    replica that still claims the old generation, and a resume would accept it.
- * 2. **Then clear.** Each target is emptied, not reconciled.
+ * 2. **Then clear children before parents.** Targets are declared in insertion
+ *    order so their reverse preserves foreign-key constraints during deletion.
  *
  * The caller re-fetches from a cold cursor afterwards; this function does not
  * fetch, so it can be tested without a transport.
@@ -63,13 +64,18 @@ export async function rebuildGeneration(
   client: WriterClient & LedgerClient,
   targets: readonly TableTarget[],
   trigger: RebuildTrigger,
+  assertActive: () => void = () => undefined,
 ): Promise<RebuildResult> {
+  assertActive();
   // Fail-safe ordering — see above.
   const generation = await bumpGeneration(client);
+  assertActive();
 
   const cleared: string[] = [];
-  for (const target of targets) {
+  for (const target of [...targets].reverse()) {
+    assertActive();
     await truncateTarget(client, target);
+    assertActive();
     cleared.push(target.table);
   }
 

@@ -69,7 +69,7 @@ describe("rebuildGeneration", () => {
     await rebuildGeneration(client, targets, "must-refetch");
 
     const bumpAt = calls.findIndex((c) => /UPDATE _replica_meta/.test(c.sql));
-    const firstDeleteAt = calls.findIndex((c) => /^DELETE FROM/.test(c.sql));
+    const firstDeleteAt = calls.findIndex((c) => c.sql.startsWith("DELETE FROM"));
     expect(bumpAt).toBeGreaterThanOrEqual(0);
     expect(firstDeleteAt).toBeGreaterThan(bumpAt);
   });
@@ -78,9 +78,20 @@ describe("rebuildGeneration", () => {
     const { client, calls } = mockClient();
     const result = await rebuildGeneration(client, targets, "resume-rejected");
 
-    expect(result.cleared).toEqual(["fixture_widgets", "fixture_gadgets"]);
+    expect(result.cleared).toEqual(["fixture_gadgets", "fixture_widgets"]);
     expect(calls.some((c) => c.sql === "DELETE FROM fixture_widgets")).toBe(true);
     expect(calls.some((c) => c.sql === "DELETE FROM fixture_gadgets")).toBe(true);
+  });
+
+  it("clears child targets before their declared parents", async () => {
+    const { client, calls } = mockClient();
+    await rebuildGeneration(client, targets, "must-refetch");
+
+    const deletes = calls.filter((call) => call.sql.startsWith("DELETE FROM"));
+    expect(deletes.map((call) => call.sql)).toEqual([
+      "DELETE FROM fixture_gadgets",
+      "DELETE FROM fixture_widgets",
+    ]);
   });
 
   it("returns the generation the replica is now on", async () => {
@@ -103,5 +114,17 @@ describe("rebuildGeneration", () => {
 
     const rowWrites = calls.filter((c) => /INSERT INTO fixture_|UPDATE fixture_/.test(c.sql));
     expect(rowWrites).toEqual([]);
+  });
+
+  it("checks authority between every generation and row mutation", async () => {
+    const { client, calls } = mockClient();
+    let checks = 0;
+
+    await expect(rebuildGeneration(client, targets, "must-refetch", () => {
+      checks += 1;
+      if (checks === 4) throw new Error("authority changed during rebuild");
+    })).rejects.toThrow("authority changed during rebuild");
+
+    expect(calls.filter((call) => call.sql.startsWith("DELETE FROM"))).toHaveLength(1);
   });
 });

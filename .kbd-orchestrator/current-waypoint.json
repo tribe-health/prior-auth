@@ -2,31 +2,33 @@
   "schemaVersion": "5",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 304,
-  "derivedRevision": 304,
+  "sourceRevision": 1716,
+  "derivedRevision": 1716,
   "frontier": {
-    "e9a7936c-0a01-43d5-9004-b93a4e5fd031": 304
+    "e9a7936c-0a01-43d5-9004-b93a4e5fd031": 1716
   },
   "conflictCount": 0,
   "projectId": "0e0821e7-baa6-41b2-9b15-beaa40e0f40b",
   "runId": "web-ui-architecture-20260904T190440Z",
   "path": [
-    "runtime-architecture"
+    "runtime-architecture",
+    "web-case-to-letter"
   ],
   "phaseIds": [
-    "runtime-architecture"
+    "runtime-architecture",
+    "runtime-architecture::web-case-to-letter"
   ],
-  "activePhaseId": "runtime-architecture",
+  "activePhaseId": "runtime-architecture::web-case-to-letter",
   "phase": "runtime-architecture",
-  "childPointer": null,
+  "childPointer": "web-case-to-letter",
   "change": null,
   "currentTask": null,
   "status": "ready",
   "completionMetric": "implementation",
-  "implementationCompleted": 12,
-  "implementationTotal": 32,
-  "planRevision": 9,
-  "revision": 304,
-  "exactNextCommand": "/kbd-apply ra-03-clinical-command-parity",
-  "updatedAt": "2026-09-08T15:33:46.673347Z"
+  "implementationCompleted": 42,
+  "implementationTotal": 58,
+  "planRevision": 11,
+  "revision": 1716,
+  "exactNextCommand": "/kbd-apply web-07-criteria-selection-ui",
+  "updatedAt": "2026-09-19T00:10:06.374916Z"
 }

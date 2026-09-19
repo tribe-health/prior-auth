@@ -1,7 +1,23 @@
-export type RuntimeCommandStatus = 'submitting' | 'uncertain';
+export type RuntimeCommandStatus = 'submitting' | 'uncertain' | 'awaiting-projection';
+
+export interface RuntimeCommandProjection {
+  readonly state?: string;
+  readonly revision?: string;
+  readonly fingerprint?: string;
+  readonly detailFingerprint?: string;
+}
 
 export interface RuntimeCommandScope {
-  readonly feature: 'evidence-reassessment' | 'surgeon-gate';
+  readonly feature:
+    | 'evidence-reassessment'
+    | 'surgeon-gate'
+    | 'letter-signing'
+    | 'annotations'
+    | 'case-management'
+    | 'document-upload';
+  readonly sessionId: string;
+  readonly authorizationRevision: string;
+  readonly epoch: number;
   readonly identityId: string;
   readonly practiceId?: string;
   readonly caseId: string;
@@ -10,7 +26,23 @@ export interface RuntimeCommandScope {
 export interface RuntimeCommandOwner {
   readonly id: string;
   readonly status: RuntimeCommandStatus;
+  readonly action?: string;
   readonly targetId?: string;
+  readonly expectedProjection?: RuntimeCommandProjection;
+}
+
+/** Retain ownership after the write receipt until the read projection agrees. */
+export function markRuntimeCommandAwaitingProjection(
+  scope: RuntimeCommandScope,
+  commandId: string,
+  expectedProjection: RuntimeCommandProjection,
+): boolean {
+  const key = keyFor(scope);
+  const owner = owners.get(key);
+  if (!owner || owner.id !== commandId) return false;
+  owners.set(key, { ...owner, status: 'awaiting-projection', expectedProjection });
+  notify(key);
+  return true;
 }
 
 const owners = new Map<string, RuntimeCommandOwner>();
@@ -19,10 +51,26 @@ const listeners = new Map<string, Set<() => void>>();
 function keyFor(scope: RuntimeCommandScope): string {
   return JSON.stringify([
     scope.feature,
+    scope.sessionId,
+    scope.authorizationRevision,
+    scope.epoch,
     scope.identityId,
     scope.practiceId ?? null,
     scope.caseId,
   ]);
+}
+
+/** Drop unresolved commands before a revoked session can render again. */
+export function clearRuntimeCommandsForSession(sessionId: string): void {
+  const affected: string[] = [];
+  for (const key of owners.keys()) {
+    const parts = JSON.parse(key) as readonly unknown[];
+    if (parts[1] === sessionId) {
+      owners.delete(key);
+      affected.push(key);
+    }
+  }
+  for (const key of affected) notify(key);
 }
 
 function notify(key: string): void {

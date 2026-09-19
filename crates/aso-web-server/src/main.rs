@@ -17,6 +17,17 @@ use tower_http::{services::ServeDir, trace::TraceLayer};
 mod adapters;
 mod migrations;
 
+fn configured_document_store(
+    root: Option<String>,
+) -> Result<Arc<dyn adapters::document_store::DocumentStore>, &'static str> {
+    match root {
+        Some(root) => Ok(Arc::new(adapters::document_store::LocalDocumentStore::new(
+            root,
+        )?)),
+        None => Ok(Arc::new(adapters::document_store::UnavailableDocumentStore)),
+    }
+}
+
 fn database_target(url: &str) -> Result<(String, u16, String), &'static str> {
     let options = PgConnectOptions::from_str(url).map_err(|_| "database URL is invalid")?;
     let database = options
@@ -32,12 +43,22 @@ fn database_target(url: &str) -> Result<(String, u16, String), &'static str> {
 fn require_mounted_clinical_configuration(
     session_database_url: Option<String>,
     gate_database_url: Option<String>,
-    kratos_url: Option<String>,
-) -> Result<(String, String, String), &'static str> {
-    match (session_database_url, gate_database_url, kratos_url) {
-        (Some(session), Some(gate), Some(kratos)) => Ok((session, gate, kratos)),
+    authority_database_url: Option<String>,
+    kratos_public_url: Option<String>,
+    kratos_admin_url: Option<String>,
+) -> Result<(String, String, String, String, String), &'static str> {
+    match (
+        session_database_url,
+        gate_database_url,
+        authority_database_url,
+        kratos_public_url,
+        kratos_admin_url,
+    ) {
+        (Some(session), Some(gate), Some(authority), Some(public), Some(admin)) => {
+            Ok((session, gate, authority, public, admin))
+        }
         _ => Err(
-            "mounted API requires ASO_DATABASE_URL, ASO_GATE_DATABASE_URL and ASO_KRATOS_PUBLIC_URL",
+            "mounted API requires ASO_DATABASE_URL, ASO_GATE_DATABASE_URL, ASO_SESSION_AUTHORITY_DATABASE_URL, ASO_KRATOS_PUBLIC_URL and ASO_KRATOS_ADMIN_URL",
         ),
     }
 }
@@ -62,16 +83,27 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         return migrations::run().await;
     }
 
-    let (session_database_url, gate_database_url, kratos_url) =
-        require_mounted_clinical_configuration(
-            std::env::var("ASO_DATABASE_URL").ok(),
-            std::env::var("ASO_GATE_DATABASE_URL").ok(),
-            std::env::var("ASO_KRATOS_PUBLIC_URL").ok(),
-        )?;
+    let (
+        session_database_url,
+        gate_database_url,
+        authority_database_url,
+        kratos_public_url,
+        kratos_admin_url,
+    ) = require_mounted_clinical_configuration(
+        std::env::var("ASO_DATABASE_URL").ok(),
+        std::env::var("ASO_GATE_DATABASE_URL").ok(),
+        std::env::var("ASO_SESSION_AUTHORITY_DATABASE_URL").ok(),
+        std::env::var("ASO_KRATOS_PUBLIC_URL").ok(),
+        std::env::var("ASO_KRATOS_ADMIN_URL").ok(),
+    )?;
     require_same_database(&session_database_url, &gate_database_url)?;
-    let sessions = adapters::session::configured_sessions(
+    require_same_database(&session_database_url, &authority_database_url)?;
+    let kratos_proxy = adapters::kratos_proxy::router(&kratos_public_url)?;
+    let session_runtime = adapters::session::configured_sessions(
         Some(session_database_url),
-        Some(kratos_url),
+        Some(authority_database_url),
+        Some(kratos_public_url),
+        Some(kratos_admin_url),
         std::env::var("ASO_ALLOW_INSECURE_KRATOS").as_deref() == Ok("true"),
     )
     .await?;
@@ -79,23 +111,36 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Clinical writes use separate restricted credentials; they never borrow
     // migration credentials or silently widen the session-reader role. The
     // mounted router never falls back to process-local clinical state.
+    let document_store_root = std::env::var("ASO_DOCUMENT_STORE_ROOT").ok();
+    let document_store = configured_document_store(document_store_root.clone())?;
+    if let Some(root) = document_store_root {
+        tracing::info!(%root, "document source store enabled");
+    } else {
+        tracing::info!("document source store unavailable; source reads fail closed");
+    }
     let repository = Arc::new(
-        adapters::gate::PgGateRepository::connect(&gate_database_url).await?,
+        adapters::gate::PgGateRepository::connect_with_document_store(
+            &gate_database_url,
+            document_store,
+        )
+        .await?,
     );
     let services = AppServices {
         cases: repository.clone(),
         evidence: repository.clone(),
-        criteria: Arc::new(adapters::unavailable::UnavailableCriteriaRepository),
+        criteria: repository.clone(),
         letters: repository.clone(),
         authority: repository,
         clock: Arc::new(ports::SystemClock),
-        sessions,
+        sessions: session_runtime.sessions,
     };
 
     let state = ServerState {
         services: Arc::new(services),
     };
-    let mut app = api_router(state).layer(TraceLayer::new_for_http());
+    let mut app = api_router(state)
+        .merge(kratos_proxy)
+        .layer(TraceLayer::new_for_http());
 
     if let Ok(root) = std::env::var("ASO_WEB_ROOT") {
         let path = std::path::PathBuf::from(&root);
@@ -112,11 +157,21 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .ok()
         .and_then(|p| p.parse().ok())
         .unwrap_or(8787);
-    let addr = SocketAddr::from(([127, 0, 0, 1], port));
+    let bind_address = std::env::var("ASO_BIND_ADDRESS")
+        .unwrap_or_else(|_| "127.0.0.1".to_owned())
+        .parse()?;
+    let addr = SocketAddr::new(bind_address, port);
     tracing::info!(%addr, "listening");
 
     let listener = tokio::net::TcpListener::bind(addr).await?;
-    axum::serve(listener, app).await?;
+    let recovery_task = session_runtime
+        .logout_recovery
+        .map(|coordinator| tokio::spawn(adapters::session::run_logout_recovery(coordinator)));
+    let result = axum::serve(listener, app).await;
+    if let Some(task) = recovery_task {
+        task.abort();
+    }
+    result?;
     Ok(())
 }
 
@@ -149,29 +204,84 @@ mod deployment_tests {
     fn mounted_api_requires_every_authoritative_dependency() {
         let session = "postgres://session:synthetic@db:5432/aso".to_owned();
         let gate = "postgres://gate:synthetic@db:5432/aso".to_owned();
-        let kratos = "https://identity.example.test".to_owned();
+        let authority = "postgres://authority:synthetic@db:5432/aso".to_owned();
+        let kratos_public = "https://identity.example.test".to_owned();
+        let kratos_admin = "https://identity-admin.example.test".to_owned();
         assert_eq!(
             require_mounted_clinical_configuration(
                 Some(session.clone()),
                 Some(gate.clone()),
-                Some(kratos.clone()),
+                Some(authority.clone()),
+                Some(kratos_public.clone()),
+                Some(kratos_admin.clone()),
             ),
-            Ok((session.clone(), gate.clone(), kratos.clone())),
+            Ok((
+                session.clone(),
+                gate.clone(),
+                authority.clone(),
+                kratos_public.clone(),
+                kratos_admin.clone(),
+            )),
         );
         for configuration in [
-            (None, Some(gate.clone()), Some(kratos.clone())),
-            (Some(session.clone()), None, Some(kratos.clone())),
-            (Some(session.clone()), Some(gate.clone()), None),
-            (None, None, None),
+            (
+                None,
+                Some(gate.clone()),
+                Some(authority.clone()),
+                Some(kratos_public.clone()),
+                Some(kratos_admin.clone()),
+            ),
+            (
+                Some(session.clone()),
+                None,
+                Some(authority.clone()),
+                Some(kratos_public.clone()),
+                Some(kratos_admin.clone()),
+            ),
+            (
+                Some(session.clone()),
+                Some(gate.clone()),
+                None,
+                Some(kratos_public.clone()),
+                Some(kratos_admin.clone()),
+            ),
+            (
+                Some(session.clone()),
+                Some(gate.clone()),
+                Some(authority.clone()),
+                None,
+                Some(kratos_admin.clone()),
+            ),
+            (
+                Some(session.clone()),
+                Some(gate.clone()),
+                Some(authority.clone()),
+                Some(kratos_public.clone()),
+                None,
+            ),
+            (None, None, None, None, None),
         ] {
             assert!(
                 require_mounted_clinical_configuration(
                     configuration.0,
                     configuration.1,
                     configuration.2,
+                    configuration.3,
+                    configuration.4,
                 )
                 .is_err()
             );
         }
+    }
+
+    #[test]
+    fn configured_document_store_refuses_an_invalid_root() {
+        assert!(
+            configured_document_store(Some(
+                "/a/synthetic/document/store/that/does/not/exist".into()
+            ))
+            .is_err()
+        );
+        assert!(configured_document_store(None).is_ok());
     }
 }

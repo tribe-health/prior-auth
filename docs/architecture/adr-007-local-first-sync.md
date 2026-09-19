@@ -39,10 +39,10 @@ bypassed the API would bypass the second of ADR-002's three layers.
 
 ## The PGlite schema is a deliberate subset
 
-Only the evidence path reaches the browser:
+Only the approved evidence and attributed-opinion path reaches the browser:
 
-`cases` · `case_evidence` · `evidence_states` · `evidence_citations` ·
-`documents`
+`annotation_types` · `annotations` · `cases` · `case_evidence` ·
+`evidence_states` · `evidence_citations` · `document_statuses`
 
 Not "the tables we happened to need." A table is absent unless it was decided
 to be present.
@@ -65,8 +65,17 @@ PGlite schema** — not filtered at query time. Absent.
 **PGlite has no pgvector, so the exclusion is also natural. That coincidence is
 not a control.** If PGlite gained pgvector tomorrow, nothing in the runtime
 would stop a vector table syncing. The control is the explicit schema subset and
-the test that fails when a sixth table appears — not the absence of an
-extension.
+the test that fails when an undeclared table appears — not the absence of an
+extension. Projection revision 5 contains attributed annotations, the
+approved annotation-type catalog, and the exact document status row. The
+status row is maintained in a WAL-producing base table from case-bound
+documents; extracted page text, object locations, parser output, and embeddings
+have no columns in that relation or the PGlite target. An opinion body, author, disposition,
+revision, and source target are available to the authorized memory-only
+runtime. The catalog exposes only `id`, `key`, `name`, and `description`, so
+the UI can create the first annotation from a server-owned type identity while
+type-specific JSON Schema and annotation `data` remain server-side. The opinion
+is labeled as surgeon provenance and cannot be presented as chart text.
 
 ## Why ElectricSQL and not prometheus-entity-sync
 
@@ -104,10 +113,11 @@ class that `docs/plan/build-order.md` phase 1 requires.** Phase 1 says a record
 carries a privacy class (`public` / `trusted` / `local`) and that local data is
 *structurally refused* at the sync boundary rather than filtered.
 
-Shapes are defined per-table with a where-clause. Whether that is expressive
-enough for per-record refusal, or whether the refusal has to live in the Axum
-layer that defines the shapes, is **unverified**. It is the largest open
-question in this phase, and it is named here rather than assumed away.
+Shapes are defined per base table. Gate obtains the server-owned projection
+registry after verified session and membership resolution; FRF accepts only
+the granted table, column set, and practice predicate and independently checks
+the signed grant before proxying Electric. The client cannot supply a table,
+column list, or narrowing parameter that broadens this registry.
 
 ## Consequences
 
@@ -119,8 +129,10 @@ question in this phase, and it is named here rather than assumed away.
 
 ## Enforcement
 
-`scripts/audit.sh` check 2 (no query cache). A test asserting the PGlite schema
-contains exactly the five named tables and fails when a sixth appears.
+`scripts/audit.sh` check 2 (no query cache). Tests assert that the PGlite
+schema, server projection registry, FRF catalog, requested columns, and graph
+bindings contain exactly the seven approved projection revision 5 tables and
+fail when an undeclared table or column appears.
 
 The PHI exclusion has **no runtime enforcement** — it is a build-time schema
 decision plus that test. If someone adds a table to the PGlite schema without

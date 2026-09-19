@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RA18 native lifecycle fixture</title>
+  </head>
+  <body>
+    <main>
+      <h1>RA18 native lifecycle fixture</h1>
+      <p id="status">Starting native IPC checks.</p>
+    </main>
+    <script type="module" src="./view-state.ts"></script>
+    <script type="module" src="./benchmark.ts"></script>
+    <script>
+      window.__RA18_ROLE__ ??= "owner";
+      const PRACTICE_A = "00000000-0000-0000-0000-000000000101";
+      const PRACTICE_B = "00000000-0000-0000-0000-000000000201";
+      const invoke = (command, input) =>
+        window.__TAURI_INTERNALS__.invoke(command, { input });
+
+      const projection = (caseId, label) => ({
+        entities: { Case: { [caseId]: { id: caseId, label } } },
+        entityStates: {},
+        syncMetadata: { [`Case:${caseId}`]: { synced: true } },
+        lists: { "replica:cases": { ids: [caseId] } },
+      });
+
+      const errorCode = (error) => {
+        if (error && typeof error === "object" && "code" in error) {
+          return error.code;
+        }
+        try {
+          const parsed = JSON.parse(String(error));
+          return parsed.code ?? String(error);
+        } catch {
+          return String(error);
+        }
+      };
+
+      const expectError = async (operation) => {
+        try {
+          await operation();
+          return "unexpected-success";
+        } catch (error) {
+          return errorCode(error);
+        }
+      };
+
+      const report = async (stage, details) => {
+        document.querySelector("#status").textContent = stage;
+        await window.__TAURI_INTERNALS__.invoke("plugin:event|emit", {
+          event: "ra18://receipt",
+          payload: { stage, role: window.__RA18_ROLE__, ...details },
+        });
+      };
+
+      const claim = (epoch) => invoke("claim_replica_owner", { epoch });
+      const publish = (epoch, ownerClaim, revision, nextProjection) =>
+        invoke("publish_replica_projection", {
+          epoch,
+          graphId: ownerClaim.graphId,
+          claimGeneration: ownerClaim.claimGeneration,
+          revision,
+          projection: nextProjection,
+        });
+
+      const createViewState = async (session) => {
+        for (let attempt = 0; attempt < 200; attempt += 1) {
+          if (window.ra18CreateViewState) {
+            return window.ra18CreateViewState(session);
+          }
+          await new Promise((resolve) => window.setTimeout(resolve, 50));
+        }
+        throw new Error("scoped view state module did not become ready within 10 seconds");
+      };
+
+      window.ra18StartPGliteBenchmark = async (phase, storageName) => {
+        for (let attempt = 0; attempt < 200; attempt += 1) {
+          if (window.ra18RunPGliteBenchmark) {
+            window.__RA18_BENCHMARK_PHASE__ = phase;
+            window.__RA18_STORAGE_NAME__ = storageName;
+            await window.ra18RunPGliteBenchmark();
+            return;
+          }
+          await new Promise((resolve) => window.setTimeout(resolve, 50));
+        }
+        await report("failure", {
+          message: "PGlite benchmark module did not become ready within 10 seconds",
+        });
+      };
+
+      let followerClaim;
+      let replacementClaim;
+
+      window.ra18AfterOwnerClose = async () => {
+        try {
+          for (let attempt = 0; attempt < 50; attempt += 1) {
+            const next = await claim(0);
+            if (next.role === "owner" && next.graphId !== followerClaim.graphId) {
+              replacementClaim = next;
+              break;
+            }
+            await new Promise((resolve) => window.setTimeout(resolve, 50));
+          }
+          if (!replacementClaim) {
+            throw new Error("replacement owner was not elected");
+          }
+          const staleClaimCode = await expectError(() =>
+            publish(0, followerClaim, 2, projection("case-stale", "stale")),
+          );
+          await publish(
+            0,
+            replacementClaim,
+            1,
+            projection("case-1", "replacement"),
+          );
+          const duplicateCode = await expectError(() =>
+            publish(
+              0,
+              replacementClaim,
+              1,
+              projection("case-duplicate", "duplicate"),
+            ),
+          );
+          await report("handover-ready", {
+            oldGraphId: followerClaim.graphId,
+            graphId: replacementClaim.graphId,
+            claimGeneration: replacementClaim.claimGeneration,
+            staleClaimCode,
+            duplicateCode,
+          });
+        } catch (error) {
+          await report("failure", { message: String(error), stack: error?.stack ?? null });
+        }
+      };
+
+      window.ra18IdentityChange = async () => {
+        try {
+          await invoke("current_session", { practiceId: PRACTICE_B });
+          const staleReadCode = await expectError(() => claim(0));
+          const staleWriteCode = await expectError(() =>
+            publish(
+              0,
+              replacementClaim,
+              2,
+              projection("case-stale", "stale identity"),
+            ),
+          );
+          const changedClaim = await claim(1);
+          if (changedClaim.role !== "owner" || changedClaim.projection !== null) {
+            throw new Error("new identity did not receive an empty owner claim");
+          }
+          await publish(
+            1,
+            changedClaim,
+            1,
+            projection("case-2", "new identity"),
+          );
+          await report("identity-ready", {
+            oldGraphId: replacementClaim.graphId,
+            graphId: changedClaim.graphId,
+            claimGeneration: changedClaim.claimGeneration,
+            staleReadCode,
+            staleWriteCode,
+          });
+        } catch (error) {
+          await report("failure", { message: String(error), stack: error?.stack ?? null });
+        }
+      };
+
+      const run = async () => {
+        try {
+          if (window.isTauri !== true) {
+            throw new Error("Tauri 2 runtime detector was not installed");
+          }
+          const session = await invoke("current_session", { practiceId: PRACTICE_A });
+          const localView = await createViewState(session);
+          if (window.__RA18_ROLE__ === "owner") {
+            const ownerClaim = await claim(0);
+            if (ownerClaim.role !== "owner" || ownerClaim.revision !== 0) {
+              throw new Error("first window did not receive the initial owner claim");
+            }
+            await publish(0, ownerClaim, 1, projection("case-1", "initial"));
+            await report("owner-ready", {
+              graphId: ownerClaim.graphId,
+              claimGeneration: ownerClaim.claimGeneration,
+              caseLabel: "initial",
+              caseIds: ["case-1"],
+              viewScope: localView.scope,
+              viewState: localView.value,
+            });
+            return;
+          }
+
+          followerClaim = await claim(0);
+          if (
+            followerClaim.role !== "follower" ||
+            followerClaim.revision !== 1 ||
+            followerClaim.projection?.entities?.Case?.["case-1"]?.label !== "initial"
+          ) {
+            throw new Error("second window did not receive the committed owner projection");
+          }
+          const ownerDeniedCode = await expectError(() =>
+            publish(0, followerClaim, 2, projection("case-1", "follower write")),
+          );
+          await report("follower-ready", {
+            graphId: followerClaim.graphId,
+            claimGeneration: followerClaim.claimGeneration,
+            revision: followerClaim.revision,
+            ownerDeniedCode,
+            caseLabel: followerClaim.projection.entities.Case["case-1"].label,
+            caseIds: followerClaim.projection.lists["replica:cases"].ids,
+            viewScope: localView.scope,
+            viewState: localView.value,
+          });
+        } catch (error) {
+          await report("failure", { message: String(error), stack: error?.stack ?? null });
+        }
+      };
+
+      window.setTimeout(run, 100);
+    </script>
+  </body>
+</html>

@@ -1,5 +1,5 @@
-import { RoutePlaceholder } from './route-placeholder';
+import { CaseQueue } from '@/features/case-queue/components/case-queue';
 
 export function Component() {
-  return <RoutePlaceholder title="Case queue" description="Review and prioritize authorization cases." />;
+  return <CaseQueue />;
 }

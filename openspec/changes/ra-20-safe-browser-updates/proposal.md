@@ -20,6 +20,6 @@ None. The root OpenSpec spec store has no existing capability to modify.
 
 ASO: runtime update coordinator, compatibility service/manifest and browser deployment assets; server migration deployment job; scoped draft and replica services.
 
-Dependencies: ra-16-authorized-source-preview. Runtime order: 6. Recommended agent: Codex; complexity L, High; model class frontier.
+Dependencies: web-case-to-letter/web-17-browser-scenario-certification. Runtime order: 6. Recommended agent: Codex; complexity L, High; model class frontier.
 
 See the reviewed [phase plan](../../../.kbd-orchestrator/phases/runtime-architecture/plan.md) and its decision gates. This proposal authorizes no implementation during planning.

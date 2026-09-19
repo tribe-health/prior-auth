@@ -19,12 +19,27 @@ use crate::{
 };
 use aso_host::{
     domain::{DomainError, LetterId},
-    signing::{SignLetterCommand, SignLetterMutation, SignLetterResult, SigningError},
+    letter_workflow::{
+        ApproveLetterCommand, GenerateLetterCommand, LetterCommandResult, LetterSnapshot,
+        LetterWorkflowError, ReviewLetterCommand,
+    },
+    signing::{
+        SignLetterCommand, SignLetterMutation, SignLetterResult, SigningError, SigningTarget,
+    },
 };
 
 pub fn router() -> Router<ServerState> {
     Router::new()
+        .route("/api/cases/{case_id}/letters", post(generate))
+        .route(
+            "/api/cases/{case_id}/letter-commands/{command_id}",
+            get(lookup_workflow),
+        )
+        .route("/api/letters/{letter_id}", get(read_letter))
+        .route("/api/letters/{letter_id}/qa", post(review_letter))
+        .route("/api/letters/{letter_id}/approve", post(approve_letter))
         .route("/api/letters/{letter_id}/sign", post(sign))
+        .route("/api/letters/{letter_id}/signing-target", get(read_target))
         .route(
             "/api/letters/{letter_id}/sign/commands/{command_id}",
             get(lookup),
@@ -32,10 +47,180 @@ pub fn router() -> Router<ServerState> {
         .layer(middleware::from_fn(no_store))
 }
 
+async fn read_target(
+    State(state): State<ServerState>,
+    headers: HeaderMap,
+    path: Result<Path<Uuid>, PathRejection>,
+    query: Result<Query<SignQuery>, QueryRejection>,
+) -> Result<Json<SigningTarget>, Response> {
+    let Path(letter_id) = path.map_err(|_| invalid_signing_request())?;
+    let Query(query) = query.map_err(|_| invalid_signing_request())?;
+    let (context, capabilities) = clinical_context(&state, &headers, query.practice_id)
+        .await
+        .map_err(context_error)?;
+    if !capabilities
+        .iter()
+        .any(|capability| capability == "sign_letter")
+    {
+        return Err(signing_error(SigningError::Denied));
+    }
+    state
+        .services
+        .read_signing_target(&context, LetterId(letter_id))
+        .await
+        .map(Json)
+        .map_err(signing_error)
+}
+
 #[derive(serde::Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 struct SignQuery {
     practice_id: Option<Uuid>,
+}
+
+fn workflow_error(value: LetterWorkflowError) -> Response {
+    let (status, code) = match value {
+        LetterWorkflowError::Unauthenticated => (StatusCode::UNAUTHORIZED, "session_required"),
+        LetterWorkflowError::Denied => (StatusCode::FORBIDDEN, "action_forbidden"),
+        LetterWorkflowError::NotFound => (StatusCode::NOT_FOUND, "resource_not_found"),
+        LetterWorkflowError::RevisionConflict => (StatusCode::CONFLICT, "stale_revision"),
+        LetterWorkflowError::CommandConflict => (StatusCode::CONFLICT, "command_conflict"),
+        LetterWorkflowError::GateIncomplete => (StatusCode::CONFLICT, "gate_stale"),
+        LetterWorkflowError::EvidenceIncomplete => {
+            (StatusCode::CONFLICT, "evidence_work_incomplete")
+        }
+        LetterWorkflowError::QaIncomplete => (StatusCode::CONFLICT, "qa_incomplete"),
+        LetterWorkflowError::CitationIncomplete => {
+            (StatusCode::UNPROCESSABLE_ENTITY, "citation_incomplete")
+        }
+        LetterWorkflowError::Invalid => (StatusCode::BAD_REQUEST, "invalid_request"),
+        LetterWorkflowError::Unavailable => {
+            (StatusCode::SERVICE_UNAVAILABLE, "service_unavailable")
+        }
+    };
+    (status, Json(json!({"error":code}))).into_response()
+}
+
+fn workflow_context_error(value: ClinicalContextError) -> Response {
+    match value {
+        ClinicalContextError::Session(aso_host::session::SessionError::Unauthenticated) => {
+            workflow_error(LetterWorkflowError::Unauthenticated)
+        }
+        ClinicalContextError::Session(
+            aso_host::session::SessionError::Unavailable
+            | aso_host::session::SessionError::NativeAuthenticationUnavailable,
+        ) => workflow_error(LetterWorkflowError::Unavailable),
+        ClinicalContextError::Session(
+            aso_host::session::SessionError::ReauthenticationRequired
+            | aso_host::session::SessionError::PracticeDenied,
+        )
+        | ClinicalContextError::NonHuman => workflow_error(LetterWorkflowError::Denied),
+    }
+}
+
+async fn generate(
+    State(state): State<ServerState>,
+    headers: HeaderMap,
+    path: Result<Path<Uuid>, PathRejection>,
+    query: Result<Query<SignQuery>, QueryRejection>,
+    body: Result<Json<GenerateLetterCommand>, JsonRejection>,
+) -> Result<Json<LetterCommandResult>, Response> {
+    let Path(case_id) = path.map_err(|_| invalid_signing_request())?;
+    let Query(query) = query.map_err(|_| invalid_signing_request())?;
+    let Json(command) = body.map_err(|_| invalid_signing_request())?;
+    let (context, capabilities) = clinical_context(&state, &headers, query.practice_id)
+        .await
+        .map_err(workflow_context_error)?;
+    state
+        .services
+        .generate_letter(&context, &capabilities, case_id, &command)
+        .await
+        .map(Json)
+        .map_err(workflow_error)
+}
+
+async fn read_letter(
+    State(state): State<ServerState>,
+    headers: HeaderMap,
+    path: Result<Path<Uuid>, PathRejection>,
+    query: Result<Query<SignQuery>, QueryRejection>,
+) -> Result<Json<LetterSnapshot>, Response> {
+    let Path(letter_id) = path.map_err(|_| invalid_signing_request())?;
+    let Query(query) = query.map_err(|_| invalid_signing_request())?;
+    let (context, capabilities) = clinical_context(&state, &headers, query.practice_id)
+        .await
+        .map_err(workflow_context_error)?;
+    state
+        .services
+        .read_letter(&context, &capabilities, letter_id)
+        .await
+        .map(Json)
+        .map_err(workflow_error)
+}
+
+async fn review_letter(
+    State(state): State<ServerState>,
+    headers: HeaderMap,
+    path: Result<Path<Uuid>, PathRejection>,
+    query: Result<Query<SignQuery>, QueryRejection>,
+    body: Result<Json<ReviewLetterCommand>, JsonRejection>,
+) -> Result<Json<LetterCommandResult>, Response> {
+    let Path(letter_id) = path.map_err(|_| invalid_signing_request())?;
+    let Query(query) = query.map_err(|_| invalid_signing_request())?;
+    let Json(command) = body.map_err(|_| invalid_signing_request())?;
+    let (context, capabilities) = clinical_context(&state, &headers, query.practice_id)
+        .await
+        .map_err(workflow_context_error)?;
+    state
+        .services
+        .review_letter(&context, &capabilities, letter_id, &command)
+        .await
+        .map(Json)
+        .map_err(workflow_error)
+}
+
+async fn approve_letter(
+    State(state): State<ServerState>,
+    headers: HeaderMap,
+    path: Result<Path<Uuid>, PathRejection>,
+    query: Result<Query<SignQuery>, QueryRejection>,
+    body: Result<Json<ApproveLetterCommand>, JsonRejection>,
+) -> Result<Json<LetterCommandResult>, Response> {
+    let Path(letter_id) = path.map_err(|_| invalid_signing_request())?;
+    let Query(query) = query.map_err(|_| invalid_signing_request())?;
+    let Json(command) = body.map_err(|_| invalid_signing_request())?;
+    let (context, capabilities) = clinical_context(&state, &headers, query.practice_id)
+        .await
+        .map_err(workflow_context_error)?;
+    state
+        .services
+        .approve_letter(&context, &capabilities, letter_id, &command)
+        .await
+        .map(Json)
+        .map_err(workflow_error)
+}
+
+async fn lookup_workflow(
+    State(state): State<ServerState>,
+    headers: HeaderMap,
+    path: Result<Path<(Uuid, Uuid)>, PathRejection>,
+    query: Result<Query<SignQuery>, QueryRejection>,
+) -> Result<Json<LetterCommandResult>, Response> {
+    let Path((case_id, command_id)) = path.map_err(|_| invalid_signing_request())?;
+    let Query(query) = query.map_err(|_| invalid_signing_request())?;
+    let (context, capabilities) = clinical_context(&state, &headers, query.practice_id)
+        .await
+        .map_err(workflow_context_error)?;
+    let result = state
+        .services
+        .lookup_letter_workflow_command(&context, &capabilities, command_id)
+        .await
+        .map_err(workflow_error)?
+        .ok_or_else(|| workflow_error(LetterWorkflowError::NotFound))?;
+    if result.case_id != case_id {
+        return Err(workflow_error(LetterWorkflowError::NotFound));
+    }
+    Ok(Json(result))
 }
 
 async fn no_store(request: Request, next: Next) -> Response {

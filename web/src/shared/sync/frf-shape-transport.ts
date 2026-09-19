@@ -33,16 +33,29 @@
  * downstream token is not the browser's to hold.
  */
 
-import type { ReplicaCheckpoint } from "@prometheus-ags/entity-graph-core";
-
-import type { ChunkRow, TableTarget } from "./chunk-writer";
-import type { ReplicaRevision, ReplicaTransport } from "./replica-runtime";
+import { CHUNK_ROW_OPERATION, type ChunkRow, type TableTarget } from "./chunk-writer";
+import {
+  ReplicaAuthorityFailure,
+  type ReplicaCheckpointSet,
+  type ReplicaRevision,
+  type ReplicaTransport,
+  type ShapeCheckpoint,
+} from "./replica-runtime";
 
 /** One Electric protocol message. */
 interface ShapeMessage {
   headers?: { operation?: string; control?: string };
   key?: string;
   value?: Record<string, unknown>;
+}
+
+function withOperation(
+  value: Record<string, unknown>,
+  operation: "insert" | "update",
+): ChunkRow {
+  const row: ChunkRow = { ...value };
+  Object.defineProperty(row, CHUNK_ROW_OPERATION, { value: operation });
+  return row;
 }
 
 export interface FrfShapeTransportOptions {
@@ -55,12 +68,17 @@ export interface FrfShapeTransportOptions {
 }
 
 /** Raised when the facade refuses the request outright. */
-export class ShapeAuthorizationError extends Error {
-  constructor(readonly status: 401 | 403) {
+export class ShapeAuthorizationError extends ReplicaAuthorityFailure {
+  constructor(
+    readonly status: 204 | 401 | 403,
+    readonly shape?: string,
+  ) {
     super(
-      status === 401
+      `${shape ? `shape ${shape}: ` : ""}${status === 204
+        ? "Replica authority could not be revalidated before the response deadline."
+        : status === 401
         ? "shape grant expired — the session must be re-established"
-        : "shape access forbidden — the grant no longer covers this shape",
+        : "shape access forbidden — the grant no longer covers this shape"}`,
     );
     this.name = "ShapeAuthorizationError";
   }
@@ -77,12 +95,25 @@ export function createFrfShapeTransport(opts: FrfShapeTransportOptions): Replica
   const doFetch = opts.fetchImpl ?? globalThis.fetch.bind(globalThis);
   const base = opts.gateUrl.replace(/\/+$/, "");
 
-  // Per-shape cursors. The runtime's single checkpoint tracks overall progress;
-  // each shape still has its own place in its own stream.
+  // Per-shape cursors. No aggregate offset can describe independent streams.
   const cursors = new Map<string, { handle?: string; offset?: string }>();
-  let caughtUp = false;
+  const coldBuffers = new Map<string, Map<string, ChunkRow>>();
+  const coldCompleted = new Map<string, ChunkRow[]>();
+  let initialized = false;
+  // A bounded runtime pass ends after one complete up-to-date revision. The
+  // next owner-lifetime pass must issue a fresh authorized continuation
+  // request, so completion is consumed once rather than becoming terminal.
+  let passComplete = false;
 
-  async function fetchShape(shape: string): Promise<{
+  function resetPass(): void {
+    cursors.clear();
+    coldBuffers.clear();
+    coldCompleted.clear();
+    initialized = false;
+    passComplete = false;
+  }
+
+  async function fetchShape(shape: string, target: TableTarget, signal?: AbortSignal): Promise<{
     rows: ChunkRow[];
     handle?: string;
     offset?: string;
@@ -102,10 +133,13 @@ export function createFrfShapeTransport(opts: FrfShapeTransportOptions): Replica
       // sees or stores it.
       credentials: "include",
       headers: { accept: "application/json" },
+      signal,
     });
 
-    if (response.status === 401) throw new ShapeAuthorizationError(401);
-    if (response.status === 403) throw new ShapeAuthorizationError(403);
+    if (response.status === 204) throw new ShapeAuthorizationError(204, shape);
+    if (response.status === 401 || response.status === 403) {
+      throw new ShapeAuthorizationError(response.status, shape);
+    }
 
     // 409 is Electric's must-refetch, preserved by the facade: the history this
     // cursor points into is gone.
@@ -126,64 +160,163 @@ export function createFrfShapeTransport(opts: FrfShapeTransportOptions): Replica
       return { rows: [], handle, offset, upToDate: false, mustRefetch: true };
     }
 
-    const body: unknown = await response.json().catch(() => []);
-    const messages: ShapeMessage[] = Array.isArray(body) ? (body as ShapeMessage[]) : [];
+    const body: unknown = await response.json();
+    if (!Array.isArray(body)) throw new Error(`shape ${shape} returned a non-array payload`);
+    const messages = body as ShapeMessage[];
 
-    const rows: ChunkRow[] = [];
+    let rows: ChunkRow[] = [];
+    let sawDelete = false;
+    const deletedKeys = new Set<string>();
+    const coldBuffer = coldBuffers.get(shape);
     for (const message of messages) {
       // Control messages (up-to-date, must-refetch) carry no row.
       if (message.headers?.control !== undefined) continue;
+      if (message.headers?.operation === "delete") {
+        sawDelete = true;
+        const valueId = message.value?.[target.idColumn ?? "id"];
+        let deletedId: string | undefined;
+        if (typeof valueId === "string") {
+          deletedId = valueId;
+        } else if (message.key) {
+          const qualified = message.key.match(/\/"([^"]+)"$/);
+          deletedId = qualified?.[1] ?? message.key;
+        }
+        if (deletedId !== undefined) {
+          deletedKeys.add(deletedId);
+          coldBuffer?.delete(deletedId);
+        }
+        continue;
+      }
       if (!message.value) continue;
-      // Deletes are not applied here: the replica is rebuilt on must-refetch
-      // rather than reconciled, and a delete arriving mid-stream would need a
-      // removal path the writer deliberately does not have.
-      if (message.headers?.operation === "delete") continue;
-      rows.push(message.value);
+      if (coldBuffer) {
+        const id = String(message.value[target.idColumn ?? "id"]);
+        const existing = coldBuffer.get(id);
+        if (message.headers?.operation === "update" && !existing) {
+          throw new Error(`shape ${shape} updated missing cold row ${id}`);
+        }
+        coldBuffer.set(id, withOperation({ ...existing, ...message.value }, "insert"));
+      } else {
+        rows.push(withOperation(
+          message.value,
+          message.headers?.operation === "update" ? "update" : "insert",
+        ));
+      }
     }
 
-    cursors.set(shape, { handle, offset });
-    return { rows, handle, offset, upToDate, mustRefetch: false };
+    const next = {
+      handle: handle ?? cursor.handle,
+      offset: offset ?? cursor.offset,
+    };
+    if (!next.handle || !next.offset) {
+      throw new Error(`shape ${shape} returned no resumable handle and offset`);
+    }
+    cursors.set(shape, next);
+
+    if (coldBuffer) {
+      if (upToDate) {
+        coldCompleted.set(shape, [...coldBuffer.values()]);
+        coldBuffers.delete(shape);
+      }
+      return { rows: [], handle: next.handle, offset: next.offset, upToDate, mustRefetch: false };
+    }
+
+    if (sawDelete && cursor.handle && !coldBuffer) {
+      cursors.delete(shape);
+      return { rows: [], handle, offset, upToDate: false, mustRefetch: true };
+    }
+    if (deletedKeys.size > 0) {
+      rows = rows.filter((row) => !deletedKeys.has(String(row[target.idColumn ?? "id"])))
+    }
+    return { rows, handle: next.handle, offset: next.offset, upToDate, mustRefetch: false };
   }
 
   return {
-    async fetch(from: ReplicaCheckpoint | null): Promise<ReplicaRevision | null> {
-      // A cold start (or a post-rebuild restart) resets every shape's cursor.
-      if (from === null && caughtUp) {
+    async fetch(from: ReplicaCheckpointSet | null, signal?: AbortSignal): Promise<ReplicaRevision | null> {
+      if (!initialized) {
         cursors.clear();
-        caughtUp = false;
-      }
-      if (caughtUp) return null;
-
-      const tables: Array<{ target: TableTarget; rows: readonly ChunkRow[] }> = [];
-      let handle = from?.handle ?? "";
-      let offset = from?.offset ?? "-1";
-      let allUpToDate = true;
-
-      for (const { shape, target } of opts.shapes) {
-        const result = await fetchShape(shape);
-
-        if (result.mustRefetch) {
-          // Surface it immediately. The runtime rebuilds and restarts cold, so
-          // there is no point fetching the remaining shapes into a replica
-          // that is about to be cleared.
-          cursors.clear();
-          caughtUp = false;
-          return { tables: [], checkpoint: { handle: result.handle ?? handle, offset }, mustRefetch: true };
+        coldBuffers.clear();
+        coldCompleted.clear();
+        for (const { shape } of opts.shapes) {
+          const cursor = from?.shapes[shape];
+          if (cursor) cursors.set(shape, cursor);
+          else coldBuffers.set(shape, new Map());
         }
-
-        if (result.rows.length > 0) tables.push({ target, rows: result.rows });
-        if (result.handle) handle = result.handle;
-        if (result.offset) offset = result.offset;
-        if (!result.upToDate) allUpToDate = false;
+        initialized = true;
+        passComplete = false;
       }
-
-      // Every shape reported up-to-date and nothing new arrived: caught up.
-      if (allUpToDate && tables.length === 0) {
-        caughtUp = true;
+      if (passComplete) {
+        passComplete = false;
         return null;
       }
 
-      return { tables, checkpoint: { handle, offset } };
+      for (;;) {
+        const tables: Array<{ shape: string; target: TableTarget; rows: readonly ChunkRow[] }> = [];
+        const checkpoint: Record<string, ShapeCheckpoint> = {};
+        let allUpToDate = true;
+
+        // Electric requests can long-poll. Starting every independent shape
+        // together keeps one quiet shape from delaying changes on all later
+        // shapes in the same committed pass.
+        const passAbort = new AbortController();
+        const abortFromCaller = () => passAbort.abort(signal?.reason);
+        if (signal?.aborted) abortFromCaller();
+        else signal?.addEventListener("abort", abortFromCaller, { once: true });
+        const requests = opts.shapes.map(async ({ shape, target }) => ({
+          shape,
+          target,
+          result: coldCompleted.has(shape)
+            ? null
+            : await fetchShape(shape, target, passAbort.signal),
+        }));
+        let results: Awaited<(typeof requests)[number]>[];
+        try {
+          results = await Promise.all(requests);
+        } catch (cause) {
+          passAbort.abort(cause);
+          await Promise.allSettled(requests);
+          resetPass();
+          throw cause;
+        } finally {
+          signal?.removeEventListener("abort", abortFromCaller);
+        }
+
+        if (results.some(({ result }) => result?.mustRefetch)) {
+          // Surface it immediately. The runtime rebuilds and restarts cold, so
+          // there is no point applying any rows fetched into a replica that is
+          // about to be cleared.
+          resetPass();
+          return { tables: [], checkpoint: {}, mustRefetch: true };
+        }
+
+        for (const { shape, target, result } of results) {
+          if (result === null) {
+            const cursor = cursors.get(shape)!;
+            checkpoint[shape] = { handle: cursor.handle!, offset: cursor.offset! };
+            continue;
+          }
+          if (result.rows.length > 0) tables.push({ shape, target, rows: result.rows });
+          checkpoint[shape] = { handle: result.handle!, offset: result.offset! };
+          if (!result.upToDate) allUpToDate = false;
+        }
+
+        if (coldBuffers.size > 0) continue;
+        if (coldCompleted.size > 0) {
+          tables.splice(0, tables.length, ...opts.shapes.map(({ shape, target }) => ({
+            shape,
+            target,
+            rows: coldCompleted.get(shape) ?? [],
+          })));
+          for (const { shape } of opts.shapes) {
+            const cursor = cursors.get(shape)!;
+            checkpoint[shape] = { handle: cursor.handle!, offset: cursor.offset! };
+          }
+          coldCompleted.clear();
+          allUpToDate = true;
+        }
+        if (allUpToDate) passComplete = true;
+
+        return { tables, checkpoint };
+      }
     },
   };
 }

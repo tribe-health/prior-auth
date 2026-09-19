@@ -68,7 +68,10 @@ belongs at the composition root and service adapters. Components use feature
 hooks and PEM graph selectors; they do not open SQL databases, choose transports
 or invoke the Tauri Zustand plugin directly. Public authentication routes mount
 without a protected graph; private feature routes wait for verified scope and
-coherent hydration. The Rust application core remains shell-independent.
+coherent hydration. Components and hooks receive ADR-010's sanitized session
+projection; they never receive or persist the native Kratos token. The Rust
+application core remains shell-independent.
 
-See [ADR-008](adr-008-shared-runtime-state-and-sessions.md). The boundary is a
-target requirement; existing audit checks cover only their stated patterns.
+See [ADR-008](adr-008-shared-runtime-state-and-sessions.md) and
+[ADR-010](adr-010-native-session-credentials.md). The boundary is a target
+requirement; existing audit checks cover only their stated patterns.

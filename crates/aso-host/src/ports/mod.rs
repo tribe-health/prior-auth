@@ -8,7 +8,127 @@ use crate::domain::*;
 use async_trait::async_trait;
 
 #[async_trait]
+pub trait DocumentProcessor: Send + Sync {
+    async fn extract_pages(
+        &self,
+        media_type: crate::document_upload::DocumentMediaType,
+        bytes: Vec<u8>,
+    ) -> Result<
+        Vec<crate::document_processing::ExtractedDocumentPage>,
+        crate::document_processing::DocumentExtractionError,
+    >;
+}
+
+#[async_trait]
 pub trait CaseRepository: Send + Sync {
+    async fn authorize_administering_entity_target(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+    ) -> Result<(), crate::administering_entity::ResolutionError> {
+        Err(crate::administering_entity::ResolutionError::Unavailable)
+    }
+
+    async fn resolve_administering_entity(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: &crate::administering_entity::ResolveAdministeringEntityCommand,
+    ) -> Result<
+        crate::administering_entity::ResolutionCommandReceipt,
+        crate::administering_entity::ResolutionError,
+    > {
+        Err(crate::administering_entity::ResolutionError::Unavailable)
+    }
+
+    async fn read_administering_entity(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+    ) -> Result<
+        crate::administering_entity::AdministeringEntityResolution,
+        crate::administering_entity::ResolutionError,
+    > {
+        Err(crate::administering_entity::ResolutionError::Unavailable)
+    }
+
+    async fn lookup_administering_entity_command(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+        _: uuid::Uuid,
+    ) -> Result<
+        Option<crate::administering_entity::ResolutionCommandReceipt>,
+        crate::administering_entity::ResolutionError,
+    > {
+        Err(crate::administering_entity::ResolutionError::Unavailable)
+    }
+
+    async fn create_case(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: &crate::case_management::CreateCaseCommand,
+    ) -> Result<crate::case_management::CaseCommandResult, crate::case_management::CaseError> {
+        Err(crate::case_management::CaseError::Unavailable)
+    }
+
+    async fn update_case(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: &crate::case_management::UpdateCaseCommand,
+    ) -> Result<crate::case_management::CaseCommandResult, crate::case_management::CaseError> {
+        Err(crate::case_management::CaseError::Unavailable)
+    }
+
+    async fn transition_case(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: &crate::case_management::TransitionCaseCommand,
+    ) -> Result<crate::case_management::CaseCommandResult, crate::case_management::CaseError> {
+        Err(crate::case_management::CaseError::Unavailable)
+    }
+
+    async fn read_case(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+    ) -> Result<crate::case_management::CaseRecord, crate::case_management::CaseError> {
+        Err(crate::case_management::CaseError::Unavailable)
+    }
+
+    async fn authorize_case_write_target(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+    ) -> Result<(), crate::case_management::CaseError> {
+        Err(crate::case_management::CaseError::Unavailable)
+    }
+
+    async fn list_cases(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+    ) -> Result<Vec<crate::case_management::CaseRecord>, crate::case_management::CaseError> {
+        Err(crate::case_management::CaseError::Unavailable)
+    }
+
+    async fn lookup_create_case_command(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+    ) -> Result<Option<crate::case_management::CaseCommandResult>, crate::case_management::CaseError>
+    {
+        Err(crate::case_management::CaseError::Unavailable)
+    }
+
+    async fn lookup_case_command(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+        _: uuid::Uuid,
+    ) -> Result<Option<crate::case_management::CaseCommandResult>, crate::case_management::CaseError>
+    {
+        Err(crate::case_management::CaseError::Unavailable)
+    }
+
     /// Legacy adapters cannot silently accept authenticated durable commands.
     async fn execute_gate_command(
         &self,
@@ -47,6 +167,143 @@ pub trait CaseRepository: Send + Sync {
 
 #[async_trait]
 pub trait EvidenceRepository: Send + Sync {
+    async fn assemble_case_evidence(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+        _: &crate::evidence_assembly::AssembleEvidenceCommand,
+    ) -> Result<
+        crate::evidence_assembly::EvidenceCommandResult,
+        crate::evidence_assembly::EvidenceAssemblyError,
+    > {
+        Err(crate::evidence_assembly::EvidenceAssemblyError::Unavailable)
+    }
+
+    async fn read_case_evidence(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+    ) -> Result<
+        crate::evidence_assembly::EvidenceSnapshot,
+        crate::evidence_assembly::EvidenceAssemblyError,
+    > {
+        Err(crate::evidence_assembly::EvidenceAssemblyError::Unavailable)
+    }
+
+    async fn lookup_evidence_assembly_command(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+        _: uuid::Uuid,
+    ) -> Result<
+        Option<crate::evidence_assembly::EvidenceCommandResult>,
+        crate::evidence_assembly::EvidenceAssemblyError,
+    > {
+        Err(crate::evidence_assembly::EvidenceAssemblyError::Unavailable)
+    }
+
+    async fn process_case_document(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: &crate::document_processing::ProcessCaseDocumentCommand,
+    ) -> Result<
+        crate::document_processing::DocumentProcessingResult,
+        crate::document_processing::DocumentProcessingError,
+    > {
+        Err(crate::document_processing::DocumentProcessingError::Unavailable)
+    }
+
+    async fn lookup_document_process_command(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+        _: uuid::Uuid,
+        _: uuid::Uuid,
+    ) -> Result<
+        Option<crate::document_processing::DocumentProcessingResult>,
+        crate::document_processing::DocumentProcessingError,
+    > {
+        Err(crate::document_processing::DocumentProcessingError::Unavailable)
+    }
+
+    async fn authorize_document_upload_target(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+    ) -> Result<(), crate::document_upload::DocumentUploadError> {
+        Err(crate::document_upload::DocumentUploadError::Unavailable)
+    }
+
+    async fn upload_case_document(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: &crate::document_upload::UploadCaseDocumentCommand,
+        _: Vec<u8>,
+    ) -> Result<
+        crate::document_upload::DocumentUploadResult,
+        crate::document_upload::DocumentUploadError,
+    > {
+        Err(crate::document_upload::DocumentUploadError::Unavailable)
+    }
+
+    async fn read_case_document(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+        _: uuid::Uuid,
+    ) -> Result<crate::document_upload::DocumentMetadata, crate::document_upload::DocumentUploadError>
+    {
+        Err(crate::document_upload::DocumentUploadError::Unavailable)
+    }
+
+    async fn lookup_document_upload_command(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+        _: uuid::Uuid,
+    ) -> Result<
+        Option<crate::document_upload::DocumentUploadResult>,
+        crate::document_upload::DocumentUploadError,
+    > {
+        Err(crate::document_upload::DocumentUploadError::Unavailable)
+    }
+
+    /// Opens source bytes only after repository-level scope authorization and
+    /// commits the corresponding read audit before returning.
+    async fn open_document_source(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: crate::source::DocumentSourceRequest,
+    ) -> Result<crate::source::DocumentSource, crate::source::DocumentSourceError> {
+        Err(crate::source::DocumentSourceError::Unavailable)
+    }
+
+    async fn read_annotation_target(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+        _: uuid::Uuid,
+    ) -> Result<(), crate::annotation::AnnotationError> {
+        Err(crate::annotation::AnnotationError::Unavailable)
+    }
+
+    async fn execute_annotation(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: &crate::annotation::AnnotationCommand,
+    ) -> Result<crate::annotation::AnnotationResult, crate::annotation::AnnotationError> {
+        Err(crate::annotation::AnnotationError::Unavailable)
+    }
+
+    async fn lookup_annotation_command(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+    ) -> Result<Option<crate::annotation::AnnotationResult>, crate::annotation::AnnotationError>
+    {
+        Err(crate::annotation::AnnotationError::Unavailable)
+    }
+
     async fn read_reassessment_target(
         &self,
         _: &crate::affirmation::ClinicalContext,
@@ -93,6 +350,85 @@ pub struct EvidenceCounts {
 
 #[async_trait]
 pub trait CriteriaRepository: Send + Sync {
+    async fn select_case_criteria(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+        _: &crate::criteria_selection::SelectCriteriaCommand,
+    ) -> Result<
+        crate::criteria_selection::CriteriaSelectionResult,
+        crate::criteria_selection::CriteriaSelectionError,
+    > {
+        Err(crate::criteria_selection::CriteriaSelectionError::Unavailable)
+    }
+
+    async fn read_criteria_selection(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+    ) -> Result<
+        crate::criteria_selection::CriteriaSelectionSnapshot,
+        crate::criteria_selection::CriteriaSelectionError,
+    > {
+        Err(crate::criteria_selection::CriteriaSelectionError::Unavailable)
+    }
+
+    async fn lookup_criteria_selection_command(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+        _: uuid::Uuid,
+    ) -> Result<
+        Option<crate::criteria_selection::CriteriaSelectionResult>,
+        crate::criteria_selection::CriteriaSelectionError,
+    > {
+        Err(crate::criteria_selection::CriteriaSelectionError::Unavailable)
+    }
+
+    async fn import_catalog(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: &crate::criteria_catalog::ImportCriteriaCatalogCommand,
+    ) -> Result<
+        crate::criteria_catalog::CriteriaCatalogImportResult,
+        crate::criteria_catalog::CriteriaCatalogError,
+    > {
+        Err(crate::criteria_catalog::CriteriaCatalogError::Unavailable)
+    }
+
+    async fn list_catalog(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: Option<uuid::Uuid>,
+    ) -> Result<
+        crate::criteria_catalog::CriteriaCatalogSnapshot,
+        crate::criteria_catalog::CriteriaCatalogError,
+    > {
+        Err(crate::criteria_catalog::CriteriaCatalogError::Unavailable)
+    }
+
+    async fn read_catalog_criterion(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+    ) -> Result<
+        crate::criteria_catalog::CatalogCriterion,
+        crate::criteria_catalog::CriteriaCatalogError,
+    > {
+        Err(crate::criteria_catalog::CriteriaCatalogError::Unavailable)
+    }
+
+    async fn lookup_import_command(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+    ) -> Result<
+        Option<crate::criteria_catalog::CriteriaCatalogImportResult>,
+        crate::criteria_catalog::CriteriaCatalogError,
+    > {
+        Err(crate::criteria_catalog::CriteriaCatalogError::Unavailable)
+    }
+
     async fn get(&self, id: CriterionId) -> Result<Criterion, DomainError>;
 
     /// Live criteria for a payer, ranked by grade and recency decay.
@@ -112,6 +448,58 @@ pub struct Criterion {
 
 #[async_trait]
 pub trait LetterRepository: Send + Sync {
+    async fn generate_letter(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+        _: &crate::letter_workflow::GenerateLetterCommand,
+    ) -> Result<
+        crate::letter_workflow::LetterCommandResult,
+        crate::letter_workflow::LetterWorkflowError,
+    > {
+        Err(crate::letter_workflow::LetterWorkflowError::Unavailable)
+    }
+    async fn read_letter(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+    ) -> Result<crate::letter_workflow::LetterSnapshot, crate::letter_workflow::LetterWorkflowError>
+    {
+        Err(crate::letter_workflow::LetterWorkflowError::Unavailable)
+    }
+    async fn review_letter(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+        _: &crate::letter_workflow::ReviewLetterCommand,
+    ) -> Result<
+        crate::letter_workflow::LetterCommandResult,
+        crate::letter_workflow::LetterWorkflowError,
+    > {
+        Err(crate::letter_workflow::LetterWorkflowError::Unavailable)
+    }
+    async fn approve_letter(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+        _: &crate::letter_workflow::ApproveLetterCommand,
+    ) -> Result<
+        crate::letter_workflow::LetterCommandResult,
+        crate::letter_workflow::LetterWorkflowError,
+    > {
+        Err(crate::letter_workflow::LetterWorkflowError::Unavailable)
+    }
+    async fn lookup_letter_workflow_command(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+    ) -> Result<
+        Option<crate::letter_workflow::LetterCommandResult>,
+        crate::letter_workflow::LetterWorkflowError,
+    > {
+        Err(crate::letter_workflow::LetterWorkflowError::Unavailable)
+    }
+
     /// Legacy adapters refuse verified signing until they implement the
     /// authoritative clinical transaction.
     async fn read_signing_target(
@@ -163,6 +551,15 @@ pub trait LetterRepository: Send + Sync {
 /// capability set — it does not inherit the surgeon's clinical authority.
 #[async_trait]
 pub trait AuthorityPort: Send + Sync {
+    async fn may_annotate(
+        &self,
+        _: &crate::affirmation::ClinicalContext,
+        _: uuid::Uuid,
+        _: uuid::Uuid,
+    ) -> Result<bool, crate::annotation::AnnotationError> {
+        Ok(false)
+    }
+
     /// The existing actor-only scaffold grants no verified clinical authority.
     async fn may_affirm_gate(
         &self,

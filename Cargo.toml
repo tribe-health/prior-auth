@@ -32,7 +32,7 @@ license    = "UNLICENSED"
 # instruction to resolve to whatever published most recently — see
 # docs/architecture/dependency-pins.md for the rationale per pin.
 [workspace.dependencies]
-axum          = "0.8.8"
+axum          = { version = "=0.8.8", features = ["multipart"] }
 tokio         = { version = "1.44.2", features = ["rt-multi-thread", "macros", "signal"] }
 tower         = "0.5.2"
 tower-http    = { version = "0.6.2", features = ["fs", "trace", "cors"] }
@@ -46,3 +46,9 @@ async-trait   = "0.1.88"
 chrono        = { version = "0.4.40", features = ["serde"] }
 sqlx          = { version = "=0.8.3", default-features = false, features = ["runtime-tokio", "tls-rustls", "postgres", "uuid", "chrono", "json", "migrate"] }
 reqwest       = { version = "=0.12.28", default-features = false, features = ["json", "rustls-tls"] }
+sha2          = "=0.10.9"
+lopdf         = { version = "=0.45.0", default-features = false }
+keyring       = "=4.2.0"
+secrecy       = "=0.10.3"
+tauri         = { version = "=2.11.5", default-features = false, features = ["test", "wry"] }
+tauri-build   = "=2.6.3"

@@ -134,17 +134,19 @@ class Probe:
                         "originatingSessionId": owner.session_id,
                         "practiceId": owner.practice_id,
                         "authorizationRevision": "membership:synthetic-ra04",
-                        "projectionRevision": 1,
+                        "projectionRevision": 5,
                         "expiresAt": (
                             datetime.datetime.now(datetime.timezone.utc)
                             + datetime.timedelta(minutes=5)
                         ).isoformat(),
                         "projections": [
+                            {"id": "annotation_types"},
+                            {"id": "annotations"},
                             {"id": "cases"},
                             {"id": "case_evidence"},
                             {"id": "evidence_states"},
                             {"id": "evidence_citations"},
-                            {"id": "documents"},
+                            {"id": "document_statuses"},
                         ],
                     }
                     grant.update(owner.grant_overrides)
@@ -338,7 +340,8 @@ class Probe:
             and claims["tenant_id"] == self.practice_id
             and claims["originating_session_id"] == self.session_id
             and claims["projection_ids"] == [
-                "cases", "case_evidence", "evidence_states", "evidence_citations", "documents"
+                "annotation_types", "annotations", "cases", "case_evidence",
+                "evidence_states", "evidence_citations", "document_statuses"
             ],
             claim_count=len(claims),
         )

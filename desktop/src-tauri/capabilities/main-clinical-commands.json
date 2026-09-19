@@ -1,0 +1,26 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "main-clinical-commands",
+  "description": "Allow the bundled clinical renderers to listen for host invalidation and invoke the closed native session and clinical command inventory.",
+  "windows": ["main", "secondary"],
+  "permissions": [
+    "core:event:default",
+    "allow-current-session",
+    "allow-logout",
+    "allow-gate-state",
+    "allow-affirm-gate",
+    "allow-remove-gate",
+    "allow-lookup-gate-command",
+    "allow-signing-target",
+    "allow-sign-letter",
+    "allow-lookup-sign-letter-command",
+    "allow-reassess-evidence",
+    "allow-lookup-reassessment-command",
+    "allow-save-annotation",
+    "allow-lookup-annotation-command",
+    "allow-document-source",
+    "allow-claim-replica-owner",
+    "allow-publish-replica-projection",
+    "allow-release-replica-owner"
+  ]
+}

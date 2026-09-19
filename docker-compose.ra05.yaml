@@ -1,0 +1,213 @@
+# RA05 local full-path override.
+# Run through `bash scripts/ra05-stack.sh ...` so the ignored synthetic RSA key
+# directory exists and RA05_GATE_KEY_DIR is absolute.
+
+services:
+  db:
+    networks: !override
+      - ra05-backend
+
+  electric:
+    # The qualified browser runs on the host, so even a loopback publication
+    # would bypass Gate's session, practice and projection enforcement.
+    ports: !reset []
+    networks: !override
+      - ra05-backend
+
+  kratos-migrate:
+    networks: !override
+      - ra05-backend
+
+  kratos:
+    networks: !override
+      - ra05-backend
+
+  iggy-server:
+    profiles: ["realtime"]
+    image: "iggyrs/iggy@sha256:68a314c1380be5a792a134f3bd346ded42bd49d9f7114c86f70b48fc85bc5272"
+    environment:
+      IGGY_SYSTEM_PATH: "/data"
+    volumes:
+      - iggy_data:/data
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "iggy",
+          "--transport",
+          "tcp",
+          "--tcp-server-address",
+          "localhost:8090",
+          "-u",
+          "iggy",
+          "-p",
+          "iggy",
+          "me"
+        ]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - ra05-backend
+
+  redis:
+    profiles: ["realtime"]
+    image: "redis@sha256:becdda6c7f4b3fb42e42fd7f120bbf5c54c4caaaf16f26da24e4563d2c1f0576"
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 2s
+      timeout: 2s
+      retries: 20
+    restart: unless-stopped
+    networks:
+      - ra05-backend
+
+  flint-gate-init:
+    profiles: ["realtime"]
+    image: "${RA05_GATE_INIT_IMAGE:-aso-prior-auth-flint-gate-init}"
+    build:
+      context: ${PROMETHEUS_ROOT:-/Users/gqadonis/Projects/prometheus}/flint-gate
+      labels:
+        org.opencontainers.image.revision: "${RA05_GATE_SOURCE_REVISION:-unbound}"
+        io.prometheus.source.aggregate: "${RA05_GATE_SOURCE_AGGREGATE:-unbound}"
+    command: ["--database-init-only"]
+    volumes:
+      - ./docker/flint-gate/config.ra05.yaml:/app/config/config.yaml:ro
+      - ${RA05_GATE_KEY_DIR:?run through scripts/ra05-stack.sh}:/run/ra05-keys:ro
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-flint}:${POSTGRES_PASSWORD:-flint}@db:5432/flintgate
+      FLINT_GATE_CONFIG: /app/config/config.yaml
+      FLINT_GATE_REQUIRE_DATABASE: "true"
+      FLINT_GATE_JWT_KEY_PATH: /run/ra05-keys/private.pem
+      FLINT_GATE_JWT_PUBLIC_KEY_PATH: /run/ra05-keys/public.pem
+      RUST_LOG: info,flint_gate=info
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+    networks:
+      - ra05-backend
+
+  flint-gate:
+    profiles: ["realtime"]
+    image: "${RA05_GATE_IMAGE:-aso-prior-auth-flint-gate}"
+    build:
+      labels:
+        org.opencontainers.image.revision: "${RA05_GATE_SOURCE_REVISION:-unbound}"
+        io.prometheus.source.aggregate: "${RA05_GATE_SOURCE_AGGREGATE:-unbound}"
+    volumes:
+      - ./docker/flint-gate/config.ra05.yaml:/app/config/config.yaml:ro
+      - ${RA05_GATE_KEY_DIR:?run through scripts/ra05-stack.sh}:/run/ra05-keys:ro
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-flint}:${POSTGRES_PASSWORD:-flint}@db:5432/flintgate
+      FLINT_GATE_CONFIG: /app/config/config.yaml
+      FLINT_GATE_REQUIRE_DATABASE: "true"
+      FLINT_GATE_JWT_KEY_PATH: /run/ra05-keys/private.pem
+      FLINT_GATE_JWT_SECRET: ""
+      FLINT_GATE_ASO_AUTHORITY_DATABASE_URL: ${RA06C_GATE_AUTHORITY_DATABASE_URL:?RA06C Gate authority reader URL is required}
+      RUST_LOG: info,flint_gate=info
+    ports: !override
+      - "127.0.0.1:${GATE_PROXY_PORT:-4456}:4456"
+    depends_on:
+      flint-gate-init:
+        condition: service_completed_successfully
+      kratos:
+        condition: service_started
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks: !override
+      ra05-backend:
+      ra05-client:
+        aliases:
+          - shape-gateway
+
+  flint-gate-peer:
+    profiles: ["realtime"]
+    image: "${RA05_GATE_IMAGE:-aso-prior-auth-flint-gate}"
+    volumes:
+      - ./docker/flint-gate/config.ra05.yaml:/app/config/config.yaml:ro
+      - ${RA05_GATE_KEY_DIR:?run through scripts/ra05-stack.sh}:/run/ra05-keys:ro
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-flint}:${POSTGRES_PASSWORD:-flint}@db:5432/flintgate
+      FLINT_GATE_CONFIG: /app/config/config.yaml
+      FLINT_GATE_REQUIRE_DATABASE: "true"
+      FLINT_GATE_JWT_KEY_PATH: /run/ra05-keys/private.pem
+      FLINT_GATE_JWT_SECRET: ""
+      FLINT_GATE_ASO_AUTHORITY_DATABASE_URL: ${RA06C_GATE_AUTHORITY_DATABASE_URL:?RA06C Gate authority reader URL is required}
+      RUST_LOG: info,flint_gate=info
+    ports:
+      - "127.0.0.1:${GATE_PEER_PROXY_PORT:-4458}:4456"
+    depends_on:
+      flint-gate-init:
+        condition: service_completed_successfully
+      kratos:
+        condition: service_started
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - ra05-backend
+
+  realtime-fabric:
+    profiles: ["realtime"]
+    image: "${RA05_FRF_IMAGE:-aso-prior-auth-realtime-fabric}"
+    build:
+      context: ${RA06_FRF_SOURCE_ROOT:-${PROMETHEUS_ROOT:-/Users/gqadonis/Projects/prometheus}/flint-realtime-fabric}
+      args:
+        CARGO_FEATURES: shape-facade
+      labels:
+        org.opencontainers.image.revision: "${RA05_FRF_SOURCE_REVISION:-unbound}"
+        io.prometheus.source.aggregate: "${RA05_FRF_SOURCE_AGGREGATE:-unbound}"
+    volumes:
+      - ./docker/frf/shape-catalog.json:/app/config/shape-catalog.json:ro
+    environment:
+      BIND_ADDR: "0.0.0.0:8080"
+      GATEWAY_PROFILE: "shape-only"
+      GRPC_PORT: "0"
+      AUTHZ_BACKEND: "verified-identity"
+      GATEWAY_JWKS_URL: "http://flint-gate:4456/.well-known/jwks.json"
+      JWT_AUDIENCE: "frf-gateway"
+      JWT_ISSUER: "https://gate.aso.local"
+      SFU_MODE: "sovereign"
+      CDC_ENABLED: "false"
+      FEDERATION_ENABLED: "false"
+      POLICY_ENGINE: "none"
+      SHAPE_ELECTRIC_URL: "${RA06C_ELECTRIC_URL:-http://electric:3000}"
+      SHAPE_CATALOG_PATH: "/app/config/shape-catalog.json"
+      RUST_LOG: "info,frf_gateway=info"
+    ports: !reset []
+    depends_on:
+      electric:
+        condition: service_started
+      flint-gate:
+        condition: service_started
+      iggy-server:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/readyz"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+      start_period: 10s
+    restart: unless-stopped
+    networks: !override
+      - ra05-backend
+
+  topology-probe:
+    profiles: ["ra05-topology"]
+    image: "${RA05_FRF_IMAGE:-aso-prior-auth-realtime-fabric}"
+    entrypoint: ["curl"]
+    networks:
+      - ra05-client
+
+volumes:
+  iggy_data:
+
+networks:
+  ra05-backend:
+  ra05-client:
+    internal: true

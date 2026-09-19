@@ -579,3 +579,274 @@ After signing and reassessment added tests with the same suffix, it selected
 three database lifecycles and ran them against one gate-only fixture. Database
 fixture runners must use the module-qualified test name with `--exact`; a test
 count greater than one is a fixture-selection failure, not broader coverage.
+
+## 2026-09-12 — Excluded evidence paths cannot contribute to a candidate digest
+
+The first RA06c manifest representation included the observed paths matched by exclusion rules in
+the candidate digest. Adding the manifest's own validation receipt would then produce a different
+digest on regeneration even though the receipt was explicitly excluded. Hash the rules and all
+included files; retain matched-path observations for audit outside the digest calculation.
+
+Effective compose output also carries host-specific absolute bind paths. Preserve symlink targets
+as source identity, but replace home-directory paths in sanitized runtime configuration with a
+stable marker before hashing. This keeps configuration evidence free of local user paths and
+reproducible across equivalent checkouts.
+
+## 2026-09-12 — The artifact build cannot cite the digest it creates
+
+The final candidate digest includes the built Docker image IDs, so the build that creates those
+images cannot truthfully name that digest in advance. Treat the build log as construction evidence,
+freeze the resulting images and effective configuration, then require candidate-bound receipts for
+every verification and campaign command. Rebuilding or retagging an image after the freeze makes
+the next receipt fail validation.
+
+## 2026-09-12 — A late source proof invalidates earlier candidate receipts
+
+Adding a missing test after a campaign has started changes an included source file even when no
+runtime implementation changes. Generate a new candidate manifest and replay candidate validation,
+boundary checks and every completed campaign receipt. Updating only the newest receipt leaves older
+passing evidence bound to an invalid candidate.
+
+## 2026-09-12 — Expiry closure may precede the sampled monotonic trigger within clock allowance
+
+Kratos stores subsecond expiry while the downstream JWT uses whole-second NumericDate. Converting
+the absolute expiry to a monotonic deadline also samples the two clocks sequentially. An open
+response can therefore close a few milliseconds before the calculated trigger and still satisfy
+the recorded 1,000 ms clock allowance. The live assertion must accept the pre-recorded negative
+allowance, retain the 5,000 ms upper limit, and still reject any delivered protected row.
+
+## Cargo ancestor configuration survives a separate CARGO_HOME — 2026-09-13
+
+Observed during RA06 input ca87f784: Cargo invoked under the isolated Gate source still used `/Users/gqadonis/.cargo/config.toml`, because Cargo searches the working directory ancestors independently of CARGO_HOME. The log showed build-cache output and the absolute sccache wrapper. The candidate manifest bound neither that configuration nor wrapper executable. The mounted frozen-binary path skips the alternate gate-build-input collector, so its later config hashing did not repair the omission. Freeze stopped before integration. Bind both present and absent ancestor/CARGO_HOME configuration locations and the selected wrapper bytes in host_build_inputs before certification.
+
+## 2026-09-13 — Review validators can freeze obsolete test totals
+
+Adding three real reauthentication regression cases changed the RA06 UI suite from 52 to 55 tests. Updating only the parent refiner left the child frozen validator requiring 52, so a full passing candidate campaign failed child c4 and required another freeze/replay. Before freezing a candidate after test changes, inspect every deterministic validator for exact test-count assertions against the targeted run output. Candidate 86d12421 is preserved with all 12 roles Passed and c4 Failed; it is not certification evidence for the corrected validator.
+
+## 2026-09-13 — Flutter human version output changes with time
+
+flutter --version prints relative framework/engine ages. Candidate 1a155a23 crossed an engine-age day boundary during UI verification and failed identity validation although every tool/dependency hash remained identical. Use flutter --version --machine with fixed revisions/dates and canonical path redaction for identities; retain raw executable and runtime dependency hashing. Never spoof the clock to restore an old human age string.
+
+## 2026-09-13 — Nested process history escaped root-only review exclusions
+
+Candidate 78cfbbe5 passed all 12 local roles but independent review found four Flint Forge nested .prometheus files in its source bundle. Root-only path filters missed nested directory components. Added nested exclusion rules, component detection in builder/validator, matched Git pathspecs, and real staged/unstaged/untracked regression fixtures. Regression failed before repair and passed after. Frozen verification inputs changed; preserved prior receipts as historical and require a new candidate. No application behavior changed.
+
+## 2026-09-13 — Committed projection admission and dictionary properties
+
+RA08 independent judge found that post-commit-only identity validation admitted invalid work into the disposal drain, and truthy inherited dictionary members such as toString could be used as entity buckets. Validate admission before tracking the supplied transaction; the caller retains SQL ownership on synchronous rejection. Keep the post-commit fence for generation changes. Reject Object.prototype property names at the dynamic-key boundary. Full assembled regression and negative-control evidence belongs to RA08 iteration2.
+
+## 2026-09-13 — KBD blocker record can propagate change status
+
+Recording ra09-gpin-adoption automatically placed RA09 in Blocked. A following explicit change transition to Blocked was rejected as Blocked-to-Blocked. Inspect canonical status after blocker recording; do not repeat the status mutation. Revision791 correctly retains completed candidate tasks and blocked adoption task4.
+
+## 2026-09-13 — Generic eligibility task titles collide across changes
+
+RA10 task1 generic title collided with prior canonical task, and task register cannot rename existing definitions (task1 already exists). Cancelled the unusable registration through typed task transition and registered the same requirement as ra10-eligibility via kbd-apply. OpenSpec driver supports nonnumeric IDs by matching description text. Give generic eligibility and finalreview tasks change-specific titles before their first registration; do not edit canonical projections or report cancelled placeholders as work completed.
+
+## 2026-09-14 — PGlite 0.5.8 browser materialization exceeds the fixed RSS gate
+
+The RA11c internal FRF adapter completed the 16,203-row functional lifecycle,
+but a 10 ms sampler measured 1,054,425,088 bytes of incremental RSS for the
+memory-only browser baseline against the pre-recorded 512 MiB limit. JavaScript
+heap remained below its 256 MiB limit. Pre-initializing PGlite, disabling graph
+snapshot persistence, paging committed readback, lowering Postgres memory
+settings, and using rebuildable unlogged replica tables did not remove the
+transient WASM peak. Do not replace the peak measurement with endpoint samples
+or raise the threshold after the run. The browser database choice or the fixed
+budget must be replanned before RA11c production adoption.
+
+
+## 2026-09-14 — Run the assembled PGlite suite with one worker on this host
+
+The 18-file RA11c suite produced eight PGlite timeouts under parallel Vitest
+workers while 150 tests passed and no assertion failed. The unchanged suite passed
+all 158 tests with `--maxWorkers=1` in 26.57 seconds. Use the serial command for
+repeatable local evidence; retain parallel timeouts as failed runs rather than
+relabeling them as passes.
+
+
+### Correction — serial execution is insufficient while the host is degraded
+
+After the authority-freshness repair, a serial 160-test run timed out one PGlite
+case at five seconds. That case passed alone with a 20-second ceiling, but the
+full 20-second run timed out two different PGlite cases. Serial execution alone
+therefore does not restore reliable evidence while Docker and local services are
+unresponsive. Treat both full runs as Failed and stop repeating them until the
+local runtime is healthy.
+
+## 2026-09-15 — Column presence cannot recover Electric operation semantics
+
+A row with fewer than all projected columns may be either an Electric partial update or an insert that relies on nullable/default columns. Inferring the operation from column count loses delete/reinsert semantics. Preserve the transport operation until the SQL statement is selected. Also, do not reject a base schema plan merely because a refetch advanced the persisted replica generation: the mounted restart intentionally reopens that higher generation under the exclusive owner.
+## 2026-09-15 — Public route tests must not construct the browser router
+
+Importing a module that eagerly calls `createBrowserRouter` in a jsdom test can start a browser navigation before the test creates its memory router. Mock the browser-router constructor while retaining the real memory-router API, or separate route objects from browser instantiation. RA12's public-route test uses the former and verifies that direct login and recovery rendering never mounts `GraphProvider`.
+
+## 2026-09-15 — Undefined web storage no longer degrades to no-lease
+
+The focused `src/shared/sync/lease-store-web.test.ts` run currently reports 8 passed and 1 failed: supplying `undefined` storage lets `write` return true although the test requires a no-lease result. RA12 task 1.2 did not touch that owner subsystem. Do not cite the full web suite as passing until its owning change resolves or supersedes this observed failure.
+
+## 2026-09-15 — Test protected route boundaries without invoking their lazy leaves
+
+A jsdom `createMemoryRouter` test of the authenticated root attempted to resolve the production lazy route before the mocked `GraphProvider` rendered. React Router then passed jsdom's AbortSignal to Node's Request and failed on the class identity mismatch. For boundary tests, replace only the protected lazy leaf with a synchronous test element while retaining the production `ProtectedRouteBoundary`. This tests whether private ownership mounts without turning a route-composition test into a loader/runtime test.
+
+## 2026-09-15 — A mounted graph resource is not a ready route
+
+`GraphProvider` can retain a PGlite resource in `offline-limited` so startup can
+recover without reopening it. Nesting a protected `<Outlet />` directly under
+that provider bypasses the semantic difference between resource ownership and
+caught-up readiness. Gate the outlet on the Zustand runtime phase and test every
+non-ready phase at the rendering boundary.
+
+## 2026-09-15 — Register every planned KBD task before completing the first
+
+`kbd-apply begin-task` registers only the current task. If the canonical change
+contains no other task definitions, completing task 1 makes the runtime infer
+that the whole change is complete even when OpenSpec still has unchecked work.
+Pre-register the remaining backend tasks before ending the first task, or repair
+the projection immediately by registering them and returning the change to
+`in_progress`. RA13 was repaired at revisions 1065–1072 and now agrees with
+OpenSpec at 1/8 complete.
+
+## 2026-09-15 — A quiescer can fail before returning its promise
+
+Calling a dependency typed as `() => Promise<void>` can still throw
+synchronously. If revalidation starts graph drain outside a `try`, that throw
+skips the recovery transition and leaves the session stuck in Quiescing. Convert
+both synchronous throws and rejected promises into the same fail-closed
+`recovery-required` path.
+
+## 2026-09-15 — Durable browser controls leak across tests unless cleared
+
+The production `logoutPending` control intentionally survives component and
+provider unmounts. A test that leaves logout unresolved therefore changes the
+initial state of later jsdom tests through shared `localStorage`. Clear browser
+storage at each test boundary unless persistence across reconstruction is the
+behavior under test.
+
+## 2026-09-15 — A session identifier is not an epoch fence
+
+Clinical command owners must survive a component remount so a lost response can
+reconcile, but a session identifier and authorization revision can remain
+unchanged across a foreground revalidation. The session store already cleared
+owners before its epoch advance; adding epoch to the registry key made the
+boundary structural for callers that bypass the store transition while
+preserving same-epoch remount recovery.
+
+## 2026-09-15 — PGlite temporal values cross the graph boundary as dates
+
+PGlite can return a PostgreSQL `DATE` as a JavaScript `Date` even when the
+normalized graph model stores an ISO string. Validate and normalize both valid
+`Date` objects and strings at the SQL-to-view projection boundary. Treating the
+driver value as string-only caused the live evidence timeline to reject a
+committed document that its SQL schema had accepted.
+
+## 2026-09-15 — A cold Electric snapshot may contain historical deletes
+
+Electric can paginate a cold snapshot across an old insert and its later
+delete. Fold the delete into the cold row buffer. Raising must-refetch for that
+historical frame creates a rebuild loop because every replacement snapshot
+contains the same history. Warm deletes may still trigger the deliberate
+replacement-generation path.
+
+## 2026-09-15 — A contained mobile nav can still move the content pane
+
+Constraining a horizontal navigation strip does not prove the page is stable
+at 320px. An ancestor with `overflow: auto` can accept the same horizontal
+wheel gesture and clip the main view even when the body remains viewport-wide.
+Exercise the gesture, assert both the root and main scroll offsets stay zero,
+then prove the intended navigation strip still scrolls. Capture a viewport
+screenshot as visual evidence; a full-page screenshot includes nested scroll
+width and can misrepresent the visible mobile frame.
+
+## 2026-09-15 — Multi-shape live polling and PGlite temporal values
+
+- Awaiting Electric shape long polls sequentially can delay later tables beyond the UI's realtime bound. Start independent authorized shape polls together, then commit or discard the assembled pass atomically.
+- PGlite may return PostgreSQL temporal columns as `Date` objects. Normalize them at the graph-to-feature projection boundary; a string-only gate selector made an affirmed case appear unavailable.
+
+## 2026-09-15 — Projection revisions are a distributed exact-match contract
+
+Adding one authorized shape requires the issuer and every consumer to advance the same revision and exact allowlist together. Gate successfully minted revision 2 with `annotations`, but FRF still required revision 1 and returned 403 until its constant, allowlist and valid grant fixtures advanced in the same integration task.
+
+## 2026-09-15 — React Strict Mode replays effect cleanup on mounted stores
+
+Closing a component-owned Zustand store directly in `useEffect` cleanup permanently fences it during React Strict Mode's development cleanup/setup replay. Defer unmount disposal by one microtask and cancel it with a mount-generation change; keep session/scope replacement fencing synchronous in render.
+
+## 2026-09-15 — Typed annotation JSON is enforced below the API shape
+
+The `Clinical Judgment` annotation type requires `data.assertion`. A structurally valid request with `data: null` reaches PostgreSQL and fails JSON Schema with SQLSTATE 23514. Model the typed payload in TypeScript and map 23514 to an invalid request response rather than a service outage.
+
+## 2026-09-16T11:48:42.691398+00:00 — PostgreSQL DATE and BYTEA need distinct PGlite wire contracts
+
+Electric sends BYTEA as a `\x` hex string, which PGlite does not accept as a BYTEA parameter; store an immutable digest as TEXT when the client only compares and projects it. PGlite can also return DATE as a JavaScript Date, but expanding it to a timestamp breaks strict equality with date-only API metadata. Normalize DATE to `YYYY-MM-DD` and keep TIMESTAMPTZ as full ISO.
+
+## 2026-09-16 — Repeated OpenSpec completion titles need a unique KBD alias
+
+The standard task 3.1 title is repeated across runtime changes, so the canonical bottleneck guard cannot resolve that full title uniquely. Use a change-scoped alias such as `ra16-final-review` for the KBD runtime boundary while completing the ordinal OpenSpec task. Passing the dotted OpenSpec id as a new canonical id registers a duplicate; cancel that duplicate through the supported KBD task transition.
+
+## 2026-09-16 — A Tauri fixture config does not isolate the base debug URL
+
+The RA18 native lifecycle example initially used `generate_context!("tauri.ra18.conf.json")` with `WebviewUrl::App`. The actual macOS process still created the base-configured `main` webview and resolved the controlled window through the base debug `devUrl`, so neither the embedded page nor its page-load hook ran. A fixture that must prove native behavior should destroy preconfigured webviews, keep the zero-window event loop alive, and create its controlled windows on a registered local URI protocol. A compile or mock-runtime test cannot expose this merge and URL-resolution behavior.
+
+## 2026-09-16 — A Vite fixture outside the web root cannot resolve web packages by importer ancestry
+
+The RA18 page lives under `desktop/src-tauri/fixtures`, so Vite could not resolve `@electric-sql/pglite` from `web/node_modules` even though the dependency was installed and the Vite process ran under `web`. The fixture-only Vite config needs an explicit alias to the installed browser entrypoint, and the fixture TypeScript config needs the matching declaration path. The Tauri custom protocol must serve the generated asset tree with correct JavaScript/WASM/data MIME types; embedding only the source HTML bypasses Vite transforms and cannot run the real PGlite bundle.
+
+## 2026-09-16 — Scope RA18 native acceptance runs to the scenario under proof
+
+After the two-window graph/view assertions succeeded, a combined task-2.1 run later exceeded the 90-second PGlite measurement receipt timeout. The PGlite stage belongs to task 2.3, so task 2.1 now uses the fixture-only `RA18_SKIP_PGLITE_BENCHMARK=1` switch and records `pgliteBenchmark=skipped-task-2.1`. Never use that switch as PGlite measurement evidence; task 2.3 must run the unskipped path and resolve or explain the observed timeout.
+
+## 2026-09-16 — A successful WKWebView PGlite run does not prove repeatability
+
+PGlite 0.5.8 completed one full native IndexedDB measurement, then fresh-store
+repetitions on the same macOS/WebKit host stalled at different boundaries:
+`PGlite.create()`, a 250-row catch-up, and the third 50-row transaction. An
+interrupted open can leave a roughly 39–42 MB WebKit IndexedDB store before
+JavaScript receives a database handle that it can close or delete. Preserve the
+passing capability measurement, record every failed repetition separately, and
+do not promote persistent desktop PGlite until repeated startup, interruption
+cleanup, and bounded catch-up pass on the claimed host.
+
+## 2026-09-16 — Tauri 2 runtime detection is boolean-backed
+
+The actual WKWebView injects `window.isTauri` as a boolean. Treating it as a function made `isNativeRuntime()` return false and could bypass host-owned replica coordination. Production detection now calls the pinned `@tauri-apps/api/core.isTauri()` wrapper, which normalizes the injected value. The actual two-window fixture must assert the injected boolean as well as the lower-level IPC bridge.
+
+## 2026-09-16 — Historical migration fixtures must isolate current authority triggers
+
+A populated-upgrade fixture failed before migration because it inserted a
+historical gate affirmation through the current verified-actor trigger. Disable
+only the authority trigger while constructing the historical state, retain
+derived-state triggers needed by the fixture, and restore authority before the
+actual migrator runs. Otherwise the probe tests fixture construction rather
+than migration compatibility.
+
+## 2026-09-16 — Sanitized test receipts need an allowlist for each assertion family
+
+The case service integration test passed, but its first receipt failed because
+the shared subprocess sanitizer retained only `gate_transaction_check` lines.
+When a focused probe introduces a new synthetic assertion prefix or exact test
+name, extend the sanitizer allowlist before using marker counts as evidence.
+Retain the first failed receipt even when the underlying test passed.
+
+## 2026-09-17 — A write capability must not inherit the read response shape
+
+Web-01 correctly authorized case mutations with `case_write`, but its durable command result embedded the full `CaseRecord`. That let a write-only principal recover fields governed by `case:read` through the mutation response or command lookup. Mutation ledgers and responses now use a minimal receipt, and the Rust result rejects unknown JSON fields so an expanded SQL result fails closed. When read and write capabilities differ, review response shape and idempotency lookup shape independently from mutation authority.
+
+## 2026-09-17 — KBD apply uses backend task ordinals
+
+For OpenSpec changes, `kbd-apply.sh begin-task` and `end-task` take the numeric ID emitted by `kbd-apply.sh list`, not the Markdown display label such as `3.1`. Passing the display label registers a duplicate canonical task. The accidental Web-01 `3.1` registration was cancelled append-only, and canonical task `6` was completed normally.
+
+## 2026-09-18 — KBD exact-next-work is a stale projection
+
+`current-waypoint.json` and `position-reminder.txt` can retain an old `exactNextCommand` after later change and task transitions. During Web-06 they continued to name completed Web-01 while `children/web-case-to-letter/progress.json` correctly showed Web-06 in progress. Use `progress.json` `changes[]` as the authority for the next change. Do not run phase activation or transition to repair the projection; record the intended next command with `prometheus kbd revise` only at a change boundary.
+
+## 2026-09-18 — Fresh migration proof cannot expose populated-replica NOT NULL failures
+
+Adding a `NOT NULL` column without a default can pass a fresh-install proof and fail when a populated local replica upgrades. This occurred in Web-02 pass 2 and again in Web-05 pass 2. Every applicable change needs a populated-replica upgrade proof built from checked-in synthetic data as well as its fresh migration proof.
+
+## 2026-09-19 — Bootstrap SQL and SQLx migrations share a fresh-install timeline
+
+The Postgres image applies `docker/bootstrap` before the API SQLx migrator. Fresh Compose startup therefore failed when later migrations added `practice_id` and `criterion_id` columns that bootstrap schema files had already created. Additive migrations that overlap the checked-in bootstrap must be idempotent at the DDL boundary and still retain their data backfill and constraint checks.
+
+## 2026-09-19 — Authorized shape identifiers and revisions are cross-repository contracts
+
+The API emitted projection revision 5 with `document_statuses`, while Flint Gate still validated revision 4 and the retired `documents` identifier. The callback first failed as unavailable during deserialization, then failed closed as denied on the revision check. A projection advance must update the ASO registry, Flint Gate validator/minter, FRF validator/catalog, and browser materializer together before the composed route can pass.

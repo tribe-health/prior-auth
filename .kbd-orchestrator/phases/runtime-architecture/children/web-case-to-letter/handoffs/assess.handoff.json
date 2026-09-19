@@ -1,0 +1,12 @@
+{
+  "stage": "assess",
+  "completedAt": "2026-09-16T23:21:13Z",
+  "outputs": [
+    "assessment.md",
+    "review/assessment/findings.json"
+  ],
+  "nextStage": "analyze",
+  "summaryForNext": "The mounted application lacks the commands for case management, document ingestion, administering-entity and criteria resolution, evidence assembly, and all three generated-letter paths. Plan vertical web-first changes with explicit replica privacy/grants and shell-neutral command parity; certify only through the local browser before native runtime work resumes.",
+  "skipped": false,
+  "skipReason": null
+}

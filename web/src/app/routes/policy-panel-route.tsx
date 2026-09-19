@@ -1,5 +1,9 @@
-import { RoutePlaceholder } from './route-placeholder';
+import { useParams } from 'react-router';
+
+import { PolicyPanel } from '@/features/criteria-selection/components/policy-panel';
 
 export function Component() {
-  return <RoutePlaceholder title="Policy panel" description="Compare case evidence with the applicable policy." />;
+  const { caseId } = useParams();
+  if (!caseId) return <p className="p-6 text-sm text-destructive">No case selected.</p>;
+  return <PolicyPanel caseId={caseId} />;
 }

@@ -4,9 +4,7 @@ use std::{collections::HashMap, sync::Mutex};
 
 use aso_host::{
     domain::*,
-    ports::{
-        CriteriaRepository, Criterion, EvidenceCounts, EvidenceRepository, LetterRepository,
-    },
+    ports::{CriteriaRepository, Criterion, EvidenceCounts, EvidenceRepository, LetterRepository},
 };
 use async_trait::async_trait;
 

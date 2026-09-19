@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"],
+      "@electric-sql/pglite": [
+        "./node_modules/@electric-sql/pglite/dist/index.d.ts"
+      ]
+    }
+  },
+  "include": [
+    "../desktop/src-tauri/fixtures/ra18/benchmark.ts",
+    "../desktop/src-tauri/fixtures/ra18/view-state.ts"
+  ]
+}

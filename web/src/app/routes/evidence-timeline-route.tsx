@@ -1,6 +1,6 @@
 import { useParams } from 'react-router';
 
-import { EvidenceTimeline } from '../../features/evidence-timeline/components/evidence-timeline';
+import { EvidenceWorkspace } from '@/features/evidence-assembly/components/evidence-workspace';
 
 // The one route that is no longer a placeholder. Every other route in this
 // directory still renders RoutePlaceholder, deliberately — this phase builds
@@ -15,5 +15,5 @@ export function Component() {
     return <p className="p-6 text-sm text-destructive">No case selected.</p>;
   }
 
-  return <EvidenceTimeline caseId={caseId} />;
+  return <EvidenceWorkspace caseId={caseId} />;
 }

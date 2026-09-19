@@ -9,6 +9,13 @@ export interface GateState {
   outstanding: GateAffirmationKind[];
 }
 
+export interface GateReviewFact {
+  readonly value: string | null;
+  readonly source: string;
+}
+
+export type GateReviewContext = Readonly<Record<GateAffirmationKind, GateReviewFact>>;
+
 export interface GateSnapshot {
   caseId: string;
   affirmed: GateAffirmationKind[];
@@ -43,6 +50,6 @@ export const gateKindLabel: Record<GateAffirmationKind, string> = {
 export const gateKindPrompt: Record<GateAffirmationKind, string> = {
   policy: 'This is the policy and version that governs this request on the date of service.',
   section: 'This is the section of that policy the request must satisfy.',
-  pathway: 'This is the operation I intend to perform.',
-  plan: 'The described levels, approach and extent match my operative plan.',
+  pathway: 'The selected policy pathway matches the intended procedure.',
+  plan: 'The procedure recorded for this case matches my operative plan.',
 };

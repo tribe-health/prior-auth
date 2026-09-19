@@ -35,6 +35,7 @@ async fn session_transaction_context_lifecycle() {
             .parse()
             .unwrap(),
         session_id: Uuid::new_v4(),
+        issuer: "https://identity.example.test/".into(),
         principal: aso_host::session::Principal::User,
         expires_at: Utc::now() + chrono::Duration::minutes(5),
     };

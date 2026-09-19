@@ -25,6 +25,13 @@ The judge's PASS means no critical findings, not necessarily zero warnings.
 The review history is retained here rather than presenting a warning-bearing
 report as a zero-finding full review.
 
+The installed `4.0.0` declaration locations below are dated evidence for this
+2026-09-06 review. They do not set current dependency authority. On 2026-09-14,
+operator decision `G-PIN-RA09-APPROVED` adopted reviewed core/react candidate
+`4.0.3-ra09.0.g071b9e5.s8179d23348ab`. The RA09 adoption receipt verifies the
+current package inventories, singleton resolution, six required runtime
+factories, and 107 shared export identities.
+
 | Judge pass | Verdict | Critical | Warning | Suggestion |
 |---|---|---:|---:|---:|
 | Full artifact, initial | PASS | 0 | 3 | 2 |

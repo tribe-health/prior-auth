@@ -298,6 +298,22 @@ async fn verified_session_context_drives_signing_and_stale_revisions_conflict() 
 }
 
 #[tokio::test]
+async fn signing_target_returns_only_the_fresh_authoritative_projection() {
+    let fixture = Fixture::new();
+    let response = fixture
+        .raw("GET", &format!("/api/letters/{}/signing-target", id(5)), "")
+        .await;
+
+    assert_eq!(response.status(), StatusCode::OK);
+    assert_eq!(response.headers()[header::CACHE_CONTROL], "no-store");
+    let body = to_bytes(response.into_body(), 4096).await.unwrap();
+    let target: SigningTarget = serde_json::from_slice(&body).unwrap();
+    assert_eq!(target, *fixture.signing.target.lock().unwrap());
+    assert_eq!(*fixture.sessions.requests.lock().unwrap(), vec![None]);
+    assert!(fixture.signing.commands.lock().unwrap().is_empty());
+}
+
+#[tokio::test]
 async fn lost_signing_response_is_reconciled_by_repeat_and_lookup() {
     let fixture = Fixture::new();
     let uri = format!("/api/letters/{}/sign", id(5));

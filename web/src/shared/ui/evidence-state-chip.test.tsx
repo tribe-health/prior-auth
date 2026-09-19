@@ -8,7 +8,7 @@
  * `audit.sh` check 6 protects the three-member union in the model; nothing
  * mechanical protects the rendering. This file is that guard.
  */
-import { cleanup, render, screen, within } from "@testing-library/react";
+import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 
 import { EVIDENCE_STATES, evidenceLabel } from "@/shared/model/evidence-state";
@@ -81,12 +81,13 @@ describe("a citation is never silently empty", () => {
     expect(screen.getByText("Epic · MRI L4-L5 · 2026-03-14")).toBeTruthy();
   });
 
-  it("renders a void treatment when there is none", () => {
+  it("renders the exclusion consequence without inventing an evidence state", () => {
     // An assertion with no citation must LOOK unsourced. Rendering nothing
     // makes it indistinguishable from a sourced claim the layout clipped.
     const { container } = render(<CitationChip source={null} />);
-    const chip = container.querySelector("[data-evidence-state='void']");
+    const chip = container.querySelector("[data-citation-status='missing']");
     expect(chip).toBeTruthy();
-    expect(within(chip as HTMLElement).getByText("Not documented")).toBeTruthy();
+    expect(screen.getByText("This assertion has no source document. It will not be included.")).toBeTruthy();
+    expect(container.querySelector("[data-evidence-state]")).toBeNull();
   });
 });

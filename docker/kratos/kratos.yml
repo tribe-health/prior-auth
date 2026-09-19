@@ -12,11 +12,12 @@ version: v26.2.0
 
 serve:
   public:
-    base_url: http://localhost:4433/
+    base_url: http://127.0.0.1:4433/
     cors:
       enabled: true
       allowed_origins:
         - http://localhost:5173
+        - http://127.0.0.1:5173
       allowed_methods: [GET, POST, PUT, PATCH, DELETE]
       allowed_headers: [Authorization, Content-Type, Cookie]
       allow_credentials: true
@@ -30,19 +31,26 @@ identity:
       url: file:///etc/config/kratos/identity.schema.json
 
 selfservice:
-  default_browser_return_url: http://localhost:5173/
+  default_browser_return_url: http://127.0.0.1:5173/
   allowed_return_urls:
     - http://localhost:5173/
+    - http://127.0.0.1:5173/
   methods:
+    code:
+      enabled: true
     password:
       enabled: true
   flows:
     login:
-      ui_url: http://localhost:5173/login
+      ui_url: http://127.0.0.1:5173/login
+    recovery:
+      enabled: true
+      ui_url: http://127.0.0.1:5173/recovery
+      use: code
     settings:
-      ui_url: http://localhost:5173/settings/profile
+      ui_url: http://127.0.0.1:5173/settings/profile
     error:
-      ui_url: http://localhost:5173/error
+      ui_url: http://127.0.0.1:5173/error
 
 secrets:
   # DEVELOPMENT ONLY — these are literal, not interpolated: Kratos does not

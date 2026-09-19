@@ -1,16 +1,16 @@
 ## Why
 
-The runtime assessment identifies a missing integration or invariant in this area. Certify the assembled runtime against the full acceptance matrix is required to achieve the phase's authorized, scoped runtime outcome.
+The browser application needs one assembled certification after its complete case-to-letter and denial-response workflow and its update coordinator have passed. Earlier runtime slices and native foundations do not prove that the web product works end to end.
 
 ## What Changes
 
-Run the 19 runtime scenarios and relevant UI gates against the actual adopted artifacts, with per-surface evidence. Recheck all four invariants, document performance thresholds before measurement, and keep first-row closure separate from full publication certification.
+Run the complete browser startup, case workflow, denial-response, update and security scenarios against the actual local deployment and supported browsers. Record observed command, service and actual-browser evidence with explicit results. Native and mobile certification remain later milestones.
 
 ## Capabilities
 
 ### New Capabilities
 
-- `ra-22-runtime-certification`: Certify the assembled runtime against the full acceptance matrix.
+- `ra-22-runtime-certification`: Certify the assembled browser runtime and product workflow.
 
 ### Modified Capabilities
 
@@ -18,8 +18,8 @@ None. The root OpenSpec spec store has no existing capability to modify.
 
 ## Impact
 
-ASO: explicit cross-repository acceptance runner/evidence and phase reflection; all companion owners supply prerequisite services/artifacts and their gate results.
+ASO owns the local cross-repository browser acceptance runner, evidence and phase reflection. Companion repositories supply the already verified services and artifacts required by the browser composition.
 
-Dependencies: ra-14-live-evidence-timeline, ra-15-attributed-annotations, ra-16-authorized-source-preview, ra-19-native-sqlite-parity, ra-20-safe-browser-updates, ra-21-safe-native-updates. Runtime order: 7. Recommended agent: Codex; complexity L, High; model class frontier.
+Dependencies: `web-case-to-letter/web-17-browser-scenario-certification` and `ra-20-safe-browser-updates`. Runtime order: 7. Recommended agent: Codex; complexity L, High; model class frontier.
 
-See the reviewed [phase plan](../../../.kbd-orchestrator/phases/runtime-architecture/plan.md) and its decision gates. This proposal authorizes no implementation during planning.
+See the reviewed [phase plan](../../../.kbd-orchestrator/phases/runtime-architecture/plan.md) and the normative [web workflow contract](../../../docs/architecture/web-case-to-letter-contract.md). This proposal authorizes no implementation during planning.
