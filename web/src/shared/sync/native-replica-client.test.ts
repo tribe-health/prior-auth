@@ -54,7 +54,7 @@ describe('native replica channel', () => {
     mockedListen.mockImplementation(async (event, listener) => {
       expect(event).toBe(NATIVE_REPLICA_EVENT);
       eventListeners.push(listener as (event: { payload: unknown }) => void);
-      return vi.fn();
+      return () => undefined;
     });
     let claims = 0;
     mockedInvoke.mockImplementation(async (command, args) => {
@@ -124,7 +124,7 @@ describe('native replica channel', () => {
     let receive: ((event: { payload: unknown }) => void) | undefined;
     mockedListen.mockImplementation(async (_event, listener) => {
       receive = listener as (event: { payload: unknown }) => void;
-      return vi.fn();
+      return () => undefined;
     });
     mockedInvoke.mockImplementation(async (command) => {
       if (command !== 'claim_replica_owner') return undefined;

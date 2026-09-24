@@ -4,3 +4,10 @@ allowBuilds:
 minimumReleaseAgeExclude:
   - '@prometheus-ags/entity-graph-core@4.0.0'
   - '@prometheus-ags/entity-graph-react@4.0.0'
+  - '@ai-sdk/gateway@4.0.91'
+  - '@ai-sdk/openai@4.0.74'
+  - '@ai-sdk/provider-utils@5.0.47'
+  - '@ai-sdk/provider@4.0.18'
+  - ai@7.0.113
+  - lucide-react@1.48.0
+  - react-resizable-panels@4.13.3

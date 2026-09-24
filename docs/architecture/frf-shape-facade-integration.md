@@ -164,7 +164,7 @@ on unrelated changes. Adding a scope revision to the session is the clean fix, a
 ## Verification status
 
 The bounded local stack executed real Kratos v26.2.0 login, Gate RS256 minting, FRF
-issuer/audience verification and Electric 1.8.0. Allowed initial and continuation requests
+issuer/audience verification and Electric 1.8.1. Allowed initial and continuation requests
 returned `200`; scope, projection, cross-identity handle and expired-handle requests returned
 `403` without Electric headers. A client-only internal network reached Gate and received its
 `401` session challenge, but could resolve neither FRF nor Electric and could not reach the

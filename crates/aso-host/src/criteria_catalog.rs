@@ -462,7 +462,10 @@ mod tests {
                 payer_id,
                 policy_id,
                 section: "3.2".into(),
-                content_sha256: format!("{:x}", Sha256::digest(requirement.as_bytes())),
+                content_sha256: Sha256::digest(requirement.as_bytes())
+                    .iter()
+                    .map(|byte| format!("{byte:02x}"))
+                    .collect(),
                 last_confirmed_at: "2026-01-01T12:00:00Z".parse().unwrap(),
                 procedure_family: None,
                 is_mandatory: true,

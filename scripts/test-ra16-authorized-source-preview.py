@@ -92,7 +92,7 @@ class SourcePreviewProbe(ra14.BrowserTimelineProbe):
                 "PGlite, PEM and real Chromium adaptive source preview"
             ),
             "command": (
-                "RUSTUP_TOOLCHAIN=1.97.1 python3 "
+                "RUSTUP_TOOLCHAIN=1.98.1 python3 "
                 "scripts/test-ra16-authorized-source-preview.py"
             ),
             "source_responses": self.source_responses,
@@ -177,7 +177,7 @@ class SourcePreviewProbe(ra14.BrowserTimelineProbe):
         process = subprocess.run(
             ["cargo", "build", "-p", "aso-web-server"],
             cwd=ROOT,
-            env={**os.environ, "RUSTUP_TOOLCHAIN": "1.97.1"},
+            env={**os.environ, "RUSTUP_TOOLCHAIN": "1.98.1"},
             text=True,
             capture_output=True,
             timeout=600,

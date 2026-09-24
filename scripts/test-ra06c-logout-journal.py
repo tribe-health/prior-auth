@@ -77,7 +77,7 @@ class LogoutJournalProbe(authority_fixture.AuthorityMigrationProbe):
                 "confirmation and transactional event lifecycle"
             ),
             commands=[
-                "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-ra06c-logout-journal.py",
+                "RUSTUP_TOOLCHAIN=1.98.1 python3 scripts/test-ra06c-logout-journal.py",
                 "docker compose exec -T db psql -U <configured admin> ...",
                 "cargo run -p aso-web-server -- --migrate-server",
                 " ".join(TEST),

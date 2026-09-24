@@ -23,7 +23,7 @@ adapters do not establish relational materialization.
 Postgres 18 (flint-forge)
      │  logical replication, shape subscriptions
      ▼
-ElectricSQL 1.8.0
+ElectricSQL 1.8.1
      │  HTTP shape streams — READ PATH ONLY
      ▼
 PGlite 0.5.8 in the browser
@@ -106,7 +106,7 @@ It was rejected on the state of its client layer, measured 2026-09-04:
 The Rust `pes-server` is real and has recent commits fixing bucket scoping. The
 TypeScript client is a stub. Publishing it would have shipped the stub.
 
-ElectricSQL 1.8.0 is published, versioned, and the entity graph ships tested
+ElectricSQL 1.8.1 is published, versioned, and the entity graph ships tested
 `createElectricAdapter` and `createTenantScopedElectricAdapter` — the tenant
 variant matters because this is a practice-boundary deployment.
 

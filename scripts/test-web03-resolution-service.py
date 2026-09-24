@@ -354,7 +354,7 @@ class ResolutionServiceProbe(schema.ResolutionSchemaProbe):
                 "practice_id": fixture["practice"]["id"],
             }),
             "ASO_TEST_RESOLUTION_CASES": json.dumps(cases),
-            "RUSTUP_TOOLCHAIN": "1.97.1",
+            "RUSTUP_TOOLCHAIN": "1.98.1",
         })
         completed, entry = self.run_process("actual_resolution_service_lifecycle", TEST, env)
         output = completed.stdout + "\n" + completed.stderr

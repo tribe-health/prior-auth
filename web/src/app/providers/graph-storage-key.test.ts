@@ -83,7 +83,7 @@ describe("graphStorageKey", () => {
   });
 
   it("carries a replica generation so a schema change invalidates the namespace", () => {
-    expect(graphStorageKey(session())).toMatch(/(^|:)g5(:|$)/);
+    expect(graphStorageKey(session())).toMatch(/(^|:)g6(:|$)/);
   });
 
   it("does not key by practice alone", () => {

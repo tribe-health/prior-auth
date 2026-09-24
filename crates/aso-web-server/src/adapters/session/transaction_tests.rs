@@ -26,7 +26,7 @@ async fn assert_clean(pool: &PgPool, baseline: &ConnectionState, label: &str) {
 }
 
 #[tokio::test]
-#[ignore = "requires isolated fixture: RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-session-context.py"]
+#[ignore = "requires isolated fixture: RUSTUP_TOOLCHAIN=1.98.1 python3 scripts/test-session-context.py"]
 async fn session_transaction_context_lifecycle() {
     let url = std::env::var("ASO_TEST_DATABASE_URL").expect("disposable DB required");
     let identity = AuthenticatedIdentity {

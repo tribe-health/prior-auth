@@ -47,7 +47,10 @@ fn context(value: &serde_json::Value, principal: Principal) -> ClinicalContext {
 }
 
 fn hash(requirement: &str) -> String {
-    format!("{:x}", Sha256::digest(requirement.as_bytes()))
+    Sha256::digest(requirement.as_bytes())
+        .iter()
+        .map(|byte| format!("{byte:02x}"))
+        .collect()
 }
 
 fn policy(

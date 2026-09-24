@@ -2,7 +2,7 @@
 """T1: actual Gate -> ASO -> Kratos/Postgres clinical boundary.
 
 Run with the workspace build directory idle and a freshly built debug Gate:
-  RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-gate-mounted.py --gate-binary <path>
+  RUSTUP_TOOLCHAIN=1.98.1 python3 scripts/test-gate-mounted.py --gate-binary <path>
 
 Only synthetic identities and disposable database resources are created.
 The second Gate targets an accepting recording sink, so its denials cannot be
@@ -86,7 +86,7 @@ class MountedProbe(transaction.Probe):
         self.origins = {boundary.KRATOS, boundary.ADMIN}
         self.report.update({
             "scope": "Mounted Gate clinical routes and independent gateway denial against an accepting sink",
-            "commands": ["RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-gate-mounted.py --gate-binary <debug executable>"],
+            "commands": ["RUSTUP_TOOLCHAIN=1.98.1 python3 scripts/test-gate-mounted.py --gate-binary <debug executable>"],
             "environment_contract": {
                 "migration": ["ASO_MIGRATION_DATABASE_URL"],
                 "application": ["ASO_DATABASE_URL", "ASO_GATE_DATABASE_URL", "ASO_KRATOS_PUBLIC_URL", "ASO_ALLOW_INSECURE_KRATOS", "ASO_PORT"],

@@ -34,21 +34,21 @@ license    = "UNLICENSED"
 # instruction to resolve to whatever published most recently — see
 # docs/architecture/dependency-pins.md for the rationale per pin.
 [workspace.dependencies]
-axum          = { version = "=0.8.8", features = ["multipart"] }
+axum          = { version = "=0.8.9", features = ["multipart"] }
 tokio         = { version = "1.44.2", features = ["rt-multi-thread", "macros", "signal"] }
 tower         = "0.5.2"
-tower-http    = { version = "0.6.2", features = ["fs", "trace", "cors"] }
+tower-http    = { version = "=0.7.1", features = ["fs", "trace", "cors"] }
 serde         = { version = "1.0.219", features = ["derive"] }
 serde_json    = "1.0.140"
-uuid          = { version = "1.16.0", features = ["v4", "v7", "serde"] }
+uuid          = { version = "=1.26.1", features = ["v4", "v7", "serde"] }
 thiserror     = "2.0.12"
 tracing       = "0.1.41"
 tracing-subscriber = { version = "0.3.19", features = ["env-filter"] }
 async-trait   = "0.1.88"
 chrono        = { version = "0.4.40", features = ["serde"] }
-sqlx          = { version = "=0.8.3", default-features = false, features = ["runtime-tokio", "tls-rustls", "postgres", "uuid", "chrono", "json", "migrate"] }
-reqwest       = { version = "=0.12.28", default-features = false, features = ["json", "rustls-tls"] }
-sha2          = "=0.10.9"
+sqlx          = { version = "=0.9.0", default-features = false, features = ["runtime-tokio", "tls-rustls", "postgres", "uuid", "chrono", "json", "migrate"] }
+reqwest       = { version = "=0.13.5", default-features = false, features = ["json", "rustls"] }
+sha2          = "=0.11.0"
 # Document assembly (openspec/changes/da-01-document-assembly-agent). Exact per
 # D-7; versions.toml adoption recorded in operator-approved plan revision 12.
 minijinja     = { version = "=2.24.0", default-features = false, features = ["builtins", "macros", "multi_template", "adjacent_loop_items", "json", "serde", "loader"] }

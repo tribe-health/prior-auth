@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """T1: real Gate -> ASO -> Kratos/Postgres, two synthetic identities.
 
-RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-session-gateway.py
+RUSTUP_TOOLCHAIN=1.98.1 python3 scripts/test-session-gateway.py
 Uses the existing Gate image and Docker database/Kratos services. Creates only
 owned temporary resources. Python PyYAML is required to read the actual route.
 """
@@ -42,7 +42,7 @@ class GatewayProbe(boundary.Probe):
         self.trace_pids = {"A": set(), "B": set()}
         self.since = datetime.datetime.now(datetime.timezone.utc).isoformat()
         self.report.update(scope="Real disposable Gate and ASO application with two Kratos identities and shared PostgreSQL pool",
-                           commands=["RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-session-gateway.py"],
+                           commands=["RUSTUP_TOOLCHAIN=1.98.1 python3 scripts/test-session-gateway.py"],
                            checks={}, unverified=[
                                "Native UI/IPC, production deployment and HTTP disconnect propagation are not tested.",
                                "Gate collapses repeated same-name credential headers; mixed distinct sources are tested, duplicate-header rejection parity is not claimed.",

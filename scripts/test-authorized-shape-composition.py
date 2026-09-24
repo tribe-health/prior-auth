@@ -57,7 +57,7 @@ class Probe:
             "result": "Failed",
             "verification_tier": 1,
             "observed_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
-            "scope": "Real Kratos v26.2.0, Gate RS256 minter, FRF verifier and Electric 1.8.0",
+            "scope": "Real Kratos v26.2.0, Gate RS256 minter, FRF verifier and Electric 1.8.1",
             "command": "python3 scripts/test-authorized-shape-composition.py",
             "checks": {},
             "cleanup": {},

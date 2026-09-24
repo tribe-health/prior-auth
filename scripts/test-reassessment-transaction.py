@@ -57,7 +57,7 @@ class ReassessmentProbe(gate_fixture.Probe):
             "and persisted reconciliation against disposable PostgreSQL"
         )
         self.report["commands"][0] = (
-            "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-reassessment-transaction.py "
+            "RUSTUP_TOOLCHAIN=1.98.1 python3 scripts/test-reassessment-transaction.py "
             "--install-mode " + self.install_mode
         )
         self.report["commands"][-1] = " ".join(gate_fixture.TEST)

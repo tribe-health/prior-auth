@@ -79,7 +79,7 @@ def main():
         "result": "Failed",
         "verificationTier": 1,
         "observedAt": datetime.datetime.now(datetime.timezone.utc).isoformat(),
-        "command": "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-ra16-source-transaction.py",
+        "command": "RUSTUP_TOOLCHAIN=1.98.1 python3 scripts/test-ra16-source-transaction.py",
         "checks": {},
         "cleanup": {},
     }
@@ -286,7 +286,7 @@ def main():
             }
             environment = os.environ.copy()
             environment.update({
-                "RUSTUP_TOOLCHAIN": "1.97.1",
+                "RUSTUP_TOOLCHAIN": "1.98.1",
                 "ASO_TEST_DATABASE_URL": runtime_url,
                 "ASO_TEST_ADMIN_DATABASE_URL": observer_url,
                 "ASO_TEST_SOURCE_ROOT": str(root),

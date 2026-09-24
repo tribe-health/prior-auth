@@ -3,7 +3,7 @@
 
 Run only after the RA14 implementation tasks are complete:
 
-    RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-ra14-live-timeline.py
+    RUSTUP_TOOLCHAIN=1.98.1 python3 scripts/test-ra14-live-timeline.py
 
 The campaign reuses the established RA05 disposable fixture and its real
 Kratos, Gate, FRF, Electric and Postgres services. It adds a Vite browser,
@@ -110,7 +110,7 @@ class BrowserTimelineProbe(transition.TransitionProbe):
                     "committed PEM graph and two real Chromium subscribers"
                 ),
                 "command": (
-                    "RUSTUP_TOOLCHAIN=1.97.1 python3 "
+                    "RUSTUP_TOOLCHAIN=1.98.1 python3 "
                     "scripts/test-ra14-live-timeline.py"
                 ),
                 "checks": {},

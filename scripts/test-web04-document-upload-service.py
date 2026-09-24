@@ -131,7 +131,7 @@ class DocumentUploadServiceProbe(schema.DocumentUploadSchemaProbe):
                     "actor_id": actor["actor_id"],
                     "practice_id": actor["practice_id"],
                 }),
-                "RUSTUP_TOOLCHAIN": "1.97.1",
+                "RUSTUP_TOOLCHAIN": "1.98.1",
             })
             completed, entry = self.run_process(
                 self.process_label, self.test_command, process_env

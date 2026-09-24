@@ -121,7 +121,7 @@ class AuthorityMigrationProbe(gate_fixture.Probe):
                 "snapshot, replay, durable cursor and process-local readiness lifecycle"
             ),
             commands=[
-                "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-ra06c-authority-migration.py "
+                "RUSTUP_TOOLCHAIN=1.98.1 python3 scripts/test-ra06c-authority-migration.py "
                 "--install-mode " + self.install_mode,
                 "docker compose port db 5432",
                 "docker compose exec -T db printenv POSTGRES_PASSWORD (captured only)",

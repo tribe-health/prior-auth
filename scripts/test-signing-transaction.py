@@ -57,7 +57,7 @@ class SigningProbe(gate_fixture.Probe):
             "against a disposable PostgreSQL database"
         )
         self.report["commands"][0] = (
-            "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-signing-transaction.py "
+            "RUSTUP_TOOLCHAIN=1.98.1 python3 scripts/test-signing-transaction.py "
             "--install-mode " + self.install_mode
         )
         self.report["commands"][-1] = " ".join(gate_fixture.TEST)
