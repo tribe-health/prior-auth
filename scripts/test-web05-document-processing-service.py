@@ -280,7 +280,7 @@ class DocumentProcessingServiceProbe(schema.DocumentUploadSchemaProbe):
                     "actor_id": self.processor_actor,
                     "practice_id": self.home,
                 }),
-                "RUSTUP_TOOLCHAIN": "1.97.1",
+                "RUSTUP_TOOLCHAIN": "1.98.1",
             })
             completed, entry = self.run_process(
                 "actual_document_processing_service_lifecycle",

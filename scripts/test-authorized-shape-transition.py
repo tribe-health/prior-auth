@@ -92,7 +92,7 @@ class TransitionProbe(composition.Probe):
             {
                 "scope": (
                     "Persisted synthetic case through real Kratos v26.2.0, "
-                    "Gate, FRF and Electric 1.8.0"
+                    "Gate, FRF and Electric 1.8.1"
                 ),
                 "command": (
                     "python3 scripts/test-authorized-shape-transition.py "

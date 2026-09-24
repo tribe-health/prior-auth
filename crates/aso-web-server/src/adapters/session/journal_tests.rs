@@ -11,7 +11,7 @@ use std::sync::Arc;
 use uuid::Uuid;
 
 #[tokio::test]
-#[ignore = "requires isolated fixture: RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-ra06c-logout-journal.py"]
+#[ignore = "requires isolated fixture: RUSTUP_TOOLCHAIN=1.98.1 python3 scripts/test-ra06c-logout-journal.py"]
 async fn logout_journal_lease_lifecycle() {
     let runtime_url = std::env::var("ASO_TEST_LOGOUT_DATABASE_URL")
         .expect("restricted disposable database required");

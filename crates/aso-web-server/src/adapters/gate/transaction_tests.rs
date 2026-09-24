@@ -13,6 +13,12 @@ use std::sync::{
     atomic::{AtomicUsize, Ordering},
 };
 
+macro_rules! audited_sql {
+    ($($arg:tt)*) => {
+        sqlx::AssertSqlSafe(format!($($arg)*))
+    };
+}
+
 fn mark(name: &str) {
     println!("gate_transaction_check: {name}");
 }
@@ -225,7 +231,7 @@ async fn gate_transaction_lifecycle() {
         "invalid synthetic owner role identifier"
     );
     // The role and table belong only to this fixture; no shared role is granted.
-    sqlx::raw_sql(&format!(
+    sqlx::raw_sql(audited_sql!(
         "BEGIN;
         CREATE ROLE {owner} NOLOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS;
         CREATE TABLE aso.{owner}(id integer);
@@ -239,7 +245,7 @@ async fn gate_transaction_lifecycle() {
     .await
     .expect("owner membership control setup failed");
     let role_refused = PgGateRepository::connect(&env("ASO_TEST_DATABASE_URL")).await;
-    sqlx::raw_sql(&format!("BEGIN; REVOKE {owner} FROM {quoted_login};
+    sqlx::raw_sql(audited_sql!("BEGIN; REVOKE {owner} FROM {quoted_login};
         DROP TABLE aso.{owner}; REVOKE USAGE ON SCHEMA aso FROM {owner}; DROP ROLE {owner}; COMMIT;"))
         .execute(&observer).await.expect("owner membership control cleanup failed");
     assert!(matches!(role_refused, Err(GateError::Unavailable)));

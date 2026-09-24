@@ -64,7 +64,7 @@ beforeEach(() => {
   nativeHandlers.length = 0;
   mockedListen.mockImplementation(async (_event, handler) => {
     nativeHandlers.push(handler as (event: { payload: unknown }) => void);
-    return vi.fn();
+    return () => undefined;
   });
 });
 

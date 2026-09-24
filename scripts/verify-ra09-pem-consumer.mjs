@@ -213,7 +213,7 @@ try {
   report.resolution = { coreFromConsumer: core.entry, coreFromReact, coreDevtools: await fileIdentity(devtools.entry), reactEntry: react.entry };
   report.checks.push("Consumer, React, and core/devtools share canonical installed core package paths");
 
-  for (const [name, version] of [["react", "19.2.0"], ["react-dom", "19.2.0"], ["@electric-sql/pglite", null]]) {
+  for (const [name, version] of [["react", "19.3.0"], ["react-dom", "19.3.0"], ["@electric-sql/pglite", null]]) {
     const actual = await packageAt(consumerRequire.resolve(name), name, consumer);
     if (version) {
       assert.equal(actual.manifest.version, version, `${name} must preserve ASO ${version}`);
@@ -222,7 +222,7 @@ try {
     }
     report.dependencies.push({ name, version: actual.manifest.version, entry: await fileIdentity(actual.entry) });
   }
-  report.checks.push("ASO React 19.2.0 and ReactDOM 19.2.0 pins remain exact; PGlite is installed locally");
+  report.checks.push("ASO React 19.3.0 and ReactDOM 19.3.0 pins remain exact; PGlite is installed locally");
 
   // Import only after candidate byte checks; the public exports must retain shared identity.
   const coreExports = await import(pathToFileURL(core.entry).href);

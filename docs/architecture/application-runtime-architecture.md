@@ -38,7 +38,7 @@ Open [prior-auth.code-workspace](../../prior-auth.code-workspace) to work across
 
 Source reading takes precedence over comments that claim a completed integration. In particular, PEM's `adapters/electricsql.ts` forwards shape changes to graph subscribers and listens for SQL notifications; its inspected implementation does **not** insert the shape rows into PGlite. Its header diagram alone is insufficient evidence of database hydration.
 
-The installed app declares React 19.2.0, Zustand 5.0.8, PGlite `^0.5.8`, and
+The installed app declares React 19.3.0, Zustand 5.0.15, PGlite `^0.5.8`, and
 Electric client `^1.5.27`. Operator decision `G-PIN-RA09-APPROVED` makes
 `versions.toml` authoritative for the reviewed PEM core/react candidate
 `4.0.3-ra09.0.g071b9e5.s8179d23348ab`; `web/package.json` consumes its exact

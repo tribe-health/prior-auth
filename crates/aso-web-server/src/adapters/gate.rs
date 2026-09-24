@@ -1677,10 +1677,14 @@ impl EvidenceRepository for PgGateRepository {
                 return Err(DocumentProcessingError::ProcessingFailed);
             }
             let text_sha256 = Sha256::digest(page.text.as_bytes());
+            let text_sha256 = text_sha256
+                .iter()
+                .map(|byte| format!("{byte:02x}"))
+                .collect::<String>();
             processed_pages.push(serde_json::json!({
                 "pageNumber": page.page_number,
                 "text": page.text,
-                "textSha256": format!("{text_sha256:x}"),
+                "textSha256": text_sha256,
             }));
         }
 

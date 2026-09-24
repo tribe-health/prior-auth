@@ -173,7 +173,7 @@ class CaseToLetterProbe(service.CriteriaServiceProbe):
                 "ASO_TEST_WORKFLOW_CRITERION_ID": self.criterion_id,
                 "ASO_TEST_WORKFLOW_DOCUMENT_ID": self.source_documents["published"],
                 "ASO_TEST_WORKFLOW_QUOTE": "Six weeks of supervised therapy are documented.",
-                "RUSTUP_TOOLCHAIN": "1.97.1",
+                "RUSTUP_TOOLCHAIN": "1.98.1",
             }
         )
         completed, entry = self.run_process(

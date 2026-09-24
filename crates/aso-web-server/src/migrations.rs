@@ -2,7 +2,7 @@
 //! credentials or runs DDL. The existing ASO schema is a prerequisite.
 
 use sqlx::{
-    PgPool,
+    PgPool, SqlStr,
     migrate::{Migration, MigrationSource, MigrationType, Migrator},
     postgres::PgPoolOptions,
 };
@@ -19,7 +19,9 @@ fn local_publication_boundary_migration() -> Migration {
         2026090600,
         "local publication boundary".into(),
         MigrationType::Simple,
-        include_str!("../../../migrations/server/2026090600_local_publication_boundary.sql").into(),
+        SqlStr::from_static(include_str!(
+            "../../../migrations/server/2026090600_local_publication_boundary.sql"
+        )),
         false,
     )
 }
@@ -29,8 +31,9 @@ fn publication_ddl_serialization_migration() -> Migration {
         2026090607,
         "publication DDL serialization".into(),
         MigrationType::Simple,
-        include_str!("../../../migrations/server/2026090607_publication_ddl_serialization.sql")
-            .into(),
+        SqlStr::from_static(include_str!(
+            "../../../migrations/server/2026090607_publication_ddl_serialization.sql"
+        )),
         false,
     )
 }
@@ -61,53 +64,54 @@ impl MigrationSource<'static> for ServerMigrations {
                     2026090601,
                     "durable gate".into(),
                     MigrationType::Simple,
-                    include_str!("../../../migrations/server/2026090601_durable_gate.sql").into(),
+                    SqlStr::from_static(include_str!(
+                        "../../../migrations/server/2026090601_durable_gate.sql"
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090602,
                     "durable signing".into(),
                     MigrationType::Simple,
-                    include_str!("../../../migrations/server/2026090602_durable_signing.sql")
-                        .into(),
+                    SqlStr::from_static(include_str!(
+                        "../../../migrations/server/2026090602_durable_signing.sql"
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090603,
                     "durable evidence reassessment".into(),
                     MigrationType::Simple,
-                    include_str!("../../../migrations/server/2026090603_durable_reassessment.sql")
-                        .into(),
+                    SqlStr::from_static(include_str!(
+                        "../../../migrations/server/2026090603_durable_reassessment.sql"
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090604,
                     "immutable approved source documents".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090604_immutable_approved_sources.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090605,
                     "clinical revision and publication guards".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090605_clinical_revision_guards.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090606,
                     "clinical truncate guards".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090606_clinical_truncate_guards.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 publication_ddl_serialization_migration(),
@@ -115,394 +119,369 @@ impl MigrationSource<'static> for ServerMigrations {
                     2026090608,
                     "approval QA serialization".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090608_approval_qa_serialization.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090609,
                     "durable session authority".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090609_durable_session_authority.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090610,
                     "session logout executor".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090610_session_logout_executor.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090611,
                     "Gate authority event reader".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090611_gate_authority_event_reader.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090612,
                     "Gate authority function boundary".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090612_gate_authority_function_boundary.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090613,
                     "Restore session reader execute".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090613_restore_session_reader_execute.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090614,
                     "durable attributed annotations".into(),
                     MigrationType::Simple,
-                    include_str!("../../../migrations/server/2026090614_durable_annotations.sql")
-                        .into(),
+                    SqlStr::from_static(include_str!(
+                        "../../../migrations/server/2026090614_durable_annotations.sql"
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090615,
                     "annotation gateway policy".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090615_annotation_gateway_policy.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090616,
                     "authorized document source".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090616_authorized_document_source.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090617,
                     "durable case commands".into(),
                     MigrationType::Simple,
-                    include_str!("../../../migrations/server/2026090617_durable_case_commands.sql")
-                        .into(),
+                    SqlStr::from_static(include_str!(
+                        "../../../migrations/server/2026090617_durable_case_commands.sql"
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090618,
                     "administering entity resolution schema".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090618_administering_entity_resolution_schema.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090619,
                     "administering entity resolution commands".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090619_administering_entity_resolution_commands.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090620,
                     "document upload schema".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090620_document_upload_schema.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090621,
                     "document processing".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090621_document_processing.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090622,
                     "document status projection".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090622_document_status_projection.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090623,
                     "case document revision read".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090623_case_document_revision_read.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090624,
                     "criteria catalog".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090624_criteria_catalog.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090625,
                     "criteria catalog commands".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090625_criteria_catalog_commands.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090626,
                     "criteria catalog repair".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090626_criteria_catalog_repair.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090627,
                     "criteria selection".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090627_criteria_selection.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090628,
                     "evidence assembly".into(),
                     MigrationType::Simple,
-                    include_str!("../../../migrations/server/2026090628_evidence_assembly.sql").into(),
+                    SqlStr::from_static(include_str!(
+                        "../../../migrations/server/2026090628_evidence_assembly.sql"
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090629,
                     "letter workflow".into(),
                     MigrationType::Simple,
-                    include_str!("../../../migrations/server/2026090629_letter_workflow.sql").into(),
+                    SqlStr::from_static(include_str!(
+                        "../../../migrations/server/2026090629_letter_workflow.sql"
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090630,
                     "criteria catalog helper execution".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090630_criteria_catalog_helper_execution.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090631,
                     "queued document payload".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090631_queued_document_payload.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090632,
                     "document processor queue".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090632_document_processor_queue.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090633,
                     "gate policy helper execution".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090633_gate_policy_helper_execution.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090634,
                     "letter claim attribution".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090634_letter_claim_attribution.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090635,
                     "signing retrieval helper execution".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090635_signing_retrieval_helper_execution.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090636,
                     "denial appeal workflow".into(),
                     MigrationType::Simple,
-                    include_str!(
-                    "../../../migrations/server/2026090636_denial_appeal_workflow.sql"
-                    )
-                    .into(),
+                    SqlStr::from_static(include_str!(
+                        "../../../migrations/server/2026090636_denial_appeal_workflow.sql"
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090637,
                     "criteria catalog revision variable".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090637_criteria_catalog_revision_variable.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090638,
                     "document generation tasks".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090638_document_generation_tasks.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090639,
                     "authorized letter assembly read".into(),
                     MigrationType::Simple,
-                    include_str!("../../../migrations/server/2026090639_letter_assembly_read.sql").into(),
+                    SqlStr::from_static(include_str!(
+                        "../../../migrations/server/2026090639_letter_assembly_read.sql"
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090640,
                     "determination response mode confirmation".into(),
                     MigrationType::Simple,
-                    include_str!("../../../migrations/server/2026090640_determination_response_mode.sql").into(),
+                    SqlStr::from_static(include_str!(
+                        "../../../migrations/server/2026090640_determination_response_mode.sql"
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090641,
                     "submission packet workflow".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090641_submission_packet_workflow.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090642,
                     "signed letter case progress".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090642_signed_letter_case_progress.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090643,
                     "submission and case progress repairs".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090643_submission_and_case_progress_repairs.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090644,
                     "signing target owner".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090644_signing_target_owner.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090645,
                     "signing current letter columns".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090645_signing_current_letter_columns.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090646,
                     "document task status projection".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090646_document_task_status_projection.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090647,
                     "determination case progress".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090647_determination_case_progress.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
                 Migration::new(
                     2026090648,
                     "case display labels".into(),
                     MigrationType::Simple,
-                    include_str!(
+                    SqlStr::from_static(include_str!(
                         "../../../migrations/server/2026090648_case_display_labels.sql"
-                    )
-                    .into(),
+                    )),
                     false,
                 ),
             ])
