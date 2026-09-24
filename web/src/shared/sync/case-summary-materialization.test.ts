@@ -32,9 +32,12 @@ describe("case summary materialization", () => {
           practice_id: "00000000-0000-0000-0000-000000000002",
           case_number: "SYNTHETIC-CASE-001",
           patient_id: "00000000-0000-0000-0000-000000000003",
+          patient_name: "Synthetic Patient Example",
           surgeon_id: "00000000-0000-0000-0000-000000000004",
+          surgeon_name: "Dr. Demo Surgeon",
           coordinator_id: null,
           payer_id: "00000000-0000-0000-0000-000000000005",
+          payer_name: "Synthetic Health Plan",
           status: "intake",
           date_of_service: "2026-09-17",
           gate_affirmed_at: null,
@@ -58,6 +61,9 @@ describe("case summary materialization", () => {
       expect(result.rows[0]).toMatchObject({
         id: CASE_ID,
         case_number: "SYNTHETIC-CASE-001",
+        patient_name: "Synthetic Patient Example",
+        payer_name: "Synthetic Health Plan",
+        surgeon_name: "Dr. Demo Surgeon",
         status: "intake",
         revision: 1,
       });

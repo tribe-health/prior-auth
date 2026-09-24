@@ -4,7 +4,7 @@
 **Supersedes** [ADR-007](adr-007-local-first-sync.md).  
 **Implementation** The browser Compose candidate now performs authorized shape
 materialization into memory-only PGlite and atomic PEM graph projection under a
-verified Kratos session. Local integration proves revision-6 document-task status
+verified Kratos session. Local integration proves the document-task status
 delivery. Persistent browser storage, native SQLite parity, safe release updates,
 the complete browser campaign and cross-platform qualification remain open.
 
@@ -86,7 +86,10 @@ absent. Revision 6 also adds `document_task_statuses`, a trigger-maintained
 projection containing only task id, case id, purpose, state, stage, durable event
 sequence and update time. The practice id exists only as the server-side scope
 predicate. Prompts, source snapshots, result artifacts, errors, commands and
-actor identities are structurally absent. Until G-DATA approves durable private client storage, the
+actor identities are structurally absent. Revision 6 carries only derived patient,
+payer, and surgeon display labels to each already-authorized case row. It does
+not replicate the participant tables, and source-record label changes advance
+the case projection revision. Until G-DATA approves durable private client storage, the
 clinical projection is eligible only in the memory-only browser runtime and
 synthetic verification.
 

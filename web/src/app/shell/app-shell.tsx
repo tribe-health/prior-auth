@@ -41,6 +41,7 @@ import {
 import { can } from "@/shared/model/session";
 import { BrandMark } from "@/shared/ui/brand-mark";
 import { cn } from "@/lib/utils";
+import { useCaseDetailProjection } from "@/features/case-queue/hooks/use-case-projection";
 
 const GLOBAL_ICONS = {
   cases: BriefcaseBusiness,
@@ -192,7 +193,7 @@ function CasePipelineNav({ caseId, gateStatus, inSheet = false }: { caseId: stri
   );
 }
 
-function MobileTopbar({ caseId, gateStatus }: { caseId?: string; gateStatus?: CaseGateStatus }) {
+function MobileTopbar({ caseId, caseLabel, caseNumber, gateStatus }: { caseId?: string; caseLabel?: string; caseNumber?: string; gateStatus?: CaseGateStatus }) {
   const session = useSession();
   const { logout } = useSessionActions();
   return (
@@ -212,7 +213,10 @@ function MobileTopbar({ caseId, gateStatus }: { caseId?: string; gateStatus?: Ca
           <SheetContent side="right" className="w-[min(23rem,92vw)] bg-surface">
             <SheetHeader className="border-b border-chrome pr-12">
               <SheetTitle className="font-display text-xl">Case workflow</SheetTitle>
-              <SheetDescription className="break-all font-mono text-[0.65rem] uppercase tracking-[0.1em]">Case {caseId}</SheetDescription>
+              <SheetDescription>
+                <span className="block truncate font-semibold text-text">{caseLabel ?? 'Loading case…'}</span>
+                {caseNumber ? <span className="mt-1 block font-mono text-[0.65rem] uppercase tracking-[0.1em]">{caseNumber}</span> : null}
+              </SheetDescription>
             </SheetHeader>
             <div className="min-h-0 flex-1 overflow-y-auto">
               <CasePipelineNav caseId={caseId} gateStatus={gateStatus} inSheet />
@@ -239,6 +243,8 @@ function CaseWorkspace({ caseId }: { caseId: string }) {
   const session = useRequiredSession();
   const { pathname } = useLocation();
   const gate = useCommittedCaseGate(caseId, session.practiceId);
+  const caseProjection = useCaseDetailProjection(caseId);
+  const activeCase = caseProjection.status === 'ready' ? caseProjection.case : null;
   const activeStep = CASE_PIPELINE.find((step) => (
     step.path === null
       ? pathname === `/cases/${caseId}`
@@ -250,13 +256,14 @@ function CaseWorkspace({ caseId }: { caseId: string }) {
 
   return (
     <div className="case-shell min-h-0 min-w-0 flex-1">
-      <MobileTopbar caseId={caseId} gateStatus={gate.status} />
+      <MobileTopbar caseId={caseId} caseLabel={activeCase?.patientName} caseNumber={activeCase?.caseNumber} gateStatus={gate.status} />
       <div className="case-workspace-grid min-h-0 min-w-0 flex-1">
       <aside className="case-context-rail min-h-0 min-w-0 overflow-hidden border-r border-chrome bg-surface">
         <div className="flex h-full min-h-0 w-(--size-context-panel) flex-col">
         <div className="border-b border-chrome px-5 py-5">
           <p className="font-mono text-[0.6rem] uppercase tracking-[0.16em] text-subtle">Active case</p>
-          <p className="mt-1 truncate text-sm font-semibold text-text">{caseId}</p>
+          <p className="mt-1 truncate text-sm font-semibold text-text">{activeCase?.patientName ?? 'Loading case…'}</p>
+          {activeCase ? <p className="mt-1 truncate font-mono text-[0.62rem] uppercase tracking-[0.08em] text-subtle">{activeCase.caseNumber}</p> : null}
         </div>
         <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
           <CasePipelineNav caseId={caseId} gateStatus={gate.status} />

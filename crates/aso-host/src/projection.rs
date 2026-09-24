@@ -121,9 +121,12 @@ const DEFINITIONS: &[ProjectionDefinition] = &[
             "practice_id",
             "case_number",
             "patient_id",
+            "patient_name",
             "surgeon_id",
+            "surgeon_name",
             "coordinator_id",
             "payer_id",
+            "payer_name",
             "status",
             "date_of_service",
             "gate_affirmed_at",
@@ -437,9 +440,12 @@ mod tests {
                 "practice_id",
                 "case_number",
                 "patient_id",
+                "patient_name",
                 "surgeon_id",
+                "surgeon_name",
                 "coordinator_id",
                 "payer_id",
+                "payer_name",
                 "status",
                 "date_of_service",
                 "gate_affirmed_at",
@@ -450,6 +456,9 @@ mod tests {
         assert!(cases.permits_column("gate_affirmed_at"));
         assert!(cases.permits_column("case_number"));
         assert!(cases.permits_column("patient_id"));
+        assert!(cases.permits_column("patient_name"));
+        assert!(cases.permits_column("payer_name"));
+        assert!(cases.permits_column("surgeon_name"));
         assert!(cases.permits_column("revision"));
         assert!(!cases.permits_column("gate_affirmed_by"));
         assert!(!cases.permits_column("member_id"));

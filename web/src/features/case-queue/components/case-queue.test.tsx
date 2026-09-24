@@ -12,7 +12,8 @@ vi.mock('../hooks/use-case-projection', () => ({
     cases: [{
       id: 'case-1', practiceId: 'practice-1', caseNumber: 'SYNTHETIC-001',
       patientId: 'patient-1', surgeonId: 'surgeon-1', coordinatorId: null,
-      payerId: 'payer-1', status: 'intake', dateOfService: '2026-09-17',
+      patientName: 'Synthetic Patient Example', surgeonName: 'Dr. Demo Surgeon',
+      payerId: 'payer-1', payerName: 'Synthetic Health Plan', status: 'intake', dateOfService: '2026-09-17',
       gateAffirmedAt: null, updatedAt: null, revision: 1,
     }],
   }),
@@ -33,11 +34,15 @@ vi.mock('../hooks/use-case-command', () => ({
 import { CaseQueue } from './case-queue';
 
 describe('case queue surface', () => {
-  it('renders committed identifiers and opens the responsive create form', () => {
+  it('renders participant names and opens the responsive create form', () => {
     render(<MemoryRouter><CaseQueue /></MemoryRouter>);
 
     expect(screen.getByRole('heading', { name: 'Cases' })).toBeTruthy();
     expect(screen.getByText('SYNTHETIC-001')).toBeTruthy();
+    expect(screen.getByText('Synthetic Patient Example')).toBeTruthy();
+    expect(screen.getByText('Synthetic Health Plan')).toBeTruthy();
+    expect(screen.getByText('Dr. Demo Surgeon')).toBeTruthy();
+    expect(screen.queryByText('patient-1')).toBeNull();
     expect(screen.getByRole('link', { name: /open case/i }).getAttribute('href')).toBe('/cases/case-1');
 
     fireEvent.click(screen.getByRole('button', { name: /new case/i }));

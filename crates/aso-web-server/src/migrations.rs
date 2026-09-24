@@ -495,6 +495,16 @@ impl MigrationSource<'static> for ServerMigrations {
                     .into(),
                     false,
                 ),
+                Migration::new(
+                    2026090648,
+                    "case display labels".into(),
+                    MigrationType::Simple,
+                    include_str!(
+                        "../../../migrations/server/2026090648_case_display_labels.sql"
+                    )
+                    .into(),
+                    false,
+                ),
             ])
         })
     }

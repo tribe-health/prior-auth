@@ -413,6 +413,35 @@ CREATE INDEX document_task_statuses_case_ix
   ON document_task_statuses(case_id, purpose, updated_at DESC);
 `;
 
+/** Revision-9 case participant display-label projection. */
+export const PGLITE_CASE_DISPLAY_LABELS_SQL = /* sql */ `
+-- The three labels are required on every authorized case row. Clear the old
+-- generation before adding them so no case can render with an identifier as a
+-- substitute for a missing name. The next authorized snapshot repopulates it.
+TRUNCATE TABLE
+  annotations,
+  annotation_types,
+  evidence_citations,
+  case_evidence,
+  evidence_states,
+  document_statuses,
+  document_task_statuses,
+  cases;
+
+DO $cutover$
+BEGIN
+  IF to_regclass('public._replica_checkpoints') IS NOT NULL THEN
+    EXECUTE 'TRUNCATE TABLE _replica_checkpoints';
+  END IF;
+END
+$cutover$;
+
+ALTER TABLE cases
+  ADD COLUMN patient_name TEXT NOT NULL,
+  ADD COLUMN payer_name TEXT NOT NULL,
+  ADD COLUMN surgeon_name TEXT NOT NULL;
+`;
+
 /** Complete current schema used by boundary tests and disposable fixtures. */
 export const PGLITE_CURRENT_SCHEMA_SQL = [
   PGLITE_SCHEMA_SQL,
@@ -421,4 +450,5 @@ export const PGLITE_CURRENT_SCHEMA_SQL = [
   PGLITE_CASE_SUMMARY_SQL,
   PGLITE_DOCUMENT_STATUS_SQL,
   PGLITE_DOCUMENT_TASK_STATUS_SQL,
+  PGLITE_CASE_DISPLAY_LABELS_SQL,
 ].join("\n");

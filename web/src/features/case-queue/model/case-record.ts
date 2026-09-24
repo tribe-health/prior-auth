@@ -19,15 +19,18 @@ export const CASE_STATUSES = [
 
 export type CaseStatus = (typeof CASE_STATUSES)[number];
 
-/** Exact identifier-only case row approved for the browser replica. */
+/** Exact case-summary row approved for the browser replica. */
 export interface CaseRecord {
   readonly id: string;
   readonly practiceId: string;
   readonly caseNumber: string;
   readonly patientId: string;
+  readonly patientName: string;
   readonly surgeonId: string;
+  readonly surgeonName: string;
   readonly coordinatorId: string | null;
   readonly payerId: string;
+  readonly payerName: string;
   readonly status: CaseStatus;
   readonly dateOfService: string | null;
   readonly gateAffirmedAt: string | null;

@@ -16,7 +16,8 @@ import { CaseDetail } from './case-detail';
 const caseRecord = {
   id: 'case-1', practiceId: 'practice-1', caseNumber: 'SYNTHETIC-001',
   patientId: 'patient-1', surgeonId: 'surgeon-1', coordinatorId: null,
-  payerId: 'payer-1', status: 'intake' as const, dateOfService: '2026-09-17',
+  patientName: 'Synthetic Patient Example', surgeonName: 'Dr. Demo Surgeon',
+  payerId: 'payer-1', payerName: 'Synthetic Health Plan', status: 'intake' as const, dateOfService: '2026-09-17',
   gateAffirmedAt: null, updatedAt: null, revision: 1,
 };
 const resolved = {
@@ -44,6 +45,20 @@ beforeEach(() => {
 afterEach(cleanup);
 
 describe('CaseDetail coverage gate', () => {
+  it('shows the patient, payer company, and surgeon names', () => {
+    coverage.mockReturnValue({
+      view: { status: 'ready', resolution: resolved, message: null, pendingCommandId: null },
+      blocked: false,
+      ...actions,
+    });
+    render(<MemoryRouter><CaseDetail caseId="case-1" /></MemoryRouter>);
+
+    expect(screen.getByText('Synthetic Patient Example')).toBeTruthy();
+    expect(screen.getByText('Synthetic Health Plan')).toBeTruthy();
+    expect(screen.getByText('Dr. Demo Surgeon')).toBeTruthy();
+    expect(screen.queryByText('patient-1')).toBeNull();
+  });
+
   it('replaces evidence navigation with a named lock until coverage is resolved', () => {
     coverage.mockReturnValue({
       view: { status: 'unresolved', resolution: null, message: null, pendingCommandId: null },

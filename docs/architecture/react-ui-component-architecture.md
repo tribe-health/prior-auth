@@ -417,7 +417,7 @@ protocols interchangeable.
 
 The application channel owner manages authorization, reconnect, cancellation and
 subscription lifetimes. `useDocumentGeneration` exposes the scoped channel and
-joins `useDocumentTaskStatus`, whose projection revision 6 row is hydrated by
+joins `useDocumentTaskStatus`, whose task-status row is retained by projection revision 6 and hydrated by
 PGlite into the PEM Zustand graph. Zustand holds only scoped transient stream/form
 state, while committed data comes from the entity graph or authorized artifact
 reads. Mark streamed content provisional

@@ -31,7 +31,7 @@ function CaseQueueCard({ record, onSelect }: { record: CaseRecord; onSelect: () 
         <div className="flex flex-wrap items-start justify-between gap-2">
           <div>
             <CardTitle className="font-display text-xl">{record.caseNumber}</CardTitle>
-            <CardDescription className="mt-1 font-mono text-[0.68rem] uppercase tracking-[0.08em]">Patient {record.patientId}</CardDescription>
+            <CardDescription className="mt-1 text-sm font-semibold text-muted">{record.patientName}</CardDescription>
           </div>
           <Badge variant="outline">{statusLabel(record.status)}</Badge>
         </div>
@@ -39,8 +39,8 @@ function CaseQueueCard({ record, onSelect }: { record: CaseRecord; onSelect: () 
       <CardContent className="grid gap-3">
         <dl className="grid grid-cols-2 gap-x-4 gap-y-3 border-y border-chrome py-4 text-sm">
           <div>
-            <dt className="text-ui-muted-foreground">Payer</dt>
-            <dd className="mt-1 break-all font-semibold">{record.payerId}</dd>
+            <dt className="text-ui-muted-foreground">Payer company</dt>
+            <dd className="mt-1 font-semibold">{record.payerName}</dd>
           </div>
           <div>
             <dt className="text-ui-muted-foreground">Service date</dt>
@@ -48,7 +48,7 @@ function CaseQueueCard({ record, onSelect }: { record: CaseRecord; onSelect: () 
           </div>
           <div className="col-span-2">
             <dt className="text-ui-muted-foreground">Surgeon</dt>
-            <dd className="mt-1 break-all font-semibold">{record.surgeonId}</dd>
+            <dd className="mt-1 font-semibold">{record.surgeonName}</dd>
           </div>
         </dl>
         <Link
@@ -89,8 +89,11 @@ export function CaseQueue() {
       const matchesSearch = search === '' || [
         record.caseNumber,
         record.patientId,
+        record.patientName,
         record.payerId,
+        record.payerName,
         record.surgeonId,
+        record.surgeonName,
       ].some((value) => value.toLocaleLowerCase().includes(search));
       return matchesStatus && matchesSearch;
     });
@@ -161,7 +164,7 @@ export function CaseQueue() {
                 id="case-search"
                 type="search"
                 value={view.state.search}
-                placeholder="Case, patient, payer, or surgeon ID"
+                placeholder="Case, patient, payer, or surgeon"
                 className="min-h-11 pl-9"
                 onChange={(event) => view.setSearch(event.currentTarget.value)}
               />

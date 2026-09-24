@@ -71,8 +71,9 @@ export const SYNC_COLUMNS: Record<PGliteTable, readonly string[]> = {
     "target_evidence_id", "target_document_id", "revision", "created_at", "updated_at",
   ],
   cases: [
-    "id", "practice_id", "case_number", "patient_id", "surgeon_id",
-    "coordinator_id", "payer_id", "status", "date_of_service",
+    "id", "practice_id", "case_number", "patient_id", "patient_name",
+    "surgeon_id", "surgeon_name", "coordinator_id", "payer_id", "payer_name",
+    "status", "date_of_service",
     "gate_affirmed_at", "updated_at", "revision",
   ],
   case_evidence: [

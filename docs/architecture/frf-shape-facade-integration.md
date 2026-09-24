@@ -1,7 +1,7 @@
 # FRF shape facade ↔ ASO replica: how the two fit together
 
 **Status:** Integration record updated 2026-09-19. The authorized facade is the implemented client
-path from Gate to Electric in the web Compose candidate. Bounded local HTTP, topology and revision-6 task-status evidence has passed; full runtime
+path from Gate to Electric in the web Compose candidate. Bounded local HTTP, topology and revision-6 case-label evidence has passed; full runtime
 certification remains open. Supersedes nothing.
 
 ## Why this note exists
@@ -80,7 +80,10 @@ architecture decision; the facade does not choose it. The document status projec
 frozen eleven fields, filters on its unreturned case-derived `practice_id`, and contains no source
 text, object location, parser output, or embedding column. The task-status row exposes only task
 id, case, purpose, state, stage, sequence and update time; prompts, sources, artifacts, errors,
-commands and actor identities remain in protected host tables.
+commands and actor identities remain in protected host tables. The case shape
+also carries the derived patient, payer, and surgeon display labels needed by
+the workbench. They are limited to authorized case rows; the participant tables
+are not shape sources.
 
 ## Adopted client path
 

@@ -16,6 +16,7 @@ import { openPGliteReplica } from "./pglite-bootstrap";
 import {
   PGLITE_ANNOTATION_TYPES_SQL,
   PGLITE_CASE_SUMMARY_SQL,
+  PGLITE_CASE_DISPLAY_LABELS_SQL,
   PGLITE_DOCUMENT_STATUS_SQL,
   PGLITE_DOCUMENT_TASK_STATUS_SQL,
   PGLITE_SCHEMA_SQL,
@@ -152,8 +153,8 @@ function trackHeap() {
 async function schemaPlan(): Promise<ReplicaSchemaPlan> {
   const schemaSql = `${PGLITE_SCHEMA_SQL}\n${CHECKPOINT_SCHEMA_SQL}`;
   return {
-    logicalVersion: 8,
-    generation: 5,
+    logicalVersion: 9,
+    generation: 6,
     migrations: [
       {
         id: "001-replica-schema",
@@ -191,6 +192,13 @@ async function schemaPlan(): Promise<ReplicaSchemaPlan> {
         sql: PGLITE_DOCUMENT_TASK_STATUS_SQL,
         checksum: await migrationChecksum(PGLITE_DOCUMENT_TASK_STATUS_SQL),
         logicalVersion: 8,
+      },
+      {
+        id: "007-case-display-labels",
+        sql: PGLITE_CASE_DISPLAY_LABELS_SQL,
+        checksum: await migrationChecksum(PGLITE_CASE_DISPLAY_LABELS_SQL),
+        logicalVersion: 9,
+        startsNewGeneration: true,
       },
     ],
   };

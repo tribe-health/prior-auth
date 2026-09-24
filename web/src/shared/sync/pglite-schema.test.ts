@@ -16,8 +16,10 @@ import {
   OMITTED_COLUMNS,
   PGLITE_ANNOTATION_TYPES_SQL,
   PGLITE_CASE_SUMMARY_SQL,
+  PGLITE_CASE_DISPLAY_LABELS_SQL,
   PGLITE_CURRENT_SCHEMA_SQL,
   PGLITE_DOCUMENT_STATUS_SQL,
+  PGLITE_DOCUMENT_TASK_STATUS_SQL,
   PGLITE_SCHEMA_SQL,
   PGLITE_SOURCE_HASH_SQL,
   PGLITE_TABLES,
@@ -195,6 +197,60 @@ describe("PGlite schema upgrades", () => {
           '00000000-0000-0000-0000-000000000015',
           'intake', NULL, NULL, now(), 1
         );
+      `)).resolves.toBeDefined();
+    } finally {
+      await upgrade.close();
+    }
+  });
+
+  it("rebuilds revision 8 before requiring participant display labels", async () => {
+    const upgrade = new PGlite();
+    await upgrade.waitReady;
+    try {
+      await upgrade.exec([
+        PGLITE_SCHEMA_SQL,
+        CHECKPOINT_SCHEMA_SQL,
+        PGLITE_ANNOTATION_TYPES_SQL,
+        PGLITE_SOURCE_HASH_SQL,
+        PGLITE_CASE_SUMMARY_SQL,
+        PGLITE_DOCUMENT_STATUS_SQL,
+        PGLITE_DOCUMENT_TASK_STATUS_SQL,
+      ].join("\n"));
+      await upgrade.exec(`
+        INSERT INTO cases (
+          id, practice_id, case_number, patient_id, surgeon_id, coordinator_id,
+          payer_id, status, date_of_service, gate_affirmed_at, updated_at, revision
+        ) VALUES (
+          '00000000-0000-0000-0000-000000000021',
+          '00000000-0000-0000-0000-000000000022',
+          'SYNTHETIC-OLD-LABEL-ROW',
+          '00000000-0000-0000-0000-000000000023',
+          '00000000-0000-0000-0000-000000000024', NULL,
+          '00000000-0000-0000-0000-000000000025',
+          'intake', NULL, NULL, now(), 1
+        );
+        INSERT INTO _replica_checkpoints (key, value, checkpoint)
+        VALUES ('synthetic-scope', 'transaction', '{"generation":5,"shapes":{"cases":{"handle":"old","offset":"1"}}}');
+      `);
+
+      await upgrade.exec(PGLITE_CASE_DISPLAY_LABELS_SQL);
+
+      await expect(upgrade.query("SELECT * FROM cases")).resolves.toMatchObject({ rows: [] });
+      await expect(upgrade.query("SELECT * FROM _replica_checkpoints")).resolves.toMatchObject({ rows: [] });
+      await expect(upgrade.exec(`
+        INSERT INTO cases (
+          id, practice_id, case_number, patient_id, patient_name,
+          surgeon_id, surgeon_name, coordinator_id, payer_id, payer_name,
+          status, date_of_service, gate_affirmed_at, updated_at, revision
+        ) VALUES (
+          '00000000-0000-0000-0000-000000000031',
+          '00000000-0000-0000-0000-000000000032',
+          'SYNTHETIC-NAMED-ROW',
+          '00000000-0000-0000-0000-000000000033', 'Synthetic Patient',
+          '00000000-0000-0000-0000-000000000034', 'Dr. Synthetic', NULL,
+          '00000000-0000-0000-0000-000000000035', 'Synthetic Health Plan',
+          'intake', NULL, NULL, now(), 1
+        )
       `)).resolves.toBeDefined();
     } finally {
       await upgrade.close();
