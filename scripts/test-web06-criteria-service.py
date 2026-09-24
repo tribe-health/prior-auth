@@ -261,7 +261,7 @@ class CriteriaServiceProbe(migration.CriteriaMigrationProbe):
                         "foreignDocumentId": self.source_documents["foreign"],
                     }
                 ),
-                "RUSTUP_TOOLCHAIN": "1.97.1",
+                "RUSTUP_TOOLCHAIN": "1.98.1",
             }
         )
         completed, entry = self.run_process(

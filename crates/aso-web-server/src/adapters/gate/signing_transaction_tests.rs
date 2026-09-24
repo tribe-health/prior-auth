@@ -10,6 +10,12 @@ use aso_host::{
 use sqlx::{PgPool, postgres::PgPoolOptions};
 use std::sync::Arc;
 
+macro_rules! audited_sql {
+    ($($arg:tt)*) => {
+        sqlx::AssertSqlSafe(format!($($arg)*))
+    };
+}
+
 fn mark(name: &str) {
     println!("gate_transaction_check: signing_{name}");
 }
@@ -874,7 +880,7 @@ async fn signing_gate_transaction_lifecycle() {
 
     let published_schema = format!("ra03_published_{}", Uuid::new_v4().simple());
     let schema_publication = format!("ra03_schema_{}", Uuid::new_v4().simple());
-    sqlx::query(&format!("CREATE SCHEMA {published_schema}"))
+    sqlx::query(audited_sql!("CREATE SCHEMA {published_schema}"))
         .execute(&observer)
         .await
         .expect("publication race schema setup failed");
@@ -883,7 +889,7 @@ async fn signing_gate_transaction_lifecycle() {
         .begin()
         .await
         .expect("schema-move-first transaction failed");
-    sqlx::query(&format!(
+    sqlx::query(audited_sql!(
         "ALTER TABLE aso.letter_sign_commands SET SCHEMA {published_schema}"
     ))
     .execute(&mut *schema_move_first)
@@ -900,7 +906,7 @@ async fn signing_gate_transaction_lifecycle() {
     let schema_for_publication = published_schema.clone();
     let publication_for_create = schema_publication.clone();
     let publication_race = tokio::spawn(async move {
-        sqlx::query(&format!(
+        sqlx::query(audited_sql!(
             "CREATE PUBLICATION {publication_for_create} FOR TABLES IN SCHEMA {schema_for_publication}"
         ))
         .execute(&mut *publication_connection)
@@ -927,7 +933,7 @@ async fn signing_gate_transaction_lifecycle() {
             .as_deref(),
         Some("40001")
     );
-    sqlx::query(&format!(
+    sqlx::query(audited_sql!(
         "ALTER TABLE {published_schema}.letter_sign_commands SET SCHEMA aso"
     ))
     .execute(&observer)
@@ -939,7 +945,7 @@ async fn signing_gate_transaction_lifecycle() {
         .begin()
         .await
         .expect("publication-first transaction failed");
-    sqlx::query(&format!(
+    sqlx::query(audited_sql!(
         "CREATE PUBLICATION {schema_publication} FOR TABLES IN SCHEMA {published_schema}"
     ))
     .execute(&mut *publication_first)
@@ -955,7 +961,7 @@ async fn signing_gate_transaction_lifecycle() {
         .expect("schema move backend PID read failed");
     let schema_for_move = published_schema.clone();
     let schema_move_race = tokio::spawn(async move {
-        sqlx::query(&format!(
+        sqlx::query(audited_sql!(
             "ALTER TABLE aso.letter_sign_commands SET SCHEMA {schema_for_move}"
         ))
         .execute(&mut *schema_move_connection)
@@ -996,7 +1002,7 @@ async fn signing_gate_transaction_lifecycle() {
     .await
     .expect("publication race state observation failed");
     assert_eq!(protected_state, (true, true));
-    sqlx::query(&format!("DROP PUBLICATION {schema_publication}"))
+    sqlx::query(audited_sql!("DROP PUBLICATION {schema_publication}"))
         .execute(&observer)
         .await
         .expect("publication-first cleanup failed");
@@ -1006,7 +1012,7 @@ async fn signing_gate_transaction_lifecycle() {
         .begin()
         .await
         .expect("table-create-first transaction failed");
-    sqlx::query(&format!(
+    sqlx::query(audited_sql!(
         "CREATE TABLE {published_schema}.gate_commands (id integer PRIMARY KEY)"
     ))
     .execute(&mut *table_create_first)
@@ -1023,7 +1029,7 @@ async fn signing_gate_transaction_lifecycle() {
     let schema_for_create_publication = published_schema.clone();
     let publication_for_table_create = schema_publication.clone();
     let create_publication_race = tokio::spawn(async move {
-        sqlx::query(&format!(
+        sqlx::query(audited_sql!(
             "CREATE PUBLICATION {publication_for_table_create} FOR TABLES IN SCHEMA {schema_for_create_publication}"
         ))
         .execute(&mut *create_publication_connection)
@@ -1050,7 +1056,7 @@ async fn signing_gate_transaction_lifecycle() {
             .as_deref(),
         Some("40001")
     );
-    sqlx::query(&format!("DROP TABLE {published_schema}.gate_commands"))
+    sqlx::query(audited_sql!("DROP TABLE {published_schema}.gate_commands"))
         .execute(&observer)
         .await
         .expect("table-create-first cleanup failed");
@@ -1060,7 +1066,7 @@ async fn signing_gate_transaction_lifecycle() {
         .begin()
         .await
         .expect("create-publication-first transaction failed");
-    sqlx::query(&format!(
+    sqlx::query(audited_sql!(
         "CREATE PUBLICATION {schema_publication} FOR TABLES IN SCHEMA {published_schema}"
     ))
     .execute(&mut *create_publication_first)
@@ -1076,7 +1082,7 @@ async fn signing_gate_transaction_lifecycle() {
         .expect("protected table create backend PID read failed");
     let schema_for_table_create = published_schema.clone();
     let table_create_race = tokio::spawn(async move {
-        sqlx::query(&format!(
+        sqlx::query(audited_sql!(
             "CREATE TABLE {schema_for_table_create}.gate_commands (id integer PRIMARY KEY)"
         ))
         .execute(&mut *table_create_connection)
@@ -1103,7 +1109,7 @@ async fn signing_gate_transaction_lifecycle() {
             .as_deref(),
         Some("40001")
     );
-    let create_race_safe: bool = sqlx::query_scalar(&format!(
+    let create_race_safe: bool = sqlx::query_scalar(audited_sql!(
         "SELECT to_regclass('{published_schema}.gate_commands') IS NULL
           AND EXISTS (
             SELECT FROM pg_catalog.pg_publication WHERE pubname='{schema_publication}'
@@ -1113,11 +1119,11 @@ async fn signing_gate_transaction_lifecycle() {
     .await
     .expect("protected table create race state observation failed");
     assert!(create_race_safe);
-    sqlx::query(&format!("DROP PUBLICATION {schema_publication}"))
+    sqlx::query(audited_sql!("DROP PUBLICATION {schema_publication}"))
         .execute(&observer)
         .await
         .expect("create-publication-first cleanup failed");
-    sqlx::query(&format!("DROP SCHEMA {published_schema}"))
+    sqlx::query(audited_sql!("DROP SCHEMA {published_schema}"))
         .execute(&observer)
         .await
         .expect("publication race schema cleanup failed");

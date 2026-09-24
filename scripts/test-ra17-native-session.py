@@ -34,7 +34,7 @@ class Probe:
             "task": "1.2",
             "result": "Failed",
             "observedAt": datetime.datetime.now(datetime.timezone.utc).isoformat(),
-            "command": "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-ra17-native-session.py",
+            "command": "RUSTUP_TOOLCHAIN=1.98.1 python3 scripts/test-ra17-native-session.py",
             "scope": "Synthetic native API login against Kratos 26.2.0 using the operating-system credential store",
             "checks": {},
             "cleanup": {},
@@ -107,7 +107,7 @@ class Probe:
             ASO_TEST_NATIVE_EMAIL=self.email,
             ASO_TEST_NATIVE_PASSWORD=self.password,
             ASO_TEST_NATIVE_ACCOUNT=self.account,
-            RUSTUP_TOOLCHAIN="1.97.1",
+            RUSTUP_TOOLCHAIN="1.98.1",
         )
         result = subprocess.run(
             command,

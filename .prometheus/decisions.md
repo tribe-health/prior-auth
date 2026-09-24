@@ -766,3 +766,15 @@ Decision (operator): document assembly runs as a self-contained Axum 0.8 agent s
 ## 2026-09-19 — Browser certification precedes native continuation
 
 The `web-case-to-letter` child is complete and is the certified implementation baseline. The parent remains at 57/61 because Tauri, native SQLite parity, safe native updates, and final cross-platform runtime certification are later work. Web behavior is not held open for those phases.
+
+## 2026-09-24 — Dependency Dashboard refresh keeps incompatible protocol peers pinned
+
+Issue #7 advances the web runtime and toolchain, Rust HTTP/database/hash stack,
+container frontends, Electric service, and Redis digest through exact pins in
+`versions.toml`. SQLx 0.9 requires explicit static SQL or an audited wrapper for
+synthetic dynamic identifiers, and SHA-2 0.11 requires explicit digest-byte hex
+encoding. The blocked PGlite Sync candidate keeps `@electric-sql/client` 1.0.14
+because `@electric-sql/experimental` 1.0.14 requires that peer. The Axum MCP
+transport keeps `sse-stream` 0.2.4 because `rmcp` 3.4.0 exposes its 0.2 type in
+the public interface. Those two holds are compatibility constraints rather than
+silent omissions from the dashboard refresh.

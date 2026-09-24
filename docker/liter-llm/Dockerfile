@@ -1,6 +1,6 @@
-# syntax=docker/dockerfile:1
+# syntax=docker/dockerfile:1.27
 # Build context: the Liter-LLM checkout. Additional context `aso`: this repo.
-FROM rust:1.97.1-bookworm AS builder
+FROM rust:1.98.1-bookworm AS builder
 WORKDIR /build
 COPY Cargo.toml Cargo.lock ./
 COPY crates/ crates/

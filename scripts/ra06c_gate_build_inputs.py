@@ -35,7 +35,7 @@ def controlled_gate_build_env(source_env: dict[str, str] | None = None) -> dict[
     env = {key: source[key] for key in allowed if key in source}
     env.update(
         {
-            "RUSTUP_TOOLCHAIN": "1.97.1",
+            "RUSTUP_TOOLCHAIN": "1.98.1",
             "CARGO_TARGET_DIR": "/tmp/ra06c02-probe-target",
             "CARGO_BUILD_BUILD_DIR": "/tmp/ra06c02-probe-build",
             "CARGO_TERM_COLOR": "never",

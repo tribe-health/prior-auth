@@ -2,7 +2,7 @@
 """Tier 1: exercise the real session endpoint with disposable local resources.
 
 Run after releasing the workspace's single-writer Cargo build directory:
-  RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-session-boundary.py
+  RUSTUP_TOOLCHAIN=1.98.1 python3 scripts/test-session-boundary.py
 
 Requires the existing Docker Compose PostgreSQL and Kratos services. Only a
 new database, a new database login, and a new synthetic Kratos identity are
@@ -98,7 +98,7 @@ class Probe:
             "observed_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
             "scope": "Mounted aso-web-server /api/session with real Kratos and a disposable PostgreSQL database",
             "commands": [
-                "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-session-boundary.py",
+                "RUSTUP_TOOLCHAIN=1.98.1 python3 scripts/test-session-boundary.py",
                 "docker compose exec -T db psql -U <configured admin> -X -A -t -q -v ON_ERROR_STOP=1 -d <disposable database> (SQL on stdin)",
                 "cargo run -p aso-web-server (configuration and disposable password supplied through environment)",
             ],

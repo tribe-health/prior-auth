@@ -2,7 +2,7 @@
 """Tier 1: disposable PostgreSQL fixture for the actual durable gate transaction.
 
 Run with the workspace Cargo build directory idle:
-  RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-gate-transaction.py
+  RUSTUP_TOOLCHAIN=1.98.1 python3 scripts/test-gate-transaction.py
 
 The default upgrade mode seeds populated legacy cases before migration.
 Use --install-mode fresh --output <receipt path> to migrate an empty clinical
@@ -129,7 +129,7 @@ class Probe:
                 "No concurrent database fixtures; a local exclusive lock covers this runner",
             ],
             "commands": [
-                "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-gate-transaction.py --install-mode " + self.install_mode,
+                "RUSTUP_TOOLCHAIN=1.98.1 python3 scripts/test-gate-transaction.py --install-mode " + self.install_mode,
                 "docker compose port db 5432",
                 "docker compose exec -T db printenv POSTGRES_PASSWORD (captured only)",
                 "docker compose exec -T db psql -U <configured admin> -X -A -t -q -v ON_ERROR_STOP=1 -d <disposable database> (SQL on stdin)",

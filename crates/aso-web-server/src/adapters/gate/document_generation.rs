@@ -50,7 +50,7 @@ impl PgGateRepository {
     async fn task_query<T: DeserializeOwned>(
         &self,
         context: &ClinicalContext,
-        sql: &str,
+        sql: &'static str,
         task_id: Uuid,
     ) -> Result<T, GenerationError> {
         let mut tx = self.begin_case(context).await.map_err(case_error)?;

@@ -2,7 +2,7 @@
 """Tier 1 task 1.3: transaction lifecycle and mounted provider error/trait contract.
 
 Reuses only the disposable resource owner from test-session-boundary.py. Run:
-RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-session-context.py
+RUSTUP_TOOLCHAIN=1.98.1 python3 scripts/test-session-context.py
 """
 
 import argparse
@@ -28,7 +28,7 @@ class ContextProbe(boundary.Probe):
     def __init__(self, args):
         super().__init__(args)
         self.report["scope"] = "Task 1.3: real PostgreSQL transaction lifecycle and mounted session authority refusals"
-        self.report["commands"][0] = "RUSTUP_TOOLCHAIN=1.97.1 python3 scripts/test-session-context.py"
+        self.report["commands"][0] = "RUSTUP_TOOLCHAIN=1.98.1 python3 scripts/test-session-context.py"
         self.report["unverified"] = [
             "Gate routing, two-identity assembled pool campaign and physical native UI remain later tasks.",
             "Cancellation is proved on the production transaction owner with an active PostgreSQL query; HTTP disconnect propagation is not claimed.",
