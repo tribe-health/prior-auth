@@ -70,7 +70,9 @@ would stop a vector table syncing. The control is the explicit schema subset and
 the test that fails when an undeclared table appears — not the absence of an
 extension. Projection revision 6 contains attributed annotations, the
 approved annotation-type catalog, the exact document status row, and a sanitized
-document-task status row. The
+document-task status row. It also carries the patient, payer, and surgeon display
+labels on each already-authorized case row; the full participant tables remain
+outside the replica. The
 status row is maintained in a WAL-producing base table from case-bound
 documents; extracted page text, object locations, parser output, and embeddings
 have no columns in that relation or the PGlite target. An opinion body, author, disposition,

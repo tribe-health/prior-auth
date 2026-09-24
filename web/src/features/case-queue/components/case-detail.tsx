@@ -59,8 +59,8 @@ export function CaseDetail({ caseId }: { readonly caseId: string }) {
           <CardHeader><CardTitle className="flex items-center gap-2"><UserRound aria-hidden="true" /> Patient and care team</CardTitle></CardHeader>
           <CardContent>
             <dl className="grid gap-3 text-sm">
-              <div><dt className="text-ui-muted-foreground">Patient identifier</dt><dd className="break-all font-medium">{record.patientId}</dd></div>
-              <div><dt className="text-ui-muted-foreground">Surgeon identifier</dt><dd className="break-all font-medium">{record.surgeonId}</dd></div>
+              <div><dt className="text-ui-muted-foreground">Patient</dt><dd className="font-medium">{record.patientName}</dd></div>
+              <div><dt className="text-ui-muted-foreground">Surgeon</dt><dd className="font-medium">{record.surgeonName}</dd></div>
               <div><dt className="text-ui-muted-foreground">Coordinator identifier</dt><dd className="break-all font-medium">{record.coordinatorId ?? 'Not assigned'}</dd></div>
             </dl>
           </CardContent>
@@ -69,7 +69,7 @@ export function CaseDetail({ caseId }: { readonly caseId: string }) {
           <CardHeader><CardTitle className="flex items-center gap-2"><ShieldCheck aria-hidden="true" /> Coverage</CardTitle></CardHeader>
           <CardContent>
             <dl className="grid gap-3 text-sm">
-              <div><dt className="text-ui-muted-foreground">Payer identifier</dt><dd className="break-all font-medium">{record.payerId}</dd></div>
+              <div><dt className="text-ui-muted-foreground">Payer company</dt><dd className="font-medium">{record.payerName}</dd></div>
               <div><dt className="text-ui-muted-foreground">Gate affirmation</dt><dd className="font-medium">{record.gateAffirmedAt ? 'Affirmed' : 'Not affirmed'}</dd></div>
             </dl>
           </CardContent>

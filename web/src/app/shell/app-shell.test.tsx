@@ -35,6 +35,19 @@ vi.mock('@/app/providers/session-provider', () => ({
   useSession: () => ({ displayName: 'Test User', capabilities: [] }),
   useSessionActions: () => ({ logout: vi.fn() }),
 }));
+vi.mock('@/features/case-queue/hooks/use-case-projection', () => ({
+  useCaseDetailProjection: () => ({
+    status: 'ready', error: null,
+    case: {
+      id: 'case-1', practiceId: 'practice-1', caseNumber: 'SYNTHETIC-001',
+      patientId: 'patient-1', patientName: 'Synthetic Patient Example',
+      surgeonId: 'surgeon-1', surgeonName: 'Dr. Demo Surgeon', coordinatorId: null,
+      payerId: 'payer-1', payerName: 'Synthetic Health Plan', status: 'ready',
+      dateOfService: '2026-09-17', gateAffirmedAt: '2026-09-15T00:00:00Z',
+      updatedAt: null, revision: 1,
+    },
+  }),
+}));
 
 import { AppShell } from './app-shell';
 
@@ -42,6 +55,22 @@ beforeEach(() => gateState.set('affirmed'));
 afterEach(cleanup);
 
 describe('the active case route follows the committed gate', () => {
+  it('identifies the active case by patient name', () => {
+    render(
+      <MemoryRouter initialEntries={['/cases/case-1']}>
+        <Routes>
+          <Route element={<AppShell />}>
+            <Route path="/cases/:caseId" element={<div>Case content</div>} />
+          </Route>
+        </Routes>
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByText('Synthetic Patient Example')).toBeTruthy();
+    expect(screen.getByText('SYNTHETIC-001')).toBeTruthy();
+    expect(screen.queryByText('case-1')).toBeNull();
+  });
+
   it('unmounts gated content immediately when affirmation is revoked', () => {
     render(
       <MemoryRouter initialEntries={['/cases/case-1/letter']}>
