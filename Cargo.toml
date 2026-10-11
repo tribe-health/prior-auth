@@ -34,7 +34,7 @@ license    = "UNLICENSED"
 # instruction to resolve to whatever published most recently — see
 # docs/architecture/dependency-pins.md for the rationale per pin.
 [workspace.dependencies]
-axum          = { version = "=0.8.8", features = ["multipart"] }
+axum          = { version = "=0.8.9", features = ["multipart"] }
 tokio         = { version = "1.44.2", features = ["rt-multi-thread", "macros", "signal"] }
 tower         = "0.5.2"
 tower-http    = { version = "0.6.2", features = ["fs", "trace", "cors"] }
