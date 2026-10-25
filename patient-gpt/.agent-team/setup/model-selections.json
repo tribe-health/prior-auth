@@ -1,0 +1,750 @@
+[
+  {
+    "roleId": "artifact-critic",
+    "result": {
+      "selected": {
+        "id": "gpt-6-astra",
+        "available": true,
+        "tier": "hard",
+        "capabilities": {
+          "tools": true
+        },
+        "pricing": {
+          "inputPerMillion": null,
+          "outputPerMillion": null
+        },
+        "freshness": {
+          "stale": null
+        },
+        "provenance": {
+          "availability": "Codex app tool metadata and local config; inference not probed",
+          "tier": "project quality-first policy annotation",
+          "capabilities": "host model/tool metadata"
+        }
+      },
+      "policy": {
+        "tier": "hard",
+        "capabilities": [
+          "tools"
+        ],
+        "model": "gpt-6-astra"
+      },
+      "appliedLayers": [
+        "role",
+        "task"
+      ],
+      "rejected": [],
+      "explanation": "All declared constraints satisfied; ordered by lowest known input+output USD per million, then exact identifier. Unknown costs rank last.",
+      "warnings": [
+        "Selected pricing freshness is unknown. Price ceilings do not guarantee current provider rates."
+      ],
+      "diagnostics": [],
+      "catalogProvenance": null,
+      "catalogFreshness": null
+    }
+  },
+  {
+    "roleId": "creative-director",
+    "result": {
+      "selected": {
+        "id": "gpt-6-astra",
+        "available": true,
+        "tier": "hard",
+        "capabilities": {
+          "tools": true
+        },
+        "pricing": {
+          "inputPerMillion": null,
+          "outputPerMillion": null
+        },
+        "freshness": {
+          "stale": null
+        },
+        "provenance": {
+          "availability": "Codex app tool metadata and local config; inference not probed",
+          "tier": "project quality-first policy annotation",
+          "capabilities": "host model/tool metadata"
+        }
+      },
+      "policy": {
+        "tier": "hard",
+        "capabilities": [
+          "tools"
+        ],
+        "model": "gpt-6-astra"
+      },
+      "appliedLayers": [
+        "role",
+        "task"
+      ],
+      "rejected": [],
+      "explanation": "All declared constraints satisfied; ordered by lowest known input+output USD per million, then exact identifier. Unknown costs rank last.",
+      "warnings": [
+        "Selected pricing freshness is unknown. Price ceilings do not guarantee current provider rates."
+      ],
+      "diagnostics": [],
+      "catalogProvenance": null,
+      "catalogFreshness": null
+    }
+  },
+  {
+    "roleId": "design-expert",
+    "result": {
+      "selected": {
+        "id": "gpt-6-astra",
+        "available": true,
+        "tier": "hard",
+        "capabilities": {
+          "tools": true
+        },
+        "pricing": {
+          "inputPerMillion": null,
+          "outputPerMillion": null
+        },
+        "freshness": {
+          "stale": null
+        },
+        "provenance": {
+          "availability": "Codex app tool metadata and local config; inference not probed",
+          "tier": "project quality-first policy annotation",
+          "capabilities": "host model/tool metadata"
+        }
+      },
+      "policy": {
+        "tier": "hard",
+        "capabilities": [
+          "tools"
+        ],
+        "model": "gpt-6-astra"
+      },
+      "appliedLayers": [
+        "role",
+        "task"
+      ],
+      "rejected": [],
+      "explanation": "All declared constraints satisfied; ordered by lowest known input+output USD per million, then exact identifier. Unknown costs rank last.",
+      "warnings": [
+        "Selected pricing freshness is unknown. Price ceilings do not guarantee current provider rates."
+      ],
+      "diagnostics": [],
+      "catalogProvenance": null,
+      "catalogFreshness": null
+    }
+  },
+  {
+    "roleId": "documentation-engineer",
+    "result": {
+      "selected": {
+        "id": "gpt-6-astra",
+        "available": true,
+        "tier": "hard",
+        "capabilities": {
+          "tools": true
+        },
+        "pricing": {
+          "inputPerMillion": null,
+          "outputPerMillion": null
+        },
+        "freshness": {
+          "stale": null
+        },
+        "provenance": {
+          "availability": "Codex app tool metadata and local config; inference not probed",
+          "tier": "project quality-first policy annotation",
+          "capabilities": "host model/tool metadata"
+        }
+      },
+      "policy": {
+        "tier": "hard",
+        "capabilities": [
+          "tools"
+        ],
+        "model": "gpt-6-astra"
+      },
+      "appliedLayers": [
+        "role",
+        "task"
+      ],
+      "rejected": [],
+      "explanation": "All declared constraints satisfied; ordered by lowest known input+output USD per million, then exact identifier. Unknown costs rank last.",
+      "warnings": [
+        "Selected pricing freshness is unknown. Price ceilings do not guarantee current provider rates."
+      ],
+      "diagnostics": [],
+      "catalogProvenance": null,
+      "catalogFreshness": null
+    }
+  },
+  {
+    "roleId": "flint-data-engineer",
+    "result": {
+      "selected": {
+        "id": "gpt-6-astra",
+        "available": true,
+        "tier": "hard",
+        "capabilities": {
+          "tools": true
+        },
+        "pricing": {
+          "inputPerMillion": null,
+          "outputPerMillion": null
+        },
+        "freshness": {
+          "stale": null
+        },
+        "provenance": {
+          "availability": "Codex app tool metadata and local config; inference not probed",
+          "tier": "project quality-first policy annotation",
+          "capabilities": "host model/tool metadata"
+        }
+      },
+      "policy": {
+        "tier": "hard",
+        "capabilities": [
+          "tools"
+        ],
+        "model": "gpt-6-astra"
+      },
+      "appliedLayers": [
+        "role",
+        "task"
+      ],
+      "rejected": [],
+      "explanation": "All declared constraints satisfied; ordered by lowest known input+output USD per million, then exact identifier. Unknown costs rank last.",
+      "warnings": [
+        "Selected pricing freshness is unknown. Price ceilings do not guarantee current provider rates."
+      ],
+      "diagnostics": [],
+      "catalogProvenance": null,
+      "catalogFreshness": null
+    }
+  },
+  {
+    "roleId": "flutter-engineer",
+    "result": {
+      "selected": {
+        "id": "gpt-6-astra",
+        "available": true,
+        "tier": "hard",
+        "capabilities": {
+          "tools": true
+        },
+        "pricing": {
+          "inputPerMillion": null,
+          "outputPerMillion": null
+        },
+        "freshness": {
+          "stale": null
+        },
+        "provenance": {
+          "availability": "Codex app tool metadata and local config; inference not probed",
+          "tier": "project quality-first policy annotation",
+          "capabilities": "host model/tool metadata"
+        }
+      },
+      "policy": {
+        "tier": "hard",
+        "capabilities": [
+          "tools"
+        ],
+        "model": "gpt-6-astra"
+      },
+      "appliedLayers": [
+        "role",
+        "task"
+      ],
+      "rejected": [],
+      "explanation": "All declared constraints satisfied; ordered by lowest known input+output USD per million, then exact identifier. Unknown costs rank last.",
+      "warnings": [
+        "Selected pricing freshness is unknown. Price ceilings do not guarantee current provider rates."
+      ],
+      "diagnostics": [],
+      "catalogProvenance": null,
+      "catalogFreshness": null
+    }
+  },
+  {
+    "roleId": "identity-security-engineer",
+    "result": {
+      "selected": {
+        "id": "gpt-6-astra",
+        "available": true,
+        "tier": "hard",
+        "capabilities": {
+          "tools": true
+        },
+        "pricing": {
+          "inputPerMillion": null,
+          "outputPerMillion": null
+        },
+        "freshness": {
+          "stale": null
+        },
+        "provenance": {
+          "availability": "Codex app tool metadata and local config; inference not probed",
+          "tier": "project quality-first policy annotation",
+          "capabilities": "host model/tool metadata"
+        }
+      },
+      "policy": {
+        "tier": "hard",
+        "capabilities": [
+          "tools"
+        ],
+        "model": "gpt-6-astra"
+      },
+      "appliedLayers": [
+        "role",
+        "task"
+      ],
+      "rejected": [],
+      "explanation": "All declared constraints satisfied; ordered by lowest known input+output USD per million, then exact identifier. Unknown costs rank last.",
+      "warnings": [
+        "Selected pricing freshness is unknown. Price ceilings do not guarantee current provider rates."
+      ],
+      "diagnostics": [],
+      "catalogProvenance": null,
+      "catalogFreshness": null
+    }
+  },
+  {
+    "roleId": "phase-verifier",
+    "result": {
+      "selected": {
+        "id": "gpt-6-astra",
+        "available": true,
+        "tier": "hard",
+        "capabilities": {
+          "tools": true
+        },
+        "pricing": {
+          "inputPerMillion": null,
+          "outputPerMillion": null
+        },
+        "freshness": {
+          "stale": null
+        },
+        "provenance": {
+          "availability": "Codex app tool metadata and local config; inference not probed",
+          "tier": "project quality-first policy annotation",
+          "capabilities": "host model/tool metadata"
+        }
+      },
+      "policy": {
+        "tier": "hard",
+        "capabilities": [
+          "tools"
+        ],
+        "model": "gpt-6-astra"
+      },
+      "appliedLayers": [
+        "role",
+        "task"
+      ],
+      "rejected": [],
+      "explanation": "All declared constraints satisfied; ordered by lowest known input+output USD per million, then exact identifier. Unknown costs rank last.",
+      "warnings": [
+        "Selected pricing freshness is unknown. Price ceilings do not guarantee current provider rates."
+      ],
+      "diagnostics": [],
+      "catalogProvenance": null,
+      "catalogFreshness": null
+    }
+  },
+  {
+    "roleId": "platform-release-engineer",
+    "result": {
+      "selected": {
+        "id": "gpt-6-astra",
+        "available": true,
+        "tier": "hard",
+        "capabilities": {
+          "tools": true
+        },
+        "pricing": {
+          "inputPerMillion": null,
+          "outputPerMillion": null
+        },
+        "freshness": {
+          "stale": null
+        },
+        "provenance": {
+          "availability": "Codex app tool metadata and local config; inference not probed",
+          "tier": "project quality-first policy annotation",
+          "capabilities": "host model/tool metadata"
+        }
+      },
+      "policy": {
+        "tier": "hard",
+        "capabilities": [
+          "tools"
+        ],
+        "model": "gpt-6-astra"
+      },
+      "appliedLayers": [
+        "role",
+        "task"
+      ],
+      "rejected": [],
+      "explanation": "All declared constraints satisfied; ordered by lowest known input+output USD per million, then exact identifier. Unknown costs rank last.",
+      "warnings": [
+        "Selected pricing freshness is unknown. Price ceilings do not guarantee current provider rates."
+      ],
+      "diagnostics": [],
+      "catalogProvenance": null,
+      "catalogFreshness": null
+    }
+  },
+  {
+    "roleId": "product-manager",
+    "result": {
+      "selected": {
+        "id": "gpt-6-astra",
+        "available": true,
+        "tier": "hard",
+        "capabilities": {
+          "tools": true
+        },
+        "pricing": {
+          "inputPerMillion": null,
+          "outputPerMillion": null
+        },
+        "freshness": {
+          "stale": null
+        },
+        "provenance": {
+          "availability": "Codex app tool metadata and local config; inference not probed",
+          "tier": "project quality-first policy annotation",
+          "capabilities": "host model/tool metadata"
+        }
+      },
+      "policy": {
+        "tier": "hard",
+        "capabilities": [
+          "tools"
+        ],
+        "model": "gpt-6-astra"
+      },
+      "appliedLayers": [
+        "role",
+        "task"
+      ],
+      "rejected": [],
+      "explanation": "All declared constraints satisfied; ordered by lowest known input+output USD per million, then exact identifier. Unknown costs rank last.",
+      "warnings": [
+        "Selected pricing freshness is unknown. Price ceilings do not guarantee current provider rates."
+      ],
+      "diagnostics": [],
+      "catalogProvenance": null,
+      "catalogFreshness": null
+    }
+  },
+  {
+    "roleId": "react-engineer",
+    "result": {
+      "selected": {
+        "id": "gpt-6-astra",
+        "available": true,
+        "tier": "hard",
+        "capabilities": {
+          "tools": true
+        },
+        "pricing": {
+          "inputPerMillion": null,
+          "outputPerMillion": null
+        },
+        "freshness": {
+          "stale": null
+        },
+        "provenance": {
+          "availability": "Codex app tool metadata and local config; inference not probed",
+          "tier": "project quality-first policy annotation",
+          "capabilities": "host model/tool metadata"
+        }
+      },
+      "policy": {
+        "tier": "hard",
+        "capabilities": [
+          "tools"
+        ],
+        "model": "gpt-6-astra"
+      },
+      "appliedLayers": [
+        "role",
+        "task"
+      ],
+      "rejected": [],
+      "explanation": "All declared constraints satisfied; ordered by lowest known input+output USD per million, then exact identifier. Unknown costs rank last.",
+      "warnings": [
+        "Selected pricing freshness is unknown. Price ceilings do not guarantee current provider rates."
+      ],
+      "diagnostics": [],
+      "catalogProvenance": null,
+      "catalogFreshness": null
+    }
+  },
+  {
+    "roleId": "rust-domain-engineer",
+    "result": {
+      "selected": {
+        "id": "gpt-6-astra",
+        "available": true,
+        "tier": "hard",
+        "capabilities": {
+          "tools": true
+        },
+        "pricing": {
+          "inputPerMillion": null,
+          "outputPerMillion": null
+        },
+        "freshness": {
+          "stale": null
+        },
+        "provenance": {
+          "availability": "Codex app tool metadata and local config; inference not probed",
+          "tier": "project quality-first policy annotation",
+          "capabilities": "host model/tool metadata"
+        }
+      },
+      "policy": {
+        "tier": "hard",
+        "capabilities": [
+          "tools"
+        ],
+        "model": "gpt-6-astra"
+      },
+      "appliedLayers": [
+        "role",
+        "task"
+      ],
+      "rejected": [],
+      "explanation": "All declared constraints satisfied; ordered by lowest known input+output USD per million, then exact identifier. Unknown costs rank last.",
+      "warnings": [
+        "Selected pricing freshness is unknown. Price ceilings do not guarantee current provider rates."
+      ],
+      "diagnostics": [],
+      "catalogProvenance": null,
+      "catalogFreshness": null
+    }
+  },
+  {
+    "roleId": "storage-engineer",
+    "result": {
+      "selected": {
+        "id": "gpt-6-astra",
+        "available": true,
+        "tier": "hard",
+        "capabilities": {
+          "tools": true
+        },
+        "pricing": {
+          "inputPerMillion": null,
+          "outputPerMillion": null
+        },
+        "freshness": {
+          "stale": null
+        },
+        "provenance": {
+          "availability": "Codex app tool metadata and local config; inference not probed",
+          "tier": "project quality-first policy annotation",
+          "capabilities": "host model/tool metadata"
+        }
+      },
+      "policy": {
+        "tier": "hard",
+        "capabilities": [
+          "tools"
+        ],
+        "model": "gpt-6-astra"
+      },
+      "appliedLayers": [
+        "role",
+        "task"
+      ],
+      "rejected": [],
+      "explanation": "All declared constraints satisfied; ordered by lowest known input+output USD per million, then exact identifier. Unknown costs rank last.",
+      "warnings": [
+        "Selected pricing freshness is unknown. Price ceilings do not guarantee current provider rates."
+      ],
+      "diagnostics": [],
+      "catalogProvenance": null,
+      "catalogFreshness": null
+    }
+  },
+  {
+    "roleId": "tauri-engineer",
+    "result": {
+      "selected": {
+        "id": "gpt-6-astra",
+        "available": true,
+        "tier": "hard",
+        "capabilities": {
+          "tools": true
+        },
+        "pricing": {
+          "inputPerMillion": null,
+          "outputPerMillion": null
+        },
+        "freshness": {
+          "stale": null
+        },
+        "provenance": {
+          "availability": "Codex app tool metadata and local config; inference not probed",
+          "tier": "project quality-first policy annotation",
+          "capabilities": "host model/tool metadata"
+        }
+      },
+      "policy": {
+        "tier": "hard",
+        "capabilities": [
+          "tools"
+        ],
+        "model": "gpt-6-astra"
+      },
+      "appliedLayers": [
+        "role",
+        "task"
+      ],
+      "rejected": [],
+      "explanation": "All declared constraints satisfied; ordered by lowest known input+output USD per million, then exact identifier. Unknown costs rank last.",
+      "warnings": [
+        "Selected pricing freshness is unknown. Price ceilings do not guarantee current provider rates."
+      ],
+      "diagnostics": [],
+      "catalogProvenance": null,
+      "catalogFreshness": null
+    }
+  },
+  {
+    "roleId": "team-lead",
+    "result": {
+      "selected": {
+        "id": "gpt-6-astra",
+        "available": true,
+        "tier": "hard",
+        "capabilities": {
+          "tools": true
+        },
+        "pricing": {
+          "inputPerMillion": null,
+          "outputPerMillion": null
+        },
+        "freshness": {
+          "stale": null
+        },
+        "provenance": {
+          "availability": "Codex app tool metadata and local config; inference not probed",
+          "tier": "project quality-first policy annotation",
+          "capabilities": "host model/tool metadata"
+        }
+      },
+      "policy": {
+        "tier": "hard",
+        "capabilities": [
+          "tools"
+        ],
+        "model": "gpt-6-astra"
+      },
+      "appliedLayers": [
+        "role",
+        "task"
+      ],
+      "rejected": [],
+      "explanation": "All declared constraints satisfied; ordered by lowest known input+output USD per million, then exact identifier. Unknown costs rank last.",
+      "warnings": [
+        "Selected pricing freshness is unknown. Price ceilings do not guarantee current provider rates."
+      ],
+      "diagnostics": [],
+      "catalogProvenance": null,
+      "catalogFreshness": null
+    }
+  },
+  {
+    "roleId": "uar-agent-expert",
+    "result": {
+      "selected": {
+        "id": "gpt-6-astra",
+        "available": true,
+        "tier": "hard",
+        "capabilities": {
+          "tools": true
+        },
+        "pricing": {
+          "inputPerMillion": null,
+          "outputPerMillion": null
+        },
+        "freshness": {
+          "stale": null
+        },
+        "provenance": {
+          "availability": "Codex app tool metadata and local config; inference not probed",
+          "tier": "project quality-first policy annotation",
+          "capabilities": "host model/tool metadata"
+        }
+      },
+      "policy": {
+        "tier": "hard",
+        "capabilities": [
+          "tools"
+        ],
+        "model": "gpt-6-astra"
+      },
+      "appliedLayers": [
+        "role",
+        "task"
+      ],
+      "rejected": [],
+      "explanation": "All declared constraints satisfied; ordered by lowest known input+output USD per million, then exact identifier. Unknown costs rank last.",
+      "warnings": [
+        "Selected pricing freshness is unknown. Price ceilings do not guarantee current provider rates."
+      ],
+      "diagnostics": [],
+      "catalogProvenance": null,
+      "catalogFreshness": null
+    }
+  },
+  {
+    "roleId": "ui-critic",
+    "result": {
+      "selected": {
+        "id": "gpt-6-astra",
+        "available": true,
+        "tier": "hard",
+        "capabilities": {
+          "tools": true
+        },
+        "pricing": {
+          "inputPerMillion": null,
+          "outputPerMillion": null
+        },
+        "freshness": {
+          "stale": null
+        },
+        "provenance": {
+          "availability": "Codex app tool metadata and local config; inference not probed",
+          "tier": "project quality-first policy annotation",
+          "capabilities": "host model/tool metadata"
+        }
+      },
+      "policy": {
+        "tier": "hard",
+        "capabilities": [
+          "tools"
+        ],
+        "model": "gpt-6-astra"
+      },
+      "appliedLayers": [
+        "role",
+        "task"
+      ],
+      "rejected": [],
+      "explanation": "All declared constraints satisfied; ordered by lowest known input+output USD per million, then exact identifier. Unknown costs rank last.",
+      "warnings": [
+        "Selected pricing freshness is unknown. Price ceilings do not guarantee current provider rates."
+      ],
+      "diagnostics": [],
+      "catalogProvenance": null,
+      "catalogFreshness": null
+    }
+  }
+]

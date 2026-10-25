@@ -1,0 +1,30 @@
+name        = "flutter-rust-ffi"
+language    = "flutter"
+description = "Flutter + Rust FFI via flutter_rust_bridge v2 with Riverpod 3.x and go_router"
+version     = "1.0.0"
+
+[[templates]]
+path               = "riverpod_notifier.dart.tera"
+output_description = "Riverpod AsyncNotifier wrapping a Rust FFI call"
+
+[[templates]]
+path               = "feature_repository.dart.tera"
+output_description = "Abstract repository interface + Rust FFI implementation"
+
+[[templates]]
+path               = "go_router_config.dart.tera"
+output_description = "GoRouter configuration with named routes"
+
+[[templates]]
+path               = "bridge_api.rs.tera"
+output_description = "Rust #[pyfunction] / #[frb] bridge API definition"
+
+[[triggers]]
+type     = "AlwaysForLanguage"
+language = "flutter"
+
+[[triggers]]
+type     = "Keywords"
+keywords = ["flutter", "dart", "riverpod", "go_router", "ffi", "flutter_rust_bridge", "shadcn_flutter"]
+
+depends_on = []

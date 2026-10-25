@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "activeTeam": "patientgpt-delivery",
+  "manifest": ".agent-team/patientgpt-delivery/team.json",
+  "target": "codex",
+  "nativeDefinitions": [
+    ".codex/agents/product-manager.toml",
+    ".codex/agents/team-lead.toml",
+    ".codex/agents/creative-director.toml",
+    ".codex/agents/design-expert.toml",
+    ".codex/agents/react-engineer.toml",
+    ".codex/agents/tauri-engineer.toml",
+    ".codex/agents/flutter-engineer.toml",
+    ".codex/agents/rust-domain-engineer.toml",
+    ".codex/agents/storage-engineer.toml",
+    ".codex/agents/flint-data-engineer.toml",
+    ".codex/agents/identity-security-engineer.toml",
+    ".codex/agents/uar-agent-expert.toml",
+    ".codex/agents/platform-release-engineer.toml",
+    ".codex/agents/documentation-engineer.toml",
+    ".codex/agents/phase-verifier.toml",
+    ".codex/agents/artifact-critic.toml",
+    ".codex/agents/ui-critic.toml"
+  ],
+  "instructionFiles": [
+    "AGENTS.md",
+    "CLAUDE.md"
+  ],
+  "delegation": "native-definitions",
+  "limitations": [
+    "Native definition presence is not live invocation evidence. The active harness owns permissions, models, concurrency and delegation.",
+    "When delegation is unavailable, use selected role instructions sequentially and report it; builder-context review is not independent.",
+    "Zed external ACP agents use their native configuration; Zed parallel threads are not an automatic delegation API."
+  ]
+}

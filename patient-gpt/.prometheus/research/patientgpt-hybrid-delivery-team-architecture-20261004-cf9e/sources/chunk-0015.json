@@ -1,0 +1,10 @@
+{
+  "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/kratos_proxy.rs",
+  "chunk_id": "chunk-0015",
+  "text": "LOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n28:     Ok(Router::new()\n29:         .route(\"/self-service/login/browser\", get(proxy))\n30:         .route(\"/self-service/login/flows\", get(proxy))\n31:         .route(\"/self-service/login\", post(proxy))\n32:         .route(\"/self-service/recovery/browser\", get(proxy))\n33:         .route(\"/self-service/recovery/flows\", get(proxy))\n34:         .route(\"/self-service/recovery\", post(proxy))\n35:         .with_state(state))",
+  "content_type": "local-source-excerpt",
+  "source_id": "src-015",
+  "retrieval_status": "local-source-read",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 163
+}

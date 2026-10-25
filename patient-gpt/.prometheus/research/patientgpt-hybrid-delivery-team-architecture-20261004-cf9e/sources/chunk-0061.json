@@ -1,0 +1,10 @@
+{
+  "url": "https://docs.ag-ui.com/concepts/events",
+  "chunk_id": "chunk-0061",
+  "text": "DOSSIER SUMMARY ONLY; not a raw fetched page. The research worker recorded official documentation retrieval; this assembly did not refetch it.\nCurrent upstream lifecycle, state, activity, subagent, custom and interrupt-aware events. Queried via Context7 /ag-ui-protocol/ag-ui and opened official page.",
+  "content_type": "worker-documentation-summary",
+  "source_id": "src-047",
+  "retrieval_status": "dossier-summary-only",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 101
+}

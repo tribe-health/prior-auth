@@ -1,0 +1,34 @@
+# Authoritative architecture decisions and dependency pins.
+# Agents must not contradict this file, and must not edit it — .claude/settings.json
+# denies Edit(versions.toml). Change it deliberately, by hand.
+
+[meta]
+created = "2026-10-04"
+
+[pins]
+# Existing project tooling, observed during OpenSpec initialization.
+openspec = "1.14.0"
+# Application dependencies remain unselected. Verify official versions and
+# compatibility before deliberately adding pins; do not copy source examples.
+
+[decisions]
+product = "PatientGPT: implement the full UI and workflows referenced by docs/design."
+surfaces = "React web, Tauri desktop, and Flutter mobile with a shared shell-independent Rust core and typed host adapters."
+runtime = "UAR owns agent execution and tool governance; use A2UI/AG-UI ContentBlock contracts."
+state = "Entity graph owns durable entities and freshness; Zustand is transient UI state; Flutter uses Riverpod. No query cache."
+clinical_source = "Reuse ASO clinical records and authorized workbench commands; the proposed PatientGPT schema adds conversation and workflow data without duplicating clinical truth."
+design = "Preserve docs/design branding, Flat 2.0 layout, light/dark themes, and existing semantic status colors."
+teams = "Agent teams by default: patientgpt-delivery; see TEAM.md and .agent-team/project-routing.json."
+verification = "Tests and independent review only at complete phase end, local integration only. Web build each 120-minute iteration; full web and Tauri every even iteration. CI never tests."
+
+typescript_target = "7.0; kebab-case .ts/.tsx filenames; exact package pin awaits scaffold compatibility verification."
+storage_target = "Browser PGlite; desktop embedded SurrealDB 3.3.0; shared Rust storage ports; Axum/Postgres via Flint Forge and Fabric. Mobile store decision remains explicit."
+identity_target = "Kratos sessions and Flint Gate as Oathkeeper-like policy boundary; Envoy integration and native credential adapters require implementation."
+deployment_target = "know-me Kubernetes context; existing Envoy Gateway on Linode/Akamai; root monorepo GitHub Actions; Docusaurus Pages and verified About link."
+
+[sources]
+design = "docs/design"
+implementation_contract = ".prometheus/project-contract.md"
+architecture_checkout = "/Users/gqadonis/Projects/hybrid-mobile-architecture-src"
+architecture_skill = "skills/hybrid-mobile-architecture/SKILL.md"
+architecture_head_observed = "c9b3e2d4ca16322de83f9210cf1e97d2480ef004"

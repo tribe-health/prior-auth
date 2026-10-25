@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agui Event Contract"
+  short_description: "Define or audit the AG-UI event stream between Universal Agent Runtime and application clients"
+  default_prompt: "Use $agui-event-contract to apply its contract to this task and verify the required evidence."

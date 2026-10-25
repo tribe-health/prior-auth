@@ -1,0 +1,4 @@
+interface:
+  display_name: "Content Block Ui"
+  short_description: "ALWAYS invoke when rendering, adding, or editing a ContentBlock variant on ANY surface (Flutter"
+  default_prompt: "Use $content-block-ui to apply its contract to this task and verify the required evidence."

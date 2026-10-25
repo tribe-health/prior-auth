@@ -1,0 +1,28 @@
+# TJ-ARCH-MOB-001 compliant
+[package]
+name = "patient-gpt-server"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+name = "patient-gpt-server"
+path = "src/main.rs"
+
+# Transport only. Behaviour lives in patient-gpt-host::AppServices.
+[dependencies]
+patient-gpt-domain.workspace = true
+patient-gpt-host.workspace = true
+patient-gpt-storage.workspace = true
+patient-gpt-uar.workspace = true
+axum.workspace = true
+futures.workspace = true
+serde.workspace = true
+tokio.workspace = true
+tower-http.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true

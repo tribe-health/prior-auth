@@ -1,0 +1,10 @@
+{
+  "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/tokens.css",
+  "chunk_id": "chunk-0068",
+  "text": "LOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n71:   --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;\n72:   --font-body:    'Mulish', 'Nunito Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;\n73:   --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;\n74:   --fs-greeting: clamp(1.75rem, 1.2rem + 2vw, 2.4rem);\n75:   --fs-title:    clamp(1.5rem, 1.2rem + 1vw, 1.85rem);\n76:   --fs-body:     1rem;\n77:   --fs-ui:       0.875rem;\n78:   --fs-meta:     0.8125rem;\n79:   --fs-mono:     0.75rem;\n80: \n81:   /* shape */\n82:   --r:          5px;\n83:   --r-lg:       8px;\n84:   --r-composer: 24px;   /* the ChatGPT-familiarity exception */\n85:   --r-bubble:   18px;\n86: \n87:   /* layout */\n88:   --sb-w: 268px;\n89:   --col:  48rem;",
+  "content_type": "local-source-excerpt",
+  "source_id": "src-052",
+  "retrieval_status": "local-source-read",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 265
+}

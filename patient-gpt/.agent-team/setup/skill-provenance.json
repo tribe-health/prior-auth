@@ -1,0 +1,170 @@
+[
+  {
+    "id": "a2ui-surface-contract",
+    "source": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/a2ui-surface-contract",
+    "project": ".agents/skills/a2ui-surface-contract",
+    "sha256": "cebf3c45f58f381ca2e10aa97ee30b2d1932fa5d998174fad74aba920594dcec"
+  },
+  {
+    "id": "adversarial-review",
+    "source": "/Users/gqadonis/.codex/skills/adversarial-review",
+    "project": ".agents/skills/adversarial-review",
+    "sha256": "e41ef240e96bd3112a1f376d7762ec6fdb30bcf8a3f6cc365d1f8ca46f04fa1f"
+  },
+  {
+    "id": "agent-runtime-security",
+    "source": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/agent-runtime-security",
+    "project": ".agents/skills/agent-runtime-security",
+    "sha256": "40a069d46542fea580f50933517afc26b307ed1fbea28ca2d7e7345859fdf800"
+  },
+  {
+    "id": "agui-event-contract",
+    "source": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/agui-event-contract",
+    "project": ".agents/skills/agui-event-contract",
+    "sha256": "192d224f220c8b6c62ead0a2390ab804ec2b4e89a608e7e3f8e2d33f5a7b5d7c"
+  },
+  {
+    "id": "axum-agent-gateway",
+    "source": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/axum-agent-gateway",
+    "project": ".agents/skills/axum-agent-gateway",
+    "sha256": "765a2383a3c7f8934889c70d4cdf48ebc2912db79ff298094804b45e31cb1613"
+  },
+  {
+    "id": "build-branded-docusaurus",
+    "source": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/build-branded-docusaurus",
+    "project": ".agents/skills/build-branded-docusaurus",
+    "sha256": "b9492d6514197f6e35505f5fe6cc3923c2dee8978f6c6e47fdcf692f4e4fb649"
+  },
+  {
+    "id": "content-block-ui",
+    "source": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/content-block-ui",
+    "project": ".agents/skills/content-block-ui",
+    "sha256": "f21f96702963364cc83b05213dcd8e2fa045ada7bf76107c44625006539f65c4"
+  },
+  {
+    "id": "delivery-cadence",
+    "source": "/Users/gqadonis/.codex/skills/delivery-cadence",
+    "project": ".agents/skills/delivery-cadence",
+    "sha256": "ea5f18060cfc69d7e7494ecdc0cc9dc0be3c18a624a3f7c8c560e7a49de2b9b9"
+  },
+  {
+    "id": "deploy-hybrid-agentic-stack",
+    "source": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/deploy-hybrid-agentic-stack",
+    "project": ".agents/skills/deploy-hybrid-agentic-stack",
+    "sha256": "18503c4a1ecdecb19546555f85444210afc887a81fe97f9dcde9ea0dd84d7af2"
+  },
+  {
+    "id": "entity-graph-web-shell",
+    "source": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/entity-graph-web-shell",
+    "project": ".agents/skills/entity-graph-web-shell",
+    "sha256": "f8e5b6584a90ed769fda4e55d95aba14d7b37fab5d6860b809ea8c371bcbe27c"
+  },
+  {
+    "id": "flutter-build-responsive-layout",
+    "source": "/Users/gqadonis/.codex/skills/flutter-build-responsive-layout",
+    "project": ".agents/skills/flutter-build-responsive-layout",
+    "sha256": "1a3fd933282eb31bde720651a992b220905f9bc0ddb5d75f01a0a5738efd8b98"
+  },
+  {
+    "id": "flutter-rust-ffi",
+    "source": "/Users/gqadonis/.codex/skills/flutter-rust-ffi",
+    "project": ".agents/skills/flutter-rust-ffi",
+    "sha256": "be0b61681638163b127b62f2fac043f9847274a339a8de39e5ffde9153a52330"
+  },
+  {
+    "id": "flutter-setup-declarative-routing",
+    "source": "/Users/gqadonis/.codex/skills/flutter-setup-declarative-routing",
+    "project": ".agents/skills/flutter-setup-declarative-routing",
+    "sha256": "f30045d7e85713b0b02b0750b59458870820ed9de6f477248306c955a45b88d5"
+  },
+  {
+    "id": "flutter-setup-localization",
+    "source": "/Users/gqadonis/.codex/skills/flutter-setup-localization",
+    "project": ".agents/skills/flutter-setup-localization",
+    "sha256": "5751dd394fdac988440144326a06342ad32c8f16409b9cdb6a3a360d09bd42c8"
+  },
+  {
+    "id": "hybrid-design-tokens",
+    "source": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-design-tokens",
+    "project": ".agents/skills/hybrid-design-tokens",
+    "sha256": "65fe6ab6c912c2ca6c43338697d5210a6c80bd34fe9bbd6944109d43b0cb142e"
+  },
+  {
+    "id": "hybrid-mobile-architecture",
+    "source": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture",
+    "project": ".agents/skills/hybrid-mobile-architecture",
+    "sha256": "aa34750b5e7ec5aaf113dbfc225505cb2d4a7de3ab0265599e29ccfe089c2c7e"
+  },
+  {
+    "id": "hybrid-runtime-verification",
+    "source": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-runtime-verification",
+    "project": ".agents/skills/hybrid-runtime-verification",
+    "sha256": "20734b4f64ae2a2b3a12fb01b0ddd4e6262b7581645ff6818c70b483df5c5a13"
+  },
+  {
+    "id": "impeccable",
+    "source": "/Users/gqadonis/.codex/skills/impeccable",
+    "project": ".agents/skills/impeccable",
+    "sha256": "1f9a29a09e315ff6570d2dc2b4e3ca7d074a85983ffb54c32725fb5acbcd9d14"
+  },
+  {
+    "id": "mobile-navigation",
+    "source": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/mobile-navigation",
+    "project": ".agents/skills/mobile-navigation",
+    "sha256": "0240fdf0ce9ee559977432cc293ccfb0d4ad29effb2aa74cb5d10d8216c39f0e"
+  },
+  {
+    "id": "persona-scoped-agent",
+    "source": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/persona-scoped-agent",
+    "project": ".agents/skills/persona-scoped-agent",
+    "sha256": "5484c21ec3dff8a8be356c76e867195e6b34cad2eb1b602bb03449ff6d76665f"
+  },
+  {
+    "id": "prometheus-ui-review",
+    "source": "/Users/gqadonis/.codex/skills/prometheus-ui-review",
+    "project": ".agents/skills/prometheus-ui-review",
+    "sha256": "a032b9ba76b3e044b0517d8846f6838d49385119a390b564adaf7a34c5ecb593"
+  },
+  {
+    "id": "prometheus-ui-ux",
+    "source": "/Users/gqadonis/.codex/skills/prometheus-ui-ux",
+    "project": ".agents/skills/prometheus-ui-ux",
+    "sha256": "481e22bb27f6922727f5268a671e16f612bb6a01e13922050a08f057a2a48127"
+  },
+  {
+    "id": "reference-ui-fidelity",
+    "source": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/reference-ui-fidelity",
+    "project": ".agents/skills/reference-ui-fidelity",
+    "sha256": "75e8466f57fdcf276da210b934b49f0b3e283cd6f3e808f73c2a93c2f91c5fc7"
+  },
+  {
+    "id": "sync-doctrine",
+    "source": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/sync-doctrine",
+    "project": ".agents/skills/sync-doctrine",
+    "sha256": "98c61bfe105c3560e23b490698dcdb3e8223ae592a2c12cf42a33ec5c2884ce1"
+  },
+  {
+    "id": "tauri-custom-titlebar",
+    "source": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/tauri-custom-titlebar",
+    "project": ".agents/skills/tauri-custom-titlebar",
+    "sha256": "b7cd74992adb50fffefd733cd693d70a614bd58a1cde818497316989c504a01d"
+  },
+  {
+    "id": "ui-ux-pro-max",
+    "source": "/Users/gqadonis/.codex/skills/ui-ux-pro-max",
+    "project": ".agents/skills/ui-ux-pro-max",
+    "sha256": "2e06cf4aac86e3cb65cfd4403b5139fe267ea2c9cb710cae3820e071d357654b"
+  },
+  {
+    "id": "vercel-composition-patterns",
+    "source": "/Users/gqadonis/.codex/skills/vercel-composition-patterns",
+    "project": ".agents/skills/vercel-composition-patterns",
+    "sha256": "8f841b20ed26d9703c385ba2079278112d611ef9a6ecf28503ec2f26e99276ce"
+  },
+  {
+    "id": "vercel-react-best-practices",
+    "source": "/Users/gqadonis/.codex/skills/vercel-react-best-practices",
+    "project": ".agents/skills/vercel-react-best-practices",
+    "sha256": "582210fa578ba060abdf247e32b49b751d0a6b44645f3ce98dfb3bfdd581f386"
+  }
+]

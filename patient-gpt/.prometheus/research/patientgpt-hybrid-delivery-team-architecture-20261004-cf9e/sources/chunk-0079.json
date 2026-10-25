@@ -1,0 +1,10 @@
+{
+  "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/UI_UX_PROTOCOL.md",
+  "chunk_id": "chunk-0079",
+  "text": "t; PASS/BLOCK requires evidence. Unresolved blocking findings stay blocking. If independent delegation or device tooling is unavailable, report it as unverified; builder self-review is not independent review.\n39: Automatic review uses prometheus-ui-review and auto-invocable better-* guidance. Upstream interface-review, break, variant and explain-interface remain user-only: never bypass disable-model-invocation by reading their files. Explicit user invocation may use their documented workflow.\n40: No per-edit hooks, native detector or live-browser engine are implied by the mini adaptation.\n41: \n42: ## Team and harness behavior\n43: Read .agent-team/project-routing.json and its real team manifest. For all code tasks select the relevant existing roles, preserve ownership, model policy, permissions and concurrency. Use native delegation only where actually available. Otherwise use role instructions sequentially and disclose the limitation. Zed's parallel-thread UI is not a delegation API; external ACP agents retain native configuration.\n44: \n45: ## Handoff evidence\n46: Record operation, surface mode, loaded skills, affected application, context authority, changed files, states/capture paths, reviewer identity and evidence, unresolved findings and platform gaps. No skill is certified universally best; catalog inclusion records provenance and suitability, not comparative proof.",
+  "content_type": "local-source-excerpt",
+  "source_id": "src-062",
+  "retrieval_status": "local-source-read",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 465
+}

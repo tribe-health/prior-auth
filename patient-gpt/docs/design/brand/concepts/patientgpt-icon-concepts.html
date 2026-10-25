@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PatientGPT · icon concepts</title>
+<meta name="description" content="Three application icon concepts for PatientGPT, shown as iOS and Android icons, favicons, wordmarks and the app sidebar, in light and dark.">
+<link rel="icon" href="./a-spine-in-conversation/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Mulish:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FFFFFF; --surface: #F7F6F4; --surface-2: #F1EFEC; --fg: #231F20; --muted: #55565A;
+    --accent: #A85417; --navy: #1F4E79; --slate: #EDF3F7;
+    --dark-bg: #14181C; --dark-surface: #1C2126; --dark-fg: #EDF0F2; --dark-muted: #B4BFC7;
+    --font-display: 'Playfair Display', 'Iowan Old Style', Charter, Georgia, serif; --font-body: 'Mulish', 'Nunito Sans', 'Segoe UI', system-ui, sans-serif; --font-mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+    --r: 5px; --r-lg: 8px;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { background: var(--bg); color: var(--fg); font: 16px/1.6 var(--font-body); -webkit-font-smoothing: antialiased; }
+  body { min-height: 100%; }
+  svg.fill { display: block; width: 100%; height: 100%; }
+  .board { max-width: 76rem; margin-inline: auto; padding: 56px 24px 96px; display: grid; gap: 64px; }
+  .board-head { display: grid; gap: 14px; max-width: 46rem; }
+  .eyebrow { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  h1 { font-family: var(--font-display); font-size: clamp(1.75rem, 1.2rem + 2vw, 2.4rem); font-weight: 600; line-height: 1.12; letter-spacing: -0.01em; }
+  .lead { color: var(--muted); max-width: 62ch; }
+  .palette { display: flex; flex-wrap: wrap; gap: 8px; }
+  .swatch { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px 6px 6px; border-radius: 18px; background: var(--surface); font-family: var(--font-mono); font-size: 0.75rem; }
+  .swatch i { display: block; width: 24px; height: 24px; border-radius: 50%; }
+
+  .concept { display: grid; gap: 24px; }
+  .concept-head { display: grid; gap: 8px; max-width: 46rem; }
+  .concept-title { font-family: var(--font-display); font-size: clamp(1.5rem, 1.2rem + 1vw, 1.85rem); font-weight: 600; line-height: 1.2; }
+  .why { max-width: 62ch; }
+  .files { font-size: 0.875rem; color: var(--muted); }
+  .files code { font-family: var(--font-mono); font-size: 0.8125rem; }
+
+  .row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  .ctx { display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 10px; padding: 20px; border-radius: var(--r-lg); background: var(--surface); min-height: 220px; }
+  .ctx.wide { grid-column: span 2; }
+  .ctx.dark { background: var(--dark-bg); color: var(--dark-fg); }
+  .ctx.dark figcaption { color: var(--dark-muted); }
+  figcaption { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); }
+
+  .phone-ios, .phone-android { justify-self: center; align-self: center; display: grid; justify-items: center; gap: 8px; padding: 24px 28px; border-radius: 28px; background: var(--navy); }
+  .phone-android { background: var(--dark-surface); }
+  .ios-tile { width: 60px; height: 60px; border-radius: 13.5px; overflow: hidden; }
+  .android-tile { width: 56px; height: 56px; border-radius: 50%; overflow: hidden; }
+  .ios-label, .android-label { font-size: 0.6875rem; color: #FFFFFF; }
+  .icon-big { justify-self: center; align-self: center; width: 140px; height: 140px; border-radius: 31px; overflow: hidden; }
+
+  .tab-mock { align-self: start; display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 10px 10px 0 0; background: var(--bg); font-size: 0.8125rem; white-space: nowrap; overflow: hidden; }
+  .tab-ico { display: block; flex: none; width: 16px; height: 16px; }
+  .tab-title { overflow: hidden; text-overflow: ellipsis; }
+  .fav-sizes { display: flex; align-items: flex-end; gap: 12px; padding-top: 8px; }
+  .fav { display: block; }
+  .fav-32 { width: 32px; height: 32px; }
+  .fav-16 { width: 16px; height: 16px; }
+  .fav-note { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); }
+
+  .wm { align-self: center; }
+  .wm-svg { display: block; width: 100%; max-width: 420px; height: auto; }
+  .sb-mock { align-self: center; display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: var(--r); background: var(--surface-2); font-weight: 700; }
+  .dark .sb-mock { background: var(--dark-surface); }
+  .sb-mark { display: block; flex: none; width: 28px; height: 28px; }
+
+  .notes { display: grid; gap: 12px; padding: 24px; border-radius: var(--r-lg); background: var(--slate); max-width: 46rem; }
+  .notes h2 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; }
+  .notes li { margin-left: 18px; }
+
+  @media (max-width: 900px) { .row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 560px) { .board { padding: 32px 16px 64px; gap: 48px; } .row { grid-template-columns: minmax(0, 1fr); } .ctx.wide { grid-column: auto; } }
+</style>
+</head>
+<body>
+<main class="board">
+  <header class="board-head" data-od-id="board-head">
+    <p class="eyebrow">Advanced Spine &amp; Orthopedics · PatientGPT</p>
+    <h1 data-od-id="board-title">Three icon concepts</h1>
+    <p class="lead">Each concept is shown where it will live: the iOS and Android home screens, a browser tab at favicon size, the wordmark in light and dark, and the app's own sidebar. All three use the practice palette only: navy for the field, ember as the single accent, paper white and the ink grey.</p>
+    <div class="palette" aria-label="Palette">
+      <span class="swatch"><i style="background:#1F4E79"></i>navy #1F4E79</span>
+      <span class="swatch"><i style="background:#DF7C35"></i>ember mark #DF7C35</span>
+      <span class="swatch"><i style="background:#A85417"></i>ember on white #A85417</span>
+      <span class="swatch"><i style="background:#F0955A"></i>ember on dark #F0955A</span>
+      <span class="swatch"><i style="background:#6E6F71"></i>grey #6E6F71</span>
+      <span class="swatch"><i style="background:#EDF3F7"></i>slate #EDF3F7</span>
+    </div>
+  </header>
+
+  <section class="concept" id="concept-a-spine-in-conversation" data-od-id="concept-a-spine-in-conversation">
+    <header class="concept-head">
+      <p class="eyebrow">Concept A</p>
+      <h2 class="concept-title" data-od-id="concept-a-title">Spine in conversation</h2>
+      <p class="why">The practice's two sweeps, kept exactly as drawn, inside a speech bubble. It says what the product is in one glance: the ASO mark, talked to. Closest to the existing brand; the sweeps need the bubble to be large, so it is the softest of the three at 16 px.</p>
+      <p class="files">Files: <code>./a-spine-in-conversation/</code> · icon, mark, mark-dark, favicon, wordmark-light, wordmark-dark</p>
+    </header>
+
+    <div class="row" data-od-id="concept-a-icons">
+      <figure class="ctx">
+        <div class="phone-ios"><div class="ios-tile"><svg class="fill" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="PatientGPT app icon · Spine in conversation"><title>PatientGPT app icon · Spine in conversation</title><rect width="512" height="512" fill="#1F4E79"/><path d="M136 96H376A64 64 0 0 1 440 160V304A64 64 0 0 1 376 368H216L116 436L152 368H136A64 64 0 0 1 72 304V160A64 64 0 0 1 136 96Z" fill="#FFFFFF"/><g transform="translate(256 232) scale(0.6) translate(-256 -256) rotate(-13 256 256) translate(0 18)"><path d="M80 250C172 186 300 154 432 162C306 126 176 148 80 208C64 218 64 240 80 250Z" fill="#6E6F71"/><path d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z" fill="#DF7C35"/></g></svg></div><span class="ios-label">PatientGPT</span></div>
+        <figcaption>iOS home screen · 60 pt</figcaption>
+      </figure>
+      <figure class="ctx">
+        <div class="phone-android"><div class="android-tile"><svg class="fill" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="PatientGPT app icon · Spine in conversation"><title>PatientGPT app icon · Spine in conversation</title><rect width="512" height="512" fill="#1F4E79"/><path d="M136 96H376A64 64 0 0 1 440 160V304A64 64 0 0 1 376 368H216L116 436L152 368H136A64 64 0 0 1 72 304V160A64 64 0 0 1 136 96Z" fill="#FFFFFF"/><g transform="translate(256 232) scale(0.6) translate(-256 -256) rotate(-13 256 256) translate(0 18)"><path d="M80 250C172 186 300 154 432 162C306 126 176 148 80 208C64 218 64 240 80 250Z" fill="#6E6F71"/><path d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z" fill="#DF7C35"/></g></svg></div><span class="android-label">PatientGPT</span></div>
+        <figcaption>Android adaptive · circle mask</figcaption>
+      </figure>
+      <figure class="ctx">
+        <div class="icon-big"><svg class="fill" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="PatientGPT app icon · Spine in conversation"><title>PatientGPT app icon · Spine in conversation</title><rect width="512" height="512" fill="#1F4E79"/><path d="M136 96H376A64 64 0 0 1 440 160V304A64 64 0 0 1 376 368H216L116 436L152 368H136A64 64 0 0 1 72 304V160A64 64 0 0 1 136 96Z" fill="#FFFFFF"/><g transform="translate(256 232) scale(0.6) translate(-256 -256) rotate(-13 256 256) translate(0 18)"><path d="M80 250C172 186 300 154 432 162C306 126 176 148 80 208C64 218 64 240 80 250Z" fill="#6E6F71"/><path d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z" fill="#DF7C35"/></g></svg></div>
+        <figcaption>App icon · 1024 master</figcaption>
+      </figure>
+      <figure class="ctx">
+        <div class="tab-mock"><span class="tab-ico"><svg class="fill" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="PatientGPT favicon · Spine in conversation"><title>PatientGPT favicon · Spine in conversation</title><rect width="512" height="512" rx="96" fill="#1F4E79"/><path d="M136 96H376A64 64 0 0 1 440 160V304A64 64 0 0 1 376 368H216L116 436L152 368H136A64 64 0 0 1 72 304V160A64 64 0 0 1 136 96Z" fill="#FFFFFF"/><g transform="translate(256 232) scale(0.6) translate(-256 -256) rotate(-13 256 256) translate(0 18)"><path d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z" fill="#DF7C35"/></g></svg></span><span class="tab-title">PatientGPT · Marcus Delgado</span></div>
+        <div class="fav-sizes"><span class="fav fav-32"><svg class="fill" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="PatientGPT favicon · Spine in conversation"><title>PatientGPT favicon · Spine in conversation</title><rect width="512" height="512" rx="96" fill="#1F4E79"/><path d="M136 96H376A64 64 0 0 1 440 160V304A64 64 0 0 1 376 368H216L116 436L152 368H136A64 64 0 0 1 72 304V160A64 64 0 0 1 136 96Z" fill="#FFFFFF"/><g transform="translate(256 232) scale(0.6) translate(-256 -256) rotate(-13 256 256) translate(0 18)"><path d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z" fill="#DF7C35"/></g></svg></span><span class="fav fav-16"><svg class="fill" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="PatientGPT favicon · Spine in conversation"><title>PatientGPT favicon · Spine in conversation</title><rect width="512" height="512" rx="96" fill="#1F4E79"/><path d="M136 96H376A64 64 0 0 1 440 160V304A64 64 0 0 1 376 368H216L116 436L152 368H136A64 64 0 0 1 72 304V160A64 64 0 0 1 136 96Z" fill="#FFFFFF"/><g transform="translate(256 232) scale(0.6) translate(-256 -256) rotate(-13 256 256) translate(0 18)"><path d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z" fill="#DF7C35"/></g></svg></span><span class="fav-note">32 · 16 px</span></div>
+        <figcaption>Favicon · The bubble keeps only the ember sweep at favicon size.</figcaption>
+      </figure>
+    </div>
+
+    <div class="row" data-od-id="concept-a-wordmarks">
+      <figure class="ctx wide light">
+        <div class="wm"><svg class="wm-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 160" role="img" aria-label="PatientGPT wordmark · Spine in conversation"><title>PatientGPT wordmark · Spine in conversation</title><!-- Wordmark set in Playfair Display 600. Convert the text to outlines before production use. --><g transform="translate(8 16) scale(0.25)"><path d="M136 96H376A64 64 0 0 1 440 160V304A64 64 0 0 1 376 368H216L116 436L152 368H136A64 64 0 0 1 72 304V160A64 64 0 0 1 136 96Z" fill="#1F4E79"/><g transform="translate(256 232) scale(0.6) translate(-256 -256) rotate(-13 256 256) translate(0 18)"><path d="M80 250C172 186 300 154 432 162C306 126 176 148 80 208C64 218 64 240 80 250Z" fill="#C7CDD2"/><path d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z" fill="#DF7C35"/></g></g><text x="160" y="110" font-family="'Playfair Display', 'Iowan Old Style', Charter, Georgia, serif" font-size="88" font-weight="600" letter-spacing="-1" fill="#231F20">PatientGPT</text></svg></div>
+        <figcaption>Wordmark · light</figcaption>
+      </figure>
+      <figure class="ctx wide dark">
+        <div class="wm"><svg class="wm-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 160" role="img" aria-label="PatientGPT wordmark, dark · Spine in conversation"><title>PatientGPT wordmark, dark · Spine in conversation</title><!-- Wordmark set in Playfair Display 600. Convert the text to outlines before production use. --><g transform="translate(8 16) scale(0.25)"><path d="M136 96H376A64 64 0 0 1 440 160V304A64 64 0 0 1 376 368H216L116 436L152 368H136A64 64 0 0 1 72 304V160A64 64 0 0 1 136 96Z" fill="#EDF3F7"/><g transform="translate(256 232) scale(0.6) translate(-256 -256) rotate(-13 256 256) translate(0 18)"><path d="M80 250C172 186 300 154 432 162C306 126 176 148 80 208C64 218 64 240 80 250Z" fill="#6E6F71"/><path d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z" fill="#DF7C35"/></g></g><text x="160" y="110" font-family="'Playfair Display', 'Iowan Old Style', Charter, Georgia, serif" font-size="88" font-weight="600" letter-spacing="-1" fill="#EDF0F2">PatientGPT</text></svg></div>
+        <figcaption>Wordmark · dark</figcaption>
+      </figure>
+      <figure class="ctx light">
+        <div class="sb-mock"><span class="sb-mark"><svg class="fill" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="PatientGPT mark · Spine in conversation"><title>PatientGPT mark · Spine in conversation</title><path d="M136 96H376A64 64 0 0 1 440 160V304A64 64 0 0 1 376 368H216L116 436L152 368H136A64 64 0 0 1 72 304V160A64 64 0 0 1 136 96Z" fill="#1F4E79"/><g transform="translate(256 232) scale(0.6) translate(-256 -256) rotate(-13 256 256) translate(0 18)"><path d="M80 250C172 186 300 154 432 162C306 126 176 148 80 208C64 218 64 240 80 250Z" fill="#C7CDD2"/><path d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z" fill="#DF7C35"/></g></svg></span><span class="sb-name">PatientGPT</span></div>
+        <figcaption>App sidebar · light</figcaption>
+      </figure>
+      <figure class="ctx dark">
+        <div class="sb-mock"><span class="sb-mark"><svg class="fill" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="PatientGPT mark, dark · Spine in conversation"><title>PatientGPT mark, dark · Spine in conversation</title><path d="M136 96H376A64 64 0 0 1 440 160V304A64 64 0 0 1 376 368H216L116 436L152 368H136A64 64 0 0 1 72 304V160A64 64 0 0 1 136 96Z" fill="#EDF3F7"/><g transform="translate(256 232) scale(0.6) translate(-256 -256) rotate(-13 256 256) translate(0 18)"><path d="M80 250C172 186 300 154 432 162C306 126 176 148 80 208C64 218 64 240 80 250Z" fill="#6E6F71"/><path d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z" fill="#DF7C35"/></g></svg></span><span class="sb-name">PatientGPT</span></div>
+        <figcaption>App sidebar · dark</figcaption>
+      </figure>
+    </div>
+  </section>
+  <section class="concept" id="concept-b-p-monogram" data-od-id="concept-b-p-monogram">
+    <header class="concept-head">
+      <p class="eyebrow">Concept B</p>
+      <h2 class="concept-title" data-od-id="concept-b-title">P monogram</h2>
+      <p class="why">A geometric P whose bowl carries an ember speech tail: PatientGPT as a letterform. One shape, two colours, no gradients. It is the strongest at tiny sizes and the easiest to set next to the ASO logo without competing with it.</p>
+      <p class="files">Files: <code>./b-p-monogram/</code> · icon, mark, mark-dark, favicon, wordmark-light, wordmark-dark</p>
+    </header>
+
+    <div class="row" data-od-id="concept-b-icons">
+      <figure class="ctx">
+        <div class="phone-ios"><div class="ios-tile"><svg class="fill" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="PatientGPT app icon · P monogram"><title>PatientGPT app icon · P monogram</title><rect width="512" height="512" fill="#1F4E79"/><path d="M148 112H304A100 100 0 0 1 304 312H220V400H148ZM220 176H304A36 36 0 0 1 304 248H220Z" fill="#FFFFFF" fill-rule="evenodd"/><path d="M296 312L364 374L244 312Z" fill="#DF7C35"/></svg></div><span class="ios-label">PatientGPT</span></div>
+        <figcaption>iOS home screen · 60 pt</figcaption>
+      </figure>
+      <figure class="ctx">
+        <div class="phone-android"><div class="android-tile"><svg class="fill" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="PatientGPT app icon · P monogram"><title>PatientGPT app icon · P monogram</title><rect width="512" height="512" fill="#1F4E79"/><path d="M148 112H304A100 100 0 0 1 304 312H220V400H148ZM220 176H304A36 36 0 0 1 304 248H220Z" fill="#FFFFFF" fill-rule="evenodd"/><path d="M296 312L364 374L244 312Z" fill="#DF7C35"/></svg></div><span class="android-label">PatientGPT</span></div>
+        <figcaption>Android adaptive · circle mask</figcaption>
+      </figure>
+      <figure class="ctx">
+        <div class="icon-big"><svg class="fill" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="PatientGPT app icon · P monogram"><title>PatientGPT app icon · P monogram</title><rect width="512" height="512" fill="#1F4E79"/><path d="M148 112H304A100 100 0 0 1 304 312H220V400H148ZM220 176H304A36 36 0 0 1 304 248H220Z" fill="#FFFFFF" fill-rule="evenodd"/><path d="M296 312L364 374L244 312Z" fill="#DF7C35"/></svg></div>
+        <figcaption>App icon · 1024 master</figcaption>
+      </figure>
+      <figure class="ctx">
+        <div class="tab-mock"><span class="tab-ico"><svg class="fill" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="PatientGPT favicon · P monogram"><title>PatientGPT favicon · P monogram</title><rect width="512" height="512" rx="96" fill="#1F4E79"/><path d="M148 112H304A100 100 0 0 1 304 312H220V400H148ZM220 176H304A36 36 0 0 1 304 248H220Z" fill="#FFFFFF" fill-rule="evenodd"/></svg></span><span class="tab-title">PatientGPT · Marcus Delgado</span></div>
+        <div class="fav-sizes"><span class="fav fav-32"><svg class="fill" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="PatientGPT favicon · P monogram"><title>PatientGPT favicon · P monogram</title><rect width="512" height="512" rx="96" fill="#1F4E79"/><path d="M148 112H304A100 100 0 0 1 304 312H220V400H148ZM220 176H304A36 36 0 0 1 304 248H220Z" fill="#FFFFFF" fill-rule="evenodd"/></svg></span><span class="fav fav-16"><svg class="fill" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="PatientGPT favicon · P monogram"><title>PatientGPT favicon · P monogram</title><rect width="512" height="512" rx="96" fill="#1F4E79"/><path d="M148 112H304A100 100 0 0 1 304 312H220V400H148ZM220 176H304A36 36 0 0 1 304 248H220Z" fill="#FFFFFF" fill-rule="evenodd"/></svg></span><span class="fav-note">32 · 16 px</span></div>
+        <figcaption>Favicon · The P alone; the tail returns from 32 px upward.</figcaption>
+      </figure>
+    </div>
+
+    <div class="row" data-od-id="concept-b-wordmarks">
+      <figure class="ctx wide light">
+        <div class="wm"><svg class="wm-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 160" role="img" aria-label="PatientGPT wordmark · P monogram"><title>PatientGPT wordmark · P monogram</title><!-- Wordmark set in Playfair Display 600. Convert the text to outlines before production use. --><g transform="translate(8 16) scale(0.25)"><path d="M148 112H304A100 100 0 0 1 304 312H220V400H148ZM220 176H304A36 36 0 0 1 304 248H220Z" fill="#1F4E79" fill-rule="evenodd"/><path d="M296 312L364 374L244 312Z" fill="#A85417"/></g><text x="160" y="110" font-family="'Playfair Display', 'Iowan Old Style', Charter, Georgia, serif" font-size="88" font-weight="600" letter-spacing="-1" fill="#231F20">PatientGPT</text></svg></div>
+        <figcaption>Wordmark · light</figcaption>
+      </figure>
+      <figure class="ctx wide dark">
+        <div class="wm"><svg class="wm-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 160" role="img" aria-label="PatientGPT wordmark, dark · P monogram"><title>PatientGPT wordmark, dark · P monogram</title><!-- Wordmark set in Playfair Display 600. Convert the text to outlines before production use. --><g transform="translate(8 16) scale(0.25)"><path d="M148 112H304A100 100 0 0 1 304 312H220V400H148ZM220 176H304A36 36 0 0 1 304 248H220Z" fill="#EDF0F2" fill-rule="evenodd"/><path d="M296 312L364 374L244 312Z" fill="#F0955A"/></g><text x="160" y="110" font-family="'Playfair Display', 'Iowan Old Style', Charter, Georgia, serif" font-size="88" font-weight="600" letter-spacing="-1" fill="#EDF0F2">PatientGPT</text></svg></div>
+        <figcaption>Wordmark · dark</figcaption>
+      </figure>
+      <figure class="ctx light">
+        <div class="sb-mock"><span class="sb-mark"><svg class="fill" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="PatientGPT mark · P monogram"><title>PatientGPT mark · P monogram</title><path d="M148 112H304A100 100 0 0 1 304 312H220V400H148ZM220 176H304A36 36 0 0 1 304 248H220Z" fill="#1F4E79" fill-rule="evenodd"/><path d="M296 312L364 374L244 312Z" fill="#A85417"/></svg></span><span class="sb-name">PatientGPT</span></div>
+        <figcaption>App sidebar · light</figcaption>
+      </figure>
+      <figure class="ctx dark">
+        <div class="sb-mock"><span class="sb-mark"><svg class="fill" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="PatientGPT mark, dark · P monogram"><title>PatientGPT mark, dark · P monogram</title><path d="M148 112H304A100 100 0 0 1 304 312H220V400H148ZM220 176H304A36 36 0 0 1 304 248H220Z" fill="#EDF0F2" fill-rule="evenodd"/><path d="M296 312L364 374L244 312Z" fill="#F0955A"/></svg></span><span class="sb-name">PatientGPT</span></div>
+        <figcaption>App sidebar · dark</figcaption>
+      </figure>
+    </div>
+  </section>
+  <section class="concept" id="concept-c-stage-track" data-od-id="concept-c-stage-track">
+    <header class="concept-head">
+      <p class="eyebrow">Concept C</p>
+      <h2 class="concept-title" data-od-id="concept-c-title">Stage track</h2>
+      <p class="why">Three rounded segments, the current one in ember with a tail: a stylised spine column that is also the case-state track the app shows on every case row. It is the only concept that comes from the product's own interface rather than the practice's mark, and it reads as 'progress you can talk to'.</p>
+      <p class="files">Files: <code>./c-stage-track/</code> · icon, mark, mark-dark, favicon, wordmark-light, wordmark-dark</p>
+    </header>
+
+    <div class="row" data-od-id="concept-c-icons">
+      <figure class="ctx">
+        <div class="phone-ios"><div class="ios-tile"><svg class="fill" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="PatientGPT app icon · Stage track"><title>PatientGPT app icon · Stage track</title><rect width="512" height="512" fill="#1F4E79"/><rect x="120" y="140" width="200" height="56" rx="28" fill="#FFFFFF"/><rect x="120" y="228" width="248" height="56" rx="28" fill="#DF7C35"/><path d="M300 284L344 328L364 284Z" fill="#DF7C35"/><rect x="120" y="316" width="200" height="56" rx="28" fill="#FFFFFF"/></svg></div><span class="ios-label">PatientGPT</span></div>
+        <figcaption>iOS home screen · 60 pt</figcaption>
+      </figure>
+      <figure class="ctx">
+        <div class="phone-android"><div class="android-tile"><svg class="fill" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="PatientGPT app icon · Stage track"><title>PatientGPT app icon · Stage track</title><rect width="512" height="512" fill="#1F4E79"/><rect x="120" y="140" width="200" height="56" rx="28" fill="#FFFFFF"/><rect x="120" y="228" width="248" height="56" rx="28" fill="#DF7C35"/><path d="M300 284L344 328L364 284Z" fill="#DF7C35"/><rect x="120" y="316" width="200" height="56" rx="28" fill="#FFFFFF"/></svg></div><span class="android-label">PatientGPT</span></div>
+        <figcaption>Android adaptive · circle mask</figcaption>
+      </figure>
+      <figure class="ctx">
+        <div class="icon-big"><svg class="fill" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="PatientGPT app icon · Stage track"><title>PatientGPT app icon · Stage track</title><rect width="512" height="512" fill="#1F4E79"/><rect x="120" y="140" width="200" height="56" rx="28" fill="#FFFFFF"/><rect x="120" y="228" width="248" height="56" rx="28" fill="#DF7C35"/><path d="M300 284L344 328L364 284Z" fill="#DF7C35"/><rect x="120" y="316" width="200" height="56" rx="28" fill="#FFFFFF"/></svg></div>
+        <figcaption>App icon · 1024 master</figcaption>
+      </figure>
+      <figure class="ctx">
+        <div class="tab-mock"><span class="tab-ico"><svg class="fill" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="PatientGPT favicon · Stage track"><title>PatientGPT favicon · Stage track</title><rect width="512" height="512" rx="96" fill="#1F4E79"/><rect x="120" y="140" width="200" height="56" rx="28" fill="#FFFFFF"/><rect x="120" y="228" width="248" height="56" rx="28" fill="#DF7C35"/><rect x="120" y="316" width="200" height="56" rx="28" fill="#FFFFFF"/></svg></span><span class="tab-title">PatientGPT · Marcus Delgado</span></div>
+        <div class="fav-sizes"><span class="fav fav-32"><svg class="fill" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="PatientGPT favicon · Stage track"><title>PatientGPT favicon · Stage track</title><rect width="512" height="512" rx="96" fill="#1F4E79"/><rect x="120" y="140" width="200" height="56" rx="28" fill="#FFFFFF"/><rect x="120" y="228" width="248" height="56" rx="28" fill="#DF7C35"/><rect x="120" y="316" width="200" height="56" rx="28" fill="#FFFFFF"/></svg></span><span class="fav fav-16"><svg class="fill" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="PatientGPT favicon · Stage track"><title>PatientGPT favicon · Stage track</title><rect width="512" height="512" rx="96" fill="#1F4E79"/><rect x="120" y="140" width="200" height="56" rx="28" fill="#FFFFFF"/><rect x="120" y="228" width="248" height="56" rx="28" fill="#DF7C35"/><rect x="120" y="316" width="200" height="56" rx="28" fill="#FFFFFF"/></svg></span><span class="fav-note">32 · 16 px</span></div>
+        <figcaption>Favicon · Three segments without the tail at favicon size.</figcaption>
+      </figure>
+    </div>
+
+    <div class="row" data-od-id="concept-c-wordmarks">
+      <figure class="ctx wide light">
+        <div class="wm"><svg class="wm-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 160" role="img" aria-label="PatientGPT wordmark · Stage track"><title>PatientGPT wordmark · Stage track</title><!-- Wordmark set in Playfair Display 600. Convert the text to outlines before production use. --><g transform="translate(8 16) scale(0.25)"><rect x="120" y="140" width="200" height="56" rx="28" fill="#1F4E79"/><rect x="120" y="228" width="248" height="56" rx="28" fill="#A85417"/><path d="M300 284L344 328L364 284Z" fill="#A85417"/><rect x="120" y="316" width="200" height="56" rx="28" fill="#1F4E79"/></g><text x="160" y="110" font-family="'Playfair Display', 'Iowan Old Style', Charter, Georgia, serif" font-size="88" font-weight="600" letter-spacing="-1" fill="#231F20">PatientGPT</text></svg></div>
+        <figcaption>Wordmark · light</figcaption>
+      </figure>
+      <figure class="ctx wide dark">
+        <div class="wm"><svg class="wm-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 160" role="img" aria-label="PatientGPT wordmark, dark · Stage track"><title>PatientGPT wordmark, dark · Stage track</title><!-- Wordmark set in Playfair Display 600. Convert the text to outlines before production use. --><g transform="translate(8 16) scale(0.25)"><rect x="120" y="140" width="200" height="56" rx="28" fill="#EDF0F2"/><rect x="120" y="228" width="248" height="56" rx="28" fill="#F0955A"/><path d="M300 284L344 328L364 284Z" fill="#F0955A"/><rect x="120" y="316" width="200" height="56" rx="28" fill="#EDF0F2"/></g><text x="160" y="110" font-family="'Playfair Display', 'Iowan Old Style', Charter, Georgia, serif" font-size="88" font-weight="600" letter-spacing="-1" fill="#EDF0F2">PatientGPT</text></svg></div>
+        <figcaption>Wordmark · dark</figcaption>
+      </figure>
+      <figure class="ctx light">
+        <div class="sb-mock"><span class="sb-mark"><svg class="fill" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="PatientGPT mark · Stage track"><title>PatientGPT mark · Stage track</title><rect x="120" y="140" width="200" height="56" rx="28" fill="#1F4E79"/><rect x="120" y="228" width="248" height="56" rx="28" fill="#A85417"/><path d="M300 284L344 328L364 284Z" fill="#A85417"/><rect x="120" y="316" width="200" height="56" rx="28" fill="#1F4E79"/></svg></span><span class="sb-name">PatientGPT</span></div>
+        <figcaption>App sidebar · light</figcaption>
+      </figure>
+      <figure class="ctx dark">
+        <div class="sb-mock"><span class="sb-mark"><svg class="fill" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="PatientGPT mark, dark · Stage track"><title>PatientGPT mark, dark · Stage track</title><rect x="120" y="140" width="200" height="56" rx="28" fill="#EDF0F2"/><rect x="120" y="228" width="248" height="56" rx="28" fill="#F0955A"/><path d="M300 284L344 328L364 284Z" fill="#F0955A"/><rect x="120" y="316" width="200" height="56" rx="28" fill="#EDF0F2"/></svg></span><span class="sb-name">PatientGPT</span></div>
+        <figcaption>App sidebar · dark</figcaption>
+      </figure>
+    </div>
+  </section>
+  <section class="notes" data-od-id="production-notes">
+    <h2>Before production</h2>
+    <ul>
+      <li>The wordmark text is live Playfair Display in the SVG files. Convert it to outlines before shipping so it renders without the font installed.</li>
+      <li>Icons are drawn on a 512 canvas; export the 1024 master, then the platform sets, from <code>icon.svg</code>. The tile is full-bleed navy; iOS and Android apply their own masks.</li>
+      <li><code>favicon.svg</code> is the simplified mark on a rounded navy tile for 16 and 32 px; use <code>mark.svg</code> / <code>mark-dark.svg</code> at 24 px and above.</li>
+      <li>Ember on white uses the text ember (#A85417); ember on navy or dark uses the brighter mark ember. Do not swap them.</li>
+    </ul>
+  </section>
+</main>
+</body>
+</html>
+

@@ -1,0 +1,25 @@
+{
+  "isolation_mode": "harness-native",
+  "model_independence": "unverified",
+  "producer_model": "unknown",
+  "review_scope": "Complete untruncated packet-final.json reviewed against the artifact mandate; no generation history or source re-verification. Completed specification artifact review only.",
+  "findings": [
+    {
+      "severity": "WARNING",
+      "file": "report.md",
+      "line": 89,
+      "claim": "The added aggregate native-export counts are not carried in an evidence-table row as required by the research review contract.",
+      "evidence": "The prose states \"103 native files across six harnesses: 102 match staged exports\". The harness table lists definition counts and limitations, while the claim evidence table contains only src-001 through src-082. Neither table records the 103 total or the 102 matching-export observation, although native-artifact-inventory.json is named in prose.",
+      "suggested_fix": "Add a separately labeled setup-evidence row carrying the 103 total, 102 matching files, preserved-critic exception, and exact project receipt path. Keep these setup observations distinct from research-source scoring and runtime claims."
+    }
+  ],
+  "checked_classes": [
+    "Executive and verified-row source labels: executive recommendations are inferred, static-source claims cite labeled entries, and every visible verified row has a source reference.",
+    "Sub-question coverage: all committed subjects now receive an answer or explicit limit. TypeScript 7.0 and kebab-case are carried as operator requirements with compatibility unresolved; the harness table gives configurations, export counts, and invocation limitations.",
+    "Unresolved contradictions: desktop adapter/version, native credential translation, and complete custom A2UI integration remain open consistently with the plan ledger.",
+    "Verification status: partial and null Feynman fields do not claim completion of the blocked external judge or uninvoked runtime gates; the report discloses the judge block and native model-independence limitation.",
+    "Numbers, dates, and quotes: the aggregate setup counts have the table-coverage omission reported above; remaining technical values appear in source or configuration tables or package metadata.",
+    "Citation completeness: the untruncated reference list includes all src-001 through src-082; no visible verified source row is orphaned."
+  ],
+  "prior_missing_subjects": "Both prior missing subjects are now covered; one setup-evidence presentation warning remains."
+}

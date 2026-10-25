@@ -1,0 +1,10 @@
+{
+  "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/shared/sync/pglite-bootstrap.ts",
+  "chunk_id": "chunk-0005",
+  "text": "LOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n22: export async function openPGliteReplica(\n23:   policy: StoragePolicy,\n24:   storageKey: string,\n25:   fetchImpl: typeof fetch = globalThis.fetch.bind(globalThis),\n26: ): Promise<PGlite> {\n27:   const dataDir = pgliteDataDir(policy, storageKey);\n28:   if (dataDir) {\n29:     return PGlite.create({\n30:       dataDir,\n31:       initialMemory: PGLITE_REPLICA_INITIAL_MEMORY,\n32:       postgresqlconf: [...PGLITE_REPLICA_POSTGRESQL_CONF],\n33:     });\n34:   }\n35: \n36:   const response = await fetchImpl(BASE_ARCHIVE);\n37:   if (!response.ok) {\n38:     throw new Error(`PGlite base archive failed: ${response.status} ${response.statusText}`);\n39:   }\n40:   return PGlite.create({\n41:     loadDataDir: await response.blob(),\n42:     initialMemory: PGLITE_REPLICA_INITIAL_MEMORY,\n43:     postgresqlconf: [...PGLITE_REPLICA_POSTGRESQL_CONF],\n44:   });",
+  "content_type": "local-source-excerpt",
+  "source_id": "src-005",
+  "retrieval_status": "local-source-read",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 305
+}

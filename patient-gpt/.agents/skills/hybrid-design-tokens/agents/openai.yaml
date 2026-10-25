@@ -1,0 +1,4 @@
+interface:
+  display_name: "Hybrid Design Tokens"
+  short_description: "ALWAYS invoke before writing any color, spacing, typography, radius, or theme value on ANY surfa"
+  default_prompt: "Use $hybrid-design-tokens to apply its contract to this task and verify the required evidence."

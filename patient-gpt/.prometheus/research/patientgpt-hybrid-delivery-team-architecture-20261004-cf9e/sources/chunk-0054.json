@@ -1,0 +1,10 @@
+{
+  "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/agui-event-contract/SKILL.md",
+  "chunk_id": "chunk-0054",
+  "text": "LOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n7: \n8: AG-UI is the runtime-to-application event boundary. UAR emits authoritative run\n9: events; clients maintain projections.\n10: \n11: ## Envelope\n12: \n13: Require protocol version, event ID, run ID, sequence, timestamp, event type,\n14: typed payload, and optional causal parent. Event IDs are stable across retries.\n15: \n16: ## Semantics\n17: \n18: - Apply events idempotently and in sequence.\n19: - Resume streams with the last committed event ID.\n20: - Represent approval, denial, cancellation, timeout, and failure explicitly.\n21: - Keep tool inputs and outputs redacted according to policy.\n22: - Preserve unknown event types without treating them as success.\n23: - Never infer completion from prose.\n24: \n25: Test disconnect/reconnect, duplicate and out-of-order events, restart recovery,\n26: slow consumers, cancellation races, unknown versions, and projection replay.",
+  "content_type": "local-source-excerpt",
+  "source_id": "src-042",
+  "retrieval_status": "local-source-read",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 315
+}

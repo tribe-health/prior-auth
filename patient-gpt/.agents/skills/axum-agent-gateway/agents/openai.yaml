@@ -1,0 +1,4 @@
+interface:
+  display_name: "Axum Agent Gateway"
+  short_description: "Implement or audit an Axum boundary between an application and Universal Agent Runtime"
+  default_prompt: "Use $axum-agent-gateway to apply its contract to this task and verify the required evidence."

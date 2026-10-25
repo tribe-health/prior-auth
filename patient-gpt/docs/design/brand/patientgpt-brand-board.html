@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PatientGPT · brand board</title>
+<meta name="description" content="The PatientGPT mark, Spine in conversation, and how it is used across the application: icons, favicon, wordmark, sidebar, launch screen, sign-in, assistant turns and notifications, in light and dark.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Mulish:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FFFFFF; --s1: #F7F6F4; --s2: #F1EFEC; --s3: #E7E4E0; --fg: #231F20; --muted: #55565A;
+    --accent: #A85417; --navy: #1F4E79; --slate: #EDF3F7; --ember: #DF7C35; --ember-dark: #F0955A;
+    --grey-light: #C7CDD2; --grey: #6E6F71;
+    --dark-bg: #14181C; --dark-s1: #1C2126; --dark-s2: #252B31; --dark-fg: #EDF0F2; --dark-muted: #B4BFC7;
+    --font-display: 'Playfair Display', 'Iowan Old Style', Charter, Georgia, serif;
+    --font-body: 'Mulish', 'Nunito Sans', 'Segoe UI', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+    --r: 5px; --r-lg: 8px;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { background: var(--bg); color: var(--fg); font: 16px/1.6 var(--font-body); -webkit-font-smoothing: antialiased; }
+  svg { display: block; }
+
+  /* the mark: colours travel on the host element into <use> */
+  .m-light { --m-bubble: #1F4E79; --m-upper: #C7CDD2; --m-lower: #DF7C35; }
+  .m-dark  { --m-bubble: #EDF3F7; --m-upper: #6E6F71; --m-lower: #DF7C35; }
+  .m-tile  { --m-bubble: #FFFFFF; --m-upper: #6E6F71; --m-lower: #DF7C35; }
+
+  .board { max-width: 76rem; margin-inline: auto; padding: 56px 24px 96px; display: grid; gap: 72px; }
+  .board-head { display: grid; gap: 14px; max-width: 48rem; }
+  .eyebrow { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  h1 { font-family: var(--font-display); font-size: clamp(1.9rem, 1.2rem + 2.4vw, 2.75rem); font-weight: 600; line-height: 1.1; letter-spacing: -0.01em; }
+  .lead { color: var(--muted); max-width: 62ch; }
+  h2 { font-family: var(--font-display); font-size: clamp(1.4rem, 1.15rem + 0.9vw, 1.75rem); font-weight: 600; line-height: 1.2; }
+  .sec { display: grid; gap: 20px; }
+  .sec-head { display: grid; gap: 6px; max-width: 48rem; }
+  .sec-head p { color: var(--muted); max-width: 62ch; }
+
+  .row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  .row-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .row-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ctx { display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 12px; padding: 20px; border-radius: var(--r-lg); background: var(--s1); min-height: 220px; }
+  .ctx.wide { grid-column: span 2; }
+  .ctx.dark { background: var(--dark-bg); color: var(--dark-fg); }
+  .ctx.navy { background: var(--navy); color: #FFFFFF; }
+  .ctx.dark figcaption, .ctx.navy figcaption { color: var(--dark-muted); }
+  .ctx.navy figcaption { color: #C8D6E2; }
+  figcaption { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); }
+  .center { justify-self: center; align-self: center; }
+
+  /* 1 · the mark */
+  .mark-big { width: 150px; height: 150px; }
+  .tile-big { width: 140px; height: 140px; border-radius: 31px; overflow: hidden; }
+  .construct { width: 100%; max-width: 560px; height: auto; align-self: center; justify-self: center; }
+  .guide { fill: none; stroke: #55565A; stroke-width: 2; stroke-dasharray: 8 8; }
+  .guide-label { font-family: var(--font-mono); font-size: 20px; fill: #55565A; }
+  .sizes { align-self: center; display: flex; flex-wrap: wrap; align-items: flex-end; gap: 28px; }
+  .size { display: grid; justify-items: center; gap: 8px; }
+  .size span { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); }
+
+  /* 2 · colour */
+  .swatches { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+  .sw { display: grid; gap: 10px; }
+  .sw i { display: block; height: 88px; border-radius: var(--r-lg); }
+  .sw b { font-size: 0.9375rem; }
+  .sw code { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); }
+  .sw small { font-size: 0.8125rem; color: var(--muted); line-height: 1.45; }
+
+  /* 3 · wordmark */
+  .wm-svg { width: 100%; max-width: 460px; height: auto; align-self: center; }
+  .type-list { display: grid; gap: 10px; align-self: center; }
+  .type-list div { display: grid; grid-template-columns: 14rem minmax(0, 1fr); gap: 12px; align-items: baseline; }
+  .t-display { font-family: var(--font-display); font-size: 1.5rem; font-weight: 600; }
+  .t-body { font-size: 1rem; font-weight: 600; }
+  .t-mono { font-family: var(--font-mono); font-size: 0.875rem; font-weight: 500; }
+  .type-list small { color: var(--muted); font-size: 0.8125rem; }
+
+  /* 4 · icons */
+  .home { justify-self: center; align-self: center; display: grid; grid-auto-flow: column; gap: 22px; padding: 26px 30px; border-radius: 30px; background: var(--navy); }
+  .home .app { display: grid; justify-items: center; gap: 8px; }
+  .home .app span { font-size: 0.6875rem; color: #FFFFFF; }
+  .ios { width: 60px; height: 60px; border-radius: 13.5px; overflow: hidden; }
+  .ghost-tile { width: 60px; height: 60px; border-radius: 13.5px; background: #3F6A92; }
+  .masks { justify-self: center; align-self: center; display: flex; gap: 18px; align-items: flex-end; }
+  .mask { display: grid; justify-items: center; gap: 8px; }
+  .mask span { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--muted); }
+  .dark .mask span { color: var(--dark-muted); }
+  .mask i { display: block; width: 56px; height: 56px; overflow: hidden; }
+  .mask-circle i { border-radius: 50%; }
+  .mask-round i { border-radius: 10px; }
+  .mask-squircle i { border-radius: 30% / 30%; }
+  .dock { justify-self: center; align-self: center; display: flex; align-items: flex-end; gap: 14px; padding: 12px 18px; border-radius: 18px; background: rgba(255, 255, 255, 0.12); }
+  .dock-tile { width: 64px; height: 64px; border-radius: 15px; overflow: hidden; }
+  .dock-ghost { width: 64px; height: 64px; border-radius: 15px; background: rgba(255, 255, 255, 0.18); }
+  .taskbar { justify-self: center; align-self: center; display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: var(--r); background: var(--dark-s2); }
+  .taskbar svg { width: 24px; height: 24px; }
+  .taskbar span { font-size: 0.8125rem; }
+
+  /* 5 · in the application */
+  .app-frame { align-self: stretch; display: grid; gap: 0; border-radius: var(--r-lg); overflow: hidden; background: var(--bg); color: var(--fg); font-size: 0.875rem; }
+  .dark .app-frame { background: var(--dark-bg); color: var(--dark-fg); }
+  .sb { display: grid; gap: 6px; padding: 10px; background: var(--s1); }
+  .dark .sb { background: var(--dark-s1); }
+  .sb-brand { display: flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 6px; border-radius: var(--r-lg); font-weight: 700; }
+  .sb-brand svg { width: 28px; height: 28px; flex: none; }
+  .sb-row { padding: 6px 8px; border-radius: var(--r); color: var(--muted); }
+  .dark .sb-row { color: var(--dark-muted); }
+  .sb-row.on { background: var(--s2); color: var(--fg); }
+  .dark .sb-row.on { background: var(--dark-s2); color: var(--dark-fg); }
+  .sb-sec { padding: 10px 8px 2px; font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+  .dark .sb-sec { color: var(--dark-muted); }
+
+  .tab-strip { align-self: center; display: grid; gap: 0; }
+  .tab-bar { display: flex; align-items: flex-end; gap: 6px; padding: 8px 8px 0; border-radius: var(--r-lg) var(--r-lg) 0 0; background: var(--s3); }
+  .dark .tab-bar { background: var(--dark-s2); }
+  .tab { display: flex; align-items: center; gap: 8px; min-width: 0; padding: 8px 12px; border-radius: 10px 10px 0 0; background: var(--bg); font-size: 0.8125rem; white-space: nowrap; }
+  .dark .tab { background: var(--dark-bg); }
+  .tab.off { background: transparent; color: var(--muted); }
+  .dark .tab.off { color: var(--dark-muted); }
+  .tab svg { width: 16px; height: 16px; flex: none; }
+  .tab span { overflow: hidden; text-overflow: ellipsis; }
+  .url { padding: 10px 12px; background: var(--bg); font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); border-radius: 0 0 var(--r-lg) var(--r-lg); }
+  .dark .url { background: var(--dark-bg); color: var(--dark-muted); }
+
+  .win { align-self: center; border-radius: 10px; overflow: hidden; background: var(--bg); }
+  .dark .win { background: var(--dark-bg); }
+  .win-bar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 10px 12px; background: var(--s2); }
+  .dark .win-bar { background: var(--dark-s2); }
+  .lights { display: flex; gap: 7px; }
+  .lights i { display: block; width: 12px; height: 12px; border-radius: 50%; background: var(--s3); }
+  .dark .lights i { background: #3A424A; }
+  .win-title { display: flex; align-items: center; gap: 8px; font-size: 0.8125rem; font-weight: 600; white-space: nowrap; }
+  .win-title svg { width: 16px; height: 16px; flex: none; }
+  .win-title span { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  .win-title { min-width: 0; }
+  .win-body { padding: 18px 16px 22px; display: grid; gap: 8px; font-size: 0.8125rem; color: var(--muted); }
+  .dark .win-body { color: var(--dark-muted); }
+
+  .phone { justify-self: center; align-self: center; width: 180px; height: 340px; border-radius: 28px; overflow: hidden; display: grid; }
+  .launch { background: var(--navy); color: #FFFFFF; display: grid; place-items: center; align-content: center; gap: 12px; }
+  .launch svg { width: 72px; height: 72px; }
+  .launch b { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; }
+  .launch small { font-size: 0.6875rem; color: #C8D6E2; }
+  .signin { background: var(--bg); color: var(--fg); display: grid; align-content: center; justify-items: center; gap: 10px; padding: 20px 18px; text-align: center; }
+  .signin svg { width: 44px; height: 44px; }
+  .signin b { font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; }
+  .signin p { font-size: 0.75rem; color: var(--muted); line-height: 1.45; }
+  .btn-primary { margin-top: 6px; width: 100%; padding: 11px 12px; border-radius: var(--r-lg); background: var(--accent); color: #FFFFFF; font-weight: 700; font-size: 0.8125rem; text-align: center; }
+  .signin small { font-family: var(--font-mono); font-size: 0.625rem; color: var(--muted); }
+
+  .thread { align-self: center; display: grid; gap: 14px; width: 100%; font-size: 0.875rem; }
+  .u-turn { justify-self: end; max-width: 70%; padding: 8px 14px; border-radius: 16px; background: var(--s2); }
+  .dark .u-turn { background: var(--dark-s2); }
+  .a-turn { display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 10px; align-items: start; }
+  .a-turn svg { width: 24px; height: 24px; margin-top: 2px; }
+  .a-turn p { line-height: 1.5; }
+  .a-turn .k { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 2px; }
+  .dark .a-turn .k { color: var(--dark-muted); }
+  .think { display: flex; align-items: center; gap: 10px; color: var(--muted); }
+  .dark .think { color: var(--dark-muted); }
+  .think svg { width: 24px; height: 24px; }
+  .think .sw-l { animation: think 1.4s ease-in-out infinite; }
+  @keyframes think { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+  @media (prefers-reduced-motion: reduce) { .think .sw-l { animation: none; } }
+
+  .lock { align-self: center; justify-self: stretch; padding: 22px 18px; border-radius: 22px; background: linear-gradient(180deg, #1F4E79, #14181C); }
+  .banner { display: grid; grid-template-columns: 38px minmax(0, 1fr); gap: 12px; align-items: center; padding: 12px 14px; border-radius: 18px; background: rgba(255, 255, 255, 0.94); color: var(--fg); }
+  .banner .ico { width: 38px; height: 38px; border-radius: 9px; overflow: hidden; }
+  .banner b { display: block; font-size: 0.8125rem; }
+  .banner .app-name { font-family: var(--font-mono); font-size: 0.6875rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); }
+  .banner p { font-size: 0.8125rem; line-height: 1.4; color: var(--muted); }
+
+  .home-state { align-self: center; justify-self: stretch; display: grid; justify-items: center; gap: 14px; padding: 8px 12px; }
+  .home-state svg { width: 40px; height: 40px; }
+  .home-state h3 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; text-align: center; }
+  .composer { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 10px 12px 16px; border-radius: 22px; background: var(--navy); color: #C8D6E2; font-size: 0.875rem; }
+  .dark .composer { background: #8FB9D0; color: #2F3E49; }
+  .composer i { display: block; width: 30px; height: 30px; border-radius: 50%; background: var(--accent); }
+  .dark .composer i { background: var(--ember-dark); }
+
+  .footer-line { align-self: center; display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: var(--r); background: var(--bg); font-size: 0.8125rem; color: var(--muted); }
+  .footer-line svg { width: 20px; height: 20px; }
+  .footer-line code { font-family: var(--font-mono); font-size: 0.75rem; }
+
+  /* 6 · rules */
+  .rules { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .rule-col { display: grid; gap: 10px; align-content: start; padding: 24px; border-radius: var(--r-lg); background: var(--slate); }
+  .rule-col.no { background: var(--s2); }
+  .rule-col h3 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; }
+  .rule-col li { margin-left: 18px; }
+  .dont-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+  .dont { display: grid; justify-items: center; gap: 8px; padding: 16px 10px; border-radius: var(--r-lg); background: var(--bg); }
+  .dont svg, .dont i { width: 64px; height: 64px; }
+  .dont span { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--muted); text-align: center; }
+  .dont .ember-bubble { --m-bubble: #DF7C35; --m-upper: #FFFFFF; --m-lower: #1F4E79; }
+  .dont .outlined path { fill: none; stroke: #1F4E79; stroke-width: 14; }
+  .dont .on-ember { display: grid; place-items: center; border-radius: 12px; background: var(--ember); }
+  .dont .on-ember svg { width: 40px; height: 40px; }
+
+  /* 7 · files */
+  table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+  th, td { text-align: left; vertical-align: top; padding: 10px 12px; }
+  th { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+  tr + tr td { border-top: 1px solid var(--s3); }
+  td code { font-family: var(--font-mono); font-size: 0.8125rem; }
+
+  @media (max-width: 1000px) { .row { grid-template-columns: repeat(2, minmax(0, 1fr)); } .swatches { grid-template-columns: repeat(3, minmax(0, 1fr)); } .dont-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 600px) {
+    .board { padding: 32px 16px 64px; gap: 56px; }
+    .row, .row-3, .row-2, .rules, .swatches { grid-template-columns: minmax(0, 1fr); }
+    .ctx.wide { grid-column: auto; }
+    .type-list div { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+    .home { grid-auto-flow: row; }
+  }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="pg-mark" viewBox="0 0 512 512">
+      <path d="M136 96H376A64 64 0 0 1 440 160V304A64 64 0 0 1 376 368H216L116 436L152 368H136A64 64 0 0 1 72 304V160A64 64 0 0 1 136 96Z" fill="var(--m-bubble)"/>
+      <g transform="translate(256 232) scale(0.6) translate(-256 -256) rotate(-13 256 256) translate(0 18)">
+        <path d="M80 250C172 186 300 154 432 162C306 126 176 148 80 208C64 218 64 240 80 250Z" fill="var(--m-upper)"/>
+        <path d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z" fill="var(--m-lower)"/>
+      </g>
+    </symbol>
+    <symbol id="pg-tile" viewBox="0 0 512 512"><rect width="512" height="512" fill="#1F4E79"/><use href="#pg-mark"/></symbol>
+    <symbol id="pg-favicon" viewBox="0 0 512 512">
+      <rect width="512" height="512" rx="96" fill="#1F4E79"/>
+      <path d="M136 96H376A64 64 0 0 1 440 160V304A64 64 0 0 1 376 368H216L116 436L152 368H136A64 64 0 0 1 72 304V160A64 64 0 0 1 136 96Z" fill="#FFFFFF"/>
+      <path d="M134 316C214 292 298 256 386 246" fill="none" stroke="#DF7C35" stroke-width="58" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<main class="board">
+  <header class="board-head" data-od-id="board-head">
+    <p class="eyebrow">Advanced Spine &amp; Orthopedics · PatientGPT · Brand board</p>
+    <h1>Spine in conversation</h1>
+    <p class="lead">The PatientGPT mark is the practice’s spine inside a speech bubble: the surgeon’s case, spoken. It was chosen on 4 October 2026 from three concepts. This board shows the mark everywhere the application puts it, in both themes, and the rules that keep it the same across the web app, the desktop app and the phone.</p>
+  </header>
+
+  <section class="sec" data-od-id="mark" aria-labelledby="h-mark">
+    <div class="sec-head">
+      <h2 id="h-mark">The mark</h2>
+      <p>Four forms, one drawing. The bubble changes colour with the surface; the spine inside it never changes. Below 24 px the favicon cut takes over, with the spine as a single bold stroke.</p>
+    </div>
+    <div class="row">
+      <figure class="ctx"><svg class="mark-big center m-light"><use href="#pg-mark"/></svg><figcaption>Mark on white · mark.svg</figcaption></figure>
+      <figure class="ctx dark"><svg class="mark-big center m-dark"><use href="#pg-mark"/></svg><figcaption>Mark on dark · mark-dark.svg</figcaption></figure>
+      <figure class="ctx navy"><svg class="tile-big center m-tile"><use href="#pg-tile"/></svg><figcaption>App icon, 1024 master · icon.svg</figcaption></figure>
+      <figure class="ctx"><svg class="tile-big center"><use href="#pg-favicon"/></svg><figcaption>Favicon cut · favicon.svg</figcaption></figure>
+    </div>
+    <div class="row">
+      <figure class="ctx wide">
+        <svg class="construct m-light" viewBox="-40 -40 600 592" role="img" aria-label="Construction of the mark on a 512 unit canvas with clear space marked">
+          <rect class="guide" x="0" y="0" width="512" height="512"/>
+          <rect class="guide" x="4" y="28" width="504" height="476" stroke-dasharray="4 6"/>
+          <use href="#pg-mark" width="512" height="512"/>
+          <line class="guide" x1="440" y1="436" x2="508" y2="436"/>
+          <text class="guide-label" x="450" y="470">68</text>
+          <text class="guide-label" x="0" y="-12">512</text>
+          <text class="guide-label" x="150" y="490">tail · 68 units</text>
+        </svg>
+        <figcaption>512 canvas. Bubble 368×272, corner radius 64, tail to the lower left. Spine at 60 %, rotated −13°, centred 24 units above the bubble’s middle. Clear space all round equals the tail height, 68 units; on the 512 canvas that is the canvas itself.</figcaption>
+      </figure>
+      <figure class="ctx wide">
+        <div class="sizes center">
+          <div class="size"><svg class="m-light" width="96" height="96"><use href="#pg-mark"/></svg><span>96</span></div>
+          <div class="size"><svg class="m-light" width="48" height="48"><use href="#pg-mark"/></svg><span>48</span></div>
+          <div class="size"><svg class="m-light" width="28" height="28"><use href="#pg-mark"/></svg><span>28 · sidebar</span></div>
+          <div class="size"><svg class="m-light" width="24" height="24"><use href="#pg-mark"/></svg><span>24 · minimum</span></div>
+          <div class="size"><svg width="32" height="32"><use href="#pg-favicon"/></svg><span>32 · favicon</span></div>
+          <div class="size"><svg width="16" height="16"><use href="#pg-favicon"/></svg><span>16 · favicon</span></div>
+        </div>
+        <figcaption>Sizes. The mark holds to 24 px. Under that, use the favicon cut; it is the only form with a stroke.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="sec" data-od-id="colour" aria-labelledby="h-colour">
+    <div class="sec-head">
+      <h2 id="h-colour">Colour</h2>
+      <p>The application’s own tokens, nothing added. Three embers do three jobs: one lives only in the mark, one is text and buttons on white, one is text and buttons on dark. Grey is the upper sweep and takes the surface’s grey.</p>
+    </div>
+    <div class="swatches">
+      <div class="sw"><i style="background:#1F4E79"></i><b>Navy</b><code>#1F4E79</code><small>The tile, the bubble on white, the composer, focus.</small></div>
+      <div class="sw"><i style="background:#DF7C35"></i><b>Mark ember</b><code>#DF7C35</code><small>The lower sweep, on every surface. Never text.</small></div>
+      <div class="sw"><i style="background:#A85417"></i><b>Text ember</b><code>#A85417</code><small>Links and the primary button on white. 5.4:1 with white text.</small></div>
+      <div class="sw"><i style="background:#F0955A"></i><b>Dark ember</b><code>#F0955A</code><small>Links and the primary button in dark mode, with ink text.</small></div>
+      <div class="sw"><i style="background:#EDF3F7"></i><b>Slate</b><code>#EDF3F7</code><small>The bubble in dark mode; surgeon-only surfaces in the app.</small></div>
+      <div class="sw"><i style="background:#C7CDD2"></i><b>Sweep grey, light</b><code>#C7CDD2</code><small>Upper sweep inside the navy bubble.</small></div>
+      <div class="sw"><i style="background:#6E6F71"></i><b>Sweep grey</b><code>#6E6F71</code><small>Upper sweep inside the white and slate bubbles.</small></div>
+      <div class="sw"><i style="background:#231F20"></i><b>Ink</b><code>#231F20</code><small>Wordmark and text on white.</small></div>
+      <div class="sw"><i style="background:#EDF0F2"></i><b>Paper, dark</b><code>#EDF0F2</code><small>Wordmark and text on dark.</small></div>
+      <div class="sw"><i style="background:#14181C"></i><b>Dark surface</b><code>#14181C</code><small>Dark-mode page. The mark sits on it with the slate bubble.</small></div>
+    </div>
+  </section>
+
+  <section class="sec" data-od-id="wordmark" aria-labelledby="h-wordmark">
+    <div class="sec-head">
+      <h2 id="h-wordmark">Wordmark and type</h2>
+      <p>Mark at a quarter scale, then the name in Playfair Display 600, the display face the app already uses. The practice name is never part of the wordmark; it sits under it as a separate line where there is room. The text is live here and must be outlined for production.</p>
+    </div>
+    <div class="row-2 row">
+      <figure class="ctx">
+        <svg class="wm-svg m-light" viewBox="0 0 780 160" role="img" aria-label="PatientGPT wordmark on white"><g transform="translate(8 16) scale(0.25)"><use href="#pg-mark" width="512" height="512"/></g><text x="160" y="110" font-family="'Playfair Display', 'Iowan Old Style', Charter, Georgia, serif" font-size="88" font-weight="600" letter-spacing="-1" fill="#231F20">PatientGPT</text></svg>
+        <figcaption>wordmark-light.svg · minimum width 120 px</figcaption>
+      </figure>
+      <figure class="ctx dark">
+        <svg class="wm-svg m-dark" viewBox="0 0 780 160" role="img" aria-label="PatientGPT wordmark on dark"><g transform="translate(8 16) scale(0.25)"><use href="#pg-mark" width="512" height="512"/></g><text x="160" y="110" font-family="'Playfair Display', 'Iowan Old Style', Charter, Georgia, serif" font-size="88" font-weight="600" letter-spacing="-1" fill="#EDF0F2">PatientGPT</text></svg>
+        <figcaption>wordmark-dark.svg</figcaption>
+      </figure>
+      <figure class="ctx wide">
+        <div class="type-list">
+          <div><span class="t-display">Playfair Display 600</span><small>Product name, screen titles, the greeting. Never below 20 px.</small></div>
+          <div><span class="t-body">Mulish 400 · 600 · 700</span><small>Everything the user reads and taps. 700 for the brand name in the sidebar.</small></div>
+          <div><span class="t-mono">JetBrains Mono 500</span><small>Case numbers, dates, criterion states, section labels. Uppercase with 0.06 em tracking for labels.</small></div>
+        </div>
+        <figcaption>The three faces of the application, unchanged.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="sec" data-od-id="icons" aria-labelledby="h-icons">
+    <div class="sec-head">
+      <h2 id="h-icons">Application icons</h2>
+      <p>One master, four platforms. The tile is full-bleed navy; each platform applies its own corner. Android’s adaptive masks cut deepest, so the bubble stays inside the central 66 %.</p>
+    </div>
+    <div class="row">
+      <figure class="ctx">
+        <div class="home">
+          <div class="app"><svg class="ios m-tile"><use href="#pg-tile"/></svg><span>PatientGPT</span></div>
+          <div class="app"><i class="ghost-tile"></i><span>Phone</span></div>
+        </div>
+        <figcaption>iOS · 60 pt home screen, Flutter app</figcaption>
+      </figure>
+      <figure class="ctx dark">
+        <div class="masks">
+          <div class="mask mask-circle"><i><svg class="m-tile" width="56" height="56"><use href="#pg-tile"/></svg></i><span>circle</span></div>
+          <div class="mask mask-squircle"><i><svg class="m-tile" width="56" height="56"><use href="#pg-tile"/></svg></i><span>squircle</span></div>
+          <div class="mask mask-round"><i><svg class="m-tile" width="56" height="56"><use href="#pg-tile"/></svg></i><span>rounded</span></div>
+        </div>
+        <figcaption>Android · adaptive icon under three launcher masks</figcaption>
+      </figure>
+      <figure class="ctx navy">
+        <div class="dock">
+          <i class="dock-ghost"></i>
+          <svg class="dock-tile m-tile"><use href="#pg-tile"/></svg>
+          <i class="dock-ghost"></i>
+        </div>
+        <figcaption>macOS · Dock, Tauri desktop app</figcaption>
+      </figure>
+      <figure class="ctx dark">
+        <div class="taskbar"><svg><use href="#pg-favicon"/></svg><span>PatientGPT</span></div>
+        <figcaption>Windows · taskbar at 24 px uses the favicon cut</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="sec" data-od-id="in-app" aria-labelledby="h-app">
+    <div class="sec-head">
+      <h2 id="h-app">In the application</h2>
+      <p>The mark is PatientGPT’s voice. It appears once in the chrome, as the sidebar brand, and then only where PatientGPT speaks: beside assistant turns, in the thinking state, on the launch screen and in notifications. It is not a decoration for empty space.</p>
+    </div>
+
+    <div class="row">
+      <figure class="ctx">
+        <div class="app-frame">
+          <div class="sb">
+            <div class="sb-brand"><svg class="m-light"><use href="#pg-mark"/></svg><span>PatientGPT</span></div>
+            <div class="sb-row">Search</div>
+            <div class="sb-row">New chat</div>
+            <div class="sb-sec">Patients</div>
+            <div class="sb-row on">Renata Kaminski</div>
+            <div class="sb-row">Marcus Delgado</div>
+            <div class="sb-row">Odalys Brennan</div>
+          </div>
+        </div>
+        <figcaption>Sidebar brand, light · mark at 28 px, Mulish 700</figcaption>
+      </figure>
+      <figure class="ctx dark">
+        <div class="app-frame">
+          <div class="sb">
+            <div class="sb-brand"><svg class="m-dark"><use href="#pg-mark"/></svg><span>PatientGPT</span></div>
+            <div class="sb-row">Search</div>
+            <div class="sb-row">New chat</div>
+            <div class="sb-sec">Patients</div>
+            <div class="sb-row on">Renata Kaminski</div>
+            <div class="sb-row">Marcus Delgado</div>
+            <div class="sb-row">Odalys Brennan</div>
+          </div>
+        </div>
+        <figcaption>Sidebar brand, dark · slate bubble</figcaption>
+      </figure>
+      <figure class="ctx wide">
+        <div class="tab-strip">
+          <div class="tab-bar">
+            <div class="tab"><svg><use href="#pg-favicon"/></svg><span>PatientGPT · Advanced Spine &amp; Orthopedics</span></div>
+            <div class="tab off"><span>Aetna CPB 0743</span></div>
+          </div>
+          <div class="url">patientgpt.advancedspineortho.example</div>
+        </div>
+        <figcaption>Browser tab · favicon.svg at 16 px, window title from the app</figcaption>
+      </figure>
+    </div>
+
+    <div class="row">
+      <figure class="ctx wide">
+        <div class="win">
+          <div class="win-bar">
+            <div class="lights"><i></i><i></i><i></i></div>
+            <div class="win-title"><svg><use href="#pg-favicon"/></svg><span>PatientGPT — Renata Kaminski · PA-2026-0431</span></div>
+            <div></div>
+          </div>
+          <div class="win-body"><span>Case · Lumbar fusion L4–L5 · Aetna</span><span>Awaiting your gate affirmation</span></div>
+        </div>
+        <figcaption>Desktop window, Tauri · title bar carries the favicon cut and the case</figcaption>
+      </figure>
+      <figure class="ctx dark wide">
+        <div class="win">
+          <div class="win-bar">
+            <div class="lights"><i></i><i></i><i></i></div>
+            <div class="win-title"><svg><use href="#pg-favicon"/></svg><span>PatientGPT — Renata Kaminski · PA-2026-0431</span></div>
+            <div></div>
+          </div>
+          <div class="win-body"><span>Case · Lumbar fusion L4–L5 · Aetna</span><span>Awaiting your gate affirmation</span></div>
+        </div>
+        <figcaption>Desktop window, dark</figcaption>
+      </figure>
+    </div>
+
+    <div class="row">
+      <figure class="ctx navy">
+        <div class="phone launch"><svg class="m-tile"><use href="#pg-mark"/></svg><b>PatientGPT</b><small>Advanced Spine &amp; Orthopedics</small></div>
+        <figcaption>Launch screen, Flutter · the tile colours, full bleed</figcaption>
+      </figure>
+      <figure class="ctx">
+        <div class="phone signin">
+          <svg class="m-light"><use href="#pg-mark"/></svg>
+          <b>PatientGPT</b>
+          <p>Sign in with your Advanced Spine &amp; Orthopedics account.</p>
+          <div class="btn-primary">Continue with practice sign-in</div>
+          <small>One account · every device</small>
+        </div>
+        <figcaption>Sign-in · one primary button, text ember</figcaption>
+      </figure>
+      <figure class="ctx wide">
+        <div class="thread">
+          <div class="u-turn">Catch me up</div>
+          <div class="a-turn"><svg class="m-light"><use href="#pg-mark"/></svg><p><span class="k">Case PA-2026-0431 · Renata Kaminski</span>Lumbar fusion L4–L5, Aetna CPB 0743. Five criteria met, two open: imaging within 12 months and documented failure of six weeks of conservative care. The MRI from 14 August is in the inbox and not yet filed.</p></div>
+          <div class="think"><svg class="m-light" viewBox="0 0 512 512"><path d="M136 96H376A64 64 0 0 1 440 160V304A64 64 0 0 1 376 368H216L116 436L152 368H136A64 64 0 0 1 72 304V160A64 64 0 0 1 136 96Z" fill="#1F4E79"/><g transform="translate(256 232) scale(0.6) translate(-256 -256) rotate(-13 256 256) translate(0 18)"><path d="M80 250C172 186 300 154 432 162C306 126 176 148 80 208C64 218 64 240 80 250Z" fill="#C7CDD2"/><path class="sw-l" d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z" fill="#DF7C35"/></g></svg><span>Reading the Aetna policy…</span></div>
+        </div>
+        <figcaption>Assistant turn and thinking state · the mark is the speaker; the ember sweep breathes while PatientGPT works</figcaption>
+      </figure>
+    </div>
+
+    <div class="row">
+      <figure class="ctx dark wide">
+        <div class="thread">
+          <div class="u-turn">Catch me up</div>
+          <div class="a-turn"><svg class="m-dark"><use href="#pg-mark"/></svg><p><span class="k">Case PA-2026-0431 · Renata Kaminski</span>Lumbar fusion L4–L5, Aetna CPB 0743. Five criteria met, two open: imaging within 12 months and documented failure of six weeks of conservative care. The MRI from 14 August is in the inbox and not yet filed.</p></div>
+        </div>
+        <figcaption>Assistant turn, dark</figcaption>
+      </figure>
+      <figure class="ctx wide">
+        <div class="lock">
+          <div class="banner">
+            <svg class="ico m-tile"><use href="#pg-tile"/></svg>
+            <div><span class="app-name">PatientGPT · now</span><b>Renata Kaminski · PA-2026-0431</b><p>Aetna asked for a peer-to-peer. Your call brief is ready.</p></div>
+          </div>
+        </div>
+        <figcaption>Push notification · the app tile, never the bare mark</figcaption>
+      </figure>
+    </div>
+
+    <div class="row">
+      <figure class="ctx wide">
+        <div class="home-state">
+          <svg class="m-light"><use href="#pg-mark"/></svg>
+          <h3>Which case first, Dr. James?</h3>
+          <div class="composer"><span>Ask about a patient or a case</span><i></i></div>
+        </div>
+        <figcaption>Home greeting · the one place the mark stands alone in the content area</figcaption>
+      </figure>
+      <figure class="ctx dark wide">
+        <div class="home-state">
+          <svg class="m-dark"><use href="#pg-mark"/></svg>
+          <h3>Which case first, Dr. James?</h3>
+          <div class="composer"><span>Ask about a patient or a case</span><i></i></div>
+        </div>
+        <figcaption>Home greeting, dark</figcaption>
+      </figure>
+      <figure class="ctx wide">
+        <div class="footer-line"><svg class="m-light"><use href="#pg-mark"/></svg><span>Prepared in PatientGPT · Advanced Spine &amp; Orthopedics · <code>2026-10-04</code></span></div>
+        <figcaption>Record footer · letters, packets and briefs carry one line with the mark at 20 px</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="sec" data-od-id="rules" aria-labelledby="h-rules">
+    <div class="sec-head">
+      <h2 id="h-rules">Rules</h2>
+      <p>Short, because the mark is simple. The practice’s spine stays the practice’s; PatientGPT is always the spine in the bubble.</p>
+    </div>
+    <div class="rules">
+      <div class="rule-col">
+        <h3>Do</h3>
+        <ul>
+          <li>Use the navy bubble on white and light surfaces, the slate bubble on dark, the white bubble on navy.</li>
+          <li>Keep the spine exactly as drawn in the practice logo, at 60 % inside the bubble.</li>
+          <li>Use the favicon cut under 24 px: browser tab, window title bar, Windows taskbar.</li>
+          <li>Set the wordmark in Playfair Display 600, ink on white, paper on dark.</li>
+          <li>Put the mark beside assistant turns and in the thinking state, where PatientGPT is speaking.</li>
+          <li>Use the full tile for notifications and any place the icon represents the installed app.</li>
+        </ul>
+      </div>
+      <div class="rule-col no">
+        <h3>Don’t</h3>
+        <ul>
+          <li>Don’t use the bare sweeps for PatientGPT; alone they are Advanced Spine &amp; Orthopedics.</li>
+          <li>Don’t recolour the bubble ember, grey or any other colour, and don’t outline it.</li>
+          <li>Don’t set text in mark ember #DF7C35; text uses #A85417 on white and #F0955A on dark.</li>
+          <li>Don’t rotate the mark, add a shadow, or place it on an ember surface.</li>
+          <li>Don’t put the mark in empty states, cards or headings as decoration.</li>
+          <li>Don’t stretch the tail or move it; it always points to the lower left.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="dont-row">
+      <div class="dont"><svg class="ember-bubble"><use href="#pg-mark"/></svg><span>Not an ember bubble</span></div>
+      <div class="dont"><svg class="outlined" viewBox="0 0 512 512"><path d="M136 96H376A64 64 0 0 1 440 160V304A64 64 0 0 1 376 368H216L116 436L152 368H136A64 64 0 0 1 72 304V160A64 64 0 0 1 136 96Z"/><g transform="translate(256 232) scale(0.6) translate(-256 -256) rotate(-13 256 256) translate(0 18)"><path d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z"/></g></svg><span>Not outlined</span></div>
+      <div class="dont"><svg class="m-light" viewBox="0 0 512 512"><g transform="rotate(-13 256 256) translate(0 18)"><path d="M80 250C172 186 300 154 432 162C306 126 176 148 80 208C64 218 64 240 80 250Z" fill="#C7CDD2"/><path d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z" fill="#DF7C35"/></g></svg><span>Not the bare spine</span></div>
+      <div class="dont"><i class="on-ember"><svg class="m-tile"><use href="#pg-mark"/></svg></i><span>Not on ember</span></div>
+    </div>
+  </section>
+
+  <section class="sec" data-od-id="files" aria-labelledby="h-files">
+    <div class="sec-head">
+      <h2 id="h-files">Files</h2>
+      <p>Everything on this board comes from these files in <code>docs/design/brand/</code>. The SVGs are the source; the PNG and ICO files are exported from them and should be regenerated, not edited.</p>
+    </div>
+    <table>
+      <thead><tr><th>File</th><th>Use</th></tr></thead>
+      <tbody>
+        <tr><td><code>icon.svg</code></td><td>The 1024 master: full-bleed navy tile, white bubble. Source for every platform icon.</td></tr>
+        <tr><td><code>mark.svg</code> · <code>mark-dark.svg</code></td><td>Transparent mark for light and dark surfaces: sidebar brand, assistant turns, sign-in, footers.</td></tr>
+        <tr><td><code>favicon.svg</code></td><td>The under-24 px cut on a rounded tile: browser tab, title bars, taskbar.</td></tr>
+        <tr><td><code>wordmark-light.svg</code> · <code>wordmark-dark.svg</code></td><td>Mark plus name. Live Playfair Display text; outline before production.</td></tr>
+        <tr><td><code>exports/icon-1024.png</code> · <code>apple-touch-icon-180.png</code> · <code>android-192.png</code> · <code>android-512.png</code></td><td>Platform icon rasters from <code>icon.svg</code>.</td></tr>
+        <tr><td><code>exports/favicon-32.png</code> · <code>favicon-16.png</code> · <code>favicon.ico</code></td><td>Rasters from <code>favicon.svg</code> for browsers that do not take SVG.</td></tr>
+        <tr><td><code>concepts/</code></td><td>The three concepts this was chosen from, with their board.</td></tr>
+      </tbody>
+    </table>
+  </section>
+</main>
+</body>
+</html>

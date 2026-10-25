@@ -1,0 +1,10 @@
+{
+  "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/vercel-react-best-practices/SKILL.md",
+  "chunk_id": "chunk-0092",
+  "text": "LOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n83: - `client-swr-dedup` - Use SWR for automatic request deduplication",
+  "content_type": "local-source-excerpt",
+  "source_id": "src-069",
+  "retrieval_status": "local-source-read",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 46
+}

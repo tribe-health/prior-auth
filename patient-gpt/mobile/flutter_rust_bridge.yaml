@@ -1,0 +1,7 @@
+# TJ-ARCH-MOB-001 compliant
+# flutter_rust_bridge_codegen 2.12.0 configuration. Run from mobile/:
+#   flutter_rust_bridge_codegen generate
+# Output under lib/bridge/generated/ is generated; never edit it by hand.
+rust_input: crate::api
+rust_root: ../crates/patient-gpt-ffi/
+dart_output: lib/bridge/generated

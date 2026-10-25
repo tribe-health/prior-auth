@@ -1,0 +1,629 @@
+{
+  "files": [
+    {
+      "target": "claude",
+      "path": ".claude/agents/product-manager.md",
+      "sha256": "fbd16b4a1900a2c6ef283c58a068a3fa2c1bfc235a99b20a1f68b98f98a00b0d",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "claude",
+      "path": ".claude/agents/team-lead.md",
+      "sha256": "3b3cd927139b8c8e847fe9f3e2cd50e4ca8f38b75d5feee2a112b2a275f68997",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "claude",
+      "path": ".claude/agents/creative-director.md",
+      "sha256": "828e70a0ec0f0bbcce3e48a7a6d58ff1183a9044cf6e0b60c62ede565a9c56df",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "claude",
+      "path": ".claude/agents/design-expert.md",
+      "sha256": "7861c508510b269e4e8f026cfa5325be6f365bd0911317bbe987508db4e4d597",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "claude",
+      "path": ".claude/agents/react-engineer.md",
+      "sha256": "ddd87434b90f523b707817051c9b8f1578e93e4c3aacb049a3330c6f0d498bdf",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "claude",
+      "path": ".claude/agents/tauri-engineer.md",
+      "sha256": "f6810adc7ff94c5e2f9ab6ed81f76b7710a36f790ad5cc9d65f86172afa4c8eb",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "claude",
+      "path": ".claude/agents/flutter-engineer.md",
+      "sha256": "dfb977eb24eb36341b54c95cd32b17af8bd3e5b54254e0d4ee2b9c1ac1d61eae",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "claude",
+      "path": ".claude/agents/rust-domain-engineer.md",
+      "sha256": "065822b0a4d0713851255db3b9244fa037d3a9d1f0ba01144e746f6e43a6a309",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "claude",
+      "path": ".claude/agents/storage-engineer.md",
+      "sha256": "abd30045cc9b281fe754e0a730f188674ecc5c9ddc7e4bf158cf3d5bb185d5f5",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "claude",
+      "path": ".claude/agents/flint-data-engineer.md",
+      "sha256": "5a8c450f9dc2dd6fda36ebb0369c1eb148ede360426aae765f27aa657376538e",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "claude",
+      "path": ".claude/agents/identity-security-engineer.md",
+      "sha256": "3ab76e7669a9af0b273372776a0764e1e94c56f68ae7bf649fc522cf70ec2970",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "claude",
+      "path": ".claude/agents/uar-agent-expert.md",
+      "sha256": "b6976d4aaae4f8984aa56d4f7186e8f466691dd5dd60865fd28b69470c52dc7d",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "claude",
+      "path": ".claude/agents/platform-release-engineer.md",
+      "sha256": "bbe31756b55185f4ef41ae5f34159537ea7c6fc857be09f1ab2828ca9563ac34",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "claude",
+      "path": ".claude/agents/documentation-engineer.md",
+      "sha256": "85bfddcf941327b13fae1d4ec5b2b2c91f458f9f5746ae491ed17ea18b857b0a",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "claude",
+      "path": ".claude/agents/phase-verifier.md",
+      "sha256": "a8171f7b29d76416d92230d8783ad2b4c8be4de07149591ca79b312e6182f95a",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "claude",
+      "path": ".claude/agents/artifact-critic.md",
+      "sha256": "738168e47be0473d304c4693eef75606ad8d231f89bf3eb6f18a03b9cc52cdf4",
+      "matchesStagedExport": false
+    },
+    {
+      "target": "claude",
+      "path": ".claude/agents/ui-critic.md",
+      "sha256": "13f4f61868ce8ee7fcfa85e13a8c660bfefe91fc4e3053e9fbca58fdab7d36cc",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "opencode",
+      "path": ".opencode/agents/product-manager.md",
+      "sha256": "63db79a02a88c8203c4d192ba25da5aa91294ab5ae96729200a1409155499ecc",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "opencode",
+      "path": ".opencode/agents/team-lead.md",
+      "sha256": "b045813ae13d220e72ffe4ed2c155271d336d110361e7d757507a78e7e40eb4b",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "opencode",
+      "path": ".opencode/agents/creative-director.md",
+      "sha256": "608278bba0d4207f4a6953e51f9107287af52e303494255c5528f50e0bef03ab",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "opencode",
+      "path": ".opencode/agents/design-expert.md",
+      "sha256": "60941e9fcf805cd0d1c3c8008a0fd981e7f41c22e35a286c718d66c23eb1c325",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "opencode",
+      "path": ".opencode/agents/react-engineer.md",
+      "sha256": "131f592619c460958440bc464de0673c67f3f78dce906abb488e982c94c19542",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "opencode",
+      "path": ".opencode/agents/tauri-engineer.md",
+      "sha256": "8000aca5f83c91161ee441fcb8e74f1c35c00d56df143a95f6d527f6d68ea1a7",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "opencode",
+      "path": ".opencode/agents/flutter-engineer.md",
+      "sha256": "e595daa9bf09e8d6b7a1b1a1d756a25d15183bedf7e38bdafea7438f96d37466",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "opencode",
+      "path": ".opencode/agents/rust-domain-engineer.md",
+      "sha256": "381befb8df3481a302e7b5653f072109c6428b2f316e1154e462ffb2f5ee0ede",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "opencode",
+      "path": ".opencode/agents/storage-engineer.md",
+      "sha256": "58cd17f539df0b1b45a793d0ce6748546caf9bbc8bdc1ed0ae9a1dcc2aba317d",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "opencode",
+      "path": ".opencode/agents/flint-data-engineer.md",
+      "sha256": "0e4581aabb33374c10cdf6324efb7149dc052083afc6abd45f496c53443441d0",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "opencode",
+      "path": ".opencode/agents/identity-security-engineer.md",
+      "sha256": "e8d5b755aa97f3bc7f5b0d903010488cd014fc0133d3b6dc5c1cdf0f290f5b35",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "opencode",
+      "path": ".opencode/agents/uar-agent-expert.md",
+      "sha256": "2d83981d4851c7c710596cb3b9a279d467789906d0e529d516dfd6c83e00b932",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "opencode",
+      "path": ".opencode/agents/platform-release-engineer.md",
+      "sha256": "95eab00e99f28ed59bfbddc7ff8e810bbeaf2432ab5561e243e3de562d02edd8",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "opencode",
+      "path": ".opencode/agents/documentation-engineer.md",
+      "sha256": "e2bc34769ba529c66f99d2ce9e2b1917549783be0abe4d974fd18493ad3a1911",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "opencode",
+      "path": ".opencode/agents/phase-verifier.md",
+      "sha256": "ac36d8d78a6678d9b268accaaa1429eac447b2f7dd7e8df42d8552c2739dc8ee",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "opencode",
+      "path": ".opencode/agents/artifact-critic.md",
+      "sha256": "a64037c54fe394bb756e21e1fd99e91d2f1b11a90b59e4cd5280675ad16dbcf2",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "opencode",
+      "path": ".opencode/agents/ui-critic.md",
+      "sha256": "88bb175c78103e6cc5a7c41933678bf89eaf4da36b8820d1c7380a853c068369",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "kimi",
+      "path": ".kimi-code/agents/product-manager.md",
+      "sha256": "e4eaafc6b902cea3bfbe552c6933423395f157c9c0ca9c7741d01d75695ad0ae",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "kimi",
+      "path": ".kimi-code/agents/team-lead.md",
+      "sha256": "a942d4808a773cf5cff5af24508652c275089cfe5f0595eaa0c70e7660a49114",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "kimi",
+      "path": ".kimi-code/agents/creative-director.md",
+      "sha256": "fa4e13514cf57bebc312a5c5fccef77f6bb5a61dc894b841158c664a2424a0d4",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "kimi",
+      "path": ".kimi-code/agents/design-expert.md",
+      "sha256": "146c0fb78f7762e53400313e558baed9ab384306d4d8776468f7ad8986825cf9",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "kimi",
+      "path": ".kimi-code/agents/react-engineer.md",
+      "sha256": "620511b1eb81aba90705eb4a911ca6eb632d62a24fddfa08f6cafcbe1df96b07",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "kimi",
+      "path": ".kimi-code/agents/tauri-engineer.md",
+      "sha256": "dcb9a85cac8312e91e8747600b4b965e96a53c0dad70063e1bb939b9d95e9537",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "kimi",
+      "path": ".kimi-code/agents/flutter-engineer.md",
+      "sha256": "201d43d0474863ce0a722729dade835a08eacacb4d95e4a92e915a9880551c1e",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "kimi",
+      "path": ".kimi-code/agents/rust-domain-engineer.md",
+      "sha256": "ae5daa506458234650263a86f474ba2762db8123799344a8305e9c39019674d9",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "kimi",
+      "path": ".kimi-code/agents/storage-engineer.md",
+      "sha256": "288d2e6c898d73768766746ade74bcad20c2655e46a8c57b88765629be0779c8",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "kimi",
+      "path": ".kimi-code/agents/flint-data-engineer.md",
+      "sha256": "b188995b4afccd2c3badf0ce1187f7b74983d92871c1066f42da0449ac4f75e7",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "kimi",
+      "path": ".kimi-code/agents/identity-security-engineer.md",
+      "sha256": "e604c7cf97e31cb82338756d2fbf7e89d5f3b500db3a82f9319902bb5d58a9c7",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "kimi",
+      "path": ".kimi-code/agents/uar-agent-expert.md",
+      "sha256": "3a7748aa70774acd6fabc770ee1075c2b8319033ad86b3a7e4014ef568170a1a",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "kimi",
+      "path": ".kimi-code/agents/platform-release-engineer.md",
+      "sha256": "1e00bcca41a80ba9fc5ac19cb028bcc439e54ec28868ab7afe8e1c2de2a16817",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "kimi",
+      "path": ".kimi-code/agents/documentation-engineer.md",
+      "sha256": "691ae447b58ca6d818b720981d7de0062f713c2ecc135d9e844472a60dadc91d",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "kimi",
+      "path": ".kimi-code/agents/phase-verifier.md",
+      "sha256": "febc338c787dd27bd9edddcc61dacfcf12572124e91b31b7f6bf487783d04031",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "kimi",
+      "path": ".kimi-code/agents/artifact-critic.md",
+      "sha256": "d718353b37d725374daede47226f6bfd75ef35e52292ce76d135eb5fae63f907",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "kimi",
+      "path": ".kimi-code/agents/ui-critic.md",
+      "sha256": "63a0892b9165a672de03cd87f9d3952841c02902131ccf5041b2e736f50e52da",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "minimax",
+      "path": ".minimax/agents/product-manager/agent.md",
+      "sha256": "fbd16b4a1900a2c6ef283c58a068a3fa2c1bfc235a99b20a1f68b98f98a00b0d",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "minimax",
+      "path": ".minimax/agents/team-lead/agent.md",
+      "sha256": "3b3cd927139b8c8e847fe9f3e2cd50e4ca8f38b75d5feee2a112b2a275f68997",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "minimax",
+      "path": ".minimax/agents/creative-director/agent.md",
+      "sha256": "828e70a0ec0f0bbcce3e48a7a6d58ff1183a9044cf6e0b60c62ede565a9c56df",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "minimax",
+      "path": ".minimax/agents/design-expert/agent.md",
+      "sha256": "7861c508510b269e4e8f026cfa5325be6f365bd0911317bbe987508db4e4d597",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "minimax",
+      "path": ".minimax/agents/react-engineer/agent.md",
+      "sha256": "ddd87434b90f523b707817051c9b8f1578e93e4c3aacb049a3330c6f0d498bdf",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "minimax",
+      "path": ".minimax/agents/tauri-engineer/agent.md",
+      "sha256": "f6810adc7ff94c5e2f9ab6ed81f76b7710a36f790ad5cc9d65f86172afa4c8eb",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "minimax",
+      "path": ".minimax/agents/flutter-engineer/agent.md",
+      "sha256": "dfb977eb24eb36341b54c95cd32b17af8bd3e5b54254e0d4ee2b9c1ac1d61eae",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "minimax",
+      "path": ".minimax/agents/rust-domain-engineer/agent.md",
+      "sha256": "065822b0a4d0713851255db3b9244fa037d3a9d1f0ba01144e746f6e43a6a309",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "minimax",
+      "path": ".minimax/agents/storage-engineer/agent.md",
+      "sha256": "abd30045cc9b281fe754e0a730f188674ecc5c9ddc7e4bf158cf3d5bb185d5f5",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "minimax",
+      "path": ".minimax/agents/flint-data-engineer/agent.md",
+      "sha256": "5a8c450f9dc2dd6fda36ebb0369c1eb148ede360426aae765f27aa657376538e",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "minimax",
+      "path": ".minimax/agents/identity-security-engineer/agent.md",
+      "sha256": "3ab76e7669a9af0b273372776a0764e1e94c56f68ae7bf649fc522cf70ec2970",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "minimax",
+      "path": ".minimax/agents/uar-agent-expert/agent.md",
+      "sha256": "b6976d4aaae4f8984aa56d4f7186e8f466691dd5dd60865fd28b69470c52dc7d",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "minimax",
+      "path": ".minimax/agents/platform-release-engineer/agent.md",
+      "sha256": "bbe31756b55185f4ef41ae5f34159537ea7c6fc857be09f1ab2828ca9563ac34",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "minimax",
+      "path": ".minimax/agents/documentation-engineer/agent.md",
+      "sha256": "85bfddcf941327b13fae1d4ec5b2b2c91f458f9f5746ae491ed17ea18b857b0a",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "minimax",
+      "path": ".minimax/agents/phase-verifier/agent.md",
+      "sha256": "d627d9282935860f3ea52cc0ffc7c1ecfdfb7e8c6cab0cf721cd65fb365478a4",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "minimax",
+      "path": ".minimax/agents/artifact-critic/agent.md",
+      "sha256": "9eb36a6b8bc3609a18541d3aaad1af20283f6690ef29b814169f37faa71de0bc",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "minimax",
+      "path": ".minimax/agents/ui-critic/agent.md",
+      "sha256": "ad2cfaa4da1094809187a374c98bee7f8d45bf1e5c55c310baa2daff8d79304e",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "deepseek",
+      "path": ".dsh/profiles/patientgpt-delivery-product-manager/cordis.patch.yml",
+      "sha256": "90cffaceb02a2d642f52c779d67eaad44ba5e1a84c253e0bacf96f20fa506f40",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "deepseek",
+      "path": ".dsh/profiles/patientgpt-delivery-team-lead/cordis.patch.yml",
+      "sha256": "de8486ae1368cb3c776cabd7a3cc38ad8402b45d62f7e8eef8a4cae1964e55b3",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "deepseek",
+      "path": ".dsh/profiles/patientgpt-delivery-creative-director/cordis.patch.yml",
+      "sha256": "3d414d0948dc5f82672714120a32504d220d438602393ed4c8f68a1eaac614f1",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "deepseek",
+      "path": ".dsh/profiles/patientgpt-delivery-design-expert/cordis.patch.yml",
+      "sha256": "cfe500407fdaef98a1bb90b0514215ba5adfef8200298c94d371bb6d996de34b",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "deepseek",
+      "path": ".dsh/profiles/patientgpt-delivery-react-engineer/cordis.patch.yml",
+      "sha256": "320801bac9e1e55fc7ff34bace26727ab897116074ec96ea241b15bb354d1a7e",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "deepseek",
+      "path": ".dsh/profiles/patientgpt-delivery-tauri-engineer/cordis.patch.yml",
+      "sha256": "810893805e9e918bababf75c40936a3189bfe3fba79c4c1392db9c4c2804e59c",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "deepseek",
+      "path": ".dsh/profiles/patientgpt-delivery-flutter-engineer/cordis.patch.yml",
+      "sha256": "2844f3757f2aeb90813b032c9ce69ab90043fff28510d656fb26780cf4ac7d2e",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "deepseek",
+      "path": ".dsh/profiles/patientgpt-delivery-rust-domain-engineer/cordis.patch.yml",
+      "sha256": "c7ca0ad57ea071b99afb8f54f220e8aa7bfa0f64915ea2fec51677e2eee43e02",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "deepseek",
+      "path": ".dsh/profiles/patientgpt-delivery-storage-engineer/cordis.patch.yml",
+      "sha256": "ebef15bcf0aa86c3e44ebbf36e2db93e9273f581fe77e5992b74298eb23cdd88",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "deepseek",
+      "path": ".dsh/profiles/patientgpt-delivery-flint-data-engineer/cordis.patch.yml",
+      "sha256": "0ea762912c2e237f57170135120e5c31bf7b3e22413c1e069179914ed9308771",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "deepseek",
+      "path": ".dsh/profiles/patientgpt-delivery-identity-security-engineer/cordis.patch.yml",
+      "sha256": "fb9a35322b060ee3c39785577eceb91bade029e85c80ff19b1fcb2e467f4f3f7",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "deepseek",
+      "path": ".dsh/profiles/patientgpt-delivery-uar-agent-expert/cordis.patch.yml",
+      "sha256": "69e30d786a016d217f54eeed3f66f6235e1674f696c470fec82b1fd73804fea8",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "deepseek",
+      "path": ".dsh/profiles/patientgpt-delivery-platform-release-engineer/cordis.patch.yml",
+      "sha256": "dc9e76f9b4eb9d6e23715f0f1d4154cf713144f01e2bb8c7392d11c68bd00543",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "deepseek",
+      "path": ".dsh/profiles/patientgpt-delivery-documentation-engineer/cordis.patch.yml",
+      "sha256": "e9d70c7d93980f305cb2ab953d863604bc2f4e11ddb6d0385adc12861a89e631",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "deepseek",
+      "path": ".dsh/profiles/patientgpt-delivery-phase-verifier/cordis.patch.yml",
+      "sha256": "cc6fe398699e6b91d87eedc3b091d84e87c30db44559327280e1c700bb71f10a",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "deepseek",
+      "path": ".dsh/profiles/patientgpt-delivery-artifact-critic/cordis.patch.yml",
+      "sha256": "619fc631ca7a0bba20ed7685f2e4afe0cc9d5588a6a7d3d673166b2c32133153",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "deepseek",
+      "path": ".dsh/profiles/patientgpt-delivery-ui-critic/cordis.patch.yml",
+      "sha256": "27d77af69daff7ebd86ec60705b3e9106aa1b3c3fb87cef66b6cccac97b19513",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "deepseek",
+      "path": ".dsh/profiles/patientgpt-delivery-team/cordis.patch.yml",
+      "sha256": "6b92a48afc974417f75150f3e69e441b8feb5b11e68f9b2e97afd025858b6e0f",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "codex",
+      "path": ".codex/agents/product-manager.toml",
+      "sha256": "06869e31a79024c6e200e1488a80f612b8a72103cc933fb5dea0e79be00bb75f",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "codex",
+      "path": ".codex/agents/team-lead.toml",
+      "sha256": "8747ee49b7b1385840be333d67ec6642c7bf986dcfe57f695fee57cf9e3cbdb1",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "codex",
+      "path": ".codex/agents/creative-director.toml",
+      "sha256": "a70f0e653ccefcca36d021f3b7a4c3e57e37278f3154effdc8cd49fbd0ef91b7",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "codex",
+      "path": ".codex/agents/design-expert.toml",
+      "sha256": "3b7c47d38c6254f1942b51631158b4e875e3ae56d08dae914296c25928c33eb4",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "codex",
+      "path": ".codex/agents/react-engineer.toml",
+      "sha256": "92e6c8a56d97699d95ccb07d94095142925af845ac3c933fba62d72ec82921c4",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "codex",
+      "path": ".codex/agents/tauri-engineer.toml",
+      "sha256": "7e3c4ba478ac561c4ebc23e9ae417b252f6ab3eaab43d667ea6df1ee1e37bcca",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "codex",
+      "path": ".codex/agents/flutter-engineer.toml",
+      "sha256": "67839434037b3b7ca2b92700507506966ea53597c3d419a988ad76bfa2e7abd3",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "codex",
+      "path": ".codex/agents/rust-domain-engineer.toml",
+      "sha256": "c2110a19f8f130d4b84a1d81e148d73a7697d98eba1104c4b6a76471c306ec7b",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "codex",
+      "path": ".codex/agents/storage-engineer.toml",
+      "sha256": "c38e7cccc7cfae9b2f19aacef6eecd5e7b4d0420b1dc0be5a0f0900e426a1ea8",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "codex",
+      "path": ".codex/agents/flint-data-engineer.toml",
+      "sha256": "b8769efbf8e66596aafd89b9598ba21ace9fff7372925f1a440ddb5ed064e080",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "codex",
+      "path": ".codex/agents/identity-security-engineer.toml",
+      "sha256": "c4ce610d94bd75548708482d706f6eb395d747572b7dc5e451180716f7db6076",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "codex",
+      "path": ".codex/agents/uar-agent-expert.toml",
+      "sha256": "75de6464c8799e00d49e3153cd01bd282a852ef70da0d48f9faf197e3f6b0531",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "codex",
+      "path": ".codex/agents/platform-release-engineer.toml",
+      "sha256": "88487aab758ef22d8d9496f7eb60823e7fea6fb50304f5605b8530b59dafdbdc",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "codex",
+      "path": ".codex/agents/documentation-engineer.toml",
+      "sha256": "2e0bbcfae59f90d3b9f0b0f5c26862fe120209490a8824dcc18c196b3ef5707e",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "codex",
+      "path": ".codex/agents/phase-verifier.toml",
+      "sha256": "ea7eee6f1912af460f87b9f1bb8a00c6dbc2b1fa3a81e857fc9b1a8eb95b6074",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "codex",
+      "path": ".codex/agents/artifact-critic.toml",
+      "sha256": "8d5c93a7a667bf09eb3aa5926595b802d21a4e8c7a23a7839120665b37f56fa7",
+      "matchesStagedExport": true
+    },
+    {
+      "target": "codex",
+      "path": ".codex/agents/ui-critic.toml",
+      "sha256": "482218b692e293096fbe973f60e28dea17aaf2766d9f20b7756e6572fdba7b8e",
+      "matchesStagedExport": true
+    }
+  ],
+  "preservedDifferences": [
+    {
+      "target": "claude",
+      "path": ".claude/agents/artifact-critic.md",
+      "reason": "Existing bootstrap critic preserved; shared team pointer governs its role"
+    }
+  ]
+}

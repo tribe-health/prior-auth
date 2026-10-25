@@ -1,0 +1,121 @@
+{
+  "package_id": "patientgpt-hybrid-delivery-team-architecture-20261004-cf9e",
+  "slug": "patientgpt-hybrid-delivery-team-architecture",
+  "producer_model": "unknown",
+  "job_id": "job-1791125242-d301b7d3",
+  "query": "PatientGPT hybrid delivery team architecture and two-hour flow cadence",
+  "depth": "deep",
+  "scale": "full",
+  "citation_style": "APA",
+  "kb_ids": [],
+  "model_routing": {},
+  "stages_planned": [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10"
+  ],
+  "stages_completed": [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10"
+  ],
+  "current_stage": null,
+  "status": "complete",
+  "blocked": null,
+  "created_at": "2026-10-04T14:47:22Z",
+  "last_updated_at": "2026-10-04T15:00:27Z",
+  "completed_at": "2026-10-04T15:00:26Z",
+  "integrations": {
+    "surreal_memory_used": false,
+    "sycophancy_correction_used": false,
+    "feynman_gate_used": false,
+    "adversarial_review_used": false
+  },
+  "hook_log": [
+    {
+      "hook": "pre-research",
+      "exit": 0,
+      "at": "2026-10-04T14:47:22Z"
+    },
+    {
+      "hook": "post-stage",
+      "exit": 0,
+      "at": "2026-10-04T14:48:08Z"
+    },
+    {
+      "hook": "post-stage",
+      "exit": 0,
+      "at": "2026-10-04T14:54:55Z"
+    },
+    {
+      "hook": "post-stage",
+      "exit": 0,
+      "at": "2026-10-04T14:54:59Z"
+    },
+    {
+      "hook": "post-stage",
+      "exit": 0,
+      "at": "2026-10-04T14:55:02Z"
+    },
+    {
+      "hook": "post-stage",
+      "exit": 0,
+      "at": "2026-10-04T14:56:59Z"
+    },
+    {
+      "hook": "post-stage",
+      "exit": 0,
+      "at": "2026-10-04T14:57:00Z"
+    },
+    {
+      "hook": "on-contradiction",
+      "exit": 0,
+      "at": "2026-10-04T14:57:00Z"
+    },
+    {
+      "hook": "post-stage",
+      "exit": 0,
+      "at": "2026-10-04T14:57:01Z"
+    },
+    {
+      "hook": "post-stage",
+      "exit": 0,
+      "at": "2026-10-04T14:57:02Z"
+    },
+    {
+      "hook": "post-stage",
+      "exit": 0,
+      "at": "2026-10-04T15:00:23Z"
+    },
+    {
+      "hook": "post-stage",
+      "exit": 0,
+      "at": "2026-10-04T15:00:27Z"
+    },
+    {
+      "hook": "post-export",
+      "exit": 0,
+      "at": "2026-10-04T15:00:27Z"
+    }
+  ],
+  "notes": [
+    "adversarial review blocked: judge failed (dispatch exited 4: [judge]       Review remains pending; refusing to claim independent judgment.)"
+  ],
+  "last_completed_stage": "10",
+  "last_completed_at": "2026-10-04T15:00:27Z",
+  "blocked_review": "blocked: judge failed (dispatch exited 4: [judge]       Review remains pending; refusing to claim independent judgment.)"
+}

@@ -1,0 +1,10 @@
+{
+  "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/docs/architecture/tauri-pglite-baseline.md",
+  "chunk_id": "chunk-0008",
+  "text": "LOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n6: This record qualifies PGlite as the shared SQL baseline inside an actual Tauri\n7: webview. It does not select persistent clinical storage for every desktop\n8: deployment. [ADR-009](adr-009-authorized-replicas-and-updates.md) remains the\n9: decision: PGlite establishes browser/desktop parity while trusted host-owned\n10: SQLite remains the preferred Tauri production target after its materializer,\n11: transactions, migrations, serialization, and multi-window behavior pass the\n12: same acceptance contract.",
+  "content_type": "local-source-excerpt",
+  "source_id": "src-008",
+  "retrieval_status": "local-source-read",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 193
+}

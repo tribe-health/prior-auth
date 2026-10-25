@@ -1,0 +1,583 @@
+{
+  "source_urls": [
+    "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host/src/lib.rs",
+    "file:///Users/gqadonis/Projects/prometheus/flint-forge/crates/fdb-ports/src/lib.rs",
+    "file:///Users/gqadonis/Projects/prometheus/flint-forge/crates/fdb-postgres/src/backend.rs",
+    "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/shared/sync/storage-policy.ts",
+    "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/shared/sync/pglite-bootstrap.ts",
+    "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/app/providers/graph-provider.tsx",
+    "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/versions.toml",
+    "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/docs/architecture/tauri-pglite-baseline.md",
+    "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-ports/src/entity_store.rs",
+    "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-store-surreal/src/store.rs",
+    "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-projection-surreal/src/store.rs",
+    "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/Cargo.lock",
+    "file:///Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core/src/auth/kratos.rs",
+    "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/session.rs",
+    "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/kratos_proxy.rs",
+    "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/data-model.md",
+    "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/versions.toml",
+    "file:///Users/gqadonis/Projects/prometheus/flint-gate/.github/workflows/deploy-gateway.yml",
+    "file:///Users/gqadonis/Projects/prometheus/flint-forge/.github/workflows/ci.yml",
+    "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/.github/workflows/docs-pages.yml",
+    "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.prometheus/team-research/storage-identity.md",
+    "https://github.com/electric-sql/pglite/blob/main/docs/docs/filesystems.md",
+    "https://github.com/electric-sql/pglite/blob/main/packages/pglite/examples/worker.html",
+    "https://github.com/surrealdb/docs.surrealdb.com/blob/main/src/content/build/embedding/by-language/rust.mdx",
+    "https://github.com/surrealdb/docs.surrealdb.com/blob/main/src/content/reference/rust/methods/new.mdx",
+    "https://github.com/surrealdb/surrealdb/releases/tag/v3.3.0",
+    "https://docs.rs/surrealdb/3.3.0/surrealdb/engine/local/index.html",
+    "https://github.com/ory/docs/blob/master/docs/kratos/session-management/01_overview.mdx",
+    "https://github.com/ory/docs/blob/master/docs/kratos/guides/zero-trust-iap-proxy-identity-access-proxy.mdx",
+    "https://gateway.envoyproxy.io/docs/tasks/security/ext-auth",
+    "https://gateway.envoyproxy.io/docs/api/extension_types",
+    "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/agents/collaboration/v0.1.0-draft.2/README.md",
+    "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/runtime/tool_admission/mod.rs",
+    "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/compiler/collaboration/runtime_semantics.rs",
+    "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/agents/collaboration/team-execution-profile-migration.md",
+    "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/protocols/ag-ui-profile.md",
+    "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/server.rs",
+    "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/frontend/src/platform/a2ui/protocol.ts",
+    "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/a2ui/protocol.rs",
+    "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/frontend/src/features/a2ui/a2ui-surface-renderer.tsx",
+    "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/references/rust/tool-governance.md",
+    "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/agui-event-contract/SKILL.md",
+    "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/references/arch-standard.md",
+    "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/a2ui-renderer.js",
+    "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/agui-stream.js",
+    "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.prometheus/project-contract.md",
+    "https://docs.ag-ui.com/concepts/events",
+    "https://a2ui.org/concepts/catalogs/",
+    "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.kbd-orchestrator/current-waypoint.json",
+    "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/README.md",
+    "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat-storyboard.html",
+    "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/tokens.css",
+    "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/panel.css",
+    "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/shell.css",
+    "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/flows.js",
+    "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/src/shared/components/Titlebar.tsx",
+    "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/src-tauri/tauri.conf.json",
+    "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/src-tauri/capabilities/default.json",
+    "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/vite.config.ts",
+    "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/package.json",
+    "file:///Users/gqadonis/Projects/know-me/know-me-system/mobile/lib/core/theme/tokens.dart",
+    "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/UI_UX_PROTOCOL.md",
+    "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/prometheus-ui-ux/SKILL.md",
+    "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/prometheus-impeccable-core/SKILL.md",
+    "file:///Users/gqadonis/.codex/skills/impeccable/SKILL.md",
+    "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/ui-ux-pro-max/SKILL.md",
+    "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/ui-ux-pro-max/provenance.json",
+    "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/better-interface/SKILL.md",
+    "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/vercel-react-best-practices/SKILL.md",
+    "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/flutter-build-responsive-layout/SKILL.md",
+    "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/SKILL.md",
+    "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/tauri-custom-titlebar/SKILL.md",
+    "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-design-tokens/SKILL.md",
+    "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/reference-ui-fidelity/SKILL.md",
+    "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/flutter-golden-ui/SKILL.md",
+    "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/build-branded-docusaurus/SKILL.md",
+    "https://v2.tauri.app/learn/window-customization/",
+    "https://docs.flutter.dev/ui/adaptive-responsive/safearea-mediaquery",
+    "https://github.com/flutter/website/blob/main/sites/docs/src/content/learn/pathway/tutorial/adaptive-layout.md",
+    "https://docusaurus.io/docs/deployment",
+    "https://docusaurus.io/docs/installation",
+    "https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages"
+  ],
+  "search_metadata": [
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host/src/lib.rs",
+      "source_id": "src-001",
+      "method": "worker dossier source inventory",
+      "owner": "storage-identity"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-forge/crates/fdb-ports/src/lib.rs",
+      "source_id": "src-002",
+      "method": "worker dossier source inventory",
+      "owner": "storage-identity"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-forge/crates/fdb-postgres/src/backend.rs",
+      "source_id": "src-003",
+      "method": "worker dossier source inventory",
+      "owner": "storage-identity"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/shared/sync/storage-policy.ts",
+      "source_id": "src-004",
+      "method": "worker dossier source inventory",
+      "owner": "storage-identity"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/shared/sync/pglite-bootstrap.ts",
+      "source_id": "src-005",
+      "method": "worker dossier source inventory",
+      "owner": "storage-identity"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/app/providers/graph-provider.tsx",
+      "source_id": "src-006",
+      "method": "worker dossier source inventory",
+      "owner": "storage-identity"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/versions.toml",
+      "source_id": "src-007",
+      "method": "worker dossier source inventory",
+      "owner": "storage-identity"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/docs/architecture/tauri-pglite-baseline.md",
+      "source_id": "src-008",
+      "method": "worker dossier source inventory",
+      "owner": "storage-identity"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-ports/src/entity_store.rs",
+      "source_id": "src-009",
+      "method": "worker dossier source inventory",
+      "owner": "storage-identity"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-store-surreal/src/store.rs",
+      "source_id": "src-010",
+      "method": "worker dossier source inventory",
+      "owner": "storage-identity"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-projection-surreal/src/store.rs",
+      "source_id": "src-011",
+      "method": "worker dossier source inventory",
+      "owner": "storage-identity"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/Cargo.lock",
+      "source_id": "src-012",
+      "method": "worker dossier source inventory",
+      "owner": "storage-identity"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core/src/auth/kratos.rs",
+      "source_id": "src-013",
+      "method": "worker dossier source inventory",
+      "owner": "storage-identity"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/session.rs",
+      "source_id": "src-014",
+      "method": "worker dossier source inventory",
+      "owner": "storage-identity"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/kratos_proxy.rs",
+      "source_id": "src-015",
+      "method": "worker dossier source inventory",
+      "owner": "storage-identity"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/data-model.md",
+      "source_id": "src-016",
+      "method": "worker dossier source inventory",
+      "owner": "storage-identity"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/versions.toml",
+      "source_id": "src-017",
+      "method": "worker dossier source inventory",
+      "owner": "storage-identity"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-gate/.github/workflows/deploy-gateway.yml",
+      "source_id": "src-018",
+      "method": "worker dossier source inventory",
+      "owner": "storage-identity"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-forge/.github/workflows/ci.yml",
+      "source_id": "src-019",
+      "method": "worker dossier source inventory",
+      "owner": "storage-identity"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/.github/workflows/docs-pages.yml",
+      "source_id": "src-020",
+      "method": "worker dossier source inventory",
+      "owner": "storage-identity"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.prometheus/team-research/storage-identity.md",
+      "source_id": "src-021",
+      "method": "worker dossier source inventory",
+      "owner": "storage-identity"
+    },
+    {
+      "url": "https://github.com/electric-sql/pglite/blob/main/docs/docs/filesystems.md",
+      "source_id": "src-022",
+      "method": "worker dossier source inventory",
+      "owner": "storage-identity"
+    },
+    {
+      "url": "https://github.com/electric-sql/pglite/blob/main/packages/pglite/examples/worker.html",
+      "source_id": "src-023",
+      "method": "worker dossier source inventory",
+      "owner": "storage-identity"
+    },
+    {
+      "url": "https://github.com/surrealdb/docs.surrealdb.com/blob/main/src/content/build/embedding/by-language/rust.mdx",
+      "source_id": "src-024",
+      "method": "worker dossier source inventory",
+      "owner": "storage-identity"
+    },
+    {
+      "url": "https://github.com/surrealdb/docs.surrealdb.com/blob/main/src/content/reference/rust/methods/new.mdx",
+      "source_id": "src-025",
+      "method": "worker dossier source inventory",
+      "owner": "storage-identity"
+    },
+    {
+      "url": "https://github.com/surrealdb/surrealdb/releases/tag/v3.3.0",
+      "source_id": "src-026",
+      "method": "worker dossier source inventory",
+      "owner": "storage-identity"
+    },
+    {
+      "url": "https://docs.rs/surrealdb/3.3.0/surrealdb/engine/local/index.html",
+      "source_id": "src-027",
+      "method": "worker dossier source inventory",
+      "owner": "storage-identity"
+    },
+    {
+      "url": "https://github.com/ory/docs/blob/master/docs/kratos/session-management/01_overview.mdx",
+      "source_id": "src-028",
+      "method": "worker dossier source inventory",
+      "owner": "storage-identity"
+    },
+    {
+      "url": "https://github.com/ory/docs/blob/master/docs/kratos/guides/zero-trust-iap-proxy-identity-access-proxy.mdx",
+      "source_id": "src-029",
+      "method": "worker dossier source inventory",
+      "owner": "storage-identity"
+    },
+    {
+      "url": "https://gateway.envoyproxy.io/docs/tasks/security/ext-auth",
+      "source_id": "src-030",
+      "method": "worker dossier source inventory",
+      "owner": "storage-identity"
+    },
+    {
+      "url": "https://gateway.envoyproxy.io/docs/api/extension_types",
+      "source_id": "src-031",
+      "method": "worker dossier source inventory",
+      "owner": "storage-identity"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/agents/collaboration/v0.1.0-draft.2/README.md",
+      "source_id": "src-032",
+      "method": "worker dossier source inventory",
+      "owner": "uar"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/runtime/tool_admission/mod.rs",
+      "source_id": "src-033",
+      "method": "worker dossier source inventory",
+      "owner": "uar"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/compiler/collaboration/runtime_semantics.rs",
+      "source_id": "src-034",
+      "method": "worker dossier source inventory",
+      "owner": "uar"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/agents/collaboration/team-execution-profile-migration.md",
+      "source_id": "src-035",
+      "method": "worker dossier source inventory",
+      "owner": "uar"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/protocols/ag-ui-profile.md",
+      "source_id": "src-036",
+      "method": "worker dossier source inventory",
+      "owner": "uar"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/server.rs",
+      "source_id": "src-037",
+      "method": "worker dossier source inventory",
+      "owner": "uar"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/frontend/src/platform/a2ui/protocol.ts",
+      "source_id": "src-038",
+      "method": "worker dossier source inventory",
+      "owner": "uar"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/a2ui/protocol.rs",
+      "source_id": "src-039",
+      "method": "worker dossier source inventory",
+      "owner": "uar"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/frontend/src/features/a2ui/a2ui-surface-renderer.tsx",
+      "source_id": "src-040",
+      "method": "worker dossier source inventory",
+      "owner": "uar"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/references/rust/tool-governance.md",
+      "source_id": "src-041",
+      "method": "worker dossier source inventory",
+      "owner": "uar"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/agui-event-contract/SKILL.md",
+      "source_id": "src-042",
+      "method": "worker dossier source inventory",
+      "owner": "uar"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/references/arch-standard.md",
+      "source_id": "src-043",
+      "method": "worker dossier source inventory",
+      "owner": "uar"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/a2ui-renderer.js",
+      "source_id": "src-044",
+      "method": "worker dossier source inventory",
+      "owner": "uar"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/agui-stream.js",
+      "source_id": "src-045",
+      "method": "worker dossier source inventory",
+      "owner": "uar"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.prometheus/project-contract.md",
+      "source_id": "src-046",
+      "method": "worker dossier source inventory",
+      "owner": "uar"
+    },
+    {
+      "url": "https://docs.ag-ui.com/concepts/events",
+      "source_id": "src-047",
+      "method": "worker dossier source inventory",
+      "owner": "uar"
+    },
+    {
+      "url": "https://a2ui.org/concepts/catalogs/",
+      "source_id": "src-048",
+      "method": "worker dossier source inventory",
+      "owner": "uar"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.kbd-orchestrator/current-waypoint.json",
+      "source_id": "src-049",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/README.md",
+      "source_id": "src-050",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat-storyboard.html",
+      "source_id": "src-051",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/tokens.css",
+      "source_id": "src-052",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/panel.css",
+      "source_id": "src-053",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/shell.css",
+      "source_id": "src-054",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/flows.js",
+      "source_id": "src-055",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/src/shared/components/Titlebar.tsx",
+      "source_id": "src-056",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/src-tauri/tauri.conf.json",
+      "source_id": "src-057",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/src-tauri/capabilities/default.json",
+      "source_id": "src-058",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/vite.config.ts",
+      "source_id": "src-059",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/package.json",
+      "source_id": "src-060",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/know-me/know-me-system/mobile/lib/core/theme/tokens.dart",
+      "source_id": "src-061",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/UI_UX_PROTOCOL.md",
+      "source_id": "src-062",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/prometheus-ui-ux/SKILL.md",
+      "source_id": "src-063",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/prometheus-impeccable-core/SKILL.md",
+      "source_id": "src-064",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "file:///Users/gqadonis/.codex/skills/impeccable/SKILL.md",
+      "source_id": "src-065",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/ui-ux-pro-max/SKILL.md",
+      "source_id": "src-066",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/ui-ux-pro-max/provenance.json",
+      "source_id": "src-067",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/better-interface/SKILL.md",
+      "source_id": "src-068",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/vercel-react-best-practices/SKILL.md",
+      "source_id": "src-069",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/flutter-build-responsive-layout/SKILL.md",
+      "source_id": "src-070",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/SKILL.md",
+      "source_id": "src-071",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/tauri-custom-titlebar/SKILL.md",
+      "source_id": "src-072",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-design-tokens/SKILL.md",
+      "source_id": "src-073",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/reference-ui-fidelity/SKILL.md",
+      "source_id": "src-074",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/flutter-golden-ui/SKILL.md",
+      "source_id": "src-075",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/build-branded-docusaurus/SKILL.md",
+      "source_id": "src-076",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "https://v2.tauri.app/learn/window-customization/",
+      "source_id": "src-077",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "https://docs.flutter.dev/ui/adaptive-responsive/safearea-mediaquery",
+      "source_id": "src-078",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "https://github.com/flutter/website/blob/main/sites/docs/src/content/learn/pathway/tutorial/adaptive-layout.md",
+      "source_id": "src-079",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "https://docusaurus.io/docs/deployment",
+      "source_id": "src-080",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "https://docusaurus.io/docs/installation",
+      "source_id": "src-081",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    },
+    {
+      "url": "https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages",
+      "source_id": "src-082",
+      "method": "worker dossier source inventory",
+      "owner": "ui-platforms"
+    }
+  ],
+  "total_found": 84,
+  "filtered_count": 0,
+  "note": "Source discovery already performed by three workers using local source inspection and Context7/official web docs. No fabricated Firecrawl/Tavily search."
+}

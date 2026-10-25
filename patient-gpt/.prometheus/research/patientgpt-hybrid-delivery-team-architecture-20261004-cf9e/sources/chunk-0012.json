@@ -1,0 +1,10 @@
+{
+  "url": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/Cargo.lock",
+  "chunk_id": "chunk-0012",
+  "text": "LOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n9496: name = \"surrealdb\"\n9497: version = \"3.1.5\"\n9498: source = \"registry+https://github.com/rust-lang/crates.io-index\"\n9499: checksum = \"81ee3110fe3ab8172eb8c135c96ed2d57c7470cdf1ad732d176db95a92c9faab\"",
+  "content_type": "local-source-excerpt",
+  "source_id": "src-012",
+  "retrieval_status": "local-source-read",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 91
+}

@@ -1,0 +1,29 @@
+# TJ-ARCH-MOB-001 compliant
+# PatientGPT Tauri 2 desktop shell. Supplies transport (commands mirroring
+# the Axum routes 1:1) and window capabilities; all React UI is web/.
+[package]
+name = "patient-gpt-desktop"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[lib]
+name = "patient_gpt_desktop"
+crate-type = ["rlib"]
+
+[build-dependencies]
+tauri-build.workspace = true
+
+[dependencies]
+patient-gpt-domain.workspace = true
+patient-gpt-host.workspace = true
+patient-gpt-uar.workspace = true
+patient-gpt-storage = { workspace = true, features = ["surreal"] }
+tauri.workspace = true
+tauri-plugin-single-instance.workspace = true
+futures.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true

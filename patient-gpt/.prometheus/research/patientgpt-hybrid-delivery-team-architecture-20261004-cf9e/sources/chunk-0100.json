@@ -1,0 +1,10 @@
+{
+  "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-design-tokens/SKILL.md",
+  "chunk_id": "chunk-0100",
+  "text": " Web: inspect at 320/768/1024/1440 in both themes \u2014 see [[tauri-ui-review]].\n88: - Flutter: golden test both `ColorScheme`s \u2014 see [[flutter-golden-ui]].\n89: - Contrast: every text/background pair meets WCAG 2.2 AA \u2014 see [[a11y-gate]].\n90: \n91: ## Related skills\n92: \n93: - `theme-factory` (external) \u2014 optional palette ideation only; not a compiler or parity proof\n94: - [[content-block-ui]] \u2014 consumes these tokens for every variant\n95: - [[a11y-gate]] \u2014 token contrast gate",
+  "content_type": "local-source-excerpt",
+  "source_id": "src-073",
+  "retrieval_status": "local-source-read",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 159
+}

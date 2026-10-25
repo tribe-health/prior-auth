@@ -1,0 +1,10 @@
+{
+  "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/app/providers/graph-provider.tsx",
+  "chunk_id": "chunk-0006",
+  "text": "LOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n122: export function graphStorageKey(\n123:   session: VerifiedSession,\n124:   deploymentId = DEPLOYMENT_ID,\n125: ): string {\n126:   return [\n127:     \"aso\",\n128:     deploymentId,\n129:     `g${REPLICA_GENERATION}`,\n130:     session.principal,\n131:     session.practiceId,\n132:     session.identityId,\n133:     session.sessionId,\n134:     session.authorizationRevision,\n135:   ].map(encodeURIComponent).join(\":\");",
+  "content_type": "local-source-excerpt",
+  "source_id": "src-006",
+  "retrieval_status": "local-source-read",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 160
+}

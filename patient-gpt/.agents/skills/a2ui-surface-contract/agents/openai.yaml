@@ -1,0 +1,4 @@
+interface:
+  display_name: "A2ui Surface Contract"
+  short_description: "Implement or review A2UI-driven surfaces that render governed agent output as typed projections"
+  default_prompt: "Use $a2ui-surface-contract to apply its contract to this task and verify the required evidence."

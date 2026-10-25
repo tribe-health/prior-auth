@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build Branded Docusaurus"
+  short_description: "Scaffold, brand, sanitize, and verify a Docusaurus documentation portal for a Prometheus project"
+  default_prompt: "Use $build-branded-docusaurus to apply its contract to this task and verify the required evidence."

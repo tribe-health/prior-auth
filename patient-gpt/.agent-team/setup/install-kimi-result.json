@@ -1,0 +1,145 @@
+{
+  "project": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt",
+  "activeTeam": "patientgpt-delivery",
+  "manifest": ".agent-team/patientgpt-delivery/team.json",
+  "nativeDefinitions": [
+    ".kimi-code/agents/product-manager.md",
+    ".kimi-code/agents/team-lead.md",
+    ".kimi-code/agents/creative-director.md",
+    ".kimi-code/agents/design-expert.md",
+    ".kimi-code/agents/react-engineer.md",
+    ".kimi-code/agents/tauri-engineer.md",
+    ".kimi-code/agents/flutter-engineer.md",
+    ".kimi-code/agents/rust-domain-engineer.md",
+    ".kimi-code/agents/storage-engineer.md",
+    ".kimi-code/agents/flint-data-engineer.md",
+    ".kimi-code/agents/identity-security-engineer.md",
+    ".kimi-code/agents/uar-agent-expert.md",
+    ".kimi-code/agents/platform-release-engineer.md",
+    ".kimi-code/agents/documentation-engineer.md",
+    ".kimi-code/agents/phase-verifier.md",
+    ".kimi-code/agents/artifact-critic.md",
+    ".kimi-code/agents/ui-critic.md"
+  ],
+  "changed": [
+    ".kimi-code/agents/product-manager.md",
+    ".kimi-code/agents/team-lead.md",
+    ".kimi-code/agents/creative-director.md",
+    ".kimi-code/agents/design-expert.md",
+    ".kimi-code/agents/react-engineer.md",
+    ".kimi-code/agents/tauri-engineer.md",
+    ".kimi-code/agents/flutter-engineer.md",
+    ".kimi-code/agents/rust-domain-engineer.md",
+    ".kimi-code/agents/storage-engineer.md",
+    ".kimi-code/agents/flint-data-engineer.md",
+    ".kimi-code/agents/identity-security-engineer.md",
+    ".kimi-code/agents/uar-agent-expert.md",
+    ".kimi-code/agents/platform-release-engineer.md",
+    ".kimi-code/agents/documentation-engineer.md",
+    ".kimi-code/agents/phase-verifier.md",
+    ".kimi-code/agents/artifact-critic.md",
+    ".kimi-code/agents/ui-critic.md",
+    ".agent-team/project-routing.json"
+  ],
+  "clean": false,
+  "dryRun": false,
+  "check": false,
+  "fingerprints": [
+    {
+      "file": ".kimi-code/agents/product-manager.md",
+      "before": null,
+      "after": "e4eaafc6b902cea3bfbe552c6933423395f157c9c0ca9c7741d01d75695ad0ae"
+    },
+    {
+      "file": ".kimi-code/agents/team-lead.md",
+      "before": null,
+      "after": "a942d4808a773cf5cff5af24508652c275089cfe5f0595eaa0c70e7660a49114"
+    },
+    {
+      "file": ".kimi-code/agents/creative-director.md",
+      "before": null,
+      "after": "fa4e13514cf57bebc312a5c5fccef77f6bb5a61dc894b841158c664a2424a0d4"
+    },
+    {
+      "file": ".kimi-code/agents/design-expert.md",
+      "before": null,
+      "after": "146c0fb78f7762e53400313e558baed9ab384306d4d8776468f7ad8986825cf9"
+    },
+    {
+      "file": ".kimi-code/agents/react-engineer.md",
+      "before": null,
+      "after": "620511b1eb81aba90705eb4a911ca6eb632d62a24fddfa08f6cafcbe1df96b07"
+    },
+    {
+      "file": ".kimi-code/agents/tauri-engineer.md",
+      "before": null,
+      "after": "dcb9a85cac8312e91e8747600b4b965e96a53c0dad70063e1bb939b9d95e9537"
+    },
+    {
+      "file": ".kimi-code/agents/flutter-engineer.md",
+      "before": null,
+      "after": "201d43d0474863ce0a722729dade835a08eacacb4d95e4a92e915a9880551c1e"
+    },
+    {
+      "file": ".kimi-code/agents/rust-domain-engineer.md",
+      "before": null,
+      "after": "ae5daa506458234650263a86f474ba2762db8123799344a8305e9c39019674d9"
+    },
+    {
+      "file": ".kimi-code/agents/storage-engineer.md",
+      "before": null,
+      "after": "288d2e6c898d73768766746ade74bcad20c2655e46a8c57b88765629be0779c8"
+    },
+    {
+      "file": ".kimi-code/agents/flint-data-engineer.md",
+      "before": null,
+      "after": "b188995b4afccd2c3badf0ce1187f7b74983d92871c1066f42da0449ac4f75e7"
+    },
+    {
+      "file": ".kimi-code/agents/identity-security-engineer.md",
+      "before": null,
+      "after": "e604c7cf97e31cb82338756d2fbf7e89d5f3b500db3a82f9319902bb5d58a9c7"
+    },
+    {
+      "file": ".kimi-code/agents/uar-agent-expert.md",
+      "before": null,
+      "after": "3a7748aa70774acd6fabc770ee1075c2b8319033ad86b3a7e4014ef568170a1a"
+    },
+    {
+      "file": ".kimi-code/agents/platform-release-engineer.md",
+      "before": null,
+      "after": "1e00bcca41a80ba9fc5ac19cb028bcc439e54ec28868ab7afe8e1c2de2a16817"
+    },
+    {
+      "file": ".kimi-code/agents/documentation-engineer.md",
+      "before": null,
+      "after": "691ae447b58ca6d818b720981d7de0062f713c2ecc135d9e844472a60dadc91d"
+    },
+    {
+      "file": ".kimi-code/agents/phase-verifier.md",
+      "before": null,
+      "after": "febc338c787dd27bd9edddcc61dacfcf12572124e91b31b7f6bf487783d04031"
+    },
+    {
+      "file": ".kimi-code/agents/artifact-critic.md",
+      "before": null,
+      "after": "d718353b37d725374daede47226f6bfd75ef35e52292ce76d135eb5fae63f907"
+    },
+    {
+      "file": ".kimi-code/agents/ui-critic.md",
+      "before": null,
+      "after": "63a0892b9165a672de03cd87f9d3952841c02902131ccf5041b2e736f50e52da"
+    },
+    {
+      "file": ".agent-team/project-routing.json",
+      "before": "744435eba46a44413fa679396d32919477c447d3c28081a0ac51ce6fc467720d",
+      "after": "73f83defb4f5f457fd03664d3e6e2a8f1b186e43c24c2f3bab5730562a380805"
+    }
+  ],
+  "diagnostics": [
+    "Source-verified serialization only; installed native validation and live execution are unverified.",
+    "Only explicit model IDs are translated. Resolve tier, skill, capability and price policies with agent-team-models before native invocation.",
+    "Role overrides are preserved without native schema certification. Skill IDs refer to separately installed skills; prompt mentions do not install or authorize them."
+  ],
+  "recovery": ".agent-team/recovery/863271f0fa4e72eea05a32ce.json"
+}

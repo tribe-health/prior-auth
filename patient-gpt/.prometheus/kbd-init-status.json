@@ -1,0 +1,10 @@
+{
+  "mode": "legacy",
+  "phase": "spec",
+  "status": "ready",
+  "exactNextWork": null,
+  "runtimeInitialized": false,
+  "initializationRequired": true,
+  "initializationAction": "run the intended typed mutation; initialization is automatic",
+  "runtimePath": "/Users/gqadonis/Library/Application Support/prometheus/kbd/projects/5180957e-e9f7-4d5d-a961-e02a6ede0ebd"
+}

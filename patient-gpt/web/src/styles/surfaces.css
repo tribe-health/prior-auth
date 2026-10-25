@@ -1,0 +1,206 @@
+/* TJ-ARCH-MOB-001 compliant · ported verbatim from docs/design/patient-chat/surfaces.css */
+/* ASO patient chat · agent surfaces, host controls, canvas.
+   Fill grammar, no lines:
+   · warm neutral (--s1) with page-colored inner rows = the assistant said it
+     (an allowlisted A2UI surface)
+   · slate (--host) with page-colored inner rows = only the surgeon decides
+     (drawn by the app, never by the assistant) */
+
+/* ── agent surface (A2UI) ─────────────────────────────────────────── */
+.surface {
+  width: 100%; min-width: 0;
+  border-radius: var(--r-lg); background: var(--s1);
+}
+.a-col { display: grid; min-width: 0; }
+.a-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.a-sec { display: grid; gap: 8px; padding: 14px 16px 4px; min-width: 0; }
+.a-sec:last-child { padding-bottom: 16px; }
+.a-sec-h {
+  color: var(--fg-2);
+  font-family: var(--font-mono); font-size: var(--fs-mono); font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+.a-text { max-width: 68ch; }
+.a-meta, .a-empty { font-size: var(--fs-ui); color: var(--fg-2); }
+.a-pad { padding: 16px; }
+
+.a-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 20px; }
+.a-fact { display: grid; gap: 1px; min-width: 0; }
+.a-fact dt { font-size: var(--fs-meta); color: var(--fg-2); }
+.a-fact dd { font-size: var(--fs-ui); font-weight: 600; overflow-wrap: anywhere; }
+
+.a-crit, .a-list { display: grid; gap: 2px; }
+.a-crit-row, .a-item {
+  padding: 10px 12px; border-radius: var(--r); background: var(--bg);
+}
+.a-crit-row { display: flex; gap: 12px; align-items: flex-start; }
+.a-crit-row > :first-child { width: 4.25rem; flex: none; }
+.a-crit-name { font-weight: 700; }
+.a-crit-ev { font-size: var(--fs-ui); color: var(--fg-2); }
+.a-cites { --od-gap: 6px; padding-top: 4px; }
+
+.a-item { display: grid; gap: 3px; }
+.a-item-h { --od-gap: 8px; }
+.a-kind { font-size: var(--fs-ui); font-weight: 700; }
+.a-owner {
+  padding: 1px 7px; border-radius: 4px; background: var(--s3); color: var(--fg);
+  font-family: var(--font-mono); font-size: var(--fs-mono); white-space: nowrap;
+}
+.a-item-t { font-size: var(--fs-ui); max-width: 68ch; }
+.a-stmt { font-size: var(--fs-ui); color: var(--fg-2); max-width: 68ch; }
+.a-next { font-weight: 600; max-width: 68ch; }
+.a-actions { --od-gap: 12px; padding-top: 2px; }
+
+/* one question at a time */
+.a-q { display: grid; gap: 12px; padding: 16px; }
+.a-q-ask { font-weight: 700; max-width: 62ch; }
+.a-q-basis { font-size: var(--fs-ui); color: var(--fg-2); max-width: 62ch; }
+.a-q-opts { display: grid; gap: 2px; }
+.a-q-opt {
+  --od-gap: 12px;
+  min-height: 44px; padding: 0 12px; border-radius: var(--r);
+  background: var(--bg); cursor: pointer;
+}
+.a-q-opt:has(input:checked) { background: var(--s3); font-weight: 700; }
+.a-q-opt:has(input:focus-visible) { background: var(--focus-bg); color: var(--focus-fg); }
+.a-q-opt:has(input:focus-visible) input { background-color: var(--focus-fg); }
+.a-q-opt:has(input:focus-visible) input:checked { background-color: var(--primary-bg); }
+.a-q-label { font-size: var(--fs-meta); font-weight: 600; color: var(--fg-2); }
+.a-q-note {
+  display: block; width: 100%; min-height: 64px; padding: 8px 10px; resize: vertical;
+  border: 0; border-radius: var(--r);
+  background: var(--field); color: var(--field-fg); caret-color: var(--field-fg);
+}
+.a-q-err { padding: 6px 10px; border-radius: var(--r); background: var(--warm-surface); font-size: var(--fs-ui); font-weight: 600; }
+.a-q-done, .a-sent { display: flex; gap: 8px; align-items: flex-start; font-size: var(--fs-ui); font-weight: 600; }
+.a-q-done .ico, .a-sent .ico { color: var(--ok); margin-top: 2px; }
+.a-req-items { display: grid; gap: 4px; padding-left: 18px; list-style: disc; font-size: var(--fs-ui); }
+
+/* rows that set patient or case context, and document lists */
+.a-ctx, .a-docs { display: grid; gap: 2px; padding: 6px; }
+.a-ctx .q-row, .a-docs .doc-row { background: var(--bg); border-radius: var(--r); }
+
+.refused {
+  display: flex; gap: 8px; align-items: flex-start; padding: 12px 16px;
+  font-size: var(--fs-ui); font-weight: 600;
+}
+
+/* ── host controls: surgeon authority ─────────────────────────────── */
+.host {
+  width: 100%; min-width: 0; padding: 16px;
+  border-radius: var(--r-lg); background: var(--host);
+}
+.host.gates, .host.packet { display: grid; gap: 12px; }
+.host-head { display: grid; gap: 2px; }
+.host-h { --od-gap: 8px; font-size: var(--fs-body); }
+.host-h .ico { color: var(--cool); }
+.host-note { font-size: var(--fs-meta); color: var(--fg-2); }
+.gate-list, .pk-list { display: grid; gap: 2px; }
+.gate { --od-gap: 12px; padding: 10px 12px; border-radius: var(--r); background: var(--host-row); }
+.gate-box { display: grid; place-items: center; width: 24px; height: 24px; }
+.gate > .ico { color: var(--ok); margin-top: 2px; }
+.gate-name { font-weight: 700; cursor: pointer; }
+.gate-what { font-size: var(--fs-ui); color: var(--fg-2); }
+.gate-why { font-size: var(--fs-meta); font-weight: 600; }
+.gate:has(input:focus-visible) { background: var(--focus-bg); }
+.gate:has(input:focus-visible) :is(.gate-name, .gate-what, .gate-why) { color: var(--focus-fg); }
+.gate:has(input:focus-visible) input { background-color: var(--focus-fg); }
+.gate:has(input:focus-visible) input:checked { background-color: var(--primary-bg); }
+.gate-count { font-family: var(--font-mono); font-size: var(--fs-mono); color: var(--fg-2); }
+.host-actions { --od-gap: 14px; }
+.host .btn.ghost { background: var(--host-row); }
+.host.artifact { --od-gap: 12px; padding: 12px 14px; }
+.host.artifact > .ico { color: var(--cool); }
+.artifact-name { font-weight: 700; }
+.card-status { font-family: var(--font-mono); font-size: var(--fs-mono); color: var(--fg-2); }
+.pk-item {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 12px;
+  padding: 8px 12px; border-radius: var(--r); background: var(--host-row);
+}
+.pk-name { font-size: var(--fs-ui); font-weight: 600; }
+.pk-sub { font-size: var(--fs-meta); color: var(--fg-2); }
+.pk-side { font-family: var(--font-mono); font-size: var(--fs-mono); color: var(--fg-2); }
+.pk-ack { display: inline-flex; gap: 4px; align-items: center; color: var(--ok); }
+.pk-ack .ico { width: 14px; height: 14px; }
+.warns { display: grid; gap: 4px; padding: 10px 12px; border-radius: var(--r); background: var(--warm-surface); font-size: var(--fs-ui); }
+.pk-sum { font-size: var(--fs-ui); font-weight: 600; }
+
+/* ── canvas: letter and source documents ──────────────────────────── */
+.canvas { min-width: 0; height: 100%; background: var(--canvas); }
+.canvas-head { --od-gap: 8px; padding: 8px 8px 8px 20px; min-height: 52px; }
+.canvas-title { font-size: var(--fs-body); }
+.canvas-meta { font-family: var(--font-mono); font-size: var(--fs-mono); color: var(--fg-2); }
+.canvas-body { padding: 4px 20px 24px; }
+.canvas-foot {
+  --od-gap: 14px;
+  padding: 12px 20px calc(12px + env(safe-area-inset-bottom));
+  background: var(--s3);
+}
+.foot-note { font-size: var(--fs-meta); color: var(--fg-2); }
+.signed { display: inline-flex; gap: 8px; align-items: center; font-weight: 700; font-size: var(--fs-ui); }
+.signed .ico { color: var(--ok); }
+
+.paper {
+  max-width: 42rem; margin: 12px auto; padding: 40px 44px;
+  border-radius: var(--r); background: var(--paper);
+}
+.paper-meta { font-family: var(--font-mono); font-size: var(--fs-mono); color: var(--fg-2); }
+.paper-title {
+  font-family: var(--font-display); font-size: var(--fs-title); font-weight: 600;
+  line-height: 1.2; letter-spacing: -0.01em;
+}
+.letter { display: grid; gap: 16px; }
+.letter-addr > span { display: block; }
+.claims { display: grid; gap: 12px; }
+.claims li { line-height: 1.7; }
+.claims .cite { margin-left: 2px; vertical-align: 1px; }
+.omitted { display: grid; gap: 8px; padding: 14px 16px; border-radius: var(--r); background: var(--s1); }
+.omitted h4 { font-size: var(--fs-ui); }
+.omitted li { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: center; font-size: var(--fs-ui); padding: 3px 0; }
+.letter-sign { font-size: var(--fs-ui); color: var(--fg-2); }
+
+.src { display: grid; gap: 14px; max-width: 42rem; margin: 12px auto; }
+.src .a-facts { padding: 4px 2px; }
+.src-tabs { --od-gap: 4px; }
+.tab {
+  min-height: 32px; padding: 0 12px; border-radius: var(--r);
+  background: var(--s3); font-size: var(--fs-meta); font-weight: 600;
+}
+.tab[aria-pressed="true"] { background: var(--fg); color: var(--bg); font-weight: 700; }
+.excerpt { display: grid; gap: 14px; margin: 0; padding: 28px 32px; }
+.excerpt blockquote { font-size: 1.0625rem; line-height: 1.7; }
+.src-note { font-size: var(--fs-meta); color: var(--fg-2); }
+
+@media (hover: hover) {
+  .a-q-opt:hover { background: var(--s2); }
+  .a-ctx .q-row:hover { background: var(--s2); }
+  .tab:not([aria-pressed="true"]):hover { background: var(--s4); }
+  .host .btn.ghost:not(:disabled):hover { background: var(--s3); }
+}
+
+/* wide: canvas sits beside the thread and the sidebar steps aside */
+@media (min-width: 1100px) {
+  .app[data-canvas="open"] { --sb-w: 0px; grid-template-columns: var(--sb-w) minmax(0, 1fr) minmax(380px, 46%); }
+  .app[data-canvas="open"] .sidebar { display: none; }
+  .app[data-canvas="open"] #sb-open { display: none; }
+}
+/* narrower: canvas overlays as a sheet */
+@media (max-width: 1099.98px) {
+  .canvas { position: fixed; inset: 0 0 0 auto; z-index: 55; width: min(100%, 560px); }
+}
+@media (max-width: 767.98px) {
+  .canvas { width: 100%; }
+  .canvas-head { padding-left: 14px; }
+  .canvas-body { padding: 0 10px 16px; }
+  .canvas-foot { padding-inline: 14px; }
+  .paper { padding: 24px 20px; margin: 8px auto; }
+  .excerpt { padding: 20px; }
+  .a-facts { grid-template-columns: minmax(0, 1fr); }
+  .a-sec { padding-inline: 12px; }
+  .a-q, .a-pad, .host { padding: 14px; }
+  .a-crit-row { flex-direction: column; gap: 6px; }
+  .a-crit-row > :first-child { width: auto; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .canvas-body > * { animation: rise var(--dur-enter) var(--ease) both; }
+}

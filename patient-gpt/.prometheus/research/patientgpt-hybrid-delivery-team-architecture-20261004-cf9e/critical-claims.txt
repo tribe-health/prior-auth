@@ -1,0 +1,10 @@
+Lines 36-48: domain repositories, authority, clock and sessions; shells wire adapters.
+Lines 85-87: PGlite Sync log=full incompatibility and internal materializer RSS above cap; historical measurements not rerun.
+Lines 6-12 and 80-108: existing SQLite preference and blocked production adoption despite bounded native measurements.
+Lines 9496-9499 resolve surrealdb 3.1.5, not required 3.3.0.
+Canonical JSON, exact SkillRefs, private bindings, immutable package closure and effective receipts; document conformance explicitly separate from runtime.
+Distinguishes authored selection from per-attempt selected artifacts; nested team/context limitations; external crash exclusion unavailable.
+agui_spec and uar.agui/1; events, custom extensions, replay and deprecated dialect boundaries.
+Exact version/profile/catalog literals and nine admitted component types; strict schema and executable-content rejection.
+Custom aso.workbench/v1 catalog contains clinical display components absent from default UAR catalog; host controls excluded.
+Five report sections; met/gap/void; source-backed assertions; distinct host-owned clinical command authority.

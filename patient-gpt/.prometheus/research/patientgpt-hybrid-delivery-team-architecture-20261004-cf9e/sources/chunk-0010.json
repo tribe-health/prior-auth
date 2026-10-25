@@ -1,0 +1,10 @@
+{
+  "url": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-store-surreal/src/store.rs",
+  "chunk_id": "chunk-0010",
+  "text": "LOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n13: /// SurrealDB-backed CRDT checkpoint store.\n14: ///\n15: /// One `SurrealCrdtStore` is wired per deployment in `frf-gateway`. The caller\n16: /// is responsible for calling `connect` + `use_ns` + `use_db` before passing\n17: /// the client to this adapter.\n18: ///\n19: /// Schema (auto-created on first write \u2014 no migration required):\n20: /// ```sql\n21: /// DEFINE TABLE crdt_snapshots SCHEMAFULL;\n22: /// DEFINE FIELD entity_id   ON crdt_snapshots TYPE string;\n23: /// DEFINE FIELD tenant_id   ON crdt_snapshots TYPE string;\n24: /// DEFINE FIELD encoded_hex ON crdt_snapshots TYPE string;\n25: /// DEFINE FIELD version     ON crdt_snapshots TYPE int;\n26: /// DEFINE INDEX idx_entity_tenant ON crdt_snapshots\n27: ///     COLUMNS entity_id, tenant_id UNIQUE;\n28: /// ```\n29: /// The `UNIQUE` index means `checkpoint` is an UPSERT on the `(entity_id,\n30: /// tenant_id)` pair \u2014 only one snapshot per entity is retained.\n31: #[derive(Clone, Debug)]\n32: pub struct SurrealCrdtStore {\n33:     db: Surreal<Any>,\n34: }\n35: \n36: impl SurrealCrdtStore {\n37:     /// Wrap an already-connected and namespace/database-selected `Surreal<Any>`.\n38:     #[must_use]\n39:     pub fn new(db: Surreal<Any>) -> Self {\n40:         Self { db }\n41:     }\n42: }\n43: \n44: #[async_trait]\n45: impl CrdtStore for SurrealCrdtStore {",
+  "content_type": "local-source-excerpt",
+  "source_id": "src-010",
+  "retrieval_status": "local-source-read",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 457
+}

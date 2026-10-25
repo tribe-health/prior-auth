@@ -1,0 +1,31 @@
+{
+  "isolation_mode": "harness-native",
+  "model_independence": "unverified",
+  "producer_model": "unknown",
+  "review_scope": "Completed specification artifact only; packet-only review with no source re-verification. The packet truncates 830 bytes from the report reference tail; that omitted content was not reviewed.",
+  "findings": [
+    {
+      "severity": "WARNING",
+      "file": "report.md",
+      "line": 33,
+      "claim": "The report omits the committed TypeScript 7.0 and kebab-case file requirements without identifying that part of the research question as unanswered.",
+      "evidence": "The fourth sub-question in goals and research_plan asks how shared React preserves \"kebab-case TypeScript 7.0 files\". The report proposes \"One implementation with injected shell transport\" and desktop chrome responsibilities, but contains no TypeScript 7.0 or kebab-case treatment, evidence, or explicit unresolved item.",
+      "suggested_fix": "Carry those requirements into the shared React ownership contract and explicitly state whether TypeScript 7.0 availability/toolchain compatibility was established or remains an adoption prerequisite. Do not infer compatibility from sibling build scripts."
+    },
+    {
+      "severity": "WARNING",
+      "file": "report.md",
+      "line": 43,
+      "claim": "The native harness/model/export configuration sub-question has no concrete configuration inventory or explicit statement that its configuration inspection was not completed.",
+      "evidence": "The last sub-question asks \"Which native harness/model/export capabilities are actually configured, and what remains source-only or unverified?\" Research_plan assigns \"Root inspects team/cadence tooling and model policies.\" The report answers only that \"The three dossiers do not provide native-harness invocation receipts, so native agent support remains source/configuration evidence only.\" It names no inspected harness configuration, available model binding, export capability, or source for any such configuration.",
+      "suggested_fix": "Add the inspected harness/model/export configuration findings and their labels, or state explicitly that this inventory was not established and remains a prerequisite to installing and exporting the proposed team. Keep configuration evidence separate from invocation evidence."
+    }
+  ],
+  "checked_classes": [
+    "Executive and evidence-table labels: recommendation is labeled inferred; executive static-source claims cite labeled rows; all visible verified rows carry source IDs.",
+    "Sub-question coverage: two omissions reported above; storage, identity, UAR, role allocation, cadence, and deployment constraints have visible treatment.",
+    "Unresolved contradictions: report retains three open items consistently with the plan ledger and does not present them as runtime closure.",
+    "Verification status: partial is consistent with disclosed uninvoked gates and source-only evidence; pending adversarial review is expected.",
+    "Numbers, dates, and quotations: visible technical versions and counts are represented in the evidence table or package metadata; source references after src-077 are outside the supplied review scope."
+  ]
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Deploy Hybrid Agentic Stack"
+  short_description: "Plan, scaffold, configure, and verify a full hybrid agentic application spanning React web, Taur"
+  default_prompt: "Use $deploy-hybrid-agentic-stack to apply its contract to this task and verify the required evidence."

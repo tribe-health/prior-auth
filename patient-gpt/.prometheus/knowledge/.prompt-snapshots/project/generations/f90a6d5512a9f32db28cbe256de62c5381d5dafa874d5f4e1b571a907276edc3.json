@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "scope": "project",
+  "generation": "f90a6d5512a9f32db28cbe256de62c5381d5dafa874d5f4e1b571a907276edc3",
+  "candidateCount": 1,
+  "byteCount": 5887,
+  "entries": [
+    {
+      "id": "karpathy-session-2b49abd410432df0",
+      "title": "Karpathy session 2b49abd41043",
+      "content": "## Delta\n\n```\nKBD STATUS — PatientGPT\nphase: spec  (bootstrap waypoint, no active phase)\nworktree: /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth  ⚠ outside worktreeRoot (/Users/gqadonis/.claude/worktrees)\nLast updated by: (not recorded) (2026-10-04)\n\nImplementation: NOT_TRACKED (0 phases)\nEvidence:       NOT_TRACKED\nCertification:  NOT_TRACKED\nPublication:    NOT_TRACKED\n\nGoals:          none defined (project.json activePhase = null)\n\nChanges:\n  OpenSpec active:   none\n  OpenSpec archived: none\n  OpenSpec specs:    none (openspec/specs/ absent)\n  Native KBD:        none (.kbd-orchestrator/phases/ absent)\n\nNext action (from waypoint): none recorded. Waypoint status is \"ready\" at spec/bootstrap.\n```\n\nPatientGPT has been set up for KBD, but no phase has been started. `project.json` has `activePhase: null`. The waypoint is still the bootstrap marker from 2026-10-04, and there is no `position.json`. Neither the phases directory nor any OpenSpec change or spec exists yet.\n\n**Worktree mismatch:** the git toplevel is the parent `prior-auth` checkout on branch `codex/web-case-to-letter-checkpoint`, not a directory under `~/.claude/worktrees`. Most of the uncommitted runtime-architecture evidence in `git status` belongs to the parent project's KBD, not to PatientGPT.\n\n**Next step:** start the first phase with `/kbd-new-phase <name> [goals…]`. There is no earlier reflection, so `/kbd-next-phase` has nothing to work from. After that, run `/kbd-assess` against the spec paths listed in `project.json`.\n\nCompleted kbd-status — spec\n\n## Root Cause\n\nNo explicit root-cause section was captured; preserve this as a session record, not an inferred diagnosis.\n\n## Corrective Actions\n\nReview and promote only reusable findings.\n\n## Session Metadata\n\n- Harness: claude-code\n- Session: bb08a33e-9561-4503-a7b8-268d3122f1e8\n- Captured: 2026-10-25T15:54:24.554993Z\n- Project: /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt\n\n## Changed Paths\n\n- ../.prometheus/knowledge/.prompt-snapshots/project/current\n- ../.prometheus/knowledge/wiki/index.md\n- ../.prometheus/knowledge/wiki/log.md\n- ../.kbd-orchestrator/phases/runtime-architecture/children/ra06-final-review-cycle-repair/\n- ../.kbd-orchestrator/phases/runtime-architecture/children/ra06-revocation-contract-repair/\n- ../.kbd-orchestrator/phases/runtime-architecture/evidence/ra-05-authorized-shape-facade/\n- ../.kbd-orchestrator/phases/runtime-architecture/evidence/ra-06-bounded-revocation/\n- ../.kbd-orchestrator/phases/runtime-architecture/evidence/ra-07-scoped-pem-runtime/\n- ../.kbd-orchestrator/phases/runtime-architecture/evidence/ra-08-committed-graph-projection/\n- ../.kbd-orchestrator/phases/runtime-architecture/evidence/ra-09-pem-delivery-gate/\n- ../.kbd-orchestrator/phases/runtime-architecture/evidence/ra-10-remove-transitive-query-cache/\n- ../.kbd-orchestrator/phases/runtime-architecture/evidence/ra-11a-sync-conformance/\n- ../.kbd-orchestrator/phases/runtime-architecture/evidence/ra-11b-worker-ownership/\n- ../.kbd-orchestrator/phases/runtime-architecture/evidence/ra-11c-sql-materialization/\n- ../.kbd-orchestrator/phases/runtime-architecture/evidence/ra-12-public-auth-startup/\n- ../.kbd-orchestrator/phases/runtime-architecture/evidence/ra-13-epoch-logout-and-drafts/\n- ../.kbd-orchestrator/phases/runtime-architecture/evidence/ra-14-live-evidence-timeline/\n- ../.kbd-orchestrator/phases/runtime-architecture/evidence/ra-15-attributed-annotations/\n- ../.kbd-orchestrator/phases/runtime-architecture/evidence/ra-16-authorized-source-preview/\n- ../.kbd-orchestrator/phases/runtime-architecture/evidence/ra-17-native-session-transport/\n- ../.kbd-orchestrator/phases/runtime-architecture/evidence/ra-18-tauri-pglite-baseline/\n- ../.kbd-orchestrator/phases/runtime-architecture/review/ra-05-authorized-shape-facade/\n- ../.kbd-orchestrator/phases/runtime-architecture/review/ra-06-bounded-revocation/\n- ../.kbd-orchestrator/phases/runtime-architecture/review/ra-07-scoped-pem-runtime/\n- ../.kbd-orchestrator/phases/runtime-architecture/review/ra-08-committed-graph-projection/\n- ../.kbd-orchestrator/phases/runtime-architecture/review/ra-09-pem-delivery-gate/\n- ../.kbd-orchestrator/phases/runtime-architecture/review/ra-10-remove-transitive-query-cache/\n- ../.kbd-orchestrator/phases/runtime-architecture/review/ra-11a-sync-conformance/\n- ../.kbd-orchestrator/phases/runtime-architecture/review/ra-11b-worker-ownership/\n- ../.kbd-orchestrator/phases/runtime-architecture/review/ra-11c-sql-materialization/\n- ../.kbd-orchestrator/phases/runtime-architecture/review/ra-12-public-auth-startup/\n- ../.kbd-orchestrator/phases/runtime-architecture/review/ra-13-epoch-logout-and-drafts/\n- ../.kbd-orchestrator/phases/runtime-architecture/review/ra-14-live-evidence-timeline/\n- ../.kbd-orchestrator/phases/runtime-architecture/review/ra-15-attributed-annotations/\n- ../.kbd-orchestrator/phases/runtime-architecture/review/ra-16-authorized-source-preview/\n- ../.kbd-orchestrator/phases/runtime-architecture/review/ra-17-native-session-transport/\n- ../.kbd-orchestrator/phases/runtime-architecture/review/ra-18-tauri-pglite-baseline/\n- ../.kbd-orchestrator/phases/runtime-architecture/review/ra06c-01-durable-authority-events/\n- ../.kbd-orchestrator/phases/runtime-architecture/review/ra06c-02-distributed-gate-fence/\n- ../.kbd-orchestrator/phases/runtime-architecture/review/ra06c-03-final-frame-lease/\n",
+      "tags": [
+        "karpathy",
+        "session-learning"
+      ],
+      "links": [],
+      "sources": [
+        {
+          "resource": "session:bb08a33e-9561-4503-a7b8-268d3122f1e8"
+        }
+      ],
+      "created_at": "2026-10-25T15:54:27.783992Z",
+      "updated_at": "2026-10-25T15:54:27.783992Z",
+      "revision": 0,
+      "entry_type": "SessionRecord",
+      "description": null,
+      "generated_by": null,
+      "extra": {}
+    }
+  ]
+}

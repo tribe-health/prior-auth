@@ -1,0 +1,10 @@
+{
+  "url": "file:///Users/gqadonis/Projects/prometheus/flint-gate/.github/workflows/deploy-gateway.yml",
+  "chunk_id": "chunk-0018",
+  "text": "LOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n4:   push:\n5:     branches: [main]\n6:     paths:\n7:       - \"k8s/**\"\n8:       - \"Dockerfile\"\n9:       - \"crates/**\"\n10:       - \".github/workflows/deploy-gateway.yml\"\n11:   workflow_dispatch:\n12:     inputs:\n13:       force_redeploy:\n14:         description: \"Force redeploy even without file changes\"\n15:         required: false\n16:         default: \"false\"\n17: \n18: env:\n19:   IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/flint-gate\n20:   K8S_NAMESPACE: flint-gate\n21:   CONTEXT: ssr",
+  "content_type": "local-source-excerpt",
+  "source_id": "src-018",
+  "retrieval_status": "local-source-read",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 187
+}

@@ -1,0 +1,14 @@
+# TJ-ARCH-MOB-001 compliant
+[package]
+name = "patient-gpt-domain"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+# DTOs and enums only. An I/O dependency here means the contract has started
+# to know where it is running.
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
