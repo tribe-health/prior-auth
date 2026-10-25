@@ -1,0 +1,10 @@
+{
+  "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/versions.toml",
+  "chunk_id": "chunk-0017",
+  "text": "LOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n11: # Application dependencies remain unselected. Verify official versions and\n12: # compatibility before deliberately adding pins; do not copy source examples.\n13: \n14: [decisions]\n15: product = \"PatientGPT: implement the full UI and workflows referenced by docs/design.\"\n16: surfaces = \"React web, Tauri desktop, and Flutter mobile with a shared shell-independent Rust core and typed host adapters.\"\n17: runtime = \"UAR owns agent execution and tool governance; use A2UI/AG-UI ContentBlock contracts.\"\n18: state = \"Entity graph owns durable entities and freshness; Zustand is transient UI state; Flutter uses Riverpod. No query cache.\"\n19: clinical_source = \"Reuse ASO clinical records and authorized workbench commands; the proposed PatientGPT schema adds conversation and workflow data without duplicating clinical truth.\"\n20: design = \"Preserve docs/design branding, Flat 2.0 layout, light/dark themes, and existing semantic status colors.\"\n21: teams = \"Agent teams by default. Project team definitions and installation are deferred.\"\n22: verification = \"Local integration testing only; CI may build, lint, typecheck, format, and package.\"",
+  "content_type": "local-source-excerpt",
+  "source_id": "src-017",
+  "retrieval_status": "local-source-read",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 404
+}

@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guide · PatientGPT · Advanced Spine &amp; Orthopedics</title>
+<meta name="description" content="A guide to PatientGPT, the chat-first prior authorization prototype: seven cases to work, and each navigation click with the screen it produces. Synthetic data only.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="PatientGPT: prior authorization, worked by chat">
+<meta property="og:description" content="PatientGPT, a clickable prototype for Advanced Spine &amp; Orthopedics: seven cases to work end to end. Synthetic data only.">
+<meta property="og:site_name" content="PatientGPT · Advanced Spine &amp; Orthopedics">
+<meta property="og:url" content="https://ipfs.prometheusags.ai/ipns/k51qzi5uqu5dltw9o2136sbfbw34e1vjvdgl12jvt09n10t9z0dr9gd6q4abf4/">
+<!-- The image is the prototype's home screen. publish-ipfs.sh swaps this stable
+     address for the image's own immutable one, so link previews refresh when it changes. -->
+<meta property="og:image" content="https://ipfs.prometheusags.ai/ipns/k51qzi5uqu5dltw9o2136sbfbw34e1vjvdgl12jvt09n10t9z0dr9gd6q4abf4/patient-chat-og.png">
+<meta property="og:image:secure_url" content="https://ipfs.prometheusags.ai/ipns/k51qzi5uqu5dltw9o2136sbfbw34e1vjvdgl12jvt09n10t9z0dr9gd6q4abf4/patient-chat-og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="PatientGPT’s home screen: a chat box under “Which case first, Dr. James?”, the Due next list, and patients with their cases in the sidebar">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PatientGPT: prior authorization, worked by chat">
+<meta name="twitter:description" content="PatientGPT, a clickable prototype for Advanced Spine &amp; Orthopedics: seven cases to work end to end. Synthetic data only.">
+<meta name="twitter:image" content="https://ipfs.prometheusags.ai/ipns/k51qzi5uqu5dltw9o2136sbfbw34e1vjvdgl12jvt09n10t9z0dr9gd6q4abf4/patient-chat-og.png">
+<meta name="twitter:image:alt" content="PatientGPT’s home screen: a chat box, the Due next list, and patients with their cases in the sidebar">
+<meta name="color-scheme" content="light dark">
+<script>
+  (function () {
+    var stored = null;
+    try { stored = localStorage.getItem('aso-theme'); } catch (err) { stored = null; }
+    var dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (dark) document.documentElement.classList.add('dark');
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Mulish:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="patient-chat/tokens.css">
+<style>
+  /* Guide page. Tokens come from patient-chat/tokens.css; fills only, no
+     borders or shadows. Each frame is the real prototype drawn at a fixed
+     size and scaled to its column: desktop size on wide screens, phone size
+     on narrow ones, where the frame is a preview and the button opens it. */
+  body { height: auto; overflow: auto; }
+  .board { max-width: 76rem; margin-inline: auto; padding: 56px 24px 96px; display: grid; gap: 64px; }
+
+  .board-head { display: grid; gap: 16px; max-width: 44rem; }
+  .eyebrow { font-family: var(--font-mono); font-size: var(--fs-mono); font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-2); }
+  .board-title { font-family: var(--font-display); font-size: var(--fs-greeting); font-weight: 600; line-height: 1.12; letter-spacing: -0.01em; }
+  .board-lead { color: var(--fg-2); max-width: 62ch; }
+  .board-actions { display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: center; padding-top: 4px; }
+  .btn.big { min-height: 48px; padding-inline: 22px; font-size: var(--fs-body); }
+  .board-note { font-size: var(--fs-meta); color: var(--fg-2); }
+
+  .sec { display: grid; gap: 20px; }
+  .sec-head { display: grid; gap: 6px; max-width: 44rem; }
+  .sec-h2 { font-family: var(--font-display); font-size: var(--fs-title); font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; }
+  .sec-lead { color: var(--fg-2); max-width: 62ch; }
+
+  /* seven cases: one row each, told apart from the page by fill */
+  .cases { display: grid; gap: 2px; }
+  .case {
+    display: grid; grid-template-columns: minmax(0, 17rem) minmax(0, 1fr) auto; gap: 8px 28px; align-items: center;
+    padding: 18px 20px; border-radius: var(--r-lg); background: var(--s1);
+  }
+  .case-id { display: grid; gap: 4px; }
+  .case-who { font-weight: 700; }
+  .case-what { font-size: var(--fs-ui); color: var(--fg-2); }
+  .case-stage {
+    justify-self: start; margin-top: 2px; padding: 2px 8px; border-radius: 4px; background: var(--s3);
+    font-family: var(--font-mono); font-size: var(--fs-mono); white-space: nowrap;
+  }
+  .case-do { font-size: var(--fs-ui); max-width: 60ch; }
+  .case .btn { white-space: nowrap; }
+
+  .prompts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .prompt { padding: 8px 14px; border-radius: 18px; background: var(--s2); font-size: var(--fs-ui); }
+
+  .steps { display: grid; gap: 56px; }
+  .step { display: grid; grid-template-columns: minmax(0, 19rem) minmax(0, 1fr); gap: 16px 32px; align-items: start; }
+  .step-text { display: grid; gap: 10px; align-content: start; }
+  .step-h { display: flex; gap: 10px; align-items: baseline; font-size: 1.25rem; line-height: 1.3; }
+  .step-n {
+    display: inline-grid; place-items: center; flex: none; width: 28px; height: 28px; border-radius: 50%;
+    background: var(--field); color: var(--field-fg);
+    font-family: var(--font-mono); font-size: var(--fs-meta); font-weight: 500; line-height: 1;
+    transform: translateY(-2px);
+  }
+  .step-line { font-size: var(--fs-ui); }
+  .step-line b { display: block; color: var(--fg-2); font-family: var(--font-mono); font-size: var(--fs-mono); font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; }
+  .step-text .btn { justify-self: start; margin-top: 4px; }
+  .frames { display: grid; gap: 16px; min-width: 0; }
+  .frames.pair { grid-template-columns: repeat(2, minmax(0, 390px)); justify-content: start; }
+  .frame { width: 100%; overflow: hidden; border-radius: var(--r-lg); background: var(--s2); }
+  .frame iframe { display: block; border: 0; transform-origin: top left; }
+  .frame-cap { padding-top: 6px; font-family: var(--font-mono); font-size: var(--fs-mono); color: var(--fg-2); }
+  .key { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; font-size: var(--fs-meta); color: var(--fg-2); }
+  .key-i { display: inline-flex; gap: 6px; align-items: center; }
+  .pip { display: inline-block; width: 6px; height: 6px; border-radius: 1px; background: var(--s4); }
+  .pip.done { background: var(--fg); }
+  .pip.now { width: 12px; background: var(--accent); }
+
+  .board-foot { display: grid; gap: 12px; padding: 24px; border-radius: var(--r-lg); background: var(--host); max-width: 44rem; }
+  .board-foot p { font-size: var(--fs-ui); max-width: 62ch; }
+  .board-foot .btn { justify-self: start; }
+
+  @media (max-width: 1024px) {
+    .case { grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); }
+    .case .btn { grid-column: 2; justify-self: start; }
+  }
+  @media (max-width: 900px) {
+    .board { padding: 40px 20px 72px; gap: 48px; }
+    .steps { gap: 44px; }
+    .step { grid-template-columns: minmax(0, 1fr); }
+  }
+  /* phones: one column, full-width actions, frames at phone size as previews */
+  @media (max-width: 700px) {
+    .board { padding: 28px 16px 64px; gap: 40px; }
+    .case { grid-template-columns: minmax(0, 1fr); padding: 16px; gap: 10px; }
+    .case .btn { grid-column: auto; justify-self: stretch; min-height: 44px; }
+    .board-actions .btn.big { flex: 1 1 100%; }
+    .step-text .btn, .board-foot .btn { justify-self: stretch; min-height: 44px; }
+    .frames.pair { grid-template-columns: minmax(0, 1fr); }
+    .frame, .frames.pair > div { max-width: 390px; }
+    .frame iframe { pointer-events: none; }
+    .prompt { padding: 10px 14px; }
+  }
+</style>
+</head>
+<body>
+<main class="board">
+  <header class="board-head">
+    <p class="eyebrow">Advanced Spine &amp; Orthopedics · prototype</p>
+    <h1 class="board-title">PatientGPT</h1>
+    <p class="board-lead">Prior authorization, worked by chat. It looks and behaves like the chat app you already use. Patients sit where projects would, and each case is a conversation that knows the payer’s policy, the chart and what is still missing. Everything in it is synthetic.</p>
+    <div class="board-actions">
+      <a class="btn primary big" href="patient-chat.html">Open PatientGPT</a>
+      <span class="board-note">Opens here. Use Guide in its sidebar to come back.</span>
+    </div>
+  </header>
+
+  <section class="sec" aria-labelledby="try-h">
+    <div class="sec-head">
+      <h2 class="sec-h2" id="try-h">Seven cases to work</h2>
+      <p class="sec-lead">Each one sits at a different point in the process, so each one asks something different of you. Work them in any order. Nothing is saved, so reloading the page starts over.</p>
+    </div>
+    <ol class="cases">
+      <li class="case">
+        <div class="case-id"><span class="case-who">Renata Kaminski</span><span class="case-what">L4–L5 decompression and fusion</span><span class="case-stage">Policy review</span></div>
+        <p class="case-do">Press Catch me up. Answer the left-calf question, send the lab request to Maya, attach the Northgate fax with +, then draft, affirm the four gates, sign and submit.</p>
+        <a class="btn ghost" href="patient-chat.html#/c/PA-2026-0431">Open this case</a>
+      </li>
+      <li class="case">
+        <div class="case-id"><span class="case-who">Marcus Delgado</span><span class="case-what">C5–C6 ACDF</span><span class="case-stage">Awaiting surgeon</span></div>
+        <p class="case-do">Every criterion is met. Press Draft the letter, affirm the four gates, read the cited letter, sign it and submit the packet. The receipt lands in the chat.</p>
+        <a class="btn ghost" href="patient-chat.html#/c/PA-2026-0447">Open this case</a>
+      </li>
+      <li class="case">
+        <div class="case-id"><span class="case-who">Odalys Brennan</span><span class="case-what">L5–S1 microdiscectomy</span><span class="case-stage">Peer-to-peer</span></div>
+        <p class="case-do">Press Prep peer-to-peer for talking points with their sources. Say why therapy stopped, open the brief, then record how the call went.</p>
+        <a class="btn ghost" href="patient-chat.html#/c/PA-2026-0419">Open this case</a>
+      </li>
+      <li class="case">
+        <div class="case-id"><span class="case-who">Theo Vasquez</span><span class="case-what">L3–L5 laminectomy</span><span class="case-stage">Evidence assembly</span></div>
+        <p class="case-do">Attach the outside MRI with + and watch the imaging criterion move. Then answer the question on prior care: the assistant will not turn a gap into met.</p>
+        <a class="btn ghost" href="patient-chat.html#/c/PA-2026-0452">Open this case</a>
+      </li>
+      <li class="case">
+        <div class="case-id"><span class="case-who">Priya Raman</span><span class="case-what">C6–C7 disc arthroplasty</span><span class="case-stage">Submitted</span></div>
+        <p class="case-do">Press Check payer status and open the receipt. Then attach the determination letter with +. The case becomes Approved from the letter, not from a guess.</p>
+        <a class="btn ghost" href="patient-chat.html#/c/PA-2026-0398">Open this case</a>
+      </li>
+      <li class="case">
+        <div class="case-id"><span class="case-who">Renata Kaminski</span><span class="case-what">L4–L5 epidural steroid injection</span><span class="case-stage">Approved</span></div>
+        <p class="case-do">A closed case. Open Files to read the signed letter, the packet, the receipt, the gate record and the determination.</p>
+        <a class="btn ghost" href="patient-chat.html#/c/PA-2026-0212/files">Open this case</a>
+      </li>
+      <li class="case">
+        <div class="case-id"><span class="case-who">A new case</span><span class="case-what">Any patient, any procedure</span><span class="case-stage">Intake</span></div>
+        <p class="case-do">In Marcus Delgado’s chart, press Open a new case and name the procedure. Choose the new case, confirm the payer policy, and see which chart documents carry over.</p>
+        <a class="btn ghost" href="patient-chat.html#/p/delgado">Open the chart</a>
+      </li>
+    </ol>
+  </section>
+
+  <section class="sec" aria-labelledby="ask-h">
+    <div class="sec-head">
+      <h2 class="sec-h2" id="ask-h">Or just ask</h2>
+      <p class="sec-lead">With no patient selected, every chart is in scope. When the assistant cannot tell which case you mean, it asks, then carries your request into the case you pick. Every answer ends with what to ask next.</p>
+    </div>
+    <ul class="prompts" aria-label="Things to type on the home screen">
+      <li class="prompt">What’s waiting on me?</li>
+      <li class="prompt">Who is missing a lab result?</li>
+      <li class="prompt">Draft the letter</li>
+      <li class="prompt">Where does Brennan stand?</li>
+      <li class="prompt">Anyone with a foot drop?</li>
+    </ul>
+  </section>
+
+  <section class="sec" aria-labelledby="nav-h">
+    <div class="sec-head">
+      <h2 class="sec-h2" id="nav-h">Where things are</h2>
+      <p class="sec-lead">Each step names one click and shows the screen it produces. The frames are PatientGPT itself, scaled to fit.</p>
+    </div>
+
+    <ol class="steps">
+      <li class="step">
+        <div class="step-text">
+          <h3 class="step-h"><span class="step-n">1</span>Nothing selected</h3>
+          <p class="step-line"><b>Click</b>Open the app, or press New chat.</p>
+          <p class="step-line"><b>Result</b>The chat box and Due next. The top bar reads All patients, so a message here is answered across every chart. History lists chats that have no patient.</p>
+          <a class="btn ghost" href="patient-chat.html#/">Open this state</a>
+        </div>
+        <div class="frames">
+          <div class="frame" data-w="1280" data-h="800" data-mw="390" data-mh="720" data-src="patient-chat.html#/"><iframe title="Prototype with nothing selected" loading="lazy"></iframe></div>
+        </div>
+      </li>
+
+      <li class="step">
+        <div class="step-text">
+          <h3 class="step-h"><span class="step-n">2</span>Click a patient</h3>
+          <p class="step-line"><b>Click</b>Renata Kaminski in the sidebar.</p>
+          <p class="step-line"><b>Result</b>The chat is now in the context of her whole chart. She opens to show two subsections: Cases and Patient history. Each case row carries its state in the process.</p>
+          <a class="btn ghost" href="patient-chat.html#/p/kaminski">Open this state</a>
+        </div>
+        <div class="frames">
+          <div class="frame" data-w="1280" data-h="800" data-mw="390" data-mh="720" data-src="patient-chat.html#/p/kaminski" data-msrc="patient-chat.html#/p/kaminski/menu"><iframe title="Prototype with a patient in context" loading="lazy"></iframe></div>
+        </div>
+      </li>
+
+      <li class="step">
+        <div class="step-text">
+          <h3 class="step-h"><span class="step-n">3</span>Click a case</h3>
+          <p class="step-line"><b>Click</b>L4–L5 decompression and fusion, under her Cases.</p>
+          <p class="step-line"><b>Result</b>The chat is in the context of that case. History now lists only this case’s conversations. The strip shows the case state, the criteria tally, the deadline and the next action.</p>
+          <p class="key" aria-label="How to read the state track">
+            <span class="key-i"><span class="pip done"></span>stage passed</span>
+            <span class="key-i"><span class="pip now"></span>current stage</span>
+            <span class="key-i"><span class="pip"></span>stage ahead</span>
+          </p>
+          <a class="btn ghost" href="patient-chat.html#/c/PA-2026-0431">Open this state</a>
+        </div>
+        <div class="frames">
+          <div class="frame" data-w="1280" data-h="800" data-mw="390" data-mh="720" data-src="patient-chat.html#/c/PA-2026-0431"><iframe title="Prototype with a case in context" loading="lazy"></iframe></div>
+        </div>
+      </li>
+
+      <li class="step">
+        <div class="step-text">
+          <h3 class="step-h"><span class="step-n">4</span>Click a case history row</h3>
+          <p class="step-line"><b>Click</b>What is still open after the consult, under Case history.</p>
+          <p class="step-line"><b>Result</b>That conversation loads into the chat view and its row is marked in the sidebar. Sending a new message continues it and moves it to the top of the list.</p>
+          <a class="btn ghost" href="patient-chat.html#/chat/h-c1">Open this state</a>
+        </div>
+        <div class="frames">
+          <div class="frame" data-w="1280" data-h="800" data-mw="390" data-mh="720" data-src="patient-chat.html#/chat/h-c1"><iframe title="Prototype with a case conversation open" loading="lazy"></iframe></div>
+        </div>
+      </li>
+
+      <li class="step">
+        <div class="step-text">
+          <h3 class="step-h"><span class="step-n">5</span>Click a patient history row</h3>
+          <p class="step-line"><b>Click</b>Has she had injections before, under Patient history.</p>
+          <p class="step-line"><b>Result</b>A conversation scoped to the whole patient loads. No case is selected, so the answer draws on documents from any of her cases.</p>
+          <a class="btn ghost" href="patient-chat.html#/chat/h-p1">Open this state</a>
+        </div>
+        <div class="frames">
+          <div class="frame" data-w="1280" data-h="800" data-mw="390" data-mh="720" data-src="patient-chat.html#/chat/h-p1"><iframe title="Prototype with a patient conversation open" loading="lazy"></iframe></div>
+        </div>
+      </li>
+
+      <li class="step">
+        <div class="step-text">
+          <h3 class="step-h"><span class="step-n">6</span>Click a global history row</h3>
+          <p class="step-line"><b>Click</b>What is due this week, under History at the bottom of the sidebar.</p>
+          <p class="step-line"><b>Result</b>A conversation with all patients in scope loads. Each row in its answer sets context: choosing one moves this same conversation into that patient or case.</p>
+          <a class="btn ghost" href="patient-chat.html#/chat/h-g1">Open this state</a>
+        </div>
+        <div class="frames">
+          <div class="frame" data-w="1280" data-h="800" data-mw="390" data-mh="720" data-src="patient-chat.html#/chat/h-g1"><iframe title="Prototype with an all-patients conversation open" loading="lazy"></iframe></div>
+        </div>
+      </li>
+
+      <li class="step">
+        <div class="step-text">
+          <h3 class="step-h"><span class="step-n">7</span>Open Files in a case</h3>
+          <p class="step-line"><b>Click</b>Files in the top bar, with a case in context.</p>
+          <p class="step-line"><b>Result</b>The Files and evidence panel slides in from the right: what the case has generated, the evidence behind each criterion, the governing policy and the rest of the chart. Every item opens in the same place, with a way back.</p>
+          <a class="btn ghost" href="patient-chat.html#/c/PA-2026-0419/files">Open this state</a>
+        </div>
+        <div class="frames">
+          <div class="frame" data-w="1280" data-h="800" data-mw="390" data-mh="720" data-src="patient-chat.html#/c/PA-2026-0419/files"><iframe title="Prototype with the files panel open on a case" loading="lazy"></iframe></div>
+        </div>
+      </li>
+
+      <li class="step">
+        <div class="step-text">
+          <h3 class="step-h"><span class="step-n">8</span>Open Files for the whole patient</h3>
+          <p class="step-line"><b>Click</b>Files in the top bar, with a patient in context.</p>
+          <p class="step-line"><b>Result</b>The same panel, scoped to the patient: generated records grouped by case, then the whole chart, newest first.</p>
+          <a class="btn ghost" href="patient-chat.html#/p/kaminski/files">Open this state</a>
+        </div>
+        <div class="frames">
+          <div class="frame" data-w="1280" data-h="800" data-mw="390" data-mh="720" data-src="patient-chat.html#/p/kaminski/files"><iframe title="Prototype with the files panel open on a patient" loading="lazy"></iframe></div>
+        </div>
+      </li>
+
+      <li class="step">
+        <div class="step-text">
+          <h3 class="step-h"><span class="step-n">9</span>On a phone</h3>
+          <p class="step-line"><b>Click</b>The sidebar button at the top left, then Files.</p>
+          <p class="step-line"><b>Result</b>The sidebar is a drawer over the page, with the same patients, cases, states and history. Files and evidence is a bottom sheet; opening an item goes full screen and Files returns to the sheet.</p>
+          <a class="btn ghost" href="patient-chat.html#/c/PA-2026-0431/menu">Open this state</a>
+        </div>
+        <div class="frames pair">
+          <div>
+            <div class="frame" data-w="390" data-h="780" data-src="patient-chat.html#/c/PA-2026-0431/menu"><iframe title="Prototype at phone width with the drawer open" loading="lazy"></iframe></div>
+            <p class="frame-cap">Drawer open</p>
+          </div>
+          <div>
+            <div class="frame" data-w="390" data-h="780" data-src="patient-chat.html#/c/PA-2026-0398/files"><iframe title="Prototype at phone width with the files sheet open" loading="lazy"></iframe></div>
+            <p class="frame-cap">Files and evidence sheet</p>
+          </div>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <footer class="board-foot">
+    <p>The assistant drafts and cites. It never affirms a gate, signs, submits or records an outcome: those controls are drawn by the app and belong to the surgeon. A criterion changes only when a document is filed.</p>
+    <a class="btn primary big" href="patient-chat.html">Open PatientGPT</a>
+  </footer>
+</main>
+
+<script>
+  /* Draw each frame at a fixed size and scale it to its column. On narrow
+     screens a frame switches to the prototype's phone layout at phone size.
+     The source is set here so only the layout in use is ever loaded. */
+  (function () {
+    var frames = Array.prototype.slice.call(document.querySelectorAll('.frame'));
+    var narrow = window.matchMedia('(max-width: 700px)');
+    function fit() {
+      frames.forEach(function (frame) {
+        var phone = narrow.matches && frame.hasAttribute('data-mw');
+        var w = Number(frame.getAttribute(phone ? 'data-mw' : 'data-w'));
+        var ht = Number(frame.getAttribute(phone ? 'data-mh' : 'data-h'));
+        var src = (phone && frame.getAttribute('data-msrc')) || frame.getAttribute('data-src');
+        var f = frame.querySelector('iframe');
+        var k = Math.min(1, frame.clientWidth / w);
+        if (f.getAttribute('src') !== src) f.setAttribute('src', src);
+        f.style.width = w + 'px';
+        f.style.height = ht + 'px';
+        f.style.transform = 'scale(' + k + ')';
+        frame.style.height = Math.round(ht * k) + 'px';
+      });
+    }
+    window.addEventListener('resize', fit);
+    fit();
+  })();
+</script>
+</body>
+</html>

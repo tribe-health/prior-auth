@@ -1,0 +1,147 @@
+{
+  "project": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt",
+  "activeTeam": "patientgpt-delivery",
+  "manifest": ".agent-team/patientgpt-delivery/team.json",
+  "nativeDefinitions": [
+    ".minimax/agents/product-manager/agent.md",
+    ".minimax/agents/team-lead/agent.md",
+    ".minimax/agents/creative-director/agent.md",
+    ".minimax/agents/design-expert/agent.md",
+    ".minimax/agents/react-engineer/agent.md",
+    ".minimax/agents/tauri-engineer/agent.md",
+    ".minimax/agents/flutter-engineer/agent.md",
+    ".minimax/agents/rust-domain-engineer/agent.md",
+    ".minimax/agents/storage-engineer/agent.md",
+    ".minimax/agents/flint-data-engineer/agent.md",
+    ".minimax/agents/identity-security-engineer/agent.md",
+    ".minimax/agents/uar-agent-expert/agent.md",
+    ".minimax/agents/platform-release-engineer/agent.md",
+    ".minimax/agents/documentation-engineer/agent.md",
+    ".minimax/agents/phase-verifier/agent.md",
+    ".minimax/agents/artifact-critic/agent.md",
+    ".minimax/agents/ui-critic/agent.md"
+  ],
+  "changed": [
+    ".minimax/agents/product-manager/agent.md",
+    ".minimax/agents/team-lead/agent.md",
+    ".minimax/agents/creative-director/agent.md",
+    ".minimax/agents/design-expert/agent.md",
+    ".minimax/agents/react-engineer/agent.md",
+    ".minimax/agents/tauri-engineer/agent.md",
+    ".minimax/agents/flutter-engineer/agent.md",
+    ".minimax/agents/rust-domain-engineer/agent.md",
+    ".minimax/agents/storage-engineer/agent.md",
+    ".minimax/agents/flint-data-engineer/agent.md",
+    ".minimax/agents/identity-security-engineer/agent.md",
+    ".minimax/agents/uar-agent-expert/agent.md",
+    ".minimax/agents/platform-release-engineer/agent.md",
+    ".minimax/agents/documentation-engineer/agent.md",
+    ".minimax/agents/phase-verifier/agent.md",
+    ".minimax/agents/artifact-critic/agent.md",
+    ".minimax/agents/ui-critic/agent.md",
+    ".agent-team/project-routing.json"
+  ],
+  "clean": false,
+  "dryRun": true,
+  "check": false,
+  "fingerprints": [
+    {
+      "file": ".minimax/agents/product-manager/agent.md",
+      "before": null,
+      "after": "fbd16b4a1900a2c6ef283c58a068a3fa2c1bfc235a99b20a1f68b98f98a00b0d"
+    },
+    {
+      "file": ".minimax/agents/team-lead/agent.md",
+      "before": null,
+      "after": "3b3cd927139b8c8e847fe9f3e2cd50e4ca8f38b75d5feee2a112b2a275f68997"
+    },
+    {
+      "file": ".minimax/agents/creative-director/agent.md",
+      "before": null,
+      "after": "828e70a0ec0f0bbcce3e48a7a6d58ff1183a9044cf6e0b60c62ede565a9c56df"
+    },
+    {
+      "file": ".minimax/agents/design-expert/agent.md",
+      "before": null,
+      "after": "7861c508510b269e4e8f026cfa5325be6f365bd0911317bbe987508db4e4d597"
+    },
+    {
+      "file": ".minimax/agents/react-engineer/agent.md",
+      "before": null,
+      "after": "ddd87434b90f523b707817051c9b8f1578e93e4c3aacb049a3330c6f0d498bdf"
+    },
+    {
+      "file": ".minimax/agents/tauri-engineer/agent.md",
+      "before": null,
+      "after": "f6810adc7ff94c5e2f9ab6ed81f76b7710a36f790ad5cc9d65f86172afa4c8eb"
+    },
+    {
+      "file": ".minimax/agents/flutter-engineer/agent.md",
+      "before": null,
+      "after": "dfb977eb24eb36341b54c95cd32b17af8bd3e5b54254e0d4ee2b9c1ac1d61eae"
+    },
+    {
+      "file": ".minimax/agents/rust-domain-engineer/agent.md",
+      "before": null,
+      "after": "065822b0a4d0713851255db3b9244fa037d3a9d1f0ba01144e746f6e43a6a309"
+    },
+    {
+      "file": ".minimax/agents/storage-engineer/agent.md",
+      "before": null,
+      "after": "abd30045cc9b281fe754e0a730f188674ecc5c9ddc7e4bf158cf3d5bb185d5f5"
+    },
+    {
+      "file": ".minimax/agents/flint-data-engineer/agent.md",
+      "before": null,
+      "after": "5a8c450f9dc2dd6fda36ebb0369c1eb148ede360426aae765f27aa657376538e"
+    },
+    {
+      "file": ".minimax/agents/identity-security-engineer/agent.md",
+      "before": null,
+      "after": "3ab76e7669a9af0b273372776a0764e1e94c56f68ae7bf649fc522cf70ec2970"
+    },
+    {
+      "file": ".minimax/agents/uar-agent-expert/agent.md",
+      "before": null,
+      "after": "b6976d4aaae4f8984aa56d4f7186e8f466691dd5dd60865fd28b69470c52dc7d"
+    },
+    {
+      "file": ".minimax/agents/platform-release-engineer/agent.md",
+      "before": null,
+      "after": "bbe31756b55185f4ef41ae5f34159537ea7c6fc857be09f1ab2828ca9563ac34"
+    },
+    {
+      "file": ".minimax/agents/documentation-engineer/agent.md",
+      "before": null,
+      "after": "85bfddcf941327b13fae1d4ec5b2b2c91f458f9f5746ae491ed17ea18b857b0a"
+    },
+    {
+      "file": ".minimax/agents/phase-verifier/agent.md",
+      "before": null,
+      "after": "d627d9282935860f3ea52cc0ffc7c1ecfdfb7e8c6cab0cf721cd65fb365478a4"
+    },
+    {
+      "file": ".minimax/agents/artifact-critic/agent.md",
+      "before": null,
+      "after": "9eb36a6b8bc3609a18541d3aaad1af20283f6690ef29b814169f37faa71de0bc"
+    },
+    {
+      "file": ".minimax/agents/ui-critic/agent.md",
+      "before": null,
+      "after": "ad2cfaa4da1094809187a374c98bee7f8d45bf1e5c55c310baa2daff8d79304e"
+    },
+    {
+      "file": ".agent-team/project-routing.json",
+      "before": "73f83defb4f5f457fd03664d3e6e2a8f1b186e43c24c2f3bab5730562a380805",
+      "after": "0eaca69b086d8f3ef208c08bad710e21be27c7fb0a851baaa703359e73f9d43c"
+    }
+  ],
+  "diagnostics": [
+    "Source-verified serialization only; installed native validation and live execution are unverified.",
+    "Only explicit model IDs are translated. Resolve tier, skill, capability and price policies with agent-team-models before native invocation.",
+    "mcode exec has no verified custom-agent selector. The MiniMax plugin manifest supports skills/MCP/hooks/apps, not an agents field; no agent plugin is invented.",
+    "Role overrides are preserved without native schema certification. Skill IDs refer to separately installed skills; prompt mentions do not install or authorize them.",
+    "MiniMax definitions require launching with MINIMAX_DATA_DIR set to the absolute project directory .minimax; installing files does not set that environment."
+  ],
+  "recovery": null
+}

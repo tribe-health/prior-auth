@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PatientGPT · Advanced Spine &amp; Orthopedics</title>
+<meta name="description" content="PatientGPT: chat-first prior authorization for Advanced Spine &amp; Orthopedics. Chats are scoped to all patients, one patient, or one case. Synthetic data only.">
+<meta name="color-scheme" content="light dark">
+<script>
+  /* set the theme before first paint: stored choice, else the system setting */
+  (function () {
+    var stored = null;
+    try { stored = localStorage.getItem('aso-theme'); } catch (err) { stored = null; }
+    var dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (dark) document.documentElement.classList.add('dark');
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Mulish:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* OD-LAYOUT-PRIMITIVES v1 — structure only: display, flex/grid, overflow, wrapping, ratio.
+   Put this @layer first; product CSS outside the layer always wins. */
+@layer od-layout {
+  :where(.od-stack,.od-row,.od-row-top,.od-cluster,.od-grid,.od-field,.od-stat,.od-cell,.od-tile) > :where(*) { min-width: 0; }
+
+  /* containers */
+  .od-stack   { display: flex; flex-direction: column; gap: var(--od-gap, 8px); }
+  .od-row     { display: flex; align-items: center; gap: var(--od-gap, 8px); }
+  .od-row-top { display: flex; align-items: flex-start; gap: var(--od-gap, 8px); }
+  .od-cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--od-gap, 8px); }
+  .od-fill    { flex: 1 1 0; min-width: 0; }
+  .od-fixed   { flex: none; }
+  .od-grid    { display: grid; gap: var(--od-gap, 12px); grid-template-columns: repeat(var(--od-cols, 3), minmax(0, 1fr)); }
+
+  /* stacked information: each piece is its own line — never sibling inline spans */
+  .od-stat, .od-field, .od-cell { display: grid; gap: var(--od-gap, 2px); }
+  :where(.od-stat,.od-field,.od-cell) > :where(*) { display: block; }
+  .od-tile { display: grid; grid-template-rows: auto 1fr; }
+  :where(.od-tile) > :where(*) { display: block; }
+
+  /* media keeps its intrinsic ratio by default; never a distorted or cropped
+     cover by accident. height:auto lets the ratio win over an <img height="…">
+     attribute. Cropping to a uniform box is an explicit opt-in: set --od-ratio
+     AND add .od-media-cover together (per the core rule, only where a crop is
+     deliberate — tile thumbs, decorative fills — never on full-frame content). */
+  .od-media { display: block; width: 100%; height: auto; aspect-ratio: var(--od-ratio, auto); }
+  .od-media-cover { object-fit: cover; }
+
+  /* data text only — authored copy is rewritten to its budget instead */
+  .od-truncate { display: block; max-width: 100%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+  .od-clamp-2, .od-clamp-3 { display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; }
+  .od-clamp-2 { -webkit-line-clamp: 2; }
+  .od-clamp-3 { -webkit-line-clamp: 3; }
+  .od-lines-2 { min-height: calc(2 * 1.4em); }   /* block-level reservation for a shared baseline */
+  .od-nowrap  { white-space: nowrap; }           /* 数字+单位 · 价格+起 · 日期+星期 */
+  .od-keep    { word-break: keep-all; overflow-wrap: anywhere; } /* CJK labels break at spaces / <wbr> first */
+
+  /* screen skeleton (optional): bars take their own space, the middle scrolls — no padding guessed for chrome */
+  .od-screen { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; height: 100%; }
+  .od-scroll { overflow-y: auto; overscroll-behavior: contain; min-height: 0; }
+
+  /* horizontal rail: the next item peeks at the edge; trailing room survives overflow */
+  .od-rail { display: flex; gap: var(--od-gap, 8px); overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none;
+             padding-inline: var(--od-rail-pad, 16px); scroll-padding-inline: var(--od-rail-pad, 16px); }
+  .od-rail::-webkit-scrollbar { display: none; }
+  :where(.od-rail) > :where(*) { flex: none; scroll-snap-align: start; }
+  :where(.od-rail) > :where(:last-child) { margin-inline-end: var(--od-rail-pad, 16px); }
+
+  .od-spacer { flex: none; visibility: hidden; pointer-events: none; }
+  .od-touch  { min-width: 44px; min-height: 44px; }
+}
+/* /OD-LAYOUT-PRIMITIVES v1 */
+</style>
+<link rel="stylesheet" href="patient-chat/tokens.css">
+<link rel="stylesheet" href="patient-chat/shell.css">
+<link rel="stylesheet" href="patient-chat/thread.css">
+<link rel="stylesheet" href="patient-chat/surfaces.css">
+<link rel="stylesheet" href="patient-chat/panel.css">
+</head>
+<body>
+<a class="skip" id="skip" href="#view">Skip to conversation</a>
+
+<div class="app" id="app" data-sidebar="open" data-route="home" data-scope="global">
+
+  <aside class="sidebar" id="sidebar" aria-label="Patients, cases and history">
+    <div class="sb-head od-row">
+      <a class="brand od-row od-fill" href="#/" aria-label="PatientGPT, Advanced Spine &amp; Orthopedics, home">
+        <svg class="mark" viewBox="0 0 512 512" aria-hidden="true" focusable="false">
+          <g transform="rotate(-13 256 256) translate(0 18)">
+            <path class="u" d="M80 250C172 186 300 154 432 162C306 126 176 148 80 208C64 218 64 240 80 250Z"/>
+            <path class="l" d="M80 308C176 266 306 234 432 240C448 250 448 274 432 284C306 278 176 312 80 330C66 324 66 314 80 308Z"/>
+          </g>
+        </svg>
+        <span class="brand-name od-fill od-truncate">PatientGPT</span>
+      </a>
+      <button class="icon-btn od-fixed" id="sb-toggle" type="button" aria-label="Close sidebar" data-ico="panel"></button>
+    </div>
+
+    <nav class="sb-nav" aria-label="Workspace">
+      <a class="sb-item od-row" href="#/"><span class="od-fixed" data-ico="edit"></span><span class="od-fill">New chat</span></a>
+      <button class="sb-item od-row" id="open-search" type="button"><span class="od-fixed" data-ico="search"></span><span class="od-fill">Search</span><kbd class="sb-kbd od-fixed" id="search-kbd">Ctrl K</kbd></button>
+      <a class="sb-item od-row" href="patient-chat-storyboard.html"><span class="od-fixed" data-ico="doc"></span><span class="od-fill">Guide</span></a>
+    </nav>
+
+    <div class="od-scroll">
+      <h2 class="sb-label" id="sb-patients-h">Patients</h2>
+      <ul class="sb-patients" id="sb-patients" aria-labelledby="sb-patients-h"></ul>
+      <h2 class="sb-label" id="sb-history-h">History</h2>
+      <ul class="sb-history" id="sb-history" aria-labelledby="sb-history-h"></ul>
+    </div>
+
+    <div class="sb-foot menu-anchor">
+      <button class="sb-item od-row" id="profile-btn" type="button" aria-haspopup="menu" aria-expanded="false" aria-label="Account: Dr. K. James, surgeon">
+        <span class="avatar od-fixed" aria-hidden="true">KJ</span>
+        <span class="od-field od-fill"><span class="sb-user">Dr. K. James</span><span class="sb-role">Surgeon</span></span>
+      </button>
+    </div>
+  </aside>
+
+  <div class="scrim" id="scrim" hidden></div>
+
+  <div class="main od-screen" id="main">
+    <header class="topbar">
+      <div class="tb-row od-row">
+        <button class="icon-btn od-fixed" id="sb-open" type="button" aria-label="Open sidebar" data-ico="panel"></button>
+        <div class="menu-anchor od-fill" id="ctx"></div>
+        <button class="files-btn od-row od-fixed" id="files-btn" type="button" aria-label="Files and evidence" aria-expanded="false" aria-controls="files" hidden><span class="od-fixed" data-ico="folder"></span><span class="files-btn-label">Files</span><span class="files-count" id="files-count"></span></button>
+        <a class="icon-btn od-fixed" id="tb-new" href="#/" aria-label="New chat" data-ico="edit"></a>
+      </div>
+      <div class="strip" id="strip" hidden></div>
+    </header>
+
+    <main class="view od-scroll" id="view" tabindex="-1"></main>
+
+    <div class="dock" id="dock">
+      <div class="composer-wrap" id="composer-wrap">
+        <div class="chips od-rail" id="chips" role="group" aria-label="Suggested prompts"></div>
+        <form class="composer on-field" id="composer" autocomplete="off">
+          <ul class="tray" id="tray" aria-label="Attached documents"></ul>
+          <label class="sr-only" for="prompt">Message</label>
+          <textarea id="prompt" rows="1" placeholder="Ask about any patient or case"></textarea>
+          <p class="composer-hint" id="composer-hint" role="status" hidden></p>
+          <div class="composer-row od-row">
+            <div class="menu-anchor od-fixed">
+              <button class="icon-btn" id="attach-btn" type="button" aria-label="Attach a chart document" aria-haspopup="menu" aria-expanded="false" data-ico="plus"></button>
+            </div>
+            <span class="od-fill"></span>
+            <button class="icon-btn od-fixed" id="mic-btn" type="button" aria-label="Dictate" aria-pressed="false" data-ico="mic"></button>
+            <button class="icon-btn send od-fixed" id="send-btn" type="submit" aria-label="Send message" disabled data-ico="up"></button>
+          </div>
+        </form>
+        <p class="disclaimer">Synthetic demo data. The assistant drafts and cites. The surgeon decides.</p>
+      </div>
+    </div>
+  </div>
+
+  <aside class="canvas od-screen" id="canvas" aria-labelledby="canvas-title" hidden>
+    <header class="canvas-head od-row">
+      <button class="btn ghost od-fixed" id="canvas-back" type="button" aria-label="Back to files and evidence"><span data-ico="arrowLeft"></span>Files</button>
+      <div class="od-field od-fill">
+        <h2 class="canvas-title" id="canvas-title"></h2>
+        <p class="canvas-meta" id="canvas-meta"></p>
+      </div>
+      <button class="icon-btn od-fixed" id="canvas-close" type="button" aria-label="Close document" data-ico="x"></button>
+    </header>
+    <div class="canvas-body od-scroll" id="canvas-body"></div>
+    <footer class="canvas-foot od-row" id="canvas-foot" hidden></footer>
+  </aside>
+
+  <!-- Files and evidence for the patient or case in context. Docked on the right
+       on wide screens, an overlay on medium ones, a bottom sheet on phones. -->
+  <aside class="files od-screen" id="files" aria-labelledby="files-title" hidden>
+    <header class="files-head od-row">
+      <div class="od-field od-fill">
+        <h2 class="files-title" id="files-title">Files and evidence</h2>
+        <p class="files-meta" id="files-meta"></p>
+      </div>
+      <button class="icon-btn od-fixed" id="files-close" type="button" aria-label="Close files and evidence" data-ico="x"></button>
+    </header>
+    <div class="files-body od-scroll" id="files-body"></div>
+  </aside>
+  <div class="scrim files-scrim" id="files-scrim" hidden></div>
+</div>
+
+<dialog class="search" id="search" aria-label="Search embedded case content">
+  <div class="search-head">
+    <div class="search-field on-field od-row">
+      <span class="od-fixed" data-ico="search"></span>
+      <label class="sr-only" for="search-input">Search embedded content across every case</label>
+      <input class="od-fill" id="search-input" type="search" placeholder="Search every case by meaning" autocomplete="off">
+      <button class="icon-btn od-fixed" id="search-close" type="button" aria-label="Close search" data-ico="x"></button>
+    </div>
+  </div>
+  <p class="search-status" id="search-status" role="status"></p>
+  <ul class="search-results" id="search-results"></ul>
+</dialog>
+
+<div class="sr-only" id="live" aria-live="polite"></div>
+
+<script src="patient-chat/ui.js"></script>
+<script src="patient-chat/data.js"></script>
+<script src="patient-chat/data-docs.js"></script>
+<script src="patient-chat/agui-stream.js"></script>
+<script src="patient-chat/a2ui-renderer.js"></script>
+<script src="patient-chat/conversations.js"></script>
+<script src="patient-chat/search.js"></script>
+<script src="patient-chat/runs.js"></script>
+<script src="patient-chat/flows.js"></script>
+<script src="patient-chat/runs-scope.js"></script>
+<script src="patient-chat/host-controls.js"></script>
+<script src="patient-chat/records.js"></script>
+<script src="patient-chat/files-panel.js"></script>
+<script src="patient-chat/thread.js"></script>
+<script src="patient-chat/composer.js"></script>
+<script src="patient-chat/nav.js"></script>
+<script src="patient-chat/search-ui.js"></script>
+<script src="patient-chat/shell.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "patientgpt-delivery-marketplace",
+  "owner": {
+    "name": "patientgpt-delivery"
+  },
+  "plugins": [
+    {
+      "name": "patientgpt-delivery",
+      "source": "./plugins/patientgpt-delivery",
+      "description": "Implement all docs/design PatientGPT workflows across shared React web/Tauri and Flutter with shared Rust, environment storage, Flint/Kratos identity, governed UAR AG-UI/A2UI, and documented monorepo delivery in visible two-hour increments."
+    }
+  ]
+}

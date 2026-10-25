@@ -1,0 +1,41 @@
+{
+  "directory": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agent-team/exports/deepseek",
+  "files": [
+    ".dsh/profiles/patientgpt-delivery-product-manager/cordis.patch.yml",
+    ".dsh/profiles/patientgpt-delivery-team-lead/cordis.patch.yml",
+    ".dsh/profiles/patientgpt-delivery-creative-director/cordis.patch.yml",
+    ".dsh/profiles/patientgpt-delivery-design-expert/cordis.patch.yml",
+    ".dsh/profiles/patientgpt-delivery-react-engineer/cordis.patch.yml",
+    ".dsh/profiles/patientgpt-delivery-tauri-engineer/cordis.patch.yml",
+    ".dsh/profiles/patientgpt-delivery-flutter-engineer/cordis.patch.yml",
+    ".dsh/profiles/patientgpt-delivery-rust-domain-engineer/cordis.patch.yml",
+    ".dsh/profiles/patientgpt-delivery-storage-engineer/cordis.patch.yml",
+    ".dsh/profiles/patientgpt-delivery-flint-data-engineer/cordis.patch.yml",
+    ".dsh/profiles/patientgpt-delivery-identity-security-engineer/cordis.patch.yml",
+    ".dsh/profiles/patientgpt-delivery-uar-agent-expert/cordis.patch.yml",
+    ".dsh/profiles/patientgpt-delivery-platform-release-engineer/cordis.patch.yml",
+    ".dsh/profiles/patientgpt-delivery-documentation-engineer/cordis.patch.yml",
+    ".dsh/profiles/patientgpt-delivery-phase-verifier/cordis.patch.yml",
+    ".dsh/profiles/patientgpt-delivery-artifact-critic/cordis.patch.yml",
+    ".dsh/profiles/patientgpt-delivery-ui-critic/cordis.patch.yml",
+    ".dsh/profiles/patientgpt-delivery-team/cordis.patch.yml",
+    "export-receipt.json",
+    "team-export.json"
+  ],
+  "verification": {
+    "level": "source-verified",
+    "source": "https://github.com/deepseek-ai/deepseek-harness/tree/master/packages/experimental/agent-team",
+    "version": "master documentation inspected 2026-09-24; experimental",
+    "live": "unverified"
+  },
+  "diagnostics": [
+    "Source-verified serialization only; installed native validation and live execution are unverified.",
+    "Only explicit model IDs are translated. Resolve tier, skill, capability and price policies with agent-team-models before native invocation.",
+    "DeepSeek teams are experimental, require durable session storage, share one process/workspace, and provide no static per-member model setting. No package install, profile activation or team creation occurs on export.",
+    "Role overrides are preserved without native schema certification. Skill IDs refer to separately installed skills; prompt mentions do not install or authorize them."
+  ],
+  "instructions": [
+    "Review staged artifacts before installation. Export grants no execution or registration authority.",
+    "Review the role persona profiles and separate team composition profile before selecting them in DeepSeek. Team options configure the experimental agent-team service. The lead creates members at runtime using the portable role prompts; profiles do not pre-create a roster."
+  ]
+}

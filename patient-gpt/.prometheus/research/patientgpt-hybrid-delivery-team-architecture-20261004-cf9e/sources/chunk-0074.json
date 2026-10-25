@@ -1,0 +1,10 @@
+{
+  "url": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/src-tauri/capabilities/default.json",
+  "chunk_id": "chunk-0074",
+  "text": "LOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n8:     \"core:window:allow-close\",\n9:     \"core:window:allow-minimize\",\n10:     \"core:window:allow-toggle-maximize\",\n11:     \"core:window:allow-start-dragging\",",
+  "content_type": "local-source-excerpt",
+  "source_id": "src-058",
+  "retrieval_status": "local-source-read",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 76
+}

@@ -1,0 +1,10 @@
+{
+  "url": "https://github.com/ory/docs/blob/master/docs/kratos/session-management/01_overview.mdx",
+  "chunk_id": "chunk-0031",
+  "text": "DOSSIER SUMMARY ONLY; not a raw fetched page. The research worker recorded official documentation retrieval; this assembly did not refetch it.\nContext7 official docs validate session cookies and native tokens at whoami.",
+  "content_type": "worker-documentation-summary",
+  "source_id": "src-028",
+  "retrieval_status": "dossier-summary-only",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 73
+}

@@ -1,0 +1,26 @@
+:root {
+  --ifm-color-primary: #e84a24;
+  --ifm-color-primary-dark: #cf3f1d;
+  --ifm-background-color: #f7f7f8;
+  --ifm-background-surface-color: #eaedf2;
+  --ifm-navbar-background-color: #e5e9ef;
+  --ifm-card-background-color: #ffffff;
+  --ifm-global-shadow-lw: none;
+  --ifm-global-shadow-md: none;
+  --ifm-global-shadow-tl: none;
+}
+
+[data-theme='dark'] {
+  --ifm-background-color: #090e15;
+  --ifm-background-surface-color: #111824;
+  --ifm-navbar-background-color: #121926;
+  --ifm-card-background-color: #192333;
+  --ifm-font-color-base: #e8ebf0;
+}
+
+*, *::before, *::after {box-shadow: none !important; border-color: transparent !important;}
+.navbar, .footer, .menu, .theme-doc-sidebar-container, .card, .alert, pre, code {box-shadow: none !important; border: 0 !important;}
+.navbar {background: var(--ifm-navbar-background-color);}
+.theme-doc-sidebar-container, .menu {background: var(--ifm-background-surface-color);}
+.card, .alert, pre {background: var(--ifm-card-background-color);}
+:focus-visible {outline: 3px solid var(--ifm-color-primary); outline-offset: 3px;}

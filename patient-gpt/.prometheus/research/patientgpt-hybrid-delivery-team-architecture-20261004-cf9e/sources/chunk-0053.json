@@ -1,0 +1,10 @@
+{
+  "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/references/rust/tool-governance.md",
+  "chunk_id": "chunk-0053",
+  "text": "LOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n3: Application-facing code never executes a raw MCP transport. It submits a typed\n4: tool intent to Universal Agent Runtime and receives governed lifecycle events.\n5: \n6: ## Required execution sequence\n7: \n8: 1. Resolve a paired, non-revoked server and stable tool identity.\n9: 2. Validate the input against the pinned JSON Schema.\n10: 3. Classify effects independently of MCP annotations.\n11: 4. Evaluate project policy with `VerifiedSession`, tenant, resource, and effect.\n12: 5. Emit an approval request when policy requires confirmation.\n13: 6. Execute with an idempotency ID, deadline, output budget, and cancellation.\n14: 7. Validate, truncate, and redact the output according to schema and policy.\n15: 8. Append an immutable result containing decision, timing, digest, and outcome.\n16: \n17: Unknown servers, schemas, actors, tenants, effects, and policy actions are\n18: denied. Tool descriptions and MCP annotations are untrusted hints. They cannot\n19: grant authorization or reduce the effect class.\n20: \n21: ## Public event states\n22: \n23: Clients render `approval-required`, `approved`, `denied`, `running`,\n24: `cancel-requested`, `cancelled`, `timed-out`, `failed`, and `completed`. They do\n25: not infer state from prose and cannot bypass a runtime decision.",
+  "content_type": "local-source-excerpt",
+  "source_id": "src-041",
+  "retrieval_status": "local-source-read",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 447
+}

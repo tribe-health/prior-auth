@@ -1,0 +1,445 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-04T14:54:54.973363+00:00",
+  "projectRoot": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt",
+  "operation": "Local full Impeccable copy when absent; read-only inventory of existing requested skills",
+  "downloaded": false,
+  "createdProductContext": false,
+  "hashAlgorithm": "sha256",
+  "treeHashMethod": "Sorted relative path, NUL, per-file SHA256, NUL; symlinks hash link target text instead of following",
+  "skills": [
+    {
+      "id": "impeccable",
+      "projectLocations": [
+        {
+          "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/impeccable",
+          "skillPath": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/impeccable/SKILL.md",
+          "skillName": "impeccable",
+          "exists": true,
+          "skillSha256": "1f9a29a09e315ff6570d2dc2b4e3ca7d074a85983ffb54c32725fb5acbcd9d14",
+          "treeSha256": "7df3d2b85d846f94f2546adb6c123aa1650fbbb7517d814a0e3de144da4f3bf6",
+          "fileOrSymlinkCount": 61
+        },
+        {
+          "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.claude/skills/impeccable",
+          "skillPath": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.claude/skills/impeccable/SKILL.md",
+          "skillName": "impeccable",
+          "exists": true,
+          "skillSha256": "1f9a29a09e315ff6570d2dc2b4e3ca7d074a85983ffb54c32725fb5acbcd9d14",
+          "treeSha256": "7df3d2b85d846f94f2546adb6c123aa1650fbbb7517d814a0e3de144da4f3bf6",
+          "fileOrSymlinkCount": 61
+        }
+      ],
+      "installedSources": [
+        {
+          "path": "/Users/gqadonis/.codex/skills/impeccable",
+          "skillPath": "/Users/gqadonis/.codex/skills/impeccable/SKILL.md",
+          "skillSha256": "1f9a29a09e315ff6570d2dc2b4e3ca7d074a85983ffb54c32725fb5acbcd9d14",
+          "treeSha256": "7df3d2b85d846f94f2546adb6c123aa1650fbbb7517d814a0e3de144da4f3bf6",
+          "fileOrSymlinkCount": 61,
+          "sourceRelationship": "actual-copy-source"
+        },
+        {
+          "path": "/Users/gqadonis/.TOOLS/skills/agents/impeccable",
+          "skillPath": "/Users/gqadonis/.TOOLS/skills/agents/impeccable/SKILL.md",
+          "skillSha256": "1f9a29a09e315ff6570d2dc2b4e3ca7d074a85983ffb54c32725fb5acbcd9d14",
+          "treeSha256": "3ed566947b3464a757217dd09d83aada22a930063b72f0e7963ca5d605cb20a1",
+          "fileOrSymlinkCount": 60,
+          "sourceRelationship": "installed-candidate-not-assumed-copy-origin"
+        }
+      ],
+      "projectCopiesMatch": true
+    },
+    {
+      "id": "ui-ux-pro-max",
+      "projectLocations": [
+        {
+          "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/ui-ux-pro-max",
+          "skillPath": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/ui-ux-pro-max/SKILL.md",
+          "skillName": "ui-ux-pro-max",
+          "exists": true,
+          "skillSha256": "2e06cf4aac86e3cb65cfd4403b5139fe267ea2c9cb710cae3820e071d357654b",
+          "treeSha256": "54d365d7162a138ea43ea61ee6118346ebbd92ca96b5f2b1c24f38ce90e12af2",
+          "fileOrSymlinkCount": 56
+        },
+        {
+          "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.claude/skills/ui-ux-pro-max",
+          "skillPath": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.claude/skills/ui-ux-pro-max/SKILL.md",
+          "skillName": "ui-ux-pro-max",
+          "exists": true,
+          "skillSha256": "2e06cf4aac86e3cb65cfd4403b5139fe267ea2c9cb710cae3820e071d357654b",
+          "treeSha256": "54d365d7162a138ea43ea61ee6118346ebbd92ca96b5f2b1c24f38ce90e12af2",
+          "fileOrSymlinkCount": 56
+        }
+      ],
+      "installedSources": [
+        {
+          "path": "/Users/gqadonis/.codex/skills/ui-ux-pro-max",
+          "skillPath": "/Users/gqadonis/.codex/skills/ui-ux-pro-max/SKILL.md",
+          "skillSha256": "2e06cf4aac86e3cb65cfd4403b5139fe267ea2c9cb710cae3820e071d357654b",
+          "treeSha256": "96f6c18f16a96b80923fa8cbdaba8edbd0193445dcb28009b39270baeda07bba",
+          "fileOrSymlinkCount": 68,
+          "sourceRelationship": "installed-candidate-not-assumed-copy-origin"
+        },
+        {
+          "path": "/Users/gqadonis/.TOOLS/skills/agents/ui-ux-pro-max",
+          "skillPath": "/Users/gqadonis/.TOOLS/skills/agents/ui-ux-pro-max/SKILL.md",
+          "skillSha256": "2e06cf4aac86e3cb65cfd4403b5139fe267ea2c9cb710cae3820e071d357654b",
+          "treeSha256": "e6baaa33fdfba8f4430f27441de78065178df9a58b743f1f46ad056ac05fe0d7",
+          "fileOrSymlinkCount": 67,
+          "sourceRelationship": "installed-candidate-not-assumed-copy-origin"
+        }
+      ],
+      "projectCopiesMatch": true
+    },
+    {
+      "id": "vercel-react-best-practices",
+      "projectLocations": [
+        {
+          "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/vercel-react-best-practices",
+          "skillPath": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/vercel-react-best-practices/SKILL.md",
+          "skillName": "vercel-react-best-practices",
+          "exists": true,
+          "skillSha256": "582210fa578ba060abdf247e32b49b751d0a6b44645f3ce98dfb3bfdd581f386",
+          "treeSha256": "2410dc4548e005e86798d62e880c826254c3eaac367b86fcdc75c0f6aca1d917",
+          "fileOrSymlinkCount": 79
+        },
+        {
+          "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.claude/skills/vercel-react-best-practices",
+          "skillPath": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.claude/skills/vercel-react-best-practices/SKILL.md",
+          "skillName": "vercel-react-best-practices",
+          "exists": true,
+          "skillSha256": "582210fa578ba060abdf247e32b49b751d0a6b44645f3ce98dfb3bfdd581f386",
+          "treeSha256": "2410dc4548e005e86798d62e880c826254c3eaac367b86fcdc75c0f6aca1d917",
+          "fileOrSymlinkCount": 79
+        }
+      ],
+      "installedSources": [
+        {
+          "path": "/Users/gqadonis/.codex/skills/vercel-react-best-practices",
+          "skillPath": "/Users/gqadonis/.codex/skills/vercel-react-best-practices/SKILL.md",
+          "skillSha256": "582210fa578ba060abdf247e32b49b751d0a6b44645f3ce98dfb3bfdd581f386",
+          "treeSha256": "88cc62178564c08f9a296d1ef181ac7aaa19a2f3750150641086fcda010bc300",
+          "fileOrSymlinkCount": 79,
+          "sourceRelationship": "installed-candidate-not-assumed-copy-origin"
+        },
+        {
+          "path": "/Users/gqadonis/.TOOLS/skills/agents/vercel-react-best-practices",
+          "skillPath": "/Users/gqadonis/.TOOLS/skills/agents/vercel-react-best-practices/SKILL.md",
+          "skillSha256": "582210fa578ba060abdf247e32b49b751d0a6b44645f3ce98dfb3bfdd581f386",
+          "treeSha256": "b00e5e732dc97f524bfdab9ded79b2f4efe6ed6c9563e2e8ffa16912783bc8db",
+          "fileOrSymlinkCount": 78,
+          "sourceRelationship": "installed-candidate-not-assumed-copy-origin"
+        }
+      ],
+      "projectCopiesMatch": true
+    },
+    {
+      "id": "vercel-composition-patterns",
+      "projectLocations": [
+        {
+          "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/vercel-composition-patterns",
+          "skillPath": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/vercel-composition-patterns/SKILL.md",
+          "skillName": "vercel-composition-patterns",
+          "exists": true,
+          "skillSha256": "8f841b20ed26d9703c385ba2079278112d611ef9a6ecf28503ec2f26e99276ce",
+          "treeSha256": "979b9c0b66285d548affa50a80faf672d5383d9c3aa5e71203114924757f093c",
+          "fileOrSymlinkCount": 17
+        },
+        {
+          "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.claude/skills/vercel-composition-patterns",
+          "skillPath": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.claude/skills/vercel-composition-patterns/SKILL.md",
+          "skillName": "vercel-composition-patterns",
+          "exists": true,
+          "skillSha256": "8f841b20ed26d9703c385ba2079278112d611ef9a6ecf28503ec2f26e99276ce",
+          "treeSha256": "979b9c0b66285d548affa50a80faf672d5383d9c3aa5e71203114924757f093c",
+          "fileOrSymlinkCount": 17
+        }
+      ],
+      "installedSources": [
+        {
+          "path": "/Users/gqadonis/.codex/skills/vercel-composition-patterns",
+          "skillPath": "/Users/gqadonis/.codex/skills/vercel-composition-patterns/SKILL.md",
+          "skillSha256": "8f841b20ed26d9703c385ba2079278112d611ef9a6ecf28503ec2f26e99276ce",
+          "treeSha256": "61c7eb0da57b6c93937491efe7fbcc7b8a3cb1c70beff5eaeeb00a5f2757573a",
+          "fileOrSymlinkCount": 17,
+          "sourceRelationship": "installed-candidate-not-assumed-copy-origin"
+        },
+        {
+          "path": "/Users/gqadonis/.TOOLS/skills/agents/vercel-composition-patterns",
+          "skillPath": "/Users/gqadonis/.TOOLS/skills/agents/vercel-composition-patterns/SKILL.md",
+          "skillSha256": "8f841b20ed26d9703c385ba2079278112d611ef9a6ecf28503ec2f26e99276ce",
+          "treeSha256": "e3aad9c56144dfde07e1bc60a129f4bf0e23fe780852e6a55834a185e03152ba",
+          "fileOrSymlinkCount": 16,
+          "sourceRelationship": "installed-candidate-not-assumed-copy-origin"
+        }
+      ],
+      "projectCopiesMatch": true
+    },
+    {
+      "id": "flutter-build-responsive-layout",
+      "projectLocations": [
+        {
+          "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/flutter-build-responsive-layout",
+          "skillPath": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/flutter-build-responsive-layout/SKILL.md",
+          "skillName": "flutter-build-responsive-layout",
+          "exists": true,
+          "skillSha256": "1a3fd933282eb31bde720651a992b220905f9bc0ddb5d75f01a0a5738efd8b98",
+          "treeSha256": "04d0738884098b59e38b70373bfa727a98053047ff85553eb390f0a8c1f1bf92",
+          "fileOrSymlinkCount": 4
+        },
+        {
+          "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.claude/skills/flutter-build-responsive-layout",
+          "skillPath": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.claude/skills/flutter-build-responsive-layout/SKILL.md",
+          "skillName": "flutter-build-responsive-layout",
+          "exists": true,
+          "skillSha256": "1a3fd933282eb31bde720651a992b220905f9bc0ddb5d75f01a0a5738efd8b98",
+          "treeSha256": "04d0738884098b59e38b70373bfa727a98053047ff85553eb390f0a8c1f1bf92",
+          "fileOrSymlinkCount": 4
+        }
+      ],
+      "installedSources": [
+        {
+          "path": "/Users/gqadonis/.codex/skills/flutter-build-responsive-layout",
+          "skillPath": "/Users/gqadonis/.codex/skills/flutter-build-responsive-layout/SKILL.md",
+          "skillSha256": "1a3fd933282eb31bde720651a992b220905f9bc0ddb5d75f01a0a5738efd8b98",
+          "treeSha256": "52db3b12f0a21d323bbf96f2c5917299f5a8ce2c7cf67e608ccdbf6a96e298e2",
+          "fileOrSymlinkCount": 4,
+          "sourceRelationship": "installed-candidate-not-assumed-copy-origin"
+        },
+        {
+          "path": "/Users/gqadonis/.TOOLS/skills/agents/flutter-build-responsive-layout",
+          "skillPath": "/Users/gqadonis/.TOOLS/skills/agents/flutter-build-responsive-layout/SKILL.md",
+          "skillSha256": "1a3fd933282eb31bde720651a992b220905f9bc0ddb5d75f01a0a5738efd8b98",
+          "treeSha256": "ad7dbcb8dbbcdcbadc9598a1c944b7c44b1710d9f6f8c68b3bbdd8c2590deffb",
+          "fileOrSymlinkCount": 3,
+          "sourceRelationship": "installed-candidate-not-assumed-copy-origin"
+        }
+      ],
+      "projectCopiesMatch": true
+    },
+    {
+      "id": "flutter-setup-declarative-routing",
+      "projectLocations": [
+        {
+          "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/flutter-setup-declarative-routing",
+          "skillPath": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/flutter-setup-declarative-routing/SKILL.md",
+          "skillName": "flutter-setup-declarative-routing",
+          "exists": true,
+          "skillSha256": "f30045d7e85713b0b02b0750b59458870820ed9de6f477248306c955a45b88d5",
+          "treeSha256": "ad6fe36131f27b3e6303bb5adb0b73bf67daa83e6ab12b8c32bd24da8714a461",
+          "fileOrSymlinkCount": 4
+        },
+        {
+          "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.claude/skills/flutter-setup-declarative-routing",
+          "skillPath": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.claude/skills/flutter-setup-declarative-routing/SKILL.md",
+          "skillName": "flutter-setup-declarative-routing",
+          "exists": true,
+          "skillSha256": "f30045d7e85713b0b02b0750b59458870820ed9de6f477248306c955a45b88d5",
+          "treeSha256": "ad6fe36131f27b3e6303bb5adb0b73bf67daa83e6ab12b8c32bd24da8714a461",
+          "fileOrSymlinkCount": 4
+        }
+      ],
+      "installedSources": [
+        {
+          "path": "/Users/gqadonis/.codex/skills/flutter-setup-declarative-routing",
+          "skillPath": "/Users/gqadonis/.codex/skills/flutter-setup-declarative-routing/SKILL.md",
+          "skillSha256": "f30045d7e85713b0b02b0750b59458870820ed9de6f477248306c955a45b88d5",
+          "treeSha256": "8d86c7fa73f75021a1db737b2db8e57fad90f336f2d9214f472fd29e21e0b3a6",
+          "fileOrSymlinkCount": 4,
+          "sourceRelationship": "installed-candidate-not-assumed-copy-origin"
+        },
+        {
+          "path": "/Users/gqadonis/.TOOLS/skills/agents/flutter-setup-declarative-routing",
+          "skillPath": "/Users/gqadonis/.TOOLS/skills/agents/flutter-setup-declarative-routing/SKILL.md",
+          "skillSha256": "f30045d7e85713b0b02b0750b59458870820ed9de6f477248306c955a45b88d5",
+          "treeSha256": "ae29d669e7cca6816617ea59cfe8bde28bd71827aeece393b052bf2736bd32ec",
+          "fileOrSymlinkCount": 3,
+          "sourceRelationship": "installed-candidate-not-assumed-copy-origin"
+        }
+      ],
+      "projectCopiesMatch": true
+    },
+    {
+      "id": "flutter-setup-localization",
+      "projectLocations": [
+        {
+          "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/flutter-setup-localization",
+          "skillPath": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/flutter-setup-localization/SKILL.md",
+          "skillName": "flutter-setup-localization",
+          "exists": true,
+          "skillSha256": "5751dd394fdac988440144326a06342ad32c8f16409b9cdb6a3a360d09bd42c8",
+          "treeSha256": "4a09397bd5c44bacd8e0a49645b840e346f8861d059ed409c841bf55491097c8",
+          "fileOrSymlinkCount": 4
+        },
+        {
+          "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.claude/skills/flutter-setup-localization",
+          "skillPath": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.claude/skills/flutter-setup-localization/SKILL.md",
+          "skillName": "flutter-setup-localization",
+          "exists": true,
+          "skillSha256": "5751dd394fdac988440144326a06342ad32c8f16409b9cdb6a3a360d09bd42c8",
+          "treeSha256": "4a09397bd5c44bacd8e0a49645b840e346f8861d059ed409c841bf55491097c8",
+          "fileOrSymlinkCount": 4
+        }
+      ],
+      "installedSources": [
+        {
+          "path": "/Users/gqadonis/.codex/skills/flutter-setup-localization",
+          "skillPath": "/Users/gqadonis/.codex/skills/flutter-setup-localization/SKILL.md",
+          "skillSha256": "5751dd394fdac988440144326a06342ad32c8f16409b9cdb6a3a360d09bd42c8",
+          "treeSha256": "fc9d73e26bf4ce0176f39607f01f34665e365aa720adfae5ba732dc8b1f31098",
+          "fileOrSymlinkCount": 4,
+          "sourceRelationship": "installed-candidate-not-assumed-copy-origin"
+        },
+        {
+          "path": "/Users/gqadonis/.TOOLS/skills/agents/flutter-setup-localization",
+          "skillPath": "/Users/gqadonis/.TOOLS/skills/agents/flutter-setup-localization/SKILL.md",
+          "skillSha256": "5751dd394fdac988440144326a06342ad32c8f16409b9cdb6a3a360d09bd42c8",
+          "treeSha256": "514d4fbce85d01768aa66fc5ca50b4b86fe777c0f9e275e8d3cd53c76c9bdf3f",
+          "fileOrSymlinkCount": 3,
+          "sourceRelationship": "installed-candidate-not-assumed-copy-origin"
+        }
+      ],
+      "projectCopiesMatch": true
+    },
+    {
+      "id": "prometheus-ui-ux",
+      "projectLocations": [
+        {
+          "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/prometheus-ui-ux",
+          "skillPath": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/prometheus-ui-ux/SKILL.md",
+          "skillName": "prometheus-ui-ux",
+          "exists": true,
+          "skillSha256": "481e22bb27f6922727f5268a671e16f612bb6a01e13922050a08f057a2a48127",
+          "treeSha256": "794000f5f3e433b3b2a141cd434a6b291e18760abb28bbb3c7b3da2a0c32a1db",
+          "fileOrSymlinkCount": 10
+        },
+        {
+          "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.claude/skills/prometheus-ui-ux",
+          "skillPath": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.claude/skills/prometheus-ui-ux/SKILL.md",
+          "skillName": "prometheus-ui-ux",
+          "exists": true,
+          "skillSha256": "481e22bb27f6922727f5268a671e16f612bb6a01e13922050a08f057a2a48127",
+          "treeSha256": "794000f5f3e433b3b2a141cd434a6b291e18760abb28bbb3c7b3da2a0c32a1db",
+          "fileOrSymlinkCount": 10
+        }
+      ],
+      "installedSources": [
+        {
+          "path": "/Users/gqadonis/.codex/skills/prometheus-ui-ux",
+          "skillPath": "/Users/gqadonis/.codex/skills/prometheus-ui-ux/SKILL.md",
+          "skillSha256": "481e22bb27f6922727f5268a671e16f612bb6a01e13922050a08f057a2a48127",
+          "treeSha256": "e3d20f553020637b79eb14620e2aaef8672ca2f1229ff003f70270558d3c2aac",
+          "fileOrSymlinkCount": 15,
+          "sourceRelationship": "installed-candidate-not-assumed-copy-origin"
+        },
+        {
+          "path": "/Users/gqadonis/.TOOLS/skills/agents/prometheus-ui-ux",
+          "skillPath": "/Users/gqadonis/.TOOLS/skills/agents/prometheus-ui-ux/SKILL.md",
+          "skillSha256": "481e22bb27f6922727f5268a671e16f612bb6a01e13922050a08f057a2a48127",
+          "treeSha256": "35ac06225ccbf580cfcf39ba56ad7e430dbf49ddaba2a569e1ff955cb9f609b0",
+          "fileOrSymlinkCount": 14,
+          "sourceRelationship": "installed-candidate-not-assumed-copy-origin"
+        }
+      ],
+      "projectCopiesMatch": true
+    },
+    {
+      "id": "prometheus-impeccable-core",
+      "projectLocations": [
+        {
+          "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/prometheus-impeccable-core",
+          "skillPath": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/prometheus-impeccable-core/SKILL.md",
+          "skillName": "prometheus-impeccable-core",
+          "exists": true,
+          "skillSha256": "d19fc20bd31b707a96247e3105bfcebc2cfcf2adb08deeacacc33b9e50cf0726",
+          "treeSha256": "6a9e8b085b19a2e882013ebaee72323da1a8550ff2af55936a62a97b4213f7a6",
+          "fileOrSymlinkCount": 5
+        },
+        {
+          "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.claude/skills/prometheus-impeccable-core",
+          "skillPath": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.claude/skills/prometheus-impeccable-core/SKILL.md",
+          "skillName": "prometheus-impeccable-core",
+          "exists": true,
+          "skillSha256": "d19fc20bd31b707a96247e3105bfcebc2cfcf2adb08deeacacc33b9e50cf0726",
+          "treeSha256": "6a9e8b085b19a2e882013ebaee72323da1a8550ff2af55936a62a97b4213f7a6",
+          "fileOrSymlinkCount": 5
+        }
+      ],
+      "installedSources": [
+        {
+          "path": "/Users/gqadonis/.codex/skills/prometheus-impeccable-core",
+          "skillPath": "/Users/gqadonis/.codex/skills/prometheus-impeccable-core/SKILL.md",
+          "skillSha256": "d19fc20bd31b707a96247e3105bfcebc2cfcf2adb08deeacacc33b9e50cf0726",
+          "treeSha256": "330a14c60be44a3a0ca2e140796f48d93877c799f9f1ebce79556fb26d6e5946",
+          "fileOrSymlinkCount": 5,
+          "sourceRelationship": "installed-candidate-not-assumed-copy-origin"
+        },
+        {
+          "path": "/Users/gqadonis/.TOOLS/skills/agents/prometheus-impeccable-core",
+          "skillPath": "/Users/gqadonis/.TOOLS/skills/agents/prometheus-impeccable-core/SKILL.md",
+          "skillSha256": "d19fc20bd31b707a96247e3105bfcebc2cfcf2adb08deeacacc33b9e50cf0726",
+          "treeSha256": "1fd9b571fb6fe2623aa974823a77a06d44bd50952f0c6bb502b7f1f4dda9ca65",
+          "fileOrSymlinkCount": 4,
+          "sourceRelationship": "installed-candidate-not-assumed-copy-origin"
+        }
+      ],
+      "projectCopiesMatch": true
+    }
+  ],
+  "contextEvidence": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.prometheus/team-research/impeccable-context.json",
+  "overrides": [
+    {
+      "id": "design-authority",
+      "rule": "PatientGPT docs/design and .prometheus/project-contract.md remain visual authority even though native context discovery reports none. No replacement brand or generic design-system generation.",
+      "source": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/UI_UX_PROTOCOL.md"
+    },
+    {
+      "id": "verification-timing",
+      "rule": "No tests, reviewers, auditors or integration checks until full production phase boundary; local testing only. Requested two-hour web/four-hour web+Tauri builds are Build-only and do not close acceptance.",
+      "source": "Operator instruction and project contract"
+    },
+    {
+      "id": "query-cache",
+      "rule": "Ignore Vercel SWR/request-cache recommendations. Entity graph owns durable state and freshness; Zustand transient UI only.",
+      "source": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/vercel-react-best-practices/SKILL.md:83"
+    },
+    {
+      "id": "typography",
+      "rule": "Keep Playfair Display, Mulish and JetBrains Mono despite generic hybrid-design-tokens two-family ceiling.",
+      "source": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/tokens.css:71-73"
+    },
+    {
+      "id": "scope-and-storage",
+      "rule": "Generic PEM version/persistence defaults do not override PatientGPT data-model and approved architecture decisions.",
+      "source": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.prometheus/project-contract.md:58-63"
+    },
+    {
+      "id": "composition-state",
+      "rule": "React composition providers expose presentation interfaces; they do not move clinical business state into components or bypass services.",
+      "source": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/vercel-composition-patterns/SKILL.md"
+    },
+    {
+      "id": "flutter-version-sensitive",
+      "rule": "Resolve current official Flutter routing/localization documentation before using example flags, imports or unpinned dependencies. Source metadata model is provenance, not a model assignment.",
+      "source": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/flutter-setup-localization/SKILL.md"
+    },
+    {
+      "id": "no-automatic-expansion",
+      "rule": "Skill availability or native context output does not authorize downloads, paid generation, publication, new runtime dependencies, or unsolicited hook activation.",
+      "source": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/impeccable/SKILL.md:12-16"
+    },
+    {
+      "id": "filename-and-typescript",
+      "rule": "Preserve operator TypeScript 7.0 and authored kebab-case filenames; document tool-mandated filename exceptions rather than silently breaking framework discovery.",
+      "source": "Operator instruction"
+    },
+    {
+      "id": "flutter-localization-imports",
+      "rule": "Installed localization examples use synthetic-package:true and package:flutter_gen. Official migration says synthetic flutter_gen is no longer generated; import generated app source and enable generate:true. Verify exact options against selected Flutter SDK before implementation.",
+      "source": "https://github.com/flutter/website/blob/main/sites/docs/src/content/release/breaking-changes/flutter-generate-i10n-source.md",
+      "retrievedVia": "Context7 /flutter/website query-docs",
+      "observedAt": "2026-10-04"
+    }
+  ]
+}

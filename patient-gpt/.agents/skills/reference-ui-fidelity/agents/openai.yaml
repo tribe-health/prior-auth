@@ -1,0 +1,4 @@
+interface:
+  display_name: "Reference Ui Fidelity"
+  short_description: "ALWAYS invoke before implementing or materially changing a product UI when a specification, mood"
+  default_prompt: "Use $reference-ui-fidelity to apply its contract to this task and verify the required evidence."

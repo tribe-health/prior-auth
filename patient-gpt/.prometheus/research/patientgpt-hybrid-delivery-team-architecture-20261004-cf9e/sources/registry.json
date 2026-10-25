@@ -1,0 +1,2129 @@
+{
+  "sources": [
+    {
+      "id": "src-001",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host/src/lib.rs",
+      "title": "Shared host capability boundary",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 36-48: domain repositories, authority, clock and sessions; shells wire adapters.",
+      "confidence": "high",
+      "aliases": [
+        "storage-identity:app-services"
+      ],
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host/src/lib.rs",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Lines 36-48: domain repositories, authority, clock and sessions; shells wire adapters.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0001"
+      ],
+      "retrieval_owner": "storage-identity",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "bf54231981e33532c704ce2cfbc778c8546182b1bc41edd816a39e075d724506",
+      "excerpt_selection": "36-48"
+    },
+    {
+      "id": "src-002",
+      "path": "/Users/gqadonis/Projects/prometheus/flint-forge/crates/fdb-ports/src/lib.rs",
+      "title": "Forge database abstraction",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 96-142: RLS-scoped connections, explicit mutation commit contract, SQL query port.",
+      "confidence": "high",
+      "aliases": [
+        "storage-identity:forge-db-port"
+      ],
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-forge/crates/fdb-ports/src/lib.rs",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Lines 96-142: RLS-scoped connections, explicit mutation commit contract, SQL query port.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0002"
+      ],
+      "retrieval_owner": "storage-identity",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "0a84842a5afa2aa6b9520dc6fb20be8bf755fd7290b694e2989f942e85fea1b0",
+      "excerpt_selection": "96-142"
+    },
+    {
+      "id": "src-003",
+      "path": "/Users/gqadonis/Projects/prometheus/flint-forge/crates/fdb-postgres/src/backend.rs",
+      "title": "Forge Postgres adapter",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 17-60: deadpool Postgres, transaction-local JWT and role context.",
+      "confidence": "high",
+      "aliases": [
+        "storage-identity:forge-postgres"
+      ],
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-forge/crates/fdb-postgres/src/backend.rs",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Lines 17-60: deadpool Postgres, transaction-local JWT and role context.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0003"
+      ],
+      "retrieval_owner": "storage-identity",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "f276baa87fb41bf5e9a701d6d85bd3fd3740280d1b14eb04fc4152a23b4be3a5",
+      "excerpt_selection": "17-60"
+    },
+    {
+      "id": "src-004",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/shared/sync/storage-policy.ts",
+      "title": "Browser storage policy",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 47-92: memory default, persistent IndexedDB opt-in, persistent experimental clinical materializer rejected.",
+      "confidence": "high",
+      "aliases": [
+        "storage-identity:browser-storage"
+      ],
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/shared/sync/storage-policy.ts",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Lines 47-92: memory default, persistent IndexedDB opt-in, persistent experimental clinical materializer rejected.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0004"
+      ],
+      "retrieval_owner": "storage-identity",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "74ebfba4eb1ad96efc032de39f3f3715ad5f861a0a776af3a6b2ed8b78bd58a0",
+      "excerpt_selection": "47-92"
+    },
+    {
+      "id": "src-005",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/shared/sync/pglite-bootstrap.ts",
+      "title": "Browser PGlite opening",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 22-44: memory archive or persistent IndexedDB construction.",
+      "confidence": "high",
+      "aliases": [
+        "storage-identity:browser-bootstrap"
+      ],
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/shared/sync/pglite-bootstrap.ts",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Lines 22-44: memory archive or persistent IndexedDB construction.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0005"
+      ],
+      "retrieval_owner": "storage-identity",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "5d7cf6b33bfae8c0c6e74287950575c10741c2aa3e07dddca2b69045a799b0c6",
+      "excerpt_selection": "22-44"
+    },
+    {
+      "id": "src-006",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/app/providers/graph-provider.tsx",
+      "title": "Identity-scoped entity graph",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 122-135 and 377-410: principal/session/authority revision namespace and offline-limited disabled materializer.",
+      "confidence": "high",
+      "aliases": [
+        "storage-identity:graph-scope"
+      ],
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/app/providers/graph-provider.tsx",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Lines 122-135 and 377-410: principal/session/authority revision namespace and offline-limited disabled materializer.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0006"
+      ],
+      "retrieval_owner": "storage-identity",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "8c0b2ff3ca1b307ac6bd43977cbd8f9a2301e2fc16a1a77f1247e3dec23eff63",
+      "excerpt_selection": "122-135 "
+    },
+    {
+      "id": "src-007",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/versions.toml",
+      "title": "Authoritative parent adoption decisions",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 85-87: PGlite Sync log=full incompatibility and internal materializer RSS above cap; historical measurements not rerun.",
+      "confidence": "high",
+      "aliases": [
+        "storage-identity:browser-adoption-block"
+      ],
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/versions.toml",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Lines 85-87: PGlite Sync log=full incompatibility and internal materializer RSS above cap; historical measurements not rerun.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0007"
+      ],
+      "retrieval_owner": "storage-identity",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "0ec9ca70be6930b7ce38e9b4faf7a6453706afa1c45738c4595733213deadb76",
+      "excerpt_selection": "85-87"
+    },
+    {
+      "id": "src-008",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/docs/architecture/tauri-pglite-baseline.md",
+      "title": "Native PGlite baseline and limitations",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 6-12 and 80-108: existing SQLite preference and blocked production adoption despite bounded native measurements.",
+      "confidence": "high",
+      "aliases": [
+        "storage-identity:desktop-baseline"
+      ],
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/docs/architecture/tauri-pglite-baseline.md",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Lines 6-12 and 80-108: existing SQLite preference and blocked production adoption despite bounded native measurements.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0008"
+      ],
+      "retrieval_owner": "storage-identity",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "913d04a48bc2075d3b7604a18171a2df591638eb657a99ba5772a60bfc295c82",
+      "excerpt_selection": "6-12 "
+    },
+    {
+      "id": "src-009",
+      "path": "/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-ports/src/entity_store.rs",
+      "title": "Fabric entity projection contract",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 53-118: tenant-scoped read/watch and state-plus-cursor atomicity.",
+      "confidence": "high",
+      "aliases": [
+        "storage-identity:fabric-projection-port"
+      ],
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-ports/src/entity_store.rs",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Lines 53-118: tenant-scoped read/watch and state-plus-cursor atomicity.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0009"
+      ],
+      "retrieval_owner": "storage-identity",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "240df55619919ff5a05b9b3b53f71705e14a59791581454f7bd37acb9b62eb26",
+      "excerpt_selection": "53-118"
+    },
+    {
+      "id": "src-010",
+      "path": "/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-store-surreal/src/store.rs",
+      "title": "Fabric SurrealDB CRDT adapter",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 13-45: deployment CRDT checkpoint store wraps Surreal<Any>.",
+      "confidence": "high",
+      "aliases": [
+        "storage-identity:fabric-surreal-crdt"
+      ],
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-store-surreal/src/store.rs",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Lines 13-45: deployment CRDT checkpoint store wraps Surreal<Any>.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0010"
+      ],
+      "retrieval_owner": "storage-identity",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "4686e4fb310f0028e3ffc8920200e850480e0770c4a52803cc7fc9a0db362dfd",
+      "excerpt_selection": "13-45"
+    },
+    {
+      "id": "src-011",
+      "path": "/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-projection-surreal/src/store.rs",
+      "title": "Fabric SurrealDB projection adapter",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 31-59: connection/authentication/database selection for projection; no native PatientGPT integration proof.",
+      "confidence": "high",
+      "aliases": [
+        "storage-identity:fabric-surreal-projection"
+      ],
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-projection-surreal/src/store.rs",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Lines 31-59: connection/authentication/database selection for projection; no native PatientGPT integration proof.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0011"
+      ],
+      "retrieval_owner": "storage-identity",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "5b26635be8cd2be014c6165dcb674c5fdf4e22178e599fd2100cfa70ef9d8f01",
+      "excerpt_selection": "31-59"
+    },
+    {
+      "id": "src-012",
+      "path": "/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/Cargo.lock",
+      "title": "Fabric actual SurrealDB resolution",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 9496-9499 resolve surrealdb 3.1.5, not required 3.3.0.",
+      "confidence": "high",
+      "aliases": [
+        "storage-identity:fabric-version"
+      ],
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/Cargo.lock",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Lines 9496-9499 resolve surrealdb 3.1.5, not required 3.3.0.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0012"
+      ],
+      "retrieval_owner": "storage-identity",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "e6c43e7e3d54d178f3eef2ad9a5a2712deff4657a021c3569c39bb49b17f540c",
+      "excerpt_selection": "9496-9499 "
+    },
+    {
+      "id": "src-013",
+      "path": "/Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core/src/auth/kratos.rs",
+      "title": "Gate credential selection",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 97-147 and 194-200 select Authorization or Cookie and reject competing credentials.",
+      "confidence": "high",
+      "aliases": [
+        "storage-identity:gate-kratos"
+      ],
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core/src/auth/kratos.rs",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Lines 97-147 and 194-200 select Authorization or Cookie and reject competing credentials.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0013"
+      ],
+      "retrieval_owner": "storage-identity",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "820461858313e95cb005d93ec32f73bdba29b8f9bb2f92f007667e68993a19a6",
+      "excerpt_selection": "97-147 "
+    },
+    {
+      "id": "src-014",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/session.rs",
+      "title": "ASO native/browser identity adapter",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 69-121 forward Cookie or x-session-token to whoami and create User principal.",
+      "confidence": "high",
+      "aliases": [
+        "storage-identity:parent-kratos"
+      ],
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/session.rs",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Lines 69-121 forward Cookie or x-session-token to whoami and create User principal.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0014"
+      ],
+      "retrieval_owner": "storage-identity",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "a61f60e180ab2eb4be6d1838136d2e3f2f14fc2958a6e4b4d3538e7fbf897e30",
+      "excerpt_selection": "69-121 "
+    },
+    {
+      "id": "src-015",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/kratos_proxy.rs",
+      "title": "Browser login and recovery proxy",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 28-35 and 55-88 browser routes and cookie/redirect preservation.",
+      "confidence": "high",
+      "aliases": [
+        "storage-identity:kratos-browser-proxy"
+      ],
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/kratos_proxy.rs",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Lines 28-35 and 55-88 browser routes and cookie/redirect preservation.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0015"
+      ],
+      "retrieval_owner": "storage-identity",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "852565c0d7a68bd1d9fee96d2bd331e80998006cd2a30333a09e90cd01f14cca",
+      "excerpt_selection": "28-35 "
+    },
+    {
+      "id": "src-016",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/data-model.md",
+      "title": "PatientGPT proposed authority/replica model",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 240-270 owner/coordinator scope and Flutter API without replica.",
+      "confidence": "high",
+      "aliases": [
+        "storage-identity:patient-data-model"
+      ],
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/data-model.md",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Lines 240-270 owner/coordinator scope and Flutter API without replica.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0016"
+      ],
+      "retrieval_owner": "storage-identity",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "538bfd6d5cc196ef92e76a11eeb4dd4fe58d884868ab4a8eaf90cebc48e4ebe2",
+      "excerpt_selection": "240-270 "
+    },
+    {
+      "id": "src-017",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/versions.toml",
+      "title": "PatientGPT dependency and architecture authority",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 11-22 application pins unselected; preserve clinical source and local-only tests.",
+      "confidence": "high",
+      "aliases": [
+        "storage-identity:patient-pins"
+      ],
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/versions.toml",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Lines 11-22 application pins unselected; preserve clinical source and local-only tests.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0017"
+      ],
+      "retrieval_owner": "storage-identity",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "aa4516ef821846743cb5295b6f48b1a97a3847a48f870134619d9ea5ae7a86f6",
+      "excerpt_selection": "11-22 "
+    },
+    {
+      "id": "src-018",
+      "path": "/Users/gqadonis/Projects/prometheus/flint-gate/.github/workflows/deploy-gateway.yml",
+      "title": "Existing Gate deployment workflow",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 4-21 and 66-86 target SSR, not know-me; no dispatch performed.",
+      "confidence": "high",
+      "aliases": [
+        "storage-identity:gate-deployment"
+      ],
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-gate/.github/workflows/deploy-gateway.yml",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Lines 4-21 and 66-86 target SSR, not know-me; no dispatch performed.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0018"
+      ],
+      "retrieval_owner": "storage-identity",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "7d1b11a09e2d39664171749b0522154d9afa09acc7a63a438d0b6af348604949",
+      "excerpt_selection": "4-21 "
+    },
+    {
+      "id": "src-019",
+      "path": "/Users/gqadonis/Projects/prometheus/flint-forge/.github/workflows/ci.yml",
+      "title": "Existing Forge CI incompatibility",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 27-28 and 68-101 run tests in CI, prohibited for PatientGPT.",
+      "confidence": "high",
+      "aliases": [
+        "storage-identity:forge-ci"
+      ],
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-forge/.github/workflows/ci.yml",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Lines 27-28 and 68-101 run tests in CI, prohibited for PatientGPT.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0019"
+      ],
+      "retrieval_owner": "storage-identity",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "4cb8aef7ab24167cea189d5f160418e1d7632476e2c99a998b951849ba823952",
+      "excerpt_selection": "27-28 "
+    },
+    {
+      "id": "src-020",
+      "path": "/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/.github/workflows/docs-pages.yml",
+      "title": "Existing docs ownership example",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 10-16,46-59,88-95 path-filter docs and separate website build/deploy.",
+      "confidence": "high",
+      "aliases": [
+        "storage-identity:fabric-docs"
+      ],
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/.github/workflows/docs-pages.yml",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Lines 10-16,46-59,88-95 path-filter docs and separate website build/deploy.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0020"
+      ],
+      "retrieval_owner": "storage-identity",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "f0e49f18ec89591a7f22bc95ca2645cbbc1bfe7cefdf149969985abbc40a6ccb",
+      "excerpt_selection": "10-16,46-59,88-95 "
+    },
+    {
+      "id": "src-021",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.prometheus/team-research/storage-identity.md",
+      "title": "Read-only know-me selected-field inventory",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Recorded explicit-context kubectl observations: Gateway 1.9.1, Envoy 1.39.1, Flint routes and ready deployments; sole listed SecurityPolicy basicAuth only. No runtime authentication proof.",
+      "confidence": "high",
+      "aliases": [
+        "storage-identity:cluster-inventory"
+      ],
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.prometheus/team-research/storage-identity.md",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Recorded explicit-context kubectl observations: Gateway 1.9.1, Envoy 1.39.1, Flint routes and ready deployments; sole listed SecurityPolicy basicAuth only. No runtime authentication proof.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0021",
+        "chunk-0022",
+        "chunk-0023",
+        "chunk-0024"
+      ],
+      "retrieval_owner": "storage-identity",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "8206ad510a96b9269966744d7ae69f89d08202b158b57d85f55c4f8a26b06a8b",
+      "excerpt_selection": "first 180 lines; claim coverage may be incomplete"
+    },
+    {
+      "id": "src-022",
+      "url": "https://github.com/electric-sql/pglite/blob/main/docs/docs/filesystems.md",
+      "title": "PGlite IndexedDB filesystem",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Context7 official source: loads files into memory; flushes changed files, relaxed durability asynchronously.",
+      "confidence": "high",
+      "aliases": [
+        "storage-identity:pglite-fs"
+      ],
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Context7 official source: loads files into memory; flushes changed files, relaxed durability asynchronously.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0025"
+      ],
+      "retrieval_owner": "storage-identity",
+      "retrieval_status": "dossier-summary-only"
+    },
+    {
+      "id": "src-023",
+      "url": "https://github.com/electric-sql/pglite/blob/main/packages/pglite/examples/worker.html",
+      "title": "PGlite worker example",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Context7 official worker API example with leader change notifications.",
+      "confidence": "high",
+      "aliases": [
+        "storage-identity:pglite-worker"
+      ],
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Context7 official worker API example with leader change notifications.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0026"
+      ],
+      "retrieval_owner": "storage-identity",
+      "retrieval_status": "dossier-summary-only"
+    },
+    {
+      "id": "src-024",
+      "url": "https://github.com/surrealdb/docs.surrealdb.com/blob/main/src/content/build/embedding/by-language/rust.mdx",
+      "title": "SurrealDB embedded Rust",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Context7 official source distinguishes memory and persistent file engines.",
+      "confidence": "high",
+      "aliases": [
+        "storage-identity:surreal-embed"
+      ],
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Context7 official source distinguishes memory and persistent file engines.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0027"
+      ],
+      "retrieval_owner": "storage-identity",
+      "retrieval_status": "dossier-summary-only"
+    },
+    {
+      "id": "src-025",
+      "url": "https://github.com/surrealdb/docs.surrealdb.com/blob/main/src/content/reference/rust/methods/new.mdx",
+      "title": "SurrealDB local connection methods",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Context7 returns kv-surrealkv example; version-specific 3.3.0 API not yet compiled or verified.",
+      "confidence": "medium",
+      "aliases": [
+        "storage-identity:surreal-new"
+      ],
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Context7 returns kv-surrealkv example; version-specific 3.3.0 API not yet compiled or verified.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0028"
+      ],
+      "retrieval_owner": "storage-identity",
+      "retrieval_status": "dossier-summary-only"
+    },
+    {
+      "id": "src-026",
+      "url": "https://github.com/surrealdb/surrealdb/releases/tag/v3.3.0",
+      "title": "SurrealDB 3.3.0 release",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Official release page opened successfully; v3.3.0 exists, released September 28.",
+      "confidence": "high",
+      "aliases": [
+        "storage-identity:surreal-release"
+      ],
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Official release page opened successfully; v3.3.0 exists, released September 28.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0029"
+      ],
+      "retrieval_owner": "storage-identity",
+      "retrieval_status": "dossier-summary-only"
+    },
+    {
+      "id": "src-027",
+      "url": "https://docs.rs/surrealdb/3.3.0/surrealdb/engine/local/index.html",
+      "title": "Version-specific local engine documentation access attempt",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Web returned URL is not accessible via this tool. No exact-version API claim derived.",
+      "confidence": "low",
+      "aliases": [
+        "storage-identity:surreal-docs-failed"
+      ],
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Web returned URL is not accessible via this tool. No exact-version API claim derived.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0030"
+      ],
+      "retrieval_owner": "storage-identity",
+      "retrieval_status": "blocked"
+    },
+    {
+      "id": "src-028",
+      "url": "https://github.com/ory/docs/blob/master/docs/kratos/session-management/01_overview.mdx",
+      "title": "Kratos session management",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Context7 official docs validate session cookies and native tokens at whoami.",
+      "confidence": "high",
+      "aliases": [
+        "storage-identity:kratos-sessions"
+      ],
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Context7 official docs validate session cookies and native tokens at whoami.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0031"
+      ],
+      "retrieval_owner": "storage-identity",
+      "retrieval_status": "dossier-summary-only"
+    },
+    {
+      "id": "src-029",
+      "url": "https://github.com/ory/docs/blob/master/docs/kratos/guides/zero-trust-iap-proxy-identity-access-proxy.mdx",
+      "title": "Kratos and Oathkeeper identity access proxy",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Context7 official docs show cookie-session validation through Kratos whoami.",
+      "confidence": "high",
+      "aliases": [
+        "storage-identity:oathkeeper-kratos"
+      ],
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Context7 official docs show cookie-session validation through Kratos whoami.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0032"
+      ],
+      "retrieval_owner": "storage-identity",
+      "retrieval_status": "dossier-summary-only"
+    },
+    {
+      "id": "src-030",
+      "url": "https://gateway.envoyproxy.io/docs/tasks/security/ext-auth",
+      "title": "Envoy Gateway external authorization",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Context7 official docs configure SecurityPolicy HTTP authorization and headersToBackend.",
+      "confidence": "high",
+      "aliases": [
+        "storage-identity:envoy-ext-auth"
+      ],
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Context7 official docs configure SecurityPolicy HTTP authorization and headersToBackend.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0033"
+      ],
+      "retrieval_owner": "storage-identity",
+      "retrieval_status": "dossier-summary-only"
+    },
+    {
+      "id": "src-031",
+      "url": "https://gateway.envoyproxy.io/docs/api/extension_types",
+      "title": "Envoy Gateway extension API",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Context7 official API documents limited default headers for HTTP external auth; cookie must be deliberately forwarded.",
+      "confidence": "high",
+      "aliases": [
+        "storage-identity:envoy-api"
+      ],
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Context7 official API documents limited default headers for HTTP external auth; cookie must be deliberately forwarded.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0034"
+      ],
+      "retrieval_owner": "storage-identity",
+      "retrieval_status": "dossier-summary-only"
+    },
+    {
+      "id": "src-032",
+      "title": "UAR immutable authoring and private bindings",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Canonical JSON, exact SkillRefs, private bindings, immutable package closure and effective receipts; document conformance explicitly separate from runtime.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "path": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/agents/collaboration/v0.1.0-draft.2/README.md",
+      "lines": "1-90",
+      "aliases": [
+        "uar:U1"
+      ],
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/agents/collaboration/v0.1.0-draft.2/README.md",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Canonical JSON, exact SkillRefs, private bindings, immutable package closure and effective receipts; document conformance explicitly separate from runtime.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0035",
+        "chunk-0036"
+      ],
+      "retrieval_owner": "uar",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "e78a4f0621598ac295d502fd92299846c245d92a5ee641f87c107a60592213a9",
+      "excerpt_selection": "1-90"
+    },
+    {
+      "id": "src-033",
+      "title": "Governed tool admission authority envelope",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Run/owner/principal, policy/catalog/host revisions and argument digest bound into prepared invocation.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "path": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/runtime/tool_admission/mod.rs",
+      "lines": "65-280",
+      "aliases": [
+        "uar:U2"
+      ],
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/runtime/tool_admission/mod.rs",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Run/owner/principal, policy/catalog/host revisions and argument digest bound into prepared invocation.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0037",
+        "chunk-0038"
+      ],
+      "retrieval_owner": "uar",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "bf2f0c71a8ef508d54f0f188a57d40d4a5e712cf5c700f0f353ca3be2331a2f4",
+      "excerpt_selection": "65-280"
+    },
+    {
+      "id": "src-034",
+      "title": "Unsupported runtime semantic requirements",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "RAG requirement passes through unsupported-field diagnostics; required fields refused; narrow-team context/child limitations explicit.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "path": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/compiler/collaboration/runtime_semantics.rs",
+      "lines": "35-42,337-415",
+      "aliases": [
+        "uar:U3"
+      ],
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/compiler/collaboration/runtime_semantics.rs",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "RAG requirement passes through unsupported-field diagnostics; required fields refused; narrow-team context/child limitations explicit.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0039"
+      ],
+      "retrieval_owner": "uar",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "cb49a9cb9ac7d6cb0adae516c87b8b04a3453484254ec302ca4c2e3b878c8124",
+      "excerpt_selection": "35-42,337-415"
+    },
+    {
+      "id": "src-035",
+      "title": "Narrow team execution limits and recovery",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Distinguishes authored selection from per-attempt selected artifacts; nested team/context limitations; external crash exclusion unavailable.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "path": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/agents/collaboration/team-execution-profile-migration.md",
+      "lines": "11-19,25-59,64-76",
+      "aliases": [
+        "uar:U4"
+      ],
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/agents/collaboration/team-execution-profile-migration.md",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Distinguishes authored selection from per-attempt selected artifacts; nested team/context limitations; external crash exclusion unavailable.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0040",
+        "chunk-0041",
+        "chunk-0042",
+        "chunk-0043"
+      ],
+      "retrieval_owner": "uar",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "cbca5ce2b63fc16ecf2dd075919933bed51628129fa088815b5da94c267157a5",
+      "excerpt_selection": "11-19,25-59,64-76"
+    },
+    {
+      "id": "src-036",
+      "title": "UAR AG-UI stable profile",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "agui_spec and uar.agui/1; events, custom extensions, replay and deprecated dialect boundaries.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "path": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/protocols/ag-ui-profile.md",
+      "lines": "1-76",
+      "aliases": [
+        "uar:U5"
+      ],
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/protocols/ag-ui-profile.md",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "agui_spec and uar.agui/1; events, custom extensions, replay and deprecated dialect boundaries.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0044",
+        "chunk-0045"
+      ],
+      "retrieval_owner": "uar",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "8a5cfa594accb7509c2d7a9d59599f779d1d72a109e76b59fd64a672fd85d678",
+      "excerpt_selection": "1-76"
+    },
+    {
+      "id": "src-037",
+      "title": "Actual UAR stream mode and lifecycle emission",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Explicit agui_spec selection, synthesized text/reasoning/tool lifecycle events.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "path": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/server.rs",
+      "lines": "4680-4733,5886-6016",
+      "aliases": [
+        "uar:U6"
+      ],
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/server.rs",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Explicit agui_spec selection, synthesized text/reasoning/tool lifecycle events.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0046",
+        "chunk-0047",
+        "chunk-0048"
+      ],
+      "retrieval_owner": "uar",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "4870d878416dfae4eefeca7dbde08eadf2c544c6ea333c90df6ed1e61b2158a0",
+      "excerpt_selection": "4680-4733,5886-6016"
+    },
+    {
+      "id": "src-038",
+      "title": "UAR frontend A2UI closed catalog schema",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Exact version/profile/catalog literals and nine admitted component types; strict schema and executable-content rejection.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "path": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime/frontend/src/platform/a2ui/protocol.ts",
+      "lines": "5-7,27-149,185-198",
+      "aliases": [
+        "uar:U7"
+      ],
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/frontend/src/platform/a2ui/protocol.ts",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Exact version/profile/catalog literals and nine admitted component types; strict schema and executable-content rejection.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0049",
+        "chunk-0050"
+      ],
+      "retrieval_owner": "uar",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "99b6f882f585d798fc5e54091cebcdcf630df86da8a32b4fa05168101ec008e9",
+      "excerpt_selection": "5-7,27-149,185-198"
+    },
+    {
+      "id": "src-039",
+      "title": "UAR Rust A2UI closed catalog validation",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Nine types, v0.9 compatibility/basic-catalog alias, rejects unapproved catalog; root required in each update.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "path": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/a2ui/protocol.rs",
+      "lines": "12-17,68-80,250-289",
+      "aliases": [
+        "uar:U8"
+      ],
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/a2ui/protocol.rs",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Nine types, v0.9 compatibility/basic-catalog alias, rejects unapproved catalog; root required in each update.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0051"
+      ],
+      "retrieval_owner": "uar",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "7b1d2c8525d5cdc390196e5f0a5ad7bdf2592367b12069676ee79809028e62e2",
+      "excerpt_selection": "12-17,68-80,250-289"
+    },
+    {
+      "id": "src-040",
+      "title": "UAR local React renderer",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Pure local projection with onAction callback; schema rendering is not action authority.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "path": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime/frontend/src/features/a2ui/a2ui-surface-renderer.tsx",
+      "lines": "13-20,45-90,176-184",
+      "aliases": [
+        "uar:U9"
+      ],
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/frontend/src/features/a2ui/a2ui-surface-renderer.tsx",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Pure local projection with onAction callback; schema rendering is not action authority.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0052"
+      ],
+      "retrieval_owner": "uar",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "af826a8a758f50292da1026920c53fe46d285549b90a4bf59103b8d18f149930",
+      "excerpt_selection": "13-20,45-90,176-184"
+    },
+    {
+      "id": "src-041",
+      "title": "Architecture tool-governance boundary",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Resolve, schema validation, independent effects, session/tenant policy, approval, governed execution and immutable result.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "path": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/references/rust/tool-governance.md",
+      "lines": "3-25",
+      "aliases": [
+        "uar:H1"
+      ],
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/references/rust/tool-governance.md",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Resolve, schema validation, independent effects, session/tenant policy, approval, governed execution and immutable result.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0053"
+      ],
+      "retrieval_owner": "uar",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "044e4d3ca6fdfd69c80c679b286706ae6f243a4afcfedf5cb823e24e3780fdd2",
+      "excerpt_selection": "3-25"
+    },
+    {
+      "id": "src-042",
+      "title": "Architecture AG-UI event contract",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Stable event/run identity, sequence, replay, explicit outcomes, unknown events and redaction.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "path": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/agui-event-contract/SKILL.md",
+      "lines": "7-27",
+      "aliases": [
+        "uar:H2"
+      ],
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/agui-event-contract/SKILL.md",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Stable event/run identity, sequence, replay, explicit outcomes, unknown events and redaction.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0054"
+      ],
+      "retrieval_owner": "uar",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "192d224f220c8b6c62ead0a2390ab804ec2b4e89a608e7e3f8e2d33f5a7b5d7c",
+      "excerpt_selection": "7-27"
+    },
+    {
+      "id": "src-043",
+      "title": "Architecture core and cross-shell ownership",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "UAR owns runtime, ContentBlock mirrors cross-shell data, bridge ownership is permanent.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "path": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/references/arch-standard.md",
+      "lines": "21-44,57-75,95-108",
+      "aliases": [
+        "uar:H3",
+        "ui-platforms:hybrid-standard"
+      ],
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/references/arch-standard.md",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "UAR owns runtime, ContentBlock mirrors cross-shell data, bridge ownership is permanent.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0055"
+      ],
+      "retrieval_owner": "uar",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "aafa263fa8ae7aa5f8a9e4f2612ca8fa3d8e9b26dd73c15b000c931425bdd408",
+      "excerpt_selection": "21-44,57-75,95-108"
+    },
+    {
+      "id": "src-044",
+      "title": "PatientGPT prototype catalog and action allowlist",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Custom aso.workbench/v1 catalog contains clinical display components absent from default UAR catalog; host controls excluded.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/a2ui-renderer.js",
+      "lines": "1-13,64-250,270-309",
+      "aliases": [
+        "uar:P1"
+      ],
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/a2ui-renderer.js",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Custom aso.workbench/v1 catalog contains clinical display components absent from default UAR catalog; host controls excluded.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0056",
+        "chunk-0057",
+        "chunk-0058"
+      ],
+      "retrieval_owner": "uar",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "e5034e3afe32d292afe7a49b5ca9277c5f4e130a1c5c69c9065e11490d11b114",
+      "excerpt_selection": "1-13,64-250,270-309"
+    },
+    {
+      "id": "src-045",
+      "title": "PatientGPT prototype event emitter",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "CUSTOM a2ui and string RUN_FINISHED outcome/interrupt shapes are prototype contract, not automatically UAR profile.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/agui-stream.js",
+      "lines": "1-67",
+      "aliases": [
+        "uar:P2"
+      ],
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/agui-stream.js",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "CUSTOM a2ui and string RUN_FINISHED outcome/interrupt shapes are prototype contract, not automatically UAR profile.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0059"
+      ],
+      "retrieval_owner": "uar",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "b36f29afc691abcb849e24779ecfbbcd5d9632139bfa20a97b86489b190a079c",
+      "excerpt_selection": "1-67"
+    },
+    {
+      "id": "src-046",
+      "title": "PatientGPT clinical and report contract",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Five report sections; met/gap/void; source-backed assertions; distinct host-owned clinical command authority.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.prometheus/project-contract.md",
+      "lines": "65-82",
+      "aliases": [
+        "uar:P3",
+        "ui-platforms:pg-contract"
+      ],
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.prometheus/project-contract.md",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Five report sections; met/gap/void; source-backed assertions; distinct host-owned clinical command authority.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0060"
+      ],
+      "retrieval_owner": "uar",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "19dd7fe198a5e6a929ad8507f86f56cf621e7fec1c4b357519bd32c51eb616f9",
+      "excerpt_selection": "65-82"
+    },
+    {
+      "id": "src-047",
+      "title": "Official AG-UI events",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Current upstream lifecycle, state, activity, subagent, custom and interrupt-aware events. Queried via Context7 /ag-ui-protocol/ag-ui and opened official page.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "url": "https://docs.ag-ui.com/concepts/events",
+      "aliases": [
+        "uar:O1"
+      ],
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Current upstream lifecycle, state, activity, subagent, custom and interrupt-aware events. Queried via Context7 /ag-ui-protocol/ag-ui and opened official page.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0061"
+      ],
+      "retrieval_owner": "uar",
+      "retrieval_status": "dossier-summary-only"
+    },
+    {
+      "id": "src-048",
+      "title": "Official A2UI catalog model",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Catalog defines shared component vocabulary with native client-owned implementations. Queried Context7 /a2ui-project/a2ui for v0.9.1 catalogs and opened official page.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "url": "https://a2ui.org/concepts/catalogs/",
+      "aliases": [
+        "uar:O2"
+      ],
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Catalog defines shared component vocabulary with native client-owned implementations. Queried Context7 /a2ui-project/a2ui for v0.9.1 catalogs and opened official page.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0062"
+      ],
+      "retrieval_owner": "uar",
+      "retrieval_status": "dossier-summary-only"
+    },
+    {
+      "id": "src-049",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.kbd-orchestrator/current-waypoint.json",
+      "title": "PatientGPT waypoint",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Spec, ready, bootstrap.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:pg-waypoint"
+      ],
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.kbd-orchestrator/current-waypoint.json",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Spec, ready, bootstrap.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0063"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "b0bc820370b3f9f5623bf0387af6887755abd9c167618cbe5abe66f433446ad4",
+      "excerpt_selection": "first 180 lines; claim coverage may be incomplete"
+    },
+    {
+      "id": "src-050",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/README.md",
+      "title": "PatientGPT design reference",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Synthetic reference for all three surfaces; script responsibilities; lines 3-49.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:pg-design"
+      ],
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/README.md",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Synthetic reference for all three surfaces; script responsibilities; lines 3-49.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0064"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "554ad2347f99893b564cdba3f6dc2fdd172a15f0bc7752fd6ea165a7890a6e92",
+      "excerpt_selection": "3-49"
+    },
+    {
+      "id": "src-051",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat-storyboard.html",
+      "title": "PatientGPT storyboard",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Seven workflow cases and nine navigation examples; lines 144-310.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:pg-storyboard"
+      ],
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat-storyboard.html",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Seven workflow cases and nine navigation examples; lines 144-310.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0065",
+        "chunk-0066",
+        "chunk-0067"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "9efe9f9df5c71a3418469a3cb284431e29bed77f3b4fbb2fb8d0ce0f2237af2e",
+      "excerpt_selection": "144-310"
+    },
+    {
+      "id": "src-052",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/tokens.css",
+      "title": "PatientGPT prototype tokens",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Three typefaces, dimensions, semantic colors and fill focus; lines 71-89 and 191-201.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:pg-tokens"
+      ],
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/tokens.css",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Three typefaces, dimensions, semantic colors and fill focus; lines 71-89 and 191-201.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0068"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "bc8f6f42af9b2121e1624f1d55f07f22fc2e447e2f471c570a46b2c97898f3a7",
+      "excerpt_selection": "71-89 "
+    },
+    {
+      "id": "src-053",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/panel.css",
+      "title": "PatientGPT Files responsive layout",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "360px panel and 1100px breakpoint, overlay and sheet rules; lines 87-101.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:pg-layout"
+      ],
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/panel.css",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "360px panel and 1100px breakpoint, overlay and sheet rules; lines 87-101.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0069"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "30a36f01e2f64fd231a7fe0996540025c3d48709b02ee0dcc0988378161e380f",
+      "excerpt_selection": "87-101"
+    },
+    {
+      "id": "src-054",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/shell.css",
+      "title": "PatientGPT shell responsive layout",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Safe area, pointer and drawer behavior; lines 113 and 198-231.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:pg-shell"
+      ],
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/shell.css",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Safe area, pointer and drawer behavior; lines 113 and 198-231.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0070"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "53eae358a3af8ce165d26fc0365854dd68508e36256c5e8f1741a7c23aa7b7dc",
+      "excerpt_selection": "113 "
+    },
+    {
+      "id": "src-055",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/flows.js",
+      "title": "Prototype workflow limits",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Letter revision and appeal drafting explicitly absent; lines 271,418.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:pg-flows"
+      ],
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/flows.js",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Letter revision and appeal drafting explicitly absent; lines 271,418.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0071"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "1c8f72837f18ccb7a969328b4c586b0fd798ed97371afb4ac9ff68ab9c551608",
+      "excerpt_selection": "271,418"
+    },
+    {
+      "id": "src-056",
+      "path": "/Users/gqadonis/Projects/know-me/know-me-system/desktop/src/shared/components/Titlebar.tsx",
+      "title": "KnowMe custom Tauri titlebar",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Gated window resolution, platform controls, header drag, fixed maximize label; lines 17-115. Source-only.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:know-titlebar"
+      ],
+      "url": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/src/shared/components/Titlebar.tsx",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Gated window resolution, platform controls, header drag, fixed maximize label; lines 17-115. Source-only.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0072"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "cc637a951a91b006b39eb6f7ebb9f71677cee29cd80982e18c531417b7b4ac2b",
+      "excerpt_selection": "17-115"
+    },
+    {
+      "id": "src-057",
+      "path": "/Users/gqadonis/Projects/know-me/know-me-system/desktop/src-tauri/tauri.conf.json",
+      "title": "KnowMe Tauri config",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Frontend dist and decorations false; lines 5-20.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:know-config"
+      ],
+      "url": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/src-tauri/tauri.conf.json",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Frontend dist and decorations false; lines 5-20.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0073"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "727426ea5b20adba428eac30aa39a0788bad913e66182e0bc841250fc1e3377a",
+      "excerpt_selection": "5-20"
+    },
+    {
+      "id": "src-058",
+      "path": "/Users/gqadonis/Projects/know-me/know-me-system/desktop/src-tauri/capabilities/default.json",
+      "title": "KnowMe capabilities",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Window control permissions; lines 8-11.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:know-capabilities"
+      ],
+      "url": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/src-tauri/capabilities/default.json",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Window control permissions; lines 8-11.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0074"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "2c0da1dd0073db3cbc34f0b8b4da6db3d39abb3683ed51f690e27c8ce9c7d6d4",
+      "excerpt_selection": "8-11"
+    },
+    {
+      "id": "src-059",
+      "path": "/Users/gqadonis/Projects/know-me/know-me-system/desktop/vite.config.ts",
+      "title": "KnowMe Vite config",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "API proxy, recorded production target failure and configured browser targets; lines 15-40.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:know-vite"
+      ],
+      "url": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/vite.config.ts",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "API proxy, recorded production target failure and configured browser targets; lines 15-40.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0075"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "709b67e0f19b087bcc6d28bdbcdde67203714ada8f62925389c5b78cb3afa80b",
+      "excerpt_selection": "15-40"
+    },
+    {
+      "id": "src-060",
+      "path": "/Users/gqadonis/Projects/know-me/know-me-system/desktop/package.json",
+      "title": "KnowMe desktop scripts",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Build and Tauri entrypoints; lines 7-11.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:know-package"
+      ],
+      "url": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/package.json",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Build and Tauri entrypoints; lines 7-11.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0076"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "8dd482fe86e77e11b5cb4ebcdf6df7bfb3ed8816298b85793297074bb30b1921",
+      "excerpt_selection": "7-11"
+    },
+    {
+      "id": "src-061",
+      "path": "/Users/gqadonis/Projects/know-me/know-me-system/mobile/lib/core/theme/tokens.dart",
+      "title": "KnowMe Flutter palette",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Manually expressed projection header and constants; lines 1-3,54 onward; no generated parity proof.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:know-mobile-tokens"
+      ],
+      "url": "file:///Users/gqadonis/Projects/know-me/know-me-system/mobile/lib/core/theme/tokens.dart",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Manually expressed projection header and constants; lines 1-3,54 onward; no generated parity proof.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0077"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "57c24219eb4f41b3fca45d5707f77e4b2e56e480493893e20a9f4b3bf26c3b32",
+      "excerpt_selection": "1-3,54 "
+    },
+    {
+      "id": "src-062",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/UI_UX_PROTOCOL.md",
+      "title": "Project UI UX protocol",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Preserve prototype, selective skills, direction roles and full phase review.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:ui-protocol"
+      ],
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/UI_UX_PROTOCOL.md",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Preserve prototype, selective skills, direction roles and full phase review.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0078",
+        "chunk-0079"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "4b49ca80e8f70d246639098e99fc470b81274b63d62de06941a9fb65acae2bdf",
+      "excerpt_selection": "first 180 lines; claim coverage may be incomplete"
+    },
+    {
+      "id": "src-063",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/prometheus-ui-ux/SKILL.md",
+      "title": "UI UX routing skill",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Routing and phase-boundary tooling; source does not claim actual verification.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:ui-router"
+      ],
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/prometheus-ui-ux/SKILL.md",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Routing and phase-boundary tooling; source does not claim actual verification.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0080"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "481e22bb27f6922727f5268a671e16f612bb6a01e13922050a08f057a2a48127",
+      "excerpt_selection": "first 180 lines; claim coverage may be incomplete"
+    },
+    {
+      "id": "src-064",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/prometheus-impeccable-core/SKILL.md",
+      "title": "Portable Impeccable core",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Context adaptation provenance and native engine exclusions; lines 11-19.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:ui-impeccable-core"
+      ],
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/prometheus-impeccable-core/SKILL.md",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Context adaptation provenance and native engine exclusions; lines 11-19.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0081"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "d19fc20bd31b707a96247e3105bfcebc2cfcf2adb08deeacacc33b9e50cf0726",
+      "excerpt_selection": "11-19"
+    },
+    {
+      "id": "src-065",
+      "path": "/Users/gqadonis/.codex/skills/impeccable/SKILL.md",
+      "title": "Impeccable 4.4.0",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Existing brief wins; preinstalled engine requirement; bounded phase review.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:ui-impeccable-full"
+      ],
+      "url": "file:///Users/gqadonis/.codex/skills/impeccable/SKILL.md",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Existing brief wins; preinstalled engine requirement; bounded phase review.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0082",
+        "chunk-0083",
+        "chunk-0084"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "1f9a29a09e315ff6570d2dc2b4e3ca7d074a85983ffb54c32725fb5acbcd9d14",
+      "excerpt_selection": "first 180 lines; claim coverage may be incomplete"
+    },
+    {
+      "id": "src-066",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/ui-ux-pro-max/SKILL.md",
+      "title": "UI UX Pro Max portable skill",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Focused retrieval, incumbent authority, no replacement direction by default.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:ui-pro-max"
+      ],
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/ui-ux-pro-max/SKILL.md",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Focused retrieval, incumbent authority, no replacement direction by default.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0085",
+        "chunk-0086"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "2e06cf4aac86e3cb65cfd4403b5139fe267ea2c9cb710cae3820e071d357654b",
+      "excerpt_selection": "first 180 lines; claim coverage may be incomplete"
+    },
+    {
+      "id": "src-067",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/ui-ux-pro-max/provenance.json",
+      "title": "Pro Max source provenance",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "MIT upstream commit dcc40ff5133ef78276117db0cc34e7b83cc8aeba; local packaged runtime description.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:ui-pro-max-provenance"
+      ],
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/ui-ux-pro-max/provenance.json",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "MIT upstream commit dcc40ff5133ef78276117db0cc34e7b83cc8aeba; local packaged runtime description.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0087",
+        "chunk-0088"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "fabf2b63894e19d6eda25da5981f5aac9d712ed00290bed854f1b45cc403d494",
+      "excerpt_selection": "first 180 lines; claim coverage may be incomplete"
+    },
+    {
+      "id": "src-068",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/better-interface/SKILL.md",
+      "title": "Better Interface",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Cross-discipline orchestration and evidence over taste.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:ui-craft"
+      ],
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/better-interface/SKILL.md",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Cross-discipline orchestration and evidence over taste.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0089",
+        "chunk-0090",
+        "chunk-0091"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "36fa2c8a3665138a7d2820949e44477af10ab7a2a3d3642d93aea9811a4ab842",
+      "excerpt_selection": "first 180 lines; claim coverage may be incomplete"
+    },
+    {
+      "id": "src-069",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/vercel-react-best-practices/SKILL.md",
+      "title": "Vercel React best practices",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Relevant render/bundle advice; SWR conflicts with PatientGPT line 83.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:ui-react"
+      ],
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/vercel-react-best-practices/SKILL.md",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Relevant render/bundle advice; SWR conflicts with PatientGPT line 83.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0092"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "582210fa578ba060abdf247e32b49b751d0a6b44645f3ce98dfb3bfdd581f386",
+      "excerpt_selection": "83"
+    },
+    {
+      "id": "src-070",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/flutter-build-responsive-layout/SKILL.md",
+      "title": "Flutter adaptive layout skill",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Available-space composition, project authority and completed-phase review.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:ui-flutter"
+      ],
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/flutter-build-responsive-layout/SKILL.md",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Available-space composition, project authority and completed-phase review.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0093",
+        "chunk-0094"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "1a3fd933282eb31bde720651a992b220905f9bc0ddb5d75f01a0a5738efd8b98",
+      "excerpt_selection": "first 180 lines; claim coverage may be incomplete"
+    },
+    {
+      "id": "src-071",
+      "path": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/SKILL.md",
+      "title": "Hybrid architecture skill",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Source checkout c9b3e2d4ca16322de83f9210cf1e97d2480ef004; adoption and architecture guidance.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:hybrid-skill"
+      ],
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/SKILL.md",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Source checkout c9b3e2d4ca16322de83f9210cf1e97d2480ef004; adoption and architecture guidance.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0095",
+        "chunk-0096"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "aa34750b5e7ec5aaf113dbfc225505cb2d4a7de3ab0265599e29ccfe089c2c7e",
+      "excerpt_selection": "first 180 lines; claim coverage may be incomplete"
+    },
+    {
+      "id": "src-072",
+      "path": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/tauri-custom-titlebar/SKILL.md",
+      "title": "Tauri titlebar skill",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Desktop-only chrome and shared-bundle call gating; broad import assertion needs qualification.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:hybrid-titlebar"
+      ],
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/tauri-custom-titlebar/SKILL.md",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Desktop-only chrome and shared-bundle call gating; broad import assertion needs qualification.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0097",
+        "chunk-0098"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "b7cd74992adb50fffefd733cd693d70a614bd58a1cde818497316989c504a01d",
+      "excerpt_selection": "first 180 lines; claim coverage may be incomplete"
+    },
+    {
+      "id": "src-073",
+      "path": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-design-tokens/SKILL.md",
+      "title": "Hybrid token skill",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "One generator source; two-family advice overridden by explicit PatientGPT fonts.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:hybrid-tokens"
+      ],
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-design-tokens/SKILL.md",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "One generator source; two-family advice overridden by explicit PatientGPT fonts.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0099",
+        "chunk-0100"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "65fe6ab6c912c2ca6c43338697d5210a6c80bd34fe9bbd6944109d43b0cb142e",
+      "excerpt_selection": "first 180 lines; claim coverage may be incomplete"
+    },
+    {
+      "id": "src-074",
+      "path": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/reference-ui-fidelity/SKILL.md",
+      "title": "Reference UI fidelity",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "State/theme/form inventory and comparison; generic persistence/version defaults subordinate to contract.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:hybrid-fidelity"
+      ],
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/reference-ui-fidelity/SKILL.md",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "State/theme/form inventory and comparison; generic persistence/version defaults subordinate to contract.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0101",
+        "chunk-0102"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "75e8466f57fdcf276da210b934b49f0b3e283cd6f3e808f73c2a93c2f91c5fc7",
+      "excerpt_selection": "first 180 lines; claim coverage may be incomplete"
+    },
+    {
+      "id": "src-075",
+      "path": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/flutter-golden-ui/SKILL.md",
+      "title": "Flutter visual verification",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Native inspection and goldens; per-widget timing overridden by full-phase boundary.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:hybrid-goldens"
+      ],
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/flutter-golden-ui/SKILL.md",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Native inspection and goldens; per-widget timing overridden by full-phase boundary.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0103"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "cd201c5cb3ecf506fc9559d2638da4cbb996732c7be0b1ee2aedb23539157d44",
+      "excerpt_selection": "first 180 lines; claim coverage may be incomplete"
+    },
+    {
+      "id": "src-076",
+      "path": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/build-branded-docusaurus/SKILL.md",
+      "title": "Branded Docusaurus skill",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Public-content classification, branded site and verification scope.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:hybrid-docs"
+      ],
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/build-branded-docusaurus/SKILL.md",
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Public-content classification, branded site and verification scope.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0104"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "local-source-read",
+      "snapshot_sha256": "b9492d6514197f6e35505f5fe6cc3923c2dee8978f6c6e47fdcf692f4e4fb649",
+      "excerpt_selection": "first 180 lines; claim coverage may be incomplete"
+    },
+    {
+      "id": "src-077",
+      "url": "https://v2.tauri.app/learn/window-customization/",
+      "title": "Tauri window customization",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Official control APIs and capability permissions; custom macOS chrome limitations; observed old tauri.windows snippet.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:tauri-official"
+      ],
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Official control APIs and capability permissions; custom macOS chrome limitations; observed old tauri.windows snippet.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0105"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "dossier-summary-only"
+    },
+    {
+      "id": "src-078",
+      "url": "https://docs.flutter.dev/ui/adaptive-responsive/safearea-mediaquery",
+      "title": "Flutter SafeArea and MediaQuery",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "System insets, window information and accessibility settings.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:flutter-official"
+      ],
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "System insets, window information and accessibility settings.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0106"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "dossier-summary-only"
+    },
+    {
+      "id": "src-079",
+      "url": "https://github.com/flutter/website/blob/main/sites/docs/src/content/learn/pathway/tutorial/adaptive-layout.md",
+      "title": "Flutter adaptive layout tutorial",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Context7 official source: LayoutBuilder and constraints-based composition.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:flutter-layout"
+      ],
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Context7 official source: LayoutBuilder and constraints-based composition.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0107"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "dossier-summary-only"
+    },
+    {
+      "id": "src-080",
+      "url": "https://docusaurus.io/docs/deployment",
+      "title": "Docusaurus deployment",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Production url/baseUrl and explicit trailingSlash; docs build artifact deployment.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:docusaurus-deploy"
+      ],
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Production url/baseUrl and explicit trailingSlash; docs build artifact deployment.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0108"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "dossier-summary-only"
+    },
+    {
+      "id": "src-081",
+      "url": "https://docusaurus.io/docs/installation",
+      "title": "Docusaurus monorepo installation",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Context7 official source supports docs in isolated monorepo subfolder.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:docusaurus-monorepo"
+      ],
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Context7 official source supports docs in isolated monorepo subfolder.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0109"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "dossier-summary-only"
+    },
+    {
+      "id": "src-082",
+      "url": "https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages",
+      "title": "GitHub Pages custom workflows",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Build/artifact/deploy separation, permissions, needs and environment; current action major versions.",
+      "confidence": "high",
+      "aliases": [
+        "ui-platforms:github-pages"
+      ],
+      "entity_id": null,
+      "claims": [
+        {
+          "text": "Build/artifact/deploy separation, permissions, needs and environment; current action major versions.",
+          "critical": false
+        }
+      ],
+      "chunk_ids": [
+        "chunk-0110"
+      ],
+      "retrieval_owner": "ui-platforms",
+      "retrieval_status": "dossier-summary-only"
+    }
+  ],
+  "indexing": "disk-only; no external memory writes",
+  "assembly_note": "Local source excerpts freshly read. Official web content represented only by explicitly labeled worker summaries."
+}

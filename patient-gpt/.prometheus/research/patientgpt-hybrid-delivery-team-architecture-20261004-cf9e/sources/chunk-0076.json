@@ -1,0 +1,10 @@
+{
+  "url": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/package.json",
+  "chunk_id": "chunk-0076",
+  "text": "LOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n7:     \"build\": \"tsc && vite build\",\n8:     \"preview\": \"vite preview\",\n9:     \"tauri\": \"tauri\",\n10:     \"tauri:dev\": \"tauri dev\",\n11:     \"tauri:build\": \"tauri build\",",
+  "content_type": "local-source-excerpt",
+  "source_id": "src-060",
+  "retrieval_status": "local-source-read",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 79
+}

@@ -1,0 +1,59 @@
+{
+  "directory": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agent-team/exports/claude",
+  "files": [
+    ".claude/agents/product-manager.md",
+    "plugins/patientgpt-delivery/agents/product-manager.md",
+    ".claude/agents/team-lead.md",
+    "plugins/patientgpt-delivery/agents/team-lead.md",
+    ".claude/agents/creative-director.md",
+    "plugins/patientgpt-delivery/agents/creative-director.md",
+    ".claude/agents/design-expert.md",
+    "plugins/patientgpt-delivery/agents/design-expert.md",
+    ".claude/agents/react-engineer.md",
+    "plugins/patientgpt-delivery/agents/react-engineer.md",
+    ".claude/agents/tauri-engineer.md",
+    "plugins/patientgpt-delivery/agents/tauri-engineer.md",
+    ".claude/agents/flutter-engineer.md",
+    "plugins/patientgpt-delivery/agents/flutter-engineer.md",
+    ".claude/agents/rust-domain-engineer.md",
+    "plugins/patientgpt-delivery/agents/rust-domain-engineer.md",
+    ".claude/agents/storage-engineer.md",
+    "plugins/patientgpt-delivery/agents/storage-engineer.md",
+    ".claude/agents/flint-data-engineer.md",
+    "plugins/patientgpt-delivery/agents/flint-data-engineer.md",
+    ".claude/agents/identity-security-engineer.md",
+    "plugins/patientgpt-delivery/agents/identity-security-engineer.md",
+    ".claude/agents/uar-agent-expert.md",
+    "plugins/patientgpt-delivery/agents/uar-agent-expert.md",
+    ".claude/agents/platform-release-engineer.md",
+    "plugins/patientgpt-delivery/agents/platform-release-engineer.md",
+    ".claude/agents/documentation-engineer.md",
+    "plugins/patientgpt-delivery/agents/documentation-engineer.md",
+    ".claude/agents/phase-verifier.md",
+    "plugins/patientgpt-delivery/agents/phase-verifier.md",
+    ".claude/agents/artifact-critic.md",
+    "plugins/patientgpt-delivery/agents/artifact-critic.md",
+    ".claude/agents/ui-critic.md",
+    "plugins/patientgpt-delivery/agents/ui-critic.md",
+    "plugins/patientgpt-delivery/.claude-plugin/plugin.json",
+    ".claude-plugin/marketplace.json",
+    "export-receipt.json",
+    "team-export.json"
+  ],
+  "verification": {
+    "level": "source-verified",
+    "source": "https://code.claude.com/docs/en/sub-agents",
+    "version": "documentation inspected 2026-09-24",
+    "live": "unverified"
+  },
+  "diagnostics": [
+    "Source-verified serialization only; installed native validation and live execution are unverified.",
+    "Only explicit model IDs are translated. Resolve tier, skill, capability and price policies with agent-team-models before native invocation.",
+    "These are native subagents; installing them does not create an experimental Claude agent team or enable that feature.",
+    "Role overrides are preserved without native schema certification. Skill IDs refer to separately installed skills; prompt mentions do not install or authorize them."
+  ],
+  "instructions": [
+    "Review staged artifacts before installation. Export grants no execution or registration authority.",
+    "Choose project .claude/agents or the staged local marketplace/plugin. Do not install both copies. Settings options are a proposed project .claude/settings.json."
+  ]
+}

@@ -1,0 +1,146 @@
+{
+  "project": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt",
+  "activeTeam": "patientgpt-delivery",
+  "manifest": ".agent-team/patientgpt-delivery/team.json",
+  "nativeDefinitions": [
+    ".opencode/agents/product-manager.md",
+    ".opencode/agents/team-lead.md",
+    ".opencode/agents/creative-director.md",
+    ".opencode/agents/design-expert.md",
+    ".opencode/agents/react-engineer.md",
+    ".opencode/agents/tauri-engineer.md",
+    ".opencode/agents/flutter-engineer.md",
+    ".opencode/agents/rust-domain-engineer.md",
+    ".opencode/agents/storage-engineer.md",
+    ".opencode/agents/flint-data-engineer.md",
+    ".opencode/agents/identity-security-engineer.md",
+    ".opencode/agents/uar-agent-expert.md",
+    ".opencode/agents/platform-release-engineer.md",
+    ".opencode/agents/documentation-engineer.md",
+    ".opencode/agents/phase-verifier.md",
+    ".opencode/agents/artifact-critic.md",
+    ".opencode/agents/ui-critic.md"
+  ],
+  "changed": [
+    ".opencode/agents/product-manager.md",
+    ".opencode/agents/team-lead.md",
+    ".opencode/agents/creative-director.md",
+    ".opencode/agents/design-expert.md",
+    ".opencode/agents/react-engineer.md",
+    ".opencode/agents/tauri-engineer.md",
+    ".opencode/agents/flutter-engineer.md",
+    ".opencode/agents/rust-domain-engineer.md",
+    ".opencode/agents/storage-engineer.md",
+    ".opencode/agents/flint-data-engineer.md",
+    ".opencode/agents/identity-security-engineer.md",
+    ".opencode/agents/uar-agent-expert.md",
+    ".opencode/agents/platform-release-engineer.md",
+    ".opencode/agents/documentation-engineer.md",
+    ".opencode/agents/phase-verifier.md",
+    ".opencode/agents/artifact-critic.md",
+    ".opencode/agents/ui-critic.md",
+    ".agent-team/project-routing.json"
+  ],
+  "clean": false,
+  "dryRun": false,
+  "check": false,
+  "fingerprints": [
+    {
+      "file": ".opencode/agents/product-manager.md",
+      "before": null,
+      "after": "63db79a02a88c8203c4d192ba25da5aa91294ab5ae96729200a1409155499ecc"
+    },
+    {
+      "file": ".opencode/agents/team-lead.md",
+      "before": null,
+      "after": "b045813ae13d220e72ffe4ed2c155271d336d110361e7d757507a78e7e40eb4b"
+    },
+    {
+      "file": ".opencode/agents/creative-director.md",
+      "before": null,
+      "after": "608278bba0d4207f4a6953e51f9107287af52e303494255c5528f50e0bef03ab"
+    },
+    {
+      "file": ".opencode/agents/design-expert.md",
+      "before": null,
+      "after": "60941e9fcf805cd0d1c3c8008a0fd981e7f41c22e35a286c718d66c23eb1c325"
+    },
+    {
+      "file": ".opencode/agents/react-engineer.md",
+      "before": null,
+      "after": "131f592619c460958440bc464de0673c67f3f78dce906abb488e982c94c19542"
+    },
+    {
+      "file": ".opencode/agents/tauri-engineer.md",
+      "before": null,
+      "after": "8000aca5f83c91161ee441fcb8e74f1c35c00d56df143a95f6d527f6d68ea1a7"
+    },
+    {
+      "file": ".opencode/agents/flutter-engineer.md",
+      "before": null,
+      "after": "e595daa9bf09e8d6b7a1b1a1d756a25d15183bedf7e38bdafea7438f96d37466"
+    },
+    {
+      "file": ".opencode/agents/rust-domain-engineer.md",
+      "before": null,
+      "after": "381befb8df3481a302e7b5653f072109c6428b2f316e1154e462ffb2f5ee0ede"
+    },
+    {
+      "file": ".opencode/agents/storage-engineer.md",
+      "before": null,
+      "after": "58cd17f539df0b1b45a793d0ce6748546caf9bbc8bdc1ed0ae9a1dcc2aba317d"
+    },
+    {
+      "file": ".opencode/agents/flint-data-engineer.md",
+      "before": null,
+      "after": "0e4581aabb33374c10cdf6324efb7149dc052083afc6abd45f496c53443441d0"
+    },
+    {
+      "file": ".opencode/agents/identity-security-engineer.md",
+      "before": null,
+      "after": "e8d5b755aa97f3bc7f5b0d903010488cd014fc0133d3b6dc5c1cdf0f290f5b35"
+    },
+    {
+      "file": ".opencode/agents/uar-agent-expert.md",
+      "before": null,
+      "after": "2d83981d4851c7c710596cb3b9a279d467789906d0e529d516dfd6c83e00b932"
+    },
+    {
+      "file": ".opencode/agents/platform-release-engineer.md",
+      "before": null,
+      "after": "95eab00e99f28ed59bfbddc7ff8e810bbeaf2432ab5561e243e3de562d02edd8"
+    },
+    {
+      "file": ".opencode/agents/documentation-engineer.md",
+      "before": null,
+      "after": "e2bc34769ba529c66f99d2ce9e2b1917549783be0abe4d974fd18493ad3a1911"
+    },
+    {
+      "file": ".opencode/agents/phase-verifier.md",
+      "before": null,
+      "after": "ac36d8d78a6678d9b268accaaa1429eac447b2f7dd7e8df42d8552c2739dc8ee"
+    },
+    {
+      "file": ".opencode/agents/artifact-critic.md",
+      "before": null,
+      "after": "a64037c54fe394bb756e21e1fd99e91d2f1b11a90b59e4cd5280675ad16dbcf2"
+    },
+    {
+      "file": ".opencode/agents/ui-critic.md",
+      "before": null,
+      "after": "88bb175c78103e6cc5a7c41933678bf89eaf4da36b8820d1c7380a853c068369"
+    },
+    {
+      "file": ".agent-team/project-routing.json",
+      "before": "9b0d15733bd87dcee587e6d9cd53611168462bd618e1d8a91f1fcaacf67a5a3a",
+      "after": "744435eba46a44413fa679396d32919477c447d3c28081a0ac51ce6fc467720d"
+    }
+  ],
+  "diagnostics": [
+    "Source-verified serialization only; installed native validation and live execution are unverified.",
+    "Only explicit model IDs are translated. Resolve tier, skill, capability and price policies with agent-team-models before native invocation.",
+    "OpenCode JS/TS or npm plugins are separate from agent definitions; no agent marketplace manifest is invented.",
+    "Role overrides are preserved without native schema certification. Skill IDs refer to separately installed skills; prompt mentions do not install or authorize them."
+  ],
+  "recovery": ".agent-team/recovery/b707ae0376bb1741e76a2eea.json"
+}

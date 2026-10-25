@@ -1,0 +1,8 @@
+[export-package] Assembling package patientgpt-hybrid-delivery-team-architecture-20261004-cf9e at /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.prometheus/research/patientgpt-hybrid-delivery-team-architecture-20261004-cf9e
+[export-package] manifest validates against research-manifest.schema.json
+{"status": "exported", "package_id": "patientgpt-hybrid-delivery-team-architecture-20261004-cf9e", "package_dir": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.prometheus/research/patientgpt-hybrid-delivery-team-architecture-20261004-cf9e", "ingest_palace": 0}
+[export-package] Package assembled at: /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.prometheus/research/patientgpt-hybrid-delivery-team-architecture-20261004-cf9e
+[post-export] Research package exported for job patientgpt-hybrid-delivery-team-architecture-20261004-cf9e at 2026-10-04T15:05:52Z
+[post-export] Package path: /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.prometheus/research/patientgpt-hybrid-delivery-team-architecture-20261004-cf9e
+[post-export] Package size: 1.4M
+[post-export] Export hook complete.

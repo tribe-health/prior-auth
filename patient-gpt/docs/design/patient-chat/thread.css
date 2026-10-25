@@ -1,0 +1,161 @@
+/* ASO patient chat · conversation, home, patient and case context pages.
+   Rows are separated by their own fill and a small gap, never by a rule. */
+
+/* ── thread ───────────────────────────────────────────────────────── */
+.thread-wrap { max-width: var(--col); margin-inline: auto; padding: 24px 0 32px; }
+.thread { display: flex; flex-direction: column; gap: 20px; min-width: 0; }
+.day {
+  align-self: center; color: var(--fg-2);
+  font-family: var(--font-mono); font-size: var(--fs-mono); letter-spacing: 0.04em;
+}
+/* the conversation changed scope: drawn by the app, in the host fill */
+.ctx-line {
+  align-self: center; display: inline-flex; align-items: center; gap: 8px;
+  max-width: 100%; padding: 6px 14px; border-radius: 16px;
+  background: var(--host); font-size: var(--fs-meta); font-weight: 600;
+}
+.ctx-line .ico { width: 16px; height: 16px; flex: none; color: var(--cool); }
+
+.msg { min-width: 0; }
+.msg.user {
+  align-self: flex-end; display: grid; gap: 6px; justify-items: end;
+  max-width: min(78%, 34rem);
+}
+.bubble {
+  padding: 10px 16px; border-radius: var(--r-bubble);
+  background: var(--s2); white-space: pre-wrap; overflow-wrap: anywhere;
+}
+.bubble-docs { display: grid; gap: 4px; justify-items: end; max-width: 100%; }
+
+.msg.agent, .msg-body { display: grid; gap: 12px; min-width: 0; }
+.msg.agent { justify-items: start; }
+.msg-body { width: 100%; }
+.prose { max-width: 68ch; overflow-wrap: anywhere; }
+.prose.streaming::after {
+  content: ''; display: inline-block; width: 7px; height: 1em;
+  margin-left: 2px; vertical-align: -0.16em; background: var(--accent);
+}
+.stopped { font-size: var(--fs-meta); color: var(--fg-2); }
+
+/* working disclosure: the AG-UI steps and tool calls behind a turn */
+.steps { max-width: 100%; font-size: var(--fs-meta); color: var(--fg-2); }
+.steps-sum {
+  --od-gap: 8px;
+  display: inline-flex; min-height: 32px; padding: 0 10px 0 6px;
+  border-radius: 16px; background: var(--s1); list-style: none; cursor: pointer;
+}
+.steps-sum::-webkit-details-marker { display: none; }
+.steps-label { font-weight: 600; }
+.steps-chev { width: 16px; height: 16px; }
+.steps[open] .steps-chev { transform: rotate(180deg); }
+.sweep { width: 18px; height: 18px; flex: none; }
+.sweep .u { fill: var(--mark-upper); }
+.sweep .l { fill: var(--accent-vivid); }
+.steps-list {
+  display: grid; gap: 10px;
+  margin: 6px 0 4px; padding: 12px 14px; border-radius: var(--r-lg);
+  background: var(--s1);
+}
+.step-name { display: block; font-weight: 600; color: var(--fg); }
+.tools { display: grid; gap: 4px; padding-top: 4px; }
+.tool { display: flex; flex-wrap: wrap; gap: 2px 8px; font-family: var(--font-mono); font-size: var(--fs-mono); }
+.tool-name { font-family: inherit; color: var(--cool); }
+.tool-res { color: var(--fg); }
+.tool-res:not(:empty)::before { content: '→ '; color: var(--fg-2); }
+
+/* a criterion changed state because a document or the surgeon said so */
+.delta {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px;
+  font-size: var(--fs-ui);
+}
+.delta .ico { width: 16px; height: 16px; color: var(--fg-2); }
+.delta-what { font-weight: 600; }
+
+/* ── home ─────────────────────────────────────────────────────────── */
+.home {
+  display: flex; flex-direction: column; justify-content: center; gap: 28px;
+  max-width: var(--col); min-height: 100%; margin-inline: auto; padding: 32px 0 40px;
+}
+.greeting {
+  font-family: var(--font-display); font-size: var(--fs-greeting); font-weight: 600;
+  line-height: 1.15; letter-spacing: -0.01em; text-align: center;
+}
+.sec-h { font-size: var(--fs-ui); font-weight: 700; color: var(--fg-2); }
+.due { display: grid; gap: 8px; }
+.queue { display: grid; gap: 4px; }
+.q-row {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 17rem); gap: 4px 20px;
+  align-items: start;
+  width: 100%; padding: 12px 14px; border-radius: var(--r-lg);
+  background: var(--s1); color: var(--fg); text-align: left;
+}
+.q-name { font-weight: 700; }
+.q-title { font-size: var(--fs-ui); color: var(--fg-2); }
+.q-due { font-family: var(--font-mono); font-size: var(--fs-mono); color: var(--fg-2); }
+.q-due.soon { color: var(--accent); font-weight: 500; }
+.q-next, .ctx-go { font-size: var(--fs-meta); color: var(--fg-2); }
+.ctx-go { font-weight: 700; color: var(--fg); }
+
+/* ── patient and case context pages ───────────────────────────────── */
+.page {
+  display: grid; gap: 28px; align-content: start;
+  max-width: var(--col); margin-inline: auto; padding: 32px 0 48px;
+}
+.page-head { display: grid; gap: 6px; }
+.page-title {
+  font-family: var(--font-display); font-size: var(--fs-title); font-weight: 600;
+  line-height: 1.2; letter-spacing: -0.01em;
+}
+.page-facts {
+  display: flex; flex-wrap: wrap; gap: 2px 16px;
+  font-family: var(--font-mono); font-size: var(--fs-mono); color: var(--fg-2);
+}
+.page-sec { display: grid; gap: 8px; }
+.sec-note { font-size: var(--fs-meta); color: var(--fg-2); max-width: 62ch; }
+.rows { display: grid; gap: 4px; }
+.row {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 16px; align-items: start;
+  padding: 12px 14px; border-radius: var(--r-lg);
+  background: var(--s1); color: var(--fg);
+}
+.row-title { font-weight: 700; }
+.row-sub { font-size: var(--fs-meta); color: var(--fg-2); }
+.row-side { font-family: var(--font-mono); font-size: var(--fs-mono); color: var(--fg-2); text-align: right; }
+.doc-row {
+  display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); gap: 4px 12px; align-items: start;
+  padding: 10px 14px; border-radius: var(--r-lg); background: var(--s1);
+}
+.doc-title { font-size: var(--fs-ui); font-weight: 600; }
+.doc-sub { font-size: var(--fs-meta); color: var(--fg-2); }
+.tag {
+  display: inline-block; padding: 1px 7px; border-radius: 4px;
+  background: var(--warm-surface); color: var(--accent);
+  font-family: var(--font-mono); font-size: var(--fs-mono); font-weight: 500;
+}
+
+@media (hover: hover) {
+  .q-row:hover, a.row:hover { background: var(--s2); }
+  .steps-sum:hover { background: var(--s2); color: var(--fg); }
+}
+
+@media (max-width: 767.98px) {
+  .thread-wrap { padding: 16px 0 24px; }
+  .msg.user { max-width: 88%; }
+  .home { justify-content: flex-start; gap: 24px; padding: 40px 0 24px; }
+  .q-row { grid-template-columns: minmax(0, 1fr); }
+  .page { gap: 24px; padding: 24px 0 32px; }
+  .row { grid-template-columns: minmax(0, 1fr); }
+  .row-side { text-align: left; }
+  .doc-row { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .msg, .delta, .ctx-line { animation: rise var(--dur-enter) var(--ease) both; }
+  .steps-chev { transition: transform var(--dur-enter) var(--ease); }
+  .prose.streaming::after { animation: blink 1s steps(2, start) infinite; }
+  .msg.agent[aria-busy="true"] .sweep .u { animation: sweep 1.1s var(--ease) infinite alternate; }
+  .msg.agent[aria-busy="true"] .sweep .l { animation: sweep 1.1s var(--ease) infinite alternate-reverse; }
+}
+@keyframes rise  { from { opacity: 0; transform: translateY(6px); } }
+@keyframes blink { to { opacity: 0; } }
+@keyframes sweep { from { opacity: 0.25; } to { opacity: 1; } }

@@ -1,0 +1,46 @@
+name: patient_gpt
+description: "PatientGPT mobile: chat-first prior authorization for Advanced Spine & Orthopedics."
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.14.0-95.2.beta
+
+# Exact pins, verified against pub.dev 2026-10-25 (docs/plan/scaffold-plan.md).
+# build_runner is 2.16.2, not the planned 2.17.1: 2.17.x requires build 5.0,
+# and riverpod_generator 4.0.9 caps build below 5.0.
+# flutter_rust_bridge 2.12.0 must equal the installed
+# flutter_rust_bridge_codegen 2.12.0; 2.13.0 is newer and not used.
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_riverpod: 3.4.3
+  riverpod_annotation: 4.0.7
+  go_router: 18.1.1
+  flutter_svg: 2.3.0
+  flutter_rust_bridge: 2.12.0
+  # cargokit FFI plugin that builds crates/patient-gpt-ffi into the app. Its
+  # name must equal the Rust library stem (patient_gpt_ffi): on iOS the
+  # flutter_rust_bridge loader opens `<stem>.framework/<stem>`.
+  patient_gpt_ffi:
+    path: rust_builder
+
+dev_dependencies:
+  flutter_lints: ^6.0.0
+  riverpod_generator: 4.0.9
+  build_runner: 2.16.2
+
+flutter:
+  uses-material-design: false
+  fonts:
+    # Variable fonts from github.com/google/fonts (OFL). Weight is set through
+    # the wght axis by lib/core/theme/pg_text.dart. See assets/fonts/README.md.
+    - family: Playfair Display
+      fonts:
+        - asset: assets/fonts/PlayfairDisplay-Variable.ttf
+    - family: Mulish
+      fonts:
+        - asset: assets/fonts/Mulish-Variable.ttf
+    - family: JetBrains Mono
+      fonts:
+        - asset: assets/fonts/JetBrainsMono-Variable.ttf

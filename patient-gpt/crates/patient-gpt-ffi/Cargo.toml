@@ -1,0 +1,26 @@
+# TJ-ARCH-MOB-001 compliant
+[package]
+name = "patient-gpt-ffi"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+# Leaf crate: the flutter_rust_bridge surface for mobile. It wires adapters
+# into patient_gpt_host::AppServices and mirrors the Axum routes one to one.
+# No behaviour lives here.
+[lib]
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[dependencies]
+patient-gpt-domain.workspace = true
+patient-gpt-host.workspace = true
+patient-gpt-storage.workspace = true
+patient-gpt-uar.workspace = true
+flutter_rust_bridge.workspace = true
+futures.workspace = true
+tokio.workspace = true
+
+# flutter_rust_bridge macros emit `cfg(frb_expand)`.
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(frb_expand)'] }

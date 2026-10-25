@@ -1,0 +1,10 @@
+{
+  "url": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/src-tauri/tauri.conf.json",
+  "chunk_id": "chunk-0073",
+  "text": "LOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n5:   \"build\": {\n6:     \"frontendDist\": \"../dist\",\n7:     \"devUrl\": \"http://localhost:1420\",\n8:     \"beforeDevCommand\": \"pnpm dev\"\n9:   },\n10:   \"app\": {\n11:     \"withGlobalTauri\": true,\n12:     \"windows\": [\n13:       {\n14:         \"title\": \"KnowMe\",\n15:         \"width\": 1280,\n16:         \"height\": 820,\n17:         \"minWidth\": 800,\n18:         \"minHeight\": 600,\n19:         \"decorations\": false,\n20:         \"transparent\": false",
+  "content_type": "local-source-excerpt",
+  "source_id": "src-057",
+  "retrieval_status": "local-source-read",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 166
+}

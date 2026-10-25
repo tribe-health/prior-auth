@@ -1,0 +1,155 @@
+{
+  "sources": [
+    {
+      "id": "U1",
+      "title": "UAR immutable authoring and private bindings",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Canonical JSON, exact SkillRefs, private bindings, immutable package closure and effective receipts; document conformance explicitly separate from runtime.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "path": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/agents/collaboration/v0.1.0-draft.2/README.md",
+      "lines": "1-90"
+    },
+    {
+      "id": "U2",
+      "title": "Governed tool admission authority envelope",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Run/owner/principal, policy/catalog/host revisions and argument digest bound into prepared invocation.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "path": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/runtime/tool_admission/mod.rs",
+      "lines": "65-280"
+    },
+    {
+      "id": "U3",
+      "title": "Unsupported runtime semantic requirements",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "RAG requirement passes through unsupported-field diagnostics; required fields refused; narrow-team context/child limitations explicit.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "path": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/compiler/collaboration/runtime_semantics.rs",
+      "lines": "35-42,337-415"
+    },
+    {
+      "id": "U4",
+      "title": "Narrow team execution limits and recovery",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Distinguishes authored selection from per-attempt selected artifacts; nested team/context limitations; external crash exclusion unavailable.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "path": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/agents/collaboration/team-execution-profile-migration.md",
+      "lines": "11-19,25-59,64-76"
+    },
+    {
+      "id": "U5",
+      "title": "UAR AG-UI stable profile",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "agui_spec and uar.agui/1; events, custom extensions, replay and deprecated dialect boundaries.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "path": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/protocols/ag-ui-profile.md",
+      "lines": "1-76"
+    },
+    {
+      "id": "U6",
+      "title": "Actual UAR stream mode and lifecycle emission",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Explicit agui_spec selection, synthesized text/reasoning/tool lifecycle events.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "path": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/server.rs",
+      "lines": "4680-4733,5886-6016"
+    },
+    {
+      "id": "U7",
+      "title": "UAR frontend A2UI closed catalog schema",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Exact version/profile/catalog literals and nine admitted component types; strict schema and executable-content rejection.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "path": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime/frontend/src/platform/a2ui/protocol.ts",
+      "lines": "5-7,27-149,185-198"
+    },
+    {
+      "id": "U8",
+      "title": "UAR Rust A2UI closed catalog validation",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Nine types, v0.9 compatibility/basic-catalog alias, rejects unapproved catalog; root required in each update.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "path": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/a2ui/protocol.rs",
+      "lines": "12-17,68-80,250-289"
+    },
+    {
+      "id": "U9",
+      "title": "UAR local React renderer",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Pure local projection with onAction callback; schema rendering is not action authority.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "path": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime/frontend/src/features/a2ui/a2ui-surface-renderer.tsx",
+      "lines": "13-20,45-90,176-184"
+    },
+    {
+      "id": "H1",
+      "title": "Architecture tool-governance boundary",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Resolve, schema validation, independent effects, session/tenant policy, approval, governed execution and immutable result.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "path": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/references/rust/tool-governance.md",
+      "lines": "3-25"
+    },
+    {
+      "id": "H2",
+      "title": "Architecture AG-UI event contract",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Stable event/run identity, sequence, replay, explicit outcomes, unknown events and redaction.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "path": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/agui-event-contract/SKILL.md",
+      "lines": "7-27"
+    },
+    {
+      "id": "H3",
+      "title": "Architecture core and cross-shell ownership",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "UAR owns runtime, ContentBlock mirrors cross-shell data, bridge ownership is permanent.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "path": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/references/arch-standard.md",
+      "lines": "21-44,57-75,95-108"
+    },
+    {
+      "id": "P1",
+      "title": "PatientGPT prototype catalog and action allowlist",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Custom aso.workbench/v1 catalog contains clinical display components absent from default UAR catalog; host controls excluded.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/a2ui-renderer.js",
+      "lines": "1-13,64-250,270-309"
+    },
+    {
+      "id": "P2",
+      "title": "PatientGPT prototype event emitter",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "CUSTOM a2ui and string RUN_FINISHED outcome/interrupt shapes are prototype contract, not automatically UAR profile.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/agui-stream.js",
+      "lines": "1-67"
+    },
+    {
+      "id": "P3",
+      "title": "PatientGPT clinical and report contract",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Five report sections; met/gap/void; source-backed assertions; distinct host-owned clinical command authority.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.prometheus/project-contract.md",
+      "lines": "65-82"
+    },
+    {
+      "id": "O1",
+      "title": "Official AG-UI events",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Current upstream lifecycle, state, activity, subagent, custom and interrupt-aware events. Queried via Context7 /ag-ui-protocol/ag-ui and opened official page.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "url": "https://docs.ag-ui.com/concepts/events"
+    },
+    {
+      "id": "O2",
+      "title": "Official A2UI catalog model",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Catalog defines shared component vocabulary with native client-owned implementations. Queried Context7 /a2ui-project/a2ui for v0.9.1 catalogs and opened official page.",
+      "confidence": "high for inspected source or documentation; runtime unverified",
+      "url": "https://a2ui.org/concepts/catalogs/"
+    }
+  ]
+}

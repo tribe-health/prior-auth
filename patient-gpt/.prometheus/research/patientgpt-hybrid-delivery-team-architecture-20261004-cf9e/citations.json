@@ -1,0 +1,1237 @@
+{
+  "citations": [
+    {
+      "id": "src-001",
+      "formatted": "Shared host capability boundary. (n.d.). file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host/src/lib.rs (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host/src/lib.rs",
+      "title": "Shared host capability boundary",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "verified",
+      "used_in_claims": [
+        "claim-1c57d6583f3b8a10"
+      ],
+      "aliases": [
+        "storage-identity:app-services"
+      ]
+    },
+    {
+      "id": "src-002",
+      "formatted": "Forge database abstraction. (n.d.). file:///Users/gqadonis/Projects/prometheus/flint-forge/crates/fdb-ports/src/lib.rs (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-forge/crates/fdb-ports/src/lib.rs",
+      "title": "Forge database abstraction",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "verified",
+      "used_in_claims": [
+        "claim-729d79f32af03242"
+      ],
+      "aliases": [
+        "storage-identity:forge-db-port"
+      ]
+    },
+    {
+      "id": "src-003",
+      "formatted": "Forge Postgres adapter. (n.d.). file:///Users/gqadonis/Projects/prometheus/flint-forge/crates/fdb-postgres/src/backend.rs (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-forge/crates/fdb-postgres/src/backend.rs",
+      "title": "Forge Postgres adapter",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "verified",
+      "used_in_claims": [
+        "claim-72248522ac863322"
+      ],
+      "aliases": [
+        "storage-identity:forge-postgres"
+      ]
+    },
+    {
+      "id": "src-004",
+      "formatted": "Browser storage policy. (n.d.). file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/shared/sync/storage-policy.ts (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/shared/sync/storage-policy.ts",
+      "title": "Browser storage policy",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "verified",
+      "used_in_claims": [
+        "claim-5c0eceaefa53f46f"
+      ],
+      "aliases": [
+        "storage-identity:browser-storage"
+      ]
+    },
+    {
+      "id": "src-005",
+      "formatted": "Browser PGlite opening. (n.d.). file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/shared/sync/pglite-bootstrap.ts (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/shared/sync/pglite-bootstrap.ts",
+      "title": "Browser PGlite opening",
+      "credibility_score": 49,
+      "confidence": 0.5,
+      "label": "verified",
+      "used_in_claims": [
+        "claim-2e05a92731ff83b8"
+      ],
+      "aliases": [
+        "storage-identity:browser-bootstrap"
+      ]
+    },
+    {
+      "id": "src-006",
+      "formatted": "Identity-scoped entity graph. (n.d.). file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/app/providers/graph-provider.tsx (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/app/providers/graph-provider.tsx",
+      "title": "Identity-scoped entity graph",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "verified",
+      "used_in_claims": [
+        "claim-b8e762bc9b378eec"
+      ],
+      "aliases": [
+        "storage-identity:graph-scope"
+      ]
+    },
+    {
+      "id": "src-007",
+      "formatted": "Authoritative parent adoption decisions. (n.d.). file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/versions.toml (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/versions.toml",
+      "title": "Authoritative parent adoption decisions",
+      "credibility_score": 49,
+      "confidence": 0.5,
+      "label": "verified",
+      "used_in_claims": [
+        "claim-ac51857b8d96e3da"
+      ],
+      "aliases": [
+        "storage-identity:browser-adoption-block"
+      ]
+    },
+    {
+      "id": "src-008",
+      "formatted": "Native PGlite baseline and limitations. (n.d.). file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/docs/architecture/tauri-pglite-baseline.md (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/docs/architecture/tauri-pglite-baseline.md",
+      "title": "Native PGlite baseline and limitations",
+      "credibility_score": 49,
+      "confidence": 0.5,
+      "label": "verified",
+      "used_in_claims": [
+        "claim-6016f9c4b4671679"
+      ],
+      "aliases": [
+        "storage-identity:desktop-baseline"
+      ]
+    },
+    {
+      "id": "src-009",
+      "formatted": "Fabric entity projection contract. (n.d.). file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-ports/src/entity_store.rs (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-ports/src/entity_store.rs",
+      "title": "Fabric entity projection contract",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "verified",
+      "used_in_claims": [
+        "claim-d769fbfa3a70992c"
+      ],
+      "aliases": [
+        "storage-identity:fabric-projection-port"
+      ]
+    },
+    {
+      "id": "src-010",
+      "formatted": "Fabric SurrealDB CRDT adapter. (n.d.). file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-store-surreal/src/store.rs (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-store-surreal/src/store.rs",
+      "title": "Fabric SurrealDB CRDT adapter",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "verified",
+      "used_in_claims": [
+        "claim-56ddf8a7cf3a34ec"
+      ],
+      "aliases": [
+        "storage-identity:fabric-surreal-crdt"
+      ]
+    },
+    {
+      "id": "src-011",
+      "formatted": "Fabric SurrealDB projection adapter. (n.d.). file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-projection-surreal/src/store.rs (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-projection-surreal/src/store.rs",
+      "title": "Fabric SurrealDB projection adapter",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "verified",
+      "used_in_claims": [
+        "claim-60a5a07d64d7f45e"
+      ],
+      "aliases": [
+        "storage-identity:fabric-surreal-projection"
+      ]
+    },
+    {
+      "id": "src-012",
+      "formatted": "Fabric actual SurrealDB resolution. (n.d.). file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/Cargo.lock (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/Cargo.lock",
+      "title": "Fabric actual SurrealDB resolution",
+      "credibility_score": 49,
+      "confidence": 0.5,
+      "label": "verified",
+      "used_in_claims": [
+        "claim-caf38ecf31c02af6"
+      ],
+      "aliases": [
+        "storage-identity:fabric-version"
+      ]
+    },
+    {
+      "id": "src-013",
+      "formatted": "Gate credential selection. (n.d.). file:///Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core/src/auth/kratos.rs (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core/src/auth/kratos.rs",
+      "title": "Gate credential selection",
+      "credibility_score": 49,
+      "confidence": 0.5,
+      "label": "verified",
+      "used_in_claims": [
+        "claim-6b30a5f31bf410bd"
+      ],
+      "aliases": [
+        "storage-identity:gate-kratos"
+      ]
+    },
+    {
+      "id": "src-014",
+      "formatted": "ASO native/browser identity adapter. (n.d.). file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/session.rs (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/session.rs",
+      "title": "ASO native/browser identity adapter",
+      "credibility_score": 49,
+      "confidence": 0.5,
+      "label": "verified",
+      "used_in_claims": [
+        "claim-416d20e8ee410e5d"
+      ],
+      "aliases": [
+        "storage-identity:parent-kratos"
+      ]
+    },
+    {
+      "id": "src-015",
+      "formatted": "Browser login and recovery proxy. (n.d.). file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/kratos_proxy.rs (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/kratos_proxy.rs",
+      "title": "Browser login and recovery proxy",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "verified",
+      "used_in_claims": [
+        "claim-b0558458916f4b2d"
+      ],
+      "aliases": [
+        "storage-identity:kratos-browser-proxy"
+      ]
+    },
+    {
+      "id": "src-016",
+      "formatted": "PatientGPT proposed authority/replica model. (n.d.). file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/data-model.md (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/data-model.md",
+      "title": "PatientGPT proposed authority/replica model",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "verified",
+      "used_in_claims": [
+        "claim-03042ff4fe8fee1b"
+      ],
+      "aliases": [
+        "storage-identity:patient-data-model"
+      ]
+    },
+    {
+      "id": "src-017",
+      "formatted": "PatientGPT dependency and architecture authority. (n.d.). file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/versions.toml (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/versions.toml",
+      "title": "PatientGPT dependency and architecture authority",
+      "credibility_score": 49,
+      "confidence": 0.5,
+      "label": "verified",
+      "used_in_claims": [
+        "claim-d0856e560d85ceaa"
+      ],
+      "aliases": [
+        "storage-identity:patient-pins"
+      ]
+    },
+    {
+      "id": "src-018",
+      "formatted": "Existing Gate deployment workflow. (n.d.). file:///Users/gqadonis/Projects/prometheus/flint-gate/.github/workflows/deploy-gateway.yml (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-gate/.github/workflows/deploy-gateway.yml",
+      "title": "Existing Gate deployment workflow",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "verified",
+      "used_in_claims": [
+        "claim-883e24ec8d449007"
+      ],
+      "aliases": [
+        "storage-identity:gate-deployment"
+      ]
+    },
+    {
+      "id": "src-019",
+      "formatted": "Existing Forge CI incompatibility. (n.d.). file:///Users/gqadonis/Projects/prometheus/flint-forge/.github/workflows/ci.yml (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-forge/.github/workflows/ci.yml",
+      "title": "Existing Forge CI incompatibility",
+      "credibility_score": 49,
+      "confidence": 0.5,
+      "label": "verified",
+      "used_in_claims": [
+        "claim-206e9a70ed615814"
+      ],
+      "aliases": [
+        "storage-identity:forge-ci"
+      ]
+    },
+    {
+      "id": "src-020",
+      "formatted": "Existing docs ownership example. (n.d.). file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/.github/workflows/docs-pages.yml (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/.github/workflows/docs-pages.yml",
+      "title": "Existing docs ownership example",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "verified",
+      "used_in_claims": [
+        "claim-5a4a09b232cacf33"
+      ],
+      "aliases": [
+        "storage-identity:fabric-docs"
+      ]
+    },
+    {
+      "id": "src-021",
+      "formatted": "Read-only know-me selected-field inventory. (n.d.). file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.prometheus/team-research/storage-identity.md (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.prometheus/team-research/storage-identity.md",
+      "title": "Read-only know-me selected-field inventory",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-8af67c24cd406130"
+      ],
+      "aliases": [
+        "storage-identity:cluster-inventory"
+      ]
+    },
+    {
+      "id": "src-022",
+      "formatted": "PGlite IndexedDB filesystem. (n.d.). https://github.com/electric-sql/pglite/blob/main/docs/docs/filesystems.md (Observed 2026-10-04).",
+      "url": "https://github.com/electric-sql/pglite/blob/main/docs/docs/filesystems.md",
+      "title": "PGlite IndexedDB filesystem",
+      "credibility_score": 57,
+      "confidence": 0.5,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-dd4f806d9b57bc09"
+      ],
+      "aliases": [
+        "storage-identity:pglite-fs"
+      ]
+    },
+    {
+      "id": "src-023",
+      "formatted": "PGlite worker example. (n.d.). https://github.com/electric-sql/pglite/blob/main/packages/pglite/examples/worker.html (Observed 2026-10-04).",
+      "url": "https://github.com/electric-sql/pglite/blob/main/packages/pglite/examples/worker.html",
+      "title": "PGlite worker example",
+      "credibility_score": 57,
+      "confidence": 0.5,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-6f5f7b98c95d4b99"
+      ],
+      "aliases": [
+        "storage-identity:pglite-worker"
+      ]
+    },
+    {
+      "id": "src-024",
+      "formatted": "SurrealDB embedded Rust. (n.d.). https://github.com/surrealdb/docs.surrealdb.com/blob/main/src/content/build/embedding/by-language/rust.mdx (Observed 2026-10-04).",
+      "url": "https://github.com/surrealdb/docs.surrealdb.com/blob/main/src/content/build/embedding/by-language/rust.mdx",
+      "title": "SurrealDB embedded Rust",
+      "credibility_score": 57,
+      "confidence": 0.5,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-4e179092c5026cb6"
+      ],
+      "aliases": [
+        "storage-identity:surreal-embed"
+      ]
+    },
+    {
+      "id": "src-025",
+      "formatted": "SurrealDB local connection methods. (n.d.). https://github.com/surrealdb/docs.surrealdb.com/blob/main/src/content/reference/rust/methods/new.mdx (Observed 2026-10-04).",
+      "url": "https://github.com/surrealdb/docs.surrealdb.com/blob/main/src/content/reference/rust/methods/new.mdx",
+      "title": "SurrealDB local connection methods",
+      "credibility_score": 57,
+      "confidence": 0.5,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-6803b29c2b91c642"
+      ],
+      "aliases": [
+        "storage-identity:surreal-new"
+      ]
+    },
+    {
+      "id": "src-026",
+      "formatted": "SurrealDB 3.3.0 release. (n.d.). https://github.com/surrealdb/surrealdb/releases/tag/v3.3.0 (Observed 2026-10-04).",
+      "url": "https://github.com/surrealdb/surrealdb/releases/tag/v3.3.0",
+      "title": "SurrealDB 3.3.0 release",
+      "credibility_score": 57,
+      "confidence": 0.5,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-1396c3e08357c4f1"
+      ],
+      "aliases": [
+        "storage-identity:surreal-release"
+      ]
+    },
+    {
+      "id": "src-027",
+      "formatted": "Version-specific local engine documentation access attempt. (n.d.). https://docs.rs/surrealdb/3.3.0/surrealdb/engine/local/index.html (Observed 2026-10-04).",
+      "url": "https://docs.rs/surrealdb/3.3.0/surrealdb/engine/local/index.html",
+      "title": "Version-specific local engine documentation access attempt",
+      "credibility_score": 57,
+      "confidence": 0.57,
+      "label": "blocked",
+      "used_in_claims": [
+        "claim-163fa11b9e05d2ec"
+      ],
+      "aliases": [
+        "storage-identity:surreal-docs-failed"
+      ]
+    },
+    {
+      "id": "src-028",
+      "formatted": "Kratos session management. (n.d.). https://github.com/ory/docs/blob/master/docs/kratos/session-management/01_overview.mdx (Observed 2026-10-04).",
+      "url": "https://github.com/ory/docs/blob/master/docs/kratos/session-management/01_overview.mdx",
+      "title": "Kratos session management",
+      "credibility_score": 57,
+      "confidence": 0.5,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-8edc8b01d28547b1"
+      ],
+      "aliases": [
+        "storage-identity:kratos-sessions"
+      ]
+    },
+    {
+      "id": "src-029",
+      "formatted": "Kratos and Oathkeeper identity access proxy. (n.d.). https://github.com/ory/docs/blob/master/docs/kratos/guides/zero-trust-iap-proxy-identity-access-proxy.mdx (Observed 2026-10-04).",
+      "url": "https://github.com/ory/docs/blob/master/docs/kratos/guides/zero-trust-iap-proxy-identity-access-proxy.mdx",
+      "title": "Kratos and Oathkeeper identity access proxy",
+      "credibility_score": 57,
+      "confidence": 0.5,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-8daf22e433969499"
+      ],
+      "aliases": [
+        "storage-identity:oathkeeper-kratos"
+      ]
+    },
+    {
+      "id": "src-030",
+      "formatted": "Envoy Gateway external authorization. (n.d.). https://gateway.envoyproxy.io/docs/tasks/security/ext-auth (Observed 2026-10-04).",
+      "url": "https://gateway.envoyproxy.io/docs/tasks/security/ext-auth",
+      "title": "Envoy Gateway external authorization",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-07864c525b809c33"
+      ],
+      "aliases": [
+        "storage-identity:envoy-ext-auth"
+      ]
+    },
+    {
+      "id": "src-031",
+      "formatted": "Envoy Gateway extension API. (n.d.). https://gateway.envoyproxy.io/docs/api/extension_types (Observed 2026-10-04).",
+      "url": "https://gateway.envoyproxy.io/docs/api/extension_types",
+      "title": "Envoy Gateway extension API",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-f802cd0655e73d7c"
+      ],
+      "aliases": [
+        "storage-identity:envoy-api"
+      ]
+    },
+    {
+      "id": "src-032",
+      "formatted": "UAR immutable authoring and private bindings. (n.d.). file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/agents/collaboration/v0.1.0-draft.2/README.md (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/agents/collaboration/v0.1.0-draft.2/README.md",
+      "title": "UAR immutable authoring and private bindings",
+      "credibility_score": 57,
+      "confidence": 0.57,
+      "label": "verified",
+      "used_in_claims": [
+        "claim-a3eeef535be1fd6f"
+      ],
+      "aliases": [
+        "uar:U1"
+      ]
+    },
+    {
+      "id": "src-033",
+      "formatted": "Governed tool admission authority envelope. (n.d.). file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/runtime/tool_admission/mod.rs (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/runtime/tool_admission/mod.rs",
+      "title": "Governed tool admission authority envelope",
+      "credibility_score": 6,
+      "confidence": 0.06,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-6d772abe8e9625fd"
+      ],
+      "aliases": [
+        "uar:U2"
+      ]
+    },
+    {
+      "id": "src-034",
+      "formatted": "Unsupported runtime semantic requirements. (n.d.). file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/compiler/collaboration/runtime_semantics.rs (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/compiler/collaboration/runtime_semantics.rs",
+      "title": "Unsupported runtime semantic requirements",
+      "credibility_score": 6,
+      "confidence": 0.06,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-65d71a3ed682255b"
+      ],
+      "aliases": [
+        "uar:U3"
+      ]
+    },
+    {
+      "id": "src-035",
+      "formatted": "Narrow team execution limits and recovery. (n.d.). file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/agents/collaboration/team-execution-profile-migration.md (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/agents/collaboration/team-execution-profile-migration.md",
+      "title": "Narrow team execution limits and recovery",
+      "credibility_score": 34,
+      "confidence": 0.5,
+      "label": "verified",
+      "used_in_claims": [
+        "claim-f517845306ab6d26"
+      ],
+      "aliases": [
+        "uar:U4"
+      ]
+    },
+    {
+      "id": "src-036",
+      "formatted": "UAR AG-UI stable profile. (n.d.). file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/protocols/ag-ui-profile.md (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/protocols/ag-ui-profile.md",
+      "title": "UAR AG-UI stable profile",
+      "credibility_score": 54,
+      "confidence": 0.54,
+      "label": "verified",
+      "used_in_claims": [
+        "claim-b94213b5422185d4"
+      ],
+      "aliases": [
+        "uar:U5"
+      ]
+    },
+    {
+      "id": "src-037",
+      "formatted": "Actual UAR stream mode and lifecycle emission. (n.d.). file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/server.rs (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/server.rs",
+      "title": "Actual UAR stream mode and lifecycle emission",
+      "credibility_score": 6,
+      "confidence": 0.06,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-3ce5411eb82ac0a3"
+      ],
+      "aliases": [
+        "uar:U6"
+      ]
+    },
+    {
+      "id": "src-038",
+      "formatted": "UAR frontend A2UI closed catalog schema. (n.d.). file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/frontend/src/platform/a2ui/protocol.ts (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/frontend/src/platform/a2ui/protocol.ts",
+      "title": "UAR frontend A2UI closed catalog schema",
+      "credibility_score": 54,
+      "confidence": 0.5,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-33bc892a5db1dd0c"
+      ],
+      "aliases": [
+        "uar:U7"
+      ]
+    },
+    {
+      "id": "src-039",
+      "formatted": "UAR Rust A2UI closed catalog validation. (n.d.). file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/a2ui/protocol.rs (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/a2ui/protocol.rs",
+      "title": "UAR Rust A2UI closed catalog validation",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-c90a940ae3d36f51"
+      ],
+      "aliases": [
+        "uar:U8"
+      ]
+    },
+    {
+      "id": "src-040",
+      "formatted": "UAR local React renderer. (n.d.). file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/frontend/src/features/a2ui/a2ui-surface-renderer.tsx (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/frontend/src/features/a2ui/a2ui-surface-renderer.tsx",
+      "title": "UAR local React renderer",
+      "credibility_score": 11,
+      "confidence": 0.11,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-aa1a0ff8f58c286c"
+      ],
+      "aliases": [
+        "uar:U9"
+      ]
+    },
+    {
+      "id": "src-041",
+      "formatted": "Architecture tool-governance boundary. (n.d.). file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/references/rust/tool-governance.md (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/references/rust/tool-governance.md",
+      "title": "Architecture tool-governance boundary",
+      "credibility_score": 6,
+      "confidence": 0.06,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-ac032f521f539c8a"
+      ],
+      "aliases": [
+        "uar:H1"
+      ]
+    },
+    {
+      "id": "src-042",
+      "formatted": "Architecture AG-UI event contract. (n.d.). file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/agui-event-contract/SKILL.md (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/agui-event-contract/SKILL.md",
+      "title": "Architecture AG-UI event contract",
+      "credibility_score": 6,
+      "confidence": 0.06,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-899d1121f86a38d2"
+      ],
+      "aliases": [
+        "uar:H2"
+      ]
+    },
+    {
+      "id": "src-043",
+      "formatted": "Architecture core and cross-shell ownership. (n.d.). file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/references/arch-standard.md (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/references/arch-standard.md",
+      "title": "Architecture core and cross-shell ownership",
+      "credibility_score": 11,
+      "confidence": 0.11,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-dc5f0c7d0c7fa3f4"
+      ],
+      "aliases": [
+        "uar:H3",
+        "ui-platforms:hybrid-standard"
+      ]
+    },
+    {
+      "id": "src-044",
+      "formatted": "PatientGPT prototype catalog and action allowlist. (n.d.). file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/a2ui-renderer.js (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/a2ui-renderer.js",
+      "title": "PatientGPT prototype catalog and action allowlist",
+      "credibility_score": 89,
+      "confidence": 0.5,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-a7726e5131f5999a"
+      ],
+      "aliases": [
+        "uar:P1"
+      ]
+    },
+    {
+      "id": "src-045",
+      "formatted": "PatientGPT prototype event emitter. (n.d.). file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/agui-stream.js (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/agui-stream.js",
+      "title": "PatientGPT prototype event emitter",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-5fab885556ba1740"
+      ],
+      "aliases": [
+        "uar:P2"
+      ]
+    },
+    {
+      "id": "src-046",
+      "formatted": "PatientGPT clinical and report contract. (n.d.). file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.prometheus/project-contract.md (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.prometheus/project-contract.md",
+      "title": "PatientGPT clinical and report contract",
+      "credibility_score": 6,
+      "confidence": 0.5,
+      "label": "verified",
+      "used_in_claims": [
+        "claim-5a64f8c14d96ce21"
+      ],
+      "aliases": [
+        "uar:P3",
+        "ui-platforms:pg-contract"
+      ]
+    },
+    {
+      "id": "src-047",
+      "formatted": "Official AG-UI events. (n.d.). https://docs.ag-ui.com/concepts/events (Observed 2026-10-04).",
+      "url": "https://docs.ag-ui.com/concepts/events",
+      "title": "Official AG-UI events",
+      "credibility_score": 57,
+      "confidence": 0.5,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-5ddbd0b83411c3c2"
+      ],
+      "aliases": [
+        "uar:O1"
+      ]
+    },
+    {
+      "id": "src-048",
+      "formatted": "Official A2UI catalog model. (n.d.). https://a2ui.org/concepts/catalogs/ (Observed 2026-10-04).",
+      "url": "https://a2ui.org/concepts/catalogs/",
+      "title": "Official A2UI catalog model",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-daada5931e721103"
+      ],
+      "aliases": [
+        "uar:O2"
+      ]
+    },
+    {
+      "id": "src-049",
+      "formatted": "PatientGPT waypoint. (n.d.). file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.kbd-orchestrator/current-waypoint.json (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.kbd-orchestrator/current-waypoint.json",
+      "title": "PatientGPT waypoint",
+      "credibility_score": 6,
+      "confidence": 0.06,
+      "label": "verified",
+      "used_in_claims": [
+        "claim-35ab2316ac9ff2d8"
+      ],
+      "aliases": [
+        "ui-platforms:pg-waypoint"
+      ]
+    },
+    {
+      "id": "src-050",
+      "formatted": "PatientGPT design reference. (n.d.). file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/README.md (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/README.md",
+      "title": "PatientGPT design reference",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-93d4429cb6971aa1"
+      ],
+      "aliases": [
+        "ui-platforms:pg-design"
+      ]
+    },
+    {
+      "id": "src-051",
+      "formatted": "PatientGPT storyboard. (n.d.). file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat-storyboard.html (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat-storyboard.html",
+      "title": "PatientGPT storyboard",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-52170b47901f7b73"
+      ],
+      "aliases": [
+        "ui-platforms:pg-storyboard"
+      ]
+    },
+    {
+      "id": "src-052",
+      "formatted": "PatientGPT prototype tokens. (n.d.). file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/tokens.css (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/tokens.css",
+      "title": "PatientGPT prototype tokens",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-8aa245b9fb3244f7"
+      ],
+      "aliases": [
+        "ui-platforms:pg-tokens"
+      ]
+    },
+    {
+      "id": "src-053",
+      "formatted": "PatientGPT Files responsive layout. (n.d.). file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/panel.css (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/panel.css",
+      "title": "PatientGPT Files responsive layout",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-df23a98b52e5a4f9"
+      ],
+      "aliases": [
+        "ui-platforms:pg-layout"
+      ]
+    },
+    {
+      "id": "src-054",
+      "formatted": "PatientGPT shell responsive layout. (n.d.). file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/shell.css (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/shell.css",
+      "title": "PatientGPT shell responsive layout",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-6849b4a24274574f"
+      ],
+      "aliases": [
+        "ui-platforms:pg-shell"
+      ]
+    },
+    {
+      "id": "src-055",
+      "formatted": "Prototype workflow limits. (n.d.). file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/flows.js (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/flows.js",
+      "title": "Prototype workflow limits",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-60bdbf29ca05c2a9"
+      ],
+      "aliases": [
+        "ui-platforms:pg-flows"
+      ]
+    },
+    {
+      "id": "src-056",
+      "formatted": "KnowMe custom Tauri titlebar. (n.d.). file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/src/shared/components/Titlebar.tsx (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/src/shared/components/Titlebar.tsx",
+      "title": "KnowMe custom Tauri titlebar",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-c44526a5c9e18ed3"
+      ],
+      "aliases": [
+        "ui-platforms:know-titlebar"
+      ]
+    },
+    {
+      "id": "src-057",
+      "formatted": "KnowMe Tauri config. (n.d.). file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/src-tauri/tauri.conf.json (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/src-tauri/tauri.conf.json",
+      "title": "KnowMe Tauri config",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-19f14b2c95ea6294"
+      ],
+      "aliases": [
+        "ui-platforms:know-config"
+      ]
+    },
+    {
+      "id": "src-058",
+      "formatted": "KnowMe capabilities. (n.d.). file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/src-tauri/capabilities/default.json (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/src-tauri/capabilities/default.json",
+      "title": "KnowMe capabilities",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-ce29a319db270b44"
+      ],
+      "aliases": [
+        "ui-platforms:know-capabilities"
+      ]
+    },
+    {
+      "id": "src-059",
+      "formatted": "KnowMe Vite config. (n.d.). file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/vite.config.ts (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/vite.config.ts",
+      "title": "KnowMe Vite config",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-bd2a681387f2ee53"
+      ],
+      "aliases": [
+        "ui-platforms:know-vite"
+      ]
+    },
+    {
+      "id": "src-060",
+      "formatted": "KnowMe desktop scripts. (n.d.). file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/package.json (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/package.json",
+      "title": "KnowMe desktop scripts",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-c41e2bc26203e013"
+      ],
+      "aliases": [
+        "ui-platforms:know-package"
+      ]
+    },
+    {
+      "id": "src-061",
+      "formatted": "KnowMe Flutter palette. (n.d.). file:///Users/gqadonis/Projects/know-me/know-me-system/mobile/lib/core/theme/tokens.dart (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/know-me/know-me-system/mobile/lib/core/theme/tokens.dart",
+      "title": "KnowMe Flutter palette",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-f4bc3fd26a2eafd3"
+      ],
+      "aliases": [
+        "ui-platforms:know-mobile-tokens"
+      ]
+    },
+    {
+      "id": "src-062",
+      "formatted": "Project UI UX protocol. (n.d.). file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/UI_UX_PROTOCOL.md (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/UI_UX_PROTOCOL.md",
+      "title": "Project UI UX protocol",
+      "credibility_score": 6,
+      "confidence": 0.06,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-8293f1bb63cff2dd"
+      ],
+      "aliases": [
+        "ui-platforms:ui-protocol"
+      ]
+    },
+    {
+      "id": "src-063",
+      "formatted": "UI UX routing skill. (n.d.). file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/prometheus-ui-ux/SKILL.md (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/prometheus-ui-ux/SKILL.md",
+      "title": "UI UX routing skill",
+      "credibility_score": 23,
+      "confidence": 0.23,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-ff2c3f9d4e6b34b6"
+      ],
+      "aliases": [
+        "ui-platforms:ui-router"
+      ]
+    },
+    {
+      "id": "src-064",
+      "formatted": "Portable Impeccable core. (n.d.). file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/prometheus-impeccable-core/SKILL.md (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/prometheus-impeccable-core/SKILL.md",
+      "title": "Portable Impeccable core",
+      "credibility_score": 66,
+      "confidence": 0.5,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-f399641afa97a15d"
+      ],
+      "aliases": [
+        "ui-platforms:ui-impeccable-core"
+      ]
+    },
+    {
+      "id": "src-065",
+      "formatted": "Impeccable 4.4.0. (n.d.). file:///Users/gqadonis/.codex/skills/impeccable/SKILL.md (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/.codex/skills/impeccable/SKILL.md",
+      "title": "Impeccable 4.4.0",
+      "credibility_score": 11,
+      "confidence": 0.11,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-4868ecff71858378"
+      ],
+      "aliases": [
+        "ui-platforms:ui-impeccable-full"
+      ]
+    },
+    {
+      "id": "src-066",
+      "formatted": "UI UX Pro Max portable skill. (n.d.). file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/ui-ux-pro-max/SKILL.md (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/ui-ux-pro-max/SKILL.md",
+      "title": "UI UX Pro Max portable skill",
+      "credibility_score": 23,
+      "confidence": 0.23,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-68ddde4259c18257"
+      ],
+      "aliases": [
+        "ui-platforms:ui-pro-max"
+      ]
+    },
+    {
+      "id": "src-067",
+      "formatted": "Pro Max source provenance. (n.d.). file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/ui-ux-pro-max/provenance.json (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/ui-ux-pro-max/provenance.json",
+      "title": "Pro Max source provenance",
+      "credibility_score": 66,
+      "confidence": 0.5,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-d369c757f397bf55"
+      ],
+      "aliases": [
+        "ui-platforms:ui-pro-max-provenance"
+      ]
+    },
+    {
+      "id": "src-068",
+      "formatted": "Better Interface. (n.d.). file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/better-interface/SKILL.md (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/better-interface/SKILL.md",
+      "title": "Better Interface",
+      "credibility_score": 11,
+      "confidence": 0.11,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-78dfffb0bc135fa4"
+      ],
+      "aliases": [
+        "ui-platforms:ui-craft"
+      ]
+    },
+    {
+      "id": "src-069",
+      "formatted": "Vercel React best practices. (n.d.). file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/vercel-react-best-practices/SKILL.md (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/vercel-react-best-practices/SKILL.md",
+      "title": "Vercel React best practices",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-99b0b7e7e7599a89"
+      ],
+      "aliases": [
+        "ui-platforms:ui-react"
+      ]
+    },
+    {
+      "id": "src-070",
+      "formatted": "Flutter adaptive layout skill. (n.d.). file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/flutter-build-responsive-layout/SKILL.md (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/flutter-build-responsive-layout/SKILL.md",
+      "title": "Flutter adaptive layout skill",
+      "credibility_score": 6,
+      "confidence": 0.06,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-65d14f5c0a4beef3"
+      ],
+      "aliases": [
+        "ui-platforms:ui-flutter"
+      ]
+    },
+    {
+      "id": "src-071",
+      "formatted": "Hybrid architecture skill. (n.d.). file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/SKILL.md (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/SKILL.md",
+      "title": "Hybrid architecture skill",
+      "credibility_score": 100,
+      "confidence": 0.5,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-68b7a16eee1a18c9"
+      ],
+      "aliases": [
+        "ui-platforms:hybrid-skill"
+      ]
+    },
+    {
+      "id": "src-072",
+      "formatted": "Tauri titlebar skill. (n.d.). file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/tauri-custom-titlebar/SKILL.md (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/tauri-custom-titlebar/SKILL.md",
+      "title": "Tauri titlebar skill",
+      "credibility_score": 6,
+      "confidence": 0.06,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-407a0b3a03e30c94"
+      ],
+      "aliases": [
+        "ui-platforms:hybrid-titlebar"
+      ]
+    },
+    {
+      "id": "src-073",
+      "formatted": "Hybrid token skill. (n.d.). file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-design-tokens/SKILL.md (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-design-tokens/SKILL.md",
+      "title": "Hybrid token skill",
+      "credibility_score": 6,
+      "confidence": 0.5,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-9173f2d0111b7f72"
+      ],
+      "aliases": [
+        "ui-platforms:hybrid-tokens"
+      ]
+    },
+    {
+      "id": "src-074",
+      "formatted": "Reference UI fidelity. (n.d.). file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/reference-ui-fidelity/SKILL.md (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/reference-ui-fidelity/SKILL.md",
+      "title": "Reference UI fidelity",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-90ca71b005cf8aa2"
+      ],
+      "aliases": [
+        "ui-platforms:hybrid-fidelity"
+      ]
+    },
+    {
+      "id": "src-075",
+      "formatted": "Flutter visual verification. (n.d.). file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/flutter-golden-ui/SKILL.md (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/flutter-golden-ui/SKILL.md",
+      "title": "Flutter visual verification",
+      "credibility_score": 6,
+      "confidence": 0.06,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-0c74862e364ae8c2"
+      ],
+      "aliases": [
+        "ui-platforms:hybrid-goldens"
+      ]
+    },
+    {
+      "id": "src-076",
+      "formatted": "Branded Docusaurus skill. (n.d.). file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/build-branded-docusaurus/SKILL.md (Observed 2026-10-04).",
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/build-branded-docusaurus/SKILL.md",
+      "title": "Branded Docusaurus skill",
+      "credibility_score": 6,
+      "confidence": 0.06,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-7be48d02bc00e606"
+      ],
+      "aliases": [
+        "ui-platforms:hybrid-docs"
+      ]
+    },
+    {
+      "id": "src-077",
+      "formatted": "Tauri window customization. (n.d.). https://v2.tauri.app/learn/window-customization/ (Observed 2026-10-04).",
+      "url": "https://v2.tauri.app/learn/window-customization/",
+      "title": "Tauri window customization",
+      "credibility_score": 24,
+      "confidence": 0.24,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-7da9935fc3cc7962"
+      ],
+      "aliases": [
+        "ui-platforms:tauri-official"
+      ]
+    },
+    {
+      "id": "src-078",
+      "formatted": "Flutter SafeArea and MediaQuery. (n.d.). https://docs.flutter.dev/ui/adaptive-responsive/safearea-mediaquery (Observed 2026-10-04).",
+      "url": "https://docs.flutter.dev/ui/adaptive-responsive/safearea-mediaquery",
+      "title": "Flutter SafeArea and MediaQuery",
+      "credibility_score": 32,
+      "confidence": 0.32,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-b9e97d33e8c6ea18"
+      ],
+      "aliases": [
+        "ui-platforms:flutter-official"
+      ]
+    },
+    {
+      "id": "src-079",
+      "formatted": "Flutter adaptive layout tutorial. (n.d.). https://github.com/flutter/website/blob/main/sites/docs/src/content/learn/pathway/tutorial/adaptive-layout.md (Observed 2026-10-04).",
+      "url": "https://github.com/flutter/website/blob/main/sites/docs/src/content/learn/pathway/tutorial/adaptive-layout.md",
+      "title": "Flutter adaptive layout tutorial",
+      "credibility_score": 57,
+      "confidence": 0.5,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-9563d81c094dc2f0"
+      ],
+      "aliases": [
+        "ui-platforms:flutter-layout"
+      ]
+    },
+    {
+      "id": "src-080",
+      "formatted": "Docusaurus deployment. (n.d.). https://docusaurus.io/docs/deployment (Observed 2026-10-04).",
+      "url": "https://docusaurus.io/docs/deployment",
+      "title": "Docusaurus deployment",
+      "credibility_score": 24,
+      "confidence": 0.24,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-2586586f2d7baea5"
+      ],
+      "aliases": [
+        "ui-platforms:docusaurus-deploy"
+      ]
+    },
+    {
+      "id": "src-081",
+      "formatted": "Docusaurus monorepo installation. (n.d.). https://docusaurus.io/docs/installation (Observed 2026-10-04).",
+      "url": "https://docusaurus.io/docs/installation",
+      "title": "Docusaurus monorepo installation",
+      "credibility_score": 49,
+      "confidence": 0.49,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-dd9cbe2aa75b2a3d"
+      ],
+      "aliases": [
+        "ui-platforms:docusaurus-monorepo"
+      ]
+    },
+    {
+      "id": "src-082",
+      "formatted": "GitHub Pages custom workflows. (n.d.). https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages (Observed 2026-10-04).",
+      "url": "https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages",
+      "title": "GitHub Pages custom workflows",
+      "credibility_score": 32,
+      "confidence": 0.32,
+      "label": "unverified",
+      "used_in_claims": [
+        "claim-1ecad15381dc1344"
+      ],
+      "aliases": [
+        "ui-platforms:github-pages"
+      ]
+    }
+  ],
+  "citation_style": "APA; unknown author/date deliberately omitted"
+}

@@ -1,0 +1,189 @@
+/* TJ-ARCH-MOB-001 compliant
+   Ported from docs/design/patient-chat/tokens.css (base and primitives only).
+   The custom properties themselves come from tokens.css, which is generated. */
+
+/* ── base ─────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+html { height: 100%; -webkit-text-size-adjust: 100%; }
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  caret-color: var(--accent);
+  scrollbar-color: var(--s3) transparent;
+}
+h1, h2, h3, h4, p, ul, ol, dl, dd, figure, blockquote, fieldset { margin: 0; }
+ul, ol, fieldset { padding: 0; }
+ul, ol { list-style: none; }
+fieldset { border: 0; min-width: 0; }
+h1, h2, h3, h4 { font-weight: 700; text-wrap: balance; }
+p { text-wrap: pretty; }
+svg { display: block; }
+a { color: inherit; text-decoration: none; }
+button { margin: 0; padding: 0; border: 0; background: none; font: inherit; color: inherit; cursor: pointer; }
+button:disabled { cursor: not-allowed; }
+textarea, input { font: inherit; color: inherit; }
+[hidden] { display: none !important; }
+::selection { background: var(--select); color: var(--fg); }
+* { scrollbar-width: thin; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
+.skip {
+  position: fixed; top: 8px; left: 8px; z-index: 80;
+  padding: 8px 14px; border-radius: var(--r);
+  background: var(--fg); color: var(--bg); font-weight: 700; font-size: var(--fs-ui);
+  transform: translateY(-160%);
+}
+.skip:focus-visible { transform: none; }
+
+/* ── focus: a fill swap on the control itself ─────────────────────── */
+:focus { outline: none; }
+:is(a, button, summary):focus-visible {
+  background-color: var(--focus-bg) !important;
+  color: var(--focus-fg) !important;
+}
+:is(a, button, summary):focus-visible * { color: inherit !important; }
+input:not([type="checkbox"]):not([type="radio"]):focus-visible,
+textarea:focus-visible {
+  background-color: var(--field-focus) !important;
+  color: var(--field-fg) !important;
+}
+
+/* ── icons ────────────────────────────────────────────────────────── */
+.ico {
+  width: 20px; height: 20px; fill: none; stroke: currentColor;
+  stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+}
+.icon-btn {
+  display: grid; place-items: center; width: 40px; height: 40px;
+  border-radius: var(--r-lg); color: var(--fg-2);
+}
+
+/* ── buttons: identified by their label ───────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 40px; padding: 0 16px; border-radius: var(--r);
+  font-size: var(--fs-ui); font-weight: 700; white-space: nowrap;
+}
+.btn.primary { background: var(--primary-bg); color: var(--primary-fg); }
+.btn.ghost { background: var(--s3); color: var(--fg); }
+.btn:disabled { background: var(--s3); color: var(--fg-2); }
+
+/* ── fields: found by shape, so the fill carries 3:1 ──────────────── */
+.on-field { background: var(--field); color: var(--field-fg); }
+.on-field:focus-within { background: var(--field-focus); }
+.on-field :is(input, textarea) {
+  border: 0; background: transparent; color: inherit; caret-color: var(--field-fg);
+}
+.on-field :is(input, textarea)::placeholder { color: var(--field-ph); opacity: 1; }
+.on-field :is(input, textarea):focus-visible { background-color: transparent !important; }
+.on-field .icon-btn { color: var(--field-fg); }
+.on-field :is(a, button):focus-visible {
+  background-color: var(--field-fg) !important;
+  color: var(--field) !important;
+}
+input[type="search"]::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; }
+
+input[type="checkbox"], input[type="radio"] {
+  -webkit-appearance: none; appearance: none;
+  display: inline-grid; place-content: center;
+  width: 20px; height: 20px; margin: 0; flex: none;
+  border: 0; border-radius: 4px; background-color: var(--field); cursor: pointer;
+}
+input[type="radio"] { border-radius: 50%; }
+input[type="checkbox"]::before {
+  content: ''; display: none; width: 12px; height: 12px; background: var(--primary-fg);
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0, 43% 62%);
+}
+input[type="radio"]::before {
+  content: ''; display: none; width: 8px; height: 8px; border-radius: 50%; background: var(--primary-fg);
+}
+input:checked { background-color: var(--primary-bg); }
+input:checked::before { display: block; }
+input[type="checkbox"]:disabled { background-color: var(--s4); cursor: not-allowed; }
+
+/* ── clinical state: label and shape, never color alone ───────────── */
+.state {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 2px 7px 2px 5px; border-radius: 4px;
+  font-family: var(--font-mono); font-size: var(--fs-mono); font-weight: 500;
+  letter-spacing: 0.04em; line-height: 1.5; white-space: nowrap;
+}
+.state-met  { color: var(--ok);   background: var(--ok-surface); }
+.state-gap  { color: var(--gap);  background: var(--gap-surface); }
+.state-void { color: var(--void); background: var(--void-surface); }
+.mark-state {
+  width: 14px; height: 14px; flex: none; fill: none; stroke: currentColor;
+  stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+}
+
+/* ── citation: document, page ─────────────────────────────────────── */
+.cite {
+  display: inline-flex; align-items: center; min-height: 24px;
+  padding: 1px 7px; border-radius: 4px;
+  background: var(--cool-surface); color: var(--cool);
+  font-family: var(--font-mono); font-size: var(--fs-mono); font-weight: 500;
+  white-space: nowrap;
+}
+.cite-none { background: var(--void-surface); color: var(--void); }
+.sec { font-family: var(--font-mono); font-size: var(--fs-mono); color: var(--fg-2); }
+
+/* ── menu: inverse fill, since nothing lifts it off the page ──────── */
+.menu-anchor { position: relative; }
+.menu {
+  position: absolute; z-index: 60;
+  width: max-content; min-width: 248px; max-width: min(340px, calc(100vw - 32px));
+  padding: 6px; border-radius: var(--r-lg);
+  background: var(--inv); color: var(--inv-fg);
+}
+.menu.below-start { top: calc(100% + 6px); left: 0; }
+.menu.above-start { bottom: calc(100% + 6px); left: 0; }
+.menu-item {
+  --od-gap: 10px;
+  width: 100%; min-height: 40px; padding: 7px 10px; border-radius: var(--r);
+  font-size: var(--fs-ui); text-align: left;
+}
+.menu-item[aria-current="true"] { background: var(--inv-current); font-weight: 700; }
+.menu-item .ico { color: var(--inv-fg-2); }
+.menu-sub { font-size: var(--fs-meta); color: var(--inv-fg-2); font-weight: 400; }
+.menu-head {
+  padding: 8px 10px 4px; color: var(--inv-fg-2);
+  font-family: var(--font-mono); font-size: var(--fs-mono); letter-spacing: 0.06em; text-transform: uppercase;
+}
+.menu-note { padding: 8px 10px; font-size: var(--fs-meta); color: var(--inv-fg-2); }
+.menu .menu-item:focus-visible {
+  background-color: var(--inv-fg) !important;
+  color: var(--inv) !important;
+}
+
+@media (hover: hover) {
+  .icon-btn:hover { background: var(--s3); color: var(--fg); }
+  .on-field .icon-btn:not(:disabled):hover { background: var(--field-hover); color: var(--field-fg); }
+  .btn.primary:not(:disabled):hover { background: var(--primary-hover); }
+  .btn.ghost:not(:disabled):hover { background: var(--s4); }
+  .cite:not(.cite-none):hover { background: var(--cool); color: var(--cool-fg); }
+  .menu-item:hover { background: var(--inv-hover); }
+}
+
+@media (pointer: coarse) {
+  .icon-btn { width: 44px; height: 44px; }
+  .btn { min-height: 44px; }
+  .cite { min-height: 32px; }
+  .menu-item { min-height: 44px; }
+  input[type="checkbox"], input[type="radio"] { width: 24px; height: 24px; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .menu { animation: pop var(--dur-enter) var(--ease); }
+  .skip { transition: transform var(--dur-enter) var(--ease); }
+}
+@keyframes pop { from { opacity: 0; transform: translateY(4px) scale(0.98); } }

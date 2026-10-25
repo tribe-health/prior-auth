@@ -1,0 +1,1943 @@
+{
+  "topics": [
+    {
+      "id": "topic-001",
+      "name": "Desktop database selection",
+      "claims": [
+        "claim-6016f9c4b4671679",
+        "claim-caf38ecf31c02af6"
+      ]
+    },
+    {
+      "id": "topic-002",
+      "name": "Reusable browser materializer versus blocked adoption",
+      "claims": [
+        "claim-2e05a92731ff83b8",
+        "claim-ac51857b8d96e3da"
+      ]
+    },
+    {
+      "id": "topic-003",
+      "name": "Native session header across adapters",
+      "claims": [
+        "claim-6b30a5f31bf410bd",
+        "claim-416d20e8ee410e5d"
+      ]
+    },
+    {
+      "id": "topic-004",
+      "name": "A2UI complete custom catalog versus closed UAR catalog",
+      "claims": [
+        "claim-33bc892a5db1dd0c",
+        "claim-a7726e5131f5999a"
+      ]
+    },
+    {
+      "id": "topic-005",
+      "name": "UAR document checkpoint versus narrow executable team profile",
+      "claims": [
+        "claim-a3eeef535be1fd6f",
+        "claim-f517845306ab6d26"
+      ]
+    },
+    {
+      "id": "topic-006",
+      "name": "Generic UI guidance versus incumbent product authority",
+      "claims": [
+        "claim-5a64f8c14d96ce21",
+        "claim-9173f2d0111b7f72"
+      ]
+    },
+    {
+      "id": "topic-007",
+      "name": "CI test example versus PatientGPT local-only policy",
+      "claims": [
+        "claim-206e9a70ed615814",
+        "claim-d0856e560d85ceaa"
+      ]
+    },
+    {
+      "id": "topic-008",
+      "name": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host/src/lib.rs",
+      "claims": [
+        "claim-1c57d6583f3b8a10"
+      ]
+    },
+    {
+      "id": "topic-009",
+      "name": "file:///Users/gqadonis/Projects/prometheus/flint-forge/crates/fdb-ports/src/lib.rs",
+      "claims": [
+        "claim-729d79f32af03242"
+      ]
+    },
+    {
+      "id": "topic-010",
+      "name": "file:///Users/gqadonis/Projects/prometheus/flint-forge/crates/fdb-postgres/src/backend.rs",
+      "claims": [
+        "claim-72248522ac863322"
+      ]
+    },
+    {
+      "id": "topic-011",
+      "name": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/shared/sync/storage-policy.ts",
+      "claims": [
+        "claim-5c0eceaefa53f46f"
+      ]
+    },
+    {
+      "id": "topic-012",
+      "name": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/app/providers/graph-provider.tsx",
+      "claims": [
+        "claim-b8e762bc9b378eec"
+      ]
+    },
+    {
+      "id": "topic-013",
+      "name": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-ports/src/entity_store.rs",
+      "claims": [
+        "claim-d769fbfa3a70992c"
+      ]
+    },
+    {
+      "id": "topic-014",
+      "name": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-store-surreal/src/store.rs",
+      "claims": [
+        "claim-56ddf8a7cf3a34ec"
+      ]
+    },
+    {
+      "id": "topic-015",
+      "name": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-projection-surreal/src/store.rs",
+      "claims": [
+        "claim-60a5a07d64d7f45e"
+      ]
+    },
+    {
+      "id": "topic-016",
+      "name": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/kratos_proxy.rs",
+      "claims": [
+        "claim-b0558458916f4b2d"
+      ]
+    },
+    {
+      "id": "topic-017",
+      "name": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/data-model.md",
+      "claims": [
+        "claim-03042ff4fe8fee1b"
+      ]
+    },
+    {
+      "id": "topic-018",
+      "name": "file:///Users/gqadonis/Projects/prometheus/flint-gate/.github/workflows/deploy-gateway.yml",
+      "claims": [
+        "claim-883e24ec8d449007"
+      ]
+    },
+    {
+      "id": "topic-019",
+      "name": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/.github/workflows/docs-pages.yml",
+      "claims": [
+        "claim-5a4a09b232cacf33"
+      ]
+    },
+    {
+      "id": "topic-020",
+      "name": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.prometheus/team-research/storage-identity.md",
+      "claims": [
+        "claim-8af67c24cd406130"
+      ]
+    },
+    {
+      "id": "topic-021",
+      "name": "github.com",
+      "claims": [
+        "claim-dd4f806d9b57bc09",
+        "claim-6f5f7b98c95d4b99",
+        "claim-4e179092c5026cb6",
+        "claim-6803b29c2b91c642",
+        "claim-1396c3e08357c4f1",
+        "claim-8edc8b01d28547b1",
+        "claim-8daf22e433969499",
+        "claim-9563d81c094dc2f0"
+      ]
+    },
+    {
+      "id": "topic-022",
+      "name": "docs.rs",
+      "claims": [
+        "claim-163fa11b9e05d2ec"
+      ]
+    },
+    {
+      "id": "topic-023",
+      "name": "gateway.envoyproxy.io",
+      "claims": [
+        "claim-07864c525b809c33",
+        "claim-f802cd0655e73d7c"
+      ]
+    },
+    {
+      "id": "topic-024",
+      "name": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/runtime/tool_admission/mod.rs",
+      "claims": [
+        "claim-6d772abe8e9625fd"
+      ]
+    },
+    {
+      "id": "topic-025",
+      "name": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/compiler/collaboration/runtime_semantics.rs",
+      "claims": [
+        "claim-65d71a3ed682255b"
+      ]
+    },
+    {
+      "id": "topic-026",
+      "name": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/protocols/ag-ui-profile.md",
+      "claims": [
+        "claim-b94213b5422185d4"
+      ]
+    },
+    {
+      "id": "topic-027",
+      "name": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/server.rs",
+      "claims": [
+        "claim-3ce5411eb82ac0a3"
+      ]
+    },
+    {
+      "id": "topic-028",
+      "name": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/a2ui/protocol.rs",
+      "claims": [
+        "claim-c90a940ae3d36f51"
+      ]
+    },
+    {
+      "id": "topic-029",
+      "name": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/frontend/src/features/a2ui/a2ui-surface-renderer.tsx",
+      "claims": [
+        "claim-aa1a0ff8f58c286c"
+      ]
+    },
+    {
+      "id": "topic-030",
+      "name": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/references/rust/tool-governance.md",
+      "claims": [
+        "claim-ac032f521f539c8a"
+      ]
+    },
+    {
+      "id": "topic-031",
+      "name": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/agui-event-contract/SKILL.md",
+      "claims": [
+        "claim-899d1121f86a38d2"
+      ]
+    },
+    {
+      "id": "topic-032",
+      "name": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/references/arch-standard.md",
+      "claims": [
+        "claim-dc5f0c7d0c7fa3f4"
+      ]
+    },
+    {
+      "id": "topic-033",
+      "name": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/agui-stream.js",
+      "claims": [
+        "claim-5fab885556ba1740"
+      ]
+    },
+    {
+      "id": "topic-034",
+      "name": "docs.ag-ui.com",
+      "claims": [
+        "claim-5ddbd0b83411c3c2"
+      ]
+    },
+    {
+      "id": "topic-035",
+      "name": "a2ui.org",
+      "claims": [
+        "claim-daada5931e721103"
+      ]
+    },
+    {
+      "id": "topic-036",
+      "name": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.kbd-orchestrator/current-waypoint.json",
+      "claims": [
+        "claim-35ab2316ac9ff2d8"
+      ]
+    },
+    {
+      "id": "topic-037",
+      "name": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/README.md",
+      "claims": [
+        "claim-93d4429cb6971aa1"
+      ]
+    },
+    {
+      "id": "topic-038",
+      "name": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat-storyboard.html",
+      "claims": [
+        "claim-52170b47901f7b73"
+      ]
+    },
+    {
+      "id": "topic-039",
+      "name": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/tokens.css",
+      "claims": [
+        "claim-8aa245b9fb3244f7"
+      ]
+    },
+    {
+      "id": "topic-040",
+      "name": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/panel.css",
+      "claims": [
+        "claim-df23a98b52e5a4f9"
+      ]
+    },
+    {
+      "id": "topic-041",
+      "name": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/shell.css",
+      "claims": [
+        "claim-6849b4a24274574f"
+      ]
+    },
+    {
+      "id": "topic-042",
+      "name": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/flows.js",
+      "claims": [
+        "claim-60bdbf29ca05c2a9"
+      ]
+    },
+    {
+      "id": "topic-043",
+      "name": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/src/shared/components/Titlebar.tsx",
+      "claims": [
+        "claim-c44526a5c9e18ed3"
+      ]
+    },
+    {
+      "id": "topic-044",
+      "name": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/src-tauri/tauri.conf.json",
+      "claims": [
+        "claim-19f14b2c95ea6294"
+      ]
+    },
+    {
+      "id": "topic-045",
+      "name": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/src-tauri/capabilities/default.json",
+      "claims": [
+        "claim-ce29a319db270b44"
+      ]
+    },
+    {
+      "id": "topic-046",
+      "name": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/vite.config.ts",
+      "claims": [
+        "claim-bd2a681387f2ee53"
+      ]
+    },
+    {
+      "id": "topic-047",
+      "name": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/package.json",
+      "claims": [
+        "claim-c41e2bc26203e013"
+      ]
+    },
+    {
+      "id": "topic-048",
+      "name": "file:///Users/gqadonis/Projects/know-me/know-me-system/mobile/lib/core/theme/tokens.dart",
+      "claims": [
+        "claim-f4bc3fd26a2eafd3"
+      ]
+    },
+    {
+      "id": "topic-049",
+      "name": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/UI_UX_PROTOCOL.md",
+      "claims": [
+        "claim-8293f1bb63cff2dd"
+      ]
+    },
+    {
+      "id": "topic-050",
+      "name": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/prometheus-ui-ux/SKILL.md",
+      "claims": [
+        "claim-ff2c3f9d4e6b34b6"
+      ]
+    },
+    {
+      "id": "topic-051",
+      "name": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/prometheus-impeccable-core/SKILL.md",
+      "claims": [
+        "claim-f399641afa97a15d"
+      ]
+    },
+    {
+      "id": "topic-052",
+      "name": "file:///Users/gqadonis/.codex/skills/impeccable/SKILL.md",
+      "claims": [
+        "claim-4868ecff71858378"
+      ]
+    },
+    {
+      "id": "topic-053",
+      "name": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/ui-ux-pro-max/SKILL.md",
+      "claims": [
+        "claim-68ddde4259c18257"
+      ]
+    },
+    {
+      "id": "topic-054",
+      "name": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/ui-ux-pro-max/provenance.json",
+      "claims": [
+        "claim-d369c757f397bf55"
+      ]
+    },
+    {
+      "id": "topic-055",
+      "name": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/better-interface/SKILL.md",
+      "claims": [
+        "claim-78dfffb0bc135fa4"
+      ]
+    },
+    {
+      "id": "topic-056",
+      "name": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/vercel-react-best-practices/SKILL.md",
+      "claims": [
+        "claim-99b0b7e7e7599a89"
+      ]
+    },
+    {
+      "id": "topic-057",
+      "name": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/flutter-build-responsive-layout/SKILL.md",
+      "claims": [
+        "claim-65d14f5c0a4beef3"
+      ]
+    },
+    {
+      "id": "topic-058",
+      "name": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/SKILL.md",
+      "claims": [
+        "claim-68b7a16eee1a18c9"
+      ]
+    },
+    {
+      "id": "topic-059",
+      "name": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/tauri-custom-titlebar/SKILL.md",
+      "claims": [
+        "claim-407a0b3a03e30c94"
+      ]
+    },
+    {
+      "id": "topic-060",
+      "name": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/reference-ui-fidelity/SKILL.md",
+      "claims": [
+        "claim-90ca71b005cf8aa2"
+      ]
+    },
+    {
+      "id": "topic-061",
+      "name": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/flutter-golden-ui/SKILL.md",
+      "claims": [
+        "claim-0c74862e364ae8c2"
+      ]
+    },
+    {
+      "id": "topic-062",
+      "name": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/build-branded-docusaurus/SKILL.md",
+      "claims": [
+        "claim-7be48d02bc00e606"
+      ]
+    },
+    {
+      "id": "topic-063",
+      "name": "v2.tauri.app",
+      "claims": [
+        "claim-7da9935fc3cc7962"
+      ]
+    },
+    {
+      "id": "topic-064",
+      "name": "docs.flutter.dev",
+      "claims": [
+        "claim-b9e97d33e8c6ea18"
+      ]
+    },
+    {
+      "id": "topic-065",
+      "name": "docusaurus.io",
+      "claims": [
+        "claim-2586586f2d7baea5",
+        "claim-dd9cbe2aa75b2a3d"
+      ]
+    },
+    {
+      "id": "topic-066",
+      "name": "docs.github.com",
+      "claims": [
+        "claim-1ecad15381dc1344"
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "id": "claim-1c57d6583f3b8a10",
+      "text": "Lines 36-48: domain repositories, authority, clock and sessions; shells wire adapters.",
+      "label": "verified",
+      "critical": true,
+      "confidence": 0.49,
+      "sources": [
+        "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host/src/lib.rs"
+      ],
+      "contradicts": [],
+      "evidence": "Static source support only; no runtime claim. /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host/src/lib.rs; retained excerpts: chunk-0001\nLOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n36: /// The single capability surface every shell consumes.\n37: ///\n38: /// Shells wire adapters into the ports; they never reach past this struct into\n39: /// a repository or a provider directly.\n40: #[derive(Clone)]\n41: pub struct AppServices {\n42:     pub cases: Arc<dyn ports::CaseRepository>,\n43:     pub evidence: Arc<dyn ports::EvidenceRepository>,\n44:     pub criteria: Arc<dyn ports::CriteriaRepository>,\n45:     pub letters: Arc<dyn ports::LetterRepository>,\n46:     pub authority: Arc<dyn ports::AuthorityPort>,\n47:     pub clock: Arc<dyn ports::Clock>,\n48:     pub sessions: Arc<dyn session::SessionPort>,"
+    },
+    {
+      "id": "claim-729d79f32af03242",
+      "text": "Lines 96-142: RLS-scoped connections, explicit mutation commit contract, SQL query port.",
+      "label": "verified",
+      "critical": false,
+      "confidence": 0.49,
+      "sources": [
+        "file:///Users/gqadonis/Projects/prometheus/flint-forge/crates/fdb-ports/src/lib.rs"
+      ],
+      "contradicts": [],
+      "evidence": "Static source support only; no runtime claim. /Users/gqadonis/Projects/prometheus/flint-forge/crates/fdb-ports/src/lib.rs; retained excerpts: chunk-0002\nLOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n96: /// Acquires RLS-scoped connections from the underlying database.\n97: #[async_trait]\n98: pub trait DatabaseBackend: Send + Sync {\n99:     /// Acquire a pooled connection with `ROLE`, `request.jwt.claims`, and\n100:     /// `request.headers` set for the duration of the returned connection's\n101:     /// transaction, so every subsequent statement runs under the caller's\n102:     /// Postgres RLS context.\n103:     ///\n104:     /// # Transaction contract\n105:     ///\n106:     /// The returned connection holds an **open transaction** \u2014 the GUCs above\n107:     /// are `SET LOCAL`, which requires one. A caller that executes anything\n108:     /// with side effects MUST commit it before dropping the connection\n109:     /// (`fdb_postgres::PgConn::commit`); otherwise the pool's recycle rolls the\n110:     /// work back while the statement's own `RETURNING` clause still reports\n111:     /// success, because it reads inside the transaction being discarded.\n112:     /// Read-only callers may skip the commit.\n113:     ///\n114:     /// # Errors\n115:     ///\n116:     /// Returns [`BackendError::Connection`] when no pooled connection is\n117:     /// available or the `SET LOCAL`/`set_config` GUC setup fails, and\n118:     /// [`BackendError::Query`] when `rls.role` fails the safe-identifier\n119:     /// check (fail-closed rather than interpolating an unvalidated role into\n120:     /// `SET LOCAL ROLE`).\n121:     async fn acqu"
+    },
+    {
+      "id": "claim-72248522ac863322",
+      "text": "Lines 17-60: deadpool Postgres, transaction-local JWT and role context.",
+      "label": "verified",
+      "critical": false,
+      "confidence": 0.49,
+      "sources": [
+        "file:///Users/gqadonis/Projects/prometheus/flint-forge/crates/fdb-postgres/src/backend.rs"
+      ],
+      "contradicts": [],
+      "evidence": "Static source support only; no runtime claim. /Users/gqadonis/Projects/prometheus/flint-forge/crates/fdb-postgres/src/backend.rs; retained excerpts: chunk-0003\nLOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n17: impl PgBackend {\n18:     /// Build from `DATABASE_URL` environment variable.\n19:     ///\n20:     /// Expects a standard Postgres connection URL:\n21:     /// `postgres://user:password@host:port/dbname`\n22:     ///\n23:     /// # Errors\n24:     ///\n25:     /// Returns [`PgError::Config`] when the `DATABASE_URL` environment\n26:     /// variable is unset, or when `deadpool_postgres` rejects the connection\n27:     /// string / fails to build the pool.\n28:     pub fn from_env() -> Result<Self, PgError> {\n29:         let database_url = std::env::var(\"DATABASE_URL\")\n30:             .map_err(|_| PgError::Config(\"DATABASE_URL must be set\".into()))?;\n31: \n32:         let mut cfg = PoolConfig::new();\n33:         cfg.url = Some(database_url);\n34: \n35:         let pool = cfg\n36:             .create_pool(Some(Runtime::Tokio1), tokio_postgres::NoTls)\n37:             .map_err(|e| PgError::Config(e.to_string()))?;\n38: \n39:         Ok(Self { pool })\n40:     }\n41: }\n42: \n43: #[async_trait]\n44: impl DatabaseBackend for PgBackend {\n45:     /// Check out a connection from the pool, open a transaction, and apply all\n46:     /// six `SET LOCAL` statements that propagate JWT context to Postgres RLS\n47:     /// and the extended GUC layer (all within the same `BEGIN` transaction):\n48:     ///\n49:     /// ```sql\n50:     /// SET LOCAL ROLE <role>;\n51:     /// SET LOCAL \"request.jwt.claims\" = '<claims_json>';\n52:     /// SET LOCAL \"requ"
+    },
+    {
+      "id": "claim-5c0eceaefa53f46f",
+      "text": "Lines 47-92: memory default, persistent IndexedDB opt-in, persistent experimental clinical materializer rejected.",
+      "label": "verified",
+      "critical": false,
+      "confidence": 0.49,
+      "sources": [
+        "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/shared/sync/storage-policy.ts"
+      ],
+      "contradicts": [],
+      "evidence": "Static source support only; no runtime claim. /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/shared/sync/storage-policy.ts; retained excerpts: chunk-0004\nLOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n47: export function resolveStoragePolicy(configured: string | undefined | null): StoragePolicy {\n48:   if (configured === undefined || configured === null || configured.trim() === \"\") {\n49:     return { mode: MEMORY, reason: \"unset-defaults-to-memory\", misconfigured: false };\n50:   }\n51: \n52:   const normalised = configured.trim().toLowerCase();\n53:   if (normalised === PERSISTENT) {\n54:     return { mode: PERSISTENT, reason: \"explicit-persistent\", misconfigured: false };\n55:   }\n56:   if (normalised === MEMORY) {\n57:     return { mode: MEMORY, reason: \"explicit-memory\", misconfigured: false };\n58:   }\n59: \n60:   // Deliberately not a throw: refusing to start is a worse failure than running\n61:   // safely and reporting it. But it is flagged, because a deployment that\n62:   // intended persistence and mistyped the value must not silently run\n63:   // ephemeral and appear to work.\n64:   return { mode: MEMORY, reason: \"unrecognised-defaults-to-memory\", misconfigured: true };\n65: }\n66: \n67: /**\n68:  * Refuse the only configuration that could durably materialize the current\n69:  * clinical projection. The experimental materializer is qualified for the\n70:  * in-memory browser runtime only; persistent clinical data remains blocked\n71:  * until the G-DATA decision approves its durable projection.\n72:  */\n73: export function assertMaterializerStoragePolicy(\n74:   policy: StoragePolicy,\n75:   materializerEnabled: boo"
+    },
+    {
+      "id": "claim-2e05a92731ff83b8",
+      "text": "Lines 22-44: memory archive or persistent IndexedDB construction.",
+      "label": "verified",
+      "critical": false,
+      "confidence": 0.5,
+      "sources": [
+        "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/shared/sync/pglite-bootstrap.ts"
+      ],
+      "contradicts": [
+        "claim-ac51857b8d96e3da"
+      ],
+      "evidence": "Static source support only; no runtime claim. /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/shared/sync/pglite-bootstrap.ts; retained excerpts: chunk-0005\nLOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n22: export async function openPGliteReplica(\n23:   policy: StoragePolicy,\n24:   storageKey: string,\n25:   fetchImpl: typeof fetch = globalThis.fetch.bind(globalThis),\n26: ): Promise<PGlite> {\n27:   const dataDir = pgliteDataDir(policy, storageKey);\n28:   if (dataDir) {\n29:     return PGlite.create({\n30:       dataDir,\n31:       initialMemory: PGLITE_REPLICA_INITIAL_MEMORY,\n32:       postgresqlconf: [...PGLITE_REPLICA_POSTGRESQL_CONF],\n33:     });\n34:   }\n35: \n36:   const response = await fetchImpl(BASE_ARCHIVE);\n37:   if (!response.ok) {\n38:     throw new Error(`PGlite base archive failed: ${response.status} ${response.statusText}`);\n39:   }\n40:   return PGlite.create({\n41:     loadDataDir: await response.blob(),\n42:     initialMemory: PGLITE_REPLICA_INITIAL_MEMORY,\n43:     postgresqlconf: [...PGLITE_REPLICA_POSTGRESQL_CONF],\n44:   });"
+    },
+    {
+      "id": "claim-b8e762bc9b378eec",
+      "text": "Lines 122-135 and 377-410: principal/session/authority revision namespace and offline-limited disabled materializer.",
+      "label": "verified",
+      "critical": false,
+      "confidence": 0.49,
+      "sources": [
+        "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/app/providers/graph-provider.tsx"
+      ],
+      "contradicts": [],
+      "evidence": "Static source support only; no runtime claim. /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/app/providers/graph-provider.tsx; retained excerpts: chunk-0006\nLOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n122: export function graphStorageKey(\n123:   session: VerifiedSession,\n124:   deploymentId = DEPLOYMENT_ID,\n125: ): string {\n126:   return [\n127:     \"aso\",\n128:     deploymentId,\n129:     `g${REPLICA_GENERATION}`,\n130:     session.principal,\n131:     session.practiceId,\n132:     session.identityId,\n133:     session.sessionId,\n134:     session.authorizationRevision,\n135:   ].map(encodeURIComponent).join(\":\");"
+    },
+    {
+      "id": "claim-ac51857b8d96e3da",
+      "text": "Lines 85-87: PGlite Sync log=full incompatibility and internal materializer RSS above cap; historical measurements not rerun.",
+      "label": "verified",
+      "critical": true,
+      "confidence": 0.5,
+      "sources": [
+        "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/versions.toml"
+      ],
+      "contradicts": [
+        "claim-2e05a92731ff83b8"
+      ],
+      "evidence": "Static source support only; no runtime claim. /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/versions.toml; retained excerpts: chunk-0007\nLOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n85: ra11a_sql_materializer = \"Blocked: @electric-sql/pglite-sync 0.6.9 with @electric-sql/pglite 0.5.8, @electric-sql/client 1.0.14, and @electric-sql/experimental 1.0.14 received HTTP 400 for unsupported log=full at the authorized FRF facade before materialization and has not proved crash-safe coordinated commits; adoption is prohibited. A future candidate must still pass the 512 MiB incremental RSS gate.\"\n86: ra11c_pem_persistence_control = \"Approved independently of materializer adoption: exact PEM core/react 4.0.3-ra11c.1.g071b9e5.sbb3dc7729aa7 add an optional scoped-runtime persistence switch used only by the memory-only browser qualification. The default remains enabled. Offline frozen install and the prior 158-test focused source passed; the current authority-freshness source passes its 11 focused tests, and ordered cold folding passes 22 transport tests plus effective delete-last and missing-update negative controls. TypeScript and lint pass. Current-source mounted update/delete/crash/refetch, restart, owner fence, checkpoint and graph parity passed all 11 behavioral checks and five cleanup checks; the mounted restart also disproved and reversed a proposed stale-plan generation guard. The aggregate suite remains Build-only because varying PGlite cases time out on this host. This pin does not approve the blocked RA11c PGlite materializer.\"\n87: ra11c_sql_materializer = \"Blocked from production adoption:"
+    },
+    {
+      "id": "claim-6016f9c4b4671679",
+      "text": "Lines 6-12 and 80-108: existing SQLite preference and blocked production adoption despite bounded native measurements.",
+      "label": "verified",
+      "critical": true,
+      "confidence": 0.5,
+      "sources": [
+        "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/docs/architecture/tauri-pglite-baseline.md"
+      ],
+      "contradicts": [
+        "claim-caf38ecf31c02af6"
+      ],
+      "evidence": "Static source support only; no runtime claim. /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/docs/architecture/tauri-pglite-baseline.md; retained excerpts: chunk-0008\nLOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n6: This record qualifies PGlite as the shared SQL baseline inside an actual Tauri\n7: webview. It does not select persistent clinical storage for every desktop\n8: deployment. [ADR-009](adr-009-authorized-replicas-and-updates.md) remains the\n9: decision: PGlite establishes browser/desktop parity while trusted host-owned\n10: SQLite remains the preferred Tauri production target after its materializer,\n11: transactions, migrations, serialization, and multi-window behavior pass the\n12: same acceptance contract."
+    },
+    {
+      "id": "claim-d769fbfa3a70992c",
+      "text": "Lines 53-118: tenant-scoped read/watch and state-plus-cursor atomicity.",
+      "label": "verified",
+      "critical": false,
+      "confidence": 0.49,
+      "sources": [
+        "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-ports/src/entity_store.rs"
+      ],
+      "contradicts": [],
+      "evidence": "Static source support only; no runtime claim. /Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-ports/src/entity_store.rs; retained excerpts: chunk-0009\nLOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n53: /// Read and watch domain entities by id within a tenant.\n54: ///\n55: /// The read side of the entity plane (`EntityService`): `get` returns the latest\n56: /// materialized `EntityChange` for an entity; `watch` streams subsequent changes.\n57: /// Tenant scoping is a required argument \u2014 an implementation MUST NOT return an entity\n58: /// belonging to a different tenant than the one requested.\n59: ///\n60: /// Adapter crates MUST instrument their implementations with\n61: /// `#[tracing::instrument(name = \"port::EntityStore::<method>\")]`.\n62: #[async_trait]\n63: pub trait EntityStore: Send + Sync + 'static {\n64:     /// Fetch the latest known change for an entity within a tenant.\n65:     /// Returns `Ok(None)` when the entity is unknown to this tenant.\n66:     async fn get_entity(\n67:         &self,\n68:         entity_id: EntityId,\n69:         tenant_id: TenantId,\n70:     ) -> Result<Option<EntityChange>, PortError>;\n71: \n72:     /// Stream subsequent changes for an entity within a tenant. The stream ends when the\n73:     /// subscription is dropped; each item is one `EntityChange`.\n74:     async fn watch_entity(\n75:         &self,\n76:         entity_id: EntityId,\n77:         tenant_id: TenantId,\n78:     ) -> Result<EntityChangeStream, PortError>;\n79: \n80:     /// Atomically apply one committed mutation and advance its durable cursor.\n81:     async fn apply_projection(\n82:         &self,\n83:         change: En"
+    },
+    {
+      "id": "claim-56ddf8a7cf3a34ec",
+      "text": "Lines 13-45: deployment CRDT checkpoint store wraps Surreal<Any>.",
+      "label": "verified",
+      "critical": false,
+      "confidence": 0.49,
+      "sources": [
+        "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-store-surreal/src/store.rs"
+      ],
+      "contradicts": [],
+      "evidence": "Static source support only; no runtime claim. /Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-store-surreal/src/store.rs; retained excerpts: chunk-0010\nLOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n13: /// SurrealDB-backed CRDT checkpoint store.\n14: ///\n15: /// One `SurrealCrdtStore` is wired per deployment in `frf-gateway`. The caller\n16: /// is responsible for calling `connect` + `use_ns` + `use_db` before passing\n17: /// the client to this adapter.\n18: ///\n19: /// Schema (auto-created on first write \u2014 no migration required):\n20: /// ```sql\n21: /// DEFINE TABLE crdt_snapshots SCHEMAFULL;\n22: /// DEFINE FIELD entity_id   ON crdt_snapshots TYPE string;\n23: /// DEFINE FIELD tenant_id   ON crdt_snapshots TYPE string;\n24: /// DEFINE FIELD encoded_hex ON crdt_snapshots TYPE string;\n25: /// DEFINE FIELD version     ON crdt_snapshots TYPE int;\n26: /// DEFINE INDEX idx_entity_tenant ON crdt_snapshots\n27: ///     COLUMNS entity_id, tenant_id UNIQUE;\n28: /// ```\n29: /// The `UNIQUE` index means `checkpoint` is an UPSERT on the `(entity_id,\n30: /// tenant_id)` pair \u2014 only one snapshot per entity is retained.\n31: #[derive(Clone, Debug)]\n32: pub struct SurrealCrdtStore {\n33:     db: Surreal<Any>,\n34: }\n35: \n36: impl SurrealCrdtStore {\n37:     /// Wrap an already-connected and namespace/database-selected `Surreal<Any>`.\n38:     #[must_use]\n39:     pub fn new(db: Surreal<Any>) -> Self {\n40:         Self { db }\n41:     }\n42: }\n43: \n44: #[async_trait]\n45: impl CrdtStore for SurrealCrdtStore {"
+    },
+    {
+      "id": "claim-60a5a07d64d7f45e",
+      "text": "Lines 31-59: connection/authentication/database selection for projection; no native PatientGPT integration proof.",
+      "label": "verified",
+      "critical": false,
+      "confidence": 0.49,
+      "sources": [
+        "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-projection-surreal/src/store.rs"
+      ],
+      "contradicts": [],
+      "evidence": "Static source support only; no runtime claim. /Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-projection-surreal/src/store.rs; retained excerpts: chunk-0011\nLOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n31: #[derive(Clone)]\n32: pub struct SurrealEntityProjection {\n33:     db: Surreal<Any>,\n34:     writer: Arc<Mutex<()>>,\n35:     watchers: Arc<RwLock<WatchSenders>>,\n36: }\n37: \n38: impl SurrealEntityProjection {\n39:     /// Connect and authenticate to a `SurrealDB` projection database.\n40:     ///\n41:     /// # Errors\n42:     ///\n43:     /// Returns an adapter error when connection, authentication, database selection,\n44:     /// or schema initialization fails.\n45:     pub async fn connect(\n46:         endpoint: &str,\n47:         username: &str,\n48:         password: &str,\n49:         namespace: &str,\n50:         database: &str,\n51:     ) -> Result<Self, SurrealProjectionError> {\n52:         let db = surrealdb::engine::any::connect(endpoint).await?;\n53:         db.signin(Root {\n54:             username: username.to_owned(),\n55:             password: password.to_owned(),\n56:         })\n57:         .await?;\n58:         db.use_ns(namespace).use_db(database).await?;\n59:         Self::from_connected(db).await"
+    },
+    {
+      "id": "claim-caf38ecf31c02af6",
+      "text": "Lines 9496-9499 resolve surrealdb 3.1.5, not required 3.3.0.",
+      "label": "verified",
+      "critical": true,
+      "confidence": 0.5,
+      "sources": [
+        "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/Cargo.lock"
+      ],
+      "contradicts": [
+        "claim-6016f9c4b4671679"
+      ],
+      "evidence": "Static source support only; no runtime claim. /Users/gqadonis/Projects/prometheus/flint-realtime-fabric/Cargo.lock; retained excerpts: chunk-0012\nLOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n9496: name = \"surrealdb\"\n9497: version = \"3.1.5\"\n9498: source = \"registry+https://github.com/rust-lang/crates.io-index\"\n9499: checksum = \"81ee3110fe3ab8172eb8c135c96ed2d57c7470cdf1ad732d176db95a92c9faab\""
+    },
+    {
+      "id": "claim-6b30a5f31bf410bd",
+      "text": "Lines 97-147 and 194-200 select Authorization or Cookie and reject competing credentials.",
+      "label": "verified",
+      "critical": false,
+      "confidence": 0.5,
+      "sources": [
+        "file:///Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core/src/auth/kratos.rs"
+      ],
+      "contradicts": [
+        "claim-416d20e8ee410e5d"
+      ],
+      "evidence": "Static source support only; no runtime claim. /Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core/src/auth/kratos.rs; retained excerpts: chunk-0013\nLOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n97: fn select_credential(\n98:     headers: &HeaderMap,\n99:     forward_cookies: bool,\n100:     session_cookie: &str,\n101: ) -> Result<KratosCredential, AuthError> {\n102:     let authorization_values: Vec<_> = headers.get_all(AUTHORIZATION).iter().collect();\n103:     let cookie_values: Vec<_> = headers.get_all(COOKIE).iter().collect();\n104:     if authorization_values.len() > 1 || cookie_values.len() > 1 {\n105:         return Err(AuthError::Unauthorized(\n106:             \"multiple Kratos credential headers are not allowed\".to_string(),\n107:         ));\n108:     }\n109: \n110:     let authorization = authorization_values.first().copied();\n111:     let session_cookie_value = if forward_cookies {\n112:         cookie_values\n113:             .first()\n114:             .copied()\n115:             .map(|header| extract_cookie(header, session_cookie))\n116:             .transpose()?\n117:             .flatten()\n118:     } else {\n119:         None\n120:     };\n121:     if authorization.is_some() && session_cookie_value.is_some() {\n122:         return Err(AuthError::Unauthorized(\n123:             \"competing Kratos credentials are not allowed\".to_string(),\n124:         ));\n125:     }\n126:     if let Some(value) = authorization {\n127:         if value.to_str().ok().is_none_or(|raw| raw.trim().is_empty()) {\n128:             return Err(AuthError::Unauthorized(\n129:                 \"Kratos authorization credential is blank\".to_stri"
+    },
+    {
+      "id": "claim-416d20e8ee410e5d",
+      "text": "Lines 69-121 forward Cookie or x-session-token to whoami and create User principal.",
+      "label": "verified",
+      "critical": false,
+      "confidence": 0.5,
+      "sources": [
+        "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/session.rs"
+      ],
+      "contradicts": [
+        "claim-6b30a5f31bf410bd"
+      ],
+      "evidence": "Static source support only; no runtime claim. /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/session.rs; retained excerpts: chunk-0014\nLOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n69:     async fn observe(\n70:         &self,\n71:         credential: &SessionCredential,\n72:     ) -> Result<Option<AuthenticatedIdentity>, SessionError> {\n73:         let (name, value) = match credential {\n74:             SessionCredential::Cookie(cookie) => (COOKIE, cookie.clone()),\n75:             SessionCredential::NativeToken(token) => {\n76:                 (HeaderName::from_static(\"x-session-token\"), token.clone())\n77:             }\n78:         };\n79:         let mut value = HeaderValue::from_str(&value).map_err(|_| SessionError::Unauthenticated)?;\n80:         value.set_sensitive(true);\n81:         let mut response = self\n82:             .client\n83:             .get(self.whoami.clone())\n84:             .header(\"accept\", \"application/json\")\n85:             .header(name, value)\n86:             .send()\n87:             .await\n88:             .map_err(|_| SessionError::Unavailable)?;\n89:         match response.status().as_u16() {\n90:             200 => {}\n91:             401 => return Ok(None),\n92:             403 => return Err(SessionError::ReauthenticationRequired),\n93:             _ => return Err(SessionError::Unavailable),\n94:         }\n95:         // Identity traits are untrusted and may be large; keep provider output\n96:         // bounded and deserialize only the authoritative session fields.\n97:         const MAX_SESSION_BYTES: usize = 64 * 1024;\n98:         let mut bytes = Vec::new();\n99:         wh"
+    },
+    {
+      "id": "claim-b0558458916f4b2d",
+      "text": "Lines 28-35 and 55-88 browser routes and cookie/redirect preservation.",
+      "label": "verified",
+      "critical": false,
+      "confidence": 0.49,
+      "sources": [
+        "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/kratos_proxy.rs"
+      ],
+      "contradicts": [],
+      "evidence": "Static source support only; no runtime claim. /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/kratos_proxy.rs; retained excerpts: chunk-0015\nLOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n28:     Ok(Router::new()\n29:         .route(\"/self-service/login/browser\", get(proxy))\n30:         .route(\"/self-service/login/flows\", get(proxy))\n31:         .route(\"/self-service/login\", post(proxy))\n32:         .route(\"/self-service/recovery/browser\", get(proxy))\n33:         .route(\"/self-service/recovery/flows\", get(proxy))\n34:         .route(\"/self-service/recovery\", post(proxy))\n35:         .with_state(state))"
+    },
+    {
+      "id": "claim-03042ff4fe8fee1b",
+      "text": "Lines 240-270 owner/coordinator scope and Flutter API without replica.",
+      "label": "verified",
+      "critical": false,
+      "confidence": 0.49,
+      "sources": [
+        "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/data-model.md"
+      ],
+      "contradicts": [],
+      "evidence": "Static source support only; no runtime claim. /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/data-model.md; retained excerpts: chunk-0016\nLOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n240: - Every `patient_gpt` table carries `practice_id` and is covered by the same\n241:   row-level security policy as the workbench tables (`current_app_practice_ids()`).\n242: - `surgeon_statements`, `question_answers`, `peer_review_call_outcomes` and\n243:   `surface_actions` with `action_name IN ('answer_question', 'send_staff_request')`\n244:   require the acting user to hold the matching role in the case's practice.\n245: - Conversations are owned by a user and readable by that user and the case's\n246:   coordinator; staff see a surgeon's chat only when the surgeon sends a\n247:   request from it.\n248: - Assistant-generated text is never stored in `aso.*` tables. The letter the\n249:   assistant drafts is written through the workbench's letter workflow, which\n250:   records `model_name` and `generated_at`.\n251: - Synthetic data only in this repository.\n252: \n253: ## 7. Replication and shells\n254: \n255: Following the workbench runtime architecture (Postgres \u2192 Electric \u2192 authorized\n256: shape facade \u2192 local replica \u2192 entity graph), the web and Tauri shells receive\n257: these shapes, scoped to the signed-in practice and user:\n258: \n259: | Shape | Filter |\n260: |---|---|\n261: | `conversations`, `messages`, `message_documents` | owner or case coordinator |\n262: | `runs` (status columns only), `surfaces` | by conversation |\n263: | `coach_questions`, `question_answers`, `surgeon_statements`, `case_conflicts` | by cas"
+    },
+    {
+      "id": "claim-d0856e560d85ceaa",
+      "text": "Lines 11-22 application pins unselected; preserve clinical source and local-only tests.",
+      "label": "verified",
+      "critical": false,
+      "confidence": 0.5,
+      "sources": [
+        "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/versions.toml"
+      ],
+      "contradicts": [
+        "claim-206e9a70ed615814"
+      ],
+      "evidence": "Static source support only; no runtime claim. /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/versions.toml; retained excerpts: chunk-0017\nLOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n11: # Application dependencies remain unselected. Verify official versions and\n12: # compatibility before deliberately adding pins; do not copy source examples.\n13: \n14: [decisions]\n15: product = \"PatientGPT: implement the full UI and workflows referenced by docs/design.\"\n16: surfaces = \"React web, Tauri desktop, and Flutter mobile with a shared shell-independent Rust core and typed host adapters.\"\n17: runtime = \"UAR owns agent execution and tool governance; use A2UI/AG-UI ContentBlock contracts.\"\n18: state = \"Entity graph owns durable entities and freshness; Zustand is transient UI state; Flutter uses Riverpod. No query cache.\"\n19: clinical_source = \"Reuse ASO clinical records and authorized workbench commands; the proposed PatientGPT schema adds conversation and workflow data without duplicating clinical truth.\"\n20: design = \"Preserve docs/design branding, Flat 2.0 layout, light/dark themes, and existing semantic status colors.\"\n21: teams = \"Agent teams by default. Project team definitions and installation are deferred.\"\n22: verification = \"Local integration testing only; CI may build, lint, typecheck, format, and package.\""
+    },
+    {
+      "id": "claim-883e24ec8d449007",
+      "text": "Lines 4-21 and 66-86 target SSR, not know-me; no dispatch performed.",
+      "label": "verified",
+      "critical": false,
+      "confidence": 0.49,
+      "sources": [
+        "file:///Users/gqadonis/Projects/prometheus/flint-gate/.github/workflows/deploy-gateway.yml"
+      ],
+      "contradicts": [],
+      "evidence": "Static source support only; no runtime claim. /Users/gqadonis/Projects/prometheus/flint-gate/.github/workflows/deploy-gateway.yml; retained excerpts: chunk-0018\nLOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n4:   push:\n5:     branches: [main]\n6:     paths:\n7:       - \"k8s/**\"\n8:       - \"Dockerfile\"\n9:       - \"crates/**\"\n10:       - \".github/workflows/deploy-gateway.yml\"\n11:   workflow_dispatch:\n12:     inputs:\n13:       force_redeploy:\n14:         description: \"Force redeploy even without file changes\"\n15:         required: false\n16:         default: \"false\"\n17: \n18: env:\n19:   IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/flint-gate\n20:   K8S_NAMESPACE: flint-gate\n21:   CONTEXT: ssr"
+    },
+    {
+      "id": "claim-206e9a70ed615814",
+      "text": "Lines 27-28 and 68-101 run tests in CI, prohibited for PatientGPT.",
+      "label": "verified",
+      "critical": false,
+      "confidence": 0.5,
+      "sources": [
+        "file:///Users/gqadonis/Projects/prometheus/flint-forge/.github/workflows/ci.yml"
+      ],
+      "contradicts": [
+        "claim-d0856e560d85ceaa"
+      ],
+      "evidence": "Static source support only; no runtime claim. /Users/gqadonis/Projects/prometheus/flint-forge/.github/workflows/ci.yml; retained excerpts: chunk-0019\nLOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n27:       - name: test\n28:         run: cargo test --workspace"
+    },
+    {
+      "id": "claim-5a4a09b232cacf33",
+      "text": "Lines 10-16,46-59,88-95 path-filter docs and separate website build/deploy.",
+      "label": "verified",
+      "critical": false,
+      "confidence": 0.49,
+      "sources": [
+        "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/.github/workflows/docs-pages.yml"
+      ],
+      "contradicts": [],
+      "evidence": "Static source support only; no runtime claim. /Users/gqadonis/Projects/prometheus/flint-realtime-fabric/.github/workflows/docs-pages.yml; retained excerpts: chunk-0020\nLOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n10:     paths:\n11:       - \"website/**\"\n12:       - \"docs/**\"\n13:       - \"README.md\"\n14:       - \"website/package-lock.json\"\n15:       - \".github/workflows/docs-pages.yml\"\n16:   push:\n46:       - name: Install the locked dependencies\n47:         run: npm ci\n48:         working-directory: website\n49: \n50:       # NOTE: this builds and inspects the documentation site. It does not run\n51:       # tests \u2014 this project's policy is local integration testing only, and CI\n52:       # runs build, lint, typecheck, format and packaging gates exclusively.\n53:       #\n54:       # `npm run build` runs the sanitizer first (it rejects machine-local\n55:       # paths, secrets and raw wiki content), then `docusaurus build`, which\n56:       # fails on a broken link because onBrokenLinks is \"throw\".\n57:       - name: Build the production site\n58:         run: npm run build\n59:         working-directory: website\n88:       name: github-pages\n89:       url: ${{ steps.deployment.outputs.page_url }}\n90:     permissions:\n91:       pages: write\n92:       id-token: write\n93:     steps:\n94:       - name: Deploy the Pages artifact\n95:         id: deployment"
+    },
+    {
+      "id": "claim-8af67c24cd406130",
+      "text": "Recorded explicit-context kubectl observations: Gateway 1.9.1, Envoy 1.39.1, Flint routes and ready deployments; sole listed SecurityPolicy basicAuth only. No runtime authentication proof.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.49,
+      "sources": [
+        "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.prometheus/team-research/storage-identity.md"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-dd4f806d9b57bc09",
+      "text": "Context7 official source: loads files into memory; flushes changed files, relaxed durability asynchronously.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.5,
+      "sources": [
+        "https://github.com/electric-sql/pglite/blob/main/docs/docs/filesystems.md"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Web page not refetched; only explicitly labeled summary retained."
+    },
+    {
+      "id": "claim-6f5f7b98c95d4b99",
+      "text": "Context7 official worker API example with leader change notifications.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.5,
+      "sources": [
+        "https://github.com/electric-sql/pglite/blob/main/packages/pglite/examples/worker.html"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Web page not refetched; only explicitly labeled summary retained."
+    },
+    {
+      "id": "claim-4e179092c5026cb6",
+      "text": "Context7 official source distinguishes memory and persistent file engines.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.5,
+      "sources": [
+        "https://github.com/surrealdb/docs.surrealdb.com/blob/main/src/content/build/embedding/by-language/rust.mdx"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Web page not refetched; only explicitly labeled summary retained."
+    },
+    {
+      "id": "claim-6803b29c2b91c642",
+      "text": "Context7 returns kv-surrealkv example; version-specific 3.3.0 API not yet compiled or verified.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.5,
+      "sources": [
+        "https://github.com/surrealdb/docs.surrealdb.com/blob/main/src/content/reference/rust/methods/new.mdx"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Web page not refetched; only explicitly labeled summary retained."
+    },
+    {
+      "id": "claim-1396c3e08357c4f1",
+      "text": "Official release page opened successfully; v3.3.0 exists, released September 28.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.5,
+      "sources": [
+        "https://github.com/surrealdb/surrealdb/releases/tag/v3.3.0"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Web page not refetched; only explicitly labeled summary retained."
+    },
+    {
+      "id": "claim-163fa11b9e05d2ec",
+      "text": "Web returned URL is not accessible via this tool. No exact-version API claim derived.",
+      "label": "blocked",
+      "critical": false,
+      "confidence": 0.57,
+      "sources": [
+        "https://docs.rs/surrealdb/3.3.0/surrealdb/engine/local/index.html"
+      ],
+      "contradicts": [],
+      "evidence": "Recorded retrieval failed. Web returned URL is not accessible via this tool. No exact-version API claim derived."
+    },
+    {
+      "id": "claim-8edc8b01d28547b1",
+      "text": "Context7 official docs validate session cookies and native tokens at whoami.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.5,
+      "sources": [
+        "https://github.com/ory/docs/blob/master/docs/kratos/session-management/01_overview.mdx"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Web page not refetched; only explicitly labeled summary retained."
+    },
+    {
+      "id": "claim-8daf22e433969499",
+      "text": "Context7 official docs show cookie-session validation through Kratos whoami.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.5,
+      "sources": [
+        "https://github.com/ory/docs/blob/master/docs/kratos/guides/zero-trust-iap-proxy-identity-access-proxy.mdx"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Web page not refetched; only explicitly labeled summary retained."
+    },
+    {
+      "id": "claim-07864c525b809c33",
+      "text": "Context7 official docs configure SecurityPolicy HTTP authorization and headersToBackend.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.49,
+      "sources": [
+        "https://gateway.envoyproxy.io/docs/tasks/security/ext-auth"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Web page not refetched; only explicitly labeled summary retained."
+    },
+    {
+      "id": "claim-f802cd0655e73d7c",
+      "text": "Context7 official API documents limited default headers for HTTP external auth; cookie must be deliberately forwarded.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.49,
+      "sources": [
+        "https://gateway.envoyproxy.io/docs/api/extension_types"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Web page not refetched; only explicitly labeled summary retained."
+    },
+    {
+      "id": "claim-a3eeef535be1fd6f",
+      "text": "Canonical JSON, exact SkillRefs, private bindings, immutable package closure and effective receipts; document conformance explicitly separate from runtime.",
+      "label": "verified",
+      "critical": true,
+      "confidence": 0.57,
+      "sources": [
+        "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/agents/collaboration/v0.1.0-draft.2/README.md"
+      ],
+      "contradicts": [
+        "claim-f517845306ab6d26"
+      ],
+      "evidence": "Static source support only; no runtime claim. /Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/agents/collaboration/v0.1.0-draft.2/README.md; retained excerpts: chunk-0035, chunk-0036\nLOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n1: # UAR Collaboration Document Profile 0.1.0-draft.2\n2: \n3: Status: **contract checkpoint; runtime conformance is not claimed.** Normative owner: Universal Agent Runtime (UAR). Profile identifier: `urn:prometheus:uar:collaboration:0.1.0-draft.2`. This project-owned identifier is not an external standards registration.\n4: \n5: MUST and MUST NOT are normative. A schema-valid value proves document shape only. Activation additionally requires immutable dependency closure, supported required semantics, a current private binding, current policy, and current private authority. The draft.1 tree remains an immutable predecessor.\n6: \n7: ## Status and Conformance\n8: \n9: This checkpoint defines document-profile conformance for AgentDefinition, TeamDefinition, WorkflowDefinition, PackageManifest, private DeploymentBinding, private RepresentationGrant, ConversionReport, EffectiveBindingReceipt, and DeploymentBindingTemplate. It does not establish runtime conformance, durable team execution, or C17 human representation behavior.\n10: \n11: The schema family is rooted at [schemas/collaboration-document.schema.json](schemas/collaboration-document.schema.json). Valid examples and intentionally invalid fixtures are documentation evidence only. A future runtime claim requires the completed production-path integration gate described by the owning OpenSpec change.\n12: \n13: ## Version Domains\n14: \n15: These versions are independent:\n"
+    },
+    {
+      "id": "claim-6d772abe8e9625fd",
+      "text": "Run/owner/principal, policy/catalog/host revisions and argument digest bound into prepared invocation.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.06,
+      "sources": [
+        "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/runtime/tool_admission/mod.rs"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-65d71a3ed682255b",
+      "text": "RAG requirement passes through unsupported-field diagnostics; required fields refused; narrow-team context/child limitations explicit.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.06,
+      "sources": [
+        "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/compiler/collaboration/runtime_semantics.rs"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-f517845306ab6d26",
+      "text": "Distinguishes authored selection from per-attempt selected artifacts; nested team/context limitations; external crash exclusion unavailable.",
+      "label": "verified",
+      "critical": true,
+      "confidence": 0.5,
+      "sources": [
+        "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/agents/collaboration/team-execution-profile-migration.md"
+      ],
+      "contradicts": [
+        "claim-a3eeef535be1fd6f"
+      ],
+      "evidence": "Static source support only; no runtime claim. /Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/agents/collaboration/team-execution-profile-migration.md; retained excerpts: chunk-0040, chunk-0041, chunk-0042, chunk-0043\nLOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n11: The ordinary semantics resolver evaluates the five semantic requirement fields but not these legacy selection fields. The team receipt narrows KB/presentation selection to none and disables ambient memory. The selected-artifact path consumes **attempt** `contextArtifactIds`; it does not consume AgentDefinition `/context/artifacts` or binding `/contextGrants`. See [runtime_semantics.rs](../../../src/uar/compiler/collaboration/runtime_semantics.rs), [team policy](../../../src/uar/compiler/collaboration/team_execution/resolution.rs) and [typed context selection](../../../src/uar/compiler/collaboration/team_execution/context.rs). Baseline storage/schema acceptance is not execution support.\n12: \n13: ## Shared instructions and exact member skills\n14: \n15: TeamDefinition may now omit `/instructions` or provide the closed `{revision,digest,text}` object. Null, unknown fields, invalid revision, a mismatching exact UTF-8 text digest, or text exceeding 16,384 bytes refuse with the corresponding `/instructions` pointer. Existing definitions without guidance stay readable. No background migration rewrites their identities. Publish a new immutable team/package version to add or revise guidance; ordinary expected-revision binding rules still apply.\n16: \n17: The compiler retains all SkillRef fields in `uar.collaboration/skill-refs` and the canonical definition extension; the preferred-ID list is only a compatibility inde"
+    },
+    {
+      "id": "claim-b94213b5422185d4",
+      "text": "agui_spec and uar.agui/1; events, custom extensions, replay and deprecated dialect boundaries.",
+      "label": "verified",
+      "critical": true,
+      "confidence": 0.54,
+      "sources": [
+        "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/protocols/ag-ui-profile.md"
+      ],
+      "contradicts": [],
+      "evidence": "Static source support only; no runtime claim. /Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/protocols/ag-ui-profile.md; retained excerpts: chunk-0044, chunk-0045\nLOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n1: # UAR AG-UI profile (`uar.agui/1`)\n2: \n3: Status: stable for UAR 1.0  \n4: Upstream vocabulary pin: AG-UI core events as documented 2026-07-11  \n5: Wire selection: `stream_mode: \"agui_spec\"`\n6: \n7: UAR implements the official AG-UI event model through a versioned compatibility profile. AG-UI itself remains pre-1.0, so the profile pins a dated vocabulary rather than claiming conformance to an upstream semantic version that does not exist. The authoritative upstream references are the [event vocabulary](https://docs.ag-ui.com/concepts/events), [architecture](https://docs.ag-ui.com/concepts/architecture), and [serialization/replay rules](https://docs.ag-ui.com/concepts/serialization).\n8: \n9: ## Transport and envelope\n10: \n11: Events are delivered as UTF-8 Server-Sent Events. The SSE `event:` value and JSON `type` discriminator are the same official upper-case event type. Every UAR profile event also carries:\n12: \n13: - `profile: \"uar.agui/1\"`\n14: - `eventId`: stable logical event identifier\n15: - `sequence`: zero-based monotonic run sequence\n16: - `threadId` and `runId` when the event belongs to a run\n17: - `timestamp`: Unix milliseconds when available\n18: \n19: The SSE `id:` is the replay cursor. Clients reconnect with `Last-Event-ID`; replayed logical events retain their original `eventId` and `sequence`.\n20: \n21: ## Supported standard events\n22: \n23: | Category | Events | UAR contract |\n24: | --- | --- | ---"
+    },
+    {
+      "id": "claim-3ce5411eb82ac0a3",
+      "text": "Explicit agui_spec selection, synthesized text/reasoning/tool lifecycle events.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.06,
+      "sources": [
+        "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/server.rs"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-33bc892a5db1dd0c",
+      "text": "Exact version/profile/catalog literals and nine admitted component types; strict schema and executable-content rejection.",
+      "label": "unverified",
+      "critical": true,
+      "confidence": 0.5,
+      "sources": [
+        "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/frontend/src/platform/a2ui/protocol.ts"
+      ],
+      "contradicts": [
+        "claim-a7726e5131f5999a"
+      ],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-c90a940ae3d36f51",
+      "text": "Nine types, v0.9 compatibility/basic-catalog alias, rejects unapproved catalog; root required in each update.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.49,
+      "sources": [
+        "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/a2ui/protocol.rs"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-aa1a0ff8f58c286c",
+      "text": "Pure local projection with onAction callback; schema rendering is not action authority.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.11,
+      "sources": [
+        "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/frontend/src/features/a2ui/a2ui-surface-renderer.tsx"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-ac032f521f539c8a",
+      "text": "Resolve, schema validation, independent effects, session/tenant policy, approval, governed execution and immutable result.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.06,
+      "sources": [
+        "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/references/rust/tool-governance.md"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-899d1121f86a38d2",
+      "text": "Stable event/run identity, sequence, replay, explicit outcomes, unknown events and redaction.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.06,
+      "sources": [
+        "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/agui-event-contract/SKILL.md"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-dc5f0c7d0c7fa3f4",
+      "text": "UAR owns runtime, ContentBlock mirrors cross-shell data, bridge ownership is permanent.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.11,
+      "sources": [
+        "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/references/arch-standard.md"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-a7726e5131f5999a",
+      "text": "Custom aso.workbench/v1 catalog contains clinical display components absent from default UAR catalog; host controls excluded.",
+      "label": "unverified",
+      "critical": true,
+      "confidence": 0.5,
+      "sources": [
+        "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/a2ui-renderer.js"
+      ],
+      "contradicts": [
+        "claim-33bc892a5db1dd0c"
+      ],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-5fab885556ba1740",
+      "text": "CUSTOM a2ui and string RUN_FINISHED outcome/interrupt shapes are prototype contract, not automatically UAR profile.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.49,
+      "sources": [
+        "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/agui-stream.js"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-5a64f8c14d96ce21",
+      "text": "Five report sections; met/gap/void; source-backed assertions; distinct host-owned clinical command authority.",
+      "label": "verified",
+      "critical": true,
+      "confidence": 0.5,
+      "sources": [
+        "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.prometheus/project-contract.md"
+      ],
+      "contradicts": [
+        "claim-9173f2d0111b7f72"
+      ],
+      "evidence": "Static source support only; no runtime claim. /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.prometheus/project-contract.md; retained excerpts: chunk-0060\nLOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n65: Every agent report uses CASE, CRITERIA STATUS, CONFLICTS, BLOCKERS, NEXT MOVE.\n66: Ask one question at a time and show no approval odds. Criteria have three states:\n67: `met`, `gap` (documented shortfall to argue), and `void` (missing documentation\n68: to obtain). A filed source document can change a criterion. A surgeon's answer\n69: is an attributed statement, never manufactured chart evidence.\n70: \n71: The app owns the Policy, Governing section, Pathway, and Operative plan gate\n72: controls, signing, packet submission, and recorded call outcome. Agent-generated\n73: surfaces cannot render or invoke these as independent authority. In production,\n74: enforce clinical authority at gateway policy, application capability, and\n75: persistence boundaries independently. Neither administrators nor agents acting\n76: for surgeons acquire the surgeon's authority by association.\n77: \n78: Generated assertions carry source document, page, and date. Unsupported claims\n79: are excluded and shown as such (the prototype uses \u201cNot asserted in this\n80: letter\u201d). Source citations navigate to the applicable document. Keep PHI within\n81: the inherited practice boundary and permitted inference policy; no real patient\n82: data enters fixtures, logs, or commits."
+    },
+    {
+      "id": "claim-5ddbd0b83411c3c2",
+      "text": "Current upstream lifecycle, state, activity, subagent, custom and interrupt-aware events. Queried via Context7 /ag-ui-protocol/ag-ui and opened official page.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.5,
+      "sources": [
+        "https://docs.ag-ui.com/concepts/events"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Web page not refetched; only explicitly labeled summary retained."
+    },
+    {
+      "id": "claim-daada5931e721103",
+      "text": "Catalog defines shared component vocabulary with native client-owned implementations. Queried Context7 /a2ui-project/a2ui for v0.9.1 catalogs and opened official page.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.49,
+      "sources": [
+        "https://a2ui.org/concepts/catalogs/"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Web page not refetched; only explicitly labeled summary retained."
+    },
+    {
+      "id": "claim-35ab2316ac9ff2d8",
+      "text": "Spec, ready, bootstrap.",
+      "label": "verified",
+      "critical": false,
+      "confidence": 0.06,
+      "sources": [
+        "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.kbd-orchestrator/current-waypoint.json"
+      ],
+      "contradicts": [],
+      "evidence": "Static source support only; no runtime claim. /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.kbd-orchestrator/current-waypoint.json; retained excerpts: chunk-0063\nLOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n1: {\n2:   \"phase\": \"spec\",\n3:   \"status\": \"ready\",\n4:   \"task\": null,\n5:   \"waypoint\": \"bootstrap\",\n6:   \"updated\": \"2026-10-04\",\n7:   \"note\": \"Authoritative for position. tier-guard.sh reads .status; final artifact commands require a completed or release boundary.\"\n8: }"
+    },
+    {
+      "id": "claim-93d4429cb6971aa1",
+      "text": "Synthetic reference for all three surfaces; script responsibilities; lines 3-49.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.49,
+      "sources": [
+        "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/README.md"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-52170b47901f7b73",
+      "text": "Seven workflow cases and nine navigation examples; lines 144-310.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.49,
+      "sources": [
+        "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat-storyboard.html"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-8aa245b9fb3244f7",
+      "text": "Three typefaces, dimensions, semantic colors and fill focus; lines 71-89 and 191-201.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.49,
+      "sources": [
+        "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/tokens.css"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-df23a98b52e5a4f9",
+      "text": "360px panel and 1100px breakpoint, overlay and sheet rules; lines 87-101.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.49,
+      "sources": [
+        "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/panel.css"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-6849b4a24274574f",
+      "text": "Safe area, pointer and drawer behavior; lines 113 and 198-231.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.49,
+      "sources": [
+        "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/shell.css"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-60bdbf29ca05c2a9",
+      "text": "Letter revision and appeal drafting explicitly absent; lines 271,418.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.49,
+      "sources": [
+        "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/flows.js"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-c44526a5c9e18ed3",
+      "text": "Gated window resolution, platform controls, header drag, fixed maximize label; lines 17-115. Source-only.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.49,
+      "sources": [
+        "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/src/shared/components/Titlebar.tsx"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-19f14b2c95ea6294",
+      "text": "Frontend dist and decorations false; lines 5-20.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.49,
+      "sources": [
+        "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/src-tauri/tauri.conf.json"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-ce29a319db270b44",
+      "text": "Window control permissions; lines 8-11.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.49,
+      "sources": [
+        "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/src-tauri/capabilities/default.json"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-bd2a681387f2ee53",
+      "text": "API proxy, recorded production target failure and configured browser targets; lines 15-40.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.49,
+      "sources": [
+        "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/vite.config.ts"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-c41e2bc26203e013",
+      "text": "Build and Tauri entrypoints; lines 7-11.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.49,
+      "sources": [
+        "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/package.json"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-f4bc3fd26a2eafd3",
+      "text": "Manually expressed projection header and constants; lines 1-3,54 onward; no generated parity proof.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.49,
+      "sources": [
+        "file:///Users/gqadonis/Projects/know-me/know-me-system/mobile/lib/core/theme/tokens.dart"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-8293f1bb63cff2dd",
+      "text": "Preserve prototype, selective skills, direction roles and full phase review.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.06,
+      "sources": [
+        "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/UI_UX_PROTOCOL.md"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-ff2c3f9d4e6b34b6",
+      "text": "Routing and phase-boundary tooling; source does not claim actual verification.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.23,
+      "sources": [
+        "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/prometheus-ui-ux/SKILL.md"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-f399641afa97a15d",
+      "text": "Context adaptation provenance and native engine exclusions; lines 11-19.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.5,
+      "sources": [
+        "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/prometheus-impeccable-core/SKILL.md"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-4868ecff71858378",
+      "text": "Existing brief wins; preinstalled engine requirement; bounded phase review.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.11,
+      "sources": [
+        "file:///Users/gqadonis/.codex/skills/impeccable/SKILL.md"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-68ddde4259c18257",
+      "text": "Focused retrieval, incumbent authority, no replacement direction by default.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.23,
+      "sources": [
+        "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/ui-ux-pro-max/SKILL.md"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-d369c757f397bf55",
+      "text": "MIT upstream commit dcc40ff5133ef78276117db0cc34e7b83cc8aeba; local packaged runtime description.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.5,
+      "sources": [
+        "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/ui-ux-pro-max/provenance.json"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-78dfffb0bc135fa4",
+      "text": "Cross-discipline orchestration and evidence over taste.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.11,
+      "sources": [
+        "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/better-interface/SKILL.md"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-99b0b7e7e7599a89",
+      "text": "Relevant render/bundle advice; SWR conflicts with PatientGPT line 83.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.49,
+      "sources": [
+        "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/vercel-react-best-practices/SKILL.md"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-65d14f5c0a4beef3",
+      "text": "Available-space composition, project authority and completed-phase review.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.06,
+      "sources": [
+        "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/flutter-build-responsive-layout/SKILL.md"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-68b7a16eee1a18c9",
+      "text": "Source checkout c9b3e2d4ca16322de83f9210cf1e97d2480ef004; adoption and architecture guidance.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.5,
+      "sources": [
+        "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/SKILL.md"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-407a0b3a03e30c94",
+      "text": "Desktop-only chrome and shared-bundle call gating; broad import assertion needs qualification.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.06,
+      "sources": [
+        "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/tauri-custom-titlebar/SKILL.md"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-9173f2d0111b7f72",
+      "text": "One generator source; two-family advice overridden by explicit PatientGPT fonts.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.5,
+      "sources": [
+        "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-design-tokens/SKILL.md"
+      ],
+      "contradicts": [
+        "claim-5a64f8c14d96ce21"
+      ],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-90ca71b005cf8aa2",
+      "text": "State/theme/form inventory and comparison; generic persistence/version defaults subordinate to contract.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.49,
+      "sources": [
+        "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/reference-ui-fidelity/SKILL.md"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-0c74862e364ae8c2",
+      "text": "Native inspection and goldens; per-widget timing overridden by full-phase boundary.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.06,
+      "sources": [
+        "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/flutter-golden-ui/SKILL.md"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-7be48d02bc00e606",
+      "text": "Public-content classification, branded site and verification scope.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.06,
+      "sources": [
+        "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/build-branded-docusaurus/SKILL.md"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Local excerpt retained for reviewer inspection."
+    },
+    {
+      "id": "claim-7da9935fc3cc7962",
+      "text": "Official control APIs and capability permissions; custom macOS chrome limitations; observed old tauri.windows snippet.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.24,
+      "sources": [
+        "https://v2.tauri.app/learn/window-customization/"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Web page not refetched; only explicitly labeled summary retained."
+    },
+    {
+      "id": "claim-b9e97d33e8c6ea18",
+      "text": "System insets, window information and accessibility settings.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.32,
+      "sources": [
+        "https://docs.flutter.dev/ui/adaptive-responsive/safearea-mediaquery"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Web page not refetched; only explicitly labeled summary retained."
+    },
+    {
+      "id": "claim-9563d81c094dc2f0",
+      "text": "Context7 official source: LayoutBuilder and constraints-based composition.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.5,
+      "sources": [
+        "https://github.com/flutter/website/blob/main/sites/docs/src/content/learn/pathway/tutorial/adaptive-layout.md"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Web page not refetched; only explicitly labeled summary retained."
+    },
+    {
+      "id": "claim-2586586f2d7baea5",
+      "text": "Production url/baseUrl and explicit trailingSlash; docs build artifact deployment.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.24,
+      "sources": [
+        "https://docusaurus.io/docs/deployment"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Web page not refetched; only explicitly labeled summary retained."
+    },
+    {
+      "id": "claim-dd9cbe2aa75b2a3d",
+      "text": "Context7 official source supports docs in isolated monorepo subfolder.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.49,
+      "sources": [
+        "https://docusaurus.io/docs/installation"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Web page not refetched; only explicitly labeled summary retained."
+    },
+    {
+      "id": "claim-1ecad15381dc1344",
+      "text": "Build/artifact/deploy separation, permissions, needs and environment; current action major versions.",
+      "label": "unverified",
+      "critical": false,
+      "confidence": 0.32,
+      "sources": [
+        "https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages"
+      ],
+      "contradicts": [],
+      "evidence": "Worker dossier claim retained without exact-claim re-verification in assembly. Web page not refetched; only explicitly labeled summary retained."
+    }
+  ],
+  "relations": [
+    {
+      "from": "claim-1c57d6583f3b8a10",
+      "to": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host/src/lib.rs",
+      "type": "cites"
+    },
+    {
+      "from": "claim-729d79f32af03242",
+      "to": "file:///Users/gqadonis/Projects/prometheus/flint-forge/crates/fdb-ports/src/lib.rs",
+      "type": "cites"
+    },
+    {
+      "from": "claim-72248522ac863322",
+      "to": "file:///Users/gqadonis/Projects/prometheus/flint-forge/crates/fdb-postgres/src/backend.rs",
+      "type": "cites"
+    },
+    {
+      "from": "claim-5c0eceaefa53f46f",
+      "to": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/shared/sync/storage-policy.ts",
+      "type": "cites"
+    },
+    {
+      "from": "claim-2e05a92731ff83b8",
+      "to": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/shared/sync/pglite-bootstrap.ts",
+      "type": "cites"
+    },
+    {
+      "from": "claim-b8e762bc9b378eec",
+      "to": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/app/providers/graph-provider.tsx",
+      "type": "cites"
+    },
+    {
+      "from": "claim-ac51857b8d96e3da",
+      "to": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/versions.toml",
+      "type": "cites"
+    },
+    {
+      "from": "claim-6016f9c4b4671679",
+      "to": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/docs/architecture/tauri-pglite-baseline.md",
+      "type": "cites"
+    },
+    {
+      "from": "claim-d769fbfa3a70992c",
+      "to": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-ports/src/entity_store.rs",
+      "type": "cites"
+    },
+    {
+      "from": "claim-56ddf8a7cf3a34ec",
+      "to": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-store-surreal/src/store.rs",
+      "type": "cites"
+    },
+    {
+      "from": "claim-60a5a07d64d7f45e",
+      "to": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-projection-surreal/src/store.rs",
+      "type": "cites"
+    },
+    {
+      "from": "claim-caf38ecf31c02af6",
+      "to": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/Cargo.lock",
+      "type": "cites"
+    },
+    {
+      "from": "claim-6b30a5f31bf410bd",
+      "to": "file:///Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core/src/auth/kratos.rs",
+      "type": "cites"
+    },
+    {
+      "from": "claim-416d20e8ee410e5d",
+      "to": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/session.rs",
+      "type": "cites"
+    },
+    {
+      "from": "claim-b0558458916f4b2d",
+      "to": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/kratos_proxy.rs",
+      "type": "cites"
+    },
+    {
+      "from": "claim-03042ff4fe8fee1b",
+      "to": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/data-model.md",
+      "type": "cites"
+    },
+    {
+      "from": "claim-d0856e560d85ceaa",
+      "to": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/versions.toml",
+      "type": "cites"
+    },
+    {
+      "from": "claim-883e24ec8d449007",
+      "to": "file:///Users/gqadonis/Projects/prometheus/flint-gate/.github/workflows/deploy-gateway.yml",
+      "type": "cites"
+    },
+    {
+      "from": "claim-206e9a70ed615814",
+      "to": "file:///Users/gqadonis/Projects/prometheus/flint-forge/.github/workflows/ci.yml",
+      "type": "cites"
+    },
+    {
+      "from": "claim-5a4a09b232cacf33",
+      "to": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/.github/workflows/docs-pages.yml",
+      "type": "cites"
+    },
+    {
+      "from": "claim-8af67c24cd406130",
+      "to": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.prometheus/team-research/storage-identity.md",
+      "type": "cites"
+    },
+    {
+      "from": "claim-dd4f806d9b57bc09",
+      "to": "https://github.com/electric-sql/pglite/blob/main/docs/docs/filesystems.md",
+      "type": "cites"
+    },
+    {
+      "from": "claim-6f5f7b98c95d4b99",
+      "to": "https://github.com/electric-sql/pglite/blob/main/packages/pglite/examples/worker.html",
+      "type": "cites"
+    },
+    {
+      "from": "claim-4e179092c5026cb6",
+      "to": "https://github.com/surrealdb/docs.surrealdb.com/blob/main/src/content/build/embedding/by-language/rust.mdx",
+      "type": "cites"
+    },
+    {
+      "from": "claim-6803b29c2b91c642",
+      "to": "https://github.com/surrealdb/docs.surrealdb.com/blob/main/src/content/reference/rust/methods/new.mdx",
+      "type": "cites"
+    },
+    {
+      "from": "claim-1396c3e08357c4f1",
+      "to": "https://github.com/surrealdb/surrealdb/releases/tag/v3.3.0",
+      "type": "cites"
+    },
+    {
+      "from": "claim-163fa11b9e05d2ec",
+      "to": "https://docs.rs/surrealdb/3.3.0/surrealdb/engine/local/index.html",
+      "type": "cites"
+    },
+    {
+      "from": "claim-8edc8b01d28547b1",
+      "to": "https://github.com/ory/docs/blob/master/docs/kratos/session-management/01_overview.mdx",
+      "type": "cites"
+    },
+    {
+      "from": "claim-8daf22e433969499",
+      "to": "https://github.com/ory/docs/blob/master/docs/kratos/guides/zero-trust-iap-proxy-identity-access-proxy.mdx",
+      "type": "cites"
+    },
+    {
+      "from": "claim-07864c525b809c33",
+      "to": "https://gateway.envoyproxy.io/docs/tasks/security/ext-auth",
+      "type": "cites"
+    },
+    {
+      "from": "claim-f802cd0655e73d7c",
+      "to": "https://gateway.envoyproxy.io/docs/api/extension_types",
+      "type": "cites"
+    },
+    {
+      "from": "claim-a3eeef535be1fd6f",
+      "to": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/agents/collaboration/v0.1.0-draft.2/README.md",
+      "type": "cites"
+    },
+    {
+      "from": "claim-6d772abe8e9625fd",
+      "to": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/runtime/tool_admission/mod.rs",
+      "type": "cites"
+    },
+    {
+      "from": "claim-65d71a3ed682255b",
+      "to": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/compiler/collaboration/runtime_semantics.rs",
+      "type": "cites"
+    },
+    {
+      "from": "claim-f517845306ab6d26",
+      "to": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/agents/collaboration/team-execution-profile-migration.md",
+      "type": "cites"
+    },
+    {
+      "from": "claim-b94213b5422185d4",
+      "to": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/protocols/ag-ui-profile.md",
+      "type": "cites"
+    },
+    {
+      "from": "claim-3ce5411eb82ac0a3",
+      "to": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/server.rs",
+      "type": "cites"
+    },
+    {
+      "from": "claim-33bc892a5db1dd0c",
+      "to": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/frontend/src/platform/a2ui/protocol.ts",
+      "type": "cites"
+    },
+    {
+      "from": "claim-c90a940ae3d36f51",
+      "to": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/a2ui/protocol.rs",
+      "type": "cites"
+    },
+    {
+      "from": "claim-aa1a0ff8f58c286c",
+      "to": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/frontend/src/features/a2ui/a2ui-surface-renderer.tsx",
+      "type": "cites"
+    },
+    {
+      "from": "claim-ac032f521f539c8a",
+      "to": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/references/rust/tool-governance.md",
+      "type": "cites"
+    },
+    {
+      "from": "claim-899d1121f86a38d2",
+      "to": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/agui-event-contract/SKILL.md",
+      "type": "cites"
+    },
+    {
+      "from": "claim-dc5f0c7d0c7fa3f4",
+      "to": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/references/arch-standard.md",
+      "type": "cites"
+    },
+    {
+      "from": "claim-a7726e5131f5999a",
+      "to": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/a2ui-renderer.js",
+      "type": "cites"
+    },
+    {
+      "from": "claim-5fab885556ba1740",
+      "to": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/agui-stream.js",
+      "type": "cites"
+    },
+    {
+      "from": "claim-5a64f8c14d96ce21",
+      "to": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.prometheus/project-contract.md",
+      "type": "cites"
+    },
+    {
+      "from": "claim-5ddbd0b83411c3c2",
+      "to": "https://docs.ag-ui.com/concepts/events",
+      "type": "cites"
+    },
+    {
+      "from": "claim-daada5931e721103",
+      "to": "https://a2ui.org/concepts/catalogs/",
+      "type": "cites"
+    },
+    {
+      "from": "claim-35ab2316ac9ff2d8",
+      "to": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.kbd-orchestrator/current-waypoint.json",
+      "type": "cites"
+    },
+    {
+      "from": "claim-93d4429cb6971aa1",
+      "to": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/README.md",
+      "type": "cites"
+    },
+    {
+      "from": "claim-52170b47901f7b73",
+      "to": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat-storyboard.html",
+      "type": "cites"
+    },
+    {
+      "from": "claim-8aa245b9fb3244f7",
+      "to": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/tokens.css",
+      "type": "cites"
+    },
+    {
+      "from": "claim-df23a98b52e5a4f9",
+      "to": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/panel.css",
+      "type": "cites"
+    },
+    {
+      "from": "claim-6849b4a24274574f",
+      "to": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/shell.css",
+      "type": "cites"
+    },
+    {
+      "from": "claim-60bdbf29ca05c2a9",
+      "to": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/flows.js",
+      "type": "cites"
+    },
+    {
+      "from": "claim-c44526a5c9e18ed3",
+      "to": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/src/shared/components/Titlebar.tsx",
+      "type": "cites"
+    },
+    {
+      "from": "claim-19f14b2c95ea6294",
+      "to": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/src-tauri/tauri.conf.json",
+      "type": "cites"
+    },
+    {
+      "from": "claim-ce29a319db270b44",
+      "to": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/src-tauri/capabilities/default.json",
+      "type": "cites"
+    },
+    {
+      "from": "claim-bd2a681387f2ee53",
+      "to": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/vite.config.ts",
+      "type": "cites"
+    },
+    {
+      "from": "claim-c41e2bc26203e013",
+      "to": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/package.json",
+      "type": "cites"
+    },
+    {
+      "from": "claim-f4bc3fd26a2eafd3",
+      "to": "file:///Users/gqadonis/Projects/know-me/know-me-system/mobile/lib/core/theme/tokens.dart",
+      "type": "cites"
+    },
+    {
+      "from": "claim-8293f1bb63cff2dd",
+      "to": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/UI_UX_PROTOCOL.md",
+      "type": "cites"
+    },
+    {
+      "from": "claim-ff2c3f9d4e6b34b6",
+      "to": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/prometheus-ui-ux/SKILL.md",
+      "type": "cites"
+    },
+    {
+      "from": "claim-f399641afa97a15d",
+      "to": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/prometheus-impeccable-core/SKILL.md",
+      "type": "cites"
+    },
+    {
+      "from": "claim-4868ecff71858378",
+      "to": "file:///Users/gqadonis/.codex/skills/impeccable/SKILL.md",
+      "type": "cites"
+    },
+    {
+      "from": "claim-68ddde4259c18257",
+      "to": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/ui-ux-pro-max/SKILL.md",
+      "type": "cites"
+    },
+    {
+      "from": "claim-d369c757f397bf55",
+      "to": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/ui-ux-pro-max/provenance.json",
+      "type": "cites"
+    },
+    {
+      "from": "claim-78dfffb0bc135fa4",
+      "to": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/better-interface/SKILL.md",
+      "type": "cites"
+    },
+    {
+      "from": "claim-99b0b7e7e7599a89",
+      "to": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/vercel-react-best-practices/SKILL.md",
+      "type": "cites"
+    },
+    {
+      "from": "claim-65d14f5c0a4beef3",
+      "to": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/flutter-build-responsive-layout/SKILL.md",
+      "type": "cites"
+    },
+    {
+      "from": "claim-68b7a16eee1a18c9",
+      "to": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/SKILL.md",
+      "type": "cites"
+    },
+    {
+      "from": "claim-407a0b3a03e30c94",
+      "to": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/tauri-custom-titlebar/SKILL.md",
+      "type": "cites"
+    },
+    {
+      "from": "claim-9173f2d0111b7f72",
+      "to": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-design-tokens/SKILL.md",
+      "type": "cites"
+    },
+    {
+      "from": "claim-90ca71b005cf8aa2",
+      "to": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/reference-ui-fidelity/SKILL.md",
+      "type": "cites"
+    },
+    {
+      "from": "claim-0c74862e364ae8c2",
+      "to": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/flutter-golden-ui/SKILL.md",
+      "type": "cites"
+    },
+    {
+      "from": "claim-7be48d02bc00e606",
+      "to": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/build-branded-docusaurus/SKILL.md",
+      "type": "cites"
+    },
+    {
+      "from": "claim-7da9935fc3cc7962",
+      "to": "https://v2.tauri.app/learn/window-customization/",
+      "type": "cites"
+    },
+    {
+      "from": "claim-b9e97d33e8c6ea18",
+      "to": "https://docs.flutter.dev/ui/adaptive-responsive/safearea-mediaquery",
+      "type": "cites"
+    },
+    {
+      "from": "claim-9563d81c094dc2f0",
+      "to": "https://github.com/flutter/website/blob/main/sites/docs/src/content/learn/pathway/tutorial/adaptive-layout.md",
+      "type": "cites"
+    },
+    {
+      "from": "claim-2586586f2d7baea5",
+      "to": "https://docusaurus.io/docs/deployment",
+      "type": "cites"
+    },
+    {
+      "from": "claim-dd9cbe2aa75b2a3d",
+      "to": "https://docusaurus.io/docs/installation",
+      "type": "cites"
+    },
+    {
+      "from": "claim-1ecad15381dc1344",
+      "to": "https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages",
+      "type": "cites"
+    },
+    {
+      "from": "claim-6016f9c4b4671679",
+      "to": "claim-caf38ecf31c02af6",
+      "type": "contradicts"
+    },
+    {
+      "from": "claim-2e05a92731ff83b8",
+      "to": "claim-ac51857b8d96e3da",
+      "type": "contradicts"
+    },
+    {
+      "from": "claim-6b30a5f31bf410bd",
+      "to": "claim-416d20e8ee410e5d",
+      "type": "contradicts"
+    },
+    {
+      "from": "claim-33bc892a5db1dd0c",
+      "to": "claim-a7726e5131f5999a",
+      "type": "contradicts"
+    },
+    {
+      "from": "claim-a3eeef535be1fd6f",
+      "to": "claim-f517845306ab6d26",
+      "type": "contradicts"
+    },
+    {
+      "from": "claim-5a64f8c14d96ce21",
+      "to": "claim-9173f2d0111b7f72",
+      "type": "contradicts"
+    },
+    {
+      "from": "claim-206e9a70ed615814",
+      "to": "claim-d0856e560d85ceaa",
+      "type": "contradicts"
+    }
+  ]
+}

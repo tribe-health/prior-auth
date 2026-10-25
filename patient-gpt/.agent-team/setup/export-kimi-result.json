@@ -1,0 +1,58 @@
+{
+  "directory": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agent-team/exports/kimi",
+  "files": [
+    ".kimi-code/agents/product-manager.md",
+    "plugins/patientgpt-delivery/agents/product-manager.md",
+    ".kimi-code/agents/team-lead.md",
+    "plugins/patientgpt-delivery/agents/team-lead.md",
+    ".kimi-code/agents/creative-director.md",
+    "plugins/patientgpt-delivery/agents/creative-director.md",
+    ".kimi-code/agents/design-expert.md",
+    "plugins/patientgpt-delivery/agents/design-expert.md",
+    ".kimi-code/agents/react-engineer.md",
+    "plugins/patientgpt-delivery/agents/react-engineer.md",
+    ".kimi-code/agents/tauri-engineer.md",
+    "plugins/patientgpt-delivery/agents/tauri-engineer.md",
+    ".kimi-code/agents/flutter-engineer.md",
+    "plugins/patientgpt-delivery/agents/flutter-engineer.md",
+    ".kimi-code/agents/rust-domain-engineer.md",
+    "plugins/patientgpt-delivery/agents/rust-domain-engineer.md",
+    ".kimi-code/agents/storage-engineer.md",
+    "plugins/patientgpt-delivery/agents/storage-engineer.md",
+    ".kimi-code/agents/flint-data-engineer.md",
+    "plugins/patientgpt-delivery/agents/flint-data-engineer.md",
+    ".kimi-code/agents/identity-security-engineer.md",
+    "plugins/patientgpt-delivery/agents/identity-security-engineer.md",
+    ".kimi-code/agents/uar-agent-expert.md",
+    "plugins/patientgpt-delivery/agents/uar-agent-expert.md",
+    ".kimi-code/agents/platform-release-engineer.md",
+    "plugins/patientgpt-delivery/agents/platform-release-engineer.md",
+    ".kimi-code/agents/documentation-engineer.md",
+    "plugins/patientgpt-delivery/agents/documentation-engineer.md",
+    ".kimi-code/agents/phase-verifier.md",
+    "plugins/patientgpt-delivery/agents/phase-verifier.md",
+    ".kimi-code/agents/artifact-critic.md",
+    "plugins/patientgpt-delivery/agents/artifact-critic.md",
+    ".kimi-code/agents/ui-critic.md",
+    "plugins/patientgpt-delivery/agents/ui-critic.md",
+    "plugins/patientgpt-delivery/kimi.plugin.json",
+    "marketplace.json",
+    "export-receipt.json",
+    "team-export.json"
+  ],
+  "verification": {
+    "level": "source-verified",
+    "source": "https://github.com/MoonshotAI/kimi-code/blob/main/docs/en/customization/agents.md",
+    "version": "main documentation inspected 2026-09-24",
+    "live": "unverified"
+  },
+  "diagnostics": [
+    "Source-verified serialization only; installed native validation and live execution are unverified.",
+    "Only explicit model IDs are translated. Resolve tier, skill, capability and price policies with agent-team-models before native invocation.",
+    "Role overrides are preserved without native schema certification. Skill IDs refer to separately installed skills; prompt mentions do not install or authorize them."
+  ],
+  "instructions": [
+    "Review staged artifacts before installation. Export grants no execution or registration authority.",
+    "Choose project .kimi-code/agents or the staged Kimi v2 marketplace/plugin. Literal ${base_prompt} in supplied prompts remains unchanged."
+  ]
+}

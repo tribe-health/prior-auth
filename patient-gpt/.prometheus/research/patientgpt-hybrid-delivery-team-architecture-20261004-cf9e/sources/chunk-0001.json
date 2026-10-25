@@ -1,0 +1,10 @@
+{
+  "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host/src/lib.rs",
+  "chunk_id": "chunk-0001",
+  "text": "LOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n36: /// The single capability surface every shell consumes.\n37: ///\n38: /// Shells wire adapters into the ports; they never reach past this struct into\n39: /// a repository or a provider directly.\n40: #[derive(Clone)]\n41: pub struct AppServices {\n42:     pub cases: Arc<dyn ports::CaseRepository>,\n43:     pub evidence: Arc<dyn ports::EvidenceRepository>,\n44:     pub criteria: Arc<dyn ports::CriteriaRepository>,\n45:     pub letters: Arc<dyn ports::LetterRepository>,\n46:     pub authority: Arc<dyn ports::AuthorityPort>,\n47:     pub clock: Arc<dyn ports::Clock>,\n48:     pub sessions: Arc<dyn session::SessionPort>,",
+  "content_type": "local-source-excerpt",
+  "source_id": "src-001",
+  "retrieval_status": "local-source-read",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 229
+}

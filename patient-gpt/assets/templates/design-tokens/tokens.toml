@@ -1,0 +1,140 @@
+# ═══════════════════════════════════════════════════════════════════════════
+# THE PatientGPT design token source. Edit only this file, then run
+#
+#   node scripts/design-tokens/gen-design-tokens.mjs
+#     ├── web/src/styles/tokens.css            CSS custom properties, light + dark
+#     └── mobile/lib/core/theme/tokens.dart    Dart token classes
+#
+# Both outputs carry a GENERATED … DO NOT EDIT banner.
+#
+# Seeded verbatim from docs/design/patient-chat/tokens.css, which is the visual
+# authority. Names are the prototype's role names, unchanged, so the prototype
+# CSS ports without translation. Add no new chromatic family.
+# ═══════════════════════════════════════════════════════════════════════════
+
+[meta]
+name = "PatientGPT"
+source = "docs/design/patient-chat/tokens.css"
+
+[color.light]
+bg = "#FFFFFF"
+s1 = "#F7F6F4"
+s2 = "#F1EFEC"
+s3 = "#E7E4E0"
+s4 = "#DAD6D1"
+canvas = "#F1EFEC"
+paper = "#FFFFFF"
+scrim = "rgba(35, 31, 32, 0.55)"
+fg = "#231F20"
+fg-2 = "#55565A"
+field = "#1F4E79"
+field-fg = "#FFFFFF"
+field-ph = "#C8D6E2"
+field-hover = "#2D5F8E"
+field-dim = "#3F6A92"
+field-focus = "#231F20"
+primary-bg = "#A85417"
+primary-fg = "#FFFFFF"
+primary-hover = "#8F4712"
+accent = "#A85417"
+accent-vivid = "#DF7C35"
+focus-bg = "#1F4E79"
+focus-fg = "#FFFFFF"
+inv = "#231F20"
+inv-fg = "#FFFFFF"
+inv-fg-2 = "#D8D4D0"
+inv-hover = "#3D3839"
+inv-current = "#55565A"
+host = "#EDF3F7"
+host-row = "#FFFFFF"
+cool = "#1F4E79"
+cool-fg = "#FFFFFF"
+cool-surface = "#EDF3F7"
+warm-surface = "#FBEFE6"
+select = "#A7C5D6"
+mark-upper = "#6E6F71"
+ok = "#1E6F4E"
+ok-surface = "#E7F3EC"
+gap = "#A85417"
+gap-surface = "#FBEFE6"
+void = "#5B5F66"
+void-surface = "#EFEFF1"
+
+[color.dark]
+bg = "#14181C"
+s1 = "#1C2126"
+s2 = "#252B31"
+s3 = "#2E353C"
+s4 = "#3A424A"
+canvas = "#1C2126"
+paper = "#14181C"
+scrim = "rgba(0, 0, 0, 0.7)"
+fg = "#EDF0F2"
+fg-2 = "#B4BFC7"
+field = "#8FB9D0"
+field-fg = "#14181C"
+field-ph = "#2F3E49"
+field-hover = "#7AA6BE"
+field-dim = "#A9C9DA"
+field-focus = "#FFFFFF"
+primary-bg = "#F0955A"
+primary-fg = "#14181C"
+primary-hover = "#F7AC7B"
+accent = "#F0955A"
+accent-vivid = "#F0955A"
+focus-bg = "#EDF0F2"
+focus-fg = "#14181C"
+inv = "#EDF0F2"
+inv-fg = "#14181C"
+inv-fg-2 = "#3A444C"
+inv-hover = "#D5DADE"
+inv-current = "#C2C9CE"
+host = "#182430"
+host-row = "#14181C"
+cool = "#8FB9D0"
+cool-fg = "#14181C"
+cool-surface = "#182430"
+warm-surface = "#2E2119"
+select = "#2F4A5C"
+mark-upper = "#C7CDD2"
+ok = "#6FD1A0"
+ok-surface = "#152620"
+gap = "#F0955A"
+gap-surface = "#2E2119"
+void = "#A9B3BB"
+void-surface = "#232830"
+
+[font]
+display = "'Playfair Display', Georgia, 'Times New Roman', serif"
+body = "'Mulish', 'Nunito Sans', 'Segoe UI', system-ui, -apple-system, sans-serif"
+mono = "'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace"
+
+[size]
+greeting = "clamp(1.75rem, 1.2rem + 2vw, 2.4rem)"
+title = "clamp(1.5rem, 1.2rem + 1vw, 1.85rem)"
+body = "1rem"
+ui = "0.875rem"
+meta = "0.8125rem"
+mono = "0.75rem"
+
+[radius]
+r = "5px"
+r-lg = "8px"
+r-composer = "24px"
+r-bubble = "18px"
+
+[layout]
+sb-w = "268px"
+col = "48rem"
+# Hard-coded in panel.css grid-template-columns at >= 1100px.
+files-w = "360px"
+
+[motion]
+ease = "cubic-bezier(0.23, 1, 0.32, 1)"
+dur-enter = "200ms"
+dur-exit = "140ms"
+
+[breakpoint]
+# shell.css / panel.css media queries: drawer below phone, Files docked at wide.
+phone = "768px"
+wide = "1100px"

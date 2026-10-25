@@ -1,0 +1,12 @@
+{
+  "name": "PatientGPT · Advanced Spine & Orthopedics",
+  "short_name": "PatientGPT",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#1F4E79",
+  "icons": [
+    { "src": "brand/android-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "brand/android-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

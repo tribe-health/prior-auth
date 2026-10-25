@@ -1,0 +1,10 @@
+{
+  "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.kbd-orchestrator/current-waypoint.json",
+  "chunk_id": "chunk-0063",
+  "text": "LOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n1: {\n2:   \"phase\": \"spec\",\n3:   \"status\": \"ready\",\n4:   \"task\": null,\n5:   \"waypoint\": \"bootstrap\",\n6:   \"updated\": \"2026-10-04\",\n7:   \"note\": \"Authoritative for position. tier-guard.sh reads .status; final artifact commands require a completed or release boundary.\"\n8: }",
+  "content_type": "local-source-excerpt",
+  "source_id": "src-049",
+  "retrieval_status": "local-source-read",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 113
+}

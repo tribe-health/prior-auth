@@ -1,0 +1,148 @@
+/* ASO patient chat · case state indicator and the Files and evidence panel.
+   Same Flat 2.0 contract as the rest: fills only, no borders, rules or shadows.
+   The panel sits where the document viewer sits, on the right. On phones it
+   becomes a bottom sheet over a solid scrim. */
+
+/* ── case state: one block per stage of the state machine ─────────── */
+.case-state { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; min-width: 0; }
+.stage-track { display: inline-flex; gap: 2px; flex: none; }
+.stage-pip { width: 6px; height: 6px; border-radius: 1px; background: var(--s4); }
+.stage-pip.is-done { background: var(--fg); }
+.stage-pip.is-now { width: 12px; background: var(--accent); }
+.stage-label {
+  display: inline-flex; align-items: center; gap: 4px; color: var(--fg-2);
+  font-family: var(--font-mono); font-size: var(--fs-mono);
+}
+.stage-label .ico { width: 14px; height: 14px; }
+
+/* in the sidebar a case is two lines: its title and deadline, then its state */
+.sb-case { display: grid; gap: 4px; padding: 7px 10px; font-size: var(--fs-ui); }
+.sb-case-top { --od-gap: 8px; }
+/* on the focus fill every block takes the text color; width still marks the current stage */
+:is(a, button):focus-visible .stage-pip { background: currentColor; opacity: 0.4; }
+:is(a, button):focus-visible :is(.stage-pip.is-done, .stage-pip.is-now) { opacity: 1; }
+
+/* ── Files control in the top bar ─────────────────────────────────── */
+.files-btn {
+  --od-gap: 6px;
+  min-height: 40px; padding: 0 12px; border-radius: var(--r-lg);
+  background: var(--s2); font-size: var(--fs-ui); font-weight: 700;
+}
+.files-btn .ico { width: 18px; height: 18px; }
+.files-btn[aria-expanded="true"] { background: var(--fg); color: var(--bg); }
+.files-count { font-family: var(--font-mono); font-size: var(--fs-mono); font-weight: 500; }
+
+/* ── the panel ────────────────────────────────────────────────────── */
+.files { grid-column: 3; min-width: 0; height: 100%; background: var(--canvas); }
+.app[data-canvas="open"] .files,
+.app[data-canvas="open"] .files-scrim { display: none; }
+.files-head { --od-gap: 8px; min-height: 52px; padding: 8px 8px 8px 20px; }
+.files-title { font-size: var(--fs-body); }
+.files-meta { font-family: var(--font-mono); font-size: var(--fs-mono); color: var(--fg-2); }
+.files-body { display: grid; gap: 20px; align-content: start; padding: 4px 12px 24px; }
+
+.f-sec { display: grid; gap: 6px; }
+.f-sec-h {
+  padding: 0 8px; color: var(--fg-2);
+  font-family: var(--font-mono); font-size: var(--fs-mono); font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+.f-list { display: grid; gap: 2px; }
+.f-group { padding: 8px 8px 2px; font-size: var(--fs-meta); font-weight: 700; }
+.f-row {
+  --od-gap: 10px;
+  width: 100%; padding: 10px 12px; border-radius: var(--r);
+  background: var(--bg); text-align: left;
+}
+/* records only the surgeon can create use the host fill, as in the conversation */
+.f-row.is-host { background: var(--host); }
+.f-kind {
+  padding: 1px 7px; border-radius: 4px; background: var(--s3);
+  font-family: var(--font-mono); font-size: var(--fs-mono); white-space: nowrap;
+}
+.f-row.is-host .f-kind { background: var(--host-row); }
+.f-title { font-size: var(--fs-ui); font-weight: 700; overflow-wrap: anywhere; }
+.f-sub { font-size: var(--fs-meta); color: var(--fg-2); overflow-wrap: anywhere; }
+.f-cites { --od-gap: 6px; padding-top: 4px; }
+.f-empty { padding: 4px 8px; font-size: var(--fs-meta); color: var(--fg-2); }
+.f-row:focus-visible .f-kind { background: transparent; }
+
+/* the viewer's way back to the list, shown only while the panel is open beneath it */
+#canvas-back { display: none; }
+.app[data-files="open"] #canvas-back { display: inline-flex; }
+#canvas-back .ico { width: 16px; height: 16px; }
+.files-scrim { z-index: 55; }
+
+@media (hover: hover) {
+  .files-btn:hover { background: var(--s3); }
+  .files-btn[aria-expanded="true"]:hover { background: var(--fg-2); color: var(--bg); }
+  button.f-row:hover { background: var(--s3); }
+}
+@media (pointer: coarse) {
+  .files-btn { min-height: 44px; }
+  button.f-row { min-height: 48px; }
+}
+
+/* wide: a docked column; the conversation reflows beside it and the sidebar stays */
+@media (min-width: 1100px) {
+  .app[data-files="open"]:not([data-canvas="open"]) {
+    grid-template-columns: var(--sb-w) minmax(0, 1fr) 360px;
+  }
+}
+/* narrower: it overlays from the right */
+@media (max-width: 1099.98px) {
+  .files { position: fixed; inset: 0 0 0 auto; z-index: 54; width: min(100%, 360px); }
+}
+/* phone: a bottom sheet over the scrim */
+@media (max-width: 767.98px) {
+  .files {
+    inset: auto 0 0 0; z-index: 56;
+    width: 100%; height: auto; max-height: 85dvh;
+    padding-bottom: env(safe-area-inset-bottom);
+    border-radius: var(--r-lg) var(--r-lg) 0 0;
+  }
+  .files-head { padding-left: 16px; }
+  .files-btn-label { display: none; }
+  .files-btn { padding: 0 10px; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .files { animation: slide-in var(--dur-enter) var(--ease); }
+}
+@media (max-width: 767.98px) and (prefers-reduced-motion: no-preference) {
+  .files { animation-name: slide-up; }
+}
+@keyframes slide-in { from { opacity: 0; transform: translateX(32px); } }
+@keyframes slide-up { from { opacity: 0; transform: translateY(48px); } }
+
+/* ── suggested next prompts: an agent surface with no fill of its own ── */
+.surface:has(> .a-sugg) { background: transparent; }
+.a-sugg { --od-gap: 8px; }
+.a-sugg .chip { max-width: 100%; }
+
+/* ── talking points, each with its sources ────────────────────────── */
+.a-points { counter-reset: point; }
+.a-points > .a-item::before {
+  counter-increment: point; content: counter(point);
+  font-family: var(--font-mono); font-size: var(--fs-mono); color: var(--fg-2);
+}
+
+/* ── the case moved along the state machine ───────────────────────── */
+.delta-from { color: var(--fg-2); }
+.delta-to { font-weight: 700; }
+
+/* ── generated records in the viewer ──────────────────────────────── */
+.rec-list { display: grid; gap: 2px; }
+.rec-item { --od-gap: 12px; padding: 10px 12px; border-radius: var(--r); background: var(--s1); font-size: var(--fs-ui); }
+.rec-item > .ico { color: var(--ok); margin-top: 2px; }
+.rec-name { font-size: var(--fs-body); font-weight: 700; }
+.rec-what { color: var(--fg-2); }
+.paper .pk-item { background: var(--s1); }
+.paper .a-facts { padding: 2px 0; }
+.claims li > .a-cites { display: inline-flex; padding-top: 0; vertical-align: 1px; }
+
+@media (hover: hover) {
+  .a-sugg .chip:hover { background: var(--s3); }
+}
+
+.case-next { font-weight: 600; max-width: 62ch; }

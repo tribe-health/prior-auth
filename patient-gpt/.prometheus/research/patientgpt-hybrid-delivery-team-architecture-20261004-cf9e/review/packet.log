@@ -1,0 +1,5 @@
+[MODEL_ROUTING] phase=adv-review-packet class=small
+[packet] WARN: 1 field(s) exceeded the 40000-byte cap and were truncated:
+[packet]   - research_report: 39877 of 40707 bytes included
+[packet]   Recorded in packet.truncation so the judge can see it.
+[packet] wrote /Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.prometheus/research/patientgpt-hybrid-delivery-team-architecture-20261004-cf9e/review/packet.json

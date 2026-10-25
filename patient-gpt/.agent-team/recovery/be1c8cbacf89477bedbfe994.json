@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "files": [
+    {
+      "file": ".minimax/agents/product-manager/agent.md",
+      "before": null,
+      "afterSha256": "fbd16b4a1900a2c6ef283c58a068a3fa2c1bfc235a99b20a1f68b98f98a00b0d"
+    },
+    {
+      "file": ".minimax/agents/team-lead/agent.md",
+      "before": null,
+      "afterSha256": "3b3cd927139b8c8e847fe9f3e2cd50e4ca8f38b75d5feee2a112b2a275f68997"
+    },
+    {
+      "file": ".minimax/agents/creative-director/agent.md",
+      "before": null,
+      "afterSha256": "828e70a0ec0f0bbcce3e48a7a6d58ff1183a9044cf6e0b60c62ede565a9c56df"
+    },
+    {
+      "file": ".minimax/agents/design-expert/agent.md",
+      "before": null,
+      "afterSha256": "7861c508510b269e4e8f026cfa5325be6f365bd0911317bbe987508db4e4d597"
+    },
+    {
+      "file": ".minimax/agents/react-engineer/agent.md",
+      "before": null,
+      "afterSha256": "ddd87434b90f523b707817051c9b8f1578e93e4c3aacb049a3330c6f0d498bdf"
+    },
+    {
+      "file": ".minimax/agents/tauri-engineer/agent.md",
+      "before": null,
+      "afterSha256": "f6810adc7ff94c5e2f9ab6ed81f76b7710a36f790ad5cc9d65f86172afa4c8eb"
+    },
+    {
+      "file": ".minimax/agents/flutter-engineer/agent.md",
+      "before": null,
+      "afterSha256": "dfb977eb24eb36341b54c95cd32b17af8bd3e5b54254e0d4ee2b9c1ac1d61eae"
+    },
+    {
+      "file": ".minimax/agents/rust-domain-engineer/agent.md",
+      "before": null,
+      "afterSha256": "065822b0a4d0713851255db3b9244fa037d3a9d1f0ba01144e746f6e43a6a309"
+    },
+    {
+      "file": ".minimax/agents/storage-engineer/agent.md",
+      "before": null,
+      "afterSha256": "abd30045cc9b281fe754e0a730f188674ecc5c9ddc7e4bf158cf3d5bb185d5f5"
+    },
+    {
+      "file": ".minimax/agents/flint-data-engineer/agent.md",
+      "before": null,
+      "afterSha256": "5a8c450f9dc2dd6fda36ebb0369c1eb148ede360426aae765f27aa657376538e"
+    },
+    {
+      "file": ".minimax/agents/identity-security-engineer/agent.md",
+      "before": null,
+      "afterSha256": "3ab76e7669a9af0b273372776a0764e1e94c56f68ae7bf649fc522cf70ec2970"
+    },
+    {
+      "file": ".minimax/agents/uar-agent-expert/agent.md",
+      "before": null,
+      "afterSha256": "b6976d4aaae4f8984aa56d4f7186e8f466691dd5dd60865fd28b69470c52dc7d"
+    },
+    {
+      "file": ".minimax/agents/platform-release-engineer/agent.md",
+      "before": null,
+      "afterSha256": "bbe31756b55185f4ef41ae5f34159537ea7c6fc857be09f1ab2828ca9563ac34"
+    },
+    {
+      "file": ".minimax/agents/documentation-engineer/agent.md",
+      "before": null,
+      "afterSha256": "85bfddcf941327b13fae1d4ec5b2b2c91f458f9f5746ae491ed17ea18b857b0a"
+    },
+    {
+      "file": ".minimax/agents/phase-verifier/agent.md",
+      "before": null,
+      "afterSha256": "d627d9282935860f3ea52cc0ffc7c1ecfdfb7e8c6cab0cf721cd65fb365478a4"
+    },
+    {
+      "file": ".minimax/agents/artifact-critic/agent.md",
+      "before": null,
+      "afterSha256": "9eb36a6b8bc3609a18541d3aaad1af20283f6690ef29b814169f37faa71de0bc"
+    },
+    {
+      "file": ".minimax/agents/ui-critic/agent.md",
+      "before": null,
+      "afterSha256": "ad2cfaa4da1094809187a374c98bee7f8d45bf1e5c55c310baa2daff8d79304e"
+    },
+    {
+      "file": ".agent-team/project-routing.json",
+      "before": "{\n  \"schemaVersion\": 1,\n  \"activeTeam\": \"patientgpt-delivery\",\n  \"manifest\": \".agent-team/patientgpt-delivery/team.json\",\n  \"target\": \"kimi\",\n  \"nativeDefinitions\": [\n    \".kimi-code/agents/product-manager.md\",\n    \".kimi-code/agents/team-lead.md\",\n    \".kimi-code/agents/creative-director.md\",\n    \".kimi-code/agents/design-expert.md\",\n    \".kimi-code/agents/react-engineer.md\",\n    \".kimi-code/agents/tauri-engineer.md\",\n    \".kimi-code/agents/flutter-engineer.md\",\n    \".kimi-code/agents/rust-domain-engineer.md\",\n    \".kimi-code/agents/storage-engineer.md\",\n    \".kimi-code/agents/flint-data-engineer.md\",\n    \".kimi-code/agents/identity-security-engineer.md\",\n    \".kimi-code/agents/uar-agent-expert.md\",\n    \".kimi-code/agents/platform-release-engineer.md\",\n    \".kimi-code/agents/documentation-engineer.md\",\n    \".kimi-code/agents/phase-verifier.md\",\n    \".kimi-code/agents/artifact-critic.md\",\n    \".kimi-code/agents/ui-critic.md\"\n  ],\n  \"instructionFiles\": [\n    \"AGENTS.md\",\n    \"CLAUDE.md\"\n  ],\n  \"delegation\": \"native-definitions\",\n  \"limitations\": [\n    \"Native definition presence is not live invocation evidence. The active harness owns permissions, models, concurrency and delegation.\",\n    \"When delegation is unavailable, use selected role instructions sequentially and report it; builder-context review is not independent.\",\n    \"Zed external ACP agents use their native configuration; Zed parallel threads are not an automatic delegation API.\"\n  ]\n}\n",
+      "afterSha256": "0eaca69b086d8f3ef208c08bad710e21be27c7fb0a851baaa703359e73f9d43c"
+    }
+  ]
+}

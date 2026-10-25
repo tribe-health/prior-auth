@@ -1,0 +1,10 @@
+{
+  "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/frontend/src/platform/a2ui/protocol.ts",
+  "chunk_id": "chunk-0050",
+  "text": "return { success: true, data: parsed.data };",
+  "content_type": "local-source-excerpt",
+  "source_id": "src-038",
+  "retrieval_status": "local-source-read",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 15
+}

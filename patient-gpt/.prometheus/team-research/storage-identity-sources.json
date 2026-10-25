@@ -1,0 +1,252 @@
+{
+  "sources": [
+    {
+      "id": "app-services",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host/src/lib.rs",
+      "title": "Shared host capability boundary",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 36-48: domain repositories, authority, clock and sessions; shells wire adapters.",
+      "confidence": "high"
+    },
+    {
+      "id": "forge-db-port",
+      "path": "/Users/gqadonis/Projects/prometheus/flint-forge/crates/fdb-ports/src/lib.rs",
+      "title": "Forge database abstraction",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 96-142: RLS-scoped connections, explicit mutation commit contract, SQL query port.",
+      "confidence": "high"
+    },
+    {
+      "id": "forge-postgres",
+      "path": "/Users/gqadonis/Projects/prometheus/flint-forge/crates/fdb-postgres/src/backend.rs",
+      "title": "Forge Postgres adapter",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 17-60: deadpool Postgres, transaction-local JWT and role context.",
+      "confidence": "high"
+    },
+    {
+      "id": "browser-storage",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/shared/sync/storage-policy.ts",
+      "title": "Browser storage policy",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 47-92: memory default, persistent IndexedDB opt-in, persistent experimental clinical materializer rejected.",
+      "confidence": "high"
+    },
+    {
+      "id": "browser-bootstrap",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/shared/sync/pglite-bootstrap.ts",
+      "title": "Browser PGlite opening",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 22-44: memory archive or persistent IndexedDB construction.",
+      "confidence": "high"
+    },
+    {
+      "id": "graph-scope",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/app/providers/graph-provider.tsx",
+      "title": "Identity-scoped entity graph",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 122-135 and 377-410: principal/session/authority revision namespace and offline-limited disabled materializer.",
+      "confidence": "high"
+    },
+    {
+      "id": "browser-adoption-block",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/versions.toml",
+      "title": "Authoritative parent adoption decisions",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 85-87: PGlite Sync log=full incompatibility and internal materializer RSS above cap; historical measurements not rerun.",
+      "confidence": "high"
+    },
+    {
+      "id": "desktop-baseline",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/docs/architecture/tauri-pglite-baseline.md",
+      "title": "Native PGlite baseline and limitations",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 6-12 and 80-108: existing SQLite preference and blocked production adoption despite bounded native measurements.",
+      "confidence": "high"
+    },
+    {
+      "id": "fabric-projection-port",
+      "path": "/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-ports/src/entity_store.rs",
+      "title": "Fabric entity projection contract",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 53-118: tenant-scoped read/watch and state-plus-cursor atomicity.",
+      "confidence": "high"
+    },
+    {
+      "id": "fabric-surreal-crdt",
+      "path": "/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-store-surreal/src/store.rs",
+      "title": "Fabric SurrealDB CRDT adapter",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 13-45: deployment CRDT checkpoint store wraps Surreal<Any>.",
+      "confidence": "high"
+    },
+    {
+      "id": "fabric-surreal-projection",
+      "path": "/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-projection-surreal/src/store.rs",
+      "title": "Fabric SurrealDB projection adapter",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 31-59: connection/authentication/database selection for projection; no native PatientGPT integration proof.",
+      "confidence": "high"
+    },
+    {
+      "id": "fabric-version",
+      "path": "/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/Cargo.lock",
+      "title": "Fabric actual SurrealDB resolution",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 9496-9499 resolve surrealdb 3.1.5, not required 3.3.0.",
+      "confidence": "high"
+    },
+    {
+      "id": "gate-kratos",
+      "path": "/Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core/src/auth/kratos.rs",
+      "title": "Gate credential selection",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 97-147 and 194-200 select Authorization or Cookie and reject competing credentials.",
+      "confidence": "high"
+    },
+    {
+      "id": "parent-kratos",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/session.rs",
+      "title": "ASO native/browser identity adapter",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 69-121 forward Cookie or x-session-token to whoami and create User principal.",
+      "confidence": "high"
+    },
+    {
+      "id": "kratos-browser-proxy",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/kratos_proxy.rs",
+      "title": "Browser login and recovery proxy",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 28-35 and 55-88 browser routes and cookie/redirect preservation.",
+      "confidence": "high"
+    },
+    {
+      "id": "patient-data-model",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/data-model.md",
+      "title": "PatientGPT proposed authority/replica model",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 240-270 owner/coordinator scope and Flutter API without replica.",
+      "confidence": "high"
+    },
+    {
+      "id": "patient-pins",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/versions.toml",
+      "title": "PatientGPT dependency and architecture authority",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 11-22 application pins unselected; preserve clinical source and local-only tests.",
+      "confidence": "high"
+    },
+    {
+      "id": "gate-deployment",
+      "path": "/Users/gqadonis/Projects/prometheus/flint-gate/.github/workflows/deploy-gateway.yml",
+      "title": "Existing Gate deployment workflow",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 4-21 and 66-86 target SSR, not know-me; no dispatch performed.",
+      "confidence": "high"
+    },
+    {
+      "id": "forge-ci",
+      "path": "/Users/gqadonis/Projects/prometheus/flint-forge/.github/workflows/ci.yml",
+      "title": "Existing Forge CI incompatibility",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 27-28 and 68-101 run tests in CI, prohibited for PatientGPT.",
+      "confidence": "high"
+    },
+    {
+      "id": "fabric-docs",
+      "path": "/Users/gqadonis/Projects/prometheus/flint-realtime-fabric/.github/workflows/docs-pages.yml",
+      "title": "Existing docs ownership example",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Lines 10-16,46-59,88-95 path-filter docs and separate website build/deploy.",
+      "confidence": "high"
+    },
+    {
+      "id": "cluster-inventory",
+      "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.prometheus/team-research/storage-identity.md",
+      "title": "Read-only know-me selected-field inventory",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Recorded explicit-context kubectl observations: Gateway 1.9.1, Envoy 1.39.1, Flint routes and ready deployments; sole listed SecurityPolicy basicAuth only. No runtime authentication proof.",
+      "confidence": "high"
+    },
+    {
+      "id": "pglite-fs",
+      "url": "https://github.com/electric-sql/pglite/blob/main/docs/docs/filesystems.md",
+      "title": "PGlite IndexedDB filesystem",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Context7 official source: loads files into memory; flushes changed files, relaxed durability asynchronously.",
+      "confidence": "high"
+    },
+    {
+      "id": "pglite-worker",
+      "url": "https://github.com/electric-sql/pglite/blob/main/packages/pglite/examples/worker.html",
+      "title": "PGlite worker example",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Context7 official worker API example with leader change notifications.",
+      "confidence": "high"
+    },
+    {
+      "id": "surreal-embed",
+      "url": "https://github.com/surrealdb/docs.surrealdb.com/blob/main/src/content/build/embedding/by-language/rust.mdx",
+      "title": "SurrealDB embedded Rust",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Context7 official source distinguishes memory and persistent file engines.",
+      "confidence": "high"
+    },
+    {
+      "id": "surreal-new",
+      "url": "https://github.com/surrealdb/docs.surrealdb.com/blob/main/src/content/reference/rust/methods/new.mdx",
+      "title": "SurrealDB local connection methods",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Context7 returns kv-surrealkv example; version-specific 3.3.0 API not yet compiled or verified.",
+      "confidence": "medium"
+    },
+    {
+      "id": "surreal-release",
+      "url": "https://github.com/surrealdb/surrealdb/releases/tag/v3.3.0",
+      "title": "SurrealDB 3.3.0 release",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Official release page opened successfully; v3.3.0 exists, released September 28.",
+      "confidence": "high"
+    },
+    {
+      "id": "surreal-docs-failed",
+      "url": "https://docs.rs/surrealdb/3.3.0/surrealdb/engine/local/index.html",
+      "title": "Version-specific local engine documentation access attempt",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Web returned URL is not accessible via this tool. No exact-version API claim derived.",
+      "confidence": "low"
+    },
+    {
+      "id": "kratos-sessions",
+      "url": "https://github.com/ory/docs/blob/master/docs/kratos/session-management/01_overview.mdx",
+      "title": "Kratos session management",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Context7 official docs validate session cookies and native tokens at whoami.",
+      "confidence": "high"
+    },
+    {
+      "id": "oathkeeper-kratos",
+      "url": "https://github.com/ory/docs/blob/master/docs/kratos/guides/zero-trust-iap-proxy-identity-access-proxy.mdx",
+      "title": "Kratos and Oathkeeper identity access proxy",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Context7 official docs show cookie-session validation through Kratos whoami.",
+      "confidence": "high"
+    },
+    {
+      "id": "envoy-ext-auth",
+      "url": "https://gateway.envoyproxy.io/docs/tasks/security/ext-auth",
+      "title": "Envoy Gateway external authorization",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Context7 official docs configure SecurityPolicy HTTP authorization and headersToBackend.",
+      "confidence": "high"
+    },
+    {
+      "id": "envoy-api",
+      "url": "https://gateway.envoyproxy.io/docs/api/extension_types",
+      "title": "Envoy Gateway extension API",
+      "observedAt": "2026-10-04",
+      "evidenceSummary": "Context7 official API documents limited default headers for HTTP external auth; cookie must be deliberately forwarded.",
+      "confidence": "high"
+    }
+  ]
+}

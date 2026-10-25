@@ -1,0 +1,61 @@
+{{- /*
+  go_router_config.dart.tera — GoRouter configuration with typed routes
+  Variables:
+    routes : list of { path, name, screen_class, path_params } route objects
+    root_redirect : path to redirect to from '/' (e.g. "/home")
+*/ -}}
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+// Import your screen widgets here
+{% for route in routes -%}
+import '../features/{{ route.name }}/presentation/{{ route.name }}_screen.dart';
+{% endfor %}
+
+part 'router.g.dart';
+
+// ─── Router provider ──────────────────────────────────────────────────────────
+
+@riverpod
+GoRouter router(RouterRef ref) {
+  // Watch auth state to handle redirects
+  // final authState = ref.watch(authStateProvider);
+
+  return GoRouter(
+    initialLocation: '{{ root_redirect }}',
+    debugLogDiagnostics: true,
+    routes: [
+      {% for route in routes -%}
+      GoRoute(
+        path: '{{ route.path }}',
+        name: '{{ route.name }}',
+        builder: (context, state) {
+          {% if route.path_params -%}
+          final id = state.pathParameters['id']!;
+          return {{ route.screen_class }}(id: id);
+          {%- else -%}
+          return const {{ route.screen_class }}();
+          {%- endif %}
+        },
+      ),
+      {% endfor %}
+    ],
+    // Redirect unauthenticated users
+    // redirect: (context, state) {
+    //   final loggedIn = authState.isAuthenticated;
+    //   if (!loggedIn && state.matchedLocation != '/login') return '/login';
+    //   return null;
+    // },
+  );
+}
+
+// ─── Navigation helpers ───────────────────────────────────────────────────────
+
+extension RouterNavigation on BuildContext {
+  {% for route in routes -%}
+  void goTo{{ route.screen_class | replace(from="_", to="") }}({% if route.path_params %}String id{% endif %}) =>
+      GoRouter.of(this).goNamed('{{ route.name }}'{% if route.path_params %}, pathParameters: {'id': id}{% endif %});
+
+  {% endfor %}
+}

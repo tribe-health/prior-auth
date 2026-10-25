@@ -1,0 +1,51 @@
+{{- /*
+  feature_repository.dart.tera — Abstract repository + Rust FFI implementation
+  Variables:
+    feature_name  : snake_case (e.g. "inference")
+    FeatureName   : PascalCase (e.g. "Inference")
+    EntityType    : Dart type returned (e.g. "InferenceResult")
+    InputType     : Dart input type (e.g. "InferenceRequest")
+    rust_fn_name  : Bridge function (e.g. "runInference")
+    rust_fn_args  : Arg mapping (e.g. "prompt: input.prompt, model: input.model")
+*/ -}}
+import '../../bridge/gen_ui_core.dart';
+import '../domain/{{ feature_name }}_entity.dart';
+
+// ─── Abstract repository (Domain layer) ───────────────────────────────────────
+// Defined here, NOT in the infrastructure layer.
+// Application code depends on this interface, never on the concrete class.
+
+abstract interface class {{ FeatureName }}Repository {
+  Future<{{ EntityType }}> perform({{ InputType }} input);
+  Stream<String> stream({{ InputType }} input);
+}
+
+// ─── Rust FFI implementation (Infrastructure layer) ───────────────────────────
+// Only this class knows about flutter_rust_bridge.
+
+class RustFfi{{ FeatureName }}Repository implements {{ FeatureName }}Repository {
+  const RustFfi{{ FeatureName }}Repository();
+
+  @override
+  Future<{{ EntityType }}> perform({{ InputType }} input) async {
+    final raw = await {{ rust_fn_name }}({{ rust_fn_args }});
+    return {{ EntityType }}.fromRaw(raw);
+  }
+
+  @override
+  Stream<String> stream({{ InputType }} input) {
+    // Replace with actual streaming FFI call when available
+    return Stream.fromFuture(
+      {{ rust_fn_name }}({{ rust_fn_args }}).then((r) => r.toString()),
+    );
+  }
+}
+
+// ─── Riverpod provider ────────────────────────────────────────────────────────
+
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+part '{{ feature_name }}_repository.g.dart';
+
+@riverpod
+{{ FeatureName }}Repository {{ feature_name }}Repository({{ FeatureName }}RepositoryRef ref) =>
+    const RustFfi{{ FeatureName }}Repository();

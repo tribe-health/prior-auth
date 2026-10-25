@@ -1,0 +1,4 @@
+interface:
+  display_name: "Sync Doctrine"
+  short_description: "ALWAYS invoke before ANY sync, replication, realtime, offline, or local-first work on any surfac"
+  default_prompt: "Use $sync-doctrine to apply its contract to this task and verify the required evidence."

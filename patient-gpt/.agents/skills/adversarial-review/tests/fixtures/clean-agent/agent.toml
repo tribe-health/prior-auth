@@ -1,0 +1,18 @@
+[agent]
+name             = "compliance-auditor"
+description      = "Read-only compliance auditor"
+default_provider = "anthropic"
+default_model    = "claude-sonnet-4-6"
+port             = 8080
+host             = "127.0.0.1"
+
+[providers.anthropic]
+url     = "https://api.anthropic.com/v1"
+key_env = "ANTHROPIC_API_KEY"
+models  = ["claude-sonnet-4-6"]
+
+[[mcp_servers]]
+name      = "surreal-memory"
+url       = "http://localhost:23001/mcp"
+transport = "sse"
+enabled   = true

@@ -1,0 +1,10 @@
+{
+  "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.prometheus/project-contract.md",
+  "chunk_id": "chunk-0060",
+  "text": "LOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n65: Every agent report uses CASE, CRITERIA STATUS, CONFLICTS, BLOCKERS, NEXT MOVE.\n66: Ask one question at a time and show no approval odds. Criteria have three states:\n67: `met`, `gap` (documented shortfall to argue), and `void` (missing documentation\n68: to obtain). A filed source document can change a criterion. A surgeon's answer\n69: is an attributed statement, never manufactured chart evidence.\n70: \n71: The app owns the Policy, Governing section, Pathway, and Operative plan gate\n72: controls, signing, packet submission, and recorded call outcome. Agent-generated\n73: surfaces cannot render or invoke these as independent authority. In production,\n74: enforce clinical authority at gateway policy, application capability, and\n75: persistence boundaries independently. Neither administrators nor agents acting\n76: for surgeons acquire the surgeon's authority by association.\n77: \n78: Generated assertions carry source document, page, and date. Unsupported claims\n79: are excluded and shown as such (the prototype uses \u201cNot asserted in this\n80: letter\u201d). Source citations navigate to the applicable document. Keep PHI within\n81: the inherited practice boundary and permitted inference policy; no real patient\n82: data enters fixtures, logs, or commits.",
+  "content_type": "local-source-excerpt",
+  "source_id": "src-046",
+  "retrieval_status": "local-source-read",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 443
+}

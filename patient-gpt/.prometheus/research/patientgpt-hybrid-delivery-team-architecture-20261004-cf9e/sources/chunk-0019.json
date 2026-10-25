@@ -1,0 +1,10 @@
+{
+  "url": "file:///Users/gqadonis/Projects/prometheus/flint-forge/.github/workflows/ci.yml",
+  "chunk_id": "chunk-0019",
+  "text": "LOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n27:       - name: test\n28:         run: cargo test --workspace",
+  "content_type": "local-source-excerpt",
+  "source_id": "src-019",
+  "retrieval_status": "local-source-read",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 44
+}

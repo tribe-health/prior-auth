@@ -1,0 +1,24 @@
+[agent]
+name             = "compliance-auditor"
+description      = "Read-only compliance auditor"
+default_provider = "anthropic"
+default_model    = "gpt-4o"
+port             = 8080
+host             = "0.0.0.0"
+
+[providers.anthropic]
+url     = "https://api.anthropic.com/v1"
+api_key = "EXAMPLE-NOT-A-REAL-KEY-fixture-literal-secret"
+models  = ["claude-sonnet-4-6"]
+
+[[mcp_servers]]
+name      = "surreal-memory"
+url       = "http://localhost:23001/mcp"
+transport = "sse"
+enabled   = false
+
+[[mcp_servers]]
+name      = "filesystem-write"
+url       = "http://localhost:9100/mcp"
+transport = "sse"
+enabled   = true

@@ -1,0 +1,6 @@
+[MODEL_ROUTING] phase=adv-review-packet class=small
+[packet] WARN: PRODUCER_UNKNOWN — cannot determine which model produced this
+[packet]       work, so the judge!=producer guarantee cannot be enforced.
+[packet]       Set KBD_PRODUCER_MODEL (e.g. export KBD_PRODUCER_MODEL=claude-opus-5)
+[packet]       to restore the cross-model check.
+[packet] wrote .prometheus/research/patientgpt-hybrid-delivery-team-architecture-20261004-cf9e/review/packet-closure.json

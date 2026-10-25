@@ -1,0 +1,12 @@
+# Transient bootstrap and local harness state.
+.prometheus/.writer.lock
+.prometheus/.review-pending
+.claude/settings.json.bak.*
+
+# Build outputs.
+/target/
+web/node_modules/
+web/dist/
+mobile/build/
+mobile/.dart_tool/
+mobile/ios/Pods/

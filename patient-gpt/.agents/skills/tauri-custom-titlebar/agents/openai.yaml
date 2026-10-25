@@ -1,0 +1,4 @@
+interface:
+  display_name: "Tauri Custom Titlebar"
+  short_description: "ALWAYS invoke when building, styling, or debugging a Tauri desktop window frame — replacing the"
+  default_prompt: "Use $tauri-custom-titlebar to apply its contract to this task and verify the required evidence."

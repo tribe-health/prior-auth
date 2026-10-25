@@ -1,0 +1,10 @@
+{
+  "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/flows.js",
+  "chunk_id": "chunk-0071",
+  "text": "LOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n271:         if (c.letter.version) return R.end(b.text('Letter v' + c.letter.version + ' was written before this arrived and does not cite it. A second version is not part of this prototype.'));\n418:     ] })).text('Drafting the appeal letter itself is not part of this prototype.');",
+  "content_type": "local-source-excerpt",
+  "source_id": "src-055",
+  "retrieval_status": "local-source-read",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 117
+}

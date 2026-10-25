@@ -1,0 +1,4 @@
+interface:
+  display_name: "Persona Scoped Agent"
+  short_description: "Design or audit an agent whose prompts, tools, retrieval, and actions are constrained by a verif"
+  default_prompt: "Use $persona-scoped-agent to apply its contract to this task and verify the required evidence."

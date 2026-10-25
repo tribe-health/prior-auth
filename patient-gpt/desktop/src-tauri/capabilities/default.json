@@ -1,0 +1,20 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "TJ-ARCH-MOB-001 compliant. Main window only: the six PatientGPT host commands (mirroring the Axum routes) and the window controls the shell title bar uses. Nothing else.",
+  "windows": ["main"],
+  "permissions": [
+    "allow-health",
+    "allow-session",
+    "allow-list-patients",
+    "allow-list-cases",
+    "allow-list-conversations",
+    "allow-start-run",
+    "core:window:allow-minimize",
+    "core:window:allow-toggle-maximize",
+    "core:window:allow-is-maximized",
+    "core:window:allow-close",
+    "core:window:allow-start-dragging",
+    "core:window:allow-internal-toggle-maximize"
+  ]
+}

@@ -1,0 +1,19 @@
+[
+  {
+    "insert": [
+      {
+        "id": "patientgpt-delivery-persistence",
+        "name": "@deepseek-ai/dsh-session-persistence-jsonl"
+      },
+      {
+        "id": "patientgpt-delivery-team",
+        "name": "@deepseek-ai/dsh-experimental-agent-team",
+        "config": {}
+      },
+      {
+        "id": "patientgpt-delivery-team-tools",
+        "name": "@deepseek-ai/dsh-experimental-tool-agent-team"
+      }
+    ]
+  }
+]

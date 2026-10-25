@@ -1,0 +1,10 @@
+{
+  "url": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-projection-surreal/src/store.rs",
+  "chunk_id": "chunk-0011",
+  "text": "LOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n31: #[derive(Clone)]\n32: pub struct SurrealEntityProjection {\n33:     db: Surreal<Any>,\n34:     writer: Arc<Mutex<()>>,\n35:     watchers: Arc<RwLock<WatchSenders>>,\n36: }\n37: \n38: impl SurrealEntityProjection {\n39:     /// Connect and authenticate to a `SurrealDB` projection database.\n40:     ///\n41:     /// # Errors\n42:     ///\n43:     /// Returns an adapter error when connection, authentication, database selection,\n44:     /// or schema initialization fails.\n45:     pub async fn connect(\n46:         endpoint: &str,\n47:         username: &str,\n48:         password: &str,\n49:         namespace: &str,\n50:         database: &str,\n51:     ) -> Result<Self, SurrealProjectionError> {\n52:         let db = surrealdb::engine::any::connect(endpoint).await?;\n53:         db.signin(Root {\n54:             username: username.to_owned(),\n55:             password: password.to_owned(),\n56:         })\n57:         .await?;\n58:         db.use_ns(namespace).use_db(database).await?;\n59:         Self::from_connected(db).await",
+  "content_type": "local-source-excerpt",
+  "source_id": "src-011",
+  "retrieval_status": "local-source-read",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 362
+}

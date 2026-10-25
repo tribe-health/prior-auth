@@ -1,0 +1,153 @@
+{
+  "project": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt",
+  "activeTeam": "patientgpt-delivery",
+  "manifest": ".agent-team/patientgpt-delivery/team.json",
+  "nativeDefinitions": [
+    ".claude/agents/product-manager.md",
+    ".claude/agents/team-lead.md",
+    ".claude/agents/creative-director.md",
+    ".claude/agents/design-expert.md",
+    ".claude/agents/react-engineer.md",
+    ".claude/agents/tauri-engineer.md",
+    ".claude/agents/flutter-engineer.md",
+    ".claude/agents/rust-domain-engineer.md",
+    ".claude/agents/storage-engineer.md",
+    ".claude/agents/flint-data-engineer.md",
+    ".claude/agents/identity-security-engineer.md",
+    ".claude/agents/uar-agent-expert.md",
+    ".claude/agents/platform-release-engineer.md",
+    ".claude/agents/documentation-engineer.md",
+    ".claude/agents/phase-verifier.md",
+    ".claude/agents/artifact-critic.md",
+    ".claude/agents/ui-critic.md"
+  ],
+  "changed": [
+    ".claude/agents/product-manager.md",
+    ".claude/agents/team-lead.md",
+    ".claude/agents/creative-director.md",
+    ".claude/agents/design-expert.md",
+    ".claude/agents/react-engineer.md",
+    ".claude/agents/tauri-engineer.md",
+    ".claude/agents/flutter-engineer.md",
+    ".claude/agents/rust-domain-engineer.md",
+    ".claude/agents/storage-engineer.md",
+    ".claude/agents/flint-data-engineer.md",
+    ".claude/agents/identity-security-engineer.md",
+    ".claude/agents/uar-agent-expert.md",
+    ".claude/agents/platform-release-engineer.md",
+    ".claude/agents/documentation-engineer.md",
+    ".claude/agents/phase-verifier.md",
+    ".claude/agents/ui-critic.md",
+    ".agent-team/patientgpt-delivery/team.json",
+    "AGENTS.md",
+    ".agent-team/project-routing.json"
+  ],
+  "clean": false,
+  "dryRun": false,
+  "check": false,
+  "fingerprints": [
+    {
+      "file": ".claude/agents/product-manager.md",
+      "before": null,
+      "after": "fbd16b4a1900a2c6ef283c58a068a3fa2c1bfc235a99b20a1f68b98f98a00b0d"
+    },
+    {
+      "file": ".claude/agents/team-lead.md",
+      "before": null,
+      "after": "3b3cd927139b8c8e847fe9f3e2cd50e4ca8f38b75d5feee2a112b2a275f68997"
+    },
+    {
+      "file": ".claude/agents/creative-director.md",
+      "before": null,
+      "after": "828e70a0ec0f0bbcce3e48a7a6d58ff1183a9044cf6e0b60c62ede565a9c56df"
+    },
+    {
+      "file": ".claude/agents/design-expert.md",
+      "before": null,
+      "after": "7861c508510b269e4e8f026cfa5325be6f365bd0911317bbe987508db4e4d597"
+    },
+    {
+      "file": ".claude/agents/react-engineer.md",
+      "before": null,
+      "after": "ddd87434b90f523b707817051c9b8f1578e93e4c3aacb049a3330c6f0d498bdf"
+    },
+    {
+      "file": ".claude/agents/tauri-engineer.md",
+      "before": null,
+      "after": "f6810adc7ff94c5e2f9ab6ed81f76b7710a36f790ad5cc9d65f86172afa4c8eb"
+    },
+    {
+      "file": ".claude/agents/flutter-engineer.md",
+      "before": null,
+      "after": "dfb977eb24eb36341b54c95cd32b17af8bd3e5b54254e0d4ee2b9c1ac1d61eae"
+    },
+    {
+      "file": ".claude/agents/rust-domain-engineer.md",
+      "before": null,
+      "after": "065822b0a4d0713851255db3b9244fa037d3a9d1f0ba01144e746f6e43a6a309"
+    },
+    {
+      "file": ".claude/agents/storage-engineer.md",
+      "before": null,
+      "after": "abd30045cc9b281fe754e0a730f188674ecc5c9ddc7e4bf158cf3d5bb185d5f5"
+    },
+    {
+      "file": ".claude/agents/flint-data-engineer.md",
+      "before": null,
+      "after": "5a8c450f9dc2dd6fda36ebb0369c1eb148ede360426aae765f27aa657376538e"
+    },
+    {
+      "file": ".claude/agents/identity-security-engineer.md",
+      "before": null,
+      "after": "3ab76e7669a9af0b273372776a0764e1e94c56f68ae7bf649fc522cf70ec2970"
+    },
+    {
+      "file": ".claude/agents/uar-agent-expert.md",
+      "before": null,
+      "after": "b6976d4aaae4f8984aa56d4f7186e8f466691dd5dd60865fd28b69470c52dc7d"
+    },
+    {
+      "file": ".claude/agents/platform-release-engineer.md",
+      "before": null,
+      "after": "bbe31756b55185f4ef41ae5f34159537ea7c6fc857be09f1ab2828ca9563ac34"
+    },
+    {
+      "file": ".claude/agents/documentation-engineer.md",
+      "before": null,
+      "after": "85bfddcf941327b13fae1d4ec5b2b2c91f458f9f5746ae491ed17ea18b857b0a"
+    },
+    {
+      "file": ".claude/agents/phase-verifier.md",
+      "before": null,
+      "after": "a8171f7b29d76416d92230d8783ad2b4c8be4de07149591ca79b312e6182f95a"
+    },
+    {
+      "file": ".claude/agents/ui-critic.md",
+      "before": null,
+      "after": "13f4f61868ce8ee7fcfa85e13a8c660bfefe91fc4e3053e9fbca58fdab7d36cc"
+    },
+    {
+      "file": ".agent-team/patientgpt-delivery/team.json",
+      "before": null,
+      "after": "a562d20bd66b8b21f3ca13ac7c505ab6f8274d93c8d1d7018359b03c167f53a3"
+    },
+    {
+      "file": "AGENTS.md",
+      "before": "5decad8d007c3316386b2577fd932b754fffbe53e68cd356a497292df42ad9c7",
+      "after": "b5ae5d614681cc1eabdef0442f44b5dd36961df27591545614e9e56487c1bdfa"
+    },
+    {
+      "file": ".agent-team/project-routing.json",
+      "before": null,
+      "after": "9b0d15733bd87dcee587e6d9cd53611168462bd618e1d8a91f1fcaacf67a5a3a"
+    }
+  ],
+  "diagnostics": [
+    "Source-verified serialization only; installed native validation and live execution are unverified.",
+    "Only explicit model IDs are translated. Resolve tier, skill, capability and price policies with agent-team-models before native invocation.",
+    "These are native subagents; installing them does not create an experimental Claude agent team or enable that feature.",
+    "Role overrides are preserved without native schema certification. Skill IDs refer to separately installed skills; prompt mentions do not install or authorize them.",
+    "Preserved existing native file .claude/agents/artifact-critic.md; project role bindings apply through the shared instructions. Native prompt/configuration edits require a deliberate merge."
+  ],
+  "recovery": ".agent-team/recovery/064045e7c056e5f05ceca54e.json"
+}
