@@ -1,0 +1,17 @@
+# TJ-ARCH-MOB-001 compliant
+[package]
+name = "patient-gpt-uar"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+# Implements the host's UarRuntimeFacade port. No write-capable dependency:
+# an agent runtime adapter never mutates clinical or conversation records.
+[dependencies]
+patient-gpt-domain.workspace = true
+patient-gpt-host.workspace = true
+async-trait.workspace = true
+futures.workspace = true
+thiserror.workspace = true
+uuid.workspace = true

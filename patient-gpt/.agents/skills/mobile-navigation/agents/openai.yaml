@@ -1,0 +1,4 @@
+interface:
+  display_name: "Mobile Navigation"
+  short_description: "ALWAYS invoke before adding, moving, or restyling top-level navigation on ANY surface (Flutter N"
+  default_prompt: "Use $mobile-navigation to apply its contract to this task and verify the required evidence."

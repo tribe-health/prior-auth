@@ -1,0 +1,176 @@
+{
+  "name": "PatientGPT",
+  "description": "Chat-first prior authorization workspace for Advanced Spine & Orthopedics, sharing clinical authority across React web/Tauri and Flutter through Rust and UAR.",
+  "activePhase": null,
+  "worktreeRoot": "${HOME}/.claude/worktrees",
+  "maxChildDepth": 4,
+  "ux_profile": "advanced",
+  "spec_paths": [
+    "openspec/specs/**/*.md",
+    "docs/design/README.md",
+    "docs/design/patient-chat-storyboard.html",
+    "docs/design/patient-chat.html",
+    "docs/design/data-model.md",
+    "docs/design/schema/patient-gpt.sql",
+    "docs/product/team-product-brief.md",
+    "docs/plan/patientgpt-delivery-cadence.md"
+  ],
+  "openspec_available": true,
+  "constraint_file": ".kbd-orchestrator/constraints.md",
+  "build_health_command": null,
+  "test_command": null,
+  "lint_command": null,
+  "preferred_planning_agent": "codex",
+  "preferred_execution_agents": [
+    "codex"
+  ],
+  "agents_config": {
+    "codex": {
+      "entry": "Codex native roles selected by .agent-team/project-routing.json; manifest .agent-team/patientgpt-delivery/team.json",
+      "strengths": [
+        "Product-manager acceptance and team-lead coordination",
+        "Specialist roles with explicit disjoint ownership",
+        "Fresh-context final-phase artifact review"
+      ]
+    }
+  },
+  "focus_project_path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt",
+  "dev_command": null,
+  "workspace": {
+    "workspace_file": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/prior-auth.code-workspace",
+    "folders": [
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt",
+        "role": "focus",
+        "purpose": "PatientGPT is the sole KBD project; nested focus overrides parent reference scope.",
+        "write_access": true
+      },
+      {
+        "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth",
+        "role": "reference",
+        "write_access": false,
+        "purpose": "Read sibling ASO clinical services, authority and monorepo conventions; excludes the nested PatientGPT focus. Narrow workflow ownership exceptions are in constraints.md.",
+        "read_paths": [
+          "README.md",
+          "AGENTS.md",
+          "versions.toml",
+          "Cargo.toml",
+          "crates/**",
+          "src/**",
+          "docs/**/*.md"
+        ]
+      },
+      {
+        "path": "/Users/gqadonis/Projects/prometheus/flint-forge",
+        "role": "reference",
+        "write_access": false,
+        "purpose": "Read server Postgres/API storage integration contracts.",
+        "read_paths": [
+          "README.md",
+          "AGENTS.md",
+          "versions.toml",
+          "Cargo.toml",
+          "crates/**",
+          "src/**",
+          "docs/**/*.md"
+        ]
+      },
+      {
+        "path": "/Users/gqadonis/Projects/prometheus/flint-gate",
+        "role": "reference",
+        "write_access": false,
+        "purpose": "Read Kratos credential and policy boundary integration.",
+        "read_paths": [
+          "README.md",
+          "AGENTS.md",
+          "versions.toml",
+          "Cargo.toml",
+          "crates/**",
+          "src/**",
+          "docs/**/*.md"
+        ]
+      },
+      {
+        "path": "/Users/gqadonis/Projects/prometheus/flint-realtime-fabric",
+        "role": "reference",
+        "write_access": false,
+        "purpose": "Read authorized projection, sync and realtime contracts.",
+        "read_paths": [
+          "README.md",
+          "AGENTS.md",
+          "versions.toml",
+          "Cargo.toml",
+          "crates/**",
+          "src/**",
+          "docs/**/*.md"
+        ]
+      },
+      {
+        "path": "/Users/gqadonis/Projects/prometheus/prometheus-entity-management",
+        "role": "reference",
+        "write_access": false,
+        "purpose": "Read entity graph state and data ownership contracts.",
+        "read_paths": [
+          "README.md",
+          "AGENTS.md",
+          "versions.toml",
+          "Cargo.toml",
+          "crates/**",
+          "src/**",
+          "docs/**/*.md"
+        ]
+      },
+      {
+        "path": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src",
+        "role": "reference",
+        "write_access": false,
+        "purpose": "Operator-selected architecture skills; project decisions override old example pins.",
+        "read_paths": [
+          "README.md",
+          "AGENTS.md",
+          "skills/**",
+          "docs/**",
+          "src/**",
+          "crates/**",
+          "frontend/**",
+          "desktop/**",
+          "mobile/**"
+        ]
+      },
+      {
+        "path": "/Users/gqadonis/Projects/prometheus/universal-agent-runtime",
+        "role": "reference",
+        "write_access": false,
+        "purpose": "Immutable product agents, tool governance, AG-UI profile and registered A2UI catalog.",
+        "read_paths": [
+          "README.md",
+          "AGENTS.md",
+          "skills/**",
+          "docs/**",
+          "src/**",
+          "crates/**",
+          "frontend/**",
+          "desktop/**",
+          "mobile/**"
+        ]
+      },
+      {
+        "path": "/Users/gqadonis/Projects/know-me/know-me-system",
+        "role": "reference",
+        "write_access": false,
+        "purpose": "Desktop custom titlebar and platform presentation inspiration; preserve PatientGPT branding.",
+        "read_paths": [
+          "README.md",
+          "AGENTS.md",
+          "skills/**",
+          "docs/**",
+          "src/**",
+          "crates/**",
+          "frontend/**",
+          "desktop/**",
+          "mobile/**"
+        ]
+      }
+    ]
+  }
+}

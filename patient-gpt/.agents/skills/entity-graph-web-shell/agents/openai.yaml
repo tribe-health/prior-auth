@@ -1,0 +1,4 @@
+interface:
+  display_name: "Entity Graph Web Shell"
+  short_description: "Design or review a React web shell whose normalized application state is owned by Prometheus Ent"
+  default_prompt: "Use $entity-graph-web-shell to apply its contract to this task and verify the required evidence."

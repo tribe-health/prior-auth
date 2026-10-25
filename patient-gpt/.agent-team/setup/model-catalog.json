@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "models": [
+    {
+      "id": "gpt-6-astra",
+      "available": true,
+      "tier": "hard",
+      "capabilities": {
+        "tools": true
+      },
+      "pricing": {
+        "inputPerMillion": null,
+        "outputPerMillion": null
+      },
+      "freshness": {
+        "stale": null
+      },
+      "provenance": {
+        "availability": "Codex app tool metadata and local config; inference not probed",
+        "tier": "project quality-first policy annotation",
+        "capabilities": "host model/tool metadata"
+      }
+    }
+  ]
+}

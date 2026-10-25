@@ -1,0 +1,10 @@
+{
+  "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/server.rs",
+  "chunk_id": "chunk-0048",
+  "text": "                              \"toolCallName\": tool_name.unwrap_or_else(|| format!(\"tool-{call_index:?}\")),\n6003:                             });\n6004:                             let start_payload = enrich_agui_spec_payload(\n6005:                                 \"TOOL_CALL_START\", start_payload, &event_id, 0,\n6006:                             );\n6007:                             let start_json = serde_json::to_string(&start_payload)\n6008:                                 .unwrap_or_else(|_| \"{}\".to_string());\n6009:                             emit_chat_frame!(Event::default()\n6010:                                 .event(\"TOOL_CALL_START\")\n6011: \n6012:                                 .data(start_json), source_event_id, frame_ordinal);\n6013:                         }\n6014: \n6015:                         if let Some((event_name, payload)) = to_agui_spec_event(&normalized_event) {\n6016:                             let payload = enrich_agui_spec_payload(",
+  "content_type": "local-source-excerpt",
+  "source_id": "src-037",
+  "retrieval_status": "local-source-read",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 321
+}

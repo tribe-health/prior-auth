@@ -1,0 +1,36 @@
+{
+  "project": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt",
+  "activeTeam": "patientgpt-delivery",
+  "manifest": ".agent-team/patientgpt-delivery/team.json",
+  "nativeDefinitions": [
+    ".codex/agents/product-manager.toml",
+    ".codex/agents/team-lead.toml",
+    ".codex/agents/creative-director.toml",
+    ".codex/agents/design-expert.toml",
+    ".codex/agents/react-engineer.toml",
+    ".codex/agents/tauri-engineer.toml",
+    ".codex/agents/flutter-engineer.toml",
+    ".codex/agents/rust-domain-engineer.toml",
+    ".codex/agents/storage-engineer.toml",
+    ".codex/agents/flint-data-engineer.toml",
+    ".codex/agents/identity-security-engineer.toml",
+    ".codex/agents/uar-agent-expert.toml",
+    ".codex/agents/platform-release-engineer.toml",
+    ".codex/agents/documentation-engineer.toml",
+    ".codex/agents/phase-verifier.toml",
+    ".codex/agents/artifact-critic.toml",
+    ".codex/agents/ui-critic.toml"
+  ],
+  "changed": [],
+  "clean": true,
+  "dryRun": false,
+  "check": true,
+  "fingerprints": [],
+  "diagnostics": [
+    "Source-verified serialization only; installed native validation and live execution are unverified.",
+    "Only explicit model IDs are translated. Resolve tier, skill, capability and price policies with agent-team-models before native invocation.",
+    "Standalone agent files are supported. A Codex plugin agents manifest field is not verified; no such field is emitted.",
+    "Role overrides are preserved without native schema certification. Skill IDs refer to separately installed skills; prompt mentions do not install or authorize them."
+  ],
+  "recovery": null
+}

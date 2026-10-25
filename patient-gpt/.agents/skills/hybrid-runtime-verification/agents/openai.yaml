@@ -1,0 +1,4 @@
+interface:
+  display_name: "Hybrid Runtime Verification"
+  short_description: "ALWAYS invoke before calling any Flutter, Tauri, React, Rust, web, desktop, or mobile applicatio"
+  default_prompt: "Use $hybrid-runtime-verification to apply its contract to this task and verify the required evidence."

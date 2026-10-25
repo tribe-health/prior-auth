@@ -1,0 +1,169 @@
+{
+  "target": "claude",
+  "verification": {
+    "level": "source-verified",
+    "source": "https://code.claude.com/docs/en/sub-agents",
+    "version": "documentation inspected 2026-09-24",
+    "live": "unverified"
+  },
+  "diagnostics": [
+    "Source-verified serialization only; installed native validation and live execution are unverified.",
+    "Only explicit model IDs are translated. Resolve tier, skill, capability and price policies with agent-team-models before native invocation.",
+    "These are native subagents; installing them does not create an experimental Claude agent team or enable that feature.",
+    "Role overrides are preserved without native schema certification. Skill IDs refer to separately installed skills; prompt mentions do not install or authorize them."
+  ],
+  "instructions": [
+    "Review staged artifacts before installation. Export grants no execution or registration authority.",
+    "Choose project .claude/agents or the staged local marketplace/plugin. Do not install both copies. Settings options are a proposed project .claude/settings.json."
+  ],
+  "files": [
+    {
+      "file": ".claude/agents/product-manager.md",
+      "sha256": "fbd16b4a1900a2c6ef283c58a068a3fa2c1bfc235a99b20a1f68b98f98a00b0d"
+    },
+    {
+      "file": "plugins/patientgpt-delivery/agents/product-manager.md",
+      "sha256": "fbd16b4a1900a2c6ef283c58a068a3fa2c1bfc235a99b20a1f68b98f98a00b0d"
+    },
+    {
+      "file": ".claude/agents/team-lead.md",
+      "sha256": "3b3cd927139b8c8e847fe9f3e2cd50e4ca8f38b75d5feee2a112b2a275f68997"
+    },
+    {
+      "file": "plugins/patientgpt-delivery/agents/team-lead.md",
+      "sha256": "3b3cd927139b8c8e847fe9f3e2cd50e4ca8f38b75d5feee2a112b2a275f68997"
+    },
+    {
+      "file": ".claude/agents/creative-director.md",
+      "sha256": "828e70a0ec0f0bbcce3e48a7a6d58ff1183a9044cf6e0b60c62ede565a9c56df"
+    },
+    {
+      "file": "plugins/patientgpt-delivery/agents/creative-director.md",
+      "sha256": "828e70a0ec0f0bbcce3e48a7a6d58ff1183a9044cf6e0b60c62ede565a9c56df"
+    },
+    {
+      "file": ".claude/agents/design-expert.md",
+      "sha256": "7861c508510b269e4e8f026cfa5325be6f365bd0911317bbe987508db4e4d597"
+    },
+    {
+      "file": "plugins/patientgpt-delivery/agents/design-expert.md",
+      "sha256": "7861c508510b269e4e8f026cfa5325be6f365bd0911317bbe987508db4e4d597"
+    },
+    {
+      "file": ".claude/agents/react-engineer.md",
+      "sha256": "ddd87434b90f523b707817051c9b8f1578e93e4c3aacb049a3330c6f0d498bdf"
+    },
+    {
+      "file": "plugins/patientgpt-delivery/agents/react-engineer.md",
+      "sha256": "ddd87434b90f523b707817051c9b8f1578e93e4c3aacb049a3330c6f0d498bdf"
+    },
+    {
+      "file": ".claude/agents/tauri-engineer.md",
+      "sha256": "f6810adc7ff94c5e2f9ab6ed81f76b7710a36f790ad5cc9d65f86172afa4c8eb"
+    },
+    {
+      "file": "plugins/patientgpt-delivery/agents/tauri-engineer.md",
+      "sha256": "f6810adc7ff94c5e2f9ab6ed81f76b7710a36f790ad5cc9d65f86172afa4c8eb"
+    },
+    {
+      "file": ".claude/agents/flutter-engineer.md",
+      "sha256": "dfb977eb24eb36341b54c95cd32b17af8bd3e5b54254e0d4ee2b9c1ac1d61eae"
+    },
+    {
+      "file": "plugins/patientgpt-delivery/agents/flutter-engineer.md",
+      "sha256": "dfb977eb24eb36341b54c95cd32b17af8bd3e5b54254e0d4ee2b9c1ac1d61eae"
+    },
+    {
+      "file": ".claude/agents/rust-domain-engineer.md",
+      "sha256": "065822b0a4d0713851255db3b9244fa037d3a9d1f0ba01144e746f6e43a6a309"
+    },
+    {
+      "file": "plugins/patientgpt-delivery/agents/rust-domain-engineer.md",
+      "sha256": "065822b0a4d0713851255db3b9244fa037d3a9d1f0ba01144e746f6e43a6a309"
+    },
+    {
+      "file": ".claude/agents/storage-engineer.md",
+      "sha256": "abd30045cc9b281fe754e0a730f188674ecc5c9ddc7e4bf158cf3d5bb185d5f5"
+    },
+    {
+      "file": "plugins/patientgpt-delivery/agents/storage-engineer.md",
+      "sha256": "abd30045cc9b281fe754e0a730f188674ecc5c9ddc7e4bf158cf3d5bb185d5f5"
+    },
+    {
+      "file": ".claude/agents/flint-data-engineer.md",
+      "sha256": "5a8c450f9dc2dd6fda36ebb0369c1eb148ede360426aae765f27aa657376538e"
+    },
+    {
+      "file": "plugins/patientgpt-delivery/agents/flint-data-engineer.md",
+      "sha256": "5a8c450f9dc2dd6fda36ebb0369c1eb148ede360426aae765f27aa657376538e"
+    },
+    {
+      "file": ".claude/agents/identity-security-engineer.md",
+      "sha256": "3ab76e7669a9af0b273372776a0764e1e94c56f68ae7bf649fc522cf70ec2970"
+    },
+    {
+      "file": "plugins/patientgpt-delivery/agents/identity-security-engineer.md",
+      "sha256": "3ab76e7669a9af0b273372776a0764e1e94c56f68ae7bf649fc522cf70ec2970"
+    },
+    {
+      "file": ".claude/agents/uar-agent-expert.md",
+      "sha256": "b6976d4aaae4f8984aa56d4f7186e8f466691dd5dd60865fd28b69470c52dc7d"
+    },
+    {
+      "file": "plugins/patientgpt-delivery/agents/uar-agent-expert.md",
+      "sha256": "b6976d4aaae4f8984aa56d4f7186e8f466691dd5dd60865fd28b69470c52dc7d"
+    },
+    {
+      "file": ".claude/agents/platform-release-engineer.md",
+      "sha256": "bbe31756b55185f4ef41ae5f34159537ea7c6fc857be09f1ab2828ca9563ac34"
+    },
+    {
+      "file": "plugins/patientgpt-delivery/agents/platform-release-engineer.md",
+      "sha256": "bbe31756b55185f4ef41ae5f34159537ea7c6fc857be09f1ab2828ca9563ac34"
+    },
+    {
+      "file": ".claude/agents/documentation-engineer.md",
+      "sha256": "85bfddcf941327b13fae1d4ec5b2b2c91f458f9f5746ae491ed17ea18b857b0a"
+    },
+    {
+      "file": "plugins/patientgpt-delivery/agents/documentation-engineer.md",
+      "sha256": "85bfddcf941327b13fae1d4ec5b2b2c91f458f9f5746ae491ed17ea18b857b0a"
+    },
+    {
+      "file": ".claude/agents/phase-verifier.md",
+      "sha256": "a8171f7b29d76416d92230d8783ad2b4c8be4de07149591ca79b312e6182f95a"
+    },
+    {
+      "file": "plugins/patientgpt-delivery/agents/phase-verifier.md",
+      "sha256": "a8171f7b29d76416d92230d8783ad2b4c8be4de07149591ca79b312e6182f95a"
+    },
+    {
+      "file": ".claude/agents/artifact-critic.md",
+      "sha256": "9eb36a6b8bc3609a18541d3aaad1af20283f6690ef29b814169f37faa71de0bc"
+    },
+    {
+      "file": "plugins/patientgpt-delivery/agents/artifact-critic.md",
+      "sha256": "9eb36a6b8bc3609a18541d3aaad1af20283f6690ef29b814169f37faa71de0bc"
+    },
+    {
+      "file": ".claude/agents/ui-critic.md",
+      "sha256": "13f4f61868ce8ee7fcfa85e13a8c660bfefe91fc4e3053e9fbca58fdab7d36cc"
+    },
+    {
+      "file": "plugins/patientgpt-delivery/agents/ui-critic.md",
+      "sha256": "13f4f61868ce8ee7fcfa85e13a8c660bfefe91fc4e3053e9fbca58fdab7d36cc"
+    },
+    {
+      "file": "plugins/patientgpt-delivery/.claude-plugin/plugin.json",
+      "sha256": "32e3b2027cd3486fa155f4fb65d4efffc8350e01f311a0dcc12f919700c9ede9"
+    },
+    {
+      "file": ".claude-plugin/marketplace.json",
+      "sha256": "d4ffdb4166c1f3227b8396e7af2441aa007239571271da0402d990a6a0f65113"
+    },
+    {
+      "file": "export-receipt.json",
+      "sha256": "6a7b46e9661483c13b3b1749a7c5fd20bb10d75d2b9a6ce6e00d727400162b1e"
+    }
+  ]
+}

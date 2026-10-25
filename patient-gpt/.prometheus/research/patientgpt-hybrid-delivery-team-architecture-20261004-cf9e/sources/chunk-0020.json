@@ -1,0 +1,10 @@
+{
+  "url": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/.github/workflows/docs-pages.yml",
+  "chunk_id": "chunk-0020",
+  "text": "LOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n10:     paths:\n11:       - \"website/**\"\n12:       - \"docs/**\"\n13:       - \"README.md\"\n14:       - \"website/package-lock.json\"\n15:       - \".github/workflows/docs-pages.yml\"\n16:   push:\n46:       - name: Install the locked dependencies\n47:         run: npm ci\n48:         working-directory: website\n49: \n50:       # NOTE: this builds and inspects the documentation site. It does not run\n51:       # tests \u2014 this project's policy is local integration testing only, and CI\n52:       # runs build, lint, typecheck, format and packaging gates exclusively.\n53:       #\n54:       # `npm run build` runs the sanitizer first (it rejects machine-local\n55:       # paths, secrets and raw wiki content), then `docusaurus build`, which\n56:       # fails on a broken link because onBrokenLinks is \"throw\".\n57:       - name: Build the production site\n58:         run: npm run build\n59:         working-directory: website\n88:       name: github-pages\n89:       url: ${{ steps.deployment.outputs.page_url }}\n90:     permissions:\n91:       pages: write\n92:       id-token: write\n93:     steps:\n94:       - name: Deploy the Pages artifact\n95:         id: deployment",
+  "content_type": "local-source-excerpt",
+  "source_id": "src-020",
+  "retrieval_status": "local-source-read",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 405
+}

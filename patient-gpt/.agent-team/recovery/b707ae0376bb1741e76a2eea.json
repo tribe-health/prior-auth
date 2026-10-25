@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "files": [
+    {
+      "file": ".opencode/agents/product-manager.md",
+      "before": null,
+      "afterSha256": "63db79a02a88c8203c4d192ba25da5aa91294ab5ae96729200a1409155499ecc"
+    },
+    {
+      "file": ".opencode/agents/team-lead.md",
+      "before": null,
+      "afterSha256": "b045813ae13d220e72ffe4ed2c155271d336d110361e7d757507a78e7e40eb4b"
+    },
+    {
+      "file": ".opencode/agents/creative-director.md",
+      "before": null,
+      "afterSha256": "608278bba0d4207f4a6953e51f9107287af52e303494255c5528f50e0bef03ab"
+    },
+    {
+      "file": ".opencode/agents/design-expert.md",
+      "before": null,
+      "afterSha256": "60941e9fcf805cd0d1c3c8008a0fd981e7f41c22e35a286c718d66c23eb1c325"
+    },
+    {
+      "file": ".opencode/agents/react-engineer.md",
+      "before": null,
+      "afterSha256": "131f592619c460958440bc464de0673c67f3f78dce906abb488e982c94c19542"
+    },
+    {
+      "file": ".opencode/agents/tauri-engineer.md",
+      "before": null,
+      "afterSha256": "8000aca5f83c91161ee441fcb8e74f1c35c00d56df143a95f6d527f6d68ea1a7"
+    },
+    {
+      "file": ".opencode/agents/flutter-engineer.md",
+      "before": null,
+      "afterSha256": "e595daa9bf09e8d6b7a1b1a1d756a25d15183bedf7e38bdafea7438f96d37466"
+    },
+    {
+      "file": ".opencode/agents/rust-domain-engineer.md",
+      "before": null,
+      "afterSha256": "381befb8df3481a302e7b5653f072109c6428b2f316e1154e462ffb2f5ee0ede"
+    },
+    {
+      "file": ".opencode/agents/storage-engineer.md",
+      "before": null,
+      "afterSha256": "58cd17f539df0b1b45a793d0ce6748546caf9bbc8bdc1ed0ae9a1dcc2aba317d"
+    },
+    {
+      "file": ".opencode/agents/flint-data-engineer.md",
+      "before": null,
+      "afterSha256": "0e4581aabb33374c10cdf6324efb7149dc052083afc6abd45f496c53443441d0"
+    },
+    {
+      "file": ".opencode/agents/identity-security-engineer.md",
+      "before": null,
+      "afterSha256": "e8d5b755aa97f3bc7f5b0d903010488cd014fc0133d3b6dc5c1cdf0f290f5b35"
+    },
+    {
+      "file": ".opencode/agents/uar-agent-expert.md",
+      "before": null,
+      "afterSha256": "2d83981d4851c7c710596cb3b9a279d467789906d0e529d516dfd6c83e00b932"
+    },
+    {
+      "file": ".opencode/agents/platform-release-engineer.md",
+      "before": null,
+      "afterSha256": "95eab00e99f28ed59bfbddc7ff8e810bbeaf2432ab5561e243e3de562d02edd8"
+    },
+    {
+      "file": ".opencode/agents/documentation-engineer.md",
+      "before": null,
+      "afterSha256": "e2bc34769ba529c66f99d2ce9e2b1917549783be0abe4d974fd18493ad3a1911"
+    },
+    {
+      "file": ".opencode/agents/phase-verifier.md",
+      "before": null,
+      "afterSha256": "ac36d8d78a6678d9b268accaaa1429eac447b2f7dd7e8df42d8552c2739dc8ee"
+    },
+    {
+      "file": ".opencode/agents/artifact-critic.md",
+      "before": null,
+      "afterSha256": "a64037c54fe394bb756e21e1fd99e91d2f1b11a90b59e4cd5280675ad16dbcf2"
+    },
+    {
+      "file": ".opencode/agents/ui-critic.md",
+      "before": null,
+      "afterSha256": "88bb175c78103e6cc5a7c41933678bf89eaf4da36b8820d1c7380a853c068369"
+    },
+    {
+      "file": ".agent-team/project-routing.json",
+      "before": "{\n  \"schemaVersion\": 1,\n  \"activeTeam\": \"patientgpt-delivery\",\n  \"manifest\": \".agent-team/patientgpt-delivery/team.json\",\n  \"target\": \"claude\",\n  \"nativeDefinitions\": [\n    \".claude/agents/product-manager.md\",\n    \".claude/agents/team-lead.md\",\n    \".claude/agents/creative-director.md\",\n    \".claude/agents/design-expert.md\",\n    \".claude/agents/react-engineer.md\",\n    \".claude/agents/tauri-engineer.md\",\n    \".claude/agents/flutter-engineer.md\",\n    \".claude/agents/rust-domain-engineer.md\",\n    \".claude/agents/storage-engineer.md\",\n    \".claude/agents/flint-data-engineer.md\",\n    \".claude/agents/identity-security-engineer.md\",\n    \".claude/agents/uar-agent-expert.md\",\n    \".claude/agents/platform-release-engineer.md\",\n    \".claude/agents/documentation-engineer.md\",\n    \".claude/agents/phase-verifier.md\",\n    \".claude/agents/artifact-critic.md\",\n    \".claude/agents/ui-critic.md\"\n  ],\n  \"instructionFiles\": [\n    \"AGENTS.md\",\n    \"CLAUDE.md\"\n  ],\n  \"delegation\": \"native-definitions\",\n  \"limitations\": [\n    \"Native definition presence is not live invocation evidence. The active harness owns permissions, models, concurrency and delegation.\",\n    \"When delegation is unavailable, use selected role instructions sequentially and report it; builder-context review is not independent.\",\n    \"Zed external ACP agents use their native configuration; Zed parallel threads are not an automatic delegation API.\"\n  ]\n}\n",
+      "afterSha256": "744435eba46a44413fa679396d32919477c447d3c28081a0ac51ce6fc467720d"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "url": "file:///Users/gqadonis/Projects/know-me/know-me-system/mobile/lib/core/theme/tokens.dart",
+  "chunk_id": "chunk-0077",
+  "text": "LOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n1: // TJ-ARCH-MOB-001 compliant\n2: // Flutter projection of the shared KnowMe semantic palette in desktop/index.css\n3: // and docs/knowme-ui-ux-standard.md. Components consume semantic roles only.\n54:   static const dark = KnowMePalette(",
+  "content_type": "local-source-excerpt",
+  "source_id": "src-061",
+  "retrieval_status": "local-source-read",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 102
+}

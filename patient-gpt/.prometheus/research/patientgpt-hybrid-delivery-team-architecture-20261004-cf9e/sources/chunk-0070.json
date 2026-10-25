@@ -1,0 +1,10 @@
+{
+  "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/shell.css",
+  "chunk_id": "chunk-0070",
+  "text": "LOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n113: .dock { padding: 0 16px calc(10px + env(safe-area-inset-bottom)); }",
+  "content_type": "local-source-excerpt",
+  "source_id": "src-054",
+  "retrieval_status": "local-source-read",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 47
+}

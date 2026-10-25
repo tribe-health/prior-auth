@@ -1,0 +1,10 @@
+{
+  "url": "https://github.com/ory/docs/blob/master/docs/kratos/guides/zero-trust-iap-proxy-identity-access-proxy.mdx",
+  "chunk_id": "chunk-0032",
+  "text": "DOSSIER SUMMARY ONLY; not a raw fetched page. The research worker recorded official documentation retrieval; this assembly did not refetch it.\nContext7 official docs show cookie-session validation through Kratos whoami.",
+  "content_type": "worker-documentation-summary",
+  "source_id": "src-029",
+  "retrieval_status": "dossier-summary-only",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 73
+}

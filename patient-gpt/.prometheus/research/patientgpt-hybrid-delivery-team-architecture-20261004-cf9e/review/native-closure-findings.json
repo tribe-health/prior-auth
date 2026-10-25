@@ -1,0 +1,14 @@
+{
+  "isolation_mode": "harness-native",
+  "model_independence": "unverified",
+  "producer_model": "unknown",
+  "review_scope": "Narrow closure review of packet-closure.json: aggregate setup-count evidence and contradictions introduced by the supplemental setup evidence table. No source re-verification or runtime verification; this is not a new full-artifact review.",
+  "findings": [],
+  "checked_classes": [
+    "Aggregate numbers lacking evidence-table coverage: report line 119 now carries 103 files, 102 matches, and the preserved critic exception with the exact project receipt and fields.",
+    "Orphan or unlabeled setup evidence: each supplemental row has a qualified local-observation label, a project receipt path, and an explicit evidence scope.",
+    "Introduced numeric contradiction: six harnesses with 17 role artifacts each plus one DeepSeek composition profile total 103; 102 matched exports plus one preserved critic also total 103. Zed is described as a pointer, outside the six export sets.",
+    "Introduced verification inflation: the supplemental table limits evidence to file presence, byte parity, configuration, and installer consistency; it explicitly disclaims live execution and does not change the 82-source research count."
+  ],
+  "closure": "The remaining count-evidence warning is resolved within the reviewed packet."
+}

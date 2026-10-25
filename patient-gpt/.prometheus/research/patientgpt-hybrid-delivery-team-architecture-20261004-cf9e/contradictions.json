@@ -1,0 +1,128 @@
+{
+  "contradictions": [
+    {
+      "id": "contra-001",
+      "topic": "Desktop database selection",
+      "claim_a": {
+        "text": "Lines 6-12 and 80-108: existing SQLite preference and blocked production adoption despite bounded native measurements.",
+        "source": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/docs/architecture/tauri-pglite-baseline.md"
+      },
+      "claim_b": {
+        "text": "Lines 9496-9499 resolve surrealdb 3.1.5, not required 3.3.0.",
+        "source": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/Cargo.lock"
+      },
+      "resolved": false,
+      "label": "blocked",
+      "resolution": "Operator requests embedded SurrealDB 3.3.0; parent SQLite preference is not a substitute and Fabric resolves 3.1.5. Native adapter and exact version compatibility need work.",
+      "strategy": "direct operator scope and source-boundary reconciliation",
+      "confidence": 0.5
+    },
+    {
+      "id": "contra-002",
+      "topic": "Reusable browser materializer versus blocked adoption",
+      "claim_a": {
+        "text": "Lines 22-44: memory archive or persistent IndexedDB construction.",
+        "source": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/shared/sync/pglite-bootstrap.ts"
+      },
+      "claim_b": {
+        "text": "Lines 85-87: PGlite Sync log=full incompatibility and internal materializer RSS above cap; historical measurements not rerun.",
+        "source": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/versions.toml"
+      },
+      "resolved": true,
+      "label": "inferred",
+      "resolution": "Opening PGlite is distinct from approving the clinical materializer. Preserve memory gate and no silent fallback; recorded block remains.",
+      "strategy": "direct operator scope and source-boundary reconciliation",
+      "confidence": 0.9
+    },
+    {
+      "id": "contra-003",
+      "topic": "Native session header across adapters",
+      "claim_a": {
+        "text": "Lines 97-147 and 194-200 select Authorization or Cookie and reject competing credentials.",
+        "source": "file:///Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core/src/auth/kratos.rs"
+      },
+      "claim_b": {
+        "text": "Lines 69-121 forward Cookie or x-session-token to whoami and create User principal.",
+        "source": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/session.rs"
+      },
+      "resolved": false,
+      "label": "blocked",
+      "resolution": "Gate selects Authorization/Cookie; host sends x-session-token for native sessions. Freeze and exercise explicit credential translation before declaring parity.",
+      "strategy": "direct operator scope and source-boundary reconciliation",
+      "confidence": 0.5
+    },
+    {
+      "id": "contra-004",
+      "topic": "A2UI complete custom catalog versus closed UAR catalog",
+      "claim_a": {
+        "text": "Exact version/profile/catalog literals and nine admitted component types; strict schema and executable-content rejection.",
+        "source": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/frontend/src/platform/a2ui/protocol.ts"
+      },
+      "claim_b": {
+        "text": "Custom aso.workbench/v1 catalog contains clinical display components absent from default UAR catalog; host controls excluded.",
+        "source": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/a2ui-renderer.js"
+      },
+      "resolved": false,
+      "label": "blocked",
+      "resolution": "Full registered component goal remains mandatory. Define versioned component contracts and extend runtime admission and both shell registries as needed; a first increment cannot waive the final catalog.",
+      "strategy": "direct operator scope and source-boundary reconciliation",
+      "confidence": 0.5
+    },
+    {
+      "id": "contra-005",
+      "topic": "UAR document checkpoint versus narrow executable team profile",
+      "claim_a": {
+        "text": "Canonical JSON, exact SkillRefs, private bindings, immutable package closure and effective receipts; document conformance explicitly separate from runtime.",
+        "source": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/agents/collaboration/v0.1.0-draft.2/README.md"
+      },
+      "claim_b": {
+        "text": "Distinguishes authored selection from per-attempt selected artifacts; nested team/context limitations; external crash exclusion unavailable.",
+        "source": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/agents/collaboration/team-execution-profile-migration.md"
+      },
+      "resolved": true,
+      "label": "inferred",
+      "resolution": "Older README only establishes document checkpoint. Newer migration describes narrow team execution with explicit unsupported fields; source availability is not installed-runtime certification.",
+      "strategy": "direct operator scope and source-boundary reconciliation",
+      "confidence": 0.9
+    },
+    {
+      "id": "contra-006",
+      "topic": "Generic UI guidance versus incumbent product authority",
+      "claim_a": {
+        "text": "Five report sections; met/gap/void; source-backed assertions; distinct host-owned clinical command authority.",
+        "source": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.prometheus/project-contract.md"
+      },
+      "claim_b": {
+        "text": "One generator source; two-family advice overridden by explicit PatientGPT fonts.",
+        "source": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-design-tokens/SKILL.md"
+      },
+      "resolved": true,
+      "label": "inferred",
+      "resolution": "Preserve prototype three fonts and existing design. Generic token advice does not override operator design authority.",
+      "strategy": "direct operator scope and source-boundary reconciliation",
+      "confidence": 0.9
+    },
+    {
+      "id": "contra-007",
+      "topic": "CI test example versus PatientGPT local-only policy",
+      "claim_a": {
+        "text": "Lines 27-28 and 68-101 run tests in CI, prohibited for PatientGPT.",
+        "source": "file:///Users/gqadonis/Projects/prometheus/flint-forge/.github/workflows/ci.yml"
+      },
+      "claim_b": {
+        "text": "Lines 11-22 application pins unselected; preserve clinical source and local-only tests.",
+        "source": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/versions.toml"
+      },
+      "resolved": true,
+      "label": "inferred",
+      "resolution": "Do not copy sibling CI tests. CI can build/lint/typecheck/package; all tests wait for completed full-phase local integration.",
+      "strategy": "direct operator scope and source-boundary reconciliation",
+      "confidence": 0.9
+    }
+  ],
+  "detection": {
+    "method": "manual source-boundary comparison",
+    "semantic_inference_model": "not invoked",
+    "limits": "Not an exhaustive semantic contradiction scan."
+  }
+}

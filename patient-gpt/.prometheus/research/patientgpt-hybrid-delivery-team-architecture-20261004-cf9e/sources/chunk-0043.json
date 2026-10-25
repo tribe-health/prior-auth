@@ -1,0 +1,10 @@
+{
+  "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/agents/collaboration/team-execution-profile-migration.md",
+  "chunk_id": "chunk-0043",
+  "text": "th a new incarnation; another stable service requires an explicitly compatible rebind.\n75: \n76: External crash exclusion is deliberately unavailable: this release has no trusted host process-tree evidence importer bound to the dead process identity. A crashed owner without an internally recorded joined proof stays held, and reclaim refuses. A future host-bound implementation must record process start identity, join the owned complete process tree, authorize and persist a replay-safe proof, and retain uncertain issued effects. It must not accept an unchecked caller assertion.",
+  "content_type": "local-source-excerpt",
+  "source_id": "src-035",
+  "retrieval_status": "local-source-read",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 194
+}

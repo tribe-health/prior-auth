@@ -1,0 +1,146 @@
+{
+  "project": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt",
+  "activeTeam": "patientgpt-delivery",
+  "manifest": ".agent-team/patientgpt-delivery/team.json",
+  "nativeDefinitions": [
+    ".codex/agents/product-manager.toml",
+    ".codex/agents/team-lead.toml",
+    ".codex/agents/creative-director.toml",
+    ".codex/agents/design-expert.toml",
+    ".codex/agents/react-engineer.toml",
+    ".codex/agents/tauri-engineer.toml",
+    ".codex/agents/flutter-engineer.toml",
+    ".codex/agents/rust-domain-engineer.toml",
+    ".codex/agents/storage-engineer.toml",
+    ".codex/agents/flint-data-engineer.toml",
+    ".codex/agents/identity-security-engineer.toml",
+    ".codex/agents/uar-agent-expert.toml",
+    ".codex/agents/platform-release-engineer.toml",
+    ".codex/agents/documentation-engineer.toml",
+    ".codex/agents/phase-verifier.toml",
+    ".codex/agents/artifact-critic.toml",
+    ".codex/agents/ui-critic.toml"
+  ],
+  "changed": [
+    ".codex/agents/product-manager.toml",
+    ".codex/agents/team-lead.toml",
+    ".codex/agents/creative-director.toml",
+    ".codex/agents/design-expert.toml",
+    ".codex/agents/react-engineer.toml",
+    ".codex/agents/tauri-engineer.toml",
+    ".codex/agents/flutter-engineer.toml",
+    ".codex/agents/rust-domain-engineer.toml",
+    ".codex/agents/storage-engineer.toml",
+    ".codex/agents/flint-data-engineer.toml",
+    ".codex/agents/identity-security-engineer.toml",
+    ".codex/agents/uar-agent-expert.toml",
+    ".codex/agents/platform-release-engineer.toml",
+    ".codex/agents/documentation-engineer.toml",
+    ".codex/agents/phase-verifier.toml",
+    ".codex/agents/artifact-critic.toml",
+    ".codex/agents/ui-critic.toml",
+    ".agent-team/project-routing.json"
+  ],
+  "clean": false,
+  "dryRun": true,
+  "check": false,
+  "fingerprints": [
+    {
+      "file": ".codex/agents/product-manager.toml",
+      "before": null,
+      "after": "06869e31a79024c6e200e1488a80f612b8a72103cc933fb5dea0e79be00bb75f"
+    },
+    {
+      "file": ".codex/agents/team-lead.toml",
+      "before": null,
+      "after": "8747ee49b7b1385840be333d67ec6642c7bf986dcfe57f695fee57cf9e3cbdb1"
+    },
+    {
+      "file": ".codex/agents/creative-director.toml",
+      "before": null,
+      "after": "a70f0e653ccefcca36d021f3b7a4c3e57e37278f3154effdc8cd49fbd0ef91b7"
+    },
+    {
+      "file": ".codex/agents/design-expert.toml",
+      "before": null,
+      "after": "3b7c47d38c6254f1942b51631158b4e875e3ae56d08dae914296c25928c33eb4"
+    },
+    {
+      "file": ".codex/agents/react-engineer.toml",
+      "before": null,
+      "after": "92e6c8a56d97699d95ccb07d94095142925af845ac3c933fba62d72ec82921c4"
+    },
+    {
+      "file": ".codex/agents/tauri-engineer.toml",
+      "before": null,
+      "after": "7e3c4ba478ac561c4ebc23e9ae417b252f6ab3eaab43d667ea6df1ee1e37bcca"
+    },
+    {
+      "file": ".codex/agents/flutter-engineer.toml",
+      "before": null,
+      "after": "67839434037b3b7ca2b92700507506966ea53597c3d419a988ad76bfa2e7abd3"
+    },
+    {
+      "file": ".codex/agents/rust-domain-engineer.toml",
+      "before": null,
+      "after": "c2110a19f8f130d4b84a1d81e148d73a7697d98eba1104c4b6a76471c306ec7b"
+    },
+    {
+      "file": ".codex/agents/storage-engineer.toml",
+      "before": null,
+      "after": "c38e7cccc7cfae9b2f19aacef6eecd5e7b4d0420b1dc0be5a0f0900e426a1ea8"
+    },
+    {
+      "file": ".codex/agents/flint-data-engineer.toml",
+      "before": null,
+      "after": "b8769efbf8e66596aafd89b9598ba21ace9fff7372925f1a440ddb5ed064e080"
+    },
+    {
+      "file": ".codex/agents/identity-security-engineer.toml",
+      "before": null,
+      "after": "c4ce610d94bd75548708482d706f6eb395d747572b7dc5e451180716f7db6076"
+    },
+    {
+      "file": ".codex/agents/uar-agent-expert.toml",
+      "before": null,
+      "after": "75de6464c8799e00d49e3153cd01bd282a852ef70da0d48f9faf197e3f6b0531"
+    },
+    {
+      "file": ".codex/agents/platform-release-engineer.toml",
+      "before": null,
+      "after": "88487aab758ef22d8d9496f7eb60823e7fea6fb50304f5605b8530b59dafdbdc"
+    },
+    {
+      "file": ".codex/agents/documentation-engineer.toml",
+      "before": null,
+      "after": "2e0bbcfae59f90d3b9f0b0f5c26862fe120209490a8824dcc18c196b3ef5707e"
+    },
+    {
+      "file": ".codex/agents/phase-verifier.toml",
+      "before": null,
+      "after": "ea7eee6f1912af460f87b9f1bb8a00c6dbc2b1fa3a81e857fc9b1a8eb95b6074"
+    },
+    {
+      "file": ".codex/agents/artifact-critic.toml",
+      "before": null,
+      "after": "8d5c93a7a667bf09eb3aa5926595b802d21a4e8c7a23a7839120665b37f56fa7"
+    },
+    {
+      "file": ".codex/agents/ui-critic.toml",
+      "before": null,
+      "after": "482218b692e293096fbe973f60e28dea17aaf2766d9f20b7756e6572fdba7b8e"
+    },
+    {
+      "file": ".agent-team/project-routing.json",
+      "before": "db98adfaa11a45cb7fb0d5c2f59edcbe032e19dce639bbad3d88d7dd4f713066",
+      "after": "f8decf32eb7d44e8e86be4e9ac6ddbb64f506e6925b5118de2305846907237ee"
+    }
+  ],
+  "diagnostics": [
+    "Source-verified serialization only; installed native validation and live execution are unverified.",
+    "Only explicit model IDs are translated. Resolve tier, skill, capability and price policies with agent-team-models before native invocation.",
+    "Standalone agent files are supported. A Codex plugin agents manifest field is not verified; no such field is emitted.",
+    "Role overrides are preserved without native schema certification. Skill IDs refer to separately installed skills; prompt mentions do not install or authorize them."
+  ],
+  "recovery": null
+}

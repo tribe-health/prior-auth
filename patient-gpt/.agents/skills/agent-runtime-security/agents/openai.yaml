@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Runtime Security"
+  short_description: "Enforce the security boundary around Universal Agent Runtime and governed tool execution"
+  default_prompt: "Use $agent-runtime-security to apply its contract to this task and verify the required evidence."

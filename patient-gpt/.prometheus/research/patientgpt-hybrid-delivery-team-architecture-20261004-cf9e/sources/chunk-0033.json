@@ -1,0 +1,10 @@
+{
+  "url": "https://gateway.envoyproxy.io/docs/tasks/security/ext-auth",
+  "chunk_id": "chunk-0033",
+  "text": "DOSSIER SUMMARY ONLY; not a raw fetched page. The research worker recorded official documentation retrieval; this assembly did not refetch it.\nContext7 official docs configure SecurityPolicy HTTP authorization and headersToBackend.",
+  "content_type": "worker-documentation-summary",
+  "source_id": "src-030",
+  "retrieval_status": "dossier-summary-only",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 77
+}

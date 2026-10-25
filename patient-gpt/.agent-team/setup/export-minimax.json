@@ -1,0 +1,5 @@
+{
+  "state": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agent-team/state.json",
+  "target": "minimax",
+  "out": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agent-team/exports/minimax"
+}

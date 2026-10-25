@@ -1,0 +1,10 @@
+{
+  "url": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/vite.config.ts",
+  "chunk_id": "chunk-0075",
+  "text": "LOCAL SOURCE EXCERPT, read from filesystem; line numbers preserved.\n15:   server: {\n16:     port: 1420,\n17:     strictPort: true,\n18:     host: host || false,\n19:     hmr: host ? { protocol: 'ws', host, port: 1421 } : undefined,\n20:     watch: { ignored: ['**/src-tauri/**'] },\n21:     proxy: {\n22:       '/api': {\n23:         target: process.env.VITE_UAR_PROXY_TARGET || 'http://127.0.0.1:1906',\n24:         changeOrigin: true,\n25:       },\n26:     },\n27:   },\n28:   resolve: { alias: { '@': path.resolve(__dirname, './src') } },\n29:   envPrefix: ['VITE_', 'TAURI_'],\n30:   // safari15, NOT Tauri's scaffold default of safari13: the app's dependencies emit\n31:   // destructuring that esbuild cannot downlevel that far \u2014 `vite build` failed with 103\n32:   // \"Transforming destructuring to the configured target environment is not supported yet\"\n33:   // errors. Nothing caught it because `tsc` and `vite dev` both pass; only the PRODUCTION\n34:   // bundle (the one Tauri actually ships) goes through esbuild's transform.\n35:   //\n36:   // safari14 still fails; 15 is the lowest that builds, verified by bisecting. Safari 15\n37:   // ships with macOS 12, which is above Tauri 2's own macOS floor \u2014 so this narrows the\n38:   // supported range slightly, deliberately, rather than shipping a bundle that cannot be\n39:   // built at all.\n40:   build: { target: process.env.TAURI_ENV_PLATFORM === 'windows' ? 'chrome105' : 'safari15', minify: !process.env.TAURI_ENV_DEBUG ? 'esbuild' : false, sourcemap: !!process.env.TAURI_ENV_DEBUG },",
+  "content_type": "local-source-excerpt",
+  "source_id": "src-059",
+  "retrieval_status": "local-source-read",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 511
+}

@@ -1,0 +1,4300 @@
+{
+  "generated_at": "2026-10-04T14:55:18Z",
+  "default_weights": {
+    "domain_authority": 0.25,
+    "author_expertise": 0.2,
+    "citation_depth": 0.2,
+    "publication_recency": 0.2,
+    "factual_verifiability": 0.15
+  },
+  "profiles": [
+    {
+      "id": "balanced",
+      "label": "Balanced",
+      "description": "Every dimension weighted equally.",
+      "weights": {
+        "domain_authority": 0.2,
+        "author_expertise": 0.2,
+        "citation_depth": 0.2,
+        "publication_recency": 0.2,
+        "factual_verifiability": 0.2
+      }
+    },
+    {
+      "id": "authority_heavy",
+      "label": "Authority heavy",
+      "description": "Stresses domain authority and author expertise over freshness.",
+      "weights": {
+        "domain_authority": 0.35,
+        "author_expertise": 0.3,
+        "citation_depth": 0.15,
+        "publication_recency": 0.1,
+        "factual_verifiability": 0.1
+      }
+    },
+    {
+      "id": "recency_heavy",
+      "label": "Recency heavy",
+      "description": "Stresses publication recency for fast-moving topics.",
+      "weights": {
+        "domain_authority": 0.15,
+        "author_expertise": 0.1,
+        "citation_depth": 0.15,
+        "publication_recency": 0.45,
+        "factual_verifiability": 0.15
+      }
+    },
+    {
+      "id": "methodology_heavy",
+      "label": "Methodology heavy",
+      "description": "Stresses citation depth and factual verifiability over popularity.",
+      "weights": {
+        "domain_authority": 0.1,
+        "author_expertise": 0.1,
+        "citation_depth": 0.35,
+        "publication_recency": 0.1,
+        "factual_verifiability": 0.35
+      }
+    }
+  ],
+  "sources": [
+    {
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/SKILL.md",
+      "base_rank": 1,
+      "base_score": 100,
+      "rank_range": 0,
+      "score_range": 0,
+      "stability": "stable",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 1,
+          "score": 100,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 1,
+          "score": 100,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 1,
+          "score": 100,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 1,
+          "score": 100,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on citation_depth, factual_verifiability"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/a2ui-renderer.js",
+      "base_rank": 2,
+      "base_score": 89,
+      "rank_range": 0,
+      "score_range": 2,
+      "stability": "stable",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 2,
+          "score": 90,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 2,
+          "score": 88,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 2,
+          "score": 90,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 2,
+          "score": 90,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on citation_depth, factual_verifiability"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/prometheus-impeccable-core/SKILL.md",
+      "base_rank": 3,
+      "base_score": 66,
+      "rank_range": 0,
+      "score_range": 6,
+      "stability": "stable",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 3,
+          "score": 70,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 3,
+          "score": 64,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 3,
+          "score": 70,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 3,
+          "score": 70,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/ui-ux-pro-max/provenance.json",
+      "base_rank": 4,
+      "base_score": 66,
+      "rank_range": 0,
+      "score_range": 6,
+      "stability": "stable",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 4,
+          "score": 70,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 4,
+          "score": 64,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 4,
+          "score": 70,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 4,
+          "score": 70,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/agents/collaboration/v0.1.0-draft.2/README.md",
+      "base_rank": 5,
+      "base_score": 57,
+      "rank_range": 53,
+      "score_range": 10,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 58,
+          "score": 50,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 5,
+          "score": 60,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 58,
+          "score": 50,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 58,
+          "score": 50,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on citation_depth",
+        "weak on factual_verifiability"
+      ]
+    },
+    {
+      "url": "https://docs.ag-ui.com/concepts/events",
+      "base_rank": 6,
+      "base_score": 57,
+      "rank_range": 1,
+      "score_range": 3,
+      "stability": "sensitive",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 7,
+          "score": 60,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 6,
+          "score": 60,
+          "applied_weights": {
+            "domain_authority": 0.5833,
+            "citation_depth": 0.25,
+            "factual_verifiability": 0.1667
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 7,
+          "score": 60,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 7,
+          "score": 57,
+          "applied_weights": {
+            "domain_authority": 0.125,
+            "citation_depth": 0.4375,
+            "factual_verifiability": 0.4375
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "https://docs.rs/surrealdb/3.3.0/surrealdb/engine/local/index.html",
+      "base_rank": 7,
+      "base_score": 57,
+      "rank_range": 1,
+      "score_range": 3,
+      "stability": "sensitive",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 8,
+          "score": 60,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 7,
+          "score": 60,
+          "applied_weights": {
+            "domain_authority": 0.5833,
+            "citation_depth": 0.25,
+            "factual_verifiability": 0.1667
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 8,
+          "score": 60,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 8,
+          "score": 57,
+          "applied_weights": {
+            "domain_authority": 0.125,
+            "citation_depth": 0.4375,
+            "factual_verifiability": 0.4375
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "https://github.com/electric-sql/pglite/blob/main/docs/docs/filesystems.md",
+      "base_rank": 8,
+      "base_score": 57,
+      "rank_range": 1,
+      "score_range": 3,
+      "stability": "sensitive",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 9,
+          "score": 60,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 8,
+          "score": 60,
+          "applied_weights": {
+            "domain_authority": 0.5833,
+            "citation_depth": 0.25,
+            "factual_verifiability": 0.1667
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 9,
+          "score": 60,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 9,
+          "score": 57,
+          "applied_weights": {
+            "domain_authority": 0.125,
+            "citation_depth": 0.4375,
+            "factual_verifiability": 0.4375
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "https://github.com/electric-sql/pglite/blob/main/packages/pglite/examples/worker.html",
+      "base_rank": 9,
+      "base_score": 57,
+      "rank_range": 1,
+      "score_range": 3,
+      "stability": "sensitive",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 10,
+          "score": 60,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 9,
+          "score": 60,
+          "applied_weights": {
+            "domain_authority": 0.5833,
+            "citation_depth": 0.25,
+            "factual_verifiability": 0.1667
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 10,
+          "score": 60,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 10,
+          "score": 57,
+          "applied_weights": {
+            "domain_authority": 0.125,
+            "citation_depth": 0.4375,
+            "factual_verifiability": 0.4375
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "https://github.com/flutter/website/blob/main/sites/docs/src/content/learn/pathway/tutorial/adaptive-layout.md",
+      "base_rank": 10,
+      "base_score": 57,
+      "rank_range": 1,
+      "score_range": 3,
+      "stability": "sensitive",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 11,
+          "score": 60,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 10,
+          "score": 60,
+          "applied_weights": {
+            "domain_authority": 0.5833,
+            "citation_depth": 0.25,
+            "factual_verifiability": 0.1667
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 11,
+          "score": 60,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 11,
+          "score": 57,
+          "applied_weights": {
+            "domain_authority": 0.125,
+            "citation_depth": 0.4375,
+            "factual_verifiability": 0.4375
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "https://github.com/ory/docs/blob/master/docs/kratos/guides/zero-trust-iap-proxy-identity-access-proxy.mdx",
+      "base_rank": 11,
+      "base_score": 57,
+      "rank_range": 1,
+      "score_range": 3,
+      "stability": "sensitive",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 12,
+          "score": 60,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 11,
+          "score": 60,
+          "applied_weights": {
+            "domain_authority": 0.5833,
+            "citation_depth": 0.25,
+            "factual_verifiability": 0.1667
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 12,
+          "score": 60,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 12,
+          "score": 57,
+          "applied_weights": {
+            "domain_authority": 0.125,
+            "citation_depth": 0.4375,
+            "factual_verifiability": 0.4375
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "https://github.com/ory/docs/blob/master/docs/kratos/session-management/01_overview.mdx",
+      "base_rank": 12,
+      "base_score": 57,
+      "rank_range": 1,
+      "score_range": 3,
+      "stability": "sensitive",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 13,
+          "score": 60,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 12,
+          "score": 60,
+          "applied_weights": {
+            "domain_authority": 0.5833,
+            "citation_depth": 0.25,
+            "factual_verifiability": 0.1667
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 13,
+          "score": 60,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 13,
+          "score": 57,
+          "applied_weights": {
+            "domain_authority": 0.125,
+            "citation_depth": 0.4375,
+            "factual_verifiability": 0.4375
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "https://github.com/surrealdb/docs.surrealdb.com/blob/main/src/content/build/embedding/by-language/rust.mdx",
+      "base_rank": 13,
+      "base_score": 57,
+      "rank_range": 1,
+      "score_range": 3,
+      "stability": "sensitive",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 14,
+          "score": 60,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 13,
+          "score": 60,
+          "applied_weights": {
+            "domain_authority": 0.5833,
+            "citation_depth": 0.25,
+            "factual_verifiability": 0.1667
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 14,
+          "score": 60,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 14,
+          "score": 57,
+          "applied_weights": {
+            "domain_authority": 0.125,
+            "citation_depth": 0.4375,
+            "factual_verifiability": 0.4375
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "https://github.com/surrealdb/docs.surrealdb.com/blob/main/src/content/reference/rust/methods/new.mdx",
+      "base_rank": 14,
+      "base_score": 57,
+      "rank_range": 1,
+      "score_range": 3,
+      "stability": "sensitive",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 15,
+          "score": 60,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 14,
+          "score": 60,
+          "applied_weights": {
+            "domain_authority": 0.5833,
+            "citation_depth": 0.25,
+            "factual_verifiability": 0.1667
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 15,
+          "score": 60,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 15,
+          "score": 57,
+          "applied_weights": {
+            "domain_authority": 0.125,
+            "citation_depth": 0.4375,
+            "factual_verifiability": 0.4375
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "https://github.com/surrealdb/surrealdb/releases/tag/v3.3.0",
+      "base_rank": 15,
+      "base_score": 57,
+      "rank_range": 1,
+      "score_range": 3,
+      "stability": "sensitive",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 16,
+          "score": 60,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 15,
+          "score": 60,
+          "applied_weights": {
+            "domain_authority": 0.5833,
+            "citation_depth": 0.25,
+            "factual_verifiability": 0.1667
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 16,
+          "score": 60,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 16,
+          "score": 57,
+          "applied_weights": {
+            "domain_authority": 0.125,
+            "citation_depth": 0.4375,
+            "factual_verifiability": 0.4375
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/protocols/ag-ui-profile.md",
+      "base_rank": 16,
+      "base_score": 54,
+      "rank_range": 11,
+      "score_range": 8,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 5,
+          "score": 60,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 16,
+          "score": 52,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 5,
+          "score": 60,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 5,
+          "score": 60,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/frontend/src/platform/a2ui/protocol.ts",
+      "base_rank": 17,
+      "base_score": 54,
+      "rank_range": 11,
+      "score_range": 8,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 6,
+          "score": 60,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 17,
+          "score": 52,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 6,
+          "score": 60,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 6,
+          "score": 60,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-host/src/lib.rs",
+      "base_rank": 18,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 17,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 22,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 17,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 17,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/kratos_proxy.rs",
+      "base_rank": 19,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 18,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 23,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 18,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 18,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/crates/aso-web-server/src/adapters/session.rs",
+      "base_rank": 20,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 19,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 24,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 19,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 19,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/docs/architecture/tauri-pglite-baseline.md",
+      "base_rank": 21,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 20,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 25,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 20,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 20,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/vercel-react-best-practices/SKILL.md",
+      "base_rank": 22,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 21,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 26,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 21,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 21,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.prometheus/team-research/storage-identity.md",
+      "base_rank": 23,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 22,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 27,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 22,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 22,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/README.md",
+      "base_rank": 24,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 23,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 28,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 23,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 23,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/data-model.md",
+      "base_rank": 25,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 24,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 29,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 24,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 24,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat-storyboard.html",
+      "base_rank": 26,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 25,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 30,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 25,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 25,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/agui-stream.js",
+      "base_rank": 27,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 26,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 31,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 26,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 26,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/flows.js",
+      "base_rank": 28,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 27,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 32,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 27,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 27,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/panel.css",
+      "base_rank": 29,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 28,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 33,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 28,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 28,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/shell.css",
+      "base_rank": 30,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 29,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 34,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 29,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 29,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/tokens.css",
+      "base_rank": 31,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 30,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 35,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 30,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 30,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/versions.toml",
+      "base_rank": 32,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 31,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 36,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 31,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 31,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/versions.toml",
+      "base_rank": 33,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 32,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 37,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 32,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 32,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/app/providers/graph-provider.tsx",
+      "base_rank": 34,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 33,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 38,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 33,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 33,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/shared/sync/pglite-bootstrap.ts",
+      "base_rank": 35,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 34,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 39,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 34,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 34,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/web/src/shared/sync/storage-policy.ts",
+      "base_rank": 36,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 35,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 40,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 35,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 35,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/reference-ui-fidelity/SKILL.md",
+      "base_rank": 37,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 36,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 41,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 36,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 36,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/package.json",
+      "base_rank": 38,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 37,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 42,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 37,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 37,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/src-tauri/capabilities/default.json",
+      "base_rank": 39,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 38,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 43,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 38,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 38,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/src-tauri/tauri.conf.json",
+      "base_rank": 40,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 39,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 44,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 39,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 39,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/src/shared/components/Titlebar.tsx",
+      "base_rank": 41,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 40,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 45,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 40,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 40,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/know-me/know-me-system/desktop/vite.config.ts",
+      "base_rank": 42,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 41,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 46,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 41,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 41,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/know-me/know-me-system/mobile/lib/core/theme/tokens.dart",
+      "base_rank": 43,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 42,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 47,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 42,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 42,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-forge/.github/workflows/ci.yml",
+      "base_rank": 44,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 43,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 48,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 43,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 43,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-forge/crates/fdb-ports/src/lib.rs",
+      "base_rank": 45,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 44,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 49,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 44,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 44,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-forge/crates/fdb-postgres/src/backend.rs",
+      "base_rank": 46,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 45,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 50,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 45,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 45,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-gate/.github/workflows/deploy-gateway.yml",
+      "base_rank": 47,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 46,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 51,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 46,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 46,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-gate/crates/flint-gate-core/src/auth/kratos.rs",
+      "base_rank": 48,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 47,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 52,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 47,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 47,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/.github/workflows/docs-pages.yml",
+      "base_rank": 49,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 48,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 53,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 48,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 48,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/Cargo.lock",
+      "base_rank": 50,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 49,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 54,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 49,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 49,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-ports/src/entity_store.rs",
+      "base_rank": 51,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 50,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 55,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 50,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 50,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-projection-surreal/src/store.rs",
+      "base_rank": 52,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 51,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 56,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 51,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 51,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/flint-realtime-fabric/crates/frf-store-surreal/src/store.rs",
+      "base_rank": 53,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 52,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 57,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 52,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 52,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/a2ui/protocol.rs",
+      "base_rank": 54,
+      "base_score": 49,
+      "rank_range": 5,
+      "score_range": 9,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 53,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 58,
+          "score": 46,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 53,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 53,
+          "score": 55,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "https://a2ui.org/concepts/catalogs/",
+      "base_rank": 55,
+      "base_score": 49,
+      "rank_range": 37,
+      "score_range": 6,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 54,
+          "score": 53,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 18,
+          "score": 48,
+          "applied_weights": {
+            "domain_authority": 0.5833,
+            "citation_depth": 0.25,
+            "factual_verifiability": 0.1667
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 54,
+          "score": 53,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 54,
+          "score": 54,
+          "applied_weights": {
+            "domain_authority": 0.125,
+            "citation_depth": 0.4375,
+            "factual_verifiability": 0.4375
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "https://docusaurus.io/docs/installation",
+      "base_rank": 56,
+      "base_score": 49,
+      "rank_range": 37,
+      "score_range": 6,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 55,
+          "score": 53,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 19,
+          "score": 48,
+          "applied_weights": {
+            "domain_authority": 0.5833,
+            "citation_depth": 0.25,
+            "factual_verifiability": 0.1667
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 55,
+          "score": 53,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 55,
+          "score": 54,
+          "applied_weights": {
+            "domain_authority": 0.125,
+            "citation_depth": 0.4375,
+            "factual_verifiability": 0.4375
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "https://gateway.envoyproxy.io/docs/api/extension_types",
+      "base_rank": 57,
+      "base_score": 49,
+      "rank_range": 37,
+      "score_range": 6,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 56,
+          "score": 53,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 20,
+          "score": 48,
+          "applied_weights": {
+            "domain_authority": 0.5833,
+            "citation_depth": 0.25,
+            "factual_verifiability": 0.1667
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 56,
+          "score": 53,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 56,
+          "score": 54,
+          "applied_weights": {
+            "domain_authority": 0.125,
+            "citation_depth": 0.4375,
+            "factual_verifiability": 0.4375
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "https://gateway.envoyproxy.io/docs/tasks/security/ext-auth",
+      "base_rank": 58,
+      "base_score": 49,
+      "rank_range": 37,
+      "score_range": 6,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 57,
+          "score": 53,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 21,
+          "score": 48,
+          "applied_weights": {
+            "domain_authority": 0.5833,
+            "citation_depth": 0.25,
+            "factual_verifiability": 0.1667
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 57,
+          "score": 53,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 57,
+          "score": 54,
+          "applied_weights": {
+            "domain_authority": 0.125,
+            "citation_depth": 0.4375,
+            "factual_verifiability": 0.4375
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "strong on factual_verifiability",
+        "weak on citation_depth"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/docs/agents/collaboration/team-execution-profile-migration.md",
+      "base_rank": 59,
+      "base_score": 34,
+      "rank_range": 2,
+      "score_range": 6,
+      "stability": "sensitive",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 59,
+          "score": 30,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 61,
+          "score": 36,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 59,
+          "score": 30,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 59,
+          "score": 30,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "weak on factual_verifiability"
+      ]
+    },
+    {
+      "url": "https://docs.flutter.dev/ui/adaptive-responsive/safearea-mediaquery",
+      "base_rank": 60,
+      "base_score": 32,
+      "rank_range": 3,
+      "score_range": 30,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 60,
+          "score": 27,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 59,
+          "score": 43,
+          "applied_weights": {
+            "domain_authority": 0.5833,
+            "citation_depth": 0.25,
+            "factual_verifiability": 0.1667
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 60,
+          "score": 27,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 62,
+          "score": 13,
+          "applied_weights": {
+            "domain_authority": 0.125,
+            "citation_depth": 0.4375,
+            "factual_verifiability": 0.4375
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "weak on citation_depth, factual_verifiability"
+      ]
+    },
+    {
+      "url": "https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages",
+      "base_rank": 61,
+      "base_score": 32,
+      "rank_range": 3,
+      "score_range": 30,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 61,
+          "score": 27,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 60,
+          "score": 43,
+          "applied_weights": {
+            "domain_authority": 0.5833,
+            "citation_depth": 0.25,
+            "factual_verifiability": 0.1667
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 61,
+          "score": 27,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 63,
+          "score": 13,
+          "applied_weights": {
+            "domain_authority": 0.125,
+            "citation_depth": 0.4375,
+            "factual_verifiability": 0.4375
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "weak on citation_depth, factual_verifiability"
+      ]
+    },
+    {
+      "url": "https://docusaurus.io/docs/deployment",
+      "base_rank": 62,
+      "base_score": 24,
+      "rank_range": 2,
+      "score_range": 21,
+      "stability": "sensitive",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 64,
+          "score": 20,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 62,
+          "score": 32,
+          "applied_weights": {
+            "domain_authority": 0.5833,
+            "citation_depth": 0.25,
+            "factual_verifiability": 0.1667
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 64,
+          "score": 20,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 64,
+          "score": 11,
+          "applied_weights": {
+            "domain_authority": 0.125,
+            "citation_depth": 0.4375,
+            "factual_verifiability": 0.4375
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "weak on citation_depth, factual_verifiability"
+      ]
+    },
+    {
+      "url": "https://v2.tauri.app/learn/window-customization/",
+      "base_rank": 63,
+      "base_score": 24,
+      "rank_range": 2,
+      "score_range": 21,
+      "stability": "sensitive",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 65,
+          "score": 20,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 63,
+          "score": 32,
+          "applied_weights": {
+            "domain_authority": 0.5833,
+            "citation_depth": 0.25,
+            "factual_verifiability": 0.1667
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 65,
+          "score": 20,
+          "applied_weights": {
+            "domain_authority": 0.3333,
+            "citation_depth": 0.3333,
+            "factual_verifiability": 0.3333
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 65,
+          "score": 11,
+          "applied_weights": {
+            "domain_authority": 0.125,
+            "citation_depth": 0.4375,
+            "factual_verifiability": 0.4375
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "weak on citation_depth, factual_verifiability"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/prometheus-ui-ux/SKILL.md",
+      "base_rank": 64,
+      "base_score": 23,
+      "rank_range": 4,
+      "score_range": 4,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 62,
+          "score": 20,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 64,
+          "score": 24,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 62,
+          "score": 20,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 60,
+          "score": 20,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "weak on factual_verifiability"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/ui-ux-pro-max/SKILL.md",
+      "base_rank": 65,
+      "base_score": 23,
+      "rank_range": 4,
+      "score_range": 4,
+      "stability": "volatile",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 63,
+          "score": 20,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 65,
+          "score": 24,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 63,
+          "score": 20,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 61,
+          "score": 20,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "weak on factual_verifiability"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/.codex/skills/impeccable/SKILL.md",
+      "base_rank": 66,
+      "base_score": 11,
+      "rank_range": 0,
+      "score_range": 2,
+      "stability": "stable",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 66,
+          "score": 10,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 66,
+          "score": 12,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 66,
+          "score": 10,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 66,
+          "score": 10,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "weak on citation_depth, factual_verifiability"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/better-interface/SKILL.md",
+      "base_rank": 67,
+      "base_score": 11,
+      "rank_range": 0,
+      "score_range": 2,
+      "stability": "stable",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 67,
+          "score": 10,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 67,
+          "score": 12,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 67,
+          "score": 10,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 67,
+          "score": 10,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "weak on citation_depth, factual_verifiability"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/references/arch-standard.md",
+      "base_rank": 68,
+      "base_score": 11,
+      "rank_range": 0,
+      "score_range": 2,
+      "stability": "stable",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 68,
+          "score": 10,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 68,
+          "score": 12,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 68,
+          "score": 10,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 68,
+          "score": 10,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "weak on citation_depth, factual_verifiability"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/frontend/src/features/a2ui/a2ui-surface-renderer.tsx",
+      "base_rank": 69,
+      "base_score": 11,
+      "rank_range": 0,
+      "score_range": 2,
+      "stability": "stable",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 69,
+          "score": 10,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 69,
+          "score": 12,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 69,
+          "score": 10,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 69,
+          "score": 10,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "weak on citation_depth, factual_verifiability"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/UI_UX_PROTOCOL.md",
+      "base_rank": 70,
+      "base_score": 6,
+      "rank_range": 0,
+      "score_range": 1,
+      "stability": "stable",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 70,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 70,
+          "score": 6,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 70,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 70,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "weak on citation_depth, factual_verifiability"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/flutter-build-responsive-layout/SKILL.md",
+      "base_rank": 71,
+      "base_score": 6,
+      "rank_range": 0,
+      "score_range": 1,
+      "stability": "stable",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 71,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 71,
+          "score": 6,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 71,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 71,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "weak on citation_depth, factual_verifiability"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.kbd-orchestrator/current-waypoint.json",
+      "base_rank": 72,
+      "base_score": 6,
+      "rank_range": 0,
+      "score_range": 1,
+      "stability": "stable",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 72,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 72,
+          "score": 6,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 72,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 72,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "weak on citation_depth, factual_verifiability"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.prometheus/project-contract.md",
+      "base_rank": 73,
+      "base_score": 6,
+      "rank_range": 0,
+      "score_range": 1,
+      "stability": "stable",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 73,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 73,
+          "score": 6,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 73,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 73,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "weak on citation_depth, factual_verifiability"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/agui-event-contract/SKILL.md",
+      "base_rank": 74,
+      "base_score": 6,
+      "rank_range": 0,
+      "score_range": 1,
+      "stability": "stable",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 74,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 74,
+          "score": 6,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 74,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 74,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "weak on citation_depth, factual_verifiability"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/build-branded-docusaurus/SKILL.md",
+      "base_rank": 75,
+      "base_score": 6,
+      "rank_range": 0,
+      "score_range": 1,
+      "stability": "stable",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 75,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 75,
+          "score": 6,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 75,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 75,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "weak on citation_depth, factual_verifiability"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/flutter-golden-ui/SKILL.md",
+      "base_rank": 76,
+      "base_score": 6,
+      "rank_range": 0,
+      "score_range": 1,
+      "stability": "stable",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 76,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 76,
+          "score": 6,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 76,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 76,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "weak on citation_depth, factual_verifiability"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-design-tokens/SKILL.md",
+      "base_rank": 77,
+      "base_score": 6,
+      "rank_range": 0,
+      "score_range": 1,
+      "stability": "stable",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 77,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 77,
+          "score": 6,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 77,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 77,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "weak on citation_depth, factual_verifiability"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/references/rust/tool-governance.md",
+      "base_rank": 78,
+      "base_score": 6,
+      "rank_range": 0,
+      "score_range": 1,
+      "stability": "stable",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 78,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 78,
+          "score": 6,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 78,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 78,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "weak on citation_depth, factual_verifiability"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/tauri-custom-titlebar/SKILL.md",
+      "base_rank": 79,
+      "base_score": 6,
+      "rank_range": 0,
+      "score_range": 1,
+      "stability": "stable",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 79,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 79,
+          "score": 6,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 79,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 79,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "weak on citation_depth, factual_verifiability"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/server.rs",
+      "base_rank": 80,
+      "base_score": 6,
+      "rank_range": 0,
+      "score_range": 1,
+      "stability": "stable",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 80,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 80,
+          "score": 6,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 80,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 80,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "weak on citation_depth, factual_verifiability"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/compiler/collaboration/runtime_semantics.rs",
+      "base_rank": 81,
+      "base_score": 6,
+      "rank_range": 0,
+      "score_range": 1,
+      "stability": "stable",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 81,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 81,
+          "score": 6,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 81,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 81,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "weak on citation_depth, factual_verifiability"
+      ]
+    },
+    {
+      "url": "file:///Users/gqadonis/Projects/prometheus/universal-agent-runtime/src/uar/runtime/tool_admission/mod.rs",
+      "base_rank": 82,
+      "base_score": 6,
+      "rank_range": 0,
+      "score_range": 1,
+      "stability": "stable",
+      "profile_ranks": [
+        {
+          "profile_id": "balanced",
+          "rank": 82,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "authority_heavy",
+          "rank": 82,
+          "score": 6,
+          "applied_weights": {
+            "citation_depth": 0.6,
+            "factual_verifiability": 0.4
+          }
+        },
+        {
+          "profile_id": "recency_heavy",
+          "rank": 82,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        },
+        {
+          "profile_id": "methodology_heavy",
+          "rank": 82,
+          "score": 5,
+          "applied_weights": {
+            "citation_depth": 0.5,
+            "factual_verifiability": 0.5
+          }
+        }
+      ],
+      "drivers": [
+        "missing evidence for domain_authority, author_expertise, publication_recency; the remaining weights are renormalised, so profiles that lean on them swing this rank",
+        "weak on citation_depth, factual_verifiability"
+      ]
+    }
+  ],
+  "summary": {
+    "stable": 21,
+    "sensitive": 13,
+    "volatile": 48,
+    "top_source": "file:///Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/SKILL.md",
+    "top_source_stable": true
+  },
+  "basis": [
+    "Each profile reruns the same dimension signals with a different weight vector and the same per-source missing-evidence renormalisation.",
+    "stable: the rank never moves across profiles; sensitive: it moves by at most two places; volatile: it moves further and should be inspected before the order is treated as decisive.",
+    "Sycophancy penalties are preserved across profiles."
+  ]
+}

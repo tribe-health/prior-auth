@@ -1,0 +1,21 @@
+[check-research-package] PASS  manifest.json validates (jsonschema)
+[check-research-package] PASS  files.report present (report.md)
+[check-research-package] PASS  files.provenance present (patientgpt-hybrid-delivery-team-architecture.provenance.md)
+[check-research-package] PASS  files.plan present (plan.md)
+[check-research-package] PASS  files.graph present (graph.json)
+[check-research-package] PASS  files.citations present (citations.json)
+[check-research-package] PASS  files.contradictions present (contradictions.json)
+[check-research-package] PASS  files.index present (index.md)
+[check-research-package] PASS  files.sources_dir present (sources/)
+[check-research-package] PASS  report.md verification_status agrees with manifest
+[check-research-package] PASS  report.md confidence agrees with manifest
+[check-research-package] PASS  report.md feynman_grade agrees with manifest
+[check-research-package] PASS  report.md misconceptions_absent agrees with manifest
+[check-research-package] PASS  report.md sources_count agrees with manifest
+[check-research-package] PASS  report.md contradictions_resolved agrees with manifest
+[check-research-package] PASS  provenance verdict agrees with manifest
+[check-research-package] PASS  graph.json validates against research-graph.schema.json (82 claims)
+[check-research-package] PASS  citations.json labels valid (82)
+[check-research-package] PASS  contradictions.json labels valid (7)
+[check-research-package] PASS  verification_status partial agrees with the derivation rule
+[check-research-package] RESULT: PASS

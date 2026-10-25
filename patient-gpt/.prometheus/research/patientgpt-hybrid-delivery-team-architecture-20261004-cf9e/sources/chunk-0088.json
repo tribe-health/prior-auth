@@ -1,0 +1,10 @@
+{
+  "url": "file:///Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/ui-ux-pro-max/provenance.json",
+  "chunk_id": "chunk-0088",
+  "text": "loads or overrides project DESIGN.md.\",\n57:     \"Upstream reference documents retained with an explicit local applicability notice; platform-specific touch units override generic CSS-pixel examples.\",\n58:     \"Direct-entry CLI detection canonicalizes filesystem aliases, preserving execution from standalone copied packages.\"\n59:   ],\n60:   \"verification\": {\n61:     \"evidence\": \"reference-cases.json\",\n62:     \"upstreamCliComparisons\": 50,\n63:     \"persistenceAndPackagedCliChecks\": 19,\n64:     \"platform\": \"darwin\",\n65:     \"node\": \"v24.16.0\",\n66:     \"status\": \"passed-on-macos\",\n67:     \"nativeWindows\": \"not-run\",\n68:     \"nativeLinux\": \"not-run\",\n69:     \"presentationParity\": \"intentional documented adaptation\"\n70:   }\n71: }",
+  "content_type": "local-source-excerpt",
+  "source_id": "src-067",
+  "retrieval_status": "local-source-read",
+  "observed_at": "2026-10-04",
+  "token_count_estimate": 244
+}

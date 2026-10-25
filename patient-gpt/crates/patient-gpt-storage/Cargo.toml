@@ -1,0 +1,20 @@
+# TJ-ARCH-MOB-001 compliant
+[package]
+name = "patient-gpt-storage"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[features]
+default = []
+# Embedded SurrealDB 3.3.0 (RocksDB engine). Off by default so the server's
+# inner loop does not compile SurrealDB; the desktop shell enables it.
+surreal = ["dep:surrealdb", "dep:tokio"]
+
+[dependencies]
+patient-gpt-domain.workspace = true
+patient-gpt-host.workspace = true
+async-trait.workspace = true
+surrealdb = { workspace = true, optional = true }
+tokio = { workspace = true, optional = true }

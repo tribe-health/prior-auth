@@ -1,0 +1,4 @@
+interface:
+  display_name: "Hybrid Mobile Architecture"
+  short_description: "Build, adopt, upgrade, and audit governed agentic applications with Flutter, Tauri, React, Axum,"
+  default_prompt: "Use $hybrid-mobile-architecture to apply its contract to this task and verify the required evidence."

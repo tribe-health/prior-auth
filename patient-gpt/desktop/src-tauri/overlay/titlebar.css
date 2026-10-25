@@ -1,0 +1,61 @@
+/* TJ-ARCH-MOB-001 compliant
+   PatientGPT desktop title bar. Brand board "Desktop window, Tauri": a --s2
+   bar, favicon cut at 16px, the window title from the app, Mulish 600 at
+   --fs-meta. Flat 2.0: fills only. Every colour is an existing token, so
+   html.dark re-themes the bar with the rest of the app. */
+
+/* The bar takes the first 40px through web/'s host chrome seam: setting
+   --host-inset-top moves the app and its fixed drawers and panels below it
+   (web/src/styles/app.css). No web/ layout class is restyled here. */
+html.pg-shell { --host-inset-top: 40px; }
+
+#pg-titlebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 90;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, auto) minmax(0, 1fr);
+  align-items: center;
+  height: 40px;
+  padding: 0 12px;
+  background: var(--s2);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: var(--fs-meta);
+  font-weight: 600;
+  line-height: 1;
+  cursor: default;
+  user-select: none;
+  -webkit-user-select: none;
+}
+/* Room for the native traffic lights. */
+html.pg-shell-macos .pg-tb-lead { min-width: 66px; }
+
+.pg-tb-title { display: flex; align-items: center; gap: 8px; min-width: 0; white-space: nowrap; }
+.pg-tb-title svg { display: block; width: 16px; height: 16px; flex: none; }
+.pg-tb-title span { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+
+.pg-tb-trail { display: flex; justify-content: flex-end; height: 100%; }
+.pg-tb-controls { display: flex; height: 100%; margin-right: -12px; }
+.pg-tb-btn {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--fg-2);
+  cursor: default;
+}
+.pg-tb-btn svg { fill: none; stroke: currentColor; stroke-width: 1; }
+.pg-tb-btn:hover { background: var(--s3); color: var(--fg); }
+.pg-tb-btn:active { background: var(--s4); color: var(--fg); }
+.pg-tb-close:hover, .pg-tb-close:active { background: var(--fg); color: var(--bg); }
+@media (prefers-reduced-motion: no-preference) {
+  .pg-tb-btn { transition: background-color var(--dur-exit) var(--ease), color var(--dur-exit) var(--ease); }
+}

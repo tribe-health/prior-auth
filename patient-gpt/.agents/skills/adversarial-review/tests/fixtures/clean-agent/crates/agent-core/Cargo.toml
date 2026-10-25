@@ -1,0 +1,4 @@
+[package]
+name = "agent-core"
+version = "0.1.0"
+description = "Conversation loop, provider routing, and read-only memory search"

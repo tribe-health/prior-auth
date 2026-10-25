@@ -1,0 +1,16 @@
+# TJ-ARCH-MOB-001 compliant
+[package]
+name = "patient-gpt-host"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+# Shell-independent by construction. If axum, tauri or flutter_rust_bridge
+# ever appears here, the shared core has stopped being shared.
+[dependencies]
+patient-gpt-domain.workspace = true
+async-trait.workspace = true
+futures.workspace = true
+thiserror.workspace = true
+uuid.workspace = true

@@ -1,0 +1,290 @@
+[
+  {
+    "id": "pg-contract",
+    "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.prometheus/project-contract.md",
+    "title": "PatientGPT implementation contract",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "Design authority, shells, clinical boundaries and explicit prototype limitations; lines 29-40, 92-117, 147-172.",
+    "confidence": "high"
+  },
+  {
+    "id": "pg-waypoint",
+    "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.kbd-orchestrator/current-waypoint.json",
+    "title": "PatientGPT waypoint",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "Spec, ready, bootstrap.",
+    "confidence": "high"
+  },
+  {
+    "id": "pg-design",
+    "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/README.md",
+    "title": "PatientGPT design reference",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "Synthetic reference for all three surfaces; script responsibilities; lines 3-49.",
+    "confidence": "high"
+  },
+  {
+    "id": "pg-storyboard",
+    "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat-storyboard.html",
+    "title": "PatientGPT storyboard",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "Seven workflow cases and nine navigation examples; lines 144-310.",
+    "confidence": "high"
+  },
+  {
+    "id": "pg-tokens",
+    "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/tokens.css",
+    "title": "PatientGPT prototype tokens",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "Three typefaces, dimensions, semantic colors and fill focus; lines 71-89 and 191-201.",
+    "confidence": "high"
+  },
+  {
+    "id": "pg-layout",
+    "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/panel.css",
+    "title": "PatientGPT Files responsive layout",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "360px panel and 1100px breakpoint, overlay and sheet rules; lines 87-101.",
+    "confidence": "high"
+  },
+  {
+    "id": "pg-shell",
+    "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/shell.css",
+    "title": "PatientGPT shell responsive layout",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "Safe area, pointer and drawer behavior; lines 113 and 198-231.",
+    "confidence": "high"
+  },
+  {
+    "id": "pg-flows",
+    "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/docs/design/patient-chat/flows.js",
+    "title": "Prototype workflow limits",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "Letter revision and appeal drafting explicitly absent; lines 271,418.",
+    "confidence": "high"
+  },
+  {
+    "id": "know-titlebar",
+    "path": "/Users/gqadonis/Projects/know-me/know-me-system/desktop/src/shared/components/Titlebar.tsx",
+    "title": "KnowMe custom Tauri titlebar",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "Gated window resolution, platform controls, header drag, fixed maximize label; lines 17-115. Source-only.",
+    "confidence": "high"
+  },
+  {
+    "id": "know-config",
+    "path": "/Users/gqadonis/Projects/know-me/know-me-system/desktop/src-tauri/tauri.conf.json",
+    "title": "KnowMe Tauri config",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "Frontend dist and decorations false; lines 5-20.",
+    "confidence": "high"
+  },
+  {
+    "id": "know-capabilities",
+    "path": "/Users/gqadonis/Projects/know-me/know-me-system/desktop/src-tauri/capabilities/default.json",
+    "title": "KnowMe capabilities",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "Window control permissions; lines 8-11.",
+    "confidence": "high"
+  },
+  {
+    "id": "know-vite",
+    "path": "/Users/gqadonis/Projects/know-me/know-me-system/desktop/vite.config.ts",
+    "title": "KnowMe Vite config",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "API proxy, recorded production target failure and configured browser targets; lines 15-40.",
+    "confidence": "high"
+  },
+  {
+    "id": "know-package",
+    "path": "/Users/gqadonis/Projects/know-me/know-me-system/desktop/package.json",
+    "title": "KnowMe desktop scripts",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "Build and Tauri entrypoints; lines 7-11.",
+    "confidence": "high"
+  },
+  {
+    "id": "know-mobile-tokens",
+    "path": "/Users/gqadonis/Projects/know-me/know-me-system/mobile/lib/core/theme/tokens.dart",
+    "title": "KnowMe Flutter palette",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "Manually expressed projection header and constants; lines 1-3,54 onward; no generated parity proof.",
+    "confidence": "high"
+  },
+  {
+    "id": "ui-protocol",
+    "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/UI_UX_PROTOCOL.md",
+    "title": "Project UI UX protocol",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "Preserve prototype, selective skills, direction roles and full phase review.",
+    "confidence": "high"
+  },
+  {
+    "id": "ui-router",
+    "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/prometheus-ui-ux/SKILL.md",
+    "title": "UI UX routing skill",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "Routing and phase-boundary tooling; source does not claim actual verification.",
+    "confidence": "high"
+  },
+  {
+    "id": "ui-impeccable-core",
+    "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/prometheus-impeccable-core/SKILL.md",
+    "title": "Portable Impeccable core",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "Context adaptation provenance and native engine exclusions; lines 11-19.",
+    "confidence": "high"
+  },
+  {
+    "id": "ui-impeccable-full",
+    "path": "/Users/gqadonis/.codex/skills/impeccable/SKILL.md",
+    "title": "Impeccable 4.4.0",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "Existing brief wins; preinstalled engine requirement; bounded phase review.",
+    "confidence": "high"
+  },
+  {
+    "id": "ui-pro-max",
+    "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/ui-ux-pro-max/SKILL.md",
+    "title": "UI UX Pro Max portable skill",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "Focused retrieval, incumbent authority, no replacement direction by default.",
+    "confidence": "high"
+  },
+  {
+    "id": "ui-pro-max-provenance",
+    "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/ui-ux-pro-max/provenance.json",
+    "title": "Pro Max source provenance",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "MIT upstream commit dcc40ff5133ef78276117db0cc34e7b83cc8aeba; local packaged runtime description.",
+    "confidence": "high"
+  },
+  {
+    "id": "ui-craft",
+    "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/better-interface/SKILL.md",
+    "title": "Better Interface",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "Cross-discipline orchestration and evidence over taste.",
+    "confidence": "high"
+  },
+  {
+    "id": "ui-react",
+    "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/vercel-react-best-practices/SKILL.md",
+    "title": "Vercel React best practices",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "Relevant render/bundle advice; SWR conflicts with PatientGPT line 83.",
+    "confidence": "high"
+  },
+  {
+    "id": "ui-flutter",
+    "path": "/Users/gqadonis/Projects/TribeHealth/kevin/prior-auth/patient-gpt/.agents/skills/flutter-build-responsive-layout/SKILL.md",
+    "title": "Flutter adaptive layout skill",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "Available-space composition, project authority and completed-phase review.",
+    "confidence": "high"
+  },
+  {
+    "id": "hybrid-standard",
+    "path": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/references/arch-standard.md",
+    "title": "Hybrid architecture standard",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "Shared Rust/native shells and permanent bridge ownership; lines 9-20,89-104. CI example overridden.",
+    "confidence": "high"
+  },
+  {
+    "id": "hybrid-skill",
+    "path": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-mobile-architecture/SKILL.md",
+    "title": "Hybrid architecture skill",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "Source checkout c9b3e2d4ca16322de83f9210cf1e97d2480ef004; adoption and architecture guidance.",
+    "confidence": "high"
+  },
+  {
+    "id": "hybrid-titlebar",
+    "path": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/tauri-custom-titlebar/SKILL.md",
+    "title": "Tauri titlebar skill",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "Desktop-only chrome and shared-bundle call gating; broad import assertion needs qualification.",
+    "confidence": "high"
+  },
+  {
+    "id": "hybrid-tokens",
+    "path": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/hybrid-design-tokens/SKILL.md",
+    "title": "Hybrid token skill",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "One generator source; two-family advice overridden by explicit PatientGPT fonts.",
+    "confidence": "high"
+  },
+  {
+    "id": "hybrid-fidelity",
+    "path": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/reference-ui-fidelity/SKILL.md",
+    "title": "Reference UI fidelity",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "State/theme/form inventory and comparison; generic persistence/version defaults subordinate to contract.",
+    "confidence": "high"
+  },
+  {
+    "id": "hybrid-goldens",
+    "path": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/flutter-golden-ui/SKILL.md",
+    "title": "Flutter visual verification",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "Native inspection and goldens; per-widget timing overridden by full-phase boundary.",
+    "confidence": "high"
+  },
+  {
+    "id": "hybrid-docs",
+    "path": "/Users/gqadonis/Projects/hybrid-mobile-architecture-src/skills/build-branded-docusaurus/SKILL.md",
+    "title": "Branded Docusaurus skill",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "Public-content classification, branded site and verification scope.",
+    "confidence": "high"
+  },
+  {
+    "id": "tauri-official",
+    "url": "https://v2.tauri.app/learn/window-customization/",
+    "title": "Tauri window customization",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "Official control APIs and capability permissions; custom macOS chrome limitations; observed old tauri.windows snippet.",
+    "confidence": "high"
+  },
+  {
+    "id": "flutter-official",
+    "url": "https://docs.flutter.dev/ui/adaptive-responsive/safearea-mediaquery",
+    "title": "Flutter SafeArea and MediaQuery",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "System insets, window information and accessibility settings.",
+    "confidence": "high"
+  },
+  {
+    "id": "flutter-layout",
+    "url": "https://github.com/flutter/website/blob/main/sites/docs/src/content/learn/pathway/tutorial/adaptive-layout.md",
+    "title": "Flutter adaptive layout tutorial",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "Context7 official source: LayoutBuilder and constraints-based composition.",
+    "confidence": "high"
+  },
+  {
+    "id": "docusaurus-deploy",
+    "url": "https://docusaurus.io/docs/deployment",
+    "title": "Docusaurus deployment",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "Production url/baseUrl and explicit trailingSlash; docs build artifact deployment.",
+    "confidence": "high"
+  },
+  {
+    "id": "docusaurus-monorepo",
+    "url": "https://docusaurus.io/docs/installation",
+    "title": "Docusaurus monorepo installation",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "Context7 official source supports docs in isolated monorepo subfolder.",
+    "confidence": "high"
+  },
+  {
+    "id": "github-pages",
+    "url": "https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages",
+    "title": "GitHub Pages custom workflows",
+    "observedAt": "2026-10-04",
+    "evidenceSummary": "Build/artifact/deploy separation, permissions, needs and environment; current action major versions.",
+    "confidence": "high"
+  }
+]

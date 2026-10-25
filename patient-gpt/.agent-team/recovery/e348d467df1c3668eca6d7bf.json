@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "files": [
+    {
+      "file": ".dsh/profiles/patientgpt-delivery-product-manager/cordis.patch.yml",
+      "before": null,
+      "afterSha256": "90cffaceb02a2d642f52c779d67eaad44ba5e1a84c253e0bacf96f20fa506f40"
+    },
+    {
+      "file": ".dsh/profiles/patientgpt-delivery-team-lead/cordis.patch.yml",
+      "before": null,
+      "afterSha256": "de8486ae1368cb3c776cabd7a3cc38ad8402b45d62f7e8eef8a4cae1964e55b3"
+    },
+    {
+      "file": ".dsh/profiles/patientgpt-delivery-creative-director/cordis.patch.yml",
+      "before": null,
+      "afterSha256": "3d414d0948dc5f82672714120a32504d220d438602393ed4c8f68a1eaac614f1"
+    },
+    {
+      "file": ".dsh/profiles/patientgpt-delivery-design-expert/cordis.patch.yml",
+      "before": null,
+      "afterSha256": "cfe500407fdaef98a1bb90b0514215ba5adfef8200298c94d371bb6d996de34b"
+    },
+    {
+      "file": ".dsh/profiles/patientgpt-delivery-react-engineer/cordis.patch.yml",
+      "before": null,
+      "afterSha256": "320801bac9e1e55fc7ff34bace26727ab897116074ec96ea241b15bb354d1a7e"
+    },
+    {
+      "file": ".dsh/profiles/patientgpt-delivery-tauri-engineer/cordis.patch.yml",
+      "before": null,
+      "afterSha256": "810893805e9e918bababf75c40936a3189bfe3fba79c4c1392db9c4c2804e59c"
+    },
+    {
+      "file": ".dsh/profiles/patientgpt-delivery-flutter-engineer/cordis.patch.yml",
+      "before": null,
+      "afterSha256": "2844f3757f2aeb90813b032c9ce69ab90043fff28510d656fb26780cf4ac7d2e"
+    },
+    {
+      "file": ".dsh/profiles/patientgpt-delivery-rust-domain-engineer/cordis.patch.yml",
+      "before": null,
+      "afterSha256": "c7ca0ad57ea071b99afb8f54f220e8aa7bfa0f64915ea2fec51677e2eee43e02"
+    },
+    {
+      "file": ".dsh/profiles/patientgpt-delivery-storage-engineer/cordis.patch.yml",
+      "before": null,
+      "afterSha256": "ebef15bcf0aa86c3e44ebbf36e2db93e9273f581fe77e5992b74298eb23cdd88"
+    },
+    {
+      "file": ".dsh/profiles/patientgpt-delivery-flint-data-engineer/cordis.patch.yml",
+      "before": null,
+      "afterSha256": "0ea762912c2e237f57170135120e5c31bf7b3e22413c1e069179914ed9308771"
+    },
+    {
+      "file": ".dsh/profiles/patientgpt-delivery-identity-security-engineer/cordis.patch.yml",
+      "before": null,
+      "afterSha256": "fb9a35322b060ee3c39785577eceb91bade029e85c80ff19b1fcb2e467f4f3f7"
+    },
+    {
+      "file": ".dsh/profiles/patientgpt-delivery-uar-agent-expert/cordis.patch.yml",
+      "before": null,
+      "afterSha256": "69e30d786a016d217f54eeed3f66f6235e1674f696c470fec82b1fd73804fea8"
+    },
+    {
+      "file": ".dsh/profiles/patientgpt-delivery-platform-release-engineer/cordis.patch.yml",
+      "before": null,
+      "afterSha256": "dc9e76f9b4eb9d6e23715f0f1d4154cf713144f01e2bb8c7392d11c68bd00543"
+    },
+    {
+      "file": ".dsh/profiles/patientgpt-delivery-documentation-engineer/cordis.patch.yml",
+      "before": null,
+      "afterSha256": "e9d70c7d93980f305cb2ab953d863604bc2f4e11ddb6d0385adc12861a89e631"
+    },
+    {
+      "file": ".dsh/profiles/patientgpt-delivery-phase-verifier/cordis.patch.yml",
+      "before": null,
+      "afterSha256": "cc6fe398699e6b91d87eedc3b091d84e87c30db44559327280e1c700bb71f10a"
+    },
+    {
+      "file": ".dsh/profiles/patientgpt-delivery-artifact-critic/cordis.patch.yml",
+      "before": null,
+      "afterSha256": "619fc631ca7a0bba20ed7685f2e4afe0cc9d5588a6a7d3d673166b2c32133153"
+    },
+    {
+      "file": ".dsh/profiles/patientgpt-delivery-ui-critic/cordis.patch.yml",
+      "before": null,
+      "afterSha256": "27d77af69daff7ebd86ec60705b3e9106aa1b3c3fb87cef66b6cccac97b19513"
+    },
+    {
+      "file": ".dsh/profiles/patientgpt-delivery-team/cordis.patch.yml",
+      "before": null,
+      "afterSha256": "6b92a48afc974417f75150f3e69e441b8feb5b11e68f9b2e97afd025858b6e0f"
+    },
+    {
+      "file": ".agent-team/project-routing.json",
+      "before": "{\n  \"schemaVersion\": 1,\n  \"activeTeam\": \"patientgpt-delivery\",\n  \"manifest\": \".agent-team/patientgpt-delivery/team.json\",\n  \"target\": \"minimax\",\n  \"nativeDefinitions\": [\n    \".minimax/agents/product-manager/agent.md\",\n    \".minimax/agents/team-lead/agent.md\",\n    \".minimax/agents/creative-director/agent.md\",\n    \".minimax/agents/design-expert/agent.md\",\n    \".minimax/agents/react-engineer/agent.md\",\n    \".minimax/agents/tauri-engineer/agent.md\",\n    \".minimax/agents/flutter-engineer/agent.md\",\n    \".minimax/agents/rust-domain-engineer/agent.md\",\n    \".minimax/agents/storage-engineer/agent.md\",\n    \".minimax/agents/flint-data-engineer/agent.md\",\n    \".minimax/agents/identity-security-engineer/agent.md\",\n    \".minimax/agents/uar-agent-expert/agent.md\",\n    \".minimax/agents/platform-release-engineer/agent.md\",\n    \".minimax/agents/documentation-engineer/agent.md\",\n    \".minimax/agents/phase-verifier/agent.md\",\n    \".minimax/agents/artifact-critic/agent.md\",\n    \".minimax/agents/ui-critic/agent.md\"\n  ],\n  \"instructionFiles\": [\n    \"AGENTS.md\",\n    \"CLAUDE.md\"\n  ],\n  \"delegation\": \"native-definitions\",\n  \"limitations\": [\n    \"Native definition presence is not live invocation evidence. The active harness owns permissions, models, concurrency and delegation.\",\n    \"When delegation is unavailable, use selected role instructions sequentially and report it; builder-context review is not independent.\",\n    \"Zed external ACP agents use their native configuration; Zed parallel threads are not an automatic delegation API.\"\n  ]\n}\n",
+      "afterSha256": "db98adfaa11a45cb7fb0d5c2f59edcbe032e19dce639bbad3d88d7dd4f713066"
+    }
+  ]
+}
