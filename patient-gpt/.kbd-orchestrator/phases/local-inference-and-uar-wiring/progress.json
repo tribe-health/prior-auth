@@ -2,16 +2,16 @@
   "schemaVersion": "2",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 6,
-  "derivedRevision": 6,
+  "sourceRevision": 14,
+  "derivedRevision": 14,
   "frontier": {
-    "6b286379-9580-4e4d-b9b3-59ae0ab1eba9": 6
+    "6f613a97-dc01-4674-8e9d-2eb1eb44b4f7": 14
   },
   "conflictCount": 0,
   "phase": "local-inference-and-uar-wiring",
   "phaseId": "local-inference-and-uar-wiring",
   "parentPhase": null,
-  "last_updated": "2026-10-26T12:09:26.074980Z",
+  "last_updated": "2026-10-26T14:13:19.066820Z",
   "last_updated_by": "kbd-runtime",
   "changes_total": 0,
   "changes_completed": 0,
@@ -46,7 +46,7 @@
   },
   "runCompletion": {
     "scope": "run",
-    "runId": "local-inference-and-uar-wiring-20261026T111757Z",
+    "runId": "local-inference-and-uar-wiring-20261026T122943Z",
     "primaryCounter": "implementation",
     "implementation": {
       "completed": 0,

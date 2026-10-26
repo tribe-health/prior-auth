@@ -1,0 +1,13 @@
+{
+  "stage": "spec",
+  "completedAt": "2026-10-26T13:54:50Z",
+  "outputs": [
+    "openspec/changes/inference-contract/proposal.md",
+    "spec.md",
+    "adopted-contract.json"
+  ],
+  "nextStage": "plan",
+  "summaryForNext": "12 OpenSpec changes (openspec/changes/), 51 scenarios, adopted-contract.json authored (schema-valid, NOT adopted; adoption needs explicit operator instruction). Next: operator review, then /kbd-plan. Host rule D-018: [Apple Silicon] tasks need the operator's ARM MacBook Pro; first switch at desktop-local-chat. desktop-uar-topology is BLOCKED until decision 3 (after uar-embedding-spike). Two critic rounds, both 'cannot stand'; round-2 fixes unreviewed. WARNING carried: iOS MLX and emulator LiteRT chat untried anywhere; UAR-5/6 reachable only via evidence harness; onboarding screens need a docs/design addition approved first; versions.toml pins listed in spec.md for the operator.",
+  "skipped": false,
+  "skipReason": null
+}

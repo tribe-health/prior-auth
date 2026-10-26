@@ -1,0 +1,867 @@
+{
+  "contractVersion": "1.0.0",
+  "kind": "kbd.adopted-contract",
+  "identity": {
+    "projectId": "5180957e-e9f7-4d5d-a961-e02a6ede0ebd",
+    "runId": "local-inference-and-uar-wiring-20261026T122943Z",
+    "phaseId": "local-inference-and-uar-wiring",
+    "planRevision": null,
+    "contractDigest": null
+  },
+  "digestNormalization": {
+    "algorithm": "sha256",
+    "command": "jq -S -c 'del(.identity.contractDigest) | del(.identity.planRevision)' adopted-contract.json | shasum -a 256",
+    "rationale": "Excludes the self-referential digest and the plan revision bound by the canonical decision at adoption.",
+    "stalenessRule": "Only the latest non-superseded adoption digest for this path is valid; any other digest is REJECT-STALE."
+  },
+  "adoptionSource": "PENDING: authored by kbd-spec on 2026-10-26 and not adopted. Adoption requires an explicit operator instruction naming this file.",
+  "decisionOwner": "Operator (Travis James): topology, toolchain, model choice, versions.toml pins, tier gate, scope amendments. uar-agent-expert for UAR-side work through a lead-scoped handoff.",
+  "amendmentPolicy": "Content changes are adopted with --supersedes <prior decision id> through kbd-contract-adopt.sh. desktop-uar-topology option tasks arrive by such an amendment after decision 3.",
+  "releaseClaim": {
+    "userOperation": "On a fresh install, a practice user opens PatientGPT on macOS desktop, iOS or Android, prepares the on-device assistant with visible progress, and the local model holds an onboarding conversation whose user-confirmed proposals download models and record a UAR endpoint, while UAR is absent. Separately, the UAR path is shown on the cloud host by URL, embedded on iOS, and on desktop through the chosen topology.",
+    "supportedEnvironments": [
+      "macOS on Apple Silicon (Tauri desktop)",
+      "iOS app on 'My Mac (Designed for iPad)'",
+      "physical iPhone",
+      "iOS simulator (embedding, store and refusal only)",
+      "arm64 Android emulator API 36 with at least 4 GiB (on the ARM MacBook Pro)",
+      "Axum cloud host on localhost with a local UAR v1.3.0 service"
+    ],
+    "currentCapabilities": "None of this exists today: no inference, embedder, model storage or real UAR in PatientGPT (assessment.md). Spec has written 12 changes; implementation is 0 of 0 tracked.",
+    "explicitUnknowns": [
+      "Whether MLX-Swift produces a reply on the Mac destination and on an iPhone (no prior evidence anywhere)",
+      "Whether LiteRT-LM CPU runs on an arm64 emulator",
+      "Whether UAR v1.3.0 builds on stable Rust and how its patch overlay affects PatientGPT's surrealdb 3.3.0",
+      "iOS binary size added by UAR, fastembed/ort and RocksDB",
+      "Qwen3-0.6B's rate of valid setup proposals",
+      "Whether a physical iPhone and an Apple signing team are available",
+      "Evidence host: chat, Mac-destination, simulator-embedding and arm64-emulator scenarios need the operator's Apple Silicon MacBook Pro (D-018); this Intel Mac cannot run them",
+      "Which model provider the local UAR service uses for UAR-1",
+      "How a PatientGPT agent is installed on a UAR v1.3.0 service"
+    ]
+  },
+  "statusVocabulary": [
+    "PASS",
+    "FAIL",
+    "BLOCKED",
+    "NOT_EXERCISED"
+  ],
+  "scenarioMatrix": [
+    {
+      "id": "LANE-1",
+      "name": "Missing lane rejected",
+      "ownerTask": "inference-contract:2.3",
+      "productionEntry": "`POST /api/runs`; Tauri `start_run`; FFI `start_run` (`FfiRunRequest.lane` absent)",
+      "realCollaborators": [
+        "Axum server",
+        "Tauri app",
+        "FFI host"
+      ],
+      "oracle": "Each answers `lane_required` (HTTP 400); no event, no conversation record",
+      "negativeControl": "A request with `lane: \"local\"` in scope `onboarding` is accepted on desktop",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: transport (HTTP, Tauri IPC, FFI)",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/LANE-1.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "LANE-2",
+      "name": "Unknown lane rejected",
+      "ownerTask": "inference-contract:2.3",
+      "productionEntry": "`POST /api/runs`; Tauri `start_run`; FFI `start_run` (`lane: \"cloud\"`)",
+      "realCollaborators": [
+        "same"
+      ],
+      "oracle": "`unknown_lane` for `lane: \"cloud\"`, no event",
+      "negativeControl": "`lane: \"uar\"` accepted in deterministic mode",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: transport (HTTP, Tauri IPC, FFI)",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/LANE-2.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "LANE-3",
+      "name": "Local lane refused in clinical scope",
+      "ownerTask": "inference-contract:2.3",
+      "productionEntry": "Tauri `start_run`",
+      "realCollaborators": [
+        "desktop app",
+        "mlex engine"
+      ],
+      "oracle": "`lane_not_permitted`; engine log shows no generate call",
+      "negativeControl": "Same message in scope `onboarding` streams a reply",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: transport (HTTP, Tauri IPC, FFI)",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/LANE-3.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "LANE-4",
+      "name": "Cloud host has no local inference",
+      "ownerTask": "inference-contract:3.1",
+      "productionEntry": "`POST /api/runs`, `POST /api/embeddings`, `POST /api/models/prepare` on Axum",
+      "realCollaborators": [
+        "Axum server"
+      ],
+      "oracle": "Each answers `lane_unavailable` (503); `GET /api/models` returns an empty catalog and a null engine; deterministic runtime not invoked",
+      "negativeControl": "`uar` run in deterministic mode answers the deterministic text",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: transport (HTTP, Tauri IPC, FFI)",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/LANE-4.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "LANE-5",
+      "name": "Desktop \"UAR absent\" mode",
+      "ownerTask": "inference-contract:2.2",
+      "productionEntry": "desktop app launch",
+      "realCollaborators": [
+        "desktop app"
+      ],
+      "oracle": "With `PATIENTGPT_UAR_MODE=none`: `uar` run refused `lane_unavailable`, `local` onboarding run streams",
+      "negativeControl": "Mode unset: startup fails naming `none`, `deterministic`, `service:<url>`",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: transport (HTTP, Tauri IPC, FFI)",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/LANE-5.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "LANE-6",
+      "name": "Onboarding scope round-trips",
+      "ownerTask": "inference-contract:1.2",
+      "productionEntry": "`GET /api/conversations?scope=onboarding`; Tauri and FFI `list_conversations`",
+      "realCollaborators": [
+        "Axum",
+        "desktop app",
+        "FFI host"
+      ],
+      "oracle": "Only onboarding conversations, each with scope kind `onboarding`",
+      "negativeControl": "`scope=onboarding:x` rejected as malformed, never defaulted to `all`",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: transport (HTTP, Tauri IPC, FFI)",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/LANE-6.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "ACQ-1",
+      "name": "Fresh acquisition with progress",
+      "ownerTask": "model-acquisition:2.3",
+      "productionEntry": "Tauri `prepare_models` from the onboarding prepare control",
+      "realCollaborators": [
+        "desktop app",
+        "huggingface.co",
+        "filesystem"
+      ],
+      "oracle": "Before prepare, `model_status` shows every entry `absent` and null selections; then increasing `downloading` bytes, `verifying`, `installing`, `ready`; every request the app itself issues to huggingface.co (before redirects) names the pinned revision; files exist only under the scratch `PATIENTGPT_DATA_DIR` with catalog sizes and digests, and nothing is written under the default app data directory",
+      "negativeControl": "— (see ACQ-2)",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: network (HTTPS) and filesystem",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/ACQ-1.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "ACQ-2",
+      "name": "Corrupted file rejected",
+      "ownerTask": "model-acquisition:2.1",
+      "productionEntry": "Tauri `prepare_models`",
+      "realCollaborators": [
+        "desktop app",
+        "filesystem"
+      ],
+      "oracle": "A `.part` file pre-seeded at full catalog length with wrong bytes is hashed locally without a request; the event and `model_status` both show `failed` `integrity_failed`; no file in place; chat run refused `model_not_installed`",
+      "negativeControl": "Untampered prepare ends `ready`",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: network (HTTPS) and filesystem",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/ACQ-2.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "ACQ-3",
+      "name": "Resume after interruption",
+      "ownerTask": "model-acquisition:2.1",
+      "productionEntry": "Tauri `prepare_models`, stopped with `cancel_operation` on its operation id, then started again",
+      "realCollaborators": [
+        "desktop app",
+        "huggingface.co"
+      ],
+      "oracle": "Second prepare's first `downloading` event reports received bytes > 0; ends `ready` with matching digest",
+      "negativeControl": "none declared for this scenario; its negative control is carried by the paired scenario named in the oracle or by the change's other scenarios",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: network (HTTPS) and filesystem",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/ACQ-3.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "ACQ-4",
+      "name": "Memory picks the model",
+      "ownerTask": "model-acquisition:2.2",
+      "productionEntry": "FFI `prepare_models` on the 4 GiB AVD; Tauri on desktop",
+      "realCollaborators": [
+        "Android app",
+        "desktop app"
+      ],
+      "oracle": "AVD `preflight` names `qwen3-0.6b-litertlm`; desktop with ≥ 8 GiB names `qwen3-1.7b-mlx-4bit`",
+      "negativeControl": "Explicit `qwen3-1.7b-litertlm` on the 4 GiB AVD refused `insufficient_memory` before download",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: network (HTTPS) and filesystem",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/ACQ-4.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "ACQ-5",
+      "name": "Models out of backups",
+      "ownerTask": "model-acquisition:4.1",
+      "productionEntry": "FFI `prepare_models` on iOS and Android",
+      "realCollaborators": [
+        "iOS app",
+        "Android app",
+        "OS file APIs"
+      ],
+      "oracle": "iOS: model file's `isExcludedFromBackup` is true; Android: files under `noBackupFilesDir`",
+      "negativeControl": "none declared for this scenario; its negative control is carried by the paired scenario named in the oracle or by the change's other scenarios",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: network (HTTPS) and filesystem",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/ACQ-5.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "ACQ-6",
+      "name": "Unknown catalog id refused",
+      "ownerTask": "inference-contract:2.3",
+      "productionEntry": "Tauri `prepare_models` with `qwen3-1.7b-litertlm` on desktop",
+      "realCollaborators": [
+        "desktop app"
+      ],
+      "oracle": "`invalid_input` before any download",
+      "negativeControl": "A desktop catalog id prepares (ACQ-1)",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: network (HTTPS) and filesystem",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/ACQ-6.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "CHAT-1",
+      "name": "Desktop streamed reply, UAR absent",
+      "ownerTask": "desktop-local-chat:1.2",
+      "productionEntry": "Tauri window onboarding screen, app started with `PATIENTGPT_UAR_MODE=none`",
+      "realCollaborators": [
+        "desktop app",
+        "mlex",
+        "Qwen3 MLX model"
+      ],
+      "oracle": "Exactly one `TEXT_MESSAGE_START`/`TEXT_MESSAGE_END` pair; ≥ 2 `TEXT_MESSAGE_CONTENT` before the end; `RUN_FINISHED`; reply has no `<think>` markers",
+      "negativeControl": "CHAT-6",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: engine and shell IPC",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/CHAT-1.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "CHAT-2",
+      "name": "iOS reply on Mac (Designed for iPad)",
+      "ownerTask": "ios-local-chat:2.2",
+      "productionEntry": "iOS app onboarding screen on the Mac destination",
+      "realCollaborators": [
+        "iOS app",
+        "MLX-Swift",
+        "Qwen3 MLX model"
+      ],
+      "oracle": "Exactly one `TEXT_MESSAGE_START`/`TEXT_MESSAGE_END` pair; ≥ 2 `TEXT_MESSAGE_CONTENT` before the end; `RUN_FINISHED`; no `<think>` markers",
+      "negativeControl": "CHAT-4",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: engine and shell IPC",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/CHAT-2.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "CHAT-3",
+      "name": "iOS reply on a physical iPhone",
+      "ownerTask": "ios-local-chat:2.2",
+      "productionEntry": "iOS app onboarding screen on the device",
+      "realCollaborators": [
+        "iOS app",
+        "MLX-Swift",
+        "model"
+      ],
+      "oracle": "Exactly one `TEXT_MESSAGE_START`/`TEXT_MESSAGE_END` pair; ≥ 2 `TEXT_MESSAGE_CONTENT` before the end; `RUN_FINISHED`; no `<think>` markers; a run started as soon as the home view appears is not refused `engine_unavailable`; receipt records device model and reported RAM",
+      "negativeControl": "CHAT-4",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: engine and shell IPC",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/CHAT-3.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "CHAT-4",
+      "name": "iOS simulator states no engine",
+      "ownerTask": "ios-local-chat:1.2",
+      "productionEntry": "iOS app onboarding screen in the simulator",
+      "realCollaborators": [
+        "iOS app"
+      ],
+      "oracle": "Run refused `engine_unavailable` (checked before `model_not_installed`, so the result does not depend on whether a model was prepared); UI says the model does not run in the simulator; no reply text",
+      "negativeControl": "none declared for this scenario; its negative control is carried by the paired scenario named in the oracle or by the change's other scenarios",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: engine and shell IPC",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/CHAT-4.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "CHAT-5",
+      "name": "Android emulator reply",
+      "ownerTask": "android-local-chat:2.2",
+      "productionEntry": "Android app onboarding screen on the arm64 API 36 AVD, mode `none`",
+      "realCollaborators": [
+        "Android app",
+        "LiteRT-LM CPU",
+        "model"
+      ],
+      "oracle": "Streamed reply, `RUN_FINISHED`",
+      "negativeControl": "`uar` run refused `lane_unavailable`",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: engine and shell IPC",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/CHAT-5.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "CHAT-6",
+      "name": "Chat before model installed",
+      "ownerTask": "inference-contract:2.3",
+      "productionEntry": "Tauri onboarding screen on a fresh data directory",
+      "realCollaborators": [
+        "desktop app"
+      ],
+      "oracle": "Refused `model_not_installed`; UI says the chat model is not installed",
+      "negativeControl": "none declared for this scenario; its negative control is carried by the paired scenario named in the oracle or by the change's other scenarios",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: engine and shell IPC",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/CHAT-6.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "CHAT-7",
+      "name": "Cancel frees the engine",
+      "ownerTask": "desktop-local-chat:1.2",
+      "productionEntry": "Tauri onboarding screen",
+      "realCollaborators": [
+        "desktop app",
+        "mlex"
+      ],
+      "oracle": "`cancel_operation` ends the first stream with `RUN_ERROR` `cancelled`; the second run's first content arrives before the first reply's token limit would have elapsed",
+      "negativeControl": "`cancel_operation` with an unknown id is refused `not_found`",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: engine and shell IPC",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/CHAT-7.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "CHAT-8",
+      "name": "Intel desktop has no engine or embedder",
+      "ownerTask": "desktop-local-chat:2.1",
+      "productionEntry": "debug Tauri app on the Intel Mac, mode `none`",
+      "realCollaborators": [
+        "desktop app"
+      ],
+      "oracle": "`local` onboarding run and `embed` both refused `engine_unavailable`; the window stays usable",
+      "negativeControl": "On the ARM MacBook Pro the same calls succeed (CHAT-1, EMB-1)",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: engine and shell IPC",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/CHAT-8.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "PRIV-1",
+      "name": "No egress during local run or embed",
+      "ownerTask": "desktop-local-chat:1.2",
+      "productionEntry": "Tauri onboarding run and `embed`",
+      "realCollaborators": [
+        "desktop app",
+        "macOS `nettop` sampling of the app PID and its WebKit networking process"
+      ],
+      "oracle": "No new non-loopback outbound connection from the app PID or its WebKit networking process between `RUN_STARTED` and `RUN_FINISHED`, or during `embed` (loopback to the dev server is excluded)",
+      "negativeControl": "A `prepare_models` run in the same session shows connections to huggingface.co (proves the sampler sees traffic)",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: network",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/PRIV-1.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "EMB-1",
+      "name": "Desktop embedding",
+      "ownerTask": "local-embedder-and-mobile-store:1.2",
+      "productionEntry": "Tauri `embed`",
+      "realCollaborators": [
+        "desktop app",
+        "fastembed",
+        "ort",
+        "int8 ONNX"
+      ],
+      "oracle": "2 vectors × 384 finite numbers, id `arctic-embed-xs-int8`; repeat call cosine ≥ 0.9999; one `query`-purpose call also returns 384 numbers",
+      "negativeControl": "EMB-4",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: engine and shell IPC",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/EMB-1.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "EMB-5",
+      "name": "Embedder loads only verified files",
+      "ownerTask": "local-embedder-and-mobile-store:1.2",
+      "productionEntry": "Tauri `embed` after deleting the embedder's `tokenizer.json` from the scratch model directory",
+      "realCollaborators": [
+        "desktop app",
+        "filesystem",
+        "`nettop`"
+      ],
+      "oracle": "`model_not_installed`; no outbound connection during the call",
+      "negativeControl": "Intact files embed (EMB-1)",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: engine and shell IPC",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/EMB-5.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "EMB-2",
+      "name": "iOS simulator embedding",
+      "ownerTask": "local-embedder-and-mobile-store:1.4",
+      "productionEntry": "FFI `embed` from the iOS app",
+      "realCollaborators": [
+        "iOS app",
+        "ort sim build"
+      ],
+      "oracle": "As EMB-1 for 2 texts",
+      "negativeControl": "Before prepare: `model_not_installed`",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: engine and shell IPC",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/EMB-2.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "EMB-3",
+      "name": "Android emulator embedding",
+      "ownerTask": "local-embedder-and-mobile-store:1.4",
+      "productionEntry": "FFI `embed` from the Android app",
+      "realCollaborators": [
+        "Android app",
+        "ort"
+      ],
+      "oracle": "As EMB-1 for 1 text",
+      "negativeControl": "Before prepare: `model_not_installed`",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: engine and shell IPC",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/EMB-3.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "EMB-4",
+      "name": "Embed limits",
+      "ownerTask": "inference-contract:2.3",
+      "productionEntry": "Tauri `embed`",
+      "realCollaborators": [
+        "desktop app"
+      ],
+      "oracle": "65 texts refused `invalid_input`, nothing computed",
+      "negativeControl": "64 texts accepted",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: engine and shell IPC",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/EMB-4.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "STORE-1",
+      "name": "Mobile conversations and settings survive restart",
+      "ownerTask": "local-embedder-and-mobile-store:2.2",
+      "productionEntry": "Onboarding conversation on the iOS simulator (conversations only), and conversation plus a confirmed `set_uar_endpoint` proposal on the Android emulator and the iOS Mac destination",
+      "realCollaborators": [
+        "apps",
+        "SurrealDB RocksDB"
+      ],
+      "oracle": "After force-quit and relaunch, scope `onboarding` lists the conversation and `get_settings` returns the recorded URL",
+      "negativeControl": "none declared for this scenario; its negative control is carried by the paired scenario named in the oracle or by the change's other scenarios",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: database (SurrealDB RocksDB) and filesystem",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/STORE-1.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "STORE-2",
+      "name": "Store open failure is loud",
+      "ownerTask": "local-embedder-and-mobile-store:2.2",
+      "productionEntry": "iOS simulator app launch",
+      "realCollaborators": [
+        "app",
+        "filesystem"
+      ],
+      "oracle": "With the store path replaced by a file in the app container, boot fails `storage_failed` and the UI says local storage could not be opened",
+      "negativeControl": "Normal launch opens the store",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: database (SurrealDB RocksDB) and filesystem",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/STORE-2.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "UAR-1",
+      "name": "Cloud host reaches UAR by URL",
+      "ownerTask": "agui-bridge-and-uar-service:2.1",
+      "productionEntry": "Web shell onboarding screen against the Axum server in service mode (`uar` lane, scope `onboarding`)",
+      "realCollaborators": [
+        "Axum server",
+        "UAR v1.3.0 service",
+        "UAR's provider"
+      ],
+      "oracle": "Browser receives streamed text from UAR and `RUN_FINISHED`",
+      "negativeControl": "UAR-2",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: process, network and AG-UI protocol",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/UAR-1.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "UAR-2",
+      "name": "UAR failures visible",
+      "ownerTask": "agui-bridge-and-uar-service:2.1",
+      "productionEntry": "same as UAR-1",
+      "realCollaborators": [
+        "Axum",
+        "UAR service"
+      ],
+      "oracle": "Service stopped: `RUN_ERROR` `uar_unavailable` within the connect timeout; wrong token: `uar_unauthorized`",
+      "negativeControl": "Correct token and running service: UAR-1",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: process, network and AG-UI protocol",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/UAR-2.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "UAR-3",
+      "name": "Unrouted scope refused",
+      "ownerTask": "agui-bridge-and-uar-service:2.2",
+      "productionEntry": "Axum `POST /api/runs`, `uar`, case scope, service mode",
+      "realCollaborators": [
+        "Axum",
+        "UAR service request log"
+      ],
+      "oracle": "`agent_unavailable` (503); UAR request log shows no request",
+      "negativeControl": "Onboarding scope reaches UAR",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: process, network and AG-UI protocol",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/UAR-3.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "UAR-4",
+      "name": "iOS embedded onboarding on local driver",
+      "ownerTask": "uar-embedded-runtime:1.2",
+      "productionEntry": "iOS app onboarding screen on the Mac destination, mode `embedded`",
+      "realCollaborators": [
+        "iOS app",
+        "embedded UAR",
+        "MLX-Swift",
+        "model"
+      ],
+      "oracle": "Subset events end `RUN_FINISHED` with synthesized message boundaries; text produced by the local model; UAR persistence files exist only inside the app container's data directory",
+      "negativeControl": "UAR-5",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: process, network and AG-UI protocol",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/UAR-4.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "UAR-5",
+      "name": "Local driver refuses other agents",
+      "ownerTask": "uar-embedded-runtime:2.1",
+      "productionEntry": "production embedded builder with a synthetic non-onboarding agent",
+      "realCollaborators": [
+        "embedded UAR"
+      ],
+      "oracle": "`driver_not_permitted`; engine log shows no generate call",
+      "negativeControl": "Onboarding agent runs (UAR-4)",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: process, network and AG-UI protocol",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/UAR-5.md: command, env names, git revision, exit code, observed output, verdict",
+      "classification": "boundary guard; the shipped app routes only the onboarding agent, so this runs through the production `UarMode::Embedded` builder in a `scripts/evidence/` harness built on macOS with feature `embedded`, whatever decision 3 chooses"
+    },
+    {
+      "id": "UAR-6",
+      "name": "Tool admission denies",
+      "ownerTask": "uar-embedded-runtime:2.2",
+      "productionEntry": "production embedded builder running the onboarding agent id with a synthetic definition that adds a tool named `sign_letter` described as read-only and safe",
+      "realCollaborators": [
+        "embedded UAR",
+        "admission port"
+      ],
+      "oracle": "Admission denies the call and logs agent id and tool name; the tool body never executes; no host state changes; UAR returns the denial to the model and the run ends `RUN_FINISHED` or `RUN_ERROR`",
+      "negativeControl": "Host start with a clinical command in an allowlist fails start-up",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: process, network and AG-UI protocol",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/UAR-6.md: command, env names, git revision, exit code, observed output, verdict",
+      "classification": "boundary guard, same harness as UAR-5"
+    },
+    {
+      "id": "UAR-7",
+      "name": "iOS UAR linked, not configured",
+      "ownerTask": "uar-embedded-runtime:3.1",
+      "productionEntry": "iOS app onboarding screen on the Mac destination, mode `none`",
+      "realCollaborators": [
+        "iOS app"
+      ],
+      "oracle": "`uar` refused `lane_unavailable`; `local` onboarding run streams",
+      "negativeControl": "none declared for this scenario; its negative control is carried by the paired scenario named in the oracle or by the change's other scenarios",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: process, network and AG-UI protocol",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/UAR-7.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "UAR-8",
+      "name": "Desktop UAR path",
+      "ownerTask": "desktop-uar-topology:3.1",
+      "productionEntry": "Tauri window onboarding screen with UAR configured for the chosen topology",
+      "realCollaborators": [
+        "desktop app and the topology's UAR"
+      ],
+      "oracle": "Streamed reply ending `RUN_FINISHED`",
+      "negativeControl": "UAR-9",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: process, network and AG-UI protocol",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/UAR-8.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "UAR-10",
+      "name": "Service mode start-up checks",
+      "ownerTask": "agui-bridge-and-uar-service:2.1",
+      "productionEntry": "`cargo run -p patient-gpt-server` with service mode",
+      "realCollaborators": [
+        "Axum server binary"
+      ],
+      "oracle": "No `PATIENTGPT_UAR_TOKEN`: start-up fails naming it; `service:http://uar.example.test`: fails stating remote URLs must use https",
+      "negativeControl": "`service:http://127.0.0.1:<port>` with a token starts",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: process, network and AG-UI protocol",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/UAR-10.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "UAR-11",
+      "name": "Android links no UAR",
+      "ownerTask": "uar-embedded-runtime:3.1",
+      "productionEntry": "`cargo tree -p patient-gpt-ffi --target aarch64-linux-android -i universal-agent-runtime`",
+      "realCollaborators": [
+        "Cargo dependency resolver"
+      ],
+      "oracle": "UAR not found in the Android dependency tree; Android app built with another mode fails boot naming `none`",
+      "negativeControl": "The same command for `aarch64-apple-ios` with feature `embedded` lists UAR",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: process, network and AG-UI protocol",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/UAR-11.md: command, env names, git revision, exit code, observed output, verdict",
+      "classification": "structural, supplemental"
+    },
+    {
+      "id": "BRIDGE-1",
+      "name": "Bridge surfaces unsupported events and version mismatch",
+      "ownerTask": "agui-bridge-and-uar-service:1.1",
+      "productionEntry": "production bridge fed streams captured from a real UAR v1.3.0 run, including an interrupt and a rewritten protocol version",
+      "realCollaborators": [
+        "bridge",
+        "captured streams with recorded digests"
+      ],
+      "oracle": "Interrupt → `RUN_ERROR` `unsupported_event`; version ≠ 1.0 → `protocol_mismatch` before text",
+      "negativeControl": "Unmodified captured text stream → subset events ending `RUN_FINISHED`",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: AG-UI protocol",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/BRIDGE-1.md: command, env names, git revision, exit code, observed output, verdict",
+      "classification": "supplemental"
+    },
+    {
+      "id": "UAR-9",
+      "name": "Desktop UAR failure contained",
+      "ownerTask": "desktop-uar-topology:2.1",
+      "productionEntry": "Tauri window onboarding screen",
+      "realCollaborators": [
+        "desktop app",
+        "UAR"
+      ],
+      "oracle": "UAR made unavailable: `uar` run ends `uar_unavailable`, window stays open, next `local` run streams",
+      "negativeControl": "none declared for this scenario; its negative control is carried by the paired scenario named in the oracle or by the change's other scenarios",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: process, network and AG-UI protocol",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/UAR-9.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "ONB-1",
+      "name": "First-run onboarding",
+      "ownerTask": "local-onboarding:4.1",
+      "productionEntry": "Tauri app on a fresh data directory",
+      "realCollaborators": [
+        "desktop app",
+        "huggingface.co",
+        "engine"
+      ],
+      "oracle": "Prepare control → progress → ready → onboarding reply streams",
+      "negativeControl": "CHAT-6",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: UI, shell IPC and local store",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/ONB-1.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "ONB-2",
+      "name": "Confirmed proposal executes once",
+      "ownerTask": "local-onboarding:2.2",
+      "productionEntry": "Tauri onboarding screen, real model reply carrying a valid proposal (up to 5 prompts from the feasibility set)",
+      "realCollaborators": [
+        "desktop app",
+        "engine",
+        "host proposal store"
+      ],
+      "oracle": "Confirm downloads the proposed entry to `ready`; second apply with the same id refused `invalid_input`",
+      "negativeControl": "ONB-3",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: UI, shell IPC and local store",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/ONB-2.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "ONB-3",
+      "name": "Declined proposal changes nothing",
+      "ownerTask": "local-onboarding:2.2",
+      "productionEntry": "same as ONB-2",
+      "realCollaborators": [
+        "same"
+      ],
+      "oracle": "Decline: no download, settings unchanged, gate shows declined",
+      "negativeControl": "none declared for this scenario; its negative control is carried by the paired scenario named in the oracle or by the change's other scenarios",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: UI, shell IPC and local store",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/ONB-3.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "ONB-4",
+      "name": "Invalid proposal has no control",
+      "ownerTask": "local-onboarding:2.2",
+      "productionEntry": "same as ONB-2, real model reply carrying an invalid block",
+      "realCollaborators": [
+        "same"
+      ],
+      "oracle": "Reply shown with the \"could not be used\" notice and no Confirm control",
+      "negativeControl": "If the model produces no invalid block in the feasibility set and the gate run, the production scenario is NOT_EXERCISED; a replay of a recorded real reply through `AppServices` is supplemental only",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: UI, shell IPC and local store",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/ONB-4.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "ONB-5",
+      "name": "UAR endpoint recorded, not connected",
+      "ownerTask": "local-onboarding:2.2",
+      "productionEntry": "same as ONB-2, proposal with `set_uar_endpoint`",
+      "realCollaborators": [
+        "desktop app",
+        "settings store",
+        "a local TCP listener on 127.0.0.1 that logs every connection"
+      ],
+      "oracle": "The proposal sets `http://127.0.0.1:<listener port>`; after Confirm, `get_settings` returns that URL and the listener logs no connection",
+      "negativeControl": "A URL with credentials fails validation",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: UI, shell IPC and local store",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/ONB-5.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "ONB-6",
+      "name": "Mobile onboarding parity",
+      "ownerTask": "local-onboarding:5.1",
+      "productionEntry": "Flutter onboarding screen on Android emulator and iOS Mac destination",
+      "realCollaborators": [
+        "apps",
+        "engines"
+      ],
+      "oracle": "Prepare → reply → proposal gate behave as ONB-1/2",
+      "negativeControl": "iOS simulator: CHAT-4 refusal shown on the onboarding screen",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: UI, shell IPC and local store",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/ONB-6.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "ONB-7",
+      "name": "Cloud host refuses setup",
+      "ownerTask": "local-onboarding:3.1",
+      "productionEntry": "Axum `GET /api/settings`, apply/decline routes",
+      "realCollaborators": [
+        "Axum server"
+      ],
+      "oracle": "`host_unsupported` (503)",
+      "negativeControl": "none declared for this scenario; its negative control is carried by the paired scenario named in the oracle or by the change's other scenarios",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: UI, shell IPC and local store",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/ONB-7.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "ONB-8",
+      "name": "Onboarding has no clinical input",
+      "ownerTask": "local-onboarding:2.2",
+      "productionEntry": "host onboarding prompt builder source",
+      "realCollaborators": [
+        "source"
+      ],
+      "oracle": "The builder takes no clinical port and no patient, case or document type",
+      "negativeControl": "A clinical-scope run never reaches the builder (LANE-3)",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: UI, shell IPC and local store",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/ONB-8.md: command, env names, git revision, exit code, observed output, verdict",
+      "classification": "structural, supplemental"
+    },
+    {
+      "id": "ONB-9",
+      "name": "Raw setup block never displayed",
+      "ownerTask": "local-onboarding:2.2",
+      "productionEntry": "Tauri onboarding screen, real model reply carrying a proposal",
+      "realCollaborators": [
+        "desktop app",
+        "engine",
+        "host withholder"
+      ],
+      "oracle": "The thread and the shell's received deltas contain no part of the ` ```patientgpt-setup ` marker or its JSON; text before the block is complete; then the `patientgpt.setup_proposal` event arrives before `RUN_FINISHED`",
+      "negativeControl": "A reply with no block streams unchanged",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: UI, shell IPC and local store",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/ONB-9.md: command, env names, git revision, exit code, observed output, verdict"
+    },
+    {
+      "id": "PAR-1",
+      "name": "Transport parity",
+      "ownerTask": "inference-contract:5.1",
+      "productionEntry": "contract table vs `routes.rs`, `commands.rs`, FFI API",
+      "realCollaborators": [
+        "source files"
+      ],
+      "oracle": "Every row present on all three with identical codes",
+      "negativeControl": "A deliberately removed command is detected, then restored",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: source",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/PAR-1.md: command, env names, git revision, exit code, observed output, verdict",
+      "classification": "structural, supplemental"
+    },
+    {
+      "id": "SPIKE-1",
+      "name": "Spike results",
+      "ownerTask": "uar-embedding-spike:4.1",
+      "productionEntry": "spike workspace",
+      "realCollaborators": [
+        "UAR v1.3.0",
+        "toolchains"
+      ],
+      "oracle": "Report exists with every item and verdict",
+      "negativeControl": "none declared for this scenario; its negative control is carried by the paired scenario named in the oracle or by the change's other scenarios",
+      "fixtures": "Scratch roots per verification.md 'Fields common to every scenario' (fresh PATIENTGPT_DATA_DIR, dedicated simulator/AVD, free ports); model files from the pinned catalog digests in openspec/changes/model-acquisition/design.md. Boundary exercised: build and in-process runtime",
+      "evidence": "Receipt under .kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/SPIKE-1.md: command, env names, git revision, exit code, observed output, verdict",
+      "classification": "design input, not acceptance"
+    }
+  ],
+  "functionalScope": [
+    "Explicit per-turn lanes (local, uar), the onboarding scope gate and the none UAR mode",
+    "Pinned model catalog with verified, resumable acquisition and RAM preflight",
+    "Local chat on macOS (mlex), iOS device and Mac destination (MLX-Swift), Android (LiteRT-LM CPU)",
+    "Local embedder (fastembed + arctic-embed-xs int8) on every native target",
+    "SurrealDB mobile store for conversations and settings, with ADR",
+    "AG-UI 1.0 to subset bridge, UAR service client and scope-to-agent routing",
+    "Embedded UAR on iOS with an onboarding-only local driver and deny-by-default tool admission",
+    "Desktop UAR topology chosen after the spike",
+    "Local-model onboarding with host-validated, user-confirmed proposals and setup commands"
+  ],
+  "resilienceScope": {
+    "policy": "Adopted resilience requirements (integrity rejection, resume, engine and UAR failure containment, store-open failure, UAR unavailability) are acceptance scenarios and never defer through budget overflow.",
+    "deferredOptional": [
+      "OS background downloads",
+      "Mirror or alternative model host",
+      "Automatic retry of UAR service runs"
+    ]
+  },
+  "exclusions": [
+    "Agentic clinical work on the local model (goal 5)",
+    "Windows and Linux desktop (decision 10)",
+    "Android UAR (decision 2)",
+    "A candle simulator chat lane (decision 1)",
+    "Connecting to the recorded UAR endpoint",
+    "Persisting PatientGPT embedding vectors and local semantic search",
+    "Clinical UAR agents and any cloud driver for them",
+    "Moving the web shell to @ag-ui/core 1.x",
+    "Distribution bundles beyond operator-approved evidence runs"
+  ],
+  "requiredSafetyChecks": [
+    "No PHI or real patient data in fixtures, logs, prompts or commits; synthetic data only",
+    "Embeddings and all local-lane content classified local and never sent to a network endpoint",
+    "Every model file verified by pinned size and SHA-256 before load",
+    "Lane parsed with no default; unknown or missing lane rejected",
+    "Local lane refused outside the onboarding scope",
+    "Local driver drives only the onboarding agent; deny-by-default tool admission; clinical commands never grantable to agents",
+    "Setup steps executed only from host-stored proposals after user confirmation",
+    "UAR token read from the environment, never logged or returned to shells",
+    "versions.toml edited only by the operator",
+    "No CI test runs"
+  ],
+  "budgets": {
+    "timeMinutes": 4800,
+    "toolCalls": 4000,
+    "repairAttempts": 3,
+    "noProgressLimit": 3,
+    "tokenBudget": "UNKNOWN",
+    "tokenFallback": "Checkpoint and report at every change boundary; stop on the no-progress limit",
+    "exhaustion": "Checkpoint, record BLOCKED with the reason, and ask the operator; never extend silently",
+    "extensions": []
+  },
+  "evidenceInvalidation": "A scenario's evidence is invalidated by a change to the PatientGPT source its owner change touches (git revision recorded per receipt), a catalog digest change, a UAR pin change for UAR scenarios, or a plan revision that amends its change. Only affected scenarios are rerun; earlier receipts stay in their dated folder.",
+  "workerRoutes": {
+    "agent": "Claude Code root agent with patientgpt-delivery native roles (rust-domain-engineer, tauri-engineer, flutter-engineer, react-engineer, storage-engineer, uar-agent-expert, flint-data-engineer, identity-security-engineer, design-expert, creative-director, documentation-engineer, platform-release-engineer; product-manager and team-lead for scope and integration)",
+    "model": "Session model at authoring: claude-opus-5-5; role models per .agent-team/patientgpt-delivery/team.json",
+    "billing": "Not confirmed by the operator",
+    "subagents": "Disjoint file ownership per change; one Cargo build at a time; critics dormant until the phase boundary",
+    "reviewRoundsMax": 2
+  },
+  "boundaryPacket": {
+    "postImplementationOnly": true,
+    "singleRun": true,
+    "commands": [
+      "bash scripts/evidence/run-final-gate.sh desktop",
+      "bash scripts/evidence/run-final-gate.sh ios-sim",
+      "bash scripts/evidence/run-final-gate.sh ios-mac",
+      "bash scripts/evidence/run-final-gate.sh ios-device",
+      "bash scripts/evidence/run-final-gate.sh android",
+      "bash scripts/evidence/run-final-gate.sh desktop-intel",
+      "bash scripts/evidence/run-final-gate.sh cloud"
+    ],
+    "expectedEffects": [
+      "Scratch data directories, a dedicated simulator and AVD state, model downloads from huggingface.co, a local UAR service on a free port",
+      "Receipts in a new dated evidence folder; no change to real app data roots"
+    ],
+    "requiredApprovals": "Operator, once at the boundary: switch to the Apple Silicon MacBook Pro (D-018), tier gate for optimized evidence builds (PROMETHEUS_TIER3=1), device and signing availability, UAR provider and PAT, decision 3 recorded",
+    "receipts": [
+      ".kbd-orchestrator/phases/local-inference-and-uar-wiring/evidence/<date>-final-gate/README.md and one receipt per scenario"
+    ],
+    "cleanup": [
+      "Delete scratch data directories and the dedicated simulator",
+      "Stop the local UAR service and revoke its PAT",
+      "Uninstall evidence app builds from devices"
+    ],
+    "stopConditions": [
+      "A missing prerequisite (record BLOCKED and stop that batch)",
+      "A required safety check fails",
+      "The no-progress limit is reached",
+      "The operator says stop"
+    ]
+  },
+  "status": {
+    "implementationComplete": false
+  }
+}

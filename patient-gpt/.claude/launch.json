@@ -3,8 +3,10 @@
   "configurations": [
     {
       "name": "web-preview",
-      "runtimeExecutable": "pnpm",
+      "runtimeExecutable": "env",
       "runtimeArgs": [
+        "COREPACK_ENABLE_STRICT=0",
+        "pnpm",
         "--dir",
         "web",
         "preview"

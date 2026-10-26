@@ -1,1 +1,1 @@
-{"totalRuns":15,"failedRuns":0,"lastRun":{"ts":"2026-10-26T12:09:38Z","kind":"analyze","edge":"after","name":"local-inference-and-uar-wiring","hookId":"kbd-stage-writeback-analyze","layer":"builtin","mode":"augment","status":0},"lastFailure":null}
+{"totalRuns":22,"failedRuns":0,"lastRun":{"ts":"2026-10-26T14:13:17Z","kind":"plan","edge":"before","name":"local-inference-and-uar-wiring","hookId":"auto-memory-recall-plan","layer":"builtin","mode":"augment","status":0},"lastFailure":null}

@@ -2,16 +2,16 @@
   "schemaVersion": "1",
   "generatedBy": "kbd-runtime",
   "projectionContractVersion": 2,
-  "sourceRevision": 6,
-  "derivedRevision": 6,
+  "sourceRevision": 15,
+  "derivedRevision": 15,
   "frontier": {
-    "6b286379-9580-4e4d-b9b3-59ae0ab1eba9": 6
+    "6f613a97-dc01-4674-8e9d-2eb1eb44b4f7": 15
   },
   "conflictCount": 0,
-  "updatedAt": "2026-10-26T12:09:26.074980Z",
+  "updatedAt": "2026-10-26T14:28:43.319767Z",
   "cursor": [
     "local-inference-and-uar-wiring",
-    "analyze"
+    "plan"
   ],
   "root": {
     "type": "phase",
