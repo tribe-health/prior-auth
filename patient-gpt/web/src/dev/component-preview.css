@@ -1,0 +1,45 @@
+/* Fixture layout only. Component appearance comes from the shared app CSS. */
+html:has(.preview-page), body:has(.preview-page), #root:has(.preview-page) {
+  height: auto;
+  min-height: 100%;
+  overflow: visible;
+}
+.preview-page { max-width: 100rem; margin: 0 auto; padding: 2rem; color: var(--fg); background: var(--bg); }
+.preview-header { display: grid; gap: 1rem; margin-bottom: 2rem; }
+.preview-header > a { width: fit-content; }
+.preview-header h1 { font-family: var(--font-display); font-size: var(--fs-title); font-weight: 600; }
+.preview-toolbar, .preview-row { display: flex; align-items: center; flex-wrap: wrap; gap: .75rem; }
+.preview-toolbar > input { flex: 1 1 18rem; }
+.preview-index { display: flex; flex-wrap: wrap; gap: .5rem 1rem; }
+.preview-index a { color: var(--cool); text-decoration: underline; text-underline-offset: .2em; }
+.preview-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 2rem; }
+.preview-section { min-width: 0; scroll-margin-top: 1rem; padding: 1.25rem; border-radius: var(--r-lg); background: var(--s1); }
+.preview-section h2 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; }
+.preview-modules { margin-top: .5rem; font-family: var(--font-mono); font-size: .6875rem; overflow-wrap: anywhere; }
+.preview-note { margin-top: .5rem; color: var(--fg-2); font-size: var(--fs-meta); }
+.preview-fixture { min-width: 0; margin-top: 1.5rem; padding: 1rem; border-radius: var(--r-lg); background: var(--bg); }
+.preview-stack { display: flex; min-width: 0; flex-direction: column; gap: 1rem; }
+.preview-image { display: grid; height: 100%; place-items: center; background: var(--s2); border-radius: var(--r-lg); }
+.preview-image img { width: 70%; }
+.preview-context, .preview-pane { padding: 1.5rem; background: var(--s2); border-radius: var(--r-lg); overflow-wrap: anywhere; }
+.preview-sidebar { min-height: 14rem; }
+.preview-sidebar > [data-slot="sidebar"] { width: 100%; }
+.preview-resize { min-height: 8rem; }
+.preview-carousel { margin-inline: 2.5rem; }
+.preview-scroller { height: 15rem; }
+.preview-thread { height: 44rem; min-width: 0; }
+.preview-thread-list { max-height: 12rem; overflow: auto; }
+.preview-swatch { padding: .75rem; border-radius: var(--r); }
+.preview-footer { margin-top: 2rem; color: var(--fg-2); font-size: var(--fs-meta); }
+#assistant { grid-column: 1 / -1; }
+.preview-fixture :where(img, video, canvas) { max-width: 100%; }
+@media (max-width: 800px) {
+  .preview-page { padding: 1rem; }
+  .preview-grid { grid-template-columns: minmax(0, 1fr); }
+  .preview-section { padding: 1rem; }
+}
+@media (max-width: 400px) {
+  .preview-page { padding: .5rem; }
+  .preview-section { padding: .75rem; }
+  .preview-fixture { padding: .5rem; }
+}

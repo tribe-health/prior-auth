@@ -5,6 +5,7 @@ import { RouterProvider } from '@tanstack/react-router'
 import { boot } from './app/boot'
 import { router } from './app/router'
 import './styles/app.css'
+import { TooltipProvider } from "@/components/ui/tooltip"
 
 boot()
 
@@ -12,6 +13,6 @@ const root = document.getElementById('root')
 if (!root) throw new Error('index.html has no #root element.')
 createRoot(root).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <TooltipProvider><RouterProvider router={router} /></TooltipProvider>
   </StrictMode>,
 )

@@ -1,12 +1,16 @@
 // TJ-ARCH-MOB-001 compliant
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
 
 // One React application for the browser and the Tauri webview.
 // The dev server proxies /api to the Axum service; Tauri reaches the same
 // operations through commands instead, so no proxy is involved there.
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), tailwindcss()],
+  resolve: {
+    alias: { '@': new URL('./src', import.meta.url).pathname },
+  },
   // PGlite ships its own WebAssembly and data bundle; pre-bundling breaks its asset URLs.
   optimizeDeps: { exclude: ['@electric-sql/pglite'] },
   server: {

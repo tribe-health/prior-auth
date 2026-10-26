@@ -38,6 +38,7 @@ class HttpPatientGptGateway implements PatientGptGateway {
       throw GatewayUnavailable(
         endpoint: uri.toString(),
         detail: 'HTTP ${res.statusCode}',
+        code: _errorCode(body),
       );
     }
     try {
@@ -45,6 +46,20 @@ class HttpPatientGptGateway implements PatientGptGateway {
     } on FormatException catch (e) {
       throw GatewayContractViolation('response is not JSON: ${e.message}');
     }
+  }
+
+  /// The `code` of the Axum error body (`{"code", "message"}`), if the body
+  /// is that shape. Anything else carries no code.
+  static String? _errorCode(String body) {
+    try {
+      final decoded = jsonDecode(body);
+      if (decoded is Map && decoded['code'] is String) {
+        return decoded['code'] as String;
+      }
+    } on FormatException {
+      return null;
+    }
+    return null;
   }
 
   @override

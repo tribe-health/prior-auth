@@ -63,12 +63,75 @@ final class PatientGptGatewayProvider
 
 String _$patientGptGatewayHash() => r'221a8a986d8f03b37e1199c29c05218333ef21cc';
 
+/// The transports the app's `EntityGraph` reads through. `main` overrides
+/// the package's `entityTransportRegistryProvider` with this.
+
+@ProviderFor(patientGptEntityTransports)
+final patientGptEntityTransportsProvider =
+    PatientGptEntityTransportsProvider._();
+
+/// The transports the app's `EntityGraph` reads through. `main` overrides
+/// the package's `entityTransportRegistryProvider` with this.
+
+final class PatientGptEntityTransportsProvider
+    extends
+        $FunctionalProvider<
+          EntityTransportRegistry,
+          EntityTransportRegistry,
+          EntityTransportRegistry
+        >
+    with $Provider<EntityTransportRegistry> {
+  /// The transports the app's `EntityGraph` reads through. `main` overrides
+  /// the package's `entityTransportRegistryProvider` with this.
+  PatientGptEntityTransportsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'patientGptEntityTransportsProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$patientGptEntityTransportsHash();
+
+  @$internal
+  @override
+  $ProviderElement<EntityTransportRegistry> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  EntityTransportRegistry create(Ref ref) {
+    return patientGptEntityTransports(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(EntityTransportRegistry value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<EntityTransportRegistry>(value),
+    );
+  }
+}
+
+String _$patientGptEntityTransportsHash() =>
+    r'7945c691ffbb9f8d3c49691af9cc30e959efa0c8';
+
+/// The session principal, or null until the graph holds it.
+
 @ProviderFor(session)
 final sessionProvider = SessionProvider._();
 
+/// The session principal, or null until the graph holds it.
+
 final class SessionProvider
-    extends $FunctionalProvider<AsyncValue<Session>, Session, FutureOr<Session>>
-    with $FutureModifier<Session>, $FutureProvider<Session> {
+    extends
+        $FunctionalProvider<AsyncValue<Session?>, Session?, FutureOr<Session?>>
+    with $FutureModifier<Session?>, $FutureProvider<Session?> {
+  /// The session principal, or null until the graph holds it.
   SessionProvider._()
     : super(
         from: null,
@@ -85,19 +148,23 @@ final class SessionProvider
 
   @$internal
   @override
-  $FutureProviderElement<Session> $createElement($ProviderPointer pointer) =>
+  $FutureProviderElement<Session?> $createElement($ProviderPointer pointer) =>
       $FutureProviderElement(pointer);
 
   @override
-  FutureOr<Session> create(Ref ref) {
+  FutureOr<Session?> create(Ref ref) {
     return session(ref);
   }
 }
 
-String _$sessionHash() => r'f80e36240dbe86363ed984b0fa5a9d3df535ec76';
+String _$sessionHash() => r'ab42c9967b10cf6d9629b0dee936612a9ab968bb';
+
+/// Patient and case order for the sidebar and "Due next", as ids.
 
 @ProviderFor(patientDirectory)
 final patientDirectoryProvider = PatientDirectoryProvider._();
+
+/// Patient and case order for the sidebar and "Due next", as ids.
 
 final class PatientDirectoryProvider
     extends
@@ -107,6 +174,7 @@ final class PatientDirectoryProvider
           FutureOr<PatientDirectory>
         >
     with $FutureModifier<PatientDirectory>, $FutureProvider<PatientDirectory> {
+  /// Patient and case order for the sidebar and "Due next", as ids.
   PatientDirectoryProvider._()
     : super(
         from: null,
@@ -133,85 +201,4 @@ final class PatientDirectoryProvider
   }
 }
 
-String _$patientDirectoryHash() => r'1dfac3a5356727d98ff825ffe7d3d573edf3427a';
-
-@ProviderFor(conversations)
-final conversationsProvider = ConversationsFamily._();
-
-final class ConversationsProvider
-    extends
-        $FunctionalProvider<
-          AsyncValue<List<ConversationSummary>>,
-          List<ConversationSummary>,
-          FutureOr<List<ConversationSummary>>
-        >
-    with
-        $FutureModifier<List<ConversationSummary>>,
-        $FutureProvider<List<ConversationSummary>> {
-  ConversationsProvider._({
-    required ConversationsFamily super.from,
-    required ConversationScope super.argument,
-  }) : super(
-         retry: noRetry,
-         name: r'conversationsProvider',
-         isAutoDispose: true,
-         dependencies: null,
-         $allTransitiveDependencies: null,
-       );
-
-  @override
-  String debugGetCreateSourceHash() => _$conversationsHash();
-
-  @override
-  String toString() {
-    return r'conversationsProvider'
-        ''
-        '($argument)';
-  }
-
-  @$internal
-  @override
-  $FutureProviderElement<List<ConversationSummary>> $createElement(
-    $ProviderPointer pointer,
-  ) => $FutureProviderElement(pointer);
-
-  @override
-  FutureOr<List<ConversationSummary>> create(Ref ref) {
-    final argument = this.argument as ConversationScope;
-    return conversations(ref, argument);
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return other is ConversationsProvider && other.argument == argument;
-  }
-
-  @override
-  int get hashCode {
-    return argument.hashCode;
-  }
-}
-
-String _$conversationsHash() => r'e216692b713e7e62fc28f15d2cb17e85e3de434b';
-
-final class ConversationsFamily extends $Family
-    with
-        $FunctionalFamilyOverride<
-          FutureOr<List<ConversationSummary>>,
-          ConversationScope
-        > {
-  ConversationsFamily._()
-    : super(
-        retry: noRetry,
-        name: r'conversationsProvider',
-        dependencies: null,
-        $allTransitiveDependencies: null,
-        isAutoDispose: true,
-      );
-
-  ConversationsProvider call(ConversationScope scope) =>
-      ConversationsProvider._(argument: scope, from: this);
-
-  @override
-  String toString() => r'conversationsProvider';
-}
+String _$patientDirectoryHash() => r'c2396319b137ae77c28bca5e575aba9a4156c20c';

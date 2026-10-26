@@ -1,8 +1,39 @@
 {
-  "phase": "spec",
+  "schemaVersion": "5",
+  "generatedBy": "kbd-runtime",
+  "projectionContractVersion": 2,
+  "sourceRevision": 6,
+  "derivedRevision": 6,
+  "frontier": {
+    "6b286379-9580-4e4d-b9b3-59ae0ab1eba9": 6
+  },
+  "conflictCount": 0,
+  "projectId": "5180957e-e9f7-4d5d-a961-e02a6ede0ebd",
+  "runId": "local-inference-and-uar-wiring-20261026T111757Z",
+  "path": [
+    "local-inference-and-uar-wiring"
+  ],
+  "phaseIds": [
+    "local-inference-and-uar-wiring"
+  ],
+  "activePhaseId": "local-inference-and-uar-wiring",
+  "activePhase": "local-inference-and-uar-wiring",
+  "phase": "local-inference-and-uar-wiring",
+  "parentPhase": null,
+  "childPointer": null,
+  "change": null,
+  "currentTask": null,
   "status": "ready",
-  "task": null,
-  "waypoint": "bootstrap",
-  "updated": "2026-10-04",
-  "note": "Authoritative for position. tier-guard.sh reads .status; final artifact commands require a completed or release boundary."
+  "lifecycle": "ready",
+  "stageId": "analyze",
+  "stageStatus": "COMPLETE",
+  "completionMetric": "implementation",
+  "implementationCompleted": 0,
+  "implementationTotal": 0,
+  "planRevision": 1,
+  "revision": 6,
+  "exactNextCommand": "/kbd-assess local-inference-and-uar-wiring",
+  "nextChange": null,
+  "nextTask": null,
+  "updatedAt": "2026-10-26T12:09:26.074980Z"
 }

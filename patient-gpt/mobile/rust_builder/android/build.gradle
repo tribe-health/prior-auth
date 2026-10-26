@@ -31,7 +31,9 @@ android {
 
     // Bumping the plugin compileSdkVersion requires all clients of this plugin
     // to bump the version in their app.
-    compileSdkVersion 33
+    // PatientGPT patch: the AndroidX libraries the app resolves (for example
+    // androidx.exifinterface 1.4.1) require compileSdk 34 or later; 33 failed.
+    compileSdkVersion 36
 
     // Use the NDK version
     // declared in /android/app/build.gradle file of the Flutter project.

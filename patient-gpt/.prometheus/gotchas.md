@@ -38,3 +38,18 @@ Supersedes the earlier KBD initialization pending note: project.json and constra
 - 2026-10-25: `surrealdb = "=3.3.0"` resolves sub-crates to 3.3.4 unless Cargo.lock is held; `cargo update` silently moves the engine.
 - 2026-10-25: cargokit looks up artifacts by package name; hyphenated crate `patient-gpt-ffi` needs the patched `libraryName` in `mobile/rust_builder`.
 - 2026-10-25: Dart reserves `void`; the token generator maps `--void` to `voidState`.
+
+## 2026-10-25 — component branding and verification
+
+- shadcn uses --accent as a surface; PatientGPT uses it as warm text. Keep the
+  brand variable intact and map Tailwind --color-accent to a separate surface role.
+- Important CSS declarations reverse layer precedence. Component field-focus
+  exceptions must share the base layer with prototype important focus rules;
+  unlayered important selectors do not override them.
+- Global prototype button resets must be layered below component utilities.
+- Color samples alone miss gradient overlays and unreadable icons. Independent
+  rendered review caught reasoning fades and an attachment fallback mismatch.
+- Recharts 3 tick labels use .recharts-cartesian-axis-tick-value; the older
+  .recharts-cartesian-axis-tick selector did not theme default #666 labels.
+- Capturing html.dark directly bypasses React's theme asset state; use the
+  preview theme control. Wait for ResizeObserver settlement before reflow checks.

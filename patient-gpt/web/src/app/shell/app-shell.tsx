@@ -4,6 +4,7 @@
 // Files panel and record viewers.
 import { useEffect, useMemo, useState } from 'react'
 import { Outlet } from '@tanstack/react-router'
+import { A2uiProvider } from '../../features/a2ui/presentation/a2ui-provider'
 import { ChatRuntimeProvider } from '../../features/chat/presentation/chat-runtime-provider'
 import { ComposerDock } from '../../features/chat/presentation/composer-placement'
 import type { ActiveThread } from '../../features/chat/presentation/active-thread'
@@ -45,6 +46,7 @@ export function AppShell() {
 
   return (
     <ChatRuntimeProvider active={active}>
+      <A2uiProvider>
       <a
         className="skip"
         id="skip"
@@ -75,6 +77,7 @@ export function AppShell() {
         </div>
       </div>
       <SearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} />
+      </A2uiProvider>
     </ChatRuntimeProvider>
   )
 }

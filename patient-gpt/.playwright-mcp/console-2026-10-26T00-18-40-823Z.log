@@ -1,0 +1,71 @@
+[     235ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:5181/node_modules/.vite/deps/react-dom_client.js?v=42f0d5a9:15802
+[     297ms] [ERROR] %s contains an input of type %s with both value and defaultValue props. Input elements must be either controlled or uncontrolled (specify either the value prop, or the defaultValue prop, but not both). Decide between using a controlled or uncontrolled input element and remove one of these props. More info: https://react.dev/link/controlled-components Input undefined @ http://127.0.0.1:5181/@vite/client:367
+[     380ms] [WARNING] Invalid image data format detected @ http://127.0.0.1:5181/@vite/client:367
+[    3072ms] [ERROR] You are calling ReactDOMClient.createRoot() on a container that has already been passed to createRoot() before. Instead, call root.render() on the existing root instead if you want to update it. @ http://127.0.0.1:5181/@vite/client:367
+[    3149ms] [WARNING] Invalid image data format detected @ http://127.0.0.1:5181/@vite/client:367
+[    3376ms] [WARNING] The width(0) and height(0) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width. @ http://127.0.0.1:5181/@vite/client:367
+[    3376ms] [WARNING] The width(0) and height(0) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width. @ http://127.0.0.1:5181/@vite/client:367
+[    3533ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:5181/node_modules/.vite/deps/react-dom_client.js?v=42f0d5a9:15802
+[    3590ms] [ERROR] %s contains an input of type %s with both value and defaultValue props. Input elements must be either controlled or uncontrolled (specify either the value prop, or the defaultValue prop, but not both). Decide between using a controlled or uncontrolled input element and remove one of these props. More info: https://react.dev/link/controlled-components Input undefined @ http://127.0.0.1:5181/@vite/client:367
+[    3672ms] [WARNING] Invalid image data format detected @ http://127.0.0.1:5181/@vite/client:367
+[   12438ms] [ERROR] You are calling ReactDOMClient.createRoot() on a container that has already been passed to createRoot() before. Instead, call root.render() on the existing root instead if you want to update it. @ http://127.0.0.1:5181/@vite/client:367
+[   12518ms] [WARNING] Invalid image data format detected @ http://127.0.0.1:5181/@vite/client:367
+[   12786ms] [WARNING] The width(0) and height(0) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width. @ http://127.0.0.1:5181/@vite/client:367
+[   12786ms] [WARNING] The width(0) and height(0) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width. @ http://127.0.0.1:5181/@vite/client:367
+[   12920ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:5181/node_modules/.vite/deps/react-dom_client.js?v=42f0d5a9:15802
+[   12971ms] [ERROR] %s contains an input of type %s with both value and defaultValue props. Input elements must be either controlled or uncontrolled (specify either the value prop, or the defaultValue prop, but not both). Decide between using a controlled or uncontrolled input element and remove one of these props. More info: https://react.dev/link/controlled-components Input undefined @ http://127.0.0.1:5181/@vite/client:367
+[   13051ms] [WARNING] Invalid image data format detected @ http://127.0.0.1:5181/@vite/client:367
+[  122247ms] [ERROR] You are calling ReactDOMClient.createRoot() on a container that has already been passed to createRoot() before. Instead, call root.render() on the existing root instead if you want to update it. @ http://127.0.0.1:5181/@vite/client:367
+[  122248ms] [ERROR] You are calling ReactDOMClient.createRoot() on a container that has already been passed to createRoot() before. Instead, call root.render() on the existing root instead if you want to update it. @ http://127.0.0.1:5181/@vite/client:367
+[  122339ms] [WARNING] Invalid image data format detected @ http://127.0.0.1:5181/@vite/client:367
+[  122733ms] [WARNING] Invalid image data format detected @ http://127.0.0.1:5181/@vite/client:367
+[  122862ms] [WARNING] The width(0) and height(0) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width. @ http://127.0.0.1:5181/@vite/client:367
+[  122862ms] [WARNING] The width(0) and height(0) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width. @ http://127.0.0.1:5181/@vite/client:367
+[  122878ms] [WARNING] The width(0) and height(0) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width. @ http://127.0.0.1:5181/@vite/client:367
+[  122878ms] [WARNING] The width(0) and height(0) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width. @ http://127.0.0.1:5181/@vite/client:367
+[  123048ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:5181/node_modules/.vite/deps/react-dom_client.js?v=42f0d5a9:15802
+[  123180ms] [WARNING] Invalid image data format detected @ http://127.0.0.1:5181/@vite/client:367
+[  142945ms] [ERROR] You are calling ReactDOMClient.createRoot() on a container that has already been passed to createRoot() before. Instead, call root.render() on the existing root instead if you want to update it. @ http://127.0.0.1:5181/@vite/client:367
+[  143359ms] [WARNING] The width(0) and height(0) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width. @ http://127.0.0.1:5181/@vite/client:367
+[  143359ms] [WARNING] The width(0) and height(0) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width. @ http://127.0.0.1:5181/@vite/client:367
+[  143548ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:5181/node_modules/.vite/deps/react-dom_client.js?v=42f0d5a9:15802
+[  227698ms] [ERROR] You are calling ReactDOMClient.createRoot() on a container that has already been passed to createRoot() before. Instead, call root.render() on the existing root instead if you want to update it. @ http://127.0.0.1:5181/@vite/client:367
+[  227973ms] [WARNING] The width(0) and height(0) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width. @ http://127.0.0.1:5181/@vite/client:367
+[  227974ms] [WARNING] The width(0) and height(0) of chart should be greater than 0,
+       please check the style of container, or the props width(100%) and height(100%),
+       or add a minWidth(0) or minHeight(undefined) or use aspect(undefined) to control the
+       height and width. @ http://127.0.0.1:5181/@vite/client:367
+[  228195ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:5181/node_modules/.vite/deps/react-dom_client.js?v=42f0d5a9:15802

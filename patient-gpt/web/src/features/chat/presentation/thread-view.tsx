@@ -9,6 +9,7 @@ import {
   type TextMessagePartProps,
 } from '@assistant-ui/react'
 import type { ContentBlock } from '../../../app/transport/dto'
+import { A2uiDevSlot } from '../../a2ui/presentation/a2ui-dev-slot'
 import { useActiveThread } from './active-thread'
 import { ContentBlockView } from './content-block-view'
 import { CONTENT_BLOCK_PART, useRunEnd } from './use-chat-runtime'
@@ -68,6 +69,7 @@ export function ThreadView({ title }: { title: string }) {
         <ThreadPrimitive.Messages components={MESSAGE_COMPONENTS} />
         <RunEndNote />
         <NothingLoaded />
+        <A2uiDevSlot />
       </div>
     </div>
   )

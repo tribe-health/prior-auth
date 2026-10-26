@@ -26,10 +26,18 @@ abstract interface class PatientGptGateway {
 
 /// The service could not be reached or refused the request.
 class GatewayUnavailable implements Exception {
-  const GatewayUnavailable({required this.endpoint, required this.detail});
+  const GatewayUnavailable({
+    required this.endpoint,
+    required this.detail,
+    this.code,
+  });
 
   final String endpoint;
   final String detail;
+
+  /// The host error code (`HostError::code()` or a transport code such as
+  /// `invalid_scope`) when the service named one; null for socket failures.
+  final String? code;
 
   @override
   String toString() => 'GatewayUnavailable($endpoint): $detail';

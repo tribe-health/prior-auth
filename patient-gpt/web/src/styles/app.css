@@ -1,7 +1,8 @@
-/* TJ-ARCH-MOB-001 compliant
-   Application entry stylesheet. Order matters: generated tokens, the OD layout
-   layer, then the ported prototype sheets. The only rules authored here are the
-   ones the React port needs and the prototype does not have. */
+/* Generated roles are authoritative. Layer resets so component utilities work. */
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+@import 'tw-shimmer';
 @import '@fontsource/playfair-display/500.css';
 @import '@fontsource/playfair-display/600.css';
 @import '@fontsource/mulish/400.css';
@@ -11,42 +12,29 @@
 @import '@fontsource/jetbrains-mono/500.css';
 @import './tokens.css';
 @import './layout-primitives.css';
-@import './base.css';
+@import './base.css' layer(base);
 @import './shell.css';
 @import './thread.css';
 @import './surfaces.css';
 @import './panel.css';
+@import './component-theme.css';
+@import '../components/assistant-ui/assistant-brand.css';
 
-#root { height: 100%; }
+@custom-variant dark (&:is(.dark *));
+@custom-variant data-open (&:where([data-state="open"], [data-open]:not([data-open="false"])));
+@custom-variant data-closed (&:where([data-state="closed"], [data-closed]:not([data-closed="false"])));
 
-/* Host chrome seam. A host that draws chrome above the page (the desktop title
-   bar) sets --host-inset-top on <html>; the app and every fixed overlay start
-   below it. The browser leaves it at 0, so nothing moves there. Each rule
-   mirrors the media range where the prototype pins that element to top: 0. */
+/* Host chrome remains outside the shared application viewport. */
 :root { --host-inset-top: 0px; }
 #root { height: calc(100% - var(--host-inset-top)); margin-top: var(--host-inset-top); }
 .app { height: calc(100dvh - var(--host-inset-top)); }
 .scrim { top: var(--host-inset-top); }
-/* Only the focused position moves. The hidden position stays base.css's, since a
-   transform transition does not re-target when the inset changes at runtime. */
 .skip:focus-visible { top: calc(8px + var(--host-inset-top)); }
-@media (max-width: 767.98px) {
-  /* The drawer's height comes from its insets; height: 100% would overhang the inset. */
-  .sidebar { top: var(--host-inset-top); height: auto; }
-}
-@media (min-width: 768px) and (max-width: 1099.98px) {
-  .files { top: var(--host-inset-top); }
-}
-@media (max-width: 1099.98px) {
-  .canvas { top: var(--host-inset-top); }
-}
-
-/* The sidebar brand uses the PatientGPT mark files (spine in the bubble), one per
-   theme, as docs/design/brand/patientgpt-brand-board.html requires. */
+@media (max-width: 767.98px) { .sidebar { top: var(--host-inset-top); height: auto; } }
+@media (min-width: 768px) and (max-width: 1099.98px) { .files { top: var(--host-inset-top); } }
+@media (max-width: 1099.98px) { .canvas { top: var(--host-inset-top); } }
 .mark-img { width: 28px; height: 28px; flex: none; }
 .mark-img.on-dark { display: none; }
 html.dark .mark-img.on-light { display: none; }
 html.dark .mark-img.on-dark { display: block; }
-
-/* ContentBlock divider: separation by space alone, since Flat 2.0 has no rules. */
 .block-divider { height: 8px; }

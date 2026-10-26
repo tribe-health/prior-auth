@@ -1,0 +1,662 @@
+- generic [active] [ref=e1]:
+  - main [ref=e3]:
+    - generic [ref=e4]:
+      - link "PatientGPT application" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - img "PatientGPT" [ref=e6]
+      - heading "Component preview" [level=1] [ref=e7]
+      - paragraph [ref=e8]: Shared web and desktop library. Synthetic fixtures only.
+      - generic [ref=e9]:
+        - searchbox "Find a component or state" [ref=e10]
+        - button "Use dark theme" [ref=e11] [cursor=pointer]
+      - status [ref=e12]: 78 modules composed across 15 fixture groups. Showing 15 groups. Coverage is an inventory, not a verification result.
+      - navigation "Fixture groups" [ref=e13]:
+        - link "Actions and labels" [ref=e14] [cursor=pointer]:
+          - /url: "#actions"
+        - link "Fields and selection" [ref=e15] [cursor=pointer]:
+          - /url: "#fields"
+        - link "Choices and calendar" [ref=e16] [cursor=pointer]:
+          - /url: "#choices"
+        - link "Regions and identity" [ref=e17] [cursor=pointer]:
+          - /url: "#regions"
+        - link "Feedback and evidence states" [ref=e18] [cursor=pointer]:
+          - /url: "#feedback"
+        - link "Disclosure and tabs" [ref=e19] [cursor=pointer]:
+          - /url: "#disclosure"
+        - link "Dialogs and overlays" [ref=e20] [cursor=pointer]:
+          - /url: "#overlays"
+        - link "Menus and commands" [ref=e21] [cursor=pointer]:
+          - /url: "#menus"
+        - link "Navigation and direction" [ref=e22] [cursor=pointer]:
+          - /url: "#navigation"
+        - link "Data and layout" [ref=e23] [cursor=pointer]:
+          - /url: "#data"
+        - link "Chat primitives" [ref=e24] [cursor=pointer]:
+          - /url: "#chat"
+        - link "Questionnaire" [ref=e25] [cursor=pointer]:
+          - /url: "#questions"
+        - link "Assistant UI conversation" [ref=e26] [cursor=pointer]:
+          - /url: "#assistant"
+        - link "Assistant UI files and media" [ref=e27] [cursor=pointer]:
+          - /url: "#assistant-media"
+        - link "Assistant UI surfaces and disclosure" [ref=e28] [cursor=pointer]:
+          - /url: "#assistant-disclosure"
+    - generic [ref=e29]:
+      - region [ref=e30]:
+        - heading "Actions and labels" [level=2] [ref=e31]
+        - paragraph [ref=e32]: button · badge · button-group · toggle · toggle-group · kbd · tooltip
+        - paragraph [ref=e33]: Variants, sizes, selected, disabled, icon, hover tooltip
+        - generic [ref=e35]:
+          - generic [ref=e36]:
+            - button "default" [ref=e37] [cursor=pointer]
+            - button "secondary" [ref=e38] [cursor=pointer]
+            - button "outline" [ref=e39] [cursor=pointer]
+            - button "ghost" [ref=e40] [cursor=pointer]
+            - button "destructive" [ref=e41] [cursor=pointer]
+            - button "link" [ref=e42] [cursor=pointer]
+          - generic [ref=e43]:
+            - button "xs" [ref=e44] [cursor=pointer]
+            - button "sm" [ref=e45] [cursor=pointer]
+            - button "default" [ref=e46] [cursor=pointer]
+            - button "lg" [ref=e47] [cursor=pointer]
+            - button "Disabled" [disabled]
+            - button "Add fixture" [ref=e48] [cursor=pointer]
+          - generic [ref=e49]:
+            - generic [ref=e50]: default
+            - generic [ref=e51]: secondary
+            - generic [ref=e52]: outline
+            - generic [ref=e53]: destructive
+          - group [ref=e54]:
+            - button "First" [ref=e55] [cursor=pointer]
+            - separator [ref=e56]
+            - button "Second" [ref=e57] [cursor=pointer]
+            - generic [ref=e58]: "2"
+          - generic [ref=e59]:
+            - button "Pin fixture" [pressed] [ref=e60] [cursor=pointer]: Pin
+            - button "Outline" [ref=e61] [cursor=pointer]
+            - button "Disabled" [disabled]
+          - group [ref=e62]:
+            - button "Compact" [pressed] [ref=e63] [cursor=pointer]
+            - button "Wide" [ref=e64] [cursor=pointer]
+          - paragraph [ref=e65]:
+            - text: Keyboard hint
+            - generic [ref=e66]:
+              - generic: ⌘
+              - generic: K
+          - button "Tooltip" [ref=e67] [cursor=pointer]
+      - region [ref=e68]:
+        - heading "Fields and selection" [level=2] [ref=e69]
+        - paragraph [ref=e70]: field · input · label · textarea · input-group · checkbox · radio-group · switch · slider · input-otp
+        - paragraph [ref=e71]: Empty, filled, invalid, disabled, checked, ranged, partial code
+        - generic [ref=e73]:
+          - generic [ref=e74]:
+            - group [ref=e75]:
+              - generic [ref=e76]: Fixture name
+              - textbox "Fixture name" [ref=e77]:
+                - /placeholder: Enter a label
+              - paragraph [ref=e78]: Only synthetic content belongs in this preview.
+            - group [ref=e79]:
+              - generic [ref=e80]: Required label
+              - textbox "Required label" [invalid] [ref=e81]
+              - alert [ref=e82]: Enter a label.
+          - generic [ref=e83]: Disabled input
+          - textbox "Disabled input" [disabled]: Unavailable
+          - generic [ref=e84]: Notes
+          - textbox "Notes" [ref=e85]:
+            - /placeholder: Synthetic review notes
+          - group [ref=e86]:
+            - group [ref=e87]
+            - textbox "Search fixture records" [ref=e91]:
+              - /placeholder: Search
+            - group [ref=e92]:
+              - button "Submit fixture search" [ref=e93] [cursor=pointer]
+          - generic [ref=e94]:
+            - checkbox "Selected" [checked] [ref=e95]
+            - checkbox [checked] [aria-hidden] [ref=e99] [cursor=pointer]
+            - generic [ref=e100]: Selected
+            - checkbox "Disabled" [disabled] [ref=e101]
+            - checkbox [disabled] [aria-hidden] [ref=e102]
+            - generic [ref=e103]: Disabled
+          - radiogroup "Fixture scope" [ref=e104]:
+            - generic [ref=e105]:
+              - radio "One record" [checked] [ref=e106]
+              - radio [checked] [aria-hidden] [ref=e109] [cursor=pointer]
+              - generic [ref=e110]: One record
+              - radio "All records" [ref=e111]
+              - radio [aria-hidden] [ref=e112] [cursor=pointer]
+              - generic [ref=e113]: All records
+          - generic [ref=e114]:
+            - switch "Show details" [checked] [ref=e115]
+            - checkbox [checked] [aria-hidden] [ref=e116] [cursor=pointer]
+            - generic [ref=e117]: Show details
+            - switch "Unavailable setting" [disabled] [ref=e118]
+            - checkbox [disabled] [aria-hidden] [ref=e119]
+          - group "Fixture range" [ref=e120]:
+            - generic [ref=e121]:
+              - slider [ref=e125]: "30"
+              - slider [ref=e127]: "70"
+          - generic:
+            - generic:
+              - generic: "1"
+              - generic: "2"
+            - textbox "Synthetic verification code" [ref=e128]: "12"
+      - region [ref=e129]:
+        - heading "Choices and calendar" [level=2] [ref=e130]
+        - paragraph [ref=e131]: native-select · select · combobox · calendar
+        - paragraph [ref=e132]: Selected, disabled option, search empty, date selected and disabled
+        - generic [ref=e134]:
+          - combobox "Native fixture select" [ref=e136]:
+            - option "Draft" [selected]
+            - option "Ready"
+            - option "Unavailable" [disabled]
+          - combobox "Fixture status" [ref=e137] [cursor=pointer]:
+            - generic [ref=e138]: draft
+            - img [aria-hidden]: ▼
+          - textbox [aria-hidden] [ref=e139]: draft
+          - group [ref=e140]:
+            - combobox "Find a fixture status" [ref=e141]
+            - group [ref=e142]:
+              - button [ref=e143] [cursor=pointer]
+          - textbox [aria-hidden] [ref=e144]
+          - generic [ref=e146]:
+            - navigation "Navigation bar" [ref=e147]:
+              - button "Go to the Previous Month" [ref=e148] [cursor=pointer]
+              - button "Go to the Next Month" [ref=e149] [cursor=pointer]
+            - generic [ref=e150]:
+              - status [ref=e152]: October 2026
+              - grid "October 2026" [ref=e153]:
+                - rowgroup [aria-hidden] [ref=e154]:
+                  - row [ref=e155]:
+                    - columnheader [ref=e156]: Su
+                    - columnheader [ref=e157]: Mo
+                    - columnheader [ref=e158]: Tu
+                    - columnheader [ref=e159]: We
+                    - columnheader [ref=e160]: Th
+                    - columnheader [ref=e161]: Fr
+                    - columnheader [ref=e162]: Sa
+                - rowgroup [ref=e163]:
+                  - row [ref=e164]:
+                    - gridcell [ref=e165]:
+                      - button "Sunday, September 27th, 2026" [ref=e166] [cursor=pointer]: "27"
+                    - gridcell [ref=e167]:
+                      - button "Monday, September 28th, 2026" [ref=e168] [cursor=pointer]: "28"
+                    - gridcell [ref=e169]:
+                      - button "Tuesday, September 29th, 2026" [ref=e170] [cursor=pointer]: "29"
+                    - gridcell [ref=e171]:
+                      - button "Wednesday, September 30th, 2026" [ref=e172] [cursor=pointer]: "30"
+                    - gridcell [ref=e173]:
+                      - button "Thursday, October 1st, 2026" [ref=e174] [cursor=pointer]: "1"
+                    - gridcell [ref=e175]:
+                      - button "Friday, October 2nd, 2026" [ref=e176] [cursor=pointer]: "2"
+                    - gridcell [ref=e177]:
+                      - button "Saturday, October 3rd, 2026" [ref=e178] [cursor=pointer]: "3"
+                  - row [ref=e179]:
+                    - gridcell [ref=e180]:
+                      - button "Sunday, October 4th, 2026" [ref=e181] [cursor=pointer]: "4"
+                    - gridcell [ref=e182]:
+                      - button "Monday, October 5th, 2026" [ref=e183] [cursor=pointer]: "5"
+                    - gridcell [ref=e184]:
+                      - button "Tuesday, October 6th, 2026" [ref=e185] [cursor=pointer]: "6"
+                    - gridcell [ref=e186]:
+                      - button "Wednesday, October 7th, 2026" [ref=e187] [cursor=pointer]: "7"
+                    - gridcell [ref=e188]:
+                      - button "Thursday, October 8th, 2026" [ref=e189] [cursor=pointer]: "8"
+                    - gridcell [ref=e190]:
+                      - button "Friday, October 9th, 2026" [ref=e191] [cursor=pointer]: "9"
+                    - gridcell [ref=e192]:
+                      - button "Saturday, October 10th, 2026" [ref=e193] [cursor=pointer]: "10"
+                  - row [ref=e194]:
+                    - gridcell [ref=e195]:
+                      - button "Sunday, October 11th, 2026" [ref=e196] [cursor=pointer]: "11"
+                    - gridcell [ref=e197]:
+                      - button "Monday, October 12th, 2026" [ref=e198] [cursor=pointer]: "12"
+                    - gridcell [ref=e199]:
+                      - button "Tuesday, October 13th, 2026" [ref=e200] [cursor=pointer]: "13"
+                    - gridcell [ref=e201]:
+                      - button "Wednesday, October 14th, 2026" [ref=e202] [cursor=pointer]: "14"
+                    - gridcell [selected] [ref=e203]:
+                      - button "Thursday, October 15th, 2026, selected" [ref=e204] [cursor=pointer]: "15"
+                    - gridcell [ref=e205]:
+                      - button "Friday, October 16th, 2026" [ref=e206] [cursor=pointer]: "16"
+                    - gridcell [ref=e207]:
+                      - button "Saturday, October 17th, 2026" [ref=e208] [cursor=pointer]: "17"
+                  - row [ref=e209]:
+                    - gridcell "Sunday, October 18th, 2026" [ref=e210]:
+                      - button "Sunday, October 18th, 2026" [disabled]: "18"
+                    - gridcell [ref=e211]:
+                      - button "Monday, October 19th, 2026" [ref=e212] [cursor=pointer]: "19"
+                    - gridcell [ref=e213]:
+                      - button "Tuesday, October 20th, 2026" [ref=e214] [cursor=pointer]: "20"
+                    - gridcell [ref=e215]:
+                      - button "Wednesday, October 21st, 2026" [ref=e216] [cursor=pointer]: "21"
+                    - gridcell [ref=e217]:
+                      - button "Thursday, October 22nd, 2026" [ref=e218] [cursor=pointer]: "22"
+                    - gridcell [ref=e219]:
+                      - button "Friday, October 23rd, 2026" [ref=e220] [cursor=pointer]: "23"
+                    - gridcell [ref=e221]:
+                      - button "Saturday, October 24th, 2026" [ref=e222] [cursor=pointer]: "24"
+                  - row [ref=e223]:
+                    - gridcell [ref=e224]:
+                      - button "Today, Sunday, October 25th, 2026" [ref=e225] [cursor=pointer]: "25"
+                    - gridcell [ref=e226]:
+                      - button "Monday, October 26th, 2026" [ref=e227] [cursor=pointer]: "26"
+                    - gridcell [ref=e228]:
+                      - button "Tuesday, October 27th, 2026" [ref=e229] [cursor=pointer]: "27"
+                    - gridcell [ref=e230]:
+                      - button "Wednesday, October 28th, 2026" [ref=e231] [cursor=pointer]: "28"
+                    - gridcell [ref=e232]:
+                      - button "Thursday, October 29th, 2026" [ref=e233] [cursor=pointer]: "29"
+                    - gridcell [ref=e234]:
+                      - button "Friday, October 30th, 2026" [ref=e235] [cursor=pointer]: "30"
+                    - gridcell [ref=e236]:
+                      - button "Saturday, October 31st, 2026" [ref=e237] [cursor=pointer]: "31"
+      - region [ref=e238]:
+        - heading "Regions and identity" [level=2] [ref=e239]
+        - paragraph [ref=e240]: card · item · separator · avatar · aspect-ratio
+        - paragraph [ref=e241]: Header, footer, metadata, fallback avatar, image
+        - generic [ref=e243]:
+          - generic [ref=e244]:
+            - generic [ref=e245]:
+              - generic [ref=e246]: Fixture record
+              - generic [ref=e247]: A neutral region with metadata.
+            - paragraph [ref=e249]: Document, page, and date stay visible.
+            - button "View fixture" [ref=e251] [cursor=pointer]
+          - list [ref=e252]:
+            - generic [ref=e255]:
+              - generic [ref=e256]: Synthetic document
+              - paragraph [ref=e257]: Page 1 · October 15, 2026
+            - separator [ref=e258]
+            - generic [ref=e259]: Second fixture
+          - separator [ref=e262]
+          - generic [ref=e263]:
+            - img "PatientGPT" [ref=e265]
+            - generic [ref=e266]: AB
+            - generic [ref=e268]: "+2"
+          - img "PatientGPT brand fixture" [ref=e271]
+      - region [ref=e272]:
+        - heading "Feedback and evidence states" [level=2] [ref=e273]
+        - paragraph [ref=e274]: alert · progress · spinner · skeleton · empty · toast
+        - paragraph [ref=e275]: Informative, destructive, met/gap/void labels and shapes, progress, loading, empty, five toast types
+        - generic [ref=e277]:
+          - alert [ref=e278]:
+            - generic [ref=e279]: Source attached
+            - generic [ref=e280]: Synthetic document · page 1 · October 15, 2026.
+          - alert [ref=e281]:
+            - generic [ref=e282]: Source missing
+            - generic [ref=e283]: This assertion has no source document. It will not be included.
+          - generic [ref=e284]:
+            - generic [ref=e285]: ● Met
+            - generic [ref=e286]: ▲ Gap
+            - generic [ref=e287]: □ Void
+          - progressbar "Fixture progress" [ref=e288]:
+            - text: Fixture progress
+            - generic [aria-hidden] [ref=e289]: 60%
+            - text: x
+          - status [ref=e292]:
+            - status "Loading" [ref=e293]
+            - generic [ref=e295]: Loading fixture
+          - generic [ref=e299]:
+            - generic [ref=e300]: No fixture records
+            - generic [ref=e301]: Change the filter to show records.
+          - generic [ref=e302]:
+            - button "success toast" [ref=e303] [cursor=pointer]
+            - button "info toast" [ref=e304] [cursor=pointer]
+            - button "warning toast" [ref=e305] [cursor=pointer]
+            - button "error toast" [ref=e306] [cursor=pointer]
+            - button "loading toast" [ref=e307] [cursor=pointer]
+      - region [ref=e308]:
+        - heading "Disclosure and tabs" [level=2] [ref=e309]
+        - paragraph [ref=e310]: accordion · collapsible · tabs
+        - paragraph [ref=e311]: Expanded, collapsed, disabled, default and line tabs
+        - generic [ref=e313]:
+          - generic [ref=e314]:
+            - generic [ref=e315]:
+              - heading [level=3] [ref=e316]:
+                - button "Record details" [expanded] [ref=e317] [cursor=pointer]
+              - region "Record details" [ref=e318]:
+                - generic [ref=e319]: Synthetic document · page 1 · October 15, 2026.
+            - heading [level=3] [ref=e321]:
+              - button "Unavailable details" [disabled] [ref=e322]
+          - button "Toggle disclosure" [ref=e324] [cursor=pointer]
+          - generic [ref=e325]:
+            - tablist [ref=e326]:
+              - tab "Overview" [selected] [ref=e327] [cursor=pointer]
+              - tab "Details" [ref=e328] [cursor=pointer]
+              - tab "Later" [disabled]
+            - tabpanel "Overview" [ref=e329]: default tabs overview
+          - generic [ref=e330]:
+            - tablist [ref=e331]:
+              - tab "Overview" [selected] [ref=e332] [cursor=pointer]
+              - tab "Details" [ref=e333] [cursor=pointer]
+              - tab "Later" [disabled]
+            - tabpanel "Overview" [ref=e334]: line tabs overview
+      - region [ref=e335]:
+        - heading "Dialogs and overlays" [level=2] [ref=e336]
+        - paragraph [ref=e337]: dialog · alert-dialog · sheet · drawer · popover · hover-card
+        - paragraph [ref=e338]: Open each trigger; keyboard focus, Escape, restoration, hover and touch
+        - generic [ref=e340]:
+          - button "Open dialog" [ref=e341] [cursor=pointer]
+          - button "Open alert" [ref=e342] [cursor=pointer]
+          - button "Open sheet" [ref=e343] [cursor=pointer]
+          - button "Open drawer" [ref=e344] [cursor=pointer]
+          - button "Open popover" [ref=e345] [cursor=pointer]
+          - link "Hover or focus card" [ref=e346] [cursor=pointer]:
+            - /url: "#regions"
+      - region [ref=e347]:
+        - heading "Menus and commands" [level=2] [ref=e348]
+        - paragraph [ref=e349]: dropdown-menu · context-menu · menubar · command
+        - paragraph [ref=e350]: Open, checked, destructive, disabled, command search empty
+        - generic [ref=e352]:
+          - button "Open menu" [ref=e353] [cursor=pointer]
+          - generic [ref=e354]: Right click or long press this fixture
+          - menubar [ref=e355]:
+            - menuitem "File" [ref=e356] [cursor=pointer]
+            - menuitem "View" [ref=e357] [cursor=pointer]
+          - generic [ref=e358]:
+            - group [ref=e361]:
+              - combobox [expanded] [ref=e362]
+              - group [ref=e363]
+            - listbox "Suggestions" [ref=e367]:
+              - generic [ref=e368]:
+                - generic [aria-hidden] [ref=e369]: Fixtures
+                - group "Fixtures" [ref=e370]:
+                  - option "Open record ⌘O" [selected] [ref=e371]:
+                    - text: Open record
+                    - generic [ref=e372]: ⌘O
+                  - option "Show metadata" [ref=e373]
+                  - option "Unavailable" [disabled]
+      - region [ref=e374]:
+        - heading "Navigation and direction" [level=2] [ref=e375]
+        - paragraph [ref=e376]: breadcrumb · navigation-menu · pagination · direction · sidebar
+        - paragraph [ref=e377]: Current page, menu overlay, selected sidebar, skeleton, right-to-left
+        - generic [ref=e379]:
+          - navigation "breadcrumb" [ref=e380]:
+            - list [ref=e381]:
+              - listitem [ref=e382]:
+                - link "Library" [ref=e383] [cursor=pointer]:
+                  - /url: "#navigation"
+              - listitem [aria-hidden] [ref=e384]
+              - listitem [ref=e387]:
+                - link "Fixture" [disabled] [ref=e388]
+          - navigation [ref=e389]:
+            - list [ref=e390]:
+              - listitem [ref=e391]:
+                - button "Browse" [ref=e392] [cursor=pointer]
+          - navigation "pagination" [ref=e395]:
+            - list [ref=e396]:
+              - listitem [ref=e397]:
+                - button "Go to previous page" [ref=e398] [cursor=pointer]:
+                  - generic [ref=e399]: Previous
+              - listitem [ref=e400]:
+                - button "1" [ref=e401] [cursor=pointer]
+              - listitem [ref=e402]:
+                - button "2" [ref=e403] [cursor=pointer]
+              - listitem [ref=e404]:
+                - button "Go to next page" [ref=e405] [cursor=pointer]:
+                  - generic [ref=e406]: Next
+          - button "اتجاه القراءة" [ref=e408] [cursor=pointer]
+          - generic [ref=e410]:
+            - textbox "Find sidebar fixtures" [ref=e412]:
+              - /placeholder: Find fixture
+            - generic [ref=e414]:
+              - generic [ref=e415]: Fixtures
+              - list [ref=e416]:
+                - listitem [ref=e417]:
+                  - button "Overview" [ref=e418] [cursor=pointer]
+                  - generic: "3"
+                - listitem [ref=e419]:
+                  - button "Files" [ref=e420] [cursor=pointer]
+                - listitem [ref=e421]
+      - region [ref=e424]:
+        - heading "Data and layout" [level=2] [ref=e425]
+        - paragraph [ref=e426]: table · chart · scroll-area · resizable · carousel
+        - paragraph [ref=e427]: Labeled table, chart tooltip and legend, scroll, resize, first and last slides
+        - generic [ref=e429]:
+          - table [ref=e431]:
+            - caption [ref=e432]: Synthetic fixture counts.
+            - rowgroup [ref=e433]:
+              - row [ref=e434]:
+                - columnheader "State" [ref=e435]
+                - columnheader "Count" [ref=e436]
+            - rowgroup [ref=e437]:
+              - row [ref=e438]:
+                - cell "● Met" [ref=e439]
+                - cell "6" [ref=e440]
+              - row [ref=e441]:
+                - cell "▲ Gap" [ref=e442]
+                - cell "2" [ref=e443]
+              - row [ref=e444]:
+                - cell "□ Void" [ref=e445]
+                - cell "3" [ref=e446]
+          - generic [ref=e449]:
+            - generic [ref=e451]:
+              - generic [ref=e452]: Documents
+              - generic [ref=e454]: Notes
+            - application [ref=e456]:
+              - generic [ref=e465]:
+                - generic [ref=e466]: One
+                - generic [ref=e468]: Two
+                - generic [ref=e470]: Three
+          - generic [ref=e473]:
+            - paragraph [ref=e474]: Scrollable fixture 1
+            - paragraph [ref=e475]: Scrollable fixture 2
+            - paragraph [ref=e476]: Scrollable fixture 3
+            - paragraph [ref=e477]: Scrollable fixture 4
+            - paragraph [ref=e478]: Scrollable fixture 5
+            - paragraph [ref=e479]: Scrollable fixture 6
+            - paragraph [ref=e480]: Scrollable fixture 7
+            - paragraph [ref=e481]: Scrollable fixture 8
+          - generic [ref=e484]:
+            - generic [ref=e485]: First region
+            - separator [ref=e488]
+            - generic [ref=e490]: Second region
+          - region [ref=e493]:
+            - generic [ref=e495]:
+              - group [ref=e496]:
+                - generic [ref=e497]: Slide 1
+              - group [ref=e498]:
+                - generic [ref=e499]: Slide 2
+              - group [ref=e500]:
+                - generic [ref=e501]: Slide 3
+            - button "Previous slide" [disabled]
+            - button "Next slide" [ref=e502] [cursor=pointer]
+      - region [ref=e504]:
+        - heading "Chat primitives" [level=2] [ref=e505]
+        - paragraph [ref=e506]: message · bubble · attachment · marker · trace · code-block · message-scroller
+        - paragraph [ref=e507]: Avatar, prose, attachment action, three marker variants, disclosure, code copy, scroll controls
+        - generic [ref=e509]:
+          - generic [ref=e511]:
+            - generic [ref=e512]: PG
+            - generic [ref=e515]:
+              - generic [ref=e516]: PatientGPT fixture
+              - generic [ref=e517]: Plain synthetic response.
+              - generic [ref=e520]: Preview content only
+          - generic [ref=e522]:
+            - generic [ref=e524]:
+              - generic [ref=e525]: synthetic-document.txt
+              - generic [ref=e526]: Text · 64 bytes
+            - button "Open synthetic attachment" [ref=e528] [cursor=pointer]
+          - generic [ref=e529]: default marker
+          - generic [ref=e535]: separator marker
+          - generic [ref=e541]: border marker
+          - generic [ref=e547]:
+            - generic [ref=e548]:
+              - generic [ref=e550]: Read fixture
+              - generic [ref=e551]: Completed
+            - button "Show trace details" [ref=e553] [cursor=pointer]
+          - generic [ref=e555]:
+            - generic [ref=e556]:
+              - generic [ref=e557]: Fixture code
+              - button "Copy" [ref=e559] [cursor=pointer]
+            - code [ref=e562]:
+              - generic [ref=e563]: const state = "void";
+          - generic [ref=e566]:
+            - region "Synthetic message history" [ref=e567]:
+              - log [ref=e568]:
+                - paragraph [ref=e570]: Synthetic message 1. Scroll to check the end control.
+                - paragraph [ref=e572]: Synthetic message 2. Scroll to check the end control.
+                - paragraph [ref=e574]: Synthetic message 3. Scroll to check the end control.
+                - paragraph [ref=e576]: Synthetic message 4. Scroll to check the end control.
+                - paragraph [ref=e578]: Synthetic message 5. Scroll to check the end control.
+                - paragraph [ref=e580]: Synthetic message 6. Scroll to check the end control.
+                - paragraph [ref=e582]: Synthetic message 7. Scroll to check the end control.
+                - paragraph [ref=e584]: Synthetic message 8. Scroll to check the end control.
+            - button "Scroll to end" [ref=e585] [cursor=pointer]
+      - region [ref=e587]:
+        - heading "Questionnaire" [level=2] [ref=e588]
+        - paragraph [ref=e589]: questionnaire
+        - paragraph [ref=e590]: Two steps, required and disabled choices, next, previous, skip, submit
+        - generic [ref=e592]:
+          - progressbar "Questionnaire progress" [ref=e593]: Question 1 of 2
+          - group "Choose a fixture layout" [ref=e594]:
+            - paragraph [ref=e596]: This choice changes no application data.
+            - generic [ref=e597]:
+              - generic [ref=e598] [cursor=pointer]:
+                - radio "Compact Show more records." [ref=e599]
+                - generic [ref=e600]:
+                  - text: Compact
+                  - generic [ref=e601]: Show more records.
+              - generic [ref=e602] [cursor=pointer]:
+                - radio "Comfortable" [ref=e603]
+                - generic [ref=e604]: Comfortable
+              - generic:
+                - radio "Unavailable" [disabled]
+                - generic: Unavailable
+          - button "Next" [ref=e606] [cursor=pointer]
+      - region [ref=e607]:
+        - heading "Assistant UI conversation" [level=2] [ref=e608]
+        - paragraph [ref=e609]: assistant/thread.aui · assistant/thread-list.aui · assistant/attachment.aui · assistant/follow-up-suggestions.aui · assistant/markdown-text · assistant/reasoning.aui · assistant/tool-fallback.aui · assistant/tool-group.aui
+        - paragraph [ref=e610]: Seeded user and assistant, attachments, markdown, reasoning, successful and failed tool records; controls enable empty/error/streaming/suggestions
+        - generic [ref=e612]:
+          - generic [ref=e613]:
+            - button "Restore messages" [ref=e614] [cursor=pointer]
+            - button "Empty thread" [ref=e615] [cursor=pointer]
+            - button "Error message" [ref=e616] [cursor=pointer]
+            - button "Streaming and suggestions" [ref=e617] [cursor=pointer]
+            - button "Attach synthetic document" [ref=e618] [cursor=pointer]
+          - paragraph [ref=e619]: Expand the reasoning and tool groups. Use the controls above for empty, error, streaming, follow-up suggestions, and composer attachments. Thread actions remain in memory.
+          - button "New Thread" [ref=e622] [cursor=pointer]
+          - generic [ref=e627]:
+            - status [ref=e629]
+            - generic [ref=e630]:
+              - generic [ref=e631]:
+                - generic [ref=e632]:
+                  - group "Document attachment synthetic-document.txt" [ref=e634]
+                  - button [ref=e641]:
+                    - button "Preview brand-icon.svg" [ref=e642]
+                - paragraph [ref=e646]: Show the synthetic review and its attachments.
+              - generic [ref=e647]:
+                - generic [ref=e648]:
+                  - generic [ref=e649]:
+                    - button "Reasoning" [ref=e651] [cursor=pointer]
+                    - button "2 tool calls" [ref=e664] [cursor=pointer]
+                  - generic [ref=e668]:
+                    - heading "Synthetic review" [level=2] [ref=e669]
+                    - paragraph [ref=e670]:
+                      - text: This is
+                      - strong [ref=e671]: fixture prose
+                      - text: with a
+                      - link "local reference" [ref=e672] [cursor=pointer]:
+                        - /url: "#assistant"
+                      - text: .
+                    - table [ref=e674]:
+                      - rowgroup [ref=e675]:
+                        - row [ref=e676]:
+                          - columnheader "Evidence" [ref=e677]
+                          - columnheader "State" [ref=e678]
+                      - rowgroup [ref=e679]:
+                        - row [ref=e680]:
+                          - cell "Document A" [ref=e681]
+                          - cell "● Met" [ref=e682]
+                        - row [ref=e683]:
+                          - cell "Document B" [ref=e684]
+                          - cell "▲ Gap" [ref=e685]
+                        - row [ref=e686]:
+                          - cell "Document C" [ref=e687]
+                          - cell "□ Void" [ref=e688]
+                    - blockquote [ref=e689]:
+                      - paragraph [ref=e690]: Synthetic document · page 1 · October 15, 2026.
+                    - generic [ref=e691]:
+                      - generic [ref=e692]: typescript
+                      - button "Copy" [ref=e693] [cursor=pointer]
+                    - code [ref=e696]: "const evidence = { state: \"void\", source: null };"
+                    - list [ref=e697]:
+                      - listitem [ref=e698]: Labels accompany every state.
+                      - listitem [ref=e699]: No clinical assertion is made by this fixture.
+                  - generic [ref=e701]:
+                    - generic [ref=e706]:
+                      - generic [ref=e707]: synthetic-document.txt
+                      - generic [ref=e708]: 35 B
+                    - link "Download synthetic-document.txt" [ref=e709] [cursor=pointer]:
+                      - /url: data:text/plain;base64,…
+                - generic [ref=e714]:
+                  - button "Copy" [ref=e715] [cursor=pointer]
+                  - button "Refresh" [ref=e717] [cursor=pointer]
+                  - button "More" [ref=e719] [cursor=pointer]
+            - generic [ref=e723]:
+              - textbox "Message input" [ref=e724]:
+                - /placeholder: Send a message...
+              - generic [ref=e725]:
+                - button "Add Attachment" [ref=e726] [cursor=pointer]
+                - generic [ref=e728]:
+                  - button "Send message" [disabled]
+      - region [ref=e729]:
+        - heading "Assistant UI files and media" [level=2] [ref=e730]
+        - paragraph [ref=e731]: assistant/image · assistant/file · assistant/media-player
+        - paragraph [ref=e732]: Image zoom, generating, content-filter error, file download, playable local audio/video
+        - generic [ref=e734]:
+          - generic [ref=e735]:
+            - button "Click to zoom image" [ref=e736]:
+              - img "PatientGPT brand fixture" [ref=e738]
+            - generic [ref=e739]: synthetic-brand.svg
+          - generic [ref=e740]: Generating image…
+          - paragraph [ref=e747]: Image could not be generated
+          - generic [ref=e748]:
+            - generic [ref=e753]: synthetic-document.txt
+            - generic [ref=e754]: 35 B
+            - link "Download synthetic-document.txt" [ref=e755] [cursor=pointer]:
+              - /url: data:text/plain;base64,…
+          - generic [ref=e759]:
+            - button "Play Synthetic one-second tone" [ref=e760] [cursor=pointer]
+            - generic [ref=e763]:
+              - generic [ref=e764]: Synthetic one-second tone
+              - slider "Seek" [ref=e765] [cursor=pointer]: "0"
+            - generic [ref=e766]: 0:00 / 0:01
+          - generic [ref=e767]:
+            - generic "Synthetic one-second color frame" [ref=e769]
+            - generic [ref=e770]:
+              - generic [ref=e771]: Synthetic one-second color frame
+              - generic [ref=e772]: 0:01
+      - region [ref=e773]:
+        - heading "Assistant UI surfaces and disclosure" [level=2] [ref=e774]
+        - paragraph [ref=e775]: assistant/reasoning · assistant/collapsible-root · assistant/surfaces · assistant/tooltip-icon-button
+        - paragraph [ref=e776]: Outline/muted/ghost, open and streaming reasoning, surface roles, shimmer, label swap, tooltip
+        - generic [ref=e778]:
+          - generic [ref=e779]:
+            - button "Reasoning (2s)" [expanded] [ref=e780] [cursor=pointer]
+            - generic [ref=e792]: outline reasoning fixture. No clinical content.
+          - generic [ref=e795]:
+            - button "Reasoning (2s)" [expanded] [ref=e796] [cursor=pointer]
+            - generic [ref=e808]: muted reasoning fixture. No clinical content.
+          - generic [ref=e811]:
+            - button "Reasoning (2s)" [expanded] [ref=e812] [cursor=pointer]
+            - generic [ref=e824]: ghost reasoning fixture. No clinical content.
+          - generic [ref=e827]:
+            - button "Reasoning" [expanded] [ref=e828] [cursor=pointer]
+            - generic [ref=e840]: Streaming reasoning fixture.
+          - button "Assistant disclosure" [ref=e844] [cursor=pointer]
+          - generic [ref=e845]:
+            - generic [ref=e846]: Paper
+            - generic [ref=e847]: Inverse
+            - generic [ref=e848]: Field
+          - generic [ref=e849]:
+            - generic [ref=e850]: Working fixture
+            - button "First label" [ref=e851] [cursor=pointer]:
+              - generic [ref=e852]:
+                - generic [ref=e853]: First label
+                - generic [aria-hidden]: Second label
+            - button "Fixture copy control" [ref=e854] [cursor=pointer]
+    - generic [ref=e856]: Review at 320px, 768px, desktop, and 200% zoom. Check both themes, keyboard focus, overlays, reduced motion, and coarse-pointer targets.
+  - generic [aria-hidden] [ref=e857]: One
+  - generic:
+    - region "Notifications"

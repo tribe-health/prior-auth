@@ -1,0 +1,570 @@
+{
+  "phase": "local-inference-and-uar-wiring",
+  "generated_at": "2026-10-26T12:20:00Z",
+  "research_budget": {
+    "max_queries_per_tier": 8,
+    "max_minutes": 20,
+    "queries_used": {
+      "engines": {
+        "tier1": 16,
+        "tier2": 0,
+        "tier3": 3,
+        "tier4": 3
+      },
+      "models": {
+        "tier1": 3,
+        "tier2": 0,
+        "tier3": 7,
+        "tier4": 3
+      },
+      "uar": {
+        "tier1": 23,
+        "tier2": 5,
+        "tier3": 2,
+        "tier4": 0
+      },
+      "storage": {
+        "tier3": 2
+      }
+    }
+  },
+  "gaps_addressed": [
+    "local-chat-inference",
+    "local-embedder",
+    "inference-host-seam",
+    "transport-contract",
+    "uar-runtime",
+    "desktop-topology",
+    "mobile-vector-store",
+    "model-acquisition",
+    "onboarding",
+    "cloud-uar-service-client",
+    "shared-agui-routing",
+    "onboarding-setup-commands",
+    "uar-driver-selection"
+  ],
+  "candidates": [
+    {
+      "id": "cand-001",
+      "name": "mlex (mlx-c)",
+      "kind": "library",
+      "registry": "crates",
+      "fit_for_gap": "macOS desktop chat engine",
+      "verdict": "adopt",
+      "license": "MIT",
+      "maintenance": {
+        "last_release": "0.1.3 (2026-07-06)"
+      },
+      "evidence": [
+        {
+          "tier": 3,
+          "source_url": "https://crates.io/crates/mlex",
+          "claim": "0.1.3, MIT"
+        },
+        {
+          "tier": 1,
+          "source_url": "https://github.com/vaibhavpandeyvpz/mlex",
+          "claim": "statically links mlx/mlx-c; macOS Apple Silicon; CI on macos-latest"
+        }
+      ],
+      "risks": [
+        "single-maintainer crate",
+        "macOS only"
+      ],
+      "decision_rationale": "Used by KnowMe; official mlx-c underneath.",
+      "repo_url": "https://github.com/vaibhavpandeyvpz/mlex",
+      "coverage_estimate": 0.9
+    },
+    {
+      "id": "cand-002",
+      "name": "llama-cpp-2",
+      "kind": "library",
+      "registry": "crates",
+      "fit_for_gap": "Windows/Linux desktop chat engine (GGUF)",
+      "verdict": "reference",
+      "license": "MIT OR Apache-2.0",
+      "maintenance": {
+        "last_release": "0.1.160 (2026-10-15)"
+      },
+      "evidence": [
+        {
+          "tier": 3,
+          "source_url": "https://crates.io/crates/llama-cpp-2",
+          "claim": "0.1.160"
+        },
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/Projects/know-me/know-me-system/rust/Cargo.toml",
+          "claim": "KnowMe uses 0.1.151 on Windows/Linux"
+        }
+      ],
+      "risks": [
+        "architecture rule forbids it on iOS/Android",
+        "Windows/Linux scope undecided"
+      ],
+      "decision_rationale": "OPERATOR-GATED (decision 10): adopt only if Windows/Linux is in scope; the proposed default (macOS only) leaves it out.",
+      "coverage_estimate": 0.9
+    },
+    {
+      "id": "cand-003",
+      "name": "mlx-swift + mlx-swift-lm",
+      "kind": "library",
+      "registry": "none",
+      "fit_for_gap": "iOS device chat engine",
+      "verdict": "adopt",
+      "license": "MIT",
+      "maintenance": {
+        "last_release": "0.32.3 / 3.32.3 (2026-09-30)"
+      },
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "https://github.com/ml-explore/mlx-swift/releases",
+          "claim": "0.32.3"
+        },
+        {
+          "tier": 1,
+          "source_url": "https://github.com/ml-explore/mlx-swift/blob/main/Source/MLX/Documentation.docc/Articles/running-on-ios.md",
+          "claim": "iOS simulator not supported for MLX inference; use Mac (Designed for iPad)"
+        }
+      ],
+      "risks": [
+        "no simulator inference",
+        "open hang-before-main issue mlx-swift#485",
+        "Swift bridge must be in project.pbxproj"
+      ],
+      "decision_rationale": "Replaces KnowMe's stale mlx-swift-examples 2.29.1.",
+      "repo_url": "https://github.com/ml-explore/mlx-swift-lm",
+      "coverage_estimate": 0.8
+    },
+    {
+      "id": "cand-004",
+      "name": "LiteRT-LM Android AAR",
+      "kind": "library",
+      "registry": "maven",
+      "fit_for_gap": "Android chat engine",
+      "verdict": "adopt",
+      "license": "Apache-2.0",
+      "maintenance": {
+        "last_release": "0.18.1 (2026-10-20)",
+        "repository": "Google Maven"
+      },
+      "evidence": [
+        {
+          "tier": 3,
+          "source_url": "https://dl.google.com/android/maven2/com/google/ai/edge/litertlm/litertlm-android/maven-metadata.xml",
+          "claim": "latest 0.18.1"
+        },
+        {
+          "tier": 1,
+          "source_url": "https://github.com/google-ai-edge/LiteRT-LM/issues/1448",
+          "claim": "maintainer: non-CPU backends not recommended on emulators"
+        }
+      ],
+      "risks": [
+        "emulator CPU support unverified",
+        "0.17.x GPU SIGSEGV (#3867)",
+        "JNI path must be a legal Java identifier"
+      ],
+      "decision_rationale": "KnowMe pins 0.14.0; upgrade and verify CPU on arm64 emulator in first spike.",
+      "repo_url": "https://github.com/google-ai-edge/LiteRT-LM",
+      "coverage_estimate": 0.8
+    },
+    {
+      "id": "cand-005",
+      "name": "candle (CPU fallback lane)",
+      "kind": "library",
+      "registry": "crates",
+      "fit_for_gap": "Simulator/emulator-capable single engine",
+      "verdict": "reference",
+      "license": "MIT OR Apache-2.0",
+      "maintenance": {
+        "last_release": "0.11.0 (2026-06-26)"
+      },
+      "evidence": [
+        {
+          "tier": 3,
+          "source_url": "https://crates.io/crates/candle-core",
+          "claim": "0.11.0"
+        },
+        {
+          "tier": 1,
+          "source_url": "https://github.com/huggingface/candle/issues/2823",
+          "claim": "Android emulator via frb failed; issue closed, Android support not confirmed"
+        }
+      ],
+      "risks": [
+        "adds an engine for chat, but UAR main already pulls candle 0.9.2 through surreal-memory local-embeddings (Cargo.toml:455-461), so the build cost is partly paid when UAR is embedded",
+        "mobile CPU throughput unknown"
+      ],
+      "decision_rationale": "Only if the operator wants simulator chat evidence."
+    },
+    {
+      "id": "cand-006",
+      "name": "mistralrs",
+      "kind": "library",
+      "registry": "crates",
+      "fit_for_gap": "Cross-target chat engine",
+      "verdict": "reject",
+      "license": "MIT",
+      "maintenance": {
+        "last_release": "crates 0.8.1 (2026-04-02); GitHub v0.9.5"
+      },
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "https://github.com/EricLBuehler/mistral.rs/issues/1903",
+          "claim": "invalid-weight errors on Qwen 2.5 GGUF on iOS"
+        },
+        {
+          "tier": 3,
+          "source_url": "https://crates.io/crates/mistralrs",
+          "claim": "stale vs GitHub"
+        }
+      ],
+      "risks": [
+        "open mobile correctness bugs"
+      ],
+      "decision_rationale": "Stale crate and mobile bugs."
+    },
+    {
+      "id": "cand-007",
+      "name": "Qwen3-0.6B (MLX/LiteRT-LM/GGUF)",
+      "kind": "library",
+      "registry": "none",
+      "fit_for_gap": "Onboarding chat model, default",
+      "verdict": "adopt",
+      "license": "Apache-2.0",
+      "maintenance": {
+        "sizes_mb": "MLX 335 / LiteRT 345 / GGUF 397",
+        "gated": false
+      },
+      "evidence": [
+        {
+          "tier": 3,
+          "source_url": "https://huggingface.co/Qwen/Qwen3-0.6B",
+          "claim": "Apache-2.0, tool calling, 32K ctx"
+        },
+        {
+          "tier": 3,
+          "source_url": "https://huggingface.co/litert-community/Qwen3-0.6B",
+          "claim": "litertlm 345 MB"
+        }
+      ],
+      "risks": [
+        "peak RAM unmeasured",
+        "quality for onboarding unmeasured"
+      ],
+      "decision_rationale": "OPERATOR-GATED (decision 5). Smallest Apache-2.0, ungated family in all three formats with tool calling stated (SmolLM2 tool use unverified; Gemma 4 E2B too large). Fitness for structured setup proposals is unmeasured; Spec includes a feasibility spike.",
+      "repo_url": "https://huggingface.co/Qwen/Qwen3-0.6B",
+      "coverage_estimate": 0.9
+    },
+    {
+      "id": "cand-008",
+      "name": "Qwen3-1.7B",
+      "kind": "library",
+      "registry": "none",
+      "fit_for_gap": "Onboarding chat model, capable devices",
+      "verdict": "adopt",
+      "license": "Apache-2.0",
+      "maintenance": {
+        "sizes_mb": "968 / 977 / 1107",
+        "gated": false
+      },
+      "evidence": [
+        {
+          "tier": 3,
+          "source_url": "https://huggingface.co/mlx-community/Qwen3-1.7B-4bit",
+          "claim": "968 MB"
+        }
+      ],
+      "risks": [
+        "RAM-gated selection required"
+      ],
+      "decision_rationale": "Upgrade tier behind RAM preflight."
+    },
+    {
+      "id": "cand-009",
+      "name": "Gemma 3 1B / 270M",
+      "kind": "library",
+      "registry": "none",
+      "fit_for_gap": "Onboarding chat model",
+      "verdict": "reject",
+      "license": "Gemma Terms of Use",
+      "maintenance": {
+        "gated": "manual/auto"
+      },
+      "evidence": [
+        {
+          "tier": 4,
+          "source_url": "https://ai.google.dev/gemma/prohibited_use_policy",
+          "claim": "prohibits automated decisions in healthcare/insurance and unlicensed medical practice"
+        }
+      ],
+      "risks": [
+        "licence",
+        "gated download"
+      ],
+      "decision_rationale": "Licence clauses and gating unsuitable for a prior-auth practice product."
+    },
+    {
+      "id": "cand-010",
+      "name": "LFM2.5-350M",
+      "kind": "library",
+      "registry": "none",
+      "fit_for_gap": "Onboarding chat model",
+      "verdict": "reject",
+      "license": "LFM Open License 1.0",
+      "maintenance": {
+        "gated": false
+      },
+      "evidence": [
+        {
+          "tier": 3,
+          "source_url": "https://huggingface.co/LiquidAI/LFM2.5-350M/raw/main/LICENSE",
+          "claim": "commercial use capped at USD 10M annual revenue"
+        }
+      ],
+      "risks": [
+        "revenue cap"
+      ],
+      "decision_rationale": "Licence revenue cap."
+    },
+    {
+      "id": "cand-011",
+      "name": "Gemma 4 E2B",
+      "kind": "library",
+      "registry": "none",
+      "fit_for_gap": "Onboarding chat model",
+      "verdict": "reference",
+      "license": "Apache-2.0",
+      "maintenance": {
+        "sizes_mb": "3551 / 2008-2588 / 3107"
+      },
+      "evidence": [
+        {
+          "tier": 4,
+          "source_url": "https://ai.google.dev/gemma/docs/gemma_4_license",
+          "claim": "Apache-2.0"
+        }
+      ],
+      "risks": [
+        "size"
+      ],
+      "decision_rationale": "Reference-app model; too large for onboarding."
+    },
+    {
+      "id": "cand-012",
+      "name": "fastembed + ort",
+      "kind": "library",
+      "registry": "crates",
+      "fit_for_gap": "On-device embedding runtime",
+      "verdict": "adapt",
+      "license": "Apache-2.0 / MIT OR Apache-2.0",
+      "maintenance": {
+        "last_release": "fastembed 7.5.0 (2026-10-23); ort 2.0.0-rc.15 (2026-10-19)"
+      },
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "https://github.com/pykeio/ort/blob/main/ort-sys/build/download/dist.tsv",
+          "claim": "prebuilt ONNX Runtime for aarch64-apple-ios, -ios-sim, aarch64/x86_64-linux-android"
+        },
+        {
+          "tier": 3,
+          "source_url": "https://crates.io/crates/fastembed",
+          "claim": "7.5.0"
+        }
+      ],
+      "risks": [
+        "ort RC breakage history (#545, #514)",
+        "tokenizers onig cross-compile unverified",
+        "disable default features but re-enable ort-download-binaries-rustls-tls (as KnowMe Cargo.toml:122); no hf-hub at runtime",
+        "supply chain: ort downloads prebuilt ONNX Runtime from cdn.pyke.io at build time (hash-pinned in dist.tsv); record as a build-time network fetch",
+        "two embedders if UAR is embedded: surreal-memory local-embeddings uses candle 0.9.2"
+      ],
+      "decision_rationale": "Two majors ahead of KnowMe; covers simulator and emulator.",
+      "repo_url": "https://github.com/Anush008/fastembed-rs",
+      "coverage_estimate": 0.85
+    },
+    {
+      "id": "cand-013",
+      "name": "snowflake-arctic-embed-xs",
+      "kind": "library",
+      "registry": "none",
+      "fit_for_gap": "Embedding model",
+      "verdict": "adopt",
+      "license": "Apache-2.0",
+      "maintenance": {
+        "size_mb": "90 fp32 / 23 int8",
+        "dims": 384
+      },
+      "evidence": [
+        {
+          "tier": 3,
+          "source_url": "https://huggingface.co/Snowflake/snowflake-arctic-embed-xs",
+          "claim": "MTEB retrieval 50.15 vs MiniLM 41.95 (self-reported)"
+        }
+      ],
+      "risks": [
+        "self-reported benchmark"
+      ],
+      "decision_rationale": "Same dims/size as MiniLM, better retrieval, fastembed-supported."
+    },
+    {
+      "id": "cand-014",
+      "name": "SurrealDB embedded (RocksDB) on mobile",
+      "kind": "library",
+      "registry": "crates",
+      "fit_for_gap": "Mobile vector store",
+      "verdict": "adopt",
+      "license": "BUSL-1.1",
+      "maintenance": {
+        "last_release": "3.3.0 pinned (3.3.4 latest)"
+      },
+      "evidence": [
+        {
+          "tier": 3,
+          "source_url": "https://crates.io/crates/surrealdb",
+          "claim": "3.3.4 latest"
+        },
+        {
+          "tier": 1,
+          "source_url": "/Users/gqadonis/Projects/know-me/know-me-system/rust/crates/gen_ui_ffi/src/api/boot.rs",
+          "claim": "KnowMe runs rocksdb:// on mobile"
+        }
+      ],
+      "risks": [
+        "BSL 1.1 licence review",
+        "sub-crates float unless Cargo.lock is held",
+        "mobile store decision open"
+      ],
+      "decision_rationale": "OPERATOR-GATED (decision 7; departs from the doctrine, needs an ADR). One store engine on desktop and mobile; alternative sqlite-vec 0.1.9."
+    },
+    {
+      "id": "cand-015",
+      "name": "UAR EmbeddedRuntime + ExternalLlmDriver",
+      "kind": "framework",
+      "registry": "none",
+      "fit_for_gap": "UAR on iOS/desktop host with host-supplied driver",
+      "verdict": "adopt",
+      "license": "MIT",
+      "maintenance": {
+        "version": "tag v1.3.0 (2026-10-24, commit 77446974); origin/main 7ee9bf31 is ahead; CHANGELOG still reads 1.3.0 unreleased (verification pending); local checkout is 1.1.1"
+      },
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "universal-agent-runtime origin/main src/llm/external_driver.rs",
+          "claim": "host async callback driver"
+        },
+        {
+          "tier": 1,
+          "source_url": "universal-agent-runtime docs/adr/0012-transport-free-ag-ui-adapter.md",
+          "claim": "in-process AG-UI encoder for embedded hosts"
+        }
+      ],
+      "risks": [
+        "nightly pin; stable unverified",
+        "[patch.crates-io] surrealdb overlay must be replicated",
+        "11 vendored path deps",
+        "host must synthesize TEXT_MESSAGE_START/END",
+        "A2UI catalog ids hard-coded",
+        "risk acceptance needed: embedding API is not a stability contract, mobile embedding is Experimental, nightly pin"
+      ],
+      "decision_rationale": "OPERATOR-GATED (decisions 12 and 14). Required by goal 4; gate behind a build spike. Embedded UAR also refuses to build without a host persistence layer, an explicit governance engine and an explicit tool admission port (src/embedded.rs:493-595); B5 must supply all four."
+    },
+    {
+      "id": "cand-016",
+      "name": "UAR uar-sidecar",
+      "kind": "service",
+      "registry": "none",
+      "fit_for_gap": "Desktop UAR without build coupling",
+      "verdict": "adopt",
+      "license": "MIT",
+      "maintenance": {},
+      "evidence": [
+        {
+          "tier": 1,
+          "source_url": "universal-agent-runtime src/bin/uar-sidecar.rs",
+          "claim": "stdin token, READY:{port}, exit on EOF"
+        }
+      ],
+      "risks": [
+        "cannot take host-supplied local driver",
+        "not usable on iOS"
+      ],
+      "decision_rationale": "OPERATOR-GATED (decision 3). Topology option (b) and the desktop fallback if the embedding spike fails: build isolation from UAR, at the cost of no host-supplied driver in UAR and no iOS use."
+    },
+    {
+      "id": "cand-017",
+      "name": "Rust AG-UI crates (ag-ui-core, ag-ui, ag-ui-protocol)",
+      "kind": "library",
+      "registry": "crates",
+      "fit_for_gap": "AG-UI types",
+      "verdict": "reject",
+      "license": "various",
+      "maintenance": {
+        "last_release": "ag-ui 0.5.0-alpha.3 (2026-09-28)"
+      },
+      "evidence": [
+        {
+          "tier": 3,
+          "source_url": "https://crates.io/crates/ag-ui",
+          "claim": "443 downloads; alpha"
+        }
+      ],
+      "risks": [
+        "unofficial, low health"
+      ],
+      "decision_rationale": "UAR builds payloads by hand; PatientGPT already has its own subset types."
+    }
+  ],
+  "build_required": [
+    {
+      "need": "patient-gpt-inference crate: InferenceProvider, Lane enum, catalog, downloader, RAM preflight, progress (adapted from KnowMe)",
+      "why_no_candidate": "No published crate provides per-device engine selection with pinned acquisition; KnowMe code is a reference, not a library.",
+      "capability_gap_id": null
+    },
+    {
+      "need": "Swift MLX bridge and Kotlin LiteRT-LM JNI bridge",
+      "why_no_candidate": "Engines are native-SDK only; bridges are app-specific.",
+      "capability_gap_id": null
+    },
+    {
+      "need": "Host port and transport mirror for lane, model status, prepare, embed (HTTP/Tauri/FFI)",
+      "why_no_candidate": "Project-specific contract.",
+      "capability_gap_id": null
+    },
+    {
+      "need": "UarRuntimeFacade over EmbeddedRuntime with AG-UI message framing",
+      "why_no_candidate": "UAR exposes primitives only; framing lives in its server loop.",
+      "capability_gap_id": null
+    },
+    {
+      "need": "UAR HTTP service client for the cloud host (goal 4) plus the shared AG-UI routing layer used by the cloud host, the desktop host crate and the iOS embedding",
+      "why_no_candidate": "UAR publishes no Rust client crate; the routing split (UAR vs host-local handlers) is PatientGPT-specific.",
+      "capability_gap_id": null
+    },
+    {
+      "need": "Host setup commands for onboarding (the write path the model's proposals use), mirrored across HTTP, Tauri and FFI, executed only by the trusted host after user confirmation",
+      "why_no_candidate": "The frozen transport mirror has six read/run operations and no setup writes; what the decentralized deployment configures is product-specific (decision 15).",
+      "capability_gap_id": null
+    },
+    {
+      "need": "UAR host components: PersistenceLayer, GovernanceEngine, HostToolAdmissionPort (enforcing agent-cannot-affirm/sign/submit) and driver selection that keeps clinical runs off the local model",
+      "why_no_candidate": "EmbeddedRuntime requires host-supplied implementations; policy is PatientGPT's.",
+      "capability_gap_id": null
+    },
+    {
+      "need": "AG-UI 1.0 to PatientGPT-subset bridge",
+      "why_no_candidate": "a2ui-react 4.2.0 pins @ag-ui/core <0.1.0; no compatible release.",
+      "capability_gap_id": null
+    },
+    {
+      "need": "Model-driven onboarding with host-executed, user-confirmed setup actions",
+      "why_no_candidate": "Product-specific; capability inversion requires host execution.",
+      "capability_gap_id": null
+    }
+  ]
+}

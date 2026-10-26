@@ -1,0 +1,123 @@
+/* Aliases of generated roles, never a second palette. --accent is brand text. */
+:root {
+  --background: var(--bg); --foreground: var(--fg);
+  --card: var(--s1); --card-foreground: var(--fg);
+  --popover: var(--inv); --popover-foreground: var(--inv-fg);
+  --primary: var(--primary-bg); --primary-foreground: var(--primary-fg);
+  --secondary: var(--s3); --secondary-foreground: var(--fg);
+  --muted: var(--s2); --muted-foreground: var(--fg-2);
+  --accent-foreground: var(--fg);
+  --destructive: var(--gap); --destructive-foreground: var(--primary-fg);
+  --border: transparent; --input: var(--field); --ring: var(--focus-bg);
+  --chart-1: var(--cool); --chart-2: var(--accent); --chart-3: var(--fg);
+  --chart-4: var(--fg-2); --chart-5: var(--mark-upper);
+  --sidebar: var(--s1); --sidebar-foreground: var(--fg);
+  --sidebar-primary: var(--primary-bg); --sidebar-primary-foreground: var(--primary-fg);
+  --sidebar-accent: var(--s3); --sidebar-accent-foreground: var(--fg);
+  --sidebar-border: transparent; --sidebar-ring: var(--focus-bg);
+  --radius: var(--r);
+}
+@theme inline {
+  --font-sans: var(--font-body);
+  /* Small headings remain Mulish; display titles explicitly use font-display. */
+  --font-heading: var(--font-body);
+  --color-background: var(--bg); --color-foreground: var(--fg);
+  --color-card: var(--s1); --color-card-foreground: var(--fg);
+  --color-popover: var(--inv); --color-popover-foreground: var(--inv-fg);
+  --color-primary: var(--primary-bg); --color-primary-foreground: var(--primary-fg);
+  --color-secondary: var(--s3); --color-secondary-foreground: var(--fg);
+  --color-muted: var(--s2); --color-muted-foreground: var(--fg-2);
+  --color-accent: var(--s3); --color-accent-foreground: var(--fg);
+  --color-destructive: var(--gap); --color-destructive-foreground: var(--primary-fg);
+  --color-border: transparent; --color-input: var(--field); --color-ring: var(--focus-bg);
+  --color-chart-1: var(--cool); --color-chart-2: var(--accent); --color-chart-3: var(--fg);
+  --color-chart-4: var(--fg-2); --color-chart-5: var(--mark-upper);
+  --color-sidebar: var(--s1); --color-sidebar-foreground: var(--fg);
+  --color-sidebar-primary: var(--primary-bg); --color-sidebar-primary-foreground: var(--primary-fg);
+  --color-sidebar-accent: var(--s3); --color-sidebar-accent-foreground: var(--fg);
+  --color-sidebar-border: transparent; --color-sidebar-ring: var(--focus-bg);
+  --radius-sm: var(--r-tag); --radius-md: var(--r); --radius-lg: var(--r);
+  --radius-xl: var(--r-lg); --radius-2xl: var(--r-lg);
+  --radius-3xl: var(--r-bubble); --radius-4xl: var(--r-composer);
+  --default-transition-duration: var(--dur-enter);
+  --default-transition-timing-function: var(--ease);
+  @keyframes collapsible-down {
+    from { height: 0; }
+    to { height: var(--radix-collapsible-content-height, var(--collapsible-panel-height, auto)); }
+  }
+  @keyframes collapsible-up {
+    from { height: var(--radix-collapsible-content-height, var(--collapsible-panel-height, auto)); }
+    to { height: 0; }
+  }
+}
+/* Stock ring removal must not leave role-based composite targets unmarked. */
+[data-slot]:is([tabindex], [role="menuitem"], [role="option"], [role="checkbox"], [role="radio"], [role="switch"]):focus-visible {
+  outline: none;
+  background-color: var(--focus-bg) !important;
+  color: var(--focus-fg) !important;
+}
+[data-slot]:focus-visible svg { color: inherit; }
+/* Unchecked fields already use navy in light mode; focus needs the distinct
+   field-focus fill. Sliders delegate keyboard focus to a hidden native input. */
+@layer base {
+  /* Important declarations in a layer precede unlayered important rules. Keep
+     these exceptions beside the prototype's important native-button focus. */
+  [data-slot]:is([role="checkbox"], [role="radio"], [role="switch"],
+    [data-slot="select-trigger"], [data-slot="native-select"]):focus-visible {
+    background-color: var(--field-focus) !important;
+    color: var(--field-fg) !important;
+  }
+  :is([data-slot="input-group"], [data-slot="aui_composer-shell"], .aui-edit-composer-root)
+    :is(button, [role="button"]):focus-visible {
+    background-color: var(--field-fg) !important;
+    color: var(--field-focus) !important;
+  }
+}
+[data-slot="slider-thumb"]:has(input:focus-visible) {
+  background-color: var(--primary-bg) !important;
+}
+/* Recharts delegates keyboard focus to its SVG. A filled plot region preserves
+   legible series colors while its keyboard tooltip exposes the active value. */
+[data-slot="chart"]:has(.recharts-surface:focus-visible) {
+  background-color: var(--s2);
+  border-radius: var(--r-lg);
+}
+[data-slot="switch"]:focus-visible [data-slot="switch-thumb"] {
+  background-color: var(--field-fg);
+}
+[data-slot$="menu-content"], [data-slot$="menu-sub-content"], [data-slot="select-content"],
+[data-slot="combobox-content"], [data-slot="command"], [data-slot="hover-card-content"],
+[data-slot="popover-content"], [data-slot="toast"] {
+  --focus-bg: var(--inv-fg); --focus-fg: var(--inv);
+}
+/* Portal backdrops must respect the same native-titlebar seam as the app. */
+[data-slot$="-overlay"] {
+  top: var(--host-inset-top);
+  min-height: 0;
+  height: calc(100dvh - var(--host-inset-top));
+}
+[data-slot="dialog-content"], [data-slot="alert-dialog-content"] {
+  top: calc(50% + var(--host-inset-top) / 2);
+  max-height: calc(100dvh - var(--host-inset-top) - 32px);
+  overflow-y: auto;
+}
+[data-slot="sheet-content"]:is([data-side="left"], [data-side="right"]) {
+  top: var(--host-inset-top);
+  height: calc(100dvh - var(--host-inset-top));
+}
+[data-slot="sheet-content"][data-side="top"] { top: var(--host-inset-top); }
+@media (pointer: coarse) {
+  [data-slot]:is(button, [role="button"], [role="menuitem"], [role="option"], [role="tab"]):not([role="checkbox"], [role="radio"], [role="switch"], [role="slider"]) {
+    min-height: var(--touch-target); min-width: var(--touch-target);
+  }
+  [data-slot="input"], [data-slot="textarea"], [data-slot="native-select"] { min-height: var(--touch-target); }
+  [data-slot="checkbox"], [data-slot="radio-group-item"] { width: 24px; height: 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-slot], [data-slot]::before, [data-slot]::after,
+  [data-slot] *, [data-slot] *::before, [data-slot] *::after,
+  [class*="aui-"], [class*="aui-"]::before, [class*="aui-"]::after,
+  [class*="aui-"] *, [class*="aui-"] *::before, [class*="aui-"] *::after {
+    animation: none !important; transition: none !important; scroll-behavior: auto !important;
+  }
+}

@@ -65,6 +65,7 @@ proposed for the operator to add to `versions.toml [pins]` by hand.
 | flutter_rust_bridge (crate + pub) | 2.12.0 | must equal installed codegen 2.12.0; 2.13.0 is latest |
 | flutter_riverpod / riverpod_annotation / riverpod_generator | 3.4.3 / 4.0.7 / 4.0.9 | |
 | build_runner | 2.16.2 | 2.17.1 needs build 5.x; riverpod_generator 4.0.9 caps build <5.0 |
+| flutter_launcher_icons (dev) | 0.14.4 | app icon generation; see "Application icons" |
 | go_router | 18.1.1 | |
 | flutter_svg | 2.3.0 | brand marks |
 
@@ -72,6 +73,25 @@ Toolchain observed: rustc 1.99.1, node 26.5.0, pnpm 11.25.0, Flutter 3.48.0-0.5.
 beta, tauri-cli 2.10.0, flutter_rust_bridge_codegen 2.12.0. `knowme-builder
 2.0.0-alpha.1` `new` generates a 14-file facade stub and `adopt` writes metadata
 only, so the scaffold is written by hand against the skill references.
+
+## Application icons
+
+`bash scripts/brand-icons/gen-app-icons.sh .` regenerates every app icon from
+`docs/design/brand/icon.svg` and `favicon.svg`, following the brand board's
+"Application icons" rules. Masters land in `assets/brand/app-icons/`:
+
+| Master | Rule it implements | Feeds |
+|---|---|---|
+| `tile-1024.png` | full-bleed navy tile, no alpha; the platform applies its corner | iOS AppIcon set, Linux and Windows Store sizes |
+| `android-foreground-1024.png` | mark in the central 66 % so every launcher mask leaves it whole; background `#1F4E79` | Android adaptive icon (inset 0) and legacy mipmaps |
+| `macos-1024.png` | macOS does not round icons: 824 px body, 185 px corner, Apple grid margin | `desktop/src-tauri/icons/icon.icns` |
+| `favicon-{16,24,32}.png` | Windows taskbar at 24 px uses the favicon cut | `icon.ico` small frames, `32x32.png` |
+
+The script needs `rsvg-convert` and `magick`. It runs `flutter_launcher_icons`
+(config in `mobile/pubspec.yaml`) and `cargo tauri icon`, then replaces the
+`.icns`, `.ico` and `32x32.png`. `flutter_launcher_icons` 0.14.4 rewrites every
+`ASSETCATALOG` line in `project.pbxproj`; the script restores that file.
+Android 13 themed (monochrome) icon is deferred until a monochrome cut exists.
 
 ## Scaffold exit criteria
 

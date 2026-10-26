@@ -81,3 +81,52 @@ Learned constraints: surrealdb =3.3.0 does not pin its sub-crates (lockfile
 holds them); build_runner 2.17.1 conflicts with riverpod_generator 4.0.9;
 typescript-eslint does not support TS 7; cargokit needs a patch for hyphenated
 crate names; frb 2.12 data enums need freezed.
+
+## 2026-10-25 — shadcn init alias repair (Spec → Plan → Execute → Reflect)
+
+Observed CLI failure: no valid path aliases or package imports. Plan: align
+TypeScript and Vite resolution for the existing web source root, then validate
+through the installed build and shadcn project discovery. Added `@/*` mapping to
+`./src/*` in `web/tsconfig.json` without deprecated baseUrl. Added the matching
+Vite alias in `web/vite.config.ts`. The same file had an observed invalid
+`react().tailwindcss()` call; corrected it to separate plugin registrations.
+No dependencies, styles, clinical logic, or defensive guards added.
+
+Completed-change evidence (local): `pnpm build` in web exited 0, printed
+`✓ built in 1.28s` (Build-only; bundle-size and upstream PGlite eval warnings).
+`pnpm dlx shadcn@latest info --json` exited 0 and reported framework Vite,
+Tailwind v4, and `importAlias: "@"` (Passed for CLI alias discovery).
+A local Vite createServer/pluginContainer.resolveId check resolved `@/main.tsx`
+to the actual `web/src/main.tsx`, exited 0 (Passed for bundler alias resolution).
+`git diff --check -- web/tsconfig.json web/vite.config.ts` exited 0 with no output.
+Full init remains unexecuted: its generated styles/dependencies are outside the
+alias repair. Browser, native, backend, and full workflow integration unverified
+by this configuration task. Supplemental append-only session record only.
+
+Independent artifact critic: no concrete blockers in the two completed configs;
+read-only, fresh reviewer context. Cross-model independence unverified.
+
+## 2026-10-25 — installed component branding (Execute → Reflect)
+
+Implemented the approved plan for the installed 63-module shadcn library and
+15 Assistant UI modules. Existing app controls remain in place. Generated source
+roles now supply compatibility aliases; brand --accent is preserved; removed
+stock colors/Geist, painted borders/shadows/rings and source-incompatible motion.
+Added the development-only preview and customization contract. Reference-derived
+geometry additions regenerate CSS and Dart. No dependencies added.
+
+Delivery delta: browser/independent review exposed field-focus collisions,
+calendar overflow, dark tab/chart contrast, sidebar input color pairing,
+reasoning overlays and attachment icon contrast. Corrected all before final
+build. Local build exit0 printed `✓ built in 1.02s`; local browser reflow,
+contrast, focus/portals, reduced motion, touch emulation, media, assistant fixture
+states and existing app with synthetic backend passed. Independent bounded visual
+review Passed. No CI tests. Native window/devices unverified. Full commands,
+limits and captures: `.prometheus/verification/component-branding/README.md`.
+
+No unrequested additions or clinical guards. Existing user package/lock changes
+preserved. Project bootstrap waypoint was not advanced by this bounded task.
+
+Final artifact-only critic found no concrete blockers. Actual Shiki syntax fixture
+also verified warm keyword and cool string roles in both themes; final build
+repeated after its preview wiring. Full evidence remains in the bounded report.

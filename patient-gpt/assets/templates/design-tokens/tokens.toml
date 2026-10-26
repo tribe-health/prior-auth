@@ -118,12 +118,15 @@ meta = "0.8125rem"
 mono = "0.75rem"
 
 [radius]
+r-tag = "4px"
 r = "5px"
 r-lg = "8px"
 r-composer = "24px"
 r-bubble = "18px"
 
 [layout]
+control-h = "40px"
+touch-target = "44px"
 sb-w = "268px"
 col = "48rem"
 # Hard-coded in panel.css grid-template-columns at >= 1100px.
