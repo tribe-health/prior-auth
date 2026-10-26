@@ -151,8 +151,8 @@ importers:
         specifier: 7.1.5
         version: 7.1.5(@types/node@24.13.3)(jiti@2.7.0)(lightningcss@1.30.1)
       vite-plugin-singlefile:
-        specifier: 2.3.3
-        version: 2.3.3(rollup@4.63.1)(vite@7.1.5(@types/node@24.13.3)(jiti@2.7.0)(lightningcss@1.30.1))
+        specifier: 2.3.4
+        version: 2.3.4(rollup@4.63.1)(vite@7.1.5(@types/node@24.13.3)(jiti@2.7.0)(lightningcss@1.30.1))
       vitest:
         specifier: ^3.2.4
         version: 3.2.7(@types/debug@4.1.13)(@types/node@24.13.3)(jiti@2.7.0)(jsdom@30.0.1)(lightningcss@1.30.1)
@@ -4796,8 +4796,8 @@ packages:
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
 
-  vite-plugin-singlefile@2.3.3:
-    resolution: {integrity: sha512-XVnGH0QzbOa8fxRSsHdCarVN1BSBXNi7uLMQYlrGRN5apdHkk62XQWRJhVever0lnfuyBkwn+kvVChdm/OoOUg==}
+  vite-plugin-singlefile@2.3.4:
+    resolution: {integrity: sha512-1FAhlTCL6KJDpSUudrVU+gspapvS+tmKCg70vwNaAU6tyXn3E/C6+NnwQIze06byhBRv7VggZ78K0h+J/Rsdrg==}
     engines: {node: '>18.0.0'}
     peerDependencies:
       rollup: ^4.59.0
@@ -9876,9 +9876,9 @@ snapshots:
       - tsx
       - yaml
 
-  vite-plugin-singlefile@2.3.3(rollup@4.63.1)(vite@7.1.5(@types/node@24.13.3)(jiti@2.7.0)(lightningcss@1.30.1)):
+  vite-plugin-singlefile@2.3.4(rollup@4.63.1)(vite@7.1.5(@types/node@24.13.3)(jiti@2.7.0)(lightningcss@1.30.1)):
     dependencies:
-      micromatch: 4.0.8
+      picomatch: 4.0.7
       vite: 7.1.5(@types/node@24.13.3)(jiti@2.7.0)(lightningcss@1.30.1)
     optionalDependencies:
       rollup: 4.63.1
