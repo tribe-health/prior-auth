@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "1",
+  "generatedBy": "kbd-runtime",
+  "projectionContractVersion": 2,
+  "sourceRevision": 6,
+  "derivedRevision": 6,
+  "frontier": {
+    "6b286379-9580-4e4d-b9b3-59ae0ab1eba9": 6
+  },
+  "conflictCount": 0,
+  "updatedAt": "2026-10-26T12:09:26.074980Z",
+  "cursor": [
+    "local-inference-and-uar-wiring",
+    "analyze"
+  ],
+  "root": {
+    "type": "phase",
+    "id": "5180957e-e9f7-4d5d-a961-e02a6ede0ebd",
+    "status": "ready",
+    "progress": {
+      "done": 0,
+      "total": 0
+    },
+    "children": [
+      {
+        "type": "phase",
+        "id": "local-inference-and-uar-wiring",
+        "canonicalId": "local-inference-and-uar-wiring",
+        "status": "PENDING",
+        "progress": {
+          "done": 0,
+          "total": 0
+        },
+        "children": [],
+        "annotations": []
+      }
+    ],
+    "annotations": []
+  }
+}

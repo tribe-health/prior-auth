@@ -53,10 +53,13 @@
   --fs-ui: 0.875rem;
   --fs-meta: 0.8125rem;
   --fs-mono: 0.75rem;
+  --r-tag: 4px;
   --r: 5px;
   --r-lg: 8px;
   --r-composer: 24px;
   --r-bubble: 18px;
+  --control-h: 40px;
+  --touch-target: 44px;
   --sb-w: 268px;
   --col: 48rem;
   --files-w: 360px;

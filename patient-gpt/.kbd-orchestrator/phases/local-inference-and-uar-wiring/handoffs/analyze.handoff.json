@@ -1,0 +1,12 @@
+{
+  "stage": "analyze",
+  "completedAt": "2026-10-26T12:09:36Z",
+  "outputs": [
+    "analysis.md",
+    "library-candidates.json"
+  ],
+  "nextStage": "spec",
+  "summaryForNext": "17 candidates, 8 build items. Adopt (operator-gated): mlex (macOS), MLX-Swift (iOS device), LiteRT-LM 0.18.1 (Android), fastembed 7.5.0 + ort rc.15 with snowflake-arctic-embed-xs, Qwen3-0.6B/1.7B, SurrealDB mobile (doctrine departure), UAR EmbeddedRuntime. MLX cannot run in the iOS simulator. Readiness BLOCKED on operator decisions 1,2,5,8,12,13,14,15 plus 7,10,11; 3,4,6,9 have defaults. Two review rounds, both 'cannot stand'; revision 3 unreviewed. WARNING/unresolved: onboarding setup commands do not exist (B10, decision 15); which model drives embedded UAR runs (decision 14); verdict schema has no pending value, gating carried in rationale prefix.",
+  "skipped": false,
+  "skipReason": null
+}

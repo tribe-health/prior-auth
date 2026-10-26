@@ -32,6 +32,7 @@ class FfiPatientGptGateway implements PatientGptGateway {
       GatewayUnavailable(
         endpoint: '$endpoint/$op',
         detail: '${e.code}: ${e.message}',
+        code: e.code,
       );
 
   static Future<T> _call<T>(String op, Future<T> Function() body) async {

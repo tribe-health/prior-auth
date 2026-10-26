@@ -1,4 +1,6 @@
 // TJ-ARCH-MOB-001 compliant
+import 'package:entity_graph_flutter/entity_graph_flutter.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -8,10 +10,10 @@ import 'package:patient_gpt/core/theme/pg_text.dart';
 import 'package:patient_gpt/core/theme/pg_theme.dart';
 import 'package:patient_gpt/core/theme/tokens.dart';
 import 'package:patient_gpt/core/widgets/pg_pressable.dart';
+import 'package:patient_gpt/features/a2ui/presentation/widgets/debug_a2ui_sample.dart';
 import 'package:patient_gpt/features/conversation/presentation/providers/thread_controller.dart';
 import 'package:patient_gpt/features/conversation/presentation/widgets/thread_view.dart';
 import 'package:patient_gpt/features/workspace/domain/patient_directory.dart';
-import 'package:patient_gpt/features/workspace/domain/patient_gpt_gateway.dart';
 import 'package:patient_gpt/features/workspace/domain/workspace_entities.dart';
 import 'package:patient_gpt/features/workspace/presentation/providers/workspace_providers.dart';
 
@@ -38,6 +40,10 @@ class HomeView extends ConsumerWidget {
         if (directory.value case final d?) ...[
           const SizedBox(height: 24),
           _DueNext(directory: d),
+        ],
+        if (kDebugMode) ...[
+          const SizedBox(height: 24),
+          const DebugA2uiSample(),
         ],
       ],
     );
@@ -107,16 +113,31 @@ class _DueNext extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         for (final id in directory.dueNextOrder)
-          if (directory.cases[id] case final k?)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 4),
-              child: _QueueRow(
-                patientName: directory.patients[k.patientId]?.displayName ?? '',
-                summary: k,
-                today: today,
-              ),
-            ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 4),
+            child: _QueueEntry(caseId: id, today: today),
+          ),
       ],
+    );
+  }
+}
+
+/// Joins the case, and its patient, from the graph by id at render time.
+class _QueueEntry extends ConsumerWidget {
+  const _QueueEntry({required this.caseId, required this.today});
+
+  final String caseId;
+  final CalendarDate today;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final k = ref.watch(caseRecordProvider(caseId)).value?.entity;
+    if (k == null) return const SizedBox.shrink();
+    final patient = ref.watch(patientRecordProvider(k.patientId)).value?.entity;
+    return _QueueRow(
+      patientName: patient?.displayName ?? '',
+      summary: k,
+      today: today,
     );
   }
 }
@@ -180,15 +201,10 @@ class _Unreachable extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final c = context.pg;
-    final detail = switch (error) {
-      GatewayUnavailable(:final detail) => detail,
-      GatewayContractViolation(:final detail) =>
-        'The reply did not match the contract: $detail',
-      _ => '$error',
-    };
-    final where = switch (error) {
-      GatewayUnavailable(:final endpoint) => endpoint,
-      _ => patientGptTransport.endpoint,
+    // Graph errors carry "<endpoint> · <detail>" from the transport mapping.
+    final message = switch (error) {
+      EntityGraphError(:final message) => message,
+      _ => '${patientGptTransport.endpoint} · $error',
     };
     return ListView(
       padding: const EdgeInsets.fromLTRB(14, 40, 14, 24),
@@ -209,7 +225,7 @@ class _Unreachable extends ConsumerWidget {
         ),
         const SizedBox(height: 16),
         Text(
-          '$where · $detail',
+          message,
           textAlign: TextAlign.center,
           style: PgText.mono(color: c.fg2),
         ),
@@ -217,10 +233,10 @@ class _Unreachable extends ConsumerWidget {
         Center(
           child: PgPressable(
             onTap: () {
+              // Every graph view refetches; derived providers follow.
               ref
-                ..invalidate(sessionProvider)
-                ..invalidate(patientDirectoryProvider)
-                ..invalidate(conversationsProvider);
+                ..invalidate(entityProvider)
+                ..invalidate(entityListProvider);
             },
             background: c.s3,
             hoverBackground: c.s4,

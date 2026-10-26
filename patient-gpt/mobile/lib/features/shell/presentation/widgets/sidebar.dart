@@ -222,7 +222,9 @@ class _Lists extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final directory = ref.watch(patientDirectoryProvider);
-    final history = ref.watch(conversationsProvider(const AllPatientsScope()));
+    final history = ref.watch(
+      conversationListProvider(const AllPatientsScope()),
+    );
     return ListView(
       padding: EdgeInsets.zero,
       children: [
@@ -240,11 +242,12 @@ class _Lists extends ConsumerWidget {
         const SizedBox(height: 16),
         const _Label('History'),
         ...switch (history) {
-          AsyncData(:final value) when value.isEmpty => const [
+          AsyncData(:final value) when value.listState.ids.isEmpty => const [
             _Empty('Chats with no patient selected appear here.'),
           ],
           AsyncData(:final value) => [
-            for (final conv in value) _HistoryRow(conversation: conv),
+            for (final id in value.listState.ids)
+              _HistoryRow(conversationId: id),
           ],
           AsyncError() => const [
             _Empty('History could not be loaded from the service.'),
@@ -268,7 +271,7 @@ class _PatientNode extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final c = context.pg;
-    final p = directory.patients[patientId];
+    final p = ref.watch(patientRecordProvider(patientId)).value?.entity;
     if (p == null) return const SizedBox.shrink();
     final overrides = ref.watch(sidebarExpansionProvider);
     final isOpen =
@@ -321,7 +324,7 @@ class _PatientNode extends ConsumerWidget {
               ),
             ],
           ),
-          if (isOpen) _PatientSub(directory: directory, patient: p),
+          if (isOpen) _PatientSub(patient: p),
         ],
       ),
     );
@@ -329,49 +332,30 @@ class _PatientNode extends ConsumerWidget {
 }
 
 class _PatientSub extends ConsumerWidget {
-  const _PatientSub({required this.directory, required this.patient});
+  const _PatientSub({required this.patient});
 
-  final PatientDirectory directory;
   final PatientSummary patient;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final c = context.pg;
-    final history = ref.watch(conversationsProvider(PatientScope(patient.id)));
+    final history = ref.watch(
+      conversationListProvider(PatientScope(patient.id)),
+    );
     return Padding(
       padding: const EdgeInsets.only(left: 28, bottom: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const _SubLabel('Cases'),
-          for (final id in patient.caseIds)
-            if (directory.cases[id] case final k?)
-              Padding(
-                padding: const EdgeInsets.only(top: 2),
-                child: _Row(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 7,
-                  ),
-                  children: [
-                    Expanded(child: _ellipsis(k.procedure, c.fg)),
-                    if (k.due case final d?) ...[
-                      const SizedBox(width: 8),
-                      Text(
-                        PgDates.short(d.date),
-                        style: PgText.mono(color: c.fg2),
-                      ),
-                    ],
-                  ],
-                ),
-              ),
+          for (final id in patient.caseIds) _CaseRow(caseId: id),
           const _SubLabel('Patient history'),
           ...switch (history) {
-            AsyncData(:final value) when value.isEmpty => const [
+            AsyncData(:final value) when value.listState.ids.isEmpty => const [
               _Empty('No patient-level chats yet.'),
             ],
             AsyncData(:final value) => [
-              for (final conv in value) _HistoryRow(conversation: conv),
+              for (final id in value.listState.ids)
+                _HistoryRow(conversationId: id),
             ],
             AsyncError() => const [
               _Empty('History could not be loaded from the service.'),
@@ -384,14 +368,47 @@ class _PatientSub extends ConsumerWidget {
   }
 }
 
-class _HistoryRow extends StatelessWidget {
-  const _HistoryRow({required this.conversation});
+/// Joins the case from the graph by id.
+class _CaseRow extends ConsumerWidget {
+  const _CaseRow({required this.caseId});
 
-  final ConversationSummary conversation;
+  final String caseId;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final c = context.pg;
+    final k = ref.watch(caseRecordProvider(caseId)).value?.entity;
+    if (k == null) return const SizedBox.shrink();
+    return Padding(
+      padding: const EdgeInsets.only(top: 2),
+      child: _Row(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+        children: [
+          Expanded(child: _ellipsis(k.procedure, c.fg)),
+          if (k.due case final d?) ...[
+            const SizedBox(width: 8),
+            Text(PgDates.short(d.date), style: PgText.mono(color: c.fg2)),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+/// Joins the conversation from the graph by id.
+class _HistoryRow extends ConsumerWidget {
+  const _HistoryRow({required this.conversationId});
+
+  final String conversationId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final c = context.pg;
+    final conversation = ref
+        .watch(conversationRecordProvider(conversationId))
+        .value
+        ?.entity;
+    if (conversation == null) return const SizedBox.shrink();
     return Padding(
       padding: const EdgeInsets.only(top: 2),
       child: _Row(

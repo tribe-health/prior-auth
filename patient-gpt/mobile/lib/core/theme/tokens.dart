@@ -204,6 +204,7 @@ class PgSizes {
 }
 
 class PgRadius {
+  static const double rTag = 4;
   static const double r = 5;
   static const double rLg = 8;
   static const double rComposer = 24;
@@ -211,6 +212,8 @@ class PgRadius {
 }
 
 class PgLayout {
+  static const double controlH = 40;
+  static const double touchTarget = 44;
   static const double sbW = 268;
   static const double col = 768;
   static const double filesW = 360;

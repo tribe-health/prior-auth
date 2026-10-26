@@ -1,0 +1,243 @@
+/* Assistant UI compositions follow docs/design/patient-chat. The generated
+   PatientGPT roles remain the color, type, geometry and motion authority. */
+:where(.aui-root, .aui-md, .aui-file-root, .aui-image-root, .aui-reasoning-root,
+  .aui-tool-group-root, .aui-tool-fallback-root, [data-slot="audio-player"],
+  [data-slot="video-player"]) {
+  font-family: var(--font-body);
+  color: var(--fg);
+}
+
+:where([class*="aui-"], [data-slot="audio-player"], [data-slot="video-player"]) {
+  animation-duration: var(--dur-enter);
+  animation-timing-function: var(--ease);
+  transition-timing-function: var(--ease);
+  transition-duration: var(--dur-enter);
+}
+
+:where([class*="aui-"][data-state="closed"], [class*="aui-"][data-closed],
+  [class*="aui-"][data-ending-style]) {
+  animation-duration: var(--dur-exit);
+  transition-duration: var(--dur-exit);
+}
+
+.aui-thread-welcome-message-inner,
+.aui-md-h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+.aui-md :is(h2, h3, h4, h5, h6) {
+  font-family: var(--font-body);
+}
+
+.aui-code-header-language,
+.aui-md :is(pre, code),
+.aui-tool-fallback-duration,
+.aui-tool-fallback-root :is(pre, code),
+[data-slot="file-size"],
+[data-slot="image-filename"] {
+  font-family: var(--font-mono);
+}
+
+.aui-user-message-content {
+  background: var(--s2);
+  color: var(--fg);
+  border-radius: var(--r-bubble);
+  padding: 10px 16px;
+}
+
+:is([data-slot="aui_composer-shell"], .aui-edit-composer-root) {
+  background: var(--field);
+  color: var(--field-fg);
+  border-radius: var(--r-composer);
+  transition: background-color var(--dur-enter) var(--ease);
+}
+
+:is([data-slot="aui_composer-shell"], .aui-edit-composer-root):focus-within {
+  background: var(--field-focus);
+}
+
+[data-slot="aui_composer-shell"][data-dragging="true"] {
+  background: var(--field-hover);
+}
+
+:is([data-slot="aui_composer-shell"], .aui-edit-composer-root) textarea {
+  color: var(--field-fg);
+  caret-color: var(--field-fg);
+  background: transparent;
+}
+
+:is([data-slot="aui_composer-shell"], .aui-edit-composer-root) textarea::placeholder {
+  color: var(--field-ph);
+  opacity: 1;
+}
+
+:is([data-slot="aui_composer-shell"], .aui-edit-composer-root) textarea:focus-visible {
+  background: transparent !important;
+  color: var(--field-fg) !important;
+}
+
+:is(.aui-composer-add-attachment, .aui-composer-dictate, .aui-composer-stop-dictation) {
+  color: var(--field-fg);
+  min-width: 40px;
+  min-height: 40px;
+}
+
+:is(.aui-composer-send, .aui-composer-resume, .aui-composer-cancel) {
+  min-width: 40px;
+  min-height: 40px;
+}
+
+:is(.aui-composer-add-attachment, .aui-composer-dictate, .aui-composer-stop-dictation):hover {
+  background: var(--field-hover);
+  color: var(--field-fg);
+}
+
+:is([data-slot="aui_composer-shell"], .aui-edit-composer-root) button:focus-visible {
+  background: var(--field-fg) !important;
+  color: var(--field) !important;
+}
+
+.aui-edit-composer-footer button[data-variant="ghost"] {
+  color: var(--field-fg);
+}
+
+.aui-message-error-root {
+  background: var(--gap-surface);
+  color: var(--gap);
+  border-radius: var(--r-lg);
+}
+
+.aui-md-blockquote {
+  background: var(--s1);
+  border-radius: var(--r-lg);
+  padding: 12px 14px;
+}
+
+.aui-md-hr {
+  border: 0;
+  height: 0;
+  margin-block: 24px;
+}
+
+.aui-md-table {
+  border-spacing: 0 4px;
+}
+
+.aui-md-th,
+.aui-md-td {
+  background: var(--s1);
+  color: var(--fg);
+}
+
+.aui-md-th { background: var(--s2); }
+.aui-md-tr > :first-child { border-radius: var(--r) 0 0 var(--r); }
+.aui-md-tr > :last-child { border-radius: 0 var(--r) var(--r) 0; }
+
+.aui-code-header-root,
+.aui-md-pre {
+  background: var(--s1);
+}
+
+.aui-thread-followup-suggestion {
+  background: var(--s1);
+  color: var(--fg);
+  min-height: 40px;
+}
+
+.aui-thread-followup-suggestion:hover { background: var(--s2); }
+
+:is(.aui-action-bar-more-content, [data-slot="aui_thread-list-item-more-content"]) {
+  background: var(--inv);
+  color: var(--inv-fg);
+  border-radius: var(--r-lg);
+}
+
+:is(.aui-action-bar-more-content, [data-slot="aui_thread-list-item-more-content"]) [role="menuitem"] {
+  color: var(--inv-fg);
+  border-radius: var(--r);
+  min-height: 40px;
+}
+
+:is(.aui-action-bar-more-content, [data-slot="aui_thread-list-item-more-content"]) [role="menuitem"]:is(:hover, [data-highlighted]) {
+  background: var(--inv-hover);
+  color: var(--inv-fg);
+}
+
+:is(.aui-action-bar-more-content, [data-slot="aui_thread-list-item-more-content"]) [role="menuitem"]:focus-visible {
+  background: var(--inv-fg) !important;
+  color: var(--inv) !important;
+}
+
+.aui-attachment-tile {
+  border-radius: var(--r-lg);
+  padding: 4px;
+}
+
+.aui-image-zoom-trigger { padding: 4px; border-radius: var(--r-lg); }
+
+.aui-attachment-tile-remove {
+  background: var(--inv);
+  color: var(--inv-fg);
+}
+
+.aui-attachment-tile-remove:hover {
+  background: var(--inv-hover);
+  color: var(--inv-fg);
+}
+
+:is(.aui-attachment-tile, .aui-image-zoom-trigger):focus-visible {
+  background: var(--focus-bg);
+  color: var(--focus-fg);
+}
+
+.aui-tool-fallback-approval,
+.aui-tool-fallback-approval-confirm {
+  background: var(--host);
+  color: var(--fg);
+  border-radius: var(--r-lg);
+  padding: 12px 14px;
+}
+
+@media (pointer: coarse) {
+  :is(.aui-root, .aui-file-root, .aui-image-root, .aui-reasoning-root,
+    .aui-tool-group-root, .aui-tool-fallback-root, [data-slot="audio-player"])
+    :is(button, a[download], input:not([type="hidden"]), [role="button"]),
+  .aui-button-icon,
+  .aui-thread-followup-suggestion,
+  .aui-action-bar-more-item,
+  [data-slot="aui_thread-list-item-more-item"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  [data-slot="aui_thread-list-item"] { min-height: 44px; }
+  [data-slot="aui_thread-list-item-more"] { opacity: 1; }
+  [data-slot="aui_thread-list-item-trigger"] { padding-inline-end: 56px; }
+  .aui-attachment-tile { min-width: 72px; min-height: 72px; }
+  .aui-attachment-tile-remove { top: 0; inset-inline-end: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(.aui-root, .aui-md, .aui-file-root, .aui-image-root, .aui-reasoning-root,
+    .aui-tool-group-root, .aui-tool-fallback-root, .aui-image-zoom-overlay,
+    [data-slot="audio-player"], [data-slot="video-player"]),
+  :is(.aui-root, .aui-md, .aui-file-root, .aui-image-root, .aui-reasoning-root,
+    .aui-tool-group-root, .aui-tool-fallback-root, .aui-image-zoom-overlay,
+    [data-slot="audio-player"], [data-slot="video-player"]) *,
+  :is(.aui-root, .aui-md) *::before,
+  :is(.aui-root, .aui-md) *::after,
+  [class*="aui-"] {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+
+  :is(.aui-root, .aui-md, .aui-reasoning-root, .aui-tool-group-root,
+    .aui-tool-fallback-root) .shimmer,
+  .aui-shimmer-label.shimmer {
+    background-image: none;
+    -webkit-text-fill-color: currentColor;
+    color: var(--fg-2);
+  }
+}

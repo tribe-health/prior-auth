@@ -1,0 +1,1 @@
+{"totalRuns":15,"failedRuns":0,"lastRun":{"ts":"2026-10-26T12:09:38Z","kind":"analyze","edge":"after","name":"local-inference-and-uar-wiring","hookId":"kbd-stage-writeback-analyze","layer":"builtin","mode":"augment","status":0},"lastFailure":null}

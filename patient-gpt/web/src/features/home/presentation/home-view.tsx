@@ -2,6 +2,7 @@
 // Nothing selected: the greeting, the chat box and "Due next" (shell.js `homeView`).
 import { Link } from '@tanstack/react-router'
 import { useDocumentTitle } from '../../../shared/dom/use-document-title'
+import { A2uiDevSlot } from '../../a2ui/presentation/a2ui-dev-slot'
 import { ComposerSlot } from '../../chat/presentation/composer-placement'
 import { useOpenCases } from '../../patients/presentation/use-patient-directory'
 import { useSession } from '../../session/presentation/use-session'
@@ -43,6 +44,7 @@ export function HomeView() {
       </h1>
       <ComposerSlot />
       <DueNext />
+      <A2uiDevSlot />
     </div>
   )
 }

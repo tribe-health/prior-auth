@@ -1,9 +1,11 @@
 // TJ-ARCH-MOB-001 compliant
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:patient_gpt/core/theme/pg_text.dart';
 import 'package:patient_gpt/core/theme/pg_theme.dart';
 import 'package:patient_gpt/core/theme/tokens.dart';
+import 'package:patient_gpt/features/a2ui/presentation/widgets/debug_a2ui_sample.dart';
 import 'package:patient_gpt/features/conversation/domain/thread_state.dart';
 
 /// `.thread`: user bubbles on the right (--s2, radius 18), assistant prose on
@@ -24,6 +26,9 @@ class ThreadView extends StatelessWidget {
           _AgentMessage(turn: t),
           const SizedBox(height: 20),
         ],
+        // The runtime emits no A2UI yet; debug builds can open the sample
+        // surface here, where a run's surface would render.
+        if (kDebugMode) const DebugA2uiSample(),
       ],
     );
   }

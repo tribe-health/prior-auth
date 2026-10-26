@@ -19,6 +19,15 @@ enum PgIconName {
     '<rect x="5.5" y="5.5" width="9" height="9" rx="1.5" fill="currentColor"/>',
   ),
   x('<path d="M5 5l10 10M15 5L5 15"/>'),
+  check('<path d="M4.5 10.5l3.5 3.5 7.5-8"/>'),
+  lock(
+    '<rect x="5" y="9" width="10" height="7.5" rx="1.5"/>'
+    '<path d="M7 9V6.5a3 3 0 0 1 6 0V9"/>',
+  ),
+  folder(
+    '<path d="M3 6.5A1.5 1.5 0 0 1 4.5 5H8l2 2h5.5A1.5 1.5 0 0 1 17 8.5v6'
+    'a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 3 14.5z"/>',
+  ),
   sun(
     '<circle cx="10" cy="10" r="3.2"/><path d="M10 2.5v2M10 15.5v2M2.5 10h2'
     'M15.5 10h2M4.7 4.7l1.4 1.4M13.9 13.9l1.4 1.4M4.7 15.3l1.4-1.4'
