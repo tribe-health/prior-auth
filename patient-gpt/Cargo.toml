@@ -51,7 +51,7 @@ futures            = "=0.3.34"
 tokio-stream       = "=0.1.19"
 # Embedded engine only (no remote protocol features). kv-rocksdb is the
 # durable on-disk engine for the desktop lane; see patient-gpt-storage.
-surrealdb          = { version = "=3.3.0", default-features = false, features = ["kv-rocksdb"] }
+surrealdb          = { version = "=3.3.5", default-features = false, features = ["kv-rocksdb"] }
 # Desktop shell (desktop/src-tauri). Verified against crates.io 2026-10-25.
 tauri                        = { version = "=2.12.5" }
 tauri-build                  = { version = "=2.7.4" }
